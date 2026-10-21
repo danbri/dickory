@@ -1,0 +1,4979 @@
+{
+  "schema_version": "1.0",
+  "title": "RDF 1.1 Semantics assertion inventory",
+  "inventory_status": "comprehensive_first_pass_not_certified_exhaustive",
+  "method": "AI close reading of the complete substantive specification, following its definitions, quantifiers, tables, theorems and document structure; HTML structure was used to verify anchors, not to extract obligations by keyword.",
+  "primary_source": {
+    "document": "RDF 1.1 Semantics",
+    "date": "2014-02-25",
+    "pinned_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/",
+    "local_snapshot": "_LEAN/specifications/rdf11-mt-20140225.html"
+  },
+  "incorporated_source": {
+    "document": "RDF 1.1 Concepts and Abstract Syntax",
+    "date": "2014-02-25",
+    "pinned_url": "https://www.w3.org/TR/2014/REC-rdf11-concepts-20140225/",
+    "local_snapshot": "_LEAN/specifications/rdf11-concepts-20140225.html"
+  },
+  "taxonomy": {
+    "definition": "Introduces an entity, notation, structure, relation, operation or inherited abstract-syntax concept.",
+    "semantic_constraint": "Restricts interpretations, denotations or truth values; includes axiomatic triple families.",
+    "general_requirement": "Specifies scope, conformance, permissions, recommendations, extension requirements or limits on what follows operationally.",
+    "mathematical_consequence": "States a theorem, derived entailment, non-entailment, equivalence, complexity result or explicitly identified consequence inferred during this reading."
+  },
+  "field_conventions": {
+    "source_status": "Normative or informative status of the cited source passage, not a command to implement an algorithm. Examples and notes remain informative even inside normative sections.",
+    "assertion_basis": "explicit means stated by the source; incorporated means imported through a source reference; derived means the inventory author inferred it and it is not a separately stated source requirement.",
+    "official_rule_code": "Only published rule identifiers are populated. Local record IDs and source HTML condition IDs are not official entailment rules.",
+    "source_locator": "Disambiguates components or conjuncts sharing a source anchor; the five numbered simple-interpretation components retain their original numbers.",
+    "dependencies": "Selected local conceptual dependencies, not a certified minimal proof dependency graph.",
+    "assessment": "Every implementation mapping, proof obligation and test mapping is unassessed; an inventory entry is not evidence of conformance."
+  },
+  "coverage_notes": {
+    "reading": "All substantive sections 1–10 and informative appendices A–D were read; the document structure and normative/informative boundaries were checked. Concepts is included only where needed by this document.",
+    "completeness": "Reading a section does not establish that every independent assertion has been inventoried. This is a reviewable first pass, not an exhaustive formalization or certified completeness result.",
+    "granularity": "Semantic conditions and published rule patterns are split. Uniform axiomatic triple families are grouped with explicit members or a quantified schema. Repeated theorems in Appendix C are attached as supporting references rather than duplicated.",
+    "tests": "W3C rdf-tests are important independent conformance evidence, not an exhaustive catalogue of normative obligations or a proof of coverage. No test-to-record mapping is asserted here.",
+    "scope": "RDF 1.1 Semantics is primary; graph sethood and other abstract-syntax definitions imported from Concepts are included. No RDF 1.2, SPARQL bag semantics or repository-specific query API contract is imported implicitly.",
+    "exclusions": [
+      "Administrative front matter, change history, acknowledgements and bibliography metadata are not independent implementation obligations.",
+      "Worked examples and diagrams are generally evidence for an assertion rather than separate records; illustrative counterexamples are summarized when they distinguish regimes.",
+      "Appendix C proof steps are not individually inventoried; theorem assumptions and supporting proof locations are retained.",
+      "Externally defined datatype lexical spaces, XML canonicalization algorithms and all RFC grammar productions are referenced dependencies, not recursively expanded here.",
+      "No claim is made to enumerate all logical consequences of the normative semantics.",
+      "No Lean declarations, implementation behavior or W3C test files have been assessed."
+    ],
+    "source_ambiguities": "Potential contradictions or omitted assumptions are review questions. The pinned text is preserved separately from a proposed mathematical reading; none is labelled confirmed W3C errata.",
+    "character_traceability": "Not implemented: no content hash, character offsets, DOM/text projection or clickable claim-to-source spans are asserted. Verified HTML anchors provide section/condition references only.",
+    "remaining_inventory_review": [
+      "Review grouped prose assertions and example-derived scope limitations for any further useful splitting.",
+      "Expand imported Concepts definitions and external datatype specifications only as needed by the chosen formalization scope.",
+      "Resolve the recorded source questions before adopting the affected claims as trusted formal statements.",
+      "Review intended-use statements in Appendix D separately from the normative model-theoretic constraints."
+    ]
+  },
+  "review_questions": [
+    {
+      "id": "RQ-D-ENTAILMENT-DIRECTION",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#D_entailment",
+      "question": "The final paragraph says recognizing more datatypes strengthens entailment but states E-entailment implies D-entailment when D is a subset of E, and D-entailment implies simple entailment. Compare these directions against the universal-model definition and section 3 monotonic-extension requirement.",
+      "mathematical_comparison": "Under compatible fixed datatype meanings, every E-interpretation is a D-interpretation, so truth preservation over all D-models implies truth preservation over all E-models. Empty-D entailment is simple entailment.",
+      "status": "review_required_not_confirmed_erratum"
+    },
+    {
+      "id": "RQ-RDFS-ENTAILMENT-DIRECTION",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#rdfs_entailment",
+      "question": "Section 9.2 states that RDFS entailment implies RDF entailment because every RDFS interpretation is an RDF interpretation, while also claiming RDFS entailment is stronger. Compare the quantified model classes.",
+      "mathematical_comparison": "For the same D, RDFS models form a subclass of RDF models; RDF entailment therefore implies RDFS entailment. The reverse does not follow from subclass inclusion.",
+      "status": "review_required_not_confirmed_erratum"
+    },
+    {
+      "id": "RQ-OPTIONAL-DATATYPE-CLASS-ASSERTIONS",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#rdfs_interpretations",
+      "question": "The table of additional rdfs-valid triples includes rdf:XMLLiteral and rdf:HTML as rdfs:Class without an explicit recognition premise; section 8 permits these datatype IRIs to be unrecognized. Establish the intended premise or derivation before treating these entries as unconditional theorems.",
+      "status": "review_required_not_confirmed_erratum"
+    },
+    {
+      "id": "RQ-FINITE-CLOSURE-DOMAIN",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#entailment_rules",
+      "question": "Appendix A calls closures finite after speaking of RDF graphs generally, while section 5.3 permits infinite graphs. Determine and document the finite/effective-input restriction required by the finiteness and complexity assertions.",
+      "mathematical_comparison": "The closure contains its premise S, so it cannot be finite when S is infinite.",
+      "status": "review_required_not_confirmed_erratum"
+    }
+  ],
+  "section_coverage": [
+    {
+      "section": "1",
+      "anchor": "introduction",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#introduction",
+      "section_status": "normative",
+      "reading_status": "read",
+      "inventory_status": "first_pass_not_certified_exhaustive",
+      "record_ids": [
+        "MT11-SCOPE"
+      ]
+    },
+    {
+      "section": "2",
+      "anchor": "conformance",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#conformance",
+      "section_status": "normative",
+      "reading_status": "read",
+      "inventory_status": "first_pass_not_certified_exhaustive",
+      "record_ids": [
+        "MT11-NORMATIVE-BOUNDARY",
+        "MT11-REQUIREMENT-KEYWORDS",
+        "MT11-SEMANTICS-SCOPE-LIMIT"
+      ]
+    },
+    {
+      "section": "3",
+      "anchor": "extensions",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#extensions",
+      "section_status": "normative",
+      "reading_status": "read",
+      "inventory_status": "first_pass_not_certified_exhaustive",
+      "record_ids": [
+        "MT11-EXTENSION-REGIME",
+        "MT11-EXTENSION-SYNTAX",
+        "MT11-EXTENSION-MONOTONICITY"
+      ]
+    },
+    {
+      "section": "4",
+      "anchor": "notation",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#notation",
+      "section_status": "normative",
+      "reading_status": "read",
+      "inventory_status": "first_pass_not_certified_exhaustive",
+      "record_ids": [
+        "MT11-SYNTAX-IMPORT",
+        "MT11-GRAPH-SET",
+        "MT11-TRIPLE-TERM-DOMAINS",
+        "MT11-TERM-IDENTITY",
+        "MT11-GENERALIZED-SYNTAX",
+        "MT11-INTERPRETATION-TERMINOLOGY",
+        "MT11-DENOTATION-IDENTIFICATION",
+        "MT11-IDENTITY-NOTATION",
+        "MT11-NAMES-VOCABULARIES",
+        "MT11-EMPTY-GRAPH",
+        "MT11-SUBGRAPH",
+        "MT11-GROUND-GRAPH",
+        "MT11-GRAPH-INSTANCE",
+        "MT11-INSTANCE-PROPERTIES",
+        "MT11-VOCABULARY-INSTANCE",
+        "MT11-PROPER-INSTANCE",
+        "MT11-ISOMORPHISM",
+        "MT11-LEAN-GRAPH",
+        "MT11-LEAN-CONSEQUENCES",
+        "MT11-SET-IDEMPOTENCE"
+      ]
+    },
+    {
+      "section": "4.1",
+      "anchor": "unions_merges",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#unions_merges",
+      "section_status": "normative",
+      "reading_status": "read",
+      "inventory_status": "first_pass_not_certified_exhaustive",
+      "record_ids": [
+        "MT11-SHARED-BLANK-IDENTITY",
+        "MT11-BLANK-LABEL-HYGIENE",
+        "MT11-UNION",
+        "MT11-MERGE",
+        "MT11-UNION-MERGE-RELATION"
+      ]
+    },
+    {
+      "section": "5",
+      "anchor": "simple",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#simple",
+      "section_status": "normative",
+      "reading_status": "read",
+      "inventory_status": "first_pass_not_certified_exhaustive",
+      "record_ids": [
+        "MT11-SIMPLE-EXTENSION-BASE",
+        "MT11-GRAPH-SOURCE-SEMANTICS",
+        "MT11-SIMPLE-IR",
+        "MT11-SIMPLE-IP",
+        "MT11-SIMPLE-IEXT",
+        "MT11-SIMPLE-IS",
+        "MT11-SIMPLE-IL",
+        "MT11-TERM-DENOTATIONS",
+        "MT11-TRIPLE-TRUTH",
+        "MT11-GRAPH-TRUTH",
+        "MT11-UNDEFINED-LITERAL-FALSE",
+        "MT11-EMPTY-TRUE",
+        "MT11-RESOURCE-PROPERTY-OVERLAP",
+        "MT11-IRI-ADDITIONAL-CONSTRAINTS"
+      ]
+    },
+    {
+      "section": "5.1",
+      "anchor": "blank_nodes",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#blank_nodes",
+      "section_status": "normative",
+      "reading_status": "read",
+      "inventory_status": "first_pass_not_certified_exhaustive",
+      "record_ids": [
+        "MT11-BLANK-ASSIGNMENT",
+        "MT11-EXISTENTIAL-GRAPH-TRUTH",
+        "MT11-BLANK-ASSIGNMENT-NONGLOBAL",
+        "MT11-TRUTH-DUPLICATION-INVARIANCE"
+      ]
+    },
+    {
+      "section": "5.1.1",
+      "anchor": "shared_blank_nodes",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#shared_blank_nodes",
+      "section_status": "informative",
+      "reading_status": "read",
+      "inventory_status": "first_pass_not_certified_exhaustive",
+      "record_ids": [
+        "MT11-SHARED-BLANK-SCOPE"
+      ]
+    },
+    {
+      "section": "5.2",
+      "anchor": "simpleentailment",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#simpleentailment",
+      "section_status": "normative",
+      "reading_status": "read",
+      "inventory_status": "first_pass_not_certified_exhaustive",
+      "record_ids": [
+        "MT11-SATISFACTION",
+        "MT11-SIMPLE-ENTAILMENT",
+        "MT11-LOGICAL-EQUIVALENCE",
+        "MT11-GRAPH-SET-ENTAILMENT",
+        "MT11-VALID-TRANSFORMATION",
+        "MT11-NO-INFERENCE-EXECUTION-MANDATE",
+        "MT11-PURPOSE-NOT-ENTAILMENT"
+      ]
+    },
+    {
+      "section": "5.3",
+      "anchor": "simple_entailment_properties",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#simple_entailment_properties",
+      "section_status": "informative",
+      "reading_status": "read",
+      "inventory_status": "first_pass_not_certified_exhaustive",
+      "record_ids": [
+        "MT11-SIMPLE-SATISFIABILITY",
+        "MT11-INTERPOLATION",
+        "MT11-SIMPLE-DECIDABILITY",
+        "MT11-EMPTY-ENTAILMENTS",
+        "MT11-SUBGRAPH-ENTAILMENT",
+        "MT11-INSTANCE-ENTAILMENT",
+        "MT11-LEAN-PROPER-INSTANCE-NONENTAILMENT",
+        "MT11-PREMISE-MONOTONICITY",
+        "MT11-COMPACTNESS",
+        "MT11-FRESH-IRI-NONENTAILMENT"
+      ]
+    },
+    {
+      "section": "6",
+      "anchor": "skolemization",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#skolemization",
+      "section_status": "informative",
+      "reading_status": "read",
+      "inventory_status": "first_pass_not_certified_exhaustive",
+      "record_ids": [
+        "MT11-SKOLEMIZATION",
+        "MT11-SKOLEM-ENTAILS-ORIGINAL",
+        "MT11-ORIGINAL-NOT-SKOLEM",
+        "MT11-SKOLEM-CONSEQUENCE-LIFTING",
+        "MT11-SKOLEM-FRESH-VOCABULARY-CONSERVATIVITY"
+      ]
+    },
+    {
+      "section": "7",
+      "anchor": "datatypes",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#datatypes",
+      "section_status": "normative",
+      "reading_status": "read",
+      "inventory_status": "first_pass_not_certified_exhaustive",
+      "record_ids": [
+        "MT11-DATATYPE-RECOGNITION-PARAMETER",
+        "MT11-DATATYPE-IDENTIFICATION-FIXED",
+        "MT11-DATATYPE-MAP-VIEW",
+        "MT11-LITERAL-DATATYPE-IMPORT",
+        "MT11-LEXICAL-TO-VALUE",
+        "MT11-ILL-TYPED-DEFINITION",
+        "MT11-REQUIRED-AND-OPTIONAL-DATATYPES",
+        "MT11-STANDARD-DATATYPE-MEANINGS",
+        "MT11-CUSTOM-DATATYPE-MEANINGS",
+        "MT11-LANGSTRING-EXCEPTION",
+        "MT11-UNKNOWN-DATATYPE-HANDLING"
+      ]
+    },
+    {
+      "section": "7.1",
+      "anchor": "D_interpretations",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#D_interpretations",
+      "section_status": "normative",
+      "reading_status": "read",
+      "inventory_status": "first_pass_not_certified_exhaustive",
+      "record_ids": [
+        "MT11-D-INTERPRETATION",
+        "MT11-LANGSTRING-VALUE",
+        "MT11-RECOGNIZED-DATATYPE-DENOTATION",
+        "MT11-RECOGNIZED-LITERAL-VALUE",
+        "MT11-ILL-TYPED-UNSATISFIABILITY",
+        "MT11-LANGSTRING-STRING-TOTALITY"
+      ]
+    },
+    {
+      "section": "7.2",
+      "anchor": "D_entailment",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#D_entailment",
+      "section_status": "normative",
+      "reading_status": "read",
+      "inventory_status": "first_pass_not_certified_exhaustive",
+      "record_ids": [
+        "MT11-D-SATISFACTION-ENTAILMENT",
+        "MT11-D-UNSATISFIABILITY-HANDLING",
+        "MT11-D-EXPLOSION",
+        "MT11-EXPLOSION-NOT-EXECUTION",
+        "MT11-EMPTY-D-SIMPLE",
+        "MT11-D-DIRECTION-SOURCE-CLAIM",
+        "MT11-D-MODEL-CLASS-MONOTONICITY"
+      ]
+    },
+    {
+      "section": "7.2.1",
+      "anchor": "datatype_entailment_patterns",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#datatype_entailment_patterns",
+      "section_status": "informative",
+      "reading_status": "read",
+      "inventory_status": "first_pass_not_certified_exhaustive",
+      "record_ids": [
+        "MT11-DATATYPE-VALUE-SUBSTITUTION",
+        "MT11-DATATYPE-PATTERN-LIMIT",
+        "MT11-SIMPLE-D-INCONSISTENCY-CHARACTERIZATION"
+      ]
+    },
+    {
+      "section": "8",
+      "anchor": "rdf_d_interpretations",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#rdf_d_interpretations",
+      "section_status": "normative",
+      "reading_status": "read",
+      "inventory_status": "first_pass_not_certified_exhaustive",
+      "record_ids": [
+        "MT11-RDF-INTERPRETATION",
+        "MT11-RDF-PROPERTY-TYPING",
+        "MT11-RDF-DATATYPE-EXTENSION",
+        "MT11-RDF-AXIOM-PROPERTIES",
+        "MT11-RDF-AXIOM-NIL",
+        "MT11-RDF-AXIOM-CONTAINER-PROPERTIES",
+        "MT11-RDF-VOCABULARY-LIMITS"
+      ]
+    },
+    {
+      "section": "8.1",
+      "anchor": "rdf_entail",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#rdf_entail",
+      "section_status": "normative",
+      "reading_status": "read",
+      "inventory_status": "first_pass_not_certified_exhaustive",
+      "record_ids": [
+        "MT11-RDF-ENTAILMENT",
+        "MT11-RDF-AXIOM-ENTAILMENT"
+      ]
+    },
+    {
+      "section": "8.1.1",
+      "anchor": "rdf_entailment_patterns",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#rdf_entailment_patterns",
+      "section_status": "informative",
+      "reading_status": "read",
+      "inventory_status": "first_pass_not_certified_exhaustive",
+      "record_ids": [
+        "MT11-RULE-rdfD1",
+        "MT11-RULE-rdfD2",
+        "MT11-RDF-DATATYPE-SPECIFIC-CONSEQUENCES"
+      ]
+    },
+    {
+      "section": "9",
+      "anchor": "rdfs_interpretations",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#rdfs_interpretations",
+      "section_status": "normative",
+      "reading_status": "read",
+      "inventory_status": "first_pass_not_certified_exhaustive",
+      "record_ids": [
+        "MT11-RDFS-CLASS-STRUCTURE",
+        "MT11-RDFS-INTERPRETATION",
+        "MT11-RDFS-ICEXT",
+        "MT11-RDFS-IC",
+        "MT11-RDFS-LV",
+        "MT11-RDFS-RESOURCE-EXTENSION",
+        "MT11-RDFS-LANGSTRING-EXTENSION",
+        "MT11-RDFS-DATATYPE-EXTENSION",
+        "MT11-RDFS-DATATYPE-TYPING",
+        "MT11-RDFS-DOMAIN",
+        "MT11-RDFS-RANGE",
+        "MT11-RDFS-SUBPROPERTY-TRANSITIVE",
+        "MT11-RDFS-SUBPROPERTY-REFLEXIVE",
+        "MT11-RDFS-SUBPROPERTY-ENDPOINTS",
+        "MT11-RDFS-SUBPROPERTY-INCLUSION",
+        "MT11-RDFS-CLASS-RESOURCE",
+        "MT11-RDFS-SUBCLASS-TRANSITIVE",
+        "MT11-RDFS-SUBCLASS-REFLEXIVE",
+        "MT11-RDFS-SUBCLASS-ENDPOINTS",
+        "MT11-RDFS-SUBCLASS-INCLUSION",
+        "MT11-RDFS-CONTAINER-SUBPROPERTY",
+        "MT11-RDFS-DATATYPE-SUBCLASS",
+        "MT11-RDFS-AXIOM-DOMAINS",
+        "MT11-RDFS-AXIOM-RANGES",
+        "MT11-RDFS-AXIOM-HIERARCHIES",
+        "MT11-RDFS-AXIOM-CONTAINER-FAMILY",
+        "MT11-RDFS-PROPERTY-CLASS-EQUALITY",
+        "MT11-RDFS-ADDITIONAL-VALID-TYPES",
+        "MT11-RDFS-ADDITIONAL-VALID-PROPERTIES",
+        "MT11-RDFS-NONSEPARATION",
+        "MT11-RDFS-VOCABULARY-BOUNDARY"
+      ]
+    },
+    {
+      "section": "9.1",
+      "anchor": "rdfs_literal_note",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#rdfs_literal_note",
+      "section_status": "informative",
+      "reading_status": "read",
+      "inventory_status": "first_pass_not_certified_exhaustive",
+      "record_ids": [
+        "MT11-LITERAL-VALUES-NOT-SYNTAX"
+      ]
+    },
+    {
+      "section": "9.2",
+      "anchor": "rdfs_entailment",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#rdfs_entailment",
+      "section_status": "normative",
+      "reading_status": "read",
+      "inventory_status": "first_pass_not_certified_exhaustive",
+      "record_ids": [
+        "MT11-RDFS-ENTAILMENT",
+        "MT11-RDFS-DIRECTION-SOURCE-CLAIM",
+        "MT11-RDFS-MODEL-CLASS-INCLUSION"
+      ]
+    },
+    {
+      "section": "9.2.1",
+      "anchor": "rdfs_patterns",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#rdfs_patterns",
+      "section_status": "informative",
+      "reading_status": "read",
+      "inventory_status": "first_pass_not_certified_exhaustive",
+      "record_ids": [
+        "MT11-RULE-rdfs1",
+        "MT11-RULE-rdfs2",
+        "MT11-RULE-rdfs3",
+        "MT11-RULE-rdfs4a",
+        "MT11-RULE-rdfs4b",
+        "MT11-RULE-rdfs5",
+        "MT11-RULE-rdfs6",
+        "MT11-RULE-rdfs7",
+        "MT11-RULE-rdfs8",
+        "MT11-RULE-rdfs9",
+        "MT11-RULE-rdfs10",
+        "MT11-RULE-rdfs11",
+        "MT11-RULE-rdfs12",
+        "MT11-RULE-rdfs13",
+        "MT11-RDFS-DATATYPE-INCONSISTENCY"
+      ]
+    },
+    {
+      "section": "10",
+      "anchor": "rdf_datasets",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#rdf_datasets",
+      "section_status": "normative",
+      "reading_status": "read",
+      "inventory_status": "first_pass_not_certified_exhaustive",
+      "record_ids": [
+        "MT11-DATASET-STRUCTURE",
+        "MT11-DATASET-NAME-DENOTATION",
+        "MT11-DATASET-DEFAULT-CONTENT",
+        "MT11-DATASET-EQUIVALENT-REPLACEMENT",
+        "MT11-DATASET-EXTENSIONS"
+      ]
+    },
+    {
+      "section": "A",
+      "anchor": "entailment_rules",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#entailment_rules",
+      "section_status": "informative",
+      "reading_status": "read",
+      "inventory_status": "first_pass_not_certified_exhaustive",
+      "record_ids": [
+        "MT11-ORDINARY-RULE-CHECK-PROCEDURE",
+        "MT11-ORDINARY-RULE-SOUND-INCOMPLETE",
+        "MT11-RULE-GrdfD1",
+        "MT11-GENERALIZED-CLOSURE",
+        "MT11-GENERALIZED-CLOSURE-COMPLETENESS",
+        "MT11-FINITE-CLOSURE-COMPLEXITY",
+        "MT11-SIMPLE-ENTAILMENT-COMPLEXITY",
+        "MT11-RULE-STRATEGY-LIMITS"
+      ]
+    },
+    {
+      "section": "B",
+      "anchor": "finite_interpretations",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#finite_interpretations",
+      "section_status": "informative",
+      "reading_status": "read",
+      "inventory_status": "first_pass_not_certified_exhaustive",
+      "record_ids": [
+        "MT11-PREINTERPRETATION",
+        "MT11-FINITE-SIMPLE-PREINTERPRETATION",
+        "MT11-FINITE-DATATYPE-PREINTERPRETATION",
+        "MT11-FINITE-RDF-RDFS-PRESERVATION"
+      ]
+    },
+    {
+      "section": "C",
+      "anchor": "proofs",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#proofs",
+      "section_status": "informative",
+      "reading_status": "read",
+      "inventory_status": "first_pass_not_certified_exhaustive",
+      "record_ids": [
+        "MT11-PROOF-APPENDIX-ROLE"
+      ]
+    },
+    {
+      "section": "D",
+      "anchor": "non_semantics",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#non_semantics",
+      "section_status": "informative",
+      "reading_status": "read",
+      "inventory_status": "first_pass_not_certified_exhaustive",
+      "record_ids": [
+        "MT11-VOCABULARY-INFORMAL-INTENT"
+      ]
+    },
+    {
+      "section": "D.1",
+      "anchor": "Reif",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#Reif",
+      "section_status": "informative",
+      "reading_status": "read",
+      "inventory_status": "first_pass_not_certified_exhaustive",
+      "record_ids": [
+        "MT11-REIFICATION-DESCRIPTION",
+        "MT11-REIFICATION-NOT-QUOTATION",
+        "MT11-REIFICATION-NONENTAILMENT",
+        "MT11-REIFICATION-NONUNIQUE-TOKENS"
+      ]
+    },
+    {
+      "section": "D.2",
+      "anchor": "containers",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#containers",
+      "section_status": "informative",
+      "reading_status": "read",
+      "inventory_status": "first_pass_not_certified_exhaustive",
+      "record_ids": [
+        "MT11-CONTAINERS-DESCRIPTION",
+        "MT11-CONTAINERS-INTENDED-TYPES",
+        "MT11-CONTAINER-NO-PERMUTATION-ENTAILMENT",
+        "MT11-CONTAINER-NO-PROPERTY-TRANSFER",
+        "MT11-CONTAINER-OPEN-STRUCTURE"
+      ]
+    },
+    {
+      "section": "D.3",
+      "anchor": "collections",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#collections",
+      "section_status": "informative",
+      "reading_status": "read",
+      "inventory_status": "first_pass_not_certified_exhaustive",
+      "record_ids": [
+        "MT11-COLLECTION-LINKED-STRUCTURE",
+        "MT11-COLLECTION-NO-EXTRA-SEMANTICS",
+        "MT11-COLLECTION-NO-EXISTENCE-CLOSURE",
+        "MT11-COLLECTION-EXTENSIONS",
+        "MT11-COLLECTION-RDFS-TYPING"
+      ]
+    }
+  ],
+  "records": [
+    {
+      "id": "MT11-SCOPE",
+      "section": "1",
+      "anchor": "introduction",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#introduction",
+      "category": "general_requirement",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "The specification assigns model-theoretic truth conditions to RDF graphs and RDF/RDFS vocabularies, characterizing truth-preserving transformations and derivations.",
+      "official_rule_code": null,
+      "dependencies": [],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "MT11-NORMATIVE-BOUNDARY",
+      "section": "2",
+      "anchor": "conformance",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#conformance",
+      "category": "general_requirement",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "Passages are normative except sections explicitly marked non-normative and authoring guidelines, diagrams, examples and notes.",
+      "official_rule_code": null,
+      "dependencies": [],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "MT11-REQUIREMENT-KEYWORDS",
+      "section": "2",
+      "anchor": "conformance",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#conformance",
+      "category": "general_requirement",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "Capitalized requirement keywords have their RFC 2119 meanings.",
+      "official_rule_code": null,
+      "dependencies": [],
+      "imports": [
+        "RFC2119"
+      ],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "MT11-SEMANTICS-SCOPE-LIMIT",
+      "section": "2",
+      "anchor": "conformance",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#conformance",
+      "category": "general_requirement",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "Normative authority concerns RDF semantics and inference validity; social naming conventions and relationships to non-RDF Web content are outside the specified semantics.",
+      "official_rule_code": null,
+      "dependencies": [],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "MT11-EXTENSION-REGIME",
+      "section": "3",
+      "anchor": "extensions",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#extensions",
+      "category": "definition",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "Additional semantic assumptions about an RDF vocabulary constitute a semantic extension and determine an entailment regime.",
+      "official_rule_code": null,
+      "dependencies": [],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "MT11-EXTENSION-SYNTAX",
+      "section": "3",
+      "anchor": "extensions",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#extensions",
+      "category": "general_requirement",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "Extensions may restrict legal graph syntax and treat violations as errors; none of the extensions normatively defined here adds such graph restrictions.",
+      "official_rule_code": null,
+      "dependencies": [],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "MT11-EXTENSION-MONOTONICITY",
+      "section": "3",
+      "anchor": "dfn-monotonic",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#dfn-monotonic",
+      "category": "general_requirement",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "Whenever G simply entails H, every extension must preserve that entailment if its additional syntactic conditions hold; stronger semantics cannot cancel an accepted simple entailment.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-SIMPLE-ENTAILMENT"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "MT11-SYNTAX-IMPORT",
+      "section": "4",
+      "anchor": "notation",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#notation",
+      "category": "definition",
+      "source_status": "normative",
+      "assertion_basis": "incorporated",
+      "paraphrase": "IRI, triple, graph, subject, predicate, object, RDF source, node, blank node, literal, graph isomorphism and dataset have their Concepts meanings.",
+      "official_rule_code": null,
+      "dependencies": [],
+      "imports": [
+        "https://www.w3.org/TR/2014/REC-rdf11-concepts-20140225/#section-rdf-graph",
+        "https://www.w3.org/TR/2014/REC-rdf11-concepts-20140225/#section-triples",
+        "https://www.w3.org/TR/2014/REC-rdf11-concepts-20140225/#section-IRIs",
+        "https://www.w3.org/TR/2014/REC-rdf11-concepts-20140225/#section-Graph-Literal",
+        "https://www.w3.org/TR/2014/REC-rdf11-concepts-20140225/#section-blank-nodes",
+        "https://www.w3.org/TR/2014/REC-rdf11-concepts-20140225/#graph-isomorphism",
+        "https://www.w3.org/TR/2014/REC-rdf11-concepts-20140225/#section-dataset"
+      ],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "MT11-GRAPH-SET",
+      "section": "4",
+      "anchor": "dfn-rdf-graph",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#dfn-rdf-graph",
+      "category": "definition",
+      "source_status": "normative",
+      "assertion_basis": "incorporated",
+      "paraphrase": "An RDF graph is a set of RDF triples, using RDF-term identity for its triple components.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-SYNTAX-IMPORT"
+      ],
+      "imports": [
+        "https://www.w3.org/TR/2014/REC-rdf11-concepts-20140225/#section-rdf-graph"
+      ],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "A list implementation may represent a graph through its membership set; this definition alone does not establish a unique enumeration or a correct cardinality operation."
+    },
+    {
+      "id": "MT11-TRIPLE-TERM-DOMAINS",
+      "section": "4",
+      "anchor": "dfn-rdf-triple",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#dfn-rdf-triple",
+      "category": "definition",
+      "source_status": "normative",
+      "assertion_basis": "incorporated",
+      "paraphrase": "An ordinary RDF triple has an IRI or blank-node subject, an IRI predicate, and an IRI, blank-node or literal object; those term kinds are distinct.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-SYNTAX-IMPORT"
+      ],
+      "imports": [
+        "https://www.w3.org/TR/2014/REC-rdf11-concepts-20140225/#section-triples"
+      ],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "MT11-TERM-IDENTITY",
+      "section": "4",
+      "anchor": "notation",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#notation",
+      "category": "definition",
+      "source_status": "normative",
+      "assertion_basis": "incorporated",
+      "paraphrase": "Abstract IRI and literal identity follow Concepts, not equality of denoted values; blank-node identifiers are concrete-syntax labels rather than the abstract blank nodes themselves.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-SYNTAX-IMPORT"
+      ],
+      "imports": [
+        "https://www.w3.org/TR/2014/REC-rdf11-concepts-20140225/#section-IRIs",
+        "https://www.w3.org/TR/2014/REC-rdf11-concepts-20140225/#section-Graph-Literal",
+        "https://www.w3.org/TR/2014/REC-rdf11-concepts-20140225/#section-blank-nodes"
+      ],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "Check literal language-tag identity against Concepts separately from the lowercase language-tag value condition in section 7.1."
+    },
+    {
+      "id": "MT11-GENERALIZED-SYNTAX",
+      "section": "4",
+      "anchor": "notation",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#notation",
+      "category": "general_requirement",
+      "source_status": "normative",
+      "assertion_basis": "incorporated",
+      "paraphrase": "All definitions apply unchanged to generalized triples, graphs and datasets, whose triple positions can each contain any RDF term.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-SYNTAX-IMPORT"
+      ],
+      "imports": [
+        "https://www.w3.org/TR/2014/REC-rdf11-concepts-20140225/#section-generalized-rdf"
+      ],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "MT11-INTERPRETATION-TERMINOLOGY",
+      "section": "4",
+      "anchor": "dfn-interpretation",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#dfn-interpretation",
+      "category": "definition",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "An interpretation maps IRIs and literals into a semantic domain subject to constraints; qualified kinds of interpretation determine corresponding entailment regimes.",
+      "official_rule_code": null,
+      "dependencies": [],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "MT11-DENOTATION-IDENTIFICATION",
+      "section": "4",
+      "anchor": "notation",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#notation",
+      "category": "definition",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "Denoting and referring name the interpretation-dependent relationship to a referent; identifying denotes an externally established naming relationship, which need not agree with a particular interpretation.",
+      "official_rule_code": null,
+      "dependencies": [],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "MT11-IDENTITY-NOTATION",
+      "section": "4",
+      "anchor": "notation",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#notation",
+      "category": "definition",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "Equality denotes strict identity, and angle-bracket pairs are ordered pairs; these conventions apply throughout the mathematics.",
+      "official_rule_code": null,
+      "dependencies": [],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "MT11-NAMES-VOCABULARIES",
+      "section": "4",
+      "anchor": "dfn-vocabulary",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#dfn-vocabulary",
+      "category": "definition",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "A name is an IRI or literal; a typed literal contributes itself and its datatype IRI as names, and a vocabulary is a set of names.",
+      "official_rule_code": null,
+      "dependencies": [],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "MT11-EMPTY-GRAPH",
+      "section": "4",
+      "anchor": "dfn-empty-graph",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#dfn-empty-graph",
+      "category": "definition",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "The empty graph is the empty set of triples.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-GRAPH-SET"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "MT11-SUBGRAPH",
+      "section": "4",
+      "anchor": "dfn-subgraph",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#dfn-subgraph",
+      "category": "definition",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "Subgraphs and proper subgraphs are respectively subsets and proper subsets of triples; a triple is identified with its singleton subgraph.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-GRAPH-SET"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "MT11-GROUND-GRAPH",
+      "section": "4",
+      "anchor": "dfn-ground",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#dfn-ground",
+      "category": "definition",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "A ground graph has no blank nodes.",
+      "official_rule_code": null,
+      "dependencies": [],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "MT11-GRAPH-INSTANCE",
+      "section": "4",
+      "anchor": "dfn-instance",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#dfn-instance",
+      "category": "definition",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "An instance is obtained by consistently replacing some or all blank nodes through a function into RDF terms; names already in the graph are unchanged.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-GRAPH-SET"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "MT11-INSTANCE-PROPERTIES",
+      "section": "4",
+      "anchor": "dfn-instance",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#dfn-instance",
+      "category": "mathematical_consequence",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "Instantiation is reflexive and composes transitively; every resulting triple is an instance of at least one original triple.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-GRAPH-INSTANCE"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "MT11-VOCABULARY-INSTANCE",
+      "section": "4",
+      "anchor": "dfn-instance-with-respect-to",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#dfn-instance-with-respect-to",
+      "category": "definition",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "An instance relative to vocabulary V uses only names in V for substituted names; substitutions by blank nodes are still permitted.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-GRAPH-INSTANCE",
+        "MT11-NAMES-VOCABULARIES"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "MT11-PROPER-INSTANCE",
+      "section": "4",
+      "anchor": "dfn-proper-instance",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#dfn-proper-instance",
+      "category": "definition",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "An instance is proper if some blank node becomes a name or distinct blank nodes are identified by the substitution.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-GRAPH-INSTANCE"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "MT11-ISOMORPHISM",
+      "section": "4",
+      "anchor": "dfn-isomorphic",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#dfn-isomorphic",
+      "category": "definition",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "Graph isomorphism is an invertible renaming of blank nodes, leaving names fixed; isomorphic graphs are mutual instances and may be treated as identical up to that renaming.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-GRAPH-INSTANCE"
+      ],
+      "imports": [
+        "https://www.w3.org/TR/2014/REC-rdf11-concepts-20140225/#graph-isomorphism"
+      ],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "MT11-LEAN-GRAPH",
+      "section": "4",
+      "anchor": "dfn-lean",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#dfn-lean",
+      "category": "definition",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "A graph is lean if none of its instances is a proper subgraph of itself.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-GRAPH-INSTANCE",
+        "MT11-SUBGRAPH"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "MT11-LEAN-CONSEQUENCES",
+      "section": "4",
+      "anchor": "dfn-lean",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#dfn-lean",
+      "category": "mathematical_consequence",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "A non-lean graph is logically redundant relative to its lean subgraphs; every ground graph is lean.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-LEAN-GRAPH",
+        "MT11-GROUND-GRAPH"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "MT11-SET-IDEMPOTENCE",
+      "section": "4",
+      "anchor": "notation",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#notation",
+      "category": "mathematical_consequence",
+      "source_status": "normative",
+      "assertion_basis": "derived",
+      "paraphrase": "Repeated occurrences of the identical triple do not add graph members, and order does not distinguish graphs with the same members.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-GRAPH-SET"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "This is the mathematical consequence of sethood, not a separately coded entailment rule or a requirement to reject duplicate surface-syntax statements."
+    },
+    {
+      "id": "MT11-SHARED-BLANK-IDENTITY",
+      "section": "4.1",
+      "anchor": "unions_merges",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#unions_merges",
+      "category": "general_requirement",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "Blank-node sharing between graphs requires a source structure that provides for shared identity; repeated retrieval of the same document or source does not by itself identify its blank nodes.",
+      "official_rule_code": null,
+      "dependencies": [],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "MT11-BLANK-LABEL-HYGIENE",
+      "section": "4.1",
+      "anchor": "unions_merges",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#unions_merges",
+      "category": "general_requirement",
+      "source_status": "informative",
+      "assertion_basis": "explicit",
+      "paraphrase": "Applications manipulating scoped blank-node labels should track the abstract identities and rename labels when combining sources to prevent accidental conflation.",
+      "official_rule_code": null,
+      "dependencies": [],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "This is an authoring/implementation guideline under the section 2 exception, not a new truth condition."
+    },
+    {
+      "id": "MT11-UNION",
+      "section": "4.1",
+      "anchor": "unions_merges",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#unions_merges",
+      "category": "definition",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "Graph union uses triple-set union and preserves actual blank-node identities, including identities shared across inputs.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-GRAPH-SET",
+        "MT11-SHARED-BLANK-IDENTITY"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "MT11-MERGE",
+      "section": "4.1",
+      "anchor": "dfn-merging",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#dfn-merging",
+      "category": "definition",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "Merge first separates blank nodes shared between inputs, then takes their union; merging subgraphs can therefore produce a larger graph.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-UNION"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "MT11-UNION-MERGE-RELATION",
+      "section": "4.1",
+      "anchor": "unions_merges",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#unions_merges",
+      "category": "mathematical_consequence",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "The union is an instance of the merge; when inputs share no blank nodes, union and merge coincide. Union retains the joint content, including shared blank-node meaning.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-UNION",
+        "MT11-MERGE",
+        "MT11-GRAPH-INSTANCE"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "MT11-SIMPLE-EXTENSION-BASE",
+      "section": "5",
+      "anchor": "simple",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#simple",
+      "category": "general_requirement",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "All semantic extensions must preserve the simple truth conditions; they may add constraints but must not modify or negate those conditions.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-EXTENSION-MONOTONICITY"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "MT11-GRAPH-SOURCE-SEMANTICS",
+      "section": "5",
+      "anchor": "simple",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#simple",
+      "category": "general_requirement",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "Semantics applies to a graph rather than a changing RDF source; a source is interpreted through its graph value at a time or state, while a fixed graph does not change meaning with time.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-SYNTAX-IMPORT"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "MT11-SIMPLE-IR",
+      "section": "5",
+      "anchor": "dfn-simple-interpretation",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#dfn-simple-interpretation",
+      "category": "definition",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "A simple interpretation includes a nonempty resource set IR.",
+      "official_rule_code": null,
+      "dependencies": [],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "source_locator": "Definition of a simple interpretation, numbered component 1"
+    },
+    {
+      "id": "MT11-SIMPLE-IP",
+      "section": "5",
+      "anchor": "dfn-simple-interpretation",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#dfn-simple-interpretation",
+      "category": "definition",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "A simple interpretation includes a property set IP.",
+      "official_rule_code": null,
+      "dependencies": [],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "source_locator": "Definition of a simple interpretation, numbered component 2"
+    },
+    {
+      "id": "MT11-SIMPLE-IEXT",
+      "section": "5",
+      "anchor": "dfn-simple-interpretation",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#dfn-simple-interpretation",
+      "category": "definition",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "IEXT maps each element of IP to a subset of IR × IR; this set of pairs is the property extension.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-SIMPLE-IR",
+        "MT11-SIMPLE-IP"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "source_locator": "Definition of a simple interpretation, numbered component 3"
+    },
+    {
+      "id": "MT11-SIMPLE-IS",
+      "section": "5",
+      "anchor": "dfn-simple-interpretation",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#dfn-simple-interpretation",
+      "category": "definition",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "IS maps every IRI into IR ∪ IP.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-SIMPLE-IR",
+        "MT11-SIMPLE-IP"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "source_locator": "Definition of a simple interpretation, numbered component 4",
+      "formalization_note": "There is no injectivity or unique-names requirement; different IRIs may denote the same object."
+    },
+    {
+      "id": "MT11-SIMPLE-IL",
+      "section": "5",
+      "anchor": "dfn-simple-interpretation",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#dfn-simple-interpretation",
+      "category": "definition",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "IL is a partial function from literals into IR; a literal may have no denotation.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-SIMPLE-IR"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "source_locator": "Definition of a simple interpretation, numbered component 5"
+    },
+    {
+      "id": "MT11-TERM-DENOTATIONS",
+      "section": "5",
+      "anchor": "simple",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#simple",
+      "category": "semantic_constraint",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "A literal evaluates using IL and an IRI using IS.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-SIMPLE-IS",
+        "MT11-SIMPLE-IL"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "source_locator": "Semantic conditions for ground graphs, first and second rows"
+    },
+    {
+      "id": "MT11-TRIPLE-TRUTH",
+      "section": "5",
+      "anchor": "simple",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#simple",
+      "category": "semantic_constraint",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "A ground triple is true precisely when its predicate denotes a member of IP and its subject/object denotations form a pair in that property extension; otherwise it is false.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-SIMPLE-IEXT",
+        "MT11-TERM-DENOTATIONS"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "source_locator": "Semantic conditions for ground graphs, third row"
+    },
+    {
+      "id": "MT11-GRAPH-TRUTH",
+      "section": "5",
+      "anchor": "simple",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#simple",
+      "category": "semantic_constraint",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "A ground graph is true exactly when every member triple is true; one false member makes it false.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-GRAPH-SET",
+        "MT11-TRIPLE-TRUTH"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "source_locator": "Semantic conditions for ground graphs, fourth row"
+    },
+    {
+      "id": "MT11-UNDEFINED-LITERAL-FALSE",
+      "section": "5",
+      "anchor": "simple",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#simple",
+      "category": "mathematical_consequence",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "A triple containing a literal with undefined IL is false, and a graph containing that triple is false.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-SIMPLE-IL",
+        "MT11-TRIPLE-TRUTH",
+        "MT11-GRAPH-TRUTH"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "MT11-EMPTY-TRUE",
+      "section": "5",
+      "anchor": "simple",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#simple",
+      "category": "mathematical_consequence",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "The empty graph is true under every simple interpretation and remains true under conforming semantic extensions wherever their syntax admits it.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-EMPTY-GRAPH",
+        "MT11-GRAPH-TRUTH",
+        "MT11-SIMPLE-EXTENSION-BASE"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "MT11-RESOURCE-PROPERTY-OVERLAP",
+      "section": "5",
+      "anchor": "simple",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#simple",
+      "category": "mathematical_consequence",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "IP and IR may overlap. In a true triple subject/object denotations lie in IR; an IRI used as both predicate and subject/object in a true graph denotes an element of IP ∩ IR.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-SIMPLE-IEXT",
+        "MT11-TRIPLE-TRUTH"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "The dual-role conclusion requires satisfaction of the relevant graph/triples; a false occurrence alone supplies no membership constraint."
+    },
+    {
+      "id": "MT11-IRI-ADDITIONAL-CONSTRAINTS",
+      "section": "5",
+      "anchor": "simple",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#simple",
+      "category": "general_requirement",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "An extension may constrain particular IRI denotations, including fixing denotations of recognized datatype IRIs.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-SIMPLE-EXTENSION-BASE"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "MT11-BLANK-ASSIGNMENT",
+      "section": "5.1",
+      "anchor": "blank_nodes",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#blank_nodes",
+      "category": "definition",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "For an assignment A from blank nodes to IR, I+A agrees with I on names and with A on its blank-node domain; triple and graph evaluation then uses the ground rules.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-SIMPLE-IR",
+        "MT11-TRIPLE-TRUTH",
+        "MT11-GRAPH-TRUTH"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "MT11-EXISTENTIAL-GRAPH-TRUTH",
+      "section": "5.1",
+      "anchor": "blank_nodes",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#blank_nodes",
+      "category": "semantic_constraint",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "A graph is true under I exactly when there exists one assignment of all its blank nodes to IR that makes the entire graph true.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-BLANK-ASSIGNMENT"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "The existential assignment has whole-graph scope and must be consistent across every occurrence of each blank node; per-triple independent assignments would weaken the condition."
+    },
+    {
+      "id": "MT11-BLANK-ASSIGNMENT-NONGLOBAL",
+      "section": "5.1",
+      "anchor": "blank_nodes",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#blank_nodes",
+      "category": "definition",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "Blank-node assignments are witnesses to graph truth rather than components of I; blank nodes have no globally fixed denotation under a simple interpretation.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-EXISTENTIAL-GRAPH-TRUTH"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "MT11-TRUTH-DUPLICATION-INVARIANCE",
+      "section": "5.1",
+      "anchor": "blank_nodes",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#blank_nodes",
+      "category": "mathematical_consequence",
+      "source_status": "normative",
+      "assertion_basis": "derived",
+      "paraphrase": "Evaluating a list through its set of triples gives the same satisfaction result after permuting or repeating identical triples, while preserving blank-node identity.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-SET-IDEMPOTENCE",
+        "MT11-GRAPH-TRUTH",
+        "MT11-EXISTENTIAL-GRAPH-TRUTH"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "This proves a possible set abstraction, not that list length, duplicate-returning scans, or repository APIs refine graph cardinality or unique enumeration."
+    },
+    {
+      "id": "MT11-SHARED-BLANK-SCOPE",
+      "section": "5.1.1",
+      "anchor": "shared_blank_nodes",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#shared_blank_nodes",
+      "category": "mathematical_consequence",
+      "source_status": "informative",
+      "assertion_basis": "explicit",
+      "paraphrase": "Separately satisfying graphs that share a blank node need not satisfy their union; union requires a common witness across those occurrences and changes existential scope.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-UNION",
+        "MT11-EXISTENTIAL-GRAPH-TRUTH"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "MT11-SATISFACTION",
+      "section": "5.2",
+      "anchor": "dfn-satisfies",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#dfn-satisfies",
+      "category": "definition",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "I satisfies E when E evaluates to true; E is satisfiable if some simple interpretation satisfies it and unsatisfiable if none does.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-EXISTENTIAL-GRAPH-TRUTH"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "MT11-SIMPLE-ENTAILMENT",
+      "section": "5.2",
+      "anchor": "dfn-entail",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#dfn-entail",
+      "category": "definition",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "G simply entails E when every simple interpretation satisfying G also satisfies E.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-SATISFACTION"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "The universal interpretation is shared by premise and conclusion, but their existential blank-node witness assignments need not be the same; joint graph meaning requires union when sharing matters."
+    },
+    {
+      "id": "MT11-LOGICAL-EQUIVALENCE",
+      "section": "5.2",
+      "anchor": "dfn-equivalent",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#dfn-equivalent",
+      "category": "definition",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "Graphs are logically equivalent exactly when each entails the other.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-SIMPLE-ENTAILMENT"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "MT11-GRAPH-SET-ENTAILMENT",
+      "section": "5.2",
+      "anchor": "simpleentailment",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#simpleentailment",
+      "category": "general_requirement",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "The document does not independently define entailment from a set of graphs; first form a union or merge, choosing whether shared blank-node identities must be retained.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-UNION",
+        "MT11-MERGE",
+        "MT11-SIMPLE-ENTAILMENT"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "MT11-VALID-TRANSFORMATION",
+      "section": "5.2",
+      "anchor": "dfn-valid",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#dfn-valid",
+      "category": "definition",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "A graph-producing process is simply valid if every output is simply entailed by its corresponding input, and invalid otherwise.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-SIMPLE-ENTAILMENT"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "MT11-NO-INFERENCE-EXECUTION-MANDATE",
+      "section": "5.2",
+      "anchor": "simpleentailment",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#simpleentailment",
+      "category": "general_requirement",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "Semantic validity does not require an application to execute an inference, and invalidity does not prohibit a transformation; the specification characterizes truth preservation rather than mandating graph operations.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-VALID-TRANSFORMATION"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "MT11-PURPOSE-NOT-ENTAILMENT",
+      "section": "5.2",
+      "anchor": "simpleentailment",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#simpleentailment",
+      "category": "general_requirement",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "Entailment preserves truth, not application-specific suitability; properties such as being a usable test manifest need not survive valid entailment.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-SIMPLE-ENTAILMENT"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "MT11-SIMPLE-SATISFIABILITY",
+      "section": "5.3",
+      "anchor": "simple_entailment_properties",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#simple_entailment_properties",
+      "category": "mathematical_consequence",
+      "source_status": "informative",
+      "assertion_basis": "explicit",
+      "paraphrase": "Every RDF graph has a satisfying simple interpretation; this assertion does not extend automatically to datatype-aware regimes.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-SATISFACTION"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "supporting_source_urls": [
+        "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#proofs"
+      ]
+    },
+    {
+      "id": "MT11-INTERPOLATION",
+      "section": "5.3",
+      "anchor": "dfn-interpolation",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#dfn-interpolation",
+      "category": "mathematical_consequence",
+      "source_status": "informative",
+      "assertion_basis": "explicit",
+      "paraphrase": "G simply entails E exactly when an instance of E is a subgraph of G.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-GRAPH-INSTANCE",
+        "MT11-SUBGRAPH",
+        "MT11-SIMPLE-ENTAILMENT"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "supporting_source_urls": [
+        "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#proofs"
+      ]
+    },
+    {
+      "id": "MT11-SIMPLE-DECIDABILITY",
+      "section": "5.3",
+      "anchor": "simple_entailment_properties",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#simple_entailment_properties",
+      "category": "mathematical_consequence",
+      "source_status": "informative",
+      "assertion_basis": "explicit",
+      "paraphrase": "Simple entailment is decidable for finite input graphs by searching for a substitution whose image is a subset of the premise; the general problem is computationally hard, while a ground conclusion reduces to subset checking.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-INTERPOLATION"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "The text permits infinite graphs elsewhere; an algorithmic decidability claim requires finite effective input. Appendix A states NP-completeness explicitly."
+    },
+    {
+      "id": "MT11-EMPTY-ENTAILMENTS",
+      "section": "5.3",
+      "anchor": "simple_entailment_properties",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#simple_entailment_properties",
+      "category": "mathematical_consequence",
+      "source_status": "informative",
+      "assertion_basis": "explicit",
+      "paraphrase": "Every graph simply entails the empty graph, and the empty graph simply entails only itself.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-SIMPLE-ENTAILMENT",
+        "MT11-EMPTY-TRUE"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "supporting_source_urls": [
+        "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#proofs"
+      ]
+    },
+    {
+      "id": "MT11-SUBGRAPH-ENTAILMENT",
+      "section": "5.3",
+      "anchor": "simple_entailment_properties",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#simple_entailment_properties",
+      "category": "mathematical_consequence",
+      "source_status": "informative",
+      "assertion_basis": "explicit",
+      "paraphrase": "Every graph simply entails each of its subgraphs.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-SUBGRAPH",
+        "MT11-SIMPLE-ENTAILMENT"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "supporting_source_urls": [
+        "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#proofs"
+      ]
+    },
+    {
+      "id": "MT11-INSTANCE-ENTAILMENT",
+      "section": "5.3",
+      "anchor": "simple_entailment_properties",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#simple_entailment_properties",
+      "category": "mathematical_consequence",
+      "source_status": "informative",
+      "assertion_basis": "explicit",
+      "paraphrase": "Every instance of a graph simply entails that graph.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-GRAPH-INSTANCE",
+        "MT11-SIMPLE-ENTAILMENT"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "supporting_source_urls": [
+        "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#proofs"
+      ]
+    },
+    {
+      "id": "MT11-LEAN-PROPER-INSTANCE-NONENTAILMENT",
+      "section": "5.3",
+      "anchor": "simple_entailment_properties",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#simple_entailment_properties",
+      "category": "mathematical_consequence",
+      "source_status": "informative",
+      "assertion_basis": "explicit",
+      "paraphrase": "A lean graph does not simply entail a proper instance of itself.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-LEAN-GRAPH",
+        "MT11-PROPER-INSTANCE",
+        "MT11-INTERPOLATION"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "supporting_source_urls": [
+        "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#proofs"
+      ]
+    },
+    {
+      "id": "MT11-PREMISE-MONOTONICITY",
+      "section": "5.3",
+      "anchor": "simple_entailment_properties",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#simple_entailment_properties",
+      "category": "mathematical_consequence",
+      "source_status": "informative",
+      "assertion_basis": "explicit",
+      "paraphrase": "If S is a subgraph of S-prime and S simply entails E, then S-prime simply entails E.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-SUBGRAPH",
+        "MT11-SIMPLE-ENTAILMENT"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "MT11-COMPACTNESS",
+      "section": "5.3",
+      "anchor": "simple_entailment_properties",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#simple_entailment_properties",
+      "category": "mathematical_consequence",
+      "source_status": "informative",
+      "assertion_basis": "explicit",
+      "paraphrase": "If S simply entails a finite E, some finite subset of S already entails E; S itself may be infinite.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-INTERPOLATION"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "Do not replace RDF graph sethood by finiteness without recording the restriction."
+    },
+    {
+      "id": "MT11-FRESH-IRI-NONENTAILMENT",
+      "section": "5.3",
+      "anchor": "simple_entailment_properties",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#simple_entailment_properties",
+      "category": "mathematical_consequence",
+      "source_status": "informative",
+      "assertion_basis": "explicit",
+      "paraphrase": "A graph cannot simply entail a graph containing an IRI absent from the premise.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-INTERPOLATION"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "supporting_source_urls": [
+        "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#proofs"
+      ]
+    },
+    {
+      "id": "MT11-SKOLEMIZATION",
+      "section": "6",
+      "anchor": "dfn-skolemization",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#dfn-skolemization",
+      "category": "definition",
+      "source_status": "informative",
+      "assertion_basis": "explicit",
+      "paraphrase": "Skolemization replaces blank nodes consistently with fresh IRIs coined for this purpose, with distinct blank nodes receiving distinct fresh IRIs.",
+      "official_rule_code": null,
+      "dependencies": [],
+      "imports": [
+        "https://www.w3.org/TR/2014/REC-rdf11-concepts-20140225/#section-skolemization"
+      ],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "Freshness is relative to other graphs at creation; the injectivity requirement is explicit in the Appendix C proof."
+    },
+    {
+      "id": "MT11-SKOLEM-ENTAILS-ORIGINAL",
+      "section": "6",
+      "anchor": "skolemization",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#skolemization",
+      "category": "mathematical_consequence",
+      "source_status": "informative",
+      "assertion_basis": "explicit",
+      "paraphrase": "A skolemized graph simply entails its original graph.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-SKOLEMIZATION",
+        "MT11-INSTANCE-ENTAILMENT"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "MT11-ORIGINAL-NOT-SKOLEM",
+      "section": "6",
+      "anchor": "skolemization",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#skolemization",
+      "category": "mathematical_consequence",
+      "source_status": "informative",
+      "assertion_basis": "explicit",
+      "paraphrase": "A graph with at least one blank node does not simply entail its skolemization, because the latter introduces a fresh IRI.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-SKOLEMIZATION",
+        "MT11-FRESH-IRI-NONENTAILMENT"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "The printed statement lacks this nontrivial-skolemization premise; for a ground graph the transformation is identity."
+    },
+    {
+      "id": "MT11-SKOLEM-CONSEQUENCE-LIFTING",
+      "section": "6",
+      "anchor": "skolemization",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#skolemization",
+      "category": "mathematical_consequence",
+      "source_status": "informative",
+      "assertion_basis": "explicit",
+      "paraphrase": "If sk(G) simply entails H, there is H-prime with G entailing H-prime and H = sk(H-prime), using the corresponding inverse replacement of skolem IRIs.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-SKOLEMIZATION",
+        "MT11-INTERPOLATION"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "supporting_source_urls": [
+        "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#proofs"
+      ]
+    },
+    {
+      "id": "MT11-SKOLEM-FRESH-VOCABULARY-CONSERVATIVITY",
+      "section": "6",
+      "anchor": "skolemization",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#skolemization",
+      "category": "mathematical_consequence",
+      "source_status": "informative",
+      "assertion_basis": "explicit",
+      "paraphrase": "For H containing none of the freshly introduced skolem IRIs, sk(G) simply entails H exactly when G simply entails H.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-SKOLEM-CONSEQUENCE-LIFTING",
+        "MT11-SKOLEM-ENTAILS-ORIGINAL"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "supporting_source_urls": [
+        "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#proofs"
+      ]
+    },
+    {
+      "id": "MT11-DATATYPE-RECOGNITION-PARAMETER",
+      "section": "7",
+      "anchor": "dfn-recognize",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#dfn-recognize",
+      "category": "definition",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "D is the set of datatype IRIs recognized by an interpretation; recognizing an IRI presupposes determining the unique datatype it identifies.",
+      "official_rule_code": null,
+      "dependencies": [],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "MT11-DATATYPE-IDENTIFICATION-FIXED",
+      "section": "7",
+      "anchor": "datatypes",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#datatypes",
+      "category": "semantic_constraint",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "A recognized datatype IRI identifies the same externally specified datatype at every occurrence; the mechanism establishing that identification is outside this semantics.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-DATATYPE-RECOGNITION-PARAMETER"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "MT11-DATATYPE-MAP-VIEW",
+      "section": "7",
+      "anchor": "dfn-datatype-map",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#dfn-datatype-map",
+      "category": "definition",
+      "source_status": "informative",
+      "assertion_basis": "explicit",
+      "paraphrase": "The datatype map associated with D is the interpretation restricted to D; descriptions parameterized by a datatype map can use this fixed map.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-DATATYPE-IDENTIFICATION-FIXED"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "This definition occurs inside a change note and is therefore informative under section 2."
+    },
+    {
+      "id": "MT11-LITERAL-DATATYPE-IMPORT",
+      "section": "7",
+      "anchor": "datatypes",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#datatypes",
+      "category": "definition",
+      "source_status": "normative",
+      "assertion_basis": "incorporated",
+      "paraphrase": "Literal structure and datatype definitions come from Concepts: ordinary datatype literals pair a lexical string with a datatype IRI; language-tagged strings additionally use a language tag and rdf:langString.",
+      "official_rule_code": null,
+      "dependencies": [],
+      "imports": [
+        "https://www.w3.org/TR/2014/REC-rdf11-concepts-20140225/#section-Graph-Literal",
+        "https://www.w3.org/TR/2014/REC-rdf11-concepts-20140225/#section-Datatypes"
+      ],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "MT11-LEXICAL-TO-VALUE",
+      "section": "7",
+      "anchor": "dfn-lexical-to-value-mapping",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#dfn-lexical-to-value-mapping",
+      "category": "definition",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "A datatype supplies a lexical space and a partial lexical-to-value mapping; L2V selects that mapping and its range is the value space.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-LITERAL-DATATYPE-IMPORT"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "MT11-ILL-TYPED-DEFINITION",
+      "section": "7",
+      "anchor": "dfn-ill-typed",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#dfn-ill-typed",
+      "category": "definition",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "A literal is ill-typed relative to D when its datatype IRI is recognized but its lexical form has no value under the corresponding mapping.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-DATATYPE-RECOGNITION-PARAMETER",
+        "MT11-LEXICAL-TO-VALUE"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "MT11-REQUIRED-AND-OPTIONAL-DATATYPES",
+      "section": "7",
+      "anchor": "datatypes",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#datatypes",
+      "category": "general_requirement",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "RDF processors need not recognize datatype IRIs beyond rdf:langString and xsd:string; recognizing additional IRIs is permitted.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-DATATYPE-RECOGNITION-PARAMETER"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "The minimum is imposed on RDF interpretations in section 8, not on arbitrary simple D-interpretations, where D can be empty."
+    },
+    {
+      "id": "MT11-STANDARD-DATATYPE-MEANINGS",
+      "section": "7",
+      "anchor": "datatypes",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#datatypes",
+      "category": "general_requirement",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "If a datatype IRI listed in Concepts section 5 is recognized, its specified meaning must be used; recognition of rdf:PlainLiteral requires its separately specified meaning.",
+      "official_rule_code": null,
+      "dependencies": [],
+      "imports": [
+        "https://www.w3.org/TR/2014/REC-rdf11-concepts-20140225/#section-Datatypes",
+        "https://www.w3.org/TR/rdf-plain-literal/"
+      ],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "MT11-CUSTOM-DATATYPE-MEANINGS",
+      "section": "7",
+      "anchor": "datatypes",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#datatypes",
+      "category": "general_requirement",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "When another datatype IRI is recognized, its identification must be unambiguous and remain fixed throughout RDF transformations and manipulations.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-DATATYPE-IDENTIFICATION-FIXED"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "MT11-LANGSTRING-EXCEPTION",
+      "section": "7",
+      "anchor": "datatypes",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#datatypes",
+      "category": "definition",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "rdf:langString identifies a datatype whose values are string/language-tag pairs, with specially defined literal interpretation instead of an L2V mapping.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-LITERAL-DATATYPE-IMPORT"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "MT11-UNKNOWN-DATATYPE-HANDLING",
+      "section": "7",
+      "anchor": "datatypes",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#datatypes",
+      "category": "general_requirement",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "A literal with an unrecognized datatype IRI should not be rejected solely for that reason and should be treated as denoting some resource like an unknown name; warnings are permitted.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-DATATYPE-RECOGNITION-PARAMETER"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "Unknown datatype and recognized datatype with invalid lexical form are different cases. Preserve the SHOULD and MAY force of these statements."
+    },
+    {
+      "id": "MT11-D-INTERPRETATION",
+      "section": "7.1",
+      "anchor": "dfn-d-interpretation",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#dfn-d-interpretation",
+      "category": "definition",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "A D-interpretation is a simple interpretation satisfying the additional datatype conditions for its recognized set D.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-SIMPLE-IR",
+        "MT11-SIMPLE-IP",
+        "MT11-SIMPLE-IEXT",
+        "MT11-SIMPLE-IS",
+        "MT11-SIMPLE-IL",
+        "MT11-DATATYPE-RECOGNITION-PARAMETER"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "MT11-LANGSTRING-VALUE",
+      "section": "7.1",
+      "anchor": "D_interpretations",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#D_interpretations",
+      "category": "semantic_constraint",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "If rdf:langString belongs to D, each language-tagged literal denotes its lexical string paired with its language tag converted to lowercase by US-ASCII rules.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-D-INTERPRETATION",
+        "MT11-LANGSTRING-EXCEPTION"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "source_locator": "Semantic conditions for datatyped literals, first row"
+    },
+    {
+      "id": "MT11-RECOGNIZED-DATATYPE-DENOTATION",
+      "section": "7.1",
+      "anchor": "D_interpretations",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#D_interpretations",
+      "category": "semantic_constraint",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "For each other IRI in D, its interpretation is the datatype it identifies.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-D-INTERPRETATION",
+        "MT11-DATATYPE-IDENTIFICATION-FIXED"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "source_locator": "Semantic conditions for datatyped literals, second row, datatype-denotation conjunct"
+    },
+    {
+      "id": "MT11-RECOGNIZED-LITERAL-VALUE",
+      "section": "7.1",
+      "anchor": "D_interpretations",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#D_interpretations",
+      "category": "semantic_constraint",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "For a literal typed with a recognized IRI other than rdf:langString, IL is the corresponding lexical-to-value result, including being undefined when that mapping is undefined.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-RECOGNIZED-DATATYPE-DENOTATION",
+        "MT11-LEXICAL-TO-VALUE",
+        "MT11-SIMPLE-IL"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "source_locator": "Semantic conditions for datatyped literals, second row, literal-value conjunct"
+    },
+    {
+      "id": "MT11-ILL-TYPED-UNSATISFIABILITY",
+      "section": "7.1",
+      "anchor": "D_interpretations",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#D_interpretations",
+      "category": "mathematical_consequence",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "Every graph containing an ill-typed literal is false in every D-interpretation; unrecognized datatype IRIs do not create this source of D-unsatisfiability.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-ILL-TYPED-DEFINITION",
+        "MT11-RECOGNIZED-LITERAL-VALUE",
+        "MT11-UNDEFINED-LITERAL-FALSE"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "MT11-LANGSTRING-STRING-TOTALITY",
+      "section": "7.1",
+      "anchor": "D_interpretations",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#D_interpretations",
+      "category": "mathematical_consequence",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "Syntactically legal rdf:langString literals always denote when recognized. For xsd:string, the source limits ill-typed forms to strings containing code points outside the XML Char production.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-LANGSTRING-VALUE",
+        "MT11-RECOGNIZED-LITERAL-VALUE"
+      ],
+      "imports": [
+        "https://www.w3.org/TR/xml/#NT-Char"
+      ],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "The xsd:string character-domain constraint needs explicit modeling; do not infer that every host-language string is a valid xsd:string value."
+    },
+    {
+      "id": "MT11-D-SATISFACTION-ENTAILMENT",
+      "section": "7.2",
+      "anchor": "D_entailment",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#D_entailment",
+      "category": "definition",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "D-satisfiability means having at least one satisfying D-interpretation; S D-entails G when every D-interpretation satisfying S also satisfies G.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-D-INTERPRETATION",
+        "MT11-SATISFACTION"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "MT11-D-UNSATISFIABILITY-HANDLING",
+      "section": "7.2",
+      "anchor": "D_entailment",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#D_entailment",
+      "category": "general_requirement",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "A graph can lack any satisfying D-interpretation; processors may report this as an error but are not required to do so.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-D-SATISFACTION-ENTAILMENT"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "MT11-D-EXPLOSION",
+      "section": "7.2",
+      "anchor": "D_entailment",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#D_entailment",
+      "category": "mathematical_consequence",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "A D-unsatisfiable graph D-entails every graph by the universal-model definition.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-D-SATISFACTION-ENTAILMENT"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "This is a vacuous implication over no satisfying models, not an inconsistent interpretation admitted into the model class."
+    },
+    {
+      "id": "MT11-EXPLOSION-NOT-EXECUTION",
+      "section": "7.2",
+      "anchor": "D_entailment",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#D_entailment",
+      "category": "general_requirement",
+      "source_status": "informative",
+      "assertion_basis": "explicit",
+      "paraphrase": "The ex-falso consequence is not an instruction or authorization to produce arbitrary application conclusions from inconsistent data.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-D-EXPLOSION"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "source_locator": "Technical note following D-unsatisfiability consequence"
+    },
+    {
+      "id": "MT11-EMPTY-D-SIMPLE",
+      "section": "7.2",
+      "anchor": "D_entailment",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#D_entailment",
+      "category": "mathematical_consequence",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "With D empty, D-entailment is exactly simple entailment.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-D-INTERPRETATION",
+        "MT11-D-SATISFACTION-ENTAILMENT",
+        "MT11-SIMPLE-ENTAILMENT"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "MT11-D-DIRECTION-SOURCE-CLAIM",
+      "section": "7.2",
+      "anchor": "D_entailment",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#D_entailment",
+      "category": "mathematical_consequence",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "The final paragraph states that E-entailment implies D-entailment for D contained in E, and that D-entailment implies simple entailment, while saying more recognized datatypes strengthen entailment.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-D-SATISFACTION-ENTAILMENT"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "Recorded as a source claim awaiting review; do not translate it into a trusted theorem without resolving the direction.",
+      "review_questions": [
+        "RQ-D-ENTAILMENT-DIRECTION"
+      ]
+    },
+    {
+      "id": "MT11-D-MODEL-CLASS-MONOTONICITY",
+      "section": "7.2",
+      "anchor": "D_entailment",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#D_entailment",
+      "category": "mathematical_consequence",
+      "source_status": "normative",
+      "assertion_basis": "derived",
+      "paraphrase": "With compatible fixed datatype meanings and D contained in E, every E-interpretation is a D-interpretation; therefore D-entailment implies E-entailment, and simple entailment implies D-entailment.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-D-INTERPRETATION",
+        "MT11-D-SATISFACTION-ENTAILMENT",
+        "MT11-EMPTY-D-SIMPLE"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "review_questions": [
+        "RQ-D-ENTAILMENT-DIRECTION"
+      ]
+    },
+    {
+      "id": "MT11-DATATYPE-VALUE-SUBSTITUTION",
+      "section": "7.2.1",
+      "anchor": "datatype_entailment_patterns",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#datatype_entailment_patterns",
+      "category": "mathematical_consequence",
+      "source_status": "informative",
+      "assertion_basis": "explicit",
+      "paraphrase": "Literals recognized to have the same value can be substituted in corresponding triples to obtain datatype entailments, including across different recognized datatypes with overlapping value spaces.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-RECOGNIZED-LITERAL-VALUE",
+        "MT11-D-SATISFACTION-ENTAILMENT"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "MT11-DATATYPE-PATTERN-LIMIT",
+      "section": "7.2.1",
+      "anchor": "datatype_entailment_patterns",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#datatype_entailment_patterns",
+      "category": "general_requirement",
+      "source_status": "informative",
+      "assertion_basis": "explicit",
+      "paraphrase": "A fixed generic syntactic pattern set does not capture all datatype entailments; the actual lexical-to-value mappings can supply additional consequences.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-DATATYPE-VALUE-SUBSTITUTION"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "MT11-SIMPLE-D-INCONSISTENCY-CHARACTERIZATION",
+      "section": "7.2.1",
+      "anchor": "datatype_entailment_patterns",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#datatype_entailment_patterns",
+      "category": "mathematical_consequence",
+      "source_status": "informative",
+      "assertion_basis": "explicit",
+      "paraphrase": "Ill-typed literals are the only source of unsatisfiability for simple D-entailment; adding RDF/RDFS vocabulary conditions can introduce other sources.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-ILL-TYPED-UNSATISFIABILITY",
+        "MT11-D-INTERPRETATION"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "MT11-RDF-INTERPRETATION",
+      "section": "8",
+      "anchor": "dfn-rdf-interpretation",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#dfn-rdf-interpretation",
+      "category": "definition",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "An RDF interpretation recognizing D is a D-interpretation in which D includes rdf:langString and xsd:string and the RDF conditions and axiomatic triples hold.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-D-INTERPRETATION",
+        "MT11-REQUIRED-AND-OPTIONAL-DATATYPES"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "MT11-RDF-PROPERTY-TYPING",
+      "section": "8",
+      "anchor": "rdfsemcond1",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#rdfsemcond1",
+      "category": "semantic_constraint",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "x belongs to IP exactly when the pair of x and the denotation of rdf:Property belongs to the extension of rdf:type.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-RDF-INTERPRETATION",
+        "MT11-SIMPLE-IEXT"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "source_locator": "RDF semantic condition with HTML identifier rdfsemcond1"
+    },
+    {
+      "id": "MT11-RDF-DATATYPE-EXTENSION",
+      "section": "8",
+      "anchor": "rdfsemcond3",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#rdfsemcond3",
+      "category": "semantic_constraint",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "For each datatype IRI a in D, rdf:type relates x to I(a) exactly when x belongs to that datatype value space.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-RDF-INTERPRETATION",
+        "MT11-LEXICAL-TO-VALUE",
+        "MT11-LANGSTRING-EXCEPTION"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "source_locator": "RDF semantic condition with HTML identifier rdfsemcond3; the source has no rdfsemcond2 row"
+    },
+    {
+      "id": "MT11-RDF-AXIOM-PROPERTIES",
+      "section": "8",
+      "anchor": "RDF_axiomatic_triples",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#RDF_axiomatic_triples",
+      "category": "semantic_constraint",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "Each listed RDF vocabulary IRI must satisfy its rdf:type rdf:Property axiomatic triple.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-RDF-INTERPRETATION"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "family_members": [
+        "rdf:type",
+        "rdf:subject",
+        "rdf:predicate",
+        "rdf:object",
+        "rdf:first",
+        "rdf:rest",
+        "rdf:value"
+      ]
+    },
+    {
+      "id": "MT11-RDF-AXIOM-NIL",
+      "section": "8",
+      "anchor": "RDF_axiomatic_triples",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#RDF_axiomatic_triples",
+      "category": "semantic_constraint",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "The triple rdf:nil rdf:type rdf:List is true in every RDF interpretation.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-RDF-INTERPRETATION"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "MT11-RDF-AXIOM-CONTAINER-PROPERTIES",
+      "section": "8",
+      "anchor": "RDF_axiomatic_triples",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#RDF_axiomatic_triples",
+      "category": "semantic_constraint",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "For every positive integer n, rdf:_n rdf:type rdf:Property is an RDF axiom.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-RDF-INTERPRETATION"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "This is an infinite indexed family; a finite implementation vocabulary needs a justified restriction."
+    },
+    {
+      "id": "MT11-RDF-VOCABULARY-LIMITS",
+      "section": "8",
+      "anchor": "rdf_d_interpretations",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#rdf_d_interpretations",
+      "category": "general_requirement",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "No other special normative meanings are imposed on the remaining RDF vocabulary; recognizing rdf:XMLLiteral and rdf:HTML is optional.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-RDF-INTERPRETATION"
+      ],
+      "imports": [
+        "https://www.w3.org/TR/2014/REC-rdf11-concepts-20140225/#section-XMLLiteral",
+        "https://www.w3.org/TR/2014/REC-rdf11-concepts-20140225/#section-html"
+      ],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "MT11-RDF-ENTAILMENT",
+      "section": "8.1",
+      "anchor": "rdf_entail",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#rdf_entail",
+      "category": "definition",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "S RDF-entails E recognizing D when every satisfying RDF interpretation of S recognizing D satisfies E; an RDF-unsatisfiable graph has no such model. Unqualified RDF entailment uses D = {rdf:langString, xsd:string}.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-RDF-INTERPRETATION",
+        "MT11-SATISFACTION"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "MT11-RDF-AXIOM-ENTAILMENT",
+      "section": "8.1",
+      "anchor": "rdf_entail",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#rdf_entail",
+      "category": "mathematical_consequence",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "The empty graph RDF-entails every RDF axiom, so the simple-entailment interpolation characterization does not extend unchanged to RDF entailment.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-RDF-ENTAILMENT",
+        "MT11-RDF-AXIOM-PROPERTIES",
+        "MT11-RDF-AXIOM-NIL",
+        "MT11-RDF-AXIOM-CONTAINER-PROPERTIES",
+        "MT11-INTERPOLATION"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "MT11-RULE-rdfD1",
+      "section": "8.1.1",
+      "anchor": "dfn-rdfd1",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#dfn-rdfd1",
+      "category": "mathematical_consequence",
+      "source_status": "informative",
+      "assertion_basis": "explicit",
+      "paraphrase": "From a triple s p literal typed with d in D, infer a graph containing s p b and b rdf:type d for one existential blank node b.",
+      "official_rule_code": "rdfD1",
+      "dependencies": [
+        "MT11-RDF-DATATYPE-EXTENSION",
+        "MT11-EXISTENTIAL-GRAPH-TRUTH"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "Both conclusion triples use the same witness; the pattern remains semantically valid for an ill-typed premise through unsatisfiability."
+    },
+    {
+      "id": "MT11-RULE-rdfD2",
+      "section": "8.1.1",
+      "anchor": "dfn-rdfd2",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#dfn-rdfd2",
+      "category": "mathematical_consequence",
+      "source_status": "informative",
+      "assertion_basis": "explicit",
+      "paraphrase": "From s p o, RDF-entail p rdf:type rdf:Property.",
+      "official_rule_code": "rdfD2",
+      "dependencies": [
+        "MT11-RDF-PROPERTY-TYPING",
+        "MT11-TRIPLE-TRUTH"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "MT11-RDF-DATATYPE-SPECIFIC-CONSEQUENCES",
+      "section": "8.1.1",
+      "anchor": "rdf_entailment_patterns",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#rdf_entailment_patterns",
+      "category": "mathematical_consequence",
+      "source_status": "informative",
+      "assertion_basis": "explicit",
+      "paraphrase": "Datatype value spaces can force entailments beyond rdfD1/rdfD2, and incompatible memberships in disjoint recognized datatype value spaces can make a graph RDF-unsatisfiable.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-RDF-DATATYPE-EXTENSION"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "The boolean example uses exhaustiveness of the two boolean values; it cannot be obtained from lexical-value equality alone."
+    },
+    {
+      "id": "MT11-RDFS-CLASS-STRUCTURE",
+      "section": "9",
+      "anchor": "dfn-class",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#dfn-class",
+      "category": "definition",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "Classes are resources typed rdfs:Class; IC collects them, and ICEXT maps classes to subsets of IR. A class may have an empty extension, and distinct classes can share an extension.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-SIMPLE-IR"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "MT11-RDFS-INTERPRETATION",
+      "section": "9",
+      "anchor": "dfn-rdfs-interpretation",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#dfn-rdfs-interpretation",
+      "category": "definition",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "An RDFS interpretation recognizing D is an RDF interpretation recognizing the same D that satisfies the RDFS semantic conditions and axiomatic triples.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-RDF-INTERPRETATION",
+        "MT11-RDFS-CLASS-STRUCTURE"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "MT11-RDFS-ICEXT",
+      "section": "9",
+      "anchor": "rdfssemcond1",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#rdfssemcond1",
+      "category": "definition",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "ICEXT(y) is the set of x such that rdf:type relates x to y.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-RDFS-INTERPRETATION",
+        "MT11-SIMPLE-IEXT"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "source_locator": "rdfssemcond1, class-extension definition"
+    },
+    {
+      "id": "MT11-RDFS-IC",
+      "section": "9",
+      "anchor": "rdfssemcond1",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#rdfssemcond1",
+      "category": "definition",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "IC is ICEXT of the denotation of rdfs:Class.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-RDFS-ICEXT"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "source_locator": "rdfssemcond1, IC definition"
+    },
+    {
+      "id": "MT11-RDFS-LV",
+      "section": "9",
+      "anchor": "rdfssemcond1",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#rdfssemcond1",
+      "category": "definition",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "LV is ICEXT of the denotation of rdfs:Literal.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-RDFS-ICEXT"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "source_locator": "rdfssemcond1, LV definition"
+    },
+    {
+      "id": "MT11-RDFS-RESOURCE-EXTENSION",
+      "section": "9",
+      "anchor": "rdfssemcond1",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#rdfssemcond1",
+      "category": "semantic_constraint",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "The extension of rdfs:Resource is exactly IR.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-RDFS-ICEXT",
+        "MT11-SIMPLE-IR"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "source_locator": "rdfssemcond1, resource-extension equality"
+    },
+    {
+      "id": "MT11-RDFS-LANGSTRING-EXTENSION",
+      "section": "9",
+      "anchor": "rdfssemcond1",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#rdfssemcond1",
+      "category": "semantic_constraint",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "The extension of rdf:langString is exactly the set of denotations of language-tagged literals.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-RDFS-ICEXT",
+        "MT11-LANGSTRING-VALUE"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "source_locator": "rdfssemcond1, language-tagged literal extension"
+    },
+    {
+      "id": "MT11-RDFS-DATATYPE-EXTENSION",
+      "section": "9",
+      "anchor": "rdfssemcond1",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#rdfssemcond1",
+      "category": "semantic_constraint",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "For every other datatype IRI a in D, ICEXT(I(a)) is its value space.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-RDFS-ICEXT",
+        "MT11-RECOGNIZED-DATATYPE-DENOTATION"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "source_locator": "rdfssemcond1, other recognized datatype extensions"
+    },
+    {
+      "id": "MT11-RDFS-DATATYPE-TYPING",
+      "section": "9",
+      "anchor": "rdfssemcond1",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#rdfssemcond1",
+      "category": "semantic_constraint",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "Every recognized datatype denotation belongs to the extension of rdfs:Datatype.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-RDFS-ICEXT",
+        "MT11-DATATYPE-RECOGNITION-PARAMETER"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "source_locator": "rdfssemcond1, recognized datatype typing"
+    },
+    {
+      "id": "MT11-RDFS-DOMAIN",
+      "section": "9",
+      "anchor": "rdfssemcond2",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#rdfssemcond2",
+      "category": "semantic_constraint",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "If rdfs:domain relates property x to class y and x relates u to v, then u belongs to ICEXT(y).",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-RDFS-INTERPRETATION",
+        "MT11-RDFS-ICEXT"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "MT11-RDFS-RANGE",
+      "section": "9",
+      "anchor": "rdfssemcond3",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#rdfssemcond3",
+      "category": "semantic_constraint",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "If rdfs:range relates property x to class y and x relates u to v, then v belongs to ICEXT(y).",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-RDFS-INTERPRETATION",
+        "MT11-RDFS-ICEXT"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "MT11-RDFS-SUBPROPERTY-TRANSITIVE",
+      "section": "9",
+      "anchor": "rdfssemcond4",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#rdfssemcond4",
+      "category": "semantic_constraint",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "The extension of rdfs:subPropertyOf is transitive on IP.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-RDFS-INTERPRETATION",
+        "MT11-SIMPLE-IP"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "source_locator": "rdfssemcond4, transitivity conjunct"
+    },
+    {
+      "id": "MT11-RDFS-SUBPROPERTY-REFLEXIVE",
+      "section": "9",
+      "anchor": "rdfssemcond4",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#rdfssemcond4",
+      "category": "semantic_constraint",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "Every property in IP is related to itself by rdfs:subPropertyOf.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-RDFS-INTERPRETATION",
+        "MT11-SIMPLE-IP"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "source_locator": "rdfssemcond4, reflexivity conjunct"
+    },
+    {
+      "id": "MT11-RDFS-SUBPROPERTY-ENDPOINTS",
+      "section": "9",
+      "anchor": "rdfssemcond5",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#rdfssemcond5",
+      "category": "semantic_constraint",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "Both endpoints of any rdfs:subPropertyOf pair belong to IP.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-RDFS-INTERPRETATION",
+        "MT11-SIMPLE-IP"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "source_locator": "rdfssemcond5, endpoint-typing conjunct"
+    },
+    {
+      "id": "MT11-RDFS-SUBPROPERTY-INCLUSION",
+      "section": "9",
+      "anchor": "rdfssemcond5",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#rdfssemcond5",
+      "category": "semantic_constraint",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "If rdfs:subPropertyOf relates x to y, IEXT(x) is a subset of IEXT(y).",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-RDFS-SUBPROPERTY-ENDPOINTS",
+        "MT11-SIMPLE-IEXT"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "source_locator": "rdfssemcond5, extension-inclusion conjunct",
+      "formalization_note": "The converse is not required; extension inclusion alone does not force a subproperty assertion."
+    },
+    {
+      "id": "MT11-RDFS-CLASS-RESOURCE",
+      "section": "9",
+      "anchor": "rdfssemcond6",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#rdfssemcond6",
+      "category": "semantic_constraint",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "Every class in IC is related to rdfs:Resource by rdfs:subClassOf.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-RDFS-IC"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "MT11-RDFS-SUBCLASS-TRANSITIVE",
+      "section": "9",
+      "anchor": "rdfssemcond8",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#rdfssemcond8",
+      "category": "semantic_constraint",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "The extension of rdfs:subClassOf is transitive on IC.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-RDFS-IC"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "source_locator": "rdfssemcond8, transitivity conjunct"
+    },
+    {
+      "id": "MT11-RDFS-SUBCLASS-REFLEXIVE",
+      "section": "9",
+      "anchor": "rdfssemcond8",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#rdfssemcond8",
+      "category": "semantic_constraint",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "Every class in IC is related to itself by rdfs:subClassOf.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-RDFS-IC"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "source_locator": "rdfssemcond8, reflexivity conjunct"
+    },
+    {
+      "id": "MT11-RDFS-SUBCLASS-ENDPOINTS",
+      "section": "9",
+      "anchor": "rdfssemcond7",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#rdfssemcond7",
+      "category": "semantic_constraint",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "Both endpoints of any rdfs:subClassOf pair belong to IC.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-RDFS-IC"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "source_locator": "rdfssemcond7, endpoint-typing conjunct; source order places condition 8 before condition 7"
+    },
+    {
+      "id": "MT11-RDFS-SUBCLASS-INCLUSION",
+      "section": "9",
+      "anchor": "rdfssemcond7",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#rdfssemcond7",
+      "category": "semantic_constraint",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "If rdfs:subClassOf relates x to y, ICEXT(x) is a subset of ICEXT(y).",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-RDFS-SUBCLASS-ENDPOINTS",
+        "MT11-RDFS-ICEXT"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "source_locator": "rdfssemcond7, extension-inclusion conjunct",
+      "formalization_note": "The converse is not required; equal or included class extensions do not by themselves force subclass assertions."
+    },
+    {
+      "id": "MT11-RDFS-CONTAINER-SUBPROPERTY",
+      "section": "9",
+      "anchor": "rdfssemcond9",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#rdfssemcond9",
+      "category": "semantic_constraint",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "Every member of the rdfs:ContainerMembershipProperty class is a subproperty of rdfs:member.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-RDFS-ICEXT",
+        "MT11-RDFS-SUBPROPERTY-INCLUSION"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "MT11-RDFS-DATATYPE-SUBCLASS",
+      "section": "9",
+      "anchor": "rdfssemcond10",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#rdfssemcond10",
+      "category": "semantic_constraint",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "Every member of the rdfs:Datatype class is a subclass of rdfs:Literal.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-RDFS-ICEXT",
+        "MT11-RDFS-SUBCLASS-INCLUSION"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "MT11-RDFS-AXIOM-DOMAINS",
+      "section": "9",
+      "anchor": "RDFS_axiomatic_triples",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#RDFS_axiomatic_triples",
+      "category": "semantic_constraint",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "Every property/class pair in this family is an axiomatic rdfs:domain triple.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-RDFS-INTERPRETATION"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "family_members": [
+        [
+          "rdf:type",
+          "rdfs:Resource"
+        ],
+        [
+          "rdfs:domain",
+          "rdf:Property"
+        ],
+        [
+          "rdfs:range",
+          "rdf:Property"
+        ],
+        [
+          "rdfs:subPropertyOf",
+          "rdf:Property"
+        ],
+        [
+          "rdfs:subClassOf",
+          "rdfs:Class"
+        ],
+        [
+          "rdf:subject",
+          "rdf:Statement"
+        ],
+        [
+          "rdf:predicate",
+          "rdf:Statement"
+        ],
+        [
+          "rdf:object",
+          "rdf:Statement"
+        ],
+        [
+          "rdfs:member",
+          "rdfs:Resource"
+        ],
+        [
+          "rdf:first",
+          "rdf:List"
+        ],
+        [
+          "rdf:rest",
+          "rdf:List"
+        ],
+        [
+          "rdfs:seeAlso",
+          "rdfs:Resource"
+        ],
+        [
+          "rdfs:isDefinedBy",
+          "rdfs:Resource"
+        ],
+        [
+          "rdfs:comment",
+          "rdfs:Resource"
+        ],
+        [
+          "rdfs:label",
+          "rdfs:Resource"
+        ],
+        [
+          "rdf:value",
+          "rdfs:Resource"
+        ]
+      ]
+    },
+    {
+      "id": "MT11-RDFS-AXIOM-RANGES",
+      "section": "9",
+      "anchor": "RDFS_axiomatic_triples",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#RDFS_axiomatic_triples",
+      "category": "semantic_constraint",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "Every property/class pair in this family is an axiomatic rdfs:range triple.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-RDFS-INTERPRETATION"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "family_members": [
+        [
+          "rdf:type",
+          "rdfs:Class"
+        ],
+        [
+          "rdfs:domain",
+          "rdfs:Class"
+        ],
+        [
+          "rdfs:range",
+          "rdfs:Class"
+        ],
+        [
+          "rdfs:subPropertyOf",
+          "rdf:Property"
+        ],
+        [
+          "rdfs:subClassOf",
+          "rdfs:Class"
+        ],
+        [
+          "rdf:subject",
+          "rdfs:Resource"
+        ],
+        [
+          "rdf:predicate",
+          "rdfs:Resource"
+        ],
+        [
+          "rdf:object",
+          "rdfs:Resource"
+        ],
+        [
+          "rdfs:member",
+          "rdfs:Resource"
+        ],
+        [
+          "rdf:first",
+          "rdfs:Resource"
+        ],
+        [
+          "rdf:rest",
+          "rdf:List"
+        ],
+        [
+          "rdfs:seeAlso",
+          "rdfs:Resource"
+        ],
+        [
+          "rdfs:isDefinedBy",
+          "rdfs:Resource"
+        ],
+        [
+          "rdfs:comment",
+          "rdfs:Literal"
+        ],
+        [
+          "rdfs:label",
+          "rdfs:Literal"
+        ],
+        [
+          "rdf:value",
+          "rdfs:Resource"
+        ]
+      ]
+    },
+    {
+      "id": "MT11-RDFS-AXIOM-HIERARCHIES",
+      "section": "9",
+      "anchor": "RDFS_axiomatic_triples",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#RDFS_axiomatic_triples",
+      "category": "semantic_constraint",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "The listed vocabulary hierarchy triples are true in every RDFS interpretation.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-RDFS-INTERPRETATION"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "family_members": [
+        [
+          "rdf:Alt",
+          "rdfs:subClassOf",
+          "rdfs:Container"
+        ],
+        [
+          "rdf:Bag",
+          "rdfs:subClassOf",
+          "rdfs:Container"
+        ],
+        [
+          "rdf:Seq",
+          "rdfs:subClassOf",
+          "rdfs:Container"
+        ],
+        [
+          "rdfs:ContainerMembershipProperty",
+          "rdfs:subClassOf",
+          "rdf:Property"
+        ],
+        [
+          "rdfs:isDefinedBy",
+          "rdfs:subPropertyOf",
+          "rdfs:seeAlso"
+        ],
+        [
+          "rdfs:Datatype",
+          "rdfs:subClassOf",
+          "rdfs:Class"
+        ]
+      ]
+    },
+    {
+      "id": "MT11-RDFS-AXIOM-CONTAINER-FAMILY",
+      "section": "9",
+      "anchor": "RDFS_axiomatic_triples",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#RDFS_axiomatic_triples",
+      "category": "semantic_constraint",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "For every positive integer n, rdf:_n has type rdfs:ContainerMembershipProperty, domain rdfs:Resource, and range rdfs:Resource.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-RDFS-INTERPRETATION"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "One uniformly indexed family containing the three corresponding axiom schemas; no finite maximum n is imposed."
+    },
+    {
+      "id": "MT11-RDFS-PROPERTY-CLASS-EQUALITY",
+      "section": "9",
+      "anchor": "rdfs_interpretations",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#rdfs_interpretations",
+      "category": "mathematical_consequence",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "IP equals ICEXT(I(rdf:Property)); recognized datatypes act as classes with their value-space extensions, and recognized literals either lack denotation or denote members of those classes.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-RDF-PROPERTY-TYPING",
+        "MT11-RDFS-ICEXT",
+        "MT11-RDFS-DATATYPE-EXTENSION",
+        "MT11-RDFS-DATATYPE-TYPING"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "MT11-RDFS-ADDITIONAL-VALID-TYPES",
+      "section": "9",
+      "anchor": "rdfs_interpretations",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#rdfs_interpretations",
+      "category": "mathematical_consequence",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "The source lists these additional rdfs:Class typings as valid in all RDFS interpretations; it explicitly does not claim the list is complete.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-RDFS-INTERPRETATION"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "source_locator": "Some rdfs-valid triples, class-typing family",
+      "review_questions": [
+        "RQ-OPTIONAL-DATATYPE-CLASS-ASSERTIONS"
+      ],
+      "family_members": [
+        "rdfs:Resource",
+        "rdfs:Class",
+        "rdfs:Literal",
+        "rdf:XMLLiteral",
+        "rdf:HTML",
+        "rdfs:Datatype",
+        "rdf:Seq",
+        "rdf:Bag",
+        "rdf:Alt",
+        "rdfs:Container",
+        "rdf:List",
+        "rdfs:ContainerMembershipProperty",
+        "rdf:Property",
+        "rdf:Statement"
+      ]
+    },
+    {
+      "id": "MT11-RDFS-ADDITIONAL-VALID-PROPERTIES",
+      "section": "9",
+      "anchor": "rdfs_interpretations",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#rdfs_interpretations",
+      "category": "mathematical_consequence",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "The source lists these additional rdf:Property typings as valid in all RDFS interpretations.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-RDFS-INTERPRETATION"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "source_locator": "Some rdfs-valid triples, property-typing family",
+      "family_members": [
+        "rdfs:domain",
+        "rdfs:range",
+        "rdfs:subPropertyOf",
+        "rdfs:subClassOf",
+        "rdfs:member",
+        "rdfs:seeAlso",
+        "rdfs:isDefinedBy",
+        "rdfs:comment",
+        "rdfs:label"
+      ]
+    },
+    {
+      "id": "MT11-RDFS-NONSEPARATION",
+      "section": "9",
+      "anchor": "rdfs_interpretations",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#rdfs_interpretations",
+      "category": "general_requirement",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "Resources, classes and properties are not disjoint categories; class self-membership and property self-application are allowed, while properties of a class do not automatically transfer to its members or conversely.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-RDFS-INTERPRETATION",
+        "MT11-RDFS-CLASS-STRUCTURE"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "MT11-RDFS-VOCABULARY-BOUNDARY",
+      "section": "9",
+      "anchor": "rdfs_interpretations",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#rdfs_interpretations",
+      "category": "general_requirement",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "The meanings of rdfs:comment, rdfs:seeAlso, rdfs:isDefinedBy and rdfs:label are constrained only through their specified domain/range/subproperty uses. The axiom/condition set intentionally contains redundancy.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-RDFS-AXIOM-DOMAINS",
+        "MT11-RDFS-AXIOM-RANGES",
+        "MT11-RDFS-AXIOM-HIERARCHIES"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "The inventory does not require redundant source assertions to become independent implementation mechanisms."
+    },
+    {
+      "id": "MT11-LITERAL-VALUES-NOT-SYNTAX",
+      "section": "9.1",
+      "anchor": "rdfs_literal_note",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#rdfs_literal_note",
+      "category": "definition",
+      "source_status": "informative",
+      "assertion_basis": "explicit",
+      "paraphrase": "rdfs:Literal classifies literal values rather than literal syntax; an IRI or blank node may denote such a value, so IRI subjects typed rdfs:Literal can be consistent.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-RDFS-LV",
+        "MT11-RDFS-DATATYPE-SUBCLASS"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "MT11-RDFS-ENTAILMENT",
+      "section": "9.2",
+      "anchor": "rdfs_entailment",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#rdfs_entailment",
+      "category": "definition",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "S RDFS-entails E recognizing D when every RDFS interpretation recognizing D that satisfies S also satisfies E.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-RDFS-INTERPRETATION",
+        "MT11-SATISFACTION"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "MT11-RDFS-DIRECTION-SOURCE-CLAIM",
+      "section": "9.2",
+      "anchor": "rdfs_entailment",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#rdfs_entailment",
+      "category": "mathematical_consequence",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "The source states that RDFS entailment implies RDF entailment because RDFS interpretations are RDF interpretations, while also saying RDFS entailment is stronger.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-RDFS-ENTAILMENT",
+        "MT11-RDF-ENTAILMENT"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "review_questions": [
+        "RQ-RDFS-ENTAILMENT-DIRECTION"
+      ]
+    },
+    {
+      "id": "MT11-RDFS-MODEL-CLASS-INCLUSION",
+      "section": "9.2",
+      "anchor": "rdfs_entailment",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#rdfs_entailment",
+      "category": "mathematical_consequence",
+      "source_status": "normative",
+      "assertion_basis": "derived",
+      "paraphrase": "For the same D, RDF entailment implies RDFS entailment by restricting the universal quantifier to the RDFS interpretations; the source also identifies IRI rdf:type rdfs:Resource triples as RDFS-valid.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-RDFS-INTERPRETATION",
+        "MT11-RDFS-ENTAILMENT",
+        "MT11-RDF-ENTAILMENT",
+        "MT11-RDFS-RESOURCE-EXTENSION"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "The general model-class direction is author-derived; the resource-typing family is explicitly stated as an example in the source.",
+      "review_questions": [
+        "RQ-RDFS-ENTAILMENT-DIRECTION"
+      ]
+    },
+    {
+      "id": "MT11-RULE-rdfs1",
+      "section": "9.2.1",
+      "anchor": "dfn-rdfs1",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#dfn-rdfs1",
+      "category": "mathematical_consequence",
+      "source_status": "informative",
+      "assertion_basis": "explicit",
+      "paraphrase": "For every recognized datatype IRI d in D, entail d rdf:type rdfs:Datatype.",
+      "official_rule_code": "rdfs1",
+      "dependencies": [
+        "MT11-RDFS-DATATYPE-TYPING"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "Pattern variables denote RDF terms; repeated variables agree across all premises and conclusions. Generalized syntax is needed when instantiation places a literal in subject position or a blank node in predicate position. The letter D in class-pattern variables is not the recognized-datatype-set parameter."
+    },
+    {
+      "id": "MT11-RULE-rdfs2",
+      "section": "9.2.1",
+      "anchor": "dfn-rdfs2",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#dfn-rdfs2",
+      "category": "mathematical_consequence",
+      "source_status": "informative",
+      "assertion_basis": "explicit",
+      "paraphrase": "From p rdfs:domain C and s p o, entail s rdf:type C.",
+      "official_rule_code": "rdfs2",
+      "dependencies": [
+        "MT11-RDFS-DOMAIN"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "Pattern variables denote RDF terms; repeated variables agree across all premises and conclusions. Generalized syntax is needed when instantiation places a literal in subject position or a blank node in predicate position. The letter D in class-pattern variables is not the recognized-datatype-set parameter."
+    },
+    {
+      "id": "MT11-RULE-rdfs3",
+      "section": "9.2.1",
+      "anchor": "dfn-rdfs3",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#dfn-rdfs3",
+      "category": "mathematical_consequence",
+      "source_status": "informative",
+      "assertion_basis": "explicit",
+      "paraphrase": "From p rdfs:range C and s p o, entail o rdf:type C.",
+      "official_rule_code": "rdfs3",
+      "dependencies": [
+        "MT11-RDFS-RANGE"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "Pattern variables denote RDF terms; repeated variables agree across all premises and conclusions. Generalized syntax is needed when instantiation places a literal in subject position or a blank node in predicate position. The letter D in class-pattern variables is not the recognized-datatype-set parameter."
+    },
+    {
+      "id": "MT11-RULE-rdfs4a",
+      "section": "9.2.1",
+      "anchor": "dfn-rdfs4a",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#dfn-rdfs4a",
+      "category": "mathematical_consequence",
+      "source_status": "informative",
+      "assertion_basis": "explicit",
+      "paraphrase": "From s p o, entail s rdf:type rdfs:Resource.",
+      "official_rule_code": "rdfs4a",
+      "dependencies": [
+        "MT11-RDFS-RESOURCE-EXTENSION"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "Pattern variables denote RDF terms; repeated variables agree across all premises and conclusions. Generalized syntax is needed when instantiation places a literal in subject position or a blank node in predicate position. The letter D in class-pattern variables is not the recognized-datatype-set parameter."
+    },
+    {
+      "id": "MT11-RULE-rdfs4b",
+      "section": "9.2.1",
+      "anchor": "dfn-rdfs4b",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#dfn-rdfs4b",
+      "category": "mathematical_consequence",
+      "source_status": "informative",
+      "assertion_basis": "explicit",
+      "paraphrase": "From s p o, entail o rdf:type rdfs:Resource.",
+      "official_rule_code": "rdfs4b",
+      "dependencies": [
+        "MT11-RDFS-RESOURCE-EXTENSION"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "Pattern variables denote RDF terms; repeated variables agree across all premises and conclusions. Generalized syntax is needed when instantiation places a literal in subject position or a blank node in predicate position. The letter D in class-pattern variables is not the recognized-datatype-set parameter."
+    },
+    {
+      "id": "MT11-RULE-rdfs5",
+      "section": "9.2.1",
+      "anchor": "dfn-rdfs5",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#dfn-rdfs5",
+      "category": "mathematical_consequence",
+      "source_status": "informative",
+      "assertion_basis": "explicit",
+      "paraphrase": "From p rdfs:subPropertyOf q and q rdfs:subPropertyOf r, entail p rdfs:subPropertyOf r.",
+      "official_rule_code": "rdfs5",
+      "dependencies": [
+        "MT11-RDFS-SUBPROPERTY-TRANSITIVE"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "Pattern variables denote RDF terms; repeated variables agree across all premises and conclusions. Generalized syntax is needed when instantiation places a literal in subject position or a blank node in predicate position. The letter D in class-pattern variables is not the recognized-datatype-set parameter."
+    },
+    {
+      "id": "MT11-RULE-rdfs6",
+      "section": "9.2.1",
+      "anchor": "dfn-rdfs6",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#dfn-rdfs6",
+      "category": "mathematical_consequence",
+      "source_status": "informative",
+      "assertion_basis": "explicit",
+      "paraphrase": "From p rdf:type rdf:Property, entail p rdfs:subPropertyOf p.",
+      "official_rule_code": "rdfs6",
+      "dependencies": [
+        "MT11-RDFS-SUBPROPERTY-REFLEXIVE"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "Pattern variables denote RDF terms; repeated variables agree across all premises and conclusions. Generalized syntax is needed when instantiation places a literal in subject position or a blank node in predicate position. The letter D in class-pattern variables is not the recognized-datatype-set parameter."
+    },
+    {
+      "id": "MT11-RULE-rdfs7",
+      "section": "9.2.1",
+      "anchor": "dfn-rdfs7",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#dfn-rdfs7",
+      "category": "mathematical_consequence",
+      "source_status": "informative",
+      "assertion_basis": "explicit",
+      "paraphrase": "From p rdfs:subPropertyOf q and s p o, entail s q o.",
+      "official_rule_code": "rdfs7",
+      "dependencies": [
+        "MT11-RDFS-SUBPROPERTY-INCLUSION"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "Pattern variables denote RDF terms; repeated variables agree across all premises and conclusions. Generalized syntax is needed when instantiation places a literal in subject position or a blank node in predicate position. The letter D in class-pattern variables is not the recognized-datatype-set parameter."
+    },
+    {
+      "id": "MT11-RULE-rdfs8",
+      "section": "9.2.1",
+      "anchor": "dfn-rdfs8",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#dfn-rdfs8",
+      "category": "mathematical_consequence",
+      "source_status": "informative",
+      "assertion_basis": "explicit",
+      "paraphrase": "From C rdf:type rdfs:Class, entail C rdfs:subClassOf rdfs:Resource.",
+      "official_rule_code": "rdfs8",
+      "dependencies": [
+        "MT11-RDFS-CLASS-RESOURCE"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "Pattern variables denote RDF terms; repeated variables agree across all premises and conclusions. Generalized syntax is needed when instantiation places a literal in subject position or a blank node in predicate position. The letter D in class-pattern variables is not the recognized-datatype-set parameter."
+    },
+    {
+      "id": "MT11-RULE-rdfs9",
+      "section": "9.2.1",
+      "anchor": "dfn-rdfs9",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#dfn-rdfs9",
+      "category": "mathematical_consequence",
+      "source_status": "informative",
+      "assertion_basis": "explicit",
+      "paraphrase": "From C rdfs:subClassOf D and x rdf:type C, entail x rdf:type D.",
+      "official_rule_code": "rdfs9",
+      "dependencies": [
+        "MT11-RDFS-SUBCLASS-INCLUSION"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "Pattern variables denote RDF terms; repeated variables agree across all premises and conclusions. Generalized syntax is needed when instantiation places a literal in subject position or a blank node in predicate position. The letter D in class-pattern variables is not the recognized-datatype-set parameter."
+    },
+    {
+      "id": "MT11-RULE-rdfs10",
+      "section": "9.2.1",
+      "anchor": "dfn-rdfs10",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#dfn-rdfs10",
+      "category": "mathematical_consequence",
+      "source_status": "informative",
+      "assertion_basis": "explicit",
+      "paraphrase": "From C rdf:type rdfs:Class, entail C rdfs:subClassOf C.",
+      "official_rule_code": "rdfs10",
+      "dependencies": [
+        "MT11-RDFS-SUBCLASS-REFLEXIVE"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "Pattern variables denote RDF terms; repeated variables agree across all premises and conclusions. Generalized syntax is needed when instantiation places a literal in subject position or a blank node in predicate position. The letter D in class-pattern variables is not the recognized-datatype-set parameter."
+    },
+    {
+      "id": "MT11-RULE-rdfs11",
+      "section": "9.2.1",
+      "anchor": "dfn-rdfs11",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#dfn-rdfs11",
+      "category": "mathematical_consequence",
+      "source_status": "informative",
+      "assertion_basis": "explicit",
+      "paraphrase": "From C rdfs:subClassOf D and D rdfs:subClassOf E, entail C rdfs:subClassOf E.",
+      "official_rule_code": "rdfs11",
+      "dependencies": [
+        "MT11-RDFS-SUBCLASS-TRANSITIVE"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "Pattern variables denote RDF terms; repeated variables agree across all premises and conclusions. Generalized syntax is needed when instantiation places a literal in subject position or a blank node in predicate position. The letter D in class-pattern variables is not the recognized-datatype-set parameter."
+    },
+    {
+      "id": "MT11-RULE-rdfs12",
+      "section": "9.2.1",
+      "anchor": "dfn-rdfs12",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#dfn-rdfs12",
+      "category": "mathematical_consequence",
+      "source_status": "informative",
+      "assertion_basis": "explicit",
+      "paraphrase": "From p rdf:type rdfs:ContainerMembershipProperty, entail p rdfs:subPropertyOf rdfs:member.",
+      "official_rule_code": "rdfs12",
+      "dependencies": [
+        "MT11-RDFS-CONTAINER-SUBPROPERTY"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "Pattern variables denote RDF terms; repeated variables agree across all premises and conclusions. Generalized syntax is needed when instantiation places a literal in subject position or a blank node in predicate position. The letter D in class-pattern variables is not the recognized-datatype-set parameter."
+    },
+    {
+      "id": "MT11-RULE-rdfs13",
+      "section": "9.2.1",
+      "anchor": "dfn-rdfs13",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#dfn-rdfs13",
+      "category": "mathematical_consequence",
+      "source_status": "informative",
+      "assertion_basis": "explicit",
+      "paraphrase": "From C rdf:type rdfs:Datatype, entail C rdfs:subClassOf rdfs:Literal.",
+      "official_rule_code": "rdfs13",
+      "dependencies": [
+        "MT11-RDFS-DATATYPE-SUBCLASS"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "Pattern variables denote RDF terms; repeated variables agree across all premises and conclusions. Generalized syntax is needed when instantiation places a literal in subject position or a blank node in predicate position. The letter D in class-pattern variables is not the recognized-datatype-set parameter."
+    },
+    {
+      "id": "MT11-RDFS-DATATYPE-INCONSISTENCY",
+      "section": "9.2.1",
+      "anchor": "rdfs_patterns",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#rdfs_patterns",
+      "category": "mathematical_consequence",
+      "source_status": "informative",
+      "assertion_basis": "explicit",
+      "paraphrase": "RDFS domain or range consequences can force an individual into disjoint recognized datatype classes and thereby make a graph unsatisfiable.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-RDFS-DOMAIN",
+        "MT11-RDFS-RANGE",
+        "MT11-RDF-DATATYPE-EXTENSION"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "MT11-DATASET-STRUCTURE",
+      "section": "10",
+      "anchor": "rdf_datasets",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#rdf_datasets",
+      "category": "definition",
+      "source_status": "normative",
+      "assertion_basis": "incorporated",
+      "paraphrase": "A dataset has one default graph and zero or more named graphs under the Concepts definition; component graphs may share blank nodes.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-SYNTAX-IMPORT"
+      ],
+      "imports": [
+        "https://www.w3.org/TR/2014/REC-rdf11-concepts-20140225/#section-dataset"
+      ],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "MT11-DATASET-NAME-DENOTATION",
+      "section": "10",
+      "anchor": "rdf_datasets",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#rdf_datasets",
+      "category": "general_requirement",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "A graph name used as an RDF term need not denote its associated graph, and engines should not presume that relationship without an external reason.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-DATASET-STRUCTURE",
+        "MT11-DENOTATION-IDENTIFICATION"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "MT11-DATASET-DEFAULT-CONTENT",
+      "section": "10",
+      "anchor": "rdf_datasets",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#rdf_datasets",
+      "category": "general_requirement",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "A dataset may be used to express RDF content; when it is, it should carry at least the semantic content of its default graph.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-DATASET-STRUCTURE"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "MAY and SHOULD do not define a complete, uniquely mandated dataset entailment relation."
+    },
+    {
+      "id": "MT11-DATASET-EQUIVALENT-REPLACEMENT",
+      "section": "10",
+      "anchor": "rdf_datasets",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#rdf_datasets",
+      "category": "mathematical_consequence",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "Replacing the default graph by a logically equivalent graph need not preserve dataset structure or cross-graph blank-node sharing.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-DATASET-STRUCTURE",
+        "MT11-LOGICAL-EQUIVALENCE",
+        "MT11-SHARED-BLANK-IDENTITY"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "The paragraph starts with an ordinary prose caution, not a styled note; structural isomorphism and logical equivalence remain distinct."
+    },
+    {
+      "id": "MT11-DATASET-EXTENSIONS",
+      "section": "10",
+      "anchor": "rdf_datasets",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#rdf_datasets",
+      "category": "general_requirement",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "Semantic extensions may impose further dataset meaning and restrictions; comparing corresponding named graphs is an example rather than the required core semantics.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-DATASET-STRUCTURE",
+        "MT11-EXTENSION-REGIME"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "MT11-ORDINARY-RULE-CHECK-PROCEDURE",
+      "section": "A",
+      "anchor": "entailment_rules",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#entailment_rules",
+      "category": "definition",
+      "source_status": "informative",
+      "assertion_basis": "explicit",
+      "paraphrase": "The ordinary rule-based check augments the premise with relevant axioms, saturates it with inference patterns, then tests whether some instance of the conclusion is included.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-RDF-AXIOM-PROPERTIES",
+        "MT11-RDF-AXIOM-CONTAINER-PROPERTIES",
+        "MT11-INTERPOLATION"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "The appendix is informative; this procedure is not a mandatory implementation architecture.",
+      "procedure_steps": [
+        {
+          "source_step": 1,
+          "operation": "Add all RDF or RDF+RDFS axiomatic triples that do not contain container membership IRIs."
+        },
+        {
+          "source_step": 2,
+          "operation": "Add axioms containing each container membership IRI that occurs in the conclusion."
+        },
+        {
+          "source_step": 3,
+          "operation": "Apply the appropriate RDF/RDFS inference patterns until no new triples are produced."
+        },
+        {
+          "source_step": 4,
+          "operation": "Check whether the enlarged graph contains an instance of the conclusion."
+        }
+      ]
+    },
+    {
+      "id": "MT11-ORDINARY-RULE-SOUND-INCOMPLETE",
+      "section": "A",
+      "anchor": "entailment_rules",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#entailment_rules",
+      "category": "mathematical_consequence",
+      "source_status": "informative",
+      "assertion_basis": "explicit",
+      "paraphrase": "A positive result from the ordinary-syntax procedure establishes entailment, but some valid RDF/RDFS entailments are missed.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-ORDINARY-RULE-CHECK-PROCEDURE"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "The examples expose shared datatype witnesses and intermediate blank-node predicates; implementing every displayed rule on legal RDF triples alone does not establish completeness."
+    },
+    {
+      "id": "MT11-RULE-GrdfD1",
+      "section": "A",
+      "anchor": "dfn-grdfd1",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#dfn-grdfd1",
+      "category": "mathematical_consequence",
+      "source_status": "informative",
+      "assertion_basis": "explicit",
+      "paraphrase": "For a premise triple containing a literal typed by d in D, infer the generalized triple literal rdf:type d.",
+      "official_rule_code": "GrdfD1",
+      "dependencies": [
+        "MT11-RDF-DATATYPE-EXTENSION",
+        "MT11-GENERALIZED-SYNTAX"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "MT11-GENERALIZED-CLOSURE",
+      "section": "A",
+      "anchor": "dfn-generalized-rdf-rdfs-closure",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#dfn-generalized-rdf-rdfs-closure",
+      "category": "definition",
+      "source_status": "informative",
+      "assertion_basis": "explicit",
+      "paraphrase": "The generalized RDF/RDFS closure of S towards E adds the prescribed finite-vocabulary axioms and saturates generalized triples with GrdfD1, rdfD2 and, for RDFS, rdfs1–rdfs13 at the base recognized datatype set.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-GENERALIZED-SYNTAX",
+        "MT11-RULE-GrdfD1",
+        "MT11-RULE-rdfD2",
+        "MT11-RDF-INTERPRETATION"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "procedure_steps": [
+        {
+          "source_step": 1,
+          "operation": "Add RDF or RDF+RDFS axioms not containing a container membership IRI."
+        },
+        {
+          "source_step": 2,
+          "operation": "For every container membership IRI in E, add the axioms containing it."
+        },
+        {
+          "source_step": 3,
+          "operation": "If step 2 added no triples, add the axioms containing rdf:_1."
+        },
+        {
+          "source_step": 4,
+          "operation": "Saturate under GrdfD1 and rdfD2, plus rdfs1–rdfs13 for RDFS, with D = {rdf:langString, xsd:string}."
+        }
+      ]
+    },
+    {
+      "id": "MT11-GENERALIZED-CLOSURE-COMPLETENESS",
+      "section": "A",
+      "anchor": "entailment_rules",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#entailment_rules",
+      "category": "mathematical_consequence",
+      "source_status": "informative",
+      "assertion_basis": "explicit",
+      "paraphrase": "If S is RDF-consistent, respectively RDFS-consistent, then S entails E in that regime exactly when the corresponding generalized closure towards E simply entails E.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-GENERALIZED-CLOSURE",
+        "MT11-SIMPLE-ENTAILMENT",
+        "MT11-RDF-ENTAILMENT",
+        "MT11-RDFS-ENTAILMENT"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "Retain the consistency premise, regime-specific closure and base datatype set. This theorem does not automatically cover arbitrary additional datatypes or inconsistent inputs."
+    },
+    {
+      "id": "MT11-FINITE-CLOSURE-COMPLEXITY",
+      "section": "A",
+      "anchor": "entailment_rules",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#entailment_rules",
+      "category": "mathematical_consequence",
+      "source_status": "informative",
+      "assertion_basis": "explicit",
+      "paraphrase": "For finite effective input, the generalized closure is finite and its generation is decidable with polynomial complexity.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-GENERALIZED-CLOSURE"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "The source states finite closures without restating a finite-input premise; an infinite S cannot have a finite closure containing it. This is a scope question, not a confirmed erratum.",
+      "review_questions": [
+        "RQ-FINITE-CLOSURE-DOMAIN"
+      ]
+    },
+    {
+      "id": "MT11-SIMPLE-ENTAILMENT-COMPLEXITY",
+      "section": "A",
+      "anchor": "entailment_rules",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#entailment_rules",
+      "category": "mathematical_consequence",
+      "source_status": "informative",
+      "assertion_basis": "explicit",
+      "paraphrase": "Simple entailment is NP-complete in general for finite inputs, while a conclusion without blank nodes admits a low-order polynomial check.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-INTERPOLATION"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "Keep the complexity of closure generation separate from the subsequent existential substitution search."
+    },
+    {
+      "id": "MT11-RULE-STRATEGY-LIMITS",
+      "section": "A",
+      "anchor": "entailment_rules",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#entailment_rules",
+      "category": "general_requirement",
+      "source_status": "informative",
+      "assertion_basis": "explicit",
+      "paraphrase": "A practical subset of the rules can miss consequences; replacing GrdfD1 with legal-syntax rdfD1 also loses completeness. Larger recognized datatype sets require datatype-specific reasoning.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-GENERALIZED-CLOSURE-COMPLETENESS",
+        "MT11-ORDINARY-RULE-SOUND-INCOMPLETE",
+        "MT11-DATATYPE-PATTERN-LIMIT"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "MT11-PREINTERPRETATION",
+      "section": "B",
+      "anchor": "dfn-pre-interpretation",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#dfn-pre-interpretation",
+      "category": "definition",
+      "source_status": "informative",
+      "assertion_basis": "explicit",
+      "paraphrase": "A pre-interpretation uses a restricted vocabulary V and maps only names in that vocabulary, enabling smaller semantic structures for the graphs being compared.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-INTERPRETATION-TERMINOLOGY",
+        "MT11-NAMES-VOCABULARIES"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "MT11-FINITE-SIMPLE-PREINTERPRETATION",
+      "section": "B",
+      "anchor": "finite_interpretations",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#finite_interpretations",
+      "category": "mathematical_consequence",
+      "source_status": "informative",
+      "assertion_basis": "explicit",
+      "paraphrase": "The sketch restricts to the names in G union E and gives a resource bound N+B+1, where N counts names and B counts blank nodes, with extensions preserving relevant triple truth values.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-PREINTERPRETATION",
+        "MT11-UNION"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "This is an informative sketch without proof, for finite compared vocabularies; the exact treatment of unmentioned terms remains a formalization obligation."
+    },
+    {
+      "id": "MT11-FINITE-DATATYPE-PREINTERPRETATION",
+      "section": "B",
+      "anchor": "finite_interpretations",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#finite_interpretations",
+      "category": "mathematical_consequence",
+      "source_status": "informative",
+      "assertion_basis": "explicit",
+      "paraphrase": "For datatype entailment, the sketch weakens value requirements to literals occurring in the compared graphs and gives the bound (N+B)×(D+1), with D here counting recognized datatypes.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-PREINTERPRETATION",
+        "MT11-D-INTERPRETATION"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "The cardinality D in the bound is not a multiplication of the datatype-IRI set; finite datatype-set assumptions must be explicit."
+    },
+    {
+      "id": "MT11-FINITE-RDF-RDFS-PRESERVATION",
+      "section": "B",
+      "anchor": "finite_interpretations",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#finite_interpretations",
+      "category": "mathematical_consequence",
+      "source_status": "informative",
+      "assertion_basis": "explicit",
+      "paraphrase": "For RDF/RDFS, the sketch restricts container vocabulary and relevant literal values, and claims suitable finite pre-interpretations extend to full interpretations without changing truth or entailment for the compared graphs.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-PREINTERPRETATION",
+        "MT11-RDF-INTERPRETATION",
+        "MT11-RDFS-INTERPRETATION"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "Do not replace global datatype value-space conditions by finite observed values without the stated extension/preservation argument."
+    },
+    {
+      "id": "MT11-PROOF-APPENDIX-ROLE",
+      "section": "C",
+      "anchor": "proofs",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#proofs",
+      "category": "general_requirement",
+      "source_status": "informative",
+      "assertion_basis": "explicit",
+      "paraphrase": "Appendix C supplies proof arguments for the previously stated empty-graph, subgraph, instance, satisfiability, interpolation, lean-instance, fresh-IRI and skolemization results.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-EMPTY-ENTAILMENTS",
+        "MT11-SUBGRAPH-ENTAILMENT",
+        "MT11-INSTANCE-ENTAILMENT",
+        "MT11-SIMPLE-SATISFIABILITY",
+        "MT11-INTERPOLATION",
+        "MT11-LEAN-PROPER-INSTANCE-NONENTAILMENT",
+        "MT11-FRESH-IRI-NONENTAILMENT",
+        "MT11-SKOLEM-CONSEQUENCE-LIFTING",
+        "MT11-SKOLEM-FRESH-VOCABULARY-CONSERVATIVITY"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "These theorem records carry supporting proof links; individual proof steps are outside this first inventory. A proof in the source is not an assessed Lean proof."
+    },
+    {
+      "id": "MT11-VOCABULARY-INFORMAL-INTENT",
+      "section": "D",
+      "anchor": "non_semantics",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#non_semantics",
+      "category": "general_requirement",
+      "source_status": "informative",
+      "assertion_basis": "explicit",
+      "paraphrase": "Much reification, container and collection intent is deliberately omitted from the formal semantic conditions; the appendix discusses intended use rather than adding mandatory entailments.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-RDF-VOCABULARY-LIMITS"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "MT11-REIFICATION-DESCRIPTION",
+      "section": "D.1",
+      "anchor": "dfn-reification",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#dfn-reification",
+      "category": "definition",
+      "source_status": "informative",
+      "assertion_basis": "explicit",
+      "paraphrase": "Reification uses rdf:Statement, rdf:subject, rdf:predicate and rdf:object to describe an RDF triple token or concrete realization.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-VOCABULARY-INFORMAL-INTENT"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "MT11-REIFICATION-NOT-QUOTATION",
+      "section": "D.1",
+      "anchor": "Reif",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#Reif",
+      "category": "definition",
+      "source_status": "informative",
+      "assertion_basis": "explicit",
+      "paraphrase": "Reification relates a triple token to the resources its components denote, rather than quoting the component IRIs as syntactic objects.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-REIFICATION-DESCRIPTION",
+        "MT11-DENOTATION-IDENTIFICATION"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "MT11-REIFICATION-NONENTAILMENT",
+      "section": "D.1",
+      "anchor": "Reif",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#Reif",
+      "category": "mathematical_consequence",
+      "source_status": "informative",
+      "assertion_basis": "explicit",
+      "paraphrase": "Reifying a triple does not entail asserting it, and asserting a triple does not entail the existence of its reification.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-REIFICATION-DESCRIPTION",
+        "MT11-SIMPLE-ENTAILMENT"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "MT11-REIFICATION-NONUNIQUE-TOKENS",
+      "section": "D.1",
+      "anchor": "Reif",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#Reif",
+      "category": "mathematical_consequence",
+      "source_status": "informative",
+      "assertion_basis": "explicit",
+      "paraphrase": "Multiple reifications can describe matching components without denoting the same token; properties asserted of one such entity need not transfer to another.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-REIFICATION-DESCRIPTION"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "MT11-CONTAINERS-DESCRIPTION",
+      "section": "D.2",
+      "anchor": "containers",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#containers",
+      "category": "definition",
+      "source_status": "informative",
+      "assertion_basis": "explicit",
+      "paraphrase": "Container vocabulary describes entities with a type and partial membership information; indexed membership properties distinguish positions, while rdfs:member is generic membership.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-VOCABULARY-INFORMAL-INTENT",
+        "MT11-RDFS-CONTAINER-SUBPROPERTY"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "MT11-CONTAINERS-INTENDED-TYPES",
+      "section": "D.2",
+      "anchor": "containers",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#containers",
+      "category": "definition",
+      "source_status": "informative",
+      "assertion_basis": "explicit",
+      "paraphrase": "The informal intended uses are an unordered duplicate-permitting bag, an ordered sequence, and alternatives that may have a preference order; indexed properties are intended as single-valued positions.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-CONTAINERS-DESCRIPTION"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "These intended properties are not additional formal RDF entailment conditions. Permitting duplicate bag members is not permitting repeated identical triples in an RDF graph."
+    },
+    {
+      "id": "MT11-CONTAINER-NO-PERMUTATION-ENTAILMENT",
+      "section": "D.2",
+      "anchor": "containers",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#containers",
+      "category": "mathematical_consequence",
+      "source_status": "informative",
+      "assertion_basis": "explicit",
+      "paraphrase": "The bag interpretation does not justify permuting indexed membership assertions as an RDF entailment.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-CONTAINERS-INTENDED-TYPES",
+        "MT11-SIMPLE-ENTAILMENT"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "MT11-CONTAINER-NO-PROPERTY-TRANSFER",
+      "section": "D.2",
+      "anchor": "containers",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#containers",
+      "category": "mathematical_consequence",
+      "source_status": "informative",
+      "assertion_basis": "explicit",
+      "paraphrase": "A property of a container does not automatically hold of its members, nor does a member property automatically hold of the container.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-CONTAINERS-DESCRIPTION"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "MT11-CONTAINER-OPEN-STRUCTURE",
+      "section": "D.2",
+      "anchor": "containers",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#containers",
+      "category": "general_requirement",
+      "source_status": "informative",
+      "assertion_basis": "explicit",
+      "paraphrase": "Formal semantics does not require container classes to be disjoint or indexed positions to be gap-free; RDF supplies no fixed upper membership bound or general finiteness requirement.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-CONTAINERS-DESCRIPTION"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "These are absences of special constraints, not requirements that every application accept every intended container shape."
+    },
+    {
+      "id": "MT11-COLLECTION-LINKED-STRUCTURE",
+      "section": "D.3",
+      "anchor": "collections",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#collections",
+      "category": "definition",
+      "source_status": "informative",
+      "assertion_basis": "explicit",
+      "paraphrase": "Collection vocabulary describes head/tail structures using rdf:first and rdf:rest with rdf:nil as a terminator; the usual application convention follows the rest chain to enumerate items.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-VOCABULARY-INFORMAL-INTENT",
+        "MT11-RDF-AXIOM-NIL"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "MT11-COLLECTION-NO-EXTRA-SEMANTICS",
+      "section": "D.3",
+      "anchor": "collections",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#collections",
+      "category": "general_requirement",
+      "source_status": "informative",
+      "assertion_basis": "explicit",
+      "paraphrase": "Beyond existing RDF/RDFS conditions, collection vocabulary has no special well-formedness constraints; branching tails, multiple heads and missing rest information are possible RDF descriptions.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-COLLECTION-LINKED-STRUCTURE"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "MT11-COLLECTION-NO-EXISTENCE-CLOSURE",
+      "section": "D.3",
+      "anchor": "collections",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#collections",
+      "category": "mathematical_consequence",
+      "source_status": "informative",
+      "assertion_basis": "explicit",
+      "paraphrase": "A described collection does not force the existence of every permutation or other derived collection; naming one sequence does not entail a newly ordered sequence.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-COLLECTION-LINKED-STRUCTURE"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "MT11-COLLECTION-EXTENSIONS",
+      "section": "D.3",
+      "anchor": "collections",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#collections",
+      "category": "general_requirement",
+      "source_status": "informative",
+      "assertion_basis": "explicit",
+      "paraphrase": "An extension may impose collection syntax and interpretation conditions selecting well-formed chains whose values form an ordered sequence, including sequences containing other sequences.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-COLLECTION-LINKED-STRUCTURE",
+        "MT11-EXTENSION-SYNTAX"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "MT11-COLLECTION-RDFS-TYPING",
+      "section": "D.3",
+      "anchor": "collections",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#collections",
+      "category": "mathematical_consequence",
+      "source_status": "informative",
+      "assertion_basis": "explicit",
+      "paraphrase": "Under RDFS, every rdf:first subject and every rdf:rest subject or object has type rdf:List by the existing domain/range constraints.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-RDFS-AXIOM-DOMAINS",
+        "MT11-RDFS-AXIOM-RANGES",
+        "MT11-RDFS-DOMAIN",
+        "MT11-RDFS-RANGE"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    }
+  ],
+  "record_count": 195
+}

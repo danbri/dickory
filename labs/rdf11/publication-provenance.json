@@ -1,0 +1,32 @@
+{
+  "origin": "Isolated _LEAN workspace, 2026-10-21",
+  "formal_sources": "All Lean source bytes unchanged on import",
+  "formal_source_sha256": {
+    "RDF11.lean": "dc8d737e7c40fb87a0989fe26b4673385a79934d398b3e6950dee39d3bec3448",
+    "Audit.lean": "405587da16ceeebaa676d7061707f463bbc17568f13137a32fb4a6f1bdfe43db",
+    "Audit/Coverage.lean": "1742cc3572f67a376d66a8276debcdf27ceefb2d519e57f50421a5b56e5afa2e",
+    "Audit/Export.lean": "16ce93d75a29cbb739315910308495b7011f86d0d7c765e760582099405e9349",
+    "Audit/Snapshot.lean": "ded3873e43fd9504e40c96701eeae61b5a24f432e543c7114b0e867e1c846934",
+    "RDF11/ScopeExample.lean": "3e1b767e9f7473418a1a48a4985ea6e331e91cf0479f8e82cdd5d42fef9c8e39",
+    "RDF11/Merge.lean": "15040c407c9dddcd0c9637327740a63e4b069e49a192b46a4c65518a304a61b7",
+    "RDF11/GeneralizedScope.lean": "29f897fc70e5f12c4eb76c50536a426ef7c53959fe9146693c9b2b3e5df1e183",
+    "RDF11/Syntax.lean": "d71f5782f356a932e6a035a196d42bb25775f8eabbebcf2871c61e31a6f06429",
+    "RDF11/Simple.lean": "01712ff788b47710e13a1da29360a362254cbd560b3d39aa2fca7529031b265b",
+    "RDF11/Set.lean": "81b81eb4ab07f088829ecb9653b8045967af0bc146e661d86dab1e1398e03439",
+    "RDF11/Entailment.lean": "ca91cb7ca368cc000f5c053c050f8e2157c9c7893b0901315116af61546752f3",
+    "RDF11/Enumeration.lean": "5da2b9fe82a5f65df7d2a5f4cce760b25fd357aa1c4200865135ec45cc585029"
+  },
+  "requirements_original_sha256": "996270bab167bf712c20032803423d7b60975584f3dcebcc1e9452c40583bf0b",
+  "documentation_edits": [
+    "Make npm-review context link local to the published lab",
+    "Describe the separate repair worknote without a dangling link",
+    "Link the W3C test checkout to its pinned public revision",
+    "Point generated viewer and evidence links to Pages; document exact Python version"
+  ],
+  "omitted": [
+    "Implementation-repair checkout and source patch",
+    "npm review execution environment",
+    "Lean build cache",
+    "Generated evidence and viewer (rebuilt in CI)"
+  ]
+}

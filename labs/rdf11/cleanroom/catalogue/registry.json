@@ -1,0 +1,4687 @@
+{
+  "schema_version": 1,
+  "status": "frozen_first_increment_inventory_not_expert_approved",
+  "lean_version": "4.33.1",
+  "allowed_axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "foundation_modules": [
+    "Init.Classical",
+    "Init.Core",
+    "Init.Data.BEq",
+    "Init.Data.Bool",
+    "Init.Data.ByteArray.Bootstrap",
+    "Init.Data.Cast",
+    "Init.Data.Char.Basic",
+    "Init.Data.Format.Basic",
+    "Init.Data.Int.Basic",
+    "Init.Data.Int.DivMod.Basic",
+    "Init.Data.Int.DivMod.Bootstrap",
+    "Init.Data.Int.Lemmas",
+    "Init.Data.Int.Order",
+    "Init.Data.List.Basic",
+    "Init.Data.List.Count",
+    "Init.Data.List.Erase",
+    "Init.Data.List.Lemmas",
+    "Init.Data.List.Pairwise",
+    "Init.Data.List.Perm",
+    "Init.Data.List.Sublist",
+    "Init.Data.Nat.Basic",
+    "Init.Data.Nat.Bitwise.Basic",
+    "Init.Data.Nat.Div.Basic",
+    "Init.Data.Nat.Dvd",
+    "Init.Data.Nat.Gcd",
+    "Init.Data.Nat.Lemmas",
+    "Init.Data.Option.Basic",
+    "Init.Data.Repr",
+    "Init.Data.String.Bootstrap",
+    "Init.Data.Sum.Basic",
+    "Init.Data.ToString.Basic",
+    "Init.GetElem",
+    "Init.Omega.Coeffs",
+    "Init.Omega.Constraint",
+    "Init.Omega.Int",
+    "Init.Omega.IntList",
+    "Init.Omega.LinearCombo",
+    "Init.Omega.Logic",
+    "Init.Prelude",
+    "Init.PropLemmas",
+    "Init.SimpLemmas",
+    "Init.SizeOf",
+    "Init.Tactics",
+    "Init.Util",
+    "Init.WF"
+  ],
+  "foundations": [
+    {
+      "id": "FOUNDATION-LEAN",
+      "purpose": "Lean 4.33.1 logical and datatype foundations; kernel checks proof terms.",
+      "requires": []
+    },
+    {
+      "id": "FOUNDATION-SETS",
+      "purpose": "Extensional predicate sets, membership, subset, images and set algebra.",
+      "requires": [
+        "FOUNDATION-LEAN",
+        "MT11-GRAPH-SET"
+      ]
+    },
+    {
+      "id": "SUPPORT-SYNTAX",
+      "purpose": "Ordinary/generalized syntax, occurrence predicates and blank-node transports, including generated eliminators and equality decisions.",
+      "requires": [
+        "FOUNDATION-SETS",
+        "MT11-TRIPLE-TERM-DOMAINS",
+        "MT11-GENERALIZED-SYNTAX"
+      ]
+    },
+    {
+      "id": "SUPPORT-INTERPRETATIONS",
+      "purpose": "Subtype domains, partial assignments, restriction and denotation agreement proofs.",
+      "requires": [
+        "FOUNDATION-LEAN",
+        "MT11-BLANK-ASSIGNMENT",
+        "MT11-EXISTENTIAL-GRAPH-TRUTH"
+      ]
+    },
+    {
+      "id": "SUPPORT-ENTAILMENT",
+      "purpose": "Truth-preservation composition and explicit witness/countermodel constructions.",
+      "requires": [
+        "FOUNDATION-LEAN",
+        "MT11-SIMPLE-ENTAILMENT"
+      ]
+    },
+    {
+      "id": "SUPPORT-MERGE",
+      "purpose": "Transport along blank-node functions and disjoint-union assignments.",
+      "requires": [
+        "SUPPORT-SYNTAX",
+        "MT11-MERGE"
+      ]
+    },
+    {
+      "id": "REFINEMENT-ENUMERATION",
+      "purpose": "Engineering contract for finite enumerations: exact set membership plus no duplicate occurrences. Not a W3C claim that every graph is finite.",
+      "requires": [
+        "FOUNDATION-SETS",
+        "MT11-GRAPH-SET"
+      ]
+    },
+    {
+      "id": "SUPPORT-SCOPE-EXAMPLE",
+      "purpose": "Small formal counterexample exhibiting the informative shared-witness issue.",
+      "requires": [
+        "MT11-SHARED-BLANK-SCOPE",
+        "SUPPORT-INTERPRETATIONS"
+      ]
+    },
+    {
+      "id": "SPEC2LEAN-ACCOUNTABILITY",
+      "purpose": "Draft structural range and record-reference certificate implementing COV-01/02/03; not a semantic completeness proof.",
+      "requires": [
+        "FOUNDATION-LEAN"
+      ]
+    },
+    {
+      "id": "SOURCE-QUESTION-GENERALIZED-INSTANCE",
+      "purpose": "Checked countermodel to an unrestricted generalized-graph reading; source scope remains an explicit expert-review question, not an asserted erratum.",
+      "requires": [
+        "MT11-GENERALIZED-SYNTAX",
+        "MT11-SIMPLE-IP",
+        "MT11-BLANK-ASSIGNMENT",
+        "MT11-INSTANCE-ENTAILMENT"
+      ]
+    }
+  ],
+  "files": [
+    {
+      "path": "Audit.lean",
+      "sha256": "405587da16ceeebaa676d7061707f463bbc17568f13137a32fb4a6f1bdfe43db",
+      "role": "formal_source",
+      "lifecycle": "active",
+      "review": "pending_expert_review"
+    },
+    {
+      "path": "Audit/Coverage.lean",
+      "sha256": "1742cc3572f67a376d66a8276debcdf27ceefb2d519e57f50421a5b56e5afa2e",
+      "role": "formal_source",
+      "lifecycle": "active",
+      "review": "pending_expert_review"
+    },
+    {
+      "path": "Audit/Export.lean",
+      "sha256": "16ce93d75a29cbb739315910308495b7011f86d0d7c765e760582099405e9349",
+      "role": "trusted_evidence_extractor",
+      "lifecycle": "active",
+      "review": "pending_expert_review"
+    },
+    {
+      "path": "Audit/Snapshot.lean",
+      "sha256": "ded3873e43fd9504e40c96701eeae61b5a24f432e543c7114b0e867e1c846934",
+      "role": "formal_source",
+      "lifecycle": "active",
+      "review": "pending_expert_review"
+    },
+    {
+      "path": "RDF11.lean",
+      "sha256": "dc8d737e7c40fb87a0989fe26b4673385a79934d398b3e6950dee39d3bec3448",
+      "role": "formal_source",
+      "lifecycle": "active",
+      "review": "pending_expert_review"
+    },
+    {
+      "path": "RDF11/Entailment.lean",
+      "sha256": "ca91cb7ca368cc000f5c053c050f8e2157c9c7893b0901315116af61546752f3",
+      "role": "formal_source",
+      "lifecycle": "active",
+      "review": "pending_expert_review"
+    },
+    {
+      "path": "RDF11/Enumeration.lean",
+      "sha256": "5da2b9fe82a5f65df7d2a5f4cce760b25fd357aa1c4200865135ec45cc585029",
+      "role": "formal_source",
+      "lifecycle": "active",
+      "review": "pending_expert_review"
+    },
+    {
+      "path": "RDF11/GeneralizedScope.lean",
+      "sha256": "29f897fc70e5f12c4eb76c50536a426ef7c53959fe9146693c9b2b3e5df1e183",
+      "role": "formal_source",
+      "lifecycle": "active",
+      "review": "pending_expert_review"
+    },
+    {
+      "path": "RDF11/Merge.lean",
+      "sha256": "15040c407c9dddcd0c9637327740a63e4b069e49a192b46a4c65518a304a61b7",
+      "role": "formal_source",
+      "lifecycle": "active",
+      "review": "pending_expert_review"
+    },
+    {
+      "path": "RDF11/ScopeExample.lean",
+      "sha256": "3e1b767e9f7473418a1a48a4985ea6e331e91cf0479f8e82cdd5d42fef9c8e39",
+      "role": "formal_source",
+      "lifecycle": "active",
+      "review": "pending_expert_review"
+    },
+    {
+      "path": "RDF11/Set.lean",
+      "sha256": "81b81eb4ab07f088829ecb9653b8045967af0bc146e661d86dab1e1398e03439",
+      "role": "formal_source",
+      "lifecycle": "active",
+      "review": "pending_expert_review"
+    },
+    {
+      "path": "RDF11/Simple.lean",
+      "sha256": "01712ff788b47710e13a1da29360a362254cbd560b3d39aa2fca7529031b265b",
+      "role": "formal_source",
+      "lifecycle": "active",
+      "review": "pending_expert_review"
+    },
+    {
+      "path": "RDF11/Syntax.lean",
+      "sha256": "d71f5782f356a932e6a035a196d42bb25775f8eabbebcf2871c61e31a6f06429",
+      "role": "formal_source",
+      "lifecycle": "active",
+      "review": "pending_expert_review"
+    }
+  ],
+  "declarations": [
+    {
+      "name": "RDF11.EntailsUnder",
+      "module": "RDF11.Entailment",
+      "kind": "definition",
+      "type": "{Iri Literal B₁ B₂ : Type} →\n  ((U : Type u) → RDF11.SimpleInterpretation Iri Literal U → Prop) →\n    RDF11.GeneralizedGraph Iri Literal B₁ → RDF11.GeneralizedGraph Iri Literal B₂ → Prop",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-SIMPLE-EXTENSION-BASE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Enumeration",
+      "module": "RDF11.Enumeration",
+      "kind": "inductive",
+      "type": "{α : Type u_1} → RDF11.Set α → Type u_1",
+      "role": "engineering_refinement",
+      "grounds": [
+        "REFINEMENT-ENUMERATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Enumeration._sizeOf_1",
+      "module": "RDF11.Enumeration",
+      "kind": "definition",
+      "type": "{α : Type u_1} → {G : RDF11.Set α} → [SizeOf α] → [(a : α) → SizeOf (G a)] → RDF11.Enumeration G → Nat",
+      "role": "engineering_refinement",
+      "grounds": [
+        "REFINEMENT-ENUMERATION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Enumeration",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Enumeration._sizeOf_inst",
+      "module": "RDF11.Enumeration",
+      "kind": "definition",
+      "type": "{α : Type u_1} → (G : RDF11.Set α) → [SizeOf α] → [(a : α) → SizeOf (G a)] → SizeOf (RDF11.Enumeration G)",
+      "role": "engineering_refinement",
+      "grounds": [
+        "REFINEMENT-ENUMERATION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Enumeration",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Enumeration.casesOn",
+      "module": "RDF11.Enumeration",
+      "kind": "definition",
+      "type": "{α : Type u_1} →\n  {G : RDF11.Set α} →\n    {motive : RDF11.Enumeration G → Sort u} →\n      (t : RDF11.Enumeration G) →\n        ((triples : List α) →\n            (nodup : triples.Nodup) →\n              (membership : ∀ (t : α), t ∈ triples ↔ G t) →\n                motive { triples := triples, nodup := nodup, membership := membership }) →\n          motive t",
+      "role": "engineering_refinement",
+      "grounds": [
+        "REFINEMENT-ENUMERATION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Enumeration",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Enumeration.count_le_one",
+      "module": "RDF11.Enumeration",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_1} {G : RDF11.Set α} [inst : BEq α] [LawfulBEq α] (e : RDF11.Enumeration G) (t : α),\n  List.count t e.triples ≤ 1",
+      "role": "engineering_refinement",
+      "grounds": [
+        "REFINEMENT-ENUMERATION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Enumeration",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Enumeration.ctorIdx",
+      "module": "RDF11.Enumeration",
+      "kind": "definition",
+      "type": "{α : Type u_1} → {G : RDF11.Set α} → RDF11.Enumeration G → Nat",
+      "role": "engineering_refinement",
+      "grounds": [
+        "REFINEMENT-ENUMERATION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Enumeration",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Enumeration.fromList",
+      "module": "RDF11.Enumeration",
+      "kind": "definition",
+      "type": "{α : Type u_1} → [DecidableEq α] → (xs : List α) → RDF11.Enumeration (RDF11.Set.ofList xs)",
+      "role": "engineering_refinement",
+      "grounds": [
+        "REFINEMENT-ENUMERATION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Enumeration",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Enumeration.length_independent",
+      "module": "RDF11.Enumeration",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_1} {G : RDF11.Set α} (e f : RDF11.Enumeration G), e.triples.length = f.triples.length",
+      "role": "engineering_refinement",
+      "grounds": [
+        "REFINEMENT-ENUMERATION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Enumeration",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Enumeration.mem_unique",
+      "module": "RDF11.Enumeration",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_1} [inst : DecidableEq α] (xs : List α) (t : α), t ∈ RDF11.Enumeration.unique xs ↔ t ∈ xs",
+      "role": "engineering_refinement",
+      "grounds": [
+        "REFINEMENT-ENUMERATION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Enumeration",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Enumeration.mem_unique._simp_1",
+      "module": "RDF11.Enumeration",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_1} [inst : DecidableEq α] (xs : List α) (t : α), (t ∈ RDF11.Enumeration.unique xs) = (t ∈ xs)",
+      "role": "engineering_refinement",
+      "grounds": [
+        "REFINEMENT-ENUMERATION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Enumeration.mem_unique",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Enumeration.mem_unique._simp_1_4",
+      "module": "RDF11.Enumeration",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_1} {b : α} {l : List α} {a : α}, (a ∈ b :: l) = (a = b ∨ a ∈ l)",
+      "role": "engineering_refinement",
+      "grounds": [
+        "REFINEMENT-ENUMERATION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Enumeration.mem_unique",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Enumeration.membership",
+      "module": "RDF11.Enumeration",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_1} {G : RDF11.Set α} (self : RDF11.Enumeration G) (t : α), t ∈ self.triples ↔ G t",
+      "role": "engineering_refinement",
+      "grounds": [
+        "REFINEMENT-ENUMERATION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Enumeration",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Enumeration.mk",
+      "module": "RDF11.Enumeration",
+      "kind": "constructor",
+      "type": "{α : Type u_1} →\n  {G : RDF11.Set α} → (triples : List α) → triples.Nodup → (∀ (t : α), t ∈ triples ↔ G t) → RDF11.Enumeration G",
+      "role": "engineering_refinement",
+      "grounds": [
+        "REFINEMENT-ENUMERATION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Enumeration",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Enumeration.mk._flat_ctor",
+      "module": "RDF11.Enumeration",
+      "kind": "definition",
+      "type": "{α : Type u_1} →\n  {G : RDF11.Set α} → (triples : List α) → triples.Nodup → (∀ (t : α), t ∈ triples ↔ G t) → RDF11.Enumeration G",
+      "role": "engineering_refinement",
+      "grounds": [
+        "REFINEMENT-ENUMERATION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Enumeration.mk",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Enumeration.mk.inj",
+      "module": "RDF11.Enumeration",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_1} {G : RDF11.Set α} {triples : List α} {nodup : triples.Nodup}\n  {membership : ∀ (t : α), t ∈ triples ↔ G t} {triples_1 : List α} {nodup_1 : triples_1.Nodup}\n  {membership_1 : ∀ (t : α), t ∈ triples_1 ↔ G t},\n  { triples := triples, nodup := nodup, membership := membership } =\n      { triples := triples_1, nodup := nodup_1, membership := membership_1 } →\n    triples = triples_1",
+      "role": "engineering_refinement",
+      "grounds": [
+        "REFINEMENT-ENUMERATION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Enumeration.mk",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Enumeration.mk.injEq",
+      "module": "RDF11.Enumeration",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_1} {G : RDF11.Set α} (triples : List α) (nodup : triples.Nodup)\n  (membership : ∀ (t : α), t ∈ triples ↔ G t) (triples_1 : List α) (nodup_1 : triples_1.Nodup)\n  (membership_1 : ∀ (t : α), t ∈ triples_1 ↔ G t),\n  ({ triples := triples, nodup := nodup, membership := membership } =\n      { triples := triples_1, nodup := nodup_1, membership := membership_1 }) =\n    (triples = triples_1)",
+      "role": "engineering_refinement",
+      "grounds": [
+        "REFINEMENT-ENUMERATION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Enumeration.mk",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Enumeration.mk.noConfusion",
+      "module": "RDF11.Enumeration",
+      "kind": "definition",
+      "type": "{α : Type u_1} →\n  {G : RDF11.Set α} →\n    {P : Sort u} →\n      {triples : List α} →\n        {nodup : triples.Nodup} →\n          {membership : ∀ (t : α), t ∈ triples ↔ G t} →\n            {triples' : List α} →\n              {nodup' : triples'.Nodup} →\n                {membership' : ∀ (t : α), t ∈ triples' ↔ G t} →\n                  { triples := triples, nodup := nodup, membership := membership } =\n                      { triples := triples', nodup := nodup', membership := membership' } →\n                    (triples ≍ triples' → P) → P",
+      "role": "engineering_refinement",
+      "grounds": [
+        "REFINEMENT-ENUMERATION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Enumeration.mk",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Enumeration.mk.sizeOf_spec",
+      "module": "RDF11.Enumeration",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_1} {G : RDF11.Set α} [inst : SizeOf α] [inst_1 : (a : α) → SizeOf (G a)] (triples : List α)\n  (nodup : triples.Nodup) (membership : ∀ (t : α), t ∈ triples ↔ G t),\n  sizeOf { triples := triples, nodup := nodup, membership := membership } = 1 + sizeOf triples + sizeOf nodup",
+      "role": "engineering_refinement",
+      "grounds": [
+        "REFINEMENT-ENUMERATION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Enumeration.mk",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Enumeration.noConfusion",
+      "module": "RDF11.Enumeration",
+      "kind": "definition",
+      "type": "{P : Sort u} →\n  {α : Type u_1} →\n    {G : RDF11.Set α} →\n      {t : RDF11.Enumeration G} →\n        {α' : Type u_1} →\n          {G' : RDF11.Set α'} →\n            {t' : RDF11.Enumeration G'} → α = α' → G ≍ G' → t ≍ t' → RDF11.Enumeration.noConfusionType P t t'",
+      "role": "engineering_refinement",
+      "grounds": [
+        "REFINEMENT-ENUMERATION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Enumeration",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Enumeration.noConfusionType",
+      "module": "RDF11.Enumeration",
+      "kind": "definition",
+      "type": "Sort u →\n  {α : Type u_1} →\n    {G : RDF11.Set α} → RDF11.Enumeration G → {α' : Type u_1} → {G' : RDF11.Set α'} → RDF11.Enumeration G' → Sort u",
+      "role": "engineering_refinement",
+      "grounds": [
+        "REFINEMENT-ENUMERATION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Enumeration",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Enumeration.nodup",
+      "module": "RDF11.Enumeration",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_1} {G : RDF11.Set α} (self : RDF11.Enumeration G), self.triples.Nodup",
+      "role": "engineering_refinement",
+      "grounds": [
+        "REFINEMENT-ENUMERATION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Enumeration",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Enumeration.rec",
+      "module": "RDF11.Enumeration",
+      "kind": "recursor",
+      "type": "{α : Type u_1} →\n  {G : RDF11.Set α} →\n    {motive : RDF11.Enumeration G → Sort u} →\n      ((triples : List α) →\n          (nodup : triples.Nodup) →\n            (membership : ∀ (t : α), t ∈ triples ↔ G t) →\n              motive { triples := triples, nodup := nodup, membership := membership }) →\n        (t : RDF11.Enumeration G) → motive t",
+      "role": "engineering_refinement",
+      "grounds": [
+        "REFINEMENT-ENUMERATION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Enumeration",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Enumeration.recOn",
+      "module": "RDF11.Enumeration",
+      "kind": "definition",
+      "type": "{α : Type u_1} →\n  {G : RDF11.Set α} →\n    {motive : RDF11.Enumeration G → Sort u} →\n      (t : RDF11.Enumeration G) →\n        ((triples : List α) →\n            (nodup : triples.Nodup) →\n              (membership : ∀ (t : α), t ∈ triples ↔ G t) →\n                motive { triples := triples, nodup := nodup, membership := membership }) →\n          motive t",
+      "role": "engineering_refinement",
+      "grounds": [
+        "REFINEMENT-ENUMERATION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Enumeration",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Enumeration.repeated_input_same_set",
+      "module": "RDF11.Enumeration",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_1} (t : α), RDF11.Set.ofList [t, t] = RDF11.Set.ofList [t]",
+      "role": "engineering_refinement",
+      "grounds": [
+        "REFINEMENT-ENUMERATION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Enumeration",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Enumeration.triples",
+      "module": "RDF11.Enumeration",
+      "kind": "definition",
+      "type": "{α : Type u_1} → {G : RDF11.Set α} → RDF11.Enumeration G → List α",
+      "role": "engineering_refinement",
+      "grounds": [
+        "REFINEMENT-ENUMERATION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Enumeration",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Enumeration.unique",
+      "module": "RDF11.Enumeration",
+      "kind": "definition",
+      "type": "{α : Type u_1} → [DecidableEq α] → List α → List α",
+      "role": "engineering_refinement",
+      "grounds": [
+        "REFINEMENT-ENUMERATION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Enumeration",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Enumeration.unique._f",
+      "module": "RDF11.Enumeration",
+      "kind": "definition",
+      "type": "{α : Type u_1} → [DecidableEq α] → (x : List α) → List.below x → List α",
+      "role": "engineering_refinement",
+      "grounds": [
+        "REFINEMENT-ENUMERATION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Enumeration.unique",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Enumeration.unique._sunfold",
+      "module": "RDF11.Enumeration",
+      "kind": "definition",
+      "type": "{α : Type u_1} → [DecidableEq α] → List α → List α",
+      "role": "engineering_refinement",
+      "grounds": [
+        "REFINEMENT-ENUMERATION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Enumeration.unique",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Enumeration.unique._unsafe_rec",
+      "module": "RDF11.Enumeration",
+      "kind": "definition",
+      "type": "{α : Type u_1} → [DecidableEq α] → List α → List α",
+      "role": "engineering_refinement",
+      "grounds": [
+        "REFINEMENT-ENUMERATION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Enumeration.unique",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Enumeration.unique.eq_1",
+      "module": "RDF11.Enumeration",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_1} [inst : DecidableEq α], RDF11.Enumeration.unique [] = []",
+      "role": "engineering_refinement",
+      "grounds": [
+        "REFINEMENT-ENUMERATION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Enumeration.unique",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Enumeration.unique.eq_2",
+      "module": "RDF11.Enumeration",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_1} [inst : DecidableEq α] (t : α) (ts : List α),\n  RDF11.Enumeration.unique (t :: ts) =\n    if t ∈ RDF11.Enumeration.unique ts then RDF11.Enumeration.unique ts else t :: RDF11.Enumeration.unique ts",
+      "role": "engineering_refinement",
+      "grounds": [
+        "REFINEMENT-ENUMERATION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Enumeration.unique",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Enumeration.unique.eq_def",
+      "module": "RDF11.Enumeration",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_1} [inst : DecidableEq α] (x : List α),\n  RDF11.Enumeration.unique x =\n    match x with\n    | [] => []\n    | t :: ts =>\n      have rest := RDF11.Enumeration.unique ts;\n      if t ∈ rest then rest else t :: rest",
+      "role": "engineering_refinement",
+      "grounds": [
+        "REFINEMENT-ENUMERATION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Enumeration.unique",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Enumeration.unique.match_1",
+      "module": "RDF11.Enumeration",
+      "kind": "definition",
+      "type": "{α : Type u_1} →\n  (motive : List α → Sort u_2) →\n    (x : List α) → (Unit → motive []) → ((t : α) → (ts : List α) → motive (t :: ts)) → motive x",
+      "role": "engineering_refinement",
+      "grounds": [
+        "REFINEMENT-ENUMERATION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Enumeration.unique",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Enumeration.unique_nodup",
+      "module": "RDF11.Enumeration",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_1} [inst : DecidableEq α] (xs : List α), (RDF11.Enumeration.unique xs).Nodup",
+      "role": "engineering_refinement",
+      "grounds": [
+        "REFINEMENT-ENUMERATION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Enumeration",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GeneralizedGraph",
+      "module": "RDF11.Syntax",
+      "kind": "definition",
+      "type": "Type → Type → Type → Type",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-GENERALIZED-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GeneralizedGraph.ground",
+      "module": "RDF11.Syntax",
+      "kind": "definition",
+      "type": "{Iri Literal Blank : Type} → RDF11.GeneralizedGraph Iri Literal Blank → Prop",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-GROUND-GRAPH"
+      ],
+      "parent_declaration_if_applicable": "RDF11.GeneralizedGraph",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GeneralizedGraph.hasBlank",
+      "module": "RDF11.Syntax",
+      "kind": "definition",
+      "type": "{Iri Literal Blank : Type} → RDF11.GeneralizedGraph Iri Literal Blank → Blank → Prop",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-GROUND-GRAPH"
+      ],
+      "parent_declaration_if_applicable": "RDF11.GeneralizedGraph",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GeneralizedGraph.mapBlank",
+      "module": "RDF11.Syntax",
+      "kind": "definition",
+      "type": "{A B Iri Literal : Type} → (A → B) → RDF11.GeneralizedGraph Iri Literal A → RDF11.GeneralizedGraph Iri Literal B",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-INSTANCE-ENTAILMENT"
+      ],
+      "parent_declaration_if_applicable": "RDF11.GeneralizedGraph",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GeneralizedGraph.mapBlank.eq_1",
+      "module": "RDF11.Syntax",
+      "kind": "theorem",
+      "type": "∀ {A B Iri Literal : Type} (f : A → B) (g : RDF11.GeneralizedGraph Iri Literal A),\n  RDF11.GeneralizedGraph.mapBlank f g = RDF11.Set.image (RDF11.GeneralizedTriple.mapBlank f) g",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.GeneralizedGraph.mapBlank",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GeneralizedGraph.mapBlank_id",
+      "module": "RDF11.Syntax",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal A : Type} (g : RDF11.GeneralizedGraph Iri Literal A), RDF11.GeneralizedGraph.mapBlank id g = g",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.GeneralizedGraph",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GeneralizedScope.I",
+      "module": "RDF11.GeneralizedScope",
+      "kind": "definition",
+      "type": "{Iri Literal : Type} → [DecidableEq Iri] → Iri → RDF11.SimpleInterpretation Iri Literal Bool",
+      "role": "proof_support",
+      "grounds": [
+        "SOURCE-QUESTION-GENERALIZED-INSTANCE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GeneralizedScope.I._proof_1",
+      "module": "RDF11.GeneralizedScope",
+      "kind": "theorem",
+      "type": "∃ x, x = false",
+      "role": "proof_support",
+      "grounds": [
+        "SOURCE-QUESTION-GENERALIZED-INSTANCE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GeneralizedScope.I._proof_2",
+      "module": "RDF11.GeneralizedScope",
+      "kind": "theorem",
+      "type": "true = false ∨ true = true",
+      "role": "proof_support",
+      "grounds": [
+        "SOURCE-QUESTION-GENERALIZED-INSTANCE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GeneralizedScope.I._proof_3",
+      "module": "RDF11.GeneralizedScope",
+      "kind": "theorem",
+      "type": "false = false ∨ false = true",
+      "role": "proof_support",
+      "grounds": [
+        "SOURCE-QUESTION-GENERALIZED-INSTANCE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GeneralizedScope.I.eq_1",
+      "module": "RDF11.GeneralizedScope",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} [inst : DecidableEq Iri] (p : Iri),\n  RDF11.GeneralizedScope.I p =\n    { IR := fun x => x = false, IR_nonempty := RDF11.GeneralizedScope.I._proof_1, IP := fun x => x = true,\n      IEXT := fun x x_1 => True,\n      IS := fun i =>\n        if i = p then ⟨true, RDF11.GeneralizedScope.I._proof_2⟩ else ⟨false, RDF11.GeneralizedScope.I._proof_3⟩,\n      IL := fun x => none }",
+      "role": "proof_support",
+      "grounds": [
+        "SOURCE-QUESTION-GENERALIZED-INSTANCE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GeneralizedScope.original",
+      "module": "RDF11.GeneralizedScope",
+      "kind": "definition",
+      "type": "{Iri Literal : Type} → Iri → RDF11.GeneralizedGraph Iri Literal Unit",
+      "role": "proof_support",
+      "grounds": [
+        "SOURCE-QUESTION-GENERALIZED-INSTANCE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GeneralizedScope.originalTriple",
+      "module": "RDF11.GeneralizedScope",
+      "kind": "definition",
+      "type": "{Iri Literal : Type} → Iri → RDF11.GeneralizedTriple Iri Literal Unit",
+      "role": "proof_support",
+      "grounds": [
+        "SOURCE-QUESTION-GENERALIZED-INSTANCE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GeneralizedScope.originalTriple.eq_1",
+      "module": "RDF11.GeneralizedScope",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} (s : Iri),\n  RDF11.GeneralizedScope.originalTriple s =\n    { subject := RDF11.Term.iri s, predicate := RDF11.Term.blank (), object := RDF11.Term.iri s }",
+      "role": "proof_support",
+      "grounds": [
+        "SOURCE-QUESTION-GENERALIZED-INSTANCE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GeneralizedScope.original_false",
+      "module": "RDF11.GeneralizedScope",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} [inst : DecidableEq Iri] (s p : Iri),\n  ¬(RDF11.GeneralizedScope.I p).Satisfies (RDF11.GeneralizedScope.original s)",
+      "role": "proof_support",
+      "grounds": [
+        "SOURCE-QUESTION-GENERALIZED-INSTANCE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GeneralizedScope.substituted",
+      "module": "RDF11.GeneralizedScope",
+      "kind": "definition",
+      "type": "{Iri Literal : Type} → Iri → Iri → RDF11.GeneralizedGraph Iri Literal Unit",
+      "role": "proof_support",
+      "grounds": [
+        "SOURCE-QUESTION-GENERALIZED-INSTANCE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GeneralizedScope.substitutedTriple",
+      "module": "RDF11.GeneralizedScope",
+      "kind": "definition",
+      "type": "{Iri Literal : Type} → Iri → Iri → RDF11.GeneralizedTriple Iri Literal Unit",
+      "role": "proof_support",
+      "grounds": [
+        "SOURCE-QUESTION-GENERALIZED-INSTANCE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GeneralizedScope.substitutedTriple.eq_1",
+      "module": "RDF11.GeneralizedScope",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} (s p : Iri),\n  RDF11.GeneralizedScope.substitutedTriple s p =\n    { subject := RDF11.Term.iri s, predicate := RDF11.Term.iri p, object := RDF11.Term.iri s }",
+      "role": "proof_support",
+      "grounds": [
+        "SOURCE-QUESTION-GENERALIZED-INSTANCE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GeneralizedScope.substituted_true",
+      "module": "RDF11.GeneralizedScope",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} [inst : DecidableEq Iri] (s p : Iri),\n  s ≠ p → (RDF11.GeneralizedScope.I p).Satisfies (RDF11.GeneralizedScope.substituted s p)",
+      "role": "proof_support",
+      "grounds": [
+        "SOURCE-QUESTION-GENERALIZED-INSTANCE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GeneralizedScope.unrestricted_generalized_instance_consequence_fails",
+      "module": "RDF11.GeneralizedScope",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} [DecidableEq Iri] (s p : Iri),\n  s ≠ p → ¬RDF11.SimplyEntails (RDF11.GeneralizedScope.substituted s p) (RDF11.GeneralizedScope.original s)",
+      "role": "proof_support",
+      "grounds": [
+        "SOURCE-QUESTION-GENERALIZED-INSTANCE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GeneralizedTriple",
+      "module": "RDF11.Syntax",
+      "kind": "inductive",
+      "type": "Type → Type → Type → Type",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-GENERALIZED-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GeneralizedTriple._sizeOf_1",
+      "module": "RDF11.Syntax",
+      "kind": "definition",
+      "type": "{Iri Literal Blank : Type} →\n  [SizeOf Iri] → [SizeOf Literal] → [SizeOf Blank] → RDF11.GeneralizedTriple Iri Literal Blank → Nat",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.GeneralizedTriple",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GeneralizedTriple._sizeOf_inst",
+      "module": "RDF11.Syntax",
+      "kind": "definition",
+      "type": "(Iri Literal Blank : Type) →\n  [SizeOf Iri] → [SizeOf Literal] → [SizeOf Blank] → SizeOf (RDF11.GeneralizedTriple Iri Literal Blank)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.GeneralizedTriple",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GeneralizedTriple.casesOn",
+      "module": "RDF11.Syntax",
+      "kind": "definition",
+      "type": "{Iri Literal Blank : Type} →\n  {motive : RDF11.GeneralizedTriple Iri Literal Blank → Sort u} →\n    (t : RDF11.GeneralizedTriple Iri Literal Blank) →\n      ((subject predicate object : RDF11.Term Iri Literal Blank) →\n          motive { subject := subject, predicate := predicate, object := object }) →\n        motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.GeneralizedTriple",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GeneralizedTriple.ctorIdx",
+      "module": "RDF11.Syntax",
+      "kind": "definition",
+      "type": "{Iri Literal Blank : Type} → RDF11.GeneralizedTriple Iri Literal Blank → Nat",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.GeneralizedTriple",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GeneralizedTriple.hasBlank",
+      "module": "RDF11.Syntax",
+      "kind": "definition",
+      "type": "{Blank Iri Literal : Type} → Blank → RDF11.GeneralizedTriple Iri Literal Blank → Prop",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-GROUND-GRAPH"
+      ],
+      "parent_declaration_if_applicable": "RDF11.GeneralizedTriple",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GeneralizedTriple.hasLiteral",
+      "module": "RDF11.Syntax",
+      "kind": "definition",
+      "type": "{Literal Iri Blank : Type} → Literal → RDF11.GeneralizedTriple Iri Literal Blank → Prop",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.GeneralizedTriple",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GeneralizedTriple.mapBlank",
+      "module": "RDF11.Syntax",
+      "kind": "definition",
+      "type": "{A B Iri Literal : Type} → (A → B) → RDF11.GeneralizedTriple Iri Literal A → RDF11.GeneralizedTriple Iri Literal B",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.GeneralizedTriple",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GeneralizedTriple.mapBlank.eq_1",
+      "module": "RDF11.Syntax",
+      "kind": "theorem",
+      "type": "∀ {A B Iri Literal : Type} (f : A → B) (t : RDF11.GeneralizedTriple Iri Literal A),\n  RDF11.GeneralizedTriple.mapBlank f t =\n    { subject := RDF11.Term.mapBlank f t.subject, predicate := RDF11.Term.mapBlank f t.predicate,\n      object := RDF11.Term.mapBlank f t.object }",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.GeneralizedTriple.mapBlank",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GeneralizedTriple.mapBlank_comp",
+      "module": "RDF11.Syntax",
+      "kind": "theorem",
+      "type": "∀ {A B C Iri Literal : Type} (f : A → B) (h : B → C) (t : RDF11.GeneralizedTriple Iri Literal A),\n  RDF11.GeneralizedTriple.mapBlank h (RDF11.GeneralizedTriple.mapBlank f t) = RDF11.GeneralizedTriple.mapBlank (h ∘ f) t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.GeneralizedTriple",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GeneralizedTriple.mapBlank_id",
+      "module": "RDF11.Syntax",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal A : Type} (t : RDF11.GeneralizedTriple Iri Literal A), RDF11.GeneralizedTriple.mapBlank id t = t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.GeneralizedTriple",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GeneralizedTriple.mk",
+      "module": "RDF11.Syntax",
+      "kind": "constructor",
+      "type": "{Iri Literal Blank : Type} →\n  RDF11.Term Iri Literal Blank →\n    RDF11.Term Iri Literal Blank → RDF11.Term Iri Literal Blank → RDF11.GeneralizedTriple Iri Literal Blank",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.GeneralizedTriple",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GeneralizedTriple.mk._flat_ctor",
+      "module": "RDF11.Syntax",
+      "kind": "definition",
+      "type": "{Iri Literal Blank : Type} →\n  RDF11.Term Iri Literal Blank →\n    RDF11.Term Iri Literal Blank → RDF11.Term Iri Literal Blank → RDF11.GeneralizedTriple Iri Literal Blank",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.GeneralizedTriple.mk",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GeneralizedTriple.mk.inj",
+      "module": "RDF11.Syntax",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Blank : Type} {subject predicate object subject_1 predicate_1 object_1 : RDF11.Term Iri Literal Blank},\n  { subject := subject, predicate := predicate, object := object } =\n      { subject := subject_1, predicate := predicate_1, object := object_1 } →\n    subject = subject_1 ∧ predicate = predicate_1 ∧ object = object_1",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.GeneralizedTriple.mk",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GeneralizedTriple.mk.injEq",
+      "module": "RDF11.Syntax",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Blank : Type} (subject predicate object subject_1 predicate_1 object_1 : RDF11.Term Iri Literal Blank),\n  ({ subject := subject, predicate := predicate, object := object } =\n      { subject := subject_1, predicate := predicate_1, object := object_1 }) =\n    (subject = subject_1 ∧ predicate = predicate_1 ∧ object = object_1)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.GeneralizedTriple.mk",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GeneralizedTriple.mk.noConfusion",
+      "module": "RDF11.Syntax",
+      "kind": "definition",
+      "type": "{Iri Literal Blank : Type} →\n  {P : Sort u} →\n    {subject predicate object subject' predicate' object' : RDF11.Term Iri Literal Blank} →\n      { subject := subject, predicate := predicate, object := object } =\n          { subject := subject', predicate := predicate', object := object' } →\n        (subject ≍ subject' → predicate ≍ predicate' → object ≍ object' → P) → P",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.GeneralizedTriple.mk",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GeneralizedTriple.mk.sizeOf_spec",
+      "module": "RDF11.Syntax",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Blank : Type} [inst : SizeOf Iri] [inst_1 : SizeOf Literal] [inst_2 : SizeOf Blank]\n  (subject predicate object : RDF11.Term Iri Literal Blank),\n  sizeOf { subject := subject, predicate := predicate, object := object } =\n    1 + sizeOf subject + sizeOf predicate + sizeOf object",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.GeneralizedTriple.mk",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GeneralizedTriple.noConfusion",
+      "module": "RDF11.Syntax",
+      "kind": "definition",
+      "type": "{P : Sort u} →\n  {Iri Literal Blank : Type} →\n    {t : RDF11.GeneralizedTriple Iri Literal Blank} →\n      {Iri' Literal' Blank' : Type} →\n        {t' : RDF11.GeneralizedTriple Iri' Literal' Blank'} →\n          Iri = Iri' → Literal = Literal' → Blank = Blank' → t ≍ t' → RDF11.GeneralizedTriple.noConfusionType P t t'",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.GeneralizedTriple",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GeneralizedTriple.noConfusionType",
+      "module": "RDF11.Syntax",
+      "kind": "definition",
+      "type": "Sort u →\n  {Iri Literal Blank : Type} →\n    RDF11.GeneralizedTriple Iri Literal Blank →\n      {Iri' Literal' Blank' : Type} → RDF11.GeneralizedTriple Iri' Literal' Blank' → Sort u",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.GeneralizedTriple",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GeneralizedTriple.object",
+      "module": "RDF11.Syntax",
+      "kind": "definition",
+      "type": "{Iri Literal Blank : Type} → RDF11.GeneralizedTriple Iri Literal Blank → RDF11.Term Iri Literal Blank",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.GeneralizedTriple",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GeneralizedTriple.predicate",
+      "module": "RDF11.Syntax",
+      "kind": "definition",
+      "type": "{Iri Literal Blank : Type} → RDF11.GeneralizedTriple Iri Literal Blank → RDF11.Term Iri Literal Blank",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.GeneralizedTriple",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GeneralizedTriple.rec",
+      "module": "RDF11.Syntax",
+      "kind": "recursor",
+      "type": "{Iri Literal Blank : Type} →\n  {motive : RDF11.GeneralizedTriple Iri Literal Blank → Sort u} →\n    ((subject predicate object : RDF11.Term Iri Literal Blank) →\n        motive { subject := subject, predicate := predicate, object := object }) →\n      (t : RDF11.GeneralizedTriple Iri Literal Blank) → motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.GeneralizedTriple",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GeneralizedTriple.recOn",
+      "module": "RDF11.Syntax",
+      "kind": "definition",
+      "type": "{Iri Literal Blank : Type} →\n  {motive : RDF11.GeneralizedTriple Iri Literal Blank → Sort u} →\n    (t : RDF11.GeneralizedTriple Iri Literal Blank) →\n      ((subject predicate object : RDF11.Term Iri Literal Blank) →\n          motive { subject := subject, predicate := predicate, object := object }) →\n        motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.GeneralizedTriple",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GeneralizedTriple.subject",
+      "module": "RDF11.Syntax",
+      "kind": "definition",
+      "type": "{Iri Literal Blank : Type} → RDF11.GeneralizedTriple Iri Literal Blank → RDF11.Term Iri Literal Blank",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.GeneralizedTriple",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Graph",
+      "module": "RDF11.Syntax",
+      "kind": "definition",
+      "type": "Type → Type → Type → Type",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-GRAPH-SET"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Graph.generalize",
+      "module": "RDF11.Syntax",
+      "kind": "definition",
+      "type": "{Iri Literal Blank : Type} → RDF11.Graph Iri Literal Blank → RDF11.GeneralizedGraph Iri Literal Blank",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-GENERALIZED-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Graph",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.LogicallyEquivalent",
+      "module": "RDF11.Entailment",
+      "kind": "definition",
+      "type": "{Iri Literal B₁ B₂ : Type} → RDF11.GeneralizedGraph Iri Literal B₁ → RDF11.GeneralizedGraph Iri Literal B₂ → Prop",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-LOGICAL-EQUIVALENCE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ScopeExample.I",
+      "module": "RDF11.ScopeExample",
+      "kind": "definition",
+      "type": "RDF11.SimpleInterpretation Bool Empty Bool",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SCOPE-EXAMPLE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ScopeExample.I._proof_1",
+      "module": "RDF11.ScopeExample",
+      "kind": "theorem",
+      "type": "∃ x, True",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SCOPE-EXAMPLE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ScopeExample.I",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ScopeExample.I.match_1",
+      "module": "RDF11.ScopeExample",
+      "kind": "definition",
+      "type": "(motive : Empty → Sort u_1) → (l : Empty) → motive l",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SCOPE-EXAMPLE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ScopeExample.I",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ScopeExample.each_satisfiable",
+      "module": "RDF11.ScopeExample",
+      "kind": "theorem",
+      "type": "∀ (v : Bool), RDF11.ScopeExample.I.Satisfies (RDF11.ScopeExample.graph v)",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-SHARED-BLANK-SCOPE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ScopeExample.graph",
+      "module": "RDF11.ScopeExample",
+      "kind": "definition",
+      "type": "Bool → RDF11.GeneralizedGraph Bool Empty Unit",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SCOPE-EXAMPLE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ScopeExample.merge_does_not_entail_union",
+      "module": "RDF11.ScopeExample",
+      "kind": "theorem",
+      "type": "¬RDF11.SimplyEntails (RDF11.merge (RDF11.ScopeExample.graph false) (RDF11.ScopeExample.graph true))\n    (RDF11.Set.union (RDF11.ScopeExample.graph false) (RDF11.ScopeExample.graph true))",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-SHARED-BLANK-SCOPE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ScopeExample.merge_satisfied",
+      "module": "RDF11.ScopeExample",
+      "kind": "theorem",
+      "type": "RDF11.ScopeExample.I.Satisfies (RDF11.merge (RDF11.ScopeExample.graph false) (RDF11.ScopeExample.graph true))",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-SHARED-BLANK-SCOPE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ScopeExample.triple",
+      "module": "RDF11.ScopeExample",
+      "kind": "definition",
+      "type": "Bool → RDF11.GeneralizedTriple Bool Empty Unit",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SCOPE-EXAMPLE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ScopeExample.union_not_satisfied",
+      "module": "RDF11.ScopeExample",
+      "kind": "theorem",
+      "type": "¬RDF11.ScopeExample.I.Satisfies (RDF11.Set.union (RDF11.ScopeExample.graph false) (RDF11.ScopeExample.graph true))",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-SHARED-BLANK-SCOPE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ScopeExample.witness_forced",
+      "module": "RDF11.ScopeExample",
+      "kind": "theorem",
+      "type": "∀ (A : RDF11.ScopeExample.I.Assignment Unit) (v : Bool),\n  RDF11.ScopeExample.I.TripleTrue A (RDF11.ScopeExample.triple v) → Option.map Subtype.val (A ()) = some v",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SCOPE-EXAMPLE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Set",
+      "module": "RDF11.Set",
+      "kind": "definition",
+      "type": "Type u → Type u",
+      "role": "foundation",
+      "grounds": [
+        "FOUNDATION-SETS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Set.empty",
+      "module": "RDF11.Set",
+      "kind": "definition",
+      "type": "{α : Type u_1} → RDF11.Set α",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-EMPTY-GRAPH"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Set",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Set.ext",
+      "module": "RDF11.Set",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_1} {s t : RDF11.Set α}, (∀ (a : α), s a ↔ t a) → s = t",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-GRAPH-SET",
+        "MT11-SET-IDEMPOTENCE",
+        "MT11-TRUTH-DUPLICATION-INVARIANCE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Set",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Set.ext_iff",
+      "module": "RDF11.Set",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_1} {s t : RDF11.Set α}, s = t ↔ ∀ (a : α), s a ↔ t a",
+      "role": "foundation",
+      "grounds": [
+        "FOUNDATION-SETS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Set",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Set.image",
+      "module": "RDF11.Set",
+      "kind": "definition",
+      "type": "{α : Type u_1} → {β : Type u_2} → (α → β) → RDF11.Set α → RDF11.Set β",
+      "role": "foundation",
+      "grounds": [
+        "FOUNDATION-SETS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Set",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Set.image.eq_1",
+      "module": "RDF11.Syntax",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_1} {β : Type u_2} (f : α → β) (s : RDF11.Set α) (b : β), RDF11.Set.image f s b = ∃ a, s a ∧ f a = b",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Set.image",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Set.ofList",
+      "module": "RDF11.Set",
+      "kind": "definition",
+      "type": "{α : Type u_1} → List α → RDF11.Set α",
+      "role": "foundation",
+      "grounds": [
+        "FOUNDATION-SETS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Set",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Set.ofList.eq_1",
+      "module": "RDF11.Set",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_1} (xs : List α) (a : α), RDF11.Set.ofList xs a = (a ∈ xs)",
+      "role": "foundation",
+      "grounds": [
+        "FOUNDATION-SETS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Set.ofList",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Set.ofList_repeat",
+      "module": "RDF11.Set",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_1} (a : α), RDF11.Set.ofList [a, a] = RDF11.Set.ofList [a]",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-SET-IDEMPOTENCE",
+        "MT11-TRUTH-DUPLICATION-INVARIANCE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Set",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Set.singleton",
+      "module": "RDF11.Set",
+      "kind": "definition",
+      "type": "{α : Type u_1} → α → RDF11.Set α",
+      "role": "foundation",
+      "grounds": [
+        "FOUNDATION-SETS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Set",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Set.subset",
+      "module": "RDF11.Set",
+      "kind": "definition",
+      "type": "{α : Type u_1} → RDF11.Set α → RDF11.Set α → Prop",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-SUBGRAPH"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Set",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Set.subset_refl",
+      "module": "RDF11.Set",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_1} (s : RDF11.Set α), s.subset s",
+      "role": "foundation",
+      "grounds": [
+        "FOUNDATION-SETS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Set",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Set.subset_trans",
+      "module": "RDF11.Set",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_1} {s t u : RDF11.Set α}, s.subset t → t.subset u → s.subset u",
+      "role": "foundation",
+      "grounds": [
+        "FOUNDATION-SETS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Set",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Set.union",
+      "module": "RDF11.Set",
+      "kind": "definition",
+      "type": "{α : Type u_1} → RDF11.Set α → RDF11.Set α → RDF11.Set α",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-UNION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Set",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Set.union_assoc",
+      "module": "RDF11.Set",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_1} (s t u : RDF11.Set α), (s.union t).union u = s.union (t.union u)",
+      "role": "foundation",
+      "grounds": [
+        "FOUNDATION-SETS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Set",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Set.union_comm",
+      "module": "RDF11.Set",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_1} (s t : RDF11.Set α), s.union t = t.union s",
+      "role": "foundation",
+      "grounds": [
+        "FOUNDATION-SETS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Set",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Set.union_idempotent",
+      "module": "RDF11.Set",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_1} (s : RDF11.Set α), s.union s = s",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-SET-IDEMPOTENCE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Set",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation",
+      "module": "RDF11.Simple",
+      "kind": "inductive",
+      "type": "Type → Type → Type u → Type u",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-BLANK-ASSIGNMENT-NONGLOBAL"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.Assignment",
+      "module": "RDF11.Simple",
+      "kind": "definition",
+      "type": "{Iri Literal : Type} → {U : Type u_1} → RDF11.SimpleInterpretation Iri Literal U → Type → Type u_1",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-BLANK-ASSIGNMENT"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.AssignmentOn",
+      "module": "RDF11.Simple",
+      "kind": "definition",
+      "type": "{Iri Literal : Type} →\n  {U : Type u_1} →\n    {Blank : Type} →\n      (I : RDF11.SimpleInterpretation Iri Literal U) →\n        RDF11.GeneralizedGraph Iri Literal Blank → I.Assignment Blank → Prop",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-BLANK-ASSIGNMENT"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.GraphTrue",
+      "module": "RDF11.Simple",
+      "kind": "definition",
+      "type": "{Iri Literal : Type} →\n  {U : Type u_1} →\n    {Blank : Type} →\n      (I : RDF11.SimpleInterpretation Iri Literal U) →\n        I.Assignment Blank → RDF11.GeneralizedGraph Iri Literal Blank → Prop",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-GRAPH-TRUTH"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.IEXT",
+      "module": "RDF11.Simple",
+      "kind": "definition",
+      "type": "{Iri Literal : Type} →\n  {U : Type u} →\n    (self : RDF11.SimpleInterpretation Iri Literal U) →\n      { p // self.IP p } → RDF11.Set ({ x // self.IR x } × { y // self.IR y })",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-SIMPLE-IEXT"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.IL",
+      "module": "RDF11.Simple",
+      "kind": "definition",
+      "type": "{Iri Literal : Type} →\n  {U : Type u} → (self : RDF11.SimpleInterpretation Iri Literal U) → Literal → Option { x // self.IR x }",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-SIMPLE-IL"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.IP",
+      "module": "RDF11.Simple",
+      "kind": "definition",
+      "type": "{Iri Literal : Type} → {U : Type u} → RDF11.SimpleInterpretation Iri Literal U → RDF11.Set U",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-SIMPLE-IP"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.IR",
+      "module": "RDF11.Simple",
+      "kind": "definition",
+      "type": "{Iri Literal : Type} → {U : Type u} → RDF11.SimpleInterpretation Iri Literal U → RDF11.Set U",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-SIMPLE-IR"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.IR_nonempty",
+      "module": "RDF11.Simple",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u} (self : RDF11.SimpleInterpretation Iri Literal U), ∃ x, self.IR x",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-SIMPLE-IR"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.IS",
+      "module": "RDF11.Simple",
+      "kind": "definition",
+      "type": "{Iri Literal : Type} →\n  {U : Type u} → (self : RDF11.SimpleInterpretation Iri Literal U) → Iri → { x // self.IR x ∨ self.IP x }",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-SIMPLE-IS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.Property",
+      "module": "RDF11.Simple",
+      "kind": "definition",
+      "type": "{Iri Literal : Type} → {U : Type u_1} → RDF11.SimpleInterpretation Iri Literal U → Type u_1",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-SIMPLE-IEXT"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.Resource",
+      "module": "RDF11.Simple",
+      "kind": "definition",
+      "type": "{Iri Literal : Type} → {U : Type u_1} → RDF11.SimpleInterpretation Iri Literal U → Type u_1",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-SIMPLE-IEXT"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.Satisfies",
+      "module": "RDF11.Simple",
+      "kind": "definition",
+      "type": "{Iri Literal : Type} →\n  {U : Type u_1} →\n    {Blank : Type} → RDF11.SimpleInterpretation Iri Literal U → RDF11.GeneralizedGraph Iri Literal Blank → Prop",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-BLANK-ASSIGNMENT-NONGLOBAL",
+        "MT11-EXISTENTIAL-GRAPH-TRUTH",
+        "MT11-SATISFACTION",
+        "MT11-TRUTH-DUPLICATION-INVARIANCE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.TripleTrue",
+      "module": "RDF11.Simple",
+      "kind": "definition",
+      "type": "{Iri Literal : Type} →\n  {U : Type u_1} →\n    {Blank : Type} →\n      (I : RDF11.SimpleInterpretation Iri Literal U) →\n        I.Assignment Blank → RDF11.GeneralizedTriple Iri Literal Blank → Prop",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-TRIPLE-TRUTH"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.TripleTrue.eq_1",
+      "module": "RDF11.Simple",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u_1} {Blank : Type} (I : RDF11.SimpleInterpretation Iri Literal U)\n  (A : I.Assignment Blank) (t : RDF11.GeneralizedTriple Iri Literal Blank),\n  I.TripleTrue A t =\n    ∃ p s o,\n      I.denote A t.predicate = some p.val ∧\n        I.denote A t.subject = some s.val ∧ I.denote A t.object = some o.val ∧ I.IEXT p (s, o)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation.TripleTrue",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation._sizeOf_1",
+      "module": "RDF11.Simple",
+      "kind": "definition",
+      "type": "{Iri Literal : Type} →\n  {U : Type u} → [SizeOf Iri] → [SizeOf Literal] → [SizeOf U] → RDF11.SimpleInterpretation Iri Literal U → Nat",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation._sizeOf_inst",
+      "module": "RDF11.Simple",
+      "kind": "definition",
+      "type": "(Iri Literal : Type) →\n  (U : Type u) → [SizeOf Iri] → [SizeOf Literal] → [SizeOf U] → SizeOf (RDF11.SimpleInterpretation Iri Literal U)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.casesOn",
+      "module": "RDF11.Simple",
+      "kind": "definition",
+      "type": "{Iri Literal : Type} →\n  {U : Type u} →\n    {motive : RDF11.SimpleInterpretation Iri Literal U → Sort u_1} →\n      (t : RDF11.SimpleInterpretation Iri Literal U) →\n        ((IR : RDF11.Set U) →\n            (IR_nonempty : ∃ x, IR x) →\n              (IP : RDF11.Set U) →\n                (IEXT : { p // IP p } → RDF11.Set ({ x // IR x } × { y // IR y })) →\n                  (IS : Iri → { x // IR x ∨ IP x }) →\n                    (IL : Literal → Option { x // IR x }) →\n                      motive { IR := IR, IR_nonempty := IR_nonempty, IP := IP, IEXT := IEXT, IS := IS, IL := IL }) →\n          motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.ctorIdx",
+      "module": "RDF11.Simple",
+      "kind": "definition",
+      "type": "{Iri Literal : Type} → {U : Type u} → RDF11.SimpleInterpretation Iri Literal U → Nat",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.denote",
+      "module": "RDF11.Simple",
+      "kind": "definition",
+      "type": "{Iri Literal : Type} →\n  {U : Type u_1} →\n    {Blank : Type} →\n      (I : RDF11.SimpleInterpretation Iri Literal U) → I.Assignment Blank → RDF11.Term Iri Literal Blank → Option U",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-BLANK-ASSIGNMENT",
+        "MT11-TERM-DENOTATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.denote.eq_1",
+      "module": "RDF11.Simple",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u_1} {Blank : Type} (I : RDF11.SimpleInterpretation Iri Literal U)\n  (A : I.Assignment Blank) (i : Iri), I.denote A (RDF11.Term.iri i) = some (I.IS i).val",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation.denote",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.denote.eq_2",
+      "module": "RDF11.Simple",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u_1} {Blank : Type} (I : RDF11.SimpleInterpretation Iri Literal U)\n  (A : I.Assignment Blank) (l : Literal), I.denote A (RDF11.Term.literal l) = Option.map Subtype.val (I.IL l)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation.denote",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.denote.eq_3",
+      "module": "RDF11.Simple",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u_1} {Blank : Type} (I : RDF11.SimpleInterpretation Iri Literal U)\n  (A : I.Assignment Blank) (b : Blank), I.denote A (RDF11.Term.blank b) = Option.map Subtype.val (A b)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation.denote",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.denote.match_1",
+      "module": "RDF11.Simple",
+      "kind": "definition",
+      "type": "{Iri Literal Blank : Type} →\n  (motive : RDF11.Term Iri Literal Blank → Sort u_1) →\n    (x : RDF11.Term Iri Literal Blank) →\n      ((i : Iri) → motive (RDF11.Term.iri i)) →\n        ((l : Literal) → motive (RDF11.Term.literal l)) → ((b : Blank) → motive (RDF11.Term.blank b)) → motive x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation.denote",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.denote_agrees",
+      "module": "RDF11.Simple",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u_1} {Blank : Type} (I : RDF11.SimpleInterpretation Iri Literal U)\n  {A B : I.Assignment Blank} (t : RDF11.Term Iri Literal Blank),\n  (∀ (b : Blank), RDF11.Term.hasBlank b t → A b = B b) → I.denote A t = I.denote B t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.denote_mapBlank",
+      "module": "RDF11.Merge",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u_1} {B₁ B₂ : Type} (I : RDF11.SimpleInterpretation Iri Literal U) (f : B₁ → B₂)\n  (A : I.Assignment B₂) (t : RDF11.Term Iri Literal B₁), I.denote A (RDF11.Term.mapBlank f t) = I.denote (A ∘ f) t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-MERGE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.graphTrue_mapBlank",
+      "module": "RDF11.Merge",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u_1} {B₁ B₂ : Type} (I : RDF11.SimpleInterpretation Iri Literal U) (f : B₁ → B₂)\n  (A : I.Assignment B₂) (G : RDF11.GeneralizedGraph Iri Literal B₁),\n  I.GraphTrue A (RDF11.GeneralizedGraph.mapBlank f G) ↔ I.GraphTrue (A ∘ f) G",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-MERGE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.graphTrue_restrict",
+      "module": "RDF11.Simple",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u_1} {Blank : Type} (I : RDF11.SimpleInterpretation Iri Literal U)\n  (G : RDF11.GeneralizedGraph Iri Literal Blank) (A : I.Assignment Blank),\n  I.GraphTrue (I.restrict G A) G ↔ I.GraphTrue A G",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.graphTrue_union",
+      "module": "RDF11.Merge",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u_1} {B : Type} (I : RDF11.SimpleInterpretation Iri Literal U) (A : I.Assignment B)\n  (G H : RDF11.GeneralizedGraph Iri Literal B), I.GraphTrue A (RDF11.Set.union G H) ↔ I.GraphTrue A G ∧ I.GraphTrue A H",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-MERGE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.graph_with_undefined_literal_false",
+      "module": "RDF11.Simple",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u_1} {Blank : Type} (I : RDF11.SimpleInterpretation Iri Literal U)\n  (G : RDF11.GeneralizedGraph Iri Literal Blank) (l : Literal),\n  I.IL l = none →\n    ∀ (t : RDF11.GeneralizedTriple Iri Literal Blank), G t → RDF11.GeneralizedTriple.hasLiteral l t → ¬I.Satisfies G",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-UNDEFINED-LITERAL-FALSE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.ground_satisfaction",
+      "module": "RDF11.Simple",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u_1} {Blank : Type} (I : RDF11.SimpleInterpretation Iri Literal U)\n  (G : RDF11.GeneralizedGraph Iri Literal Blank), G.ground → (I.Satisfies G ↔ I.GraphTrue (fun x => none) G)",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-GRAPH-TRUTH"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.mk",
+      "module": "RDF11.Simple",
+      "kind": "constructor",
+      "type": "{Iri Literal : Type} →\n  {U : Type u} →\n    (IR : RDF11.Set U) →\n      (∃ x, IR x) →\n        (IP : RDF11.Set U) →\n          ({ p // IP p } → RDF11.Set ({ x // IR x } × { y // IR y })) →\n            (Iri → { x // IR x ∨ IP x }) → (Literal → Option { x // IR x }) → RDF11.SimpleInterpretation Iri Literal U",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.mk._flat_ctor",
+      "module": "RDF11.Simple",
+      "kind": "definition",
+      "type": "{Iri Literal : Type} →\n  {U : Type u} →\n    (IR : RDF11.Set U) →\n      (∃ x, IR x) →\n        (IP : RDF11.Set U) →\n          ({ p // IP p } → RDF11.Set ({ x // IR x } × { y // IR y })) →\n            (Iri → { x // IR x ∨ IP x }) → (Literal → Option { x // IR x }) → RDF11.SimpleInterpretation Iri Literal U",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation.mk",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.mk.inj",
+      "module": "RDF11.Simple",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u} {IR : RDF11.Set U} {IR_nonempty : ∃ x, IR x} {IP : RDF11.Set U}\n  {IEXT : { p // IP p } → RDF11.Set ({ x // IR x } × { y // IR y })} {IS : Iri → { x // IR x ∨ IP x }}\n  {IL : Literal → Option { x // IR x }} {IR_1 : RDF11.Set U} {IR_nonempty_1 : ∃ x, IR_1 x} {IP_1 : RDF11.Set U}\n  {IEXT_1 : { p // IP_1 p } → RDF11.Set ({ x // IR_1 x } × { y // IR_1 y })} {IS_1 : Iri → { x // IR_1 x ∨ IP_1 x }}\n  {IL_1 : Literal → Option { x // IR_1 x }},\n  { IR := IR, IR_nonempty := IR_nonempty, IP := IP, IEXT := IEXT, IS := IS, IL := IL } =\n      { IR := IR_1, IR_nonempty := IR_nonempty_1, IP := IP_1, IEXT := IEXT_1, IS := IS_1, IL := IL_1 } →\n    IR = IR_1 ∧ IP = IP_1 ∧ IEXT ≍ IEXT_1 ∧ IS ≍ IS_1 ∧ IL ≍ IL_1",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation.mk",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.mk.injEq",
+      "module": "RDF11.Simple",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u} (IR : RDF11.Set U) (IR_nonempty : ∃ x, IR x) (IP : RDF11.Set U)\n  (IEXT : { p // IP p } → RDF11.Set ({ x // IR x } × { y // IR y })) (IS : Iri → { x // IR x ∨ IP x })\n  (IL : Literal → Option { x // IR x }) (IR_1 : RDF11.Set U) (IR_nonempty_1 : ∃ x, IR_1 x) (IP_1 : RDF11.Set U)\n  (IEXT_1 : { p // IP_1 p } → RDF11.Set ({ x // IR_1 x } × { y // IR_1 y })) (IS_1 : Iri → { x // IR_1 x ∨ IP_1 x })\n  (IL_1 : Literal → Option { x // IR_1 x }),\n  ({ IR := IR, IR_nonempty := IR_nonempty, IP := IP, IEXT := IEXT, IS := IS, IL := IL } =\n      { IR := IR_1, IR_nonempty := IR_nonempty_1, IP := IP_1, IEXT := IEXT_1, IS := IS_1, IL := IL_1 }) =\n    (IR = IR_1 ∧ IP = IP_1 ∧ IEXT ≍ IEXT_1 ∧ IS ≍ IS_1 ∧ IL ≍ IL_1)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation.mk",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.mk.noConfusion",
+      "module": "RDF11.Simple",
+      "kind": "definition",
+      "type": "{Iri Literal : Type} →\n  {U : Type u} →\n    {P : Sort u_1} →\n      {IR : RDF11.Set U} →\n        {IR_nonempty : ∃ x, IR x} →\n          {IP : RDF11.Set U} →\n            {IEXT : { p // IP p } → RDF11.Set ({ x // IR x } × { y // IR y })} →\n              {IS : Iri → { x // IR x ∨ IP x }} →\n                {IL : Literal → Option { x // IR x }} →\n                  {IR' : RDF11.Set U} →\n                    {IR_nonempty' : ∃ x, IR' x} →\n                      {IP' : RDF11.Set U} →\n                        {IEXT' : { p // IP' p } → RDF11.Set ({ x // IR' x } × { y // IR' y })} →\n                          {IS' : Iri → { x // IR' x ∨ IP' x }} →\n                            {IL' : Literal → Option { x // IR' x }} →\n                              { IR := IR, IR_nonempty := IR_nonempty, IP := IP, IEXT := IEXT, IS := IS, IL := IL } =\n                                  { IR := IR', IR_nonempty := IR_nonempty', IP := IP', IEXT := IEXT', IS := IS',\n                                    IL := IL' } →\n                                (IR ≍ IR' → IP ≍ IP' → IEXT ≍ IEXT' → IS ≍ IS' → IL ≍ IL' → P) → P",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation.mk",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.mk.sizeOf_spec",
+      "module": "RDF11.Simple",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u} [inst : SizeOf Iri] [inst_1 : SizeOf Literal] [inst_2 : SizeOf U] (IR : RDF11.Set U)\n  (IR_nonempty : ∃ x, IR x) (IP : RDF11.Set U) (IEXT : { p // IP p } → RDF11.Set ({ x // IR x } × { y // IR y }))\n  (IS : Iri → { x // IR x ∨ IP x }) (IL : Literal → Option { x // IR x }),\n  sizeOf { IR := IR, IR_nonempty := IR_nonempty, IP := IP, IEXT := IEXT, IS := IS, IL := IL } = 1 + sizeOf IR_nonempty",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation.mk",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.noConfusion",
+      "module": "RDF11.Simple",
+      "kind": "definition",
+      "type": "{P : Sort u_1} →\n  {Iri Literal : Type} →\n    {U : Type u} →\n      {t : RDF11.SimpleInterpretation Iri Literal U} →\n        {Iri' Literal' : Type} →\n          {U' : Type u} →\n            {t' : RDF11.SimpleInterpretation Iri' Literal' U'} →\n              Iri = Iri' → Literal = Literal' → U = U' → t ≍ t' → RDF11.SimpleInterpretation.noConfusionType P t t'",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.noConfusionType",
+      "module": "RDF11.Simple",
+      "kind": "definition",
+      "type": "Sort u_1 →\n  {Iri Literal : Type} →\n    {U : Type u} →\n      RDF11.SimpleInterpretation Iri Literal U →\n        {Iri' Literal' : Type} → {U' : Type u} → RDF11.SimpleInterpretation Iri' Literal' U' → Sort u_1",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.rec",
+      "module": "RDF11.Simple",
+      "kind": "recursor",
+      "type": "{Iri Literal : Type} →\n  {U : Type u} →\n    {motive : RDF11.SimpleInterpretation Iri Literal U → Sort u_1} →\n      ((IR : RDF11.Set U) →\n          (IR_nonempty : ∃ x, IR x) →\n            (IP : RDF11.Set U) →\n              (IEXT : { p // IP p } → RDF11.Set ({ x // IR x } × { y // IR y })) →\n                (IS : Iri → { x // IR x ∨ IP x }) →\n                  (IL : Literal → Option { x // IR x }) →\n                    motive { IR := IR, IR_nonempty := IR_nonempty, IP := IP, IEXT := IEXT, IS := IS, IL := IL }) →\n        (t : RDF11.SimpleInterpretation Iri Literal U) → motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.recOn",
+      "module": "RDF11.Simple",
+      "kind": "definition",
+      "type": "{Iri Literal : Type} →\n  {U : Type u} →\n    {motive : RDF11.SimpleInterpretation Iri Literal U → Sort u_1} →\n      (t : RDF11.SimpleInterpretation Iri Literal U) →\n        ((IR : RDF11.Set U) →\n            (IR_nonempty : ∃ x, IR x) →\n              (IP : RDF11.Set U) →\n                (IEXT : { p // IP p } → RDF11.Set ({ x // IR x } × { y // IR y })) →\n                  (IS : Iri → { x // IR x ∨ IP x }) →\n                    (IL : Literal → Option { x // IR x }) →\n                      motive { IR := IR, IR_nonempty := IR_nonempty, IP := IP, IEXT := IEXT, IS := IS, IL := IL }) →\n          motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.restrict",
+      "module": "RDF11.Simple",
+      "kind": "definition",
+      "type": "{Iri Literal : Type} →\n  {U : Type u_1} →\n    {Blank : Type} →\n      (I : RDF11.SimpleInterpretation Iri Literal U) →\n        RDF11.GeneralizedGraph Iri Literal Blank → I.Assignment Blank → I.Assignment Blank",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.restrict.eq_1",
+      "module": "RDF11.Simple",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u_1} {Blank : Type} (I : RDF11.SimpleInterpretation Iri Literal U)\n  (G : RDF11.GeneralizedGraph Iri Literal Blank) (A : I.Assignment Blank) (b : Blank),\n  I.restrict G A b = if G.hasBlank b then A b else none",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation.restrict",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.satisfies_empty",
+      "module": "RDF11.Simple",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u_1} {Blank : Type} (I : RDF11.SimpleInterpretation Iri Literal U),\n  I.Satisfies RDF11.Set.empty",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-EMPTY-TRUE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.satisfies_iff_exists_graphTrue",
+      "module": "RDF11.Simple",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u_1} {Blank : Type} (I : RDF11.SimpleInterpretation Iri Literal U)\n  (G : RDF11.GeneralizedGraph Iri Literal Blank), I.Satisfies G ↔ ∃ A, I.GraphTrue A G",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-BLANK-ASSIGNMENT"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.satisfies_mapBlank_implies",
+      "module": "RDF11.Merge",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u_1} {B₁ B₂ : Type} (I : RDF11.SimpleInterpretation Iri Literal U) (f : B₁ → B₂)\n  (G : RDF11.GeneralizedGraph Iri Literal B₁), I.Satisfies (RDF11.GeneralizedGraph.mapBlank f G) → I.Satisfies G",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-MERGE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.satisfies_subgraph",
+      "module": "RDF11.Simple",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u_1} {Blank : Type} (I : RDF11.SimpleInterpretation Iri Literal U)\n  {G H : RDF11.GeneralizedGraph Iri Literal Blank}, RDF11.Set.subset H G → I.Satisfies G → I.Satisfies H",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-SUBGRAPH-ENTAILMENT"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.tripleTrue_agrees",
+      "module": "RDF11.Simple",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u_1} {Blank : Type} (I : RDF11.SimpleInterpretation Iri Literal U)\n  {A B : I.Assignment Blank} (t : RDF11.GeneralizedTriple Iri Literal Blank),\n  (∀ (b : Blank), RDF11.GeneralizedTriple.hasBlank b t → A b = B b) → (I.TripleTrue A t ↔ I.TripleTrue B t)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.tripleTrue_blank_defined",
+      "module": "RDF11.Simple",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u_1} {Blank : Type} (I : RDF11.SimpleInterpretation Iri Literal U)\n  {A : I.Assignment Blank} {t : RDF11.GeneralizedTriple Iri Literal Blank},\n  I.TripleTrue A t → ∀ {b : Blank}, RDF11.GeneralizedTriple.hasBlank b t → ∃ x, A b = some x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.tripleTrue_mapBlank",
+      "module": "RDF11.Merge",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u_1} {B₁ B₂ : Type} (I : RDF11.SimpleInterpretation Iri Literal U) (f : B₁ → B₂)\n  (A : I.Assignment B₂) (t : RDF11.GeneralizedTriple Iri Literal B₁),\n  I.TripleTrue A (RDF11.GeneralizedTriple.mapBlank f t) ↔ I.TripleTrue (A ∘ f) t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-MERGE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.undefined_literal_any_position",
+      "module": "RDF11.Simple",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u_1} {Blank : Type} (I : RDF11.SimpleInterpretation Iri Literal U)\n  (A : I.Assignment Blank) (l : Literal),\n  I.IL l = none →\n    ∀ (t : RDF11.GeneralizedTriple Iri Literal Blank), RDF11.GeneralizedTriple.hasLiteral l t → ¬I.TripleTrue A t",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-UNDEFINED-LITERAL-FALSE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.undefined_literal_false",
+      "module": "RDF11.Simple",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u_1} {Blank : Type} (I : RDF11.SimpleInterpretation Iri Literal U)\n  (A : I.Assignment Blank) (l : Literal),\n  I.IL l = none →\n    ∀ (s p : RDF11.Term Iri Literal Blank),\n      ¬I.TripleTrue A { subject := s, predicate := p, object := RDF11.Term.literal l }",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimplyEntails",
+      "module": "RDF11.Entailment",
+      "kind": "definition",
+      "type": "{Iri Literal B₁ B₂ : Type} → RDF11.GeneralizedGraph Iri Literal B₁ → RDF11.GeneralizedGraph Iri Literal B₂ → Prop",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-SIMPLE-ENTAILMENT"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Subject",
+      "module": "RDF11.Syntax",
+      "kind": "inductive",
+      "type": "Type → Type → Type",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-TRIPLE-TERM-DOMAINS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Subject._sizeOf_1",
+      "module": "RDF11.Syntax",
+      "kind": "definition",
+      "type": "{Iri Blank : Type} → [SizeOf Iri] → [SizeOf Blank] → RDF11.Subject Iri Blank → Nat",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Subject",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Subject._sizeOf_inst",
+      "module": "RDF11.Syntax",
+      "kind": "definition",
+      "type": "(Iri Blank : Type) → [SizeOf Iri] → [SizeOf Blank] → SizeOf (RDF11.Subject Iri Blank)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Subject",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Subject.blank",
+      "module": "RDF11.Syntax",
+      "kind": "constructor",
+      "type": "{Iri Blank : Type} → Blank → RDF11.Subject Iri Blank",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Subject",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Subject.blank.elim",
+      "module": "RDF11.Syntax",
+      "kind": "definition",
+      "type": "{Iri Blank : Type} →\n  {motive : RDF11.Subject Iri Blank → Sort u} →\n    (t : RDF11.Subject Iri Blank) → t.ctorIdx = 1 → ((a : Blank) → motive (RDF11.Subject.blank a)) → motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Subject.blank",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Subject.blank.inj",
+      "module": "RDF11.Syntax",
+      "kind": "theorem",
+      "type": "∀ {Iri Blank : Type} {a a_1 : Blank}, RDF11.Subject.blank a = RDF11.Subject.blank a_1 → a = a_1",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Subject.blank",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Subject.blank.injEq",
+      "module": "RDF11.Syntax",
+      "kind": "theorem",
+      "type": "∀ {Iri Blank : Type} (a a_1 : Blank), (RDF11.Subject.blank a = RDF11.Subject.blank a_1) = (a = a_1)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Subject.blank",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Subject.blank.noConfusion",
+      "module": "RDF11.Syntax",
+      "kind": "definition",
+      "type": "{Iri Blank : Type} → {P : Sort u} → {a a' : Blank} → RDF11.Subject.blank a = RDF11.Subject.blank a' → (a ≍ a' → P) → P",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Subject.blank",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Subject.blank.sizeOf_spec",
+      "module": "RDF11.Syntax",
+      "kind": "theorem",
+      "type": "∀ {Iri Blank : Type} [inst : SizeOf Iri] [inst_1 : SizeOf Blank] (a : Blank),\n  sizeOf (RDF11.Subject.blank a) = 1 + sizeOf a",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Subject.blank",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Subject.casesOn",
+      "module": "RDF11.Syntax",
+      "kind": "definition",
+      "type": "{Iri Blank : Type} →\n  {motive : RDF11.Subject Iri Blank → Sort u} →\n    (t : RDF11.Subject Iri Blank) →\n      ((a : Iri) → motive (RDF11.Subject.iri a)) → ((a : Blank) → motive (RDF11.Subject.blank a)) → motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Subject",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Subject.ctorElim",
+      "module": "RDF11.Syntax",
+      "kind": "definition",
+      "type": "{Iri Blank : Type} →\n  {motive : RDF11.Subject Iri Blank → Sort u} →\n    (ctorIdx : Nat) →\n      (t : RDF11.Subject Iri Blank) → ctorIdx = t.ctorIdx → RDF11.Subject.ctorElimType ctorIdx → motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Subject",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Subject.ctorElimType",
+      "module": "RDF11.Syntax",
+      "kind": "definition",
+      "type": "{Iri Blank : Type} → {motive : RDF11.Subject Iri Blank → Sort u} → Nat → Sort (max 1 u)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Subject",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Subject.ctorIdx",
+      "module": "RDF11.Syntax",
+      "kind": "definition",
+      "type": "{Iri Blank : Type} → RDF11.Subject Iri Blank → Nat",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Subject",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Subject.iri",
+      "module": "RDF11.Syntax",
+      "kind": "constructor",
+      "type": "{Iri Blank : Type} → Iri → RDF11.Subject Iri Blank",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Subject",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Subject.iri.elim",
+      "module": "RDF11.Syntax",
+      "kind": "definition",
+      "type": "{Iri Blank : Type} →\n  {motive : RDF11.Subject Iri Blank → Sort u} →\n    (t : RDF11.Subject Iri Blank) → t.ctorIdx = 0 → ((a : Iri) → motive (RDF11.Subject.iri a)) → motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Subject.iri",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Subject.iri.inj",
+      "module": "RDF11.Syntax",
+      "kind": "theorem",
+      "type": "∀ {Iri Blank : Type} {a a_1 : Iri}, RDF11.Subject.iri a = RDF11.Subject.iri a_1 → a = a_1",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Subject.iri",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Subject.iri.injEq",
+      "module": "RDF11.Syntax",
+      "kind": "theorem",
+      "type": "∀ {Iri Blank : Type} (a a_1 : Iri), (RDF11.Subject.iri a = RDF11.Subject.iri a_1) = (a = a_1)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Subject.iri",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Subject.iri.noConfusion",
+      "module": "RDF11.Syntax",
+      "kind": "definition",
+      "type": "{Iri Blank : Type} → {P : Sort u} → {a a' : Iri} → RDF11.Subject.iri a = RDF11.Subject.iri a' → (a ≍ a' → P) → P",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Subject.iri",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Subject.iri.sizeOf_spec",
+      "module": "RDF11.Syntax",
+      "kind": "theorem",
+      "type": "∀ {Iri Blank : Type} [inst : SizeOf Iri] [inst_1 : SizeOf Blank] (a : Iri), sizeOf (RDF11.Subject.iri a) = 1 + sizeOf a",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Subject.iri",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Subject.noConfusion",
+      "module": "RDF11.Syntax",
+      "kind": "definition",
+      "type": "{P : Sort u} →\n  {Iri Blank : Type} →\n    {t : RDF11.Subject Iri Blank} →\n      {Iri' Blank' : Type} →\n        {t' : RDF11.Subject Iri' Blank'} → Iri = Iri' → Blank = Blank' → t ≍ t' → RDF11.Subject.noConfusionType P t t'",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Subject",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Subject.noConfusionType",
+      "module": "RDF11.Syntax",
+      "kind": "definition",
+      "type": "Sort u → {Iri Blank : Type} → RDF11.Subject Iri Blank → {Iri' Blank' : Type} → RDF11.Subject Iri' Blank' → Sort u",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Subject",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Subject.rec",
+      "module": "RDF11.Syntax",
+      "kind": "recursor",
+      "type": "{Iri Blank : Type} →\n  {motive : RDF11.Subject Iri Blank → Sort u} →\n    ((a : Iri) → motive (RDF11.Subject.iri a)) →\n      ((a : Blank) → motive (RDF11.Subject.blank a)) → (t : RDF11.Subject Iri Blank) → motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Subject",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Subject.recOn",
+      "module": "RDF11.Syntax",
+      "kind": "definition",
+      "type": "{Iri Blank : Type} →\n  {motive : RDF11.Subject Iri Blank → Sort u} →\n    (t : RDF11.Subject Iri Blank) →\n      ((a : Iri) → motive (RDF11.Subject.iri a)) → ((a : Blank) → motive (RDF11.Subject.blank a)) → motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Subject",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Subject.toTerm",
+      "module": "RDF11.Syntax",
+      "kind": "definition",
+      "type": "{Iri Blank Literal : Type} → RDF11.Subject Iri Blank → RDF11.Term Iri Literal Blank",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Subject",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Subject.toTerm.match_1",
+      "module": "RDF11.Syntax",
+      "kind": "definition",
+      "type": "{Iri Blank : Type} →\n  (motive : RDF11.Subject Iri Blank → Sort u_1) →\n    (x : RDF11.Subject Iri Blank) →\n      ((i : Iri) → motive (RDF11.Subject.iri i)) → ((b : Blank) → motive (RDF11.Subject.blank b)) → motive x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Subject.toTerm",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Term",
+      "module": "RDF11.Syntax",
+      "kind": "inductive",
+      "type": "Type → Type → Type → Type",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-TRIPLE-TERM-DOMAINS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Term._sizeOf_1",
+      "module": "RDF11.Syntax",
+      "kind": "definition",
+      "type": "{Iri Literal Blank : Type} → [SizeOf Iri] → [SizeOf Literal] → [SizeOf Blank] → RDF11.Term Iri Literal Blank → Nat",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Term",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Term._sizeOf_inst",
+      "module": "RDF11.Syntax",
+      "kind": "definition",
+      "type": "(Iri Literal Blank : Type) → [SizeOf Iri] → [SizeOf Literal] → [SizeOf Blank] → SizeOf (RDF11.Term Iri Literal Blank)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Term",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Term.blank",
+      "module": "RDF11.Syntax",
+      "kind": "constructor",
+      "type": "{Iri Literal Blank : Type} → Blank → RDF11.Term Iri Literal Blank",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Term",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Term.blank.elim",
+      "module": "RDF11.Syntax",
+      "kind": "definition",
+      "type": "{Iri Literal Blank : Type} →\n  {motive : RDF11.Term Iri Literal Blank → Sort u} →\n    (t : RDF11.Term Iri Literal Blank) → t.ctorIdx = 2 → ((a : Blank) → motive (RDF11.Term.blank a)) → motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Term.blank",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Term.blank.inj",
+      "module": "RDF11.Syntax",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Blank : Type} {a a_1 : Blank}, RDF11.Term.blank a = RDF11.Term.blank a_1 → a = a_1",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Term.blank",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Term.blank.injEq",
+      "module": "RDF11.Syntax",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Blank : Type} (a a_1 : Blank), (RDF11.Term.blank a = RDF11.Term.blank a_1) = (a = a_1)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Term.blank",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Term.blank.noConfusion",
+      "module": "RDF11.Syntax",
+      "kind": "definition",
+      "type": "{Iri Literal Blank : Type} → {P : Sort u} → {a a' : Blank} → RDF11.Term.blank a = RDF11.Term.blank a' → (a ≍ a' → P) → P",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Term.blank",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Term.blank.sizeOf_spec",
+      "module": "RDF11.Syntax",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Blank : Type} [inst : SizeOf Iri] [inst_1 : SizeOf Literal] [inst_2 : SizeOf Blank] (a : Blank),\n  sizeOf (RDF11.Term.blank a) = 1 + sizeOf a",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Term.blank",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Term.casesOn",
+      "module": "RDF11.Syntax",
+      "kind": "definition",
+      "type": "{Iri Literal Blank : Type} →\n  {motive : RDF11.Term Iri Literal Blank → Sort u} →\n    (t : RDF11.Term Iri Literal Blank) →\n      ((a : Iri) → motive (RDF11.Term.iri a)) →\n        ((a : Literal) → motive (RDF11.Term.literal a)) → ((a : Blank) → motive (RDF11.Term.blank a)) → motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Term",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Term.ctorElim",
+      "module": "RDF11.Syntax",
+      "kind": "definition",
+      "type": "{Iri Literal Blank : Type} →\n  {motive : RDF11.Term Iri Literal Blank → Sort u} →\n    (ctorIdx : Nat) →\n      (t : RDF11.Term Iri Literal Blank) → ctorIdx = t.ctorIdx → RDF11.Term.ctorElimType ctorIdx → motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Term",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Term.ctorElimType",
+      "module": "RDF11.Syntax",
+      "kind": "definition",
+      "type": "{Iri Literal Blank : Type} → {motive : RDF11.Term Iri Literal Blank → Sort u} → Nat → Sort (max 1 u)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Term",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Term.ctorIdx",
+      "module": "RDF11.Syntax",
+      "kind": "definition",
+      "type": "{Iri Literal Blank : Type} → RDF11.Term Iri Literal Blank → Nat",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Term",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Term.hasBlank",
+      "module": "RDF11.Syntax",
+      "kind": "definition",
+      "type": "{Blank Iri Literal : Type} → Blank → RDF11.Term Iri Literal Blank → Prop",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-GROUND-GRAPH"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Term",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Term.hasBlank.match_1",
+      "module": "RDF11.Syntax",
+      "kind": "definition",
+      "type": "{Blank Iri Literal : Type} →\n  (motive : RDF11.Term Iri Literal Blank → Sort u_1) →\n    (x : RDF11.Term Iri Literal Blank) →\n      ((c : Blank) → motive (RDF11.Term.blank c)) →\n        ((a : Iri) → motive (RDF11.Term.iri a)) → ((a : Literal) → motive (RDF11.Term.literal a)) → motive x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Term.hasBlank",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Term.hasLiteral",
+      "module": "RDF11.Syntax",
+      "kind": "definition",
+      "type": "{Literal Iri Blank : Type} → Literal → RDF11.Term Iri Literal Blank → Prop",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Term",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Term.hasLiteral.match_1",
+      "module": "RDF11.Syntax",
+      "kind": "definition",
+      "type": "{Literal Iri Blank : Type} →\n  (motive : RDF11.Term Iri Literal Blank → Sort u_1) →\n    (x : RDF11.Term Iri Literal Blank) →\n      ((k : Literal) → motive (RDF11.Term.literal k)) →\n        ((a : Iri) → motive (RDF11.Term.iri a)) → ((a : Blank) → motive (RDF11.Term.blank a)) → motive x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Term.hasLiteral",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Term.iri",
+      "module": "RDF11.Syntax",
+      "kind": "constructor",
+      "type": "{Iri Literal Blank : Type} → Iri → RDF11.Term Iri Literal Blank",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Term",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Term.iri.elim",
+      "module": "RDF11.Syntax",
+      "kind": "definition",
+      "type": "{Iri Literal Blank : Type} →\n  {motive : RDF11.Term Iri Literal Blank → Sort u} →\n    (t : RDF11.Term Iri Literal Blank) → t.ctorIdx = 0 → ((a : Iri) → motive (RDF11.Term.iri a)) → motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Term.iri",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Term.iri.inj",
+      "module": "RDF11.Syntax",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Blank : Type} {a a_1 : Iri}, RDF11.Term.iri a = RDF11.Term.iri a_1 → a = a_1",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Term.iri",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Term.iri.injEq",
+      "module": "RDF11.Syntax",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Blank : Type} (a a_1 : Iri), (RDF11.Term.iri a = RDF11.Term.iri a_1) = (a = a_1)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Term.iri",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Term.iri.noConfusion",
+      "module": "RDF11.Syntax",
+      "kind": "definition",
+      "type": "{Iri Literal Blank : Type} → {P : Sort u} → {a a' : Iri} → RDF11.Term.iri a = RDF11.Term.iri a' → (a ≍ a' → P) → P",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Term.iri",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Term.iri.sizeOf_spec",
+      "module": "RDF11.Syntax",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Blank : Type} [inst : SizeOf Iri] [inst_1 : SizeOf Literal] [inst_2 : SizeOf Blank] (a : Iri),\n  sizeOf (RDF11.Term.iri a) = 1 + sizeOf a",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Term.iri",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Term.literal",
+      "module": "RDF11.Syntax",
+      "kind": "constructor",
+      "type": "{Iri Literal Blank : Type} → Literal → RDF11.Term Iri Literal Blank",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Term",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Term.literal.elim",
+      "module": "RDF11.Syntax",
+      "kind": "definition",
+      "type": "{Iri Literal Blank : Type} →\n  {motive : RDF11.Term Iri Literal Blank → Sort u} →\n    (t : RDF11.Term Iri Literal Blank) → t.ctorIdx = 1 → ((a : Literal) → motive (RDF11.Term.literal a)) → motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Term.literal",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Term.literal.inj",
+      "module": "RDF11.Syntax",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Blank : Type} {a a_1 : Literal}, RDF11.Term.literal a = RDF11.Term.literal a_1 → a = a_1",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Term.literal",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Term.literal.injEq",
+      "module": "RDF11.Syntax",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Blank : Type} (a a_1 : Literal), (RDF11.Term.literal a = RDF11.Term.literal a_1) = (a = a_1)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Term.literal",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Term.literal.noConfusion",
+      "module": "RDF11.Syntax",
+      "kind": "definition",
+      "type": "{Iri Literal Blank : Type} →\n  {P : Sort u} → {a a' : Literal} → RDF11.Term.literal a = RDF11.Term.literal a' → (a ≍ a' → P) → P",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Term.literal",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Term.literal.sizeOf_spec",
+      "module": "RDF11.Syntax",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Blank : Type} [inst : SizeOf Iri] [inst_1 : SizeOf Literal] [inst_2 : SizeOf Blank] (a : Literal),\n  sizeOf (RDF11.Term.literal a) = 1 + sizeOf a",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Term.literal",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Term.mapBlank",
+      "module": "RDF11.Syntax",
+      "kind": "definition",
+      "type": "{A B Iri Literal : Type} → (A → B) → RDF11.Term Iri Literal A → RDF11.Term Iri Literal B",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Term",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Term.mapBlank.match_1",
+      "module": "RDF11.Syntax",
+      "kind": "definition",
+      "type": "{A Iri Literal : Type} →\n  (motive : RDF11.Term Iri Literal A → Sort u_1) →\n    (x : RDF11.Term Iri Literal A) →\n      ((i : Iri) → motive (RDF11.Term.iri i)) →\n        ((l : Literal) → motive (RDF11.Term.literal l)) → ((b : A) → motive (RDF11.Term.blank b)) → motive x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Term.mapBlank",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Term.mapBlank_comp",
+      "module": "RDF11.Syntax",
+      "kind": "theorem",
+      "type": "∀ {A B C Iri Literal : Type} (f : A → B) (h : B → C) (t : RDF11.Term Iri Literal A),\n  RDF11.Term.mapBlank h (RDF11.Term.mapBlank f t) = RDF11.Term.mapBlank (h ∘ f) t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Term",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Term.mapBlank_id",
+      "module": "RDF11.Syntax",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal A : Type} (t : RDF11.Term Iri Literal A), RDF11.Term.mapBlank id t = t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Term",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Term.noConfusion",
+      "module": "RDF11.Syntax",
+      "kind": "definition",
+      "type": "{P : Sort u} →\n  {Iri Literal Blank : Type} →\n    {t : RDF11.Term Iri Literal Blank} →\n      {Iri' Literal' Blank' : Type} →\n        {t' : RDF11.Term Iri' Literal' Blank'} →\n          Iri = Iri' → Literal = Literal' → Blank = Blank' → t ≍ t' → RDF11.Term.noConfusionType P t t'",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Term",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Term.noConfusionType",
+      "module": "RDF11.Syntax",
+      "kind": "definition",
+      "type": "Sort u →\n  {Iri Literal Blank : Type} →\n    RDF11.Term Iri Literal Blank → {Iri' Literal' Blank' : Type} → RDF11.Term Iri' Literal' Blank' → Sort u",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Term",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Term.rec",
+      "module": "RDF11.Syntax",
+      "kind": "recursor",
+      "type": "{Iri Literal Blank : Type} →\n  {motive : RDF11.Term Iri Literal Blank → Sort u} →\n    ((a : Iri) → motive (RDF11.Term.iri a)) →\n      ((a : Literal) → motive (RDF11.Term.literal a)) →\n        ((a : Blank) → motive (RDF11.Term.blank a)) → (t : RDF11.Term Iri Literal Blank) → motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Term",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Term.recOn",
+      "module": "RDF11.Syntax",
+      "kind": "definition",
+      "type": "{Iri Literal Blank : Type} →\n  {motive : RDF11.Term Iri Literal Blank → Sort u} →\n    (t : RDF11.Term Iri Literal Blank) →\n      ((a : Iri) → motive (RDF11.Term.iri a)) →\n        ((a : Literal) → motive (RDF11.Term.literal a)) → ((a : Blank) → motive (RDF11.Term.blank a)) → motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Term",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Triple",
+      "module": "RDF11.Syntax",
+      "kind": "inductive",
+      "type": "Type → Type → Type → Type",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-GRAPH-SET",
+        "MT11-TRIPLE-TERM-DOMAINS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Triple._sizeOf_1",
+      "module": "RDF11.Syntax",
+      "kind": "definition",
+      "type": "{Iri Literal Blank : Type} → [SizeOf Iri] → [SizeOf Literal] → [SizeOf Blank] → RDF11.Triple Iri Literal Blank → Nat",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Triple",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Triple._sizeOf_inst",
+      "module": "RDF11.Syntax",
+      "kind": "definition",
+      "type": "(Iri Literal Blank : Type) → [SizeOf Iri] → [SizeOf Literal] → [SizeOf Blank] → SizeOf (RDF11.Triple Iri Literal Blank)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Triple",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Triple.casesOn",
+      "module": "RDF11.Syntax",
+      "kind": "definition",
+      "type": "{Iri Literal Blank : Type} →\n  {motive : RDF11.Triple Iri Literal Blank → Sort u} →\n    (t : RDF11.Triple Iri Literal Blank) →\n      ((subject : RDF11.Subject Iri Blank) →\n          (predicate : Iri) →\n            (object : RDF11.Term Iri Literal Blank) →\n              motive { subject := subject, predicate := predicate, object := object }) →\n        motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Triple",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Triple.ctorIdx",
+      "module": "RDF11.Syntax",
+      "kind": "definition",
+      "type": "{Iri Literal Blank : Type} → RDF11.Triple Iri Literal Blank → Nat",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Triple",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Triple.generalize",
+      "module": "RDF11.Syntax",
+      "kind": "definition",
+      "type": "{Iri Literal Blank : Type} → RDF11.Triple Iri Literal Blank → RDF11.GeneralizedTriple Iri Literal Blank",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-GENERALIZED-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Triple",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Triple.mk",
+      "module": "RDF11.Syntax",
+      "kind": "constructor",
+      "type": "{Iri Literal Blank : Type} →\n  RDF11.Subject Iri Blank → Iri → RDF11.Term Iri Literal Blank → RDF11.Triple Iri Literal Blank",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Triple",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Triple.mk._flat_ctor",
+      "module": "RDF11.Syntax",
+      "kind": "definition",
+      "type": "{Iri Literal Blank : Type} →\n  RDF11.Subject Iri Blank → Iri → RDF11.Term Iri Literal Blank → RDF11.Triple Iri Literal Blank",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Triple.mk",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Triple.mk.inj",
+      "module": "RDF11.Syntax",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Blank : Type} {subject : RDF11.Subject Iri Blank} {predicate : Iri}\n  {object : RDF11.Term Iri Literal Blank} {subject_1 : RDF11.Subject Iri Blank} {predicate_1 : Iri}\n  {object_1 : RDF11.Term Iri Literal Blank},\n  { subject := subject, predicate := predicate, object := object } =\n      { subject := subject_1, predicate := predicate_1, object := object_1 } →\n    subject = subject_1 ∧ predicate = predicate_1 ∧ object = object_1",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Triple.mk",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Triple.mk.injEq",
+      "module": "RDF11.Syntax",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Blank : Type} (subject : RDF11.Subject Iri Blank) (predicate : Iri)\n  (object : RDF11.Term Iri Literal Blank) (subject_1 : RDF11.Subject Iri Blank) (predicate_1 : Iri)\n  (object_1 : RDF11.Term Iri Literal Blank),\n  ({ subject := subject, predicate := predicate, object := object } =\n      { subject := subject_1, predicate := predicate_1, object := object_1 }) =\n    (subject = subject_1 ∧ predicate = predicate_1 ∧ object = object_1)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Triple.mk",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Triple.mk.noConfusion",
+      "module": "RDF11.Syntax",
+      "kind": "definition",
+      "type": "{Iri Literal Blank : Type} →\n  {P : Sort u} →\n    {subject : RDF11.Subject Iri Blank} →\n      {predicate : Iri} →\n        {object : RDF11.Term Iri Literal Blank} →\n          {subject' : RDF11.Subject Iri Blank} →\n            {predicate' : Iri} →\n              {object' : RDF11.Term Iri Literal Blank} →\n                { subject := subject, predicate := predicate, object := object } =\n                    { subject := subject', predicate := predicate', object := object' } →\n                  (subject ≍ subject' → predicate ≍ predicate' → object ≍ object' → P) → P",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Triple.mk",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Triple.mk.sizeOf_spec",
+      "module": "RDF11.Syntax",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Blank : Type} [inst : SizeOf Iri] [inst_1 : SizeOf Literal] [inst_2 : SizeOf Blank]\n  (subject : RDF11.Subject Iri Blank) (predicate : Iri) (object : RDF11.Term Iri Literal Blank),\n  sizeOf { subject := subject, predicate := predicate, object := object } =\n    1 + sizeOf subject + sizeOf predicate + sizeOf object",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Triple.mk",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Triple.noConfusion",
+      "module": "RDF11.Syntax",
+      "kind": "definition",
+      "type": "{P : Sort u} →\n  {Iri Literal Blank : Type} →\n    {t : RDF11.Triple Iri Literal Blank} →\n      {Iri' Literal' Blank' : Type} →\n        {t' : RDF11.Triple Iri' Literal' Blank'} →\n          Iri = Iri' → Literal = Literal' → Blank = Blank' → t ≍ t' → RDF11.Triple.noConfusionType P t t'",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Triple",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Triple.noConfusionType",
+      "module": "RDF11.Syntax",
+      "kind": "definition",
+      "type": "Sort u →\n  {Iri Literal Blank : Type} →\n    RDF11.Triple Iri Literal Blank → {Iri' Literal' Blank' : Type} → RDF11.Triple Iri' Literal' Blank' → Sort u",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Triple",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Triple.object",
+      "module": "RDF11.Syntax",
+      "kind": "definition",
+      "type": "{Iri Literal Blank : Type} → RDF11.Triple Iri Literal Blank → RDF11.Term Iri Literal Blank",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Triple",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Triple.predicate",
+      "module": "RDF11.Syntax",
+      "kind": "definition",
+      "type": "{Iri Literal Blank : Type} → RDF11.Triple Iri Literal Blank → Iri",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Triple",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Triple.rec",
+      "module": "RDF11.Syntax",
+      "kind": "recursor",
+      "type": "{Iri Literal Blank : Type} →\n  {motive : RDF11.Triple Iri Literal Blank → Sort u} →\n    ((subject : RDF11.Subject Iri Blank) →\n        (predicate : Iri) →\n          (object : RDF11.Term Iri Literal Blank) →\n            motive { subject := subject, predicate := predicate, object := object }) →\n      (t : RDF11.Triple Iri Literal Blank) → motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Triple",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Triple.recOn",
+      "module": "RDF11.Syntax",
+      "kind": "definition",
+      "type": "{Iri Literal Blank : Type} →\n  {motive : RDF11.Triple Iri Literal Blank → Sort u} →\n    (t : RDF11.Triple Iri Literal Blank) →\n      ((subject : RDF11.Subject Iri Blank) →\n          (predicate : Iri) →\n            (object : RDF11.Term Iri Literal Blank) →\n              motive { subject := subject, predicate := predicate, object := object }) →\n        motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Triple",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Triple.subject",
+      "module": "RDF11.Syntax",
+      "kind": "definition",
+      "type": "{Iri Literal Blank : Type} → RDF11.Triple Iri Literal Blank → RDF11.Subject Iri Blank",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Triple",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.all_graphs_simply_satisfiable",
+      "module": "RDF11.Entailment",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (G : RDF11.GeneralizedGraph Iri Literal B), ∃ U I, I.Satisfies G",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-SIMPLE-SATISFIABILITY"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.empty_entails_only_empty",
+      "module": "RDF11.Entailment",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B₂ B₁ : Type} (E : RDF11.GeneralizedGraph Iri Literal B₂),\n  RDF11.SimplyEntails RDF11.Set.empty E → E = RDF11.Set.empty",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-EMPTY-ENTAILMENTS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.entails_empty",
+      "module": "RDF11.Entailment",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B₁ B₂ : Type} (G : RDF11.GeneralizedGraph Iri Literal B₁), RDF11.SimplyEntails G RDF11.Set.empty",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-EMPTY-ENTAILMENTS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.extension_preserves_simple_entailment",
+      "module": "RDF11.Entailment",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B₁ B₂ : Type} (C : (U : Type u) → RDF11.SimpleInterpretation Iri Literal U → Prop)\n  {G : RDF11.GeneralizedGraph Iri Literal B₁} {E : RDF11.GeneralizedGraph Iri Literal B₂},\n  RDF11.SimplyEntails G E → RDF11.EntailsUnder C G E",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-SIMPLE-EXTENSION-BASE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.indiscriminate",
+      "module": "RDF11.Entailment",
+      "kind": "definition",
+      "type": "{Iri Literal : Type} → RDF11.SimpleInterpretation Iri Literal (ULift Unit)",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-SIMPLE-SATISFIABILITY"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.indiscriminate._proof_1",
+      "module": "RDF11.Entailment",
+      "kind": "theorem",
+      "type": "∃ x, True",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ENTAILMENT"
+      ],
+      "parent_declaration_if_applicable": "RDF11.indiscriminate",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.instDecidableEqGeneralizedTriple",
+      "module": "RDF11.Syntax",
+      "kind": "definition",
+      "type": "{Iri Literal Blank : Type} →\n  [DecidableEq Iri] →\n    [DecidableEq Literal] → [DecidableEq Blank] → DecidableEq (RDF11.GeneralizedTriple Iri Literal Blank)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.instDecidableEqGeneralizedTriple.decEq",
+      "module": "RDF11.Syntax",
+      "kind": "definition",
+      "type": "{Iri Literal Blank : Type} →\n  [DecidableEq Iri] →\n    [DecidableEq Literal] →\n      [DecidableEq Blank] → (x x_1 : RDF11.GeneralizedTriple Iri Literal Blank) → Decidable (x = x_1)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.instDecidableEqGeneralizedTriple",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.instDecidableEqGeneralizedTriple.decEq._proof_1",
+      "module": "RDF11.Syntax",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Blank : Type} (a a_1 a_2 : RDF11.Term Iri Literal Blank),\n  { subject := a, predicate := a_1, object := a_2 } = { subject := a, predicate := a_1, object := a_2 }",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.instDecidableEqGeneralizedTriple.decEq",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.instDecidableEqGeneralizedTriple.decEq._proof_2",
+      "module": "RDF11.Syntax",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Blank : Type} (a a_1 a_2 b : RDF11.Term Iri Literal Blank),\n  ¬a_2 = b → { subject := a, predicate := a_1, object := a_2 } = { subject := a, predicate := a_1, object := b } → False",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.instDecidableEqGeneralizedTriple.decEq",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.instDecidableEqGeneralizedTriple.decEq._proof_3",
+      "module": "RDF11.Syntax",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Blank : Type} (a a_1 a_2 b b_1 : RDF11.Term Iri Literal Blank),\n  ¬a_1 = b → { subject := a, predicate := a_1, object := a_2 } = { subject := a, predicate := b, object := b_1 } → False",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.instDecidableEqGeneralizedTriple.decEq",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.instDecidableEqGeneralizedTriple.decEq._proof_4",
+      "module": "RDF11.Syntax",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Blank : Type} (a a_1 a_2 b b_1 b_2 : RDF11.Term Iri Literal Blank),\n  ¬a = b → { subject := a, predicate := a_1, object := a_2 } = { subject := b, predicate := b_1, object := b_2 } → False",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.instDecidableEqGeneralizedTriple.decEq",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.instDecidableEqGeneralizedTriple.decEq.match_1",
+      "module": "RDF11.Syntax",
+      "kind": "definition",
+      "type": "{Iri Literal Blank : Type} →\n  (motive : RDF11.GeneralizedTriple Iri Literal Blank → RDF11.GeneralizedTriple Iri Literal Blank → Sort u_1) →\n    (x x_1 : RDF11.GeneralizedTriple Iri Literal Blank) →\n      ((a a_1 a_2 b b_1 b_2 : RDF11.Term Iri Literal Blank) →\n          motive { subject := a, predicate := a_1, object := a_2 } { subject := b, predicate := b_1, object := b_2 }) →\n        motive x x_1",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.instDecidableEqGeneralizedTriple.decEq",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.instDecidableEqSubject",
+      "module": "RDF11.Syntax",
+      "kind": "definition",
+      "type": "{Iri Blank : Type} → [DecidableEq Iri] → [DecidableEq Blank] → DecidableEq (RDF11.Subject Iri Blank)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.instDecidableEqSubject.decEq",
+      "module": "RDF11.Syntax",
+      "kind": "definition",
+      "type": "{Iri Blank : Type} → [DecidableEq Iri] → [DecidableEq Blank] → (x x_1 : RDF11.Subject Iri Blank) → Decidable (x = x_1)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.instDecidableEqSubject",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.instDecidableEqSubject.decEq._proof_1",
+      "module": "RDF11.Syntax",
+      "kind": "theorem",
+      "type": "∀ {Iri Blank : Type} (a : Iri), RDF11.Subject.iri a = RDF11.Subject.iri a",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.instDecidableEqSubject.decEq",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.instDecidableEqSubject.decEq._proof_2",
+      "module": "RDF11.Syntax",
+      "kind": "theorem",
+      "type": "∀ {Iri Blank : Type} (a b : Iri), ¬a = b → RDF11.Subject.iri a = RDF11.Subject.iri b → False",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.instDecidableEqSubject.decEq",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.instDecidableEqSubject.decEq._proof_3",
+      "module": "RDF11.Syntax",
+      "kind": "theorem",
+      "type": "∀ {Iri Blank : Type} (a : Iri) (a_1 : Blank), RDF11.Subject.iri a = RDF11.Subject.blank a_1 → False",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.instDecidableEqSubject.decEq",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.instDecidableEqSubject.decEq._proof_4",
+      "module": "RDF11.Syntax",
+      "kind": "theorem",
+      "type": "∀ {Iri Blank : Type} (a : Blank) (a_1 : Iri), RDF11.Subject.blank a = RDF11.Subject.iri a_1 → False",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.instDecidableEqSubject.decEq",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.instDecidableEqSubject.decEq._proof_5",
+      "module": "RDF11.Syntax",
+      "kind": "theorem",
+      "type": "∀ {Iri Blank : Type} (a : Blank), RDF11.Subject.blank a = RDF11.Subject.blank a",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.instDecidableEqSubject.decEq",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.instDecidableEqSubject.decEq._proof_6",
+      "module": "RDF11.Syntax",
+      "kind": "theorem",
+      "type": "∀ {Iri Blank : Type} (a b : Blank), ¬a = b → RDF11.Subject.blank a = RDF11.Subject.blank b → False",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.instDecidableEqSubject.decEq",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.instDecidableEqSubject.decEq.match_1",
+      "module": "RDF11.Syntax",
+      "kind": "definition",
+      "type": "{Iri Blank : Type} →\n  (motive : RDF11.Subject Iri Blank → RDF11.Subject Iri Blank → Sort u_1) →\n    (x x_1 : RDF11.Subject Iri Blank) →\n      ((a b : Iri) → motive (RDF11.Subject.iri a) (RDF11.Subject.iri b)) →\n        ((a : Iri) → (a_1 : Blank) → motive (RDF11.Subject.iri a) (RDF11.Subject.blank a_1)) →\n          ((a : Blank) → (a_1 : Iri) → motive (RDF11.Subject.blank a) (RDF11.Subject.iri a_1)) →\n            ((a b : Blank) → motive (RDF11.Subject.blank a) (RDF11.Subject.blank b)) → motive x x_1",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.instDecidableEqSubject.decEq",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.instDecidableEqTerm",
+      "module": "RDF11.Syntax",
+      "kind": "definition",
+      "type": "{Iri Literal Blank : Type} →\n  [DecidableEq Iri] → [DecidableEq Literal] → [DecidableEq Blank] → DecidableEq (RDF11.Term Iri Literal Blank)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.instDecidableEqTerm.decEq",
+      "module": "RDF11.Syntax",
+      "kind": "definition",
+      "type": "{Iri Literal Blank : Type} →\n  [DecidableEq Iri] →\n    [DecidableEq Literal] → [DecidableEq Blank] → (x x_1 : RDF11.Term Iri Literal Blank) → Decidable (x = x_1)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.instDecidableEqTerm",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.instDecidableEqTerm.decEq._proof_1",
+      "module": "RDF11.Syntax",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Blank : Type} (a : Iri), RDF11.Term.iri a = RDF11.Term.iri a",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.instDecidableEqTerm.decEq",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.instDecidableEqTerm.decEq._proof_10",
+      "module": "RDF11.Syntax",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Blank : Type} (a : Blank) (a_1 : Literal), RDF11.Term.blank a = RDF11.Term.literal a_1 → False",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.instDecidableEqTerm.decEq",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.instDecidableEqTerm.decEq._proof_11",
+      "module": "RDF11.Syntax",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Blank : Type} (a : Blank), RDF11.Term.blank a = RDF11.Term.blank a",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.instDecidableEqTerm.decEq",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.instDecidableEqTerm.decEq._proof_12",
+      "module": "RDF11.Syntax",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Blank : Type} (a b : Blank), ¬a = b → RDF11.Term.blank a = RDF11.Term.blank b → False",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.instDecidableEqTerm.decEq",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.instDecidableEqTerm.decEq._proof_2",
+      "module": "RDF11.Syntax",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Blank : Type} (a b : Iri), ¬a = b → RDF11.Term.iri a = RDF11.Term.iri b → False",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.instDecidableEqTerm.decEq",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.instDecidableEqTerm.decEq._proof_3",
+      "module": "RDF11.Syntax",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Blank : Type} (a : Iri) (a_1 : Literal), RDF11.Term.iri a = RDF11.Term.literal a_1 → False",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.instDecidableEqTerm.decEq",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.instDecidableEqTerm.decEq._proof_4",
+      "module": "RDF11.Syntax",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Blank : Type} (a : Iri) (a_1 : Blank), RDF11.Term.iri a = RDF11.Term.blank a_1 → False",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.instDecidableEqTerm.decEq",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.instDecidableEqTerm.decEq._proof_5",
+      "module": "RDF11.Syntax",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Blank : Type} (a : Literal) (a_1 : Iri), RDF11.Term.literal a = RDF11.Term.iri a_1 → False",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.instDecidableEqTerm.decEq",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.instDecidableEqTerm.decEq._proof_6",
+      "module": "RDF11.Syntax",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Blank : Type} (a : Literal), RDF11.Term.literal a = RDF11.Term.literal a",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.instDecidableEqTerm.decEq",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.instDecidableEqTerm.decEq._proof_7",
+      "module": "RDF11.Syntax",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Blank : Type} (a b : Literal), ¬a = b → RDF11.Term.literal a = RDF11.Term.literal b → False",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.instDecidableEqTerm.decEq",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.instDecidableEqTerm.decEq._proof_8",
+      "module": "RDF11.Syntax",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Blank : Type} (a : Literal) (a_1 : Blank), RDF11.Term.literal a = RDF11.Term.blank a_1 → False",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.instDecidableEqTerm.decEq",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.instDecidableEqTerm.decEq._proof_9",
+      "module": "RDF11.Syntax",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Blank : Type} (a : Blank) (a_1 : Iri), RDF11.Term.blank a = RDF11.Term.iri a_1 → False",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.instDecidableEqTerm.decEq",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.instDecidableEqTerm.decEq.match_1",
+      "module": "RDF11.Syntax",
+      "kind": "definition",
+      "type": "{Iri Literal Blank : Type} →\n  (motive : RDF11.Term Iri Literal Blank → RDF11.Term Iri Literal Blank → Sort u_1) →\n    (x x_1 : RDF11.Term Iri Literal Blank) →\n      ((a b : Iri) → motive (RDF11.Term.iri a) (RDF11.Term.iri b)) →\n        ((a : Iri) → (a_1 : Literal) → motive (RDF11.Term.iri a) (RDF11.Term.literal a_1)) →\n          ((a : Iri) → (a_1 : Blank) → motive (RDF11.Term.iri a) (RDF11.Term.blank a_1)) →\n            ((a : Literal) → (a_1 : Iri) → motive (RDF11.Term.literal a) (RDF11.Term.iri a_1)) →\n              ((a b : Literal) → motive (RDF11.Term.literal a) (RDF11.Term.literal b)) →\n                ((a : Literal) → (a_1 : Blank) → motive (RDF11.Term.literal a) (RDF11.Term.blank a_1)) →\n                  ((a : Blank) → (a_1 : Iri) → motive (RDF11.Term.blank a) (RDF11.Term.iri a_1)) →\n                    ((a : Blank) → (a_1 : Literal) → motive (RDF11.Term.blank a) (RDF11.Term.literal a_1)) →\n                      ((a b : Blank) → motive (RDF11.Term.blank a) (RDF11.Term.blank b)) → motive x x_1",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.instDecidableEqTerm.decEq",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.instDecidableEqTriple",
+      "module": "RDF11.Syntax",
+      "kind": "definition",
+      "type": "{Iri Literal Blank : Type} →\n  [DecidableEq Iri] → [DecidableEq Literal] → [DecidableEq Blank] → DecidableEq (RDF11.Triple Iri Literal Blank)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.instDecidableEqTriple.decEq",
+      "module": "RDF11.Syntax",
+      "kind": "definition",
+      "type": "{Iri Literal Blank : Type} →\n  [DecidableEq Iri] →\n    [DecidableEq Literal] → [DecidableEq Blank] → (x x_1 : RDF11.Triple Iri Literal Blank) → Decidable (x = x_1)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.instDecidableEqTriple",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.instDecidableEqTriple.decEq._proof_1",
+      "module": "RDF11.Syntax",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Blank : Type} (a : RDF11.Subject Iri Blank) (a_1 : Iri) (a_2 : RDF11.Term Iri Literal Blank),\n  { subject := a, predicate := a_1, object := a_2 } = { subject := a, predicate := a_1, object := a_2 }",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.instDecidableEqTriple.decEq",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.instDecidableEqTriple.decEq._proof_2",
+      "module": "RDF11.Syntax",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Blank : Type} (a : RDF11.Subject Iri Blank) (a_1 : Iri) (a_2 b : RDF11.Term Iri Literal Blank),\n  ¬a_2 = b → { subject := a, predicate := a_1, object := a_2 } = { subject := a, predicate := a_1, object := b } → False",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.instDecidableEqTriple.decEq",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.instDecidableEqTriple.decEq._proof_3",
+      "module": "RDF11.Syntax",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Blank : Type} (a : RDF11.Subject Iri Blank) (a_1 : Iri) (a_2 : RDF11.Term Iri Literal Blank) (b : Iri)\n  (b_1 : RDF11.Term Iri Literal Blank),\n  ¬a_1 = b → { subject := a, predicate := a_1, object := a_2 } = { subject := a, predicate := b, object := b_1 } → False",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.instDecidableEqTriple.decEq",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.instDecidableEqTriple.decEq._proof_4",
+      "module": "RDF11.Syntax",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Blank : Type} (a : RDF11.Subject Iri Blank) (a_1 : Iri) (a_2 : RDF11.Term Iri Literal Blank)\n  (b : RDF11.Subject Iri Blank) (b_1 : Iri) (b_2 : RDF11.Term Iri Literal Blank),\n  ¬a = b → { subject := a, predicate := a_1, object := a_2 } = { subject := b, predicate := b_1, object := b_2 } → False",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.instDecidableEqTriple.decEq",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.instDecidableEqTriple.decEq.match_1",
+      "module": "RDF11.Syntax",
+      "kind": "definition",
+      "type": "{Iri Literal Blank : Type} →\n  (motive : RDF11.Triple Iri Literal Blank → RDF11.Triple Iri Literal Blank → Sort u_1) →\n    (x x_1 : RDF11.Triple Iri Literal Blank) →\n      ((a : RDF11.Subject Iri Blank) →\n          (a_1 : Iri) →\n            (a_2 : RDF11.Term Iri Literal Blank) →\n              (b : RDF11.Subject Iri Blank) →\n                (b_1 : Iri) →\n                  (b_2 : RDF11.Term Iri Literal Blank) →\n                    motive { subject := a, predicate := a_1, object := a_2 }\n                      { subject := b, predicate := b_1, object := b_2 }) →\n        motive x x_1",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.instDecidableEqTriple.decEq",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.merge",
+      "module": "RDF11.Merge",
+      "kind": "definition",
+      "type": "{Iri Literal B₁ B₂ : Type} →\n  RDF11.GeneralizedGraph Iri Literal B₁ →\n    RDF11.GeneralizedGraph Iri Literal B₂ → RDF11.GeneralizedGraph Iri Literal (B₁ ⊕ B₂)",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-MERGE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.noPairs",
+      "module": "RDF11.Entailment",
+      "kind": "definition",
+      "type": "{Iri Literal : Type} → RDF11.SimpleInterpretation Iri Literal (ULift Unit)",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-EMPTY-ENTAILMENTS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.premise_monotonicity",
+      "module": "RDF11.Entailment",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B₁ B₂ : Type} {G H : RDF11.GeneralizedGraph Iri Literal B₁} {E : RDF11.GeneralizedGraph Iri Literal B₂},\n  RDF11.Set.subset G H → RDF11.SimplyEntails G E → RDF11.SimplyEntails H E",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-PREMISE-MONOTONICITY"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.renamed_entails_original",
+      "module": "RDF11.Merge",
+      "kind": "theorem",
+      "type": "∀ {B₁ B₂ Iri Literal : Type} (f : B₁ → B₂) (G : RDF11.GeneralizedGraph Iri Literal B₁),\n  RDF11.SimplyEntails (RDF11.GeneralizedGraph.mapBlank f G) G",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-INSTANCE-ENTAILMENT"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.satisfies_merge",
+      "module": "RDF11.Merge",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u_1} {B₁ B₂ : Type} (I : RDF11.SimpleInterpretation Iri Literal U)\n  (G : RDF11.GeneralizedGraph Iri Literal B₁) (H : RDF11.GeneralizedGraph Iri Literal B₂),\n  I.Satisfies (RDF11.merge G H) ↔ I.Satisfies G ∧ I.Satisfies H",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-MERGE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.simplyEntails_refl",
+      "module": "RDF11.Entailment",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (G : RDF11.GeneralizedGraph Iri Literal B), RDF11.SimplyEntails G G",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ENTAILMENT"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.simplyEntails_trans",
+      "module": "RDF11.Entailment",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B₁ B₂ B₃ : Type} {G : RDF11.GeneralizedGraph Iri Literal B₁} {H : RDF11.GeneralizedGraph Iri Literal B₂}\n  {E : RDF11.GeneralizedGraph Iri Literal B₃},\n  RDF11.SimplyEntails G H → RDF11.SimplyEntails H E → RDF11.SimplyEntails G E",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ENTAILMENT"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.stronger_conditions_preserve_entailment",
+      "module": "RDF11.Entailment",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B₁ B₂ : Type} {C D : (U : Type u) → RDF11.SimpleInterpretation Iri Literal U → Prop},\n  (∀ (U : Type u) (I : RDF11.SimpleInterpretation Iri Literal U), D U I → C U I) →\n    ∀ {G : RDF11.GeneralizedGraph Iri Literal B₁} {E : RDF11.GeneralizedGraph Iri Literal B₂},\n      RDF11.EntailsUnder C G E → RDF11.EntailsUnder D G E",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-SIMPLE-EXTENSION-BASE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.subgraph_entailment",
+      "module": "RDF11.Entailment",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {G E : RDF11.GeneralizedGraph Iri Literal B}, RDF11.Set.subset E G → RDF11.SimplyEntails G E",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-SUBGRAPH-ENTAILMENT"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.union_entails_merge",
+      "module": "RDF11.Merge",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (G H : RDF11.GeneralizedGraph Iri Literal B),\n  RDF11.SimplyEntails (RDF11.Set.union G H) (RDF11.merge G H)",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-UNION-MERGE-RELATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "Spec2Lean.Atom",
+      "module": "Audit.Coverage",
+      "kind": "inductive",
+      "type": "Type",
+      "role": "coverage_certificate",
+      "grounds": [
+        "SPEC2LEAN-ACCOUNTABILITY"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "Spec2Lean.Atom._sizeOf_1",
+      "module": "Audit.Coverage",
+      "kind": "definition",
+      "type": "Spec2Lean.Atom → Nat",
+      "role": "coverage_certificate",
+      "grounds": [
+        "SPEC2LEAN-ACCOUNTABILITY"
+      ],
+      "parent_declaration_if_applicable": "Spec2Lean.Atom",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "Spec2Lean.Atom._sizeOf_inst",
+      "module": "Audit.Coverage",
+      "kind": "definition",
+      "type": "SizeOf Spec2Lean.Atom",
+      "role": "coverage_certificate",
+      "grounds": [
+        "SPEC2LEAN-ACCOUNTABILITY"
+      ],
+      "parent_declaration_if_applicable": "Spec2Lean.Atom",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "Spec2Lean.Atom.casesOn",
+      "module": "Audit.Coverage",
+      "kind": "definition",
+      "type": "{motive : Spec2Lean.Atom → Sort u} →\n  (t : Spec2Lean.Atom) →\n    ((start stop : Nat) → (refs : List String) → motive { start := start, stop := stop, refs := refs }) → motive t",
+      "role": "coverage_certificate",
+      "grounds": [
+        "SPEC2LEAN-ACCOUNTABILITY"
+      ],
+      "parent_declaration_if_applicable": "Spec2Lean.Atom",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "Spec2Lean.Atom.ctorIdx",
+      "module": "Audit.Coverage",
+      "kind": "definition",
+      "type": "Spec2Lean.Atom → Nat",
+      "role": "coverage_certificate",
+      "grounds": [
+        "SPEC2LEAN-ACCOUNTABILITY"
+      ],
+      "parent_declaration_if_applicable": "Spec2Lean.Atom",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "Spec2Lean.Atom.mk",
+      "module": "Audit.Coverage",
+      "kind": "constructor",
+      "type": "Nat → Nat → List String → Spec2Lean.Atom",
+      "role": "coverage_certificate",
+      "grounds": [
+        "SPEC2LEAN-ACCOUNTABILITY"
+      ],
+      "parent_declaration_if_applicable": "Spec2Lean.Atom",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "Spec2Lean.Atom.mk._flat_ctor",
+      "module": "Audit.Coverage",
+      "kind": "definition",
+      "type": "Nat → Nat → List String → Spec2Lean.Atom",
+      "role": "coverage_certificate",
+      "grounds": [
+        "SPEC2LEAN-ACCOUNTABILITY"
+      ],
+      "parent_declaration_if_applicable": "Spec2Lean.Atom.mk",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "Spec2Lean.Atom.mk.inj",
+      "module": "Audit.Coverage",
+      "kind": "theorem",
+      "type": "∀ {start stop : Nat} {refs : List String} {start_1 stop_1 : Nat} {refs_1 : List String},\n  { start := start, stop := stop, refs := refs } = { start := start_1, stop := stop_1, refs := refs_1 } →\n    start = start_1 ∧ stop = stop_1 ∧ refs = refs_1",
+      "role": "coverage_certificate",
+      "grounds": [
+        "SPEC2LEAN-ACCOUNTABILITY"
+      ],
+      "parent_declaration_if_applicable": "Spec2Lean.Atom.mk",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "Spec2Lean.Atom.mk.injEq",
+      "module": "Audit.Coverage",
+      "kind": "theorem",
+      "type": "∀ (start stop : Nat) (refs : List String) (start_1 stop_1 : Nat) (refs_1 : List String),\n  ({ start := start, stop := stop, refs := refs } = { start := start_1, stop := stop_1, refs := refs_1 }) =\n    (start = start_1 ∧ stop = stop_1 ∧ refs = refs_1)",
+      "role": "coverage_certificate",
+      "grounds": [
+        "SPEC2LEAN-ACCOUNTABILITY"
+      ],
+      "parent_declaration_if_applicable": "Spec2Lean.Atom.mk",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "Spec2Lean.Atom.mk.noConfusion",
+      "module": "Audit.Coverage",
+      "kind": "definition",
+      "type": "{P : Sort u} →\n  {start stop : Nat} →\n    {refs : List String} →\n      {start' stop' : Nat} →\n        {refs' : List String} →\n          { start := start, stop := stop, refs := refs } = { start := start', stop := stop', refs := refs' } →\n            (start = start' → stop = stop' → refs = refs' → P) → P",
+      "role": "coverage_certificate",
+      "grounds": [
+        "SPEC2LEAN-ACCOUNTABILITY"
+      ],
+      "parent_declaration_if_applicable": "Spec2Lean.Atom.mk",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "Spec2Lean.Atom.mk.sizeOf_spec",
+      "module": "Audit.Coverage",
+      "kind": "theorem",
+      "type": "∀ (start stop : Nat) (refs : List String),\n  sizeOf { start := start, stop := stop, refs := refs } = 1 + sizeOf start + sizeOf stop + sizeOf refs",
+      "role": "coverage_certificate",
+      "grounds": [
+        "SPEC2LEAN-ACCOUNTABILITY"
+      ],
+      "parent_declaration_if_applicable": "Spec2Lean.Atom.mk",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "Spec2Lean.Atom.noConfusion",
+      "module": "Audit.Coverage",
+      "kind": "definition",
+      "type": "{P : Sort u} → {t t' : Spec2Lean.Atom} → t = t' → Spec2Lean.Atom.noConfusionType P t t'",
+      "role": "coverage_certificate",
+      "grounds": [
+        "SPEC2LEAN-ACCOUNTABILITY"
+      ],
+      "parent_declaration_if_applicable": "Spec2Lean.Atom",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "Spec2Lean.Atom.noConfusionType",
+      "module": "Audit.Coverage",
+      "kind": "definition",
+      "type": "Sort u → Spec2Lean.Atom → Spec2Lean.Atom → Sort u",
+      "role": "coverage_certificate",
+      "grounds": [
+        "SPEC2LEAN-ACCOUNTABILITY"
+      ],
+      "parent_declaration_if_applicable": "Spec2Lean.Atom",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "Spec2Lean.Atom.rec",
+      "module": "Audit.Coverage",
+      "kind": "recursor",
+      "type": "{motive : Spec2Lean.Atom → Sort u} →\n  ((start stop : Nat) → (refs : List String) → motive { start := start, stop := stop, refs := refs }) →\n    (t : Spec2Lean.Atom) → motive t",
+      "role": "coverage_certificate",
+      "grounds": [
+        "SPEC2LEAN-ACCOUNTABILITY"
+      ],
+      "parent_declaration_if_applicable": "Spec2Lean.Atom",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "Spec2Lean.Atom.recOn",
+      "module": "Audit.Coverage",
+      "kind": "definition",
+      "type": "{motive : Spec2Lean.Atom → Sort u} →\n  (t : Spec2Lean.Atom) →\n    ((start stop : Nat) → (refs : List String) → motive { start := start, stop := stop, refs := refs }) → motive t",
+      "role": "coverage_certificate",
+      "grounds": [
+        "SPEC2LEAN-ACCOUNTABILITY"
+      ],
+      "parent_declaration_if_applicable": "Spec2Lean.Atom",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "Spec2Lean.Atom.refs",
+      "module": "Audit.Coverage",
+      "kind": "definition",
+      "type": "Spec2Lean.Atom → List String",
+      "role": "coverage_certificate",
+      "grounds": [
+        "SPEC2LEAN-ACCOUNTABILITY"
+      ],
+      "parent_declaration_if_applicable": "Spec2Lean.Atom",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "Spec2Lean.Atom.start",
+      "module": "Audit.Coverage",
+      "kind": "definition",
+      "type": "Spec2Lean.Atom → Nat",
+      "role": "coverage_certificate",
+      "grounds": [
+        "SPEC2LEAN-ACCOUNTABILITY"
+      ],
+      "parent_declaration_if_applicable": "Spec2Lean.Atom",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "Spec2Lean.Atom.stop",
+      "module": "Audit.Coverage",
+      "kind": "definition",
+      "type": "Spec2Lean.Atom → Nat",
+      "role": "coverage_certificate",
+      "grounds": [
+        "SPEC2LEAN-ACCOUNTABILITY"
+      ],
+      "parent_declaration_if_applicable": "Spec2Lean.Atom",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "Spec2Lean.Contains",
+      "module": "Audit.Coverage",
+      "kind": "definition",
+      "type": "Spec2Lean.Atom → Nat → Prop",
+      "role": "coverage_certificate",
+      "grounds": [
+        "SPEC2LEAN-ACCOUNTABILITY"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "Spec2Lean.Snapshot.conceptsAtoms",
+      "module": "Audit.Snapshot",
+      "kind": "definition",
+      "type": "List Spec2Lean.Atom",
+      "role": "coverage_certificate",
+      "grounds": [
+        "SPEC2LEAN-ACCOUNTABILITY"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "Spec2Lean.Snapshot.conceptsSHA256",
+      "module": "Audit.Snapshot",
+      "kind": "definition",
+      "type": "String",
+      "role": "coverage_certificate",
+      "grounds": [
+        "SPEC2LEAN-ACCOUNTABILITY"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "Spec2Lean.Snapshot.concepts_all_positions",
+      "module": "Audit.Snapshot",
+      "kind": "theorem",
+      "type": "∀ (i : Nat),\n  i < 120796 →\n    ∃ a,\n      a ∈ Spec2Lean.Snapshot.conceptsAtoms ∧\n        Spec2Lean.Contains a i ∧\n          ∀ (b : Spec2Lean.Atom), b ∈ Spec2Lean.Snapshot.conceptsAtoms → Spec2Lean.Contains b i → b = a",
+      "role": "coverage_certificate",
+      "grounds": [
+        "SPEC2LEAN-ACCOUNTABILITY"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "Spec2Lean.Snapshot.concepts_references",
+      "module": "Audit.Snapshot",
+      "kind": "theorem",
+      "type": "∀ {a : Spec2Lean.Atom},\n  a ∈ Spec2Lean.Snapshot.conceptsAtoms → a.refs ≠ [] ∧ ∀ (r : String), r ∈ a.refs → r ∈ Spec2Lean.Snapshot.ids",
+      "role": "coverage_certificate",
+      "grounds": [
+        "SPEC2LEAN-ACCOUNTABILITY"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "Spec2Lean.Snapshot.concepts_valid",
+      "module": "Audit.Snapshot",
+      "kind": "theorem",
+      "type": "Spec2Lean.ValidPartition Spec2Lean.Snapshot.ids 120796 0 Spec2Lean.Snapshot.conceptsAtoms",
+      "role": "coverage_certificate",
+      "grounds": [
+        "SPEC2LEAN-ACCOUNTABILITY"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "Spec2Lean.Snapshot.ids",
+      "module": "Audit.Snapshot",
+      "kind": "definition",
+      "type": "List String",
+      "role": "coverage_certificate",
+      "grounds": [
+        "SPEC2LEAN-ACCOUNTABILITY"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "Spec2Lean.Snapshot.mtAtoms",
+      "module": "Audit.Snapshot",
+      "kind": "definition",
+      "type": "List Spec2Lean.Atom",
+      "role": "coverage_certificate",
+      "grounds": [
+        "SPEC2LEAN-ACCOUNTABILITY"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "Spec2Lean.Snapshot.mtSHA256",
+      "module": "Audit.Snapshot",
+      "kind": "definition",
+      "type": "String",
+      "role": "coverage_certificate",
+      "grounds": [
+        "SPEC2LEAN-ACCOUNTABILITY"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "Spec2Lean.Snapshot.mt_all_positions",
+      "module": "Audit.Snapshot",
+      "kind": "theorem",
+      "type": "∀ (i : Nat),\n  i < 139975 →\n    ∃ a,\n      a ∈ Spec2Lean.Snapshot.mtAtoms ∧\n        Spec2Lean.Contains a i ∧ ∀ (b : Spec2Lean.Atom), b ∈ Spec2Lean.Snapshot.mtAtoms → Spec2Lean.Contains b i → b = a",
+      "role": "coverage_certificate",
+      "grounds": [
+        "SPEC2LEAN-ACCOUNTABILITY"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "Spec2Lean.Snapshot.mt_references",
+      "module": "Audit.Snapshot",
+      "kind": "theorem",
+      "type": "∀ {a : Spec2Lean.Atom},\n  a ∈ Spec2Lean.Snapshot.mtAtoms → a.refs ≠ [] ∧ ∀ (r : String), r ∈ a.refs → r ∈ Spec2Lean.Snapshot.ids",
+      "role": "coverage_certificate",
+      "grounds": [
+        "SPEC2LEAN-ACCOUNTABILITY"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "Spec2Lean.Snapshot.mt_valid",
+      "module": "Audit.Snapshot",
+      "kind": "theorem",
+      "type": "Spec2Lean.ValidPartition Spec2Lean.Snapshot.ids 139975 0 Spec2Lean.Snapshot.mtAtoms",
+      "role": "coverage_certificate",
+      "grounds": [
+        "SPEC2LEAN-ACCOUNTABILITY"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "Spec2Lean.ValidPartition",
+      "module": "Audit.Coverage",
+      "kind": "definition",
+      "type": "List String → Nat → Nat → List Spec2Lean.Atom → Prop",
+      "role": "coverage_certificate",
+      "grounds": [
+        "SPEC2LEAN-ACCOUNTABILITY"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "Spec2Lean.ValidPartition._f",
+      "module": "Audit.Coverage",
+      "kind": "definition",
+      "type": "List String → Nat → (atoms : List Spec2Lean.Atom) → List.below (motive := fun atoms => Nat → Prop) atoms → Nat → Prop",
+      "role": "coverage_certificate",
+      "grounds": [
+        "SPEC2LEAN-ACCOUNTABILITY"
+      ],
+      "parent_declaration_if_applicable": "Spec2Lean.ValidPartition",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "Spec2Lean.ValidPartition._sunfold",
+      "module": "Audit.Coverage",
+      "kind": "definition",
+      "type": "List String → Nat → Nat → List Spec2Lean.Atom → Prop",
+      "role": "coverage_certificate",
+      "grounds": [
+        "SPEC2LEAN-ACCOUNTABILITY"
+      ],
+      "parent_declaration_if_applicable": "Spec2Lean.ValidPartition",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "Spec2Lean.ValidPartition._unsafe_rec",
+      "module": "Audit.Coverage",
+      "kind": "definition",
+      "type": "List String → Nat → Nat → List Spec2Lean.Atom → Prop",
+      "role": "coverage_certificate",
+      "grounds": [
+        "SPEC2LEAN-ACCOUNTABILITY"
+      ],
+      "parent_declaration_if_applicable": "Spec2Lean.ValidPartition",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "Spec2Lean.ValidPartition.eq_1",
+      "module": "Audit.Coverage",
+      "kind": "theorem",
+      "type": "∀ (ids : List String) (limit start : Nat), Spec2Lean.ValidPartition ids limit start [] = (start = limit)",
+      "role": "coverage_certificate",
+      "grounds": [
+        "SPEC2LEAN-ACCOUNTABILITY"
+      ],
+      "parent_declaration_if_applicable": "Spec2Lean.ValidPartition",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "Spec2Lean.ValidPartition.eq_2",
+      "module": "Audit.Coverage",
+      "kind": "theorem",
+      "type": "∀ (ids : List String) (limit start : Nat) (a : Spec2Lean.Atom) (rest : List Spec2Lean.Atom),\n  Spec2Lean.ValidPartition ids limit start (a :: rest) =\n    (a.start = start ∧\n      a.start < a.stop ∧\n        a.refs ≠ [] ∧ (∀ (r : String), r ∈ a.refs → r ∈ ids) ∧ Spec2Lean.ValidPartition ids limit a.stop rest)",
+      "role": "coverage_certificate",
+      "grounds": [
+        "SPEC2LEAN-ACCOUNTABILITY"
+      ],
+      "parent_declaration_if_applicable": "Spec2Lean.ValidPartition",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "Spec2Lean.ValidPartition.eq_def",
+      "module": "Audit.Coverage",
+      "kind": "theorem",
+      "type": "∀ (ids : List String) (limit start : Nat) (atoms : List Spec2Lean.Atom),\n  Spec2Lean.ValidPartition ids limit start atoms =\n    match atoms with\n    | [] => start = limit\n    | a :: rest =>\n      a.start = start ∧\n        a.start < a.stop ∧\n          a.refs ≠ [] ∧ (∀ (r : String), r ∈ a.refs → r ∈ ids) ∧ Spec2Lean.ValidPartition ids limit a.stop rest",
+      "role": "coverage_certificate",
+      "grounds": [
+        "SPEC2LEAN-ACCOUNTABILITY"
+      ],
+      "parent_declaration_if_applicable": "Spec2Lean.ValidPartition",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "Spec2Lean.ValidPartition.match_1",
+      "module": "Audit.Coverage",
+      "kind": "definition",
+      "type": "(motive : List Spec2Lean.Atom → Sort u_1) →\n  (atoms : List Spec2Lean.Atom) →\n    (Unit → motive []) → ((a : Spec2Lean.Atom) → (rest : List Spec2Lean.Atom) → motive (a :: rest)) → motive atoms",
+      "role": "coverage_certificate",
+      "grounds": [
+        "SPEC2LEAN-ACCOUNTABILITY"
+      ],
+      "parent_declaration_if_applicable": "Spec2Lean.ValidPartition",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "Spec2Lean.instDecidableEqAtom",
+      "module": "Audit.Coverage",
+      "kind": "definition",
+      "type": "DecidableEq Spec2Lean.Atom",
+      "role": "coverage_certificate",
+      "grounds": [
+        "SPEC2LEAN-ACCOUNTABILITY"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "Spec2Lean.instDecidableEqAtom.decEq",
+      "module": "Audit.Coverage",
+      "kind": "definition",
+      "type": "(x x_1 : Spec2Lean.Atom) → Decidable (x = x_1)",
+      "role": "coverage_certificate",
+      "grounds": [
+        "SPEC2LEAN-ACCOUNTABILITY"
+      ],
+      "parent_declaration_if_applicable": "Spec2Lean.instDecidableEqAtom",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "Spec2Lean.instDecidableEqAtom.decEq._proof_1",
+      "module": "Audit.Coverage",
+      "kind": "theorem",
+      "type": "∀ (a a_1 : Nat) (a_2 : List String), { start := a, stop := a_1, refs := a_2 } = { start := a, stop := a_1, refs := a_2 }",
+      "role": "coverage_certificate",
+      "grounds": [
+        "SPEC2LEAN-ACCOUNTABILITY"
+      ],
+      "parent_declaration_if_applicable": "Spec2Lean.instDecidableEqAtom.decEq",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "Spec2Lean.instDecidableEqAtom.decEq._proof_2",
+      "module": "Audit.Coverage",
+      "kind": "theorem",
+      "type": "∀ (a a_1 : Nat) (a_2 b : List String),\n  ¬a_2 = b → { start := a, stop := a_1, refs := a_2 } = { start := a, stop := a_1, refs := b } → False",
+      "role": "coverage_certificate",
+      "grounds": [
+        "SPEC2LEAN-ACCOUNTABILITY"
+      ],
+      "parent_declaration_if_applicable": "Spec2Lean.instDecidableEqAtom.decEq",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "Spec2Lean.instDecidableEqAtom.decEq._proof_3",
+      "module": "Audit.Coverage",
+      "kind": "theorem",
+      "type": "∀ (a a_1 : Nat) (a_2 : List String) (b : Nat) (b_1 : List String),\n  ¬a_1 = b → { start := a, stop := a_1, refs := a_2 } = { start := a, stop := b, refs := b_1 } → False",
+      "role": "coverage_certificate",
+      "grounds": [
+        "SPEC2LEAN-ACCOUNTABILITY"
+      ],
+      "parent_declaration_if_applicable": "Spec2Lean.instDecidableEqAtom.decEq",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "Spec2Lean.instDecidableEqAtom.decEq._proof_4",
+      "module": "Audit.Coverage",
+      "kind": "theorem",
+      "type": "∀ (a a_1 : Nat) (a_2 : List String) (b b_1 : Nat) (b_2 : List String),\n  ¬a = b → { start := a, stop := a_1, refs := a_2 } = { start := b, stop := b_1, refs := b_2 } → False",
+      "role": "coverage_certificate",
+      "grounds": [
+        "SPEC2LEAN-ACCOUNTABILITY"
+      ],
+      "parent_declaration_if_applicable": "Spec2Lean.instDecidableEqAtom.decEq",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "Spec2Lean.instDecidableEqAtom.decEq.match_1",
+      "module": "Audit.Coverage",
+      "kind": "definition",
+      "type": "(motive : Spec2Lean.Atom → Spec2Lean.Atom → Sort u_1) →\n  (x x_1 : Spec2Lean.Atom) →\n    ((a a_1 : Nat) →\n        (a_2 : List String) →\n          (b b_1 : Nat) →\n            (b_2 : List String) →\n              motive { start := a, stop := a_1, refs := a_2 } { start := b, stop := b_1, refs := b_2 }) →\n      motive x x_1",
+      "role": "coverage_certificate",
+      "grounds": [
+        "SPEC2LEAN-ACCOUNTABILITY"
+      ],
+      "parent_declaration_if_applicable": "Spec2Lean.instDecidableEqAtom.decEq",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "Spec2Lean.instDecidableValidPartition",
+      "module": "Audit.Coverage",
+      "kind": "definition",
+      "type": "(ids : List String) →\n  (limit start : Nat) → (atoms : List Spec2Lean.Atom) → Decidable (Spec2Lean.ValidPartition ids limit start atoms)",
+      "role": "coverage_certificate",
+      "grounds": [
+        "SPEC2LEAN-ACCOUNTABILITY"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "Spec2Lean.instReprAtom",
+      "module": "Audit.Coverage",
+      "kind": "definition",
+      "type": "Repr Spec2Lean.Atom",
+      "role": "coverage_certificate",
+      "grounds": [
+        "SPEC2LEAN-ACCOUNTABILITY"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "Spec2Lean.instReprAtom.repr",
+      "module": "Audit.Coverage",
+      "kind": "definition",
+      "type": "Spec2Lean.Atom → Nat → Format",
+      "role": "coverage_certificate",
+      "grounds": [
+        "SPEC2LEAN-ACCOUNTABILITY"
+      ],
+      "parent_declaration_if_applicable": "Spec2Lean.instReprAtom",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "Spec2Lean.member_starts_after",
+      "module": "Audit.Coverage",
+      "kind": "theorem",
+      "type": "∀ {ids : List String} {limit start : Nat} {atoms : List Spec2Lean.Atom},\n  Spec2Lean.ValidPartition ids limit start atoms → ∀ {a : Spec2Lean.Atom}, a ∈ atoms → start ≤ a.start",
+      "role": "coverage_certificate",
+      "grounds": [
+        "SPEC2LEAN-ACCOUNTABILITY"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "Spec2Lean.member_starts_after._proof_1_1",
+      "module": "Audit.Coverage",
+      "kind": "theorem",
+      "type": "∀ (b : Spec2Lean.Atom) {start : Nat}, b.start = start → ¬start ≤ b.start → False",
+      "role": "coverage_certificate",
+      "grounds": [
+        "SPEC2LEAN-ACCOUNTABILITY"
+      ],
+      "parent_declaration_if_applicable": "Spec2Lean.member_starts_after",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "Spec2Lean.member_starts_after._proof_1_2",
+      "module": "Audit.Coverage",
+      "kind": "theorem",
+      "type": "∀ {a : Spec2Lean.Atom} (b : Spec2Lean.Atom) {start : Nat},\n  b.start = start → b.start < b.stop → b.stop ≤ a.start → ¬start ≤ a.start → False",
+      "role": "coverage_certificate",
+      "grounds": [
+        "SPEC2LEAN-ACCOUNTABILITY"
+      ],
+      "parent_declaration_if_applicable": "Spec2Lean.member_starts_after",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "Spec2Lean.partitionDecidable",
+      "module": "Audit.Coverage",
+      "kind": "definition",
+      "type": "(ids : List String) →\n  (limit start : Nat) → (atoms : List Spec2Lean.Atom) → Decidable (Spec2Lean.ValidPartition ids limit start atoms)",
+      "role": "coverage_certificate",
+      "grounds": [
+        "SPEC2LEAN-ACCOUNTABILITY"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "Spec2Lean.partitionDecidable._aux_1",
+      "module": "Audit.Coverage",
+      "kind": "definition",
+      "type": "(ids : List String) → (limit start : Nat) → Decidable (Spec2Lean.ValidPartition ids limit start [])",
+      "role": "coverage_certificate",
+      "grounds": [
+        "SPEC2LEAN-ACCOUNTABILITY"
+      ],
+      "parent_declaration_if_applicable": "Spec2Lean.partitionDecidable",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "Spec2Lean.partitionDecidable._aux_3",
+      "module": "Audit.Coverage",
+      "kind": "definition",
+      "type": "(ids : List String) →\n  (limit start : Nat) →\n    (a : Spec2Lean.Atom) →\n      (rest : List Spec2Lean.Atom) →\n        Decidable (Spec2Lean.ValidPartition ids limit a.stop rest) →\n          Decidable (Spec2Lean.ValidPartition ids limit start (a :: rest))",
+      "role": "coverage_certificate",
+      "grounds": [
+        "SPEC2LEAN-ACCOUNTABILITY"
+      ],
+      "parent_declaration_if_applicable": "Spec2Lean.partitionDecidable",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "Spec2Lean.partitionDecidable._f",
+      "module": "Audit.Coverage",
+      "kind": "definition",
+      "type": "(ids : List String) →\n  (limit : Nat) →\n    (atoms : List Spec2Lean.Atom) →\n      List.below (motive := fun atoms => (start : Nat) → Decidable (Spec2Lean.ValidPartition ids limit start atoms))\n          atoms →\n        (start : Nat) → Decidable (Spec2Lean.ValidPartition ids limit start atoms)",
+      "role": "coverage_certificate",
+      "grounds": [
+        "SPEC2LEAN-ACCOUNTABILITY"
+      ],
+      "parent_declaration_if_applicable": "Spec2Lean.partitionDecidable",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "Spec2Lean.partitionDecidable._sunfold",
+      "module": "Audit.Coverage",
+      "kind": "definition",
+      "type": "(ids : List String) →\n  (limit start : Nat) → (atoms : List Spec2Lean.Atom) → Decidable (Spec2Lean.ValidPartition ids limit start atoms)",
+      "role": "coverage_certificate",
+      "grounds": [
+        "SPEC2LEAN-ACCOUNTABILITY"
+      ],
+      "parent_declaration_if_applicable": "Spec2Lean.partitionDecidable",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "Spec2Lean.partitionDecidable._unsafe_rec",
+      "module": "Audit.Coverage",
+      "kind": "definition",
+      "type": "(ids : List String) →\n  (limit start : Nat) → (atoms : List Spec2Lean.Atom) → Decidable (Spec2Lean.ValidPartition ids limit start atoms)",
+      "role": "coverage_certificate",
+      "grounds": [
+        "SPEC2LEAN-ACCOUNTABILITY"
+      ],
+      "parent_declaration_if_applicable": "Spec2Lean.partitionDecidable",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "Spec2Lean.partition_sound",
+      "module": "Audit.Coverage",
+      "kind": "theorem",
+      "type": "∀ {ids : List String} {limit start : Nat} {atoms : List Spec2Lean.Atom},\n  Spec2Lean.ValidPartition ids limit start atoms →\n    ∀ (i : Nat),\n      start ≤ i ∧ i < limit →\n        ∃ a, a ∈ atoms ∧ Spec2Lean.Contains a i ∧ ∀ (b : Spec2Lean.Atom), b ∈ atoms → Spec2Lean.Contains b i → b = a",
+      "role": "coverage_certificate",
+      "grounds": [
+        "SPEC2LEAN-ACCOUNTABILITY"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "Spec2Lean.partition_sound._proof_1_4",
+      "module": "Audit.Coverage",
+      "kind": "theorem",
+      "type": "∀ {limit : Nat} (i : Nat) {start : Nat}, start = limit → start ≤ i ∧ i < limit → False",
+      "role": "coverage_certificate",
+      "grounds": [
+        "SPEC2LEAN-ACCOUNTABILITY"
+      ],
+      "parent_declaration_if_applicable": "Spec2Lean.partition_sound",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "Spec2Lean.partition_sound._proof_1_5",
+      "module": "Audit.Coverage",
+      "kind": "theorem",
+      "type": "∀ {limit : Nat} (i : Nat) (a : Spec2Lean.Atom) {start : Nat},\n  start ≤ i ∧ i < limit → a.start = start → ¬a.start ≤ i → False",
+      "role": "coverage_certificate",
+      "grounds": [
+        "SPEC2LEAN-ACCOUNTABILITY"
+      ],
+      "parent_declaration_if_applicable": "Spec2Lean.partition_sound",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "Spec2Lean.partition_sound._proof_1_6",
+      "module": "Audit.Coverage",
+      "kind": "theorem",
+      "type": "∀ {limit : Nat} (i : Nat) (a : Spec2Lean.Atom) {start : Nat},\n  i < a.stop → ∀ (b : Spec2Lean.Atom), a.stop ≤ b.start → b.start ≤ i → False",
+      "role": "coverage_certificate",
+      "grounds": [
+        "SPEC2LEAN-ACCOUNTABILITY"
+      ],
+      "parent_declaration_if_applicable": "Spec2Lean.partition_sound",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "Spec2Lean.partition_sound._proof_1_7",
+      "module": "Audit.Coverage",
+      "kind": "theorem",
+      "type": "∀ {limit : Nat} (i : Nat) (a : Spec2Lean.Atom) {start : Nat},\n  start ≤ i ∧ i < limit → ¬i < a.stop → ¬(a.stop ≤ i ∧ i < limit) → False",
+      "role": "coverage_certificate",
+      "grounds": [
+        "SPEC2LEAN-ACCOUNTABILITY"
+      ],
+      "parent_declaration_if_applicable": "Spec2Lean.partition_sound",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "Spec2Lean.references_grounded",
+      "module": "Audit.Coverage",
+      "kind": "theorem",
+      "type": "∀ {ids : List String} {limit start : Nat} {atoms : List Spec2Lean.Atom},\n  Spec2Lean.ValidPartition ids limit start atoms →\n    ∀ {a : Spec2Lean.Atom}, a ∈ atoms → a.refs ≠ [] ∧ ∀ (r : String), r ∈ a.refs → r ∈ ids",
+      "role": "coverage_certificate",
+      "grounds": [
+        "SPEC2LEAN-ACCOUNTABILITY"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.Audit.Coverage.0.Spec2Lean.ValidPartition.match_1.eq_1",
+      "module": "Audit.Coverage",
+      "kind": "theorem",
+      "type": "∀ (motive : List Spec2Lean.Atom → Sort u_1) (h_1 : Unit → motive [])\n  (h_2 : (a : Spec2Lean.Atom) → (rest : List Spec2Lean.Atom) → motive (a :: rest)),\n  (match [] with\n    | [] => h_1 ()\n    | a :: rest => h_2 a rest) =\n    h_1 ()",
+      "role": "coverage_certificate",
+      "grounds": [
+        "SPEC2LEAN-ACCOUNTABILITY"
+      ],
+      "parent_declaration_if_applicable": "Spec2Lean.ValidPartition.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.Audit.Coverage.0.Spec2Lean.ValidPartition.match_1.eq_2",
+      "module": "Audit.Coverage",
+      "kind": "theorem",
+      "type": "∀ (motive : List Spec2Lean.Atom → Sort u_1) (a : Spec2Lean.Atom) (rest : List Spec2Lean.Atom) (h_1 : Unit → motive [])\n  (h_2 : (a : Spec2Lean.Atom) → (rest : List Spec2Lean.Atom) → motive (a :: rest)),\n  (match a :: rest with\n    | [] => h_1 ()\n    | a :: rest => h_2 a rest) =\n    h_2 a rest",
+      "role": "coverage_certificate",
+      "grounds": [
+        "SPEC2LEAN-ACCOUNTABILITY"
+      ],
+      "parent_declaration_if_applicable": "Spec2Lean.ValidPartition.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.Audit.Coverage.0.Spec2Lean.ValidPartition.match_1.splitter",
+      "module": "Audit.Coverage",
+      "kind": "definition",
+      "type": "(motive : List Spec2Lean.Atom → Sort u_1) →\n  (atoms : List Spec2Lean.Atom) →\n    (Unit → motive []) → ((a : Spec2Lean.Atom) → (rest : List Spec2Lean.Atom) → motive (a :: rest)) → motive atoms",
+      "role": "coverage_certificate",
+      "grounds": [
+        "SPEC2LEAN-ACCOUNTABILITY"
+      ],
+      "parent_declaration_if_applicable": "Spec2Lean.ValidPartition.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.Enumeration.0.RDF11.Enumeration.unique.match_1.eq_1",
+      "module": "RDF11.Enumeration",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_1} (motive : List α → Sort u_2) (h_1 : Unit → motive [])\n  (h_2 : (t : α) → (ts : List α) → motive (t :: ts)),\n  (match [] with\n    | [] => h_1 ()\n    | t :: ts => h_2 t ts) =\n    h_1 ()",
+      "role": "engineering_refinement",
+      "grounds": [
+        "REFINEMENT-ENUMERATION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Enumeration",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.Enumeration.0.RDF11.Enumeration.unique.match_1.eq_2",
+      "module": "RDF11.Enumeration",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_1} (motive : List α → Sort u_2) (t : α) (ts : List α) (h_1 : Unit → motive [])\n  (h_2 : (t : α) → (ts : List α) → motive (t :: ts)),\n  (match t :: ts with\n    | [] => h_1 ()\n    | t :: ts => h_2 t ts) =\n    h_2 t ts",
+      "role": "engineering_refinement",
+      "grounds": [
+        "REFINEMENT-ENUMERATION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Enumeration",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.Enumeration.0.RDF11.Enumeration.unique.match_1.splitter",
+      "module": "RDF11.Enumeration",
+      "kind": "definition",
+      "type": "{α : Type u_1} →\n  (motive : List α → Sort u_2) →\n    (x : List α) → (Unit → motive []) → ((t : α) → (ts : List α) → motive (t :: ts)) → motive x",
+      "role": "engineering_refinement",
+      "grounds": [
+        "REFINEMENT-ENUMERATION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Enumeration",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.Simple.0.RDF11.SimpleInterpretation.denote.match_1.eq_1",
+      "module": "RDF11.Simple",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Blank : Type} (motive : RDF11.Term Iri Literal Blank → Sort u_1) (i : Iri)\n  (h_1 : (i : Iri) → motive (RDF11.Term.iri i)) (h_2 : (l : Literal) → motive (RDF11.Term.literal l))\n  (h_3 : (b : Blank) → motive (RDF11.Term.blank b)),\n  (match RDF11.Term.iri i with\n    | RDF11.Term.iri i => h_1 i\n    | RDF11.Term.literal l => h_2 l\n    | RDF11.Term.blank b => h_3 b) =\n    h_1 i",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.Simple.0.RDF11.SimpleInterpretation.denote.match_1.eq_2",
+      "module": "RDF11.Simple",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Blank : Type} (motive : RDF11.Term Iri Literal Blank → Sort u_1) (l : Literal)\n  (h_1 : (i : Iri) → motive (RDF11.Term.iri i)) (h_2 : (l : Literal) → motive (RDF11.Term.literal l))\n  (h_3 : (b : Blank) → motive (RDF11.Term.blank b)),\n  (match RDF11.Term.literal l with\n    | RDF11.Term.iri i => h_1 i\n    | RDF11.Term.literal l => h_2 l\n    | RDF11.Term.blank b => h_3 b) =\n    h_2 l",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.Simple.0.RDF11.SimpleInterpretation.denote.match_1.eq_3",
+      "module": "RDF11.Simple",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Blank : Type} (motive : RDF11.Term Iri Literal Blank → Sort u_1) (b : Blank)\n  (h_1 : (i : Iri) → motive (RDF11.Term.iri i)) (h_2 : (l : Literal) → motive (RDF11.Term.literal l))\n  (h_3 : (b : Blank) → motive (RDF11.Term.blank b)),\n  (match RDF11.Term.blank b with\n    | RDF11.Term.iri i => h_1 i\n    | RDF11.Term.literal l => h_2 l\n    | RDF11.Term.blank b => h_3 b) =\n    h_3 b",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.Simple.0.RDF11.SimpleInterpretation.denote.match_1.splitter",
+      "module": "RDF11.Simple",
+      "kind": "definition",
+      "type": "{Iri Literal Blank : Type} →\n  (motive : RDF11.Term Iri Literal Blank → Sort u_1) →\n    (x : RDF11.Term Iri Literal Blank) →\n      ((i : Iri) → motive (RDF11.Term.iri i)) →\n        ((l : Literal) → motive (RDF11.Term.literal l)) → ((b : Blank) → motive (RDF11.Term.blank b)) → motive x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    }
+  ],
+  "limits": [
+    "Registry inclusion is not expert acceptance.",
+    "Generated helpers inherit an explicit reviewed-later support purpose; their dependency edges come from elaborated expressions.",
+    "The extractor and Python validator are trusted tools; no Lean proof yet establishes the full declaration-grounding certificate."
+  ]
+}

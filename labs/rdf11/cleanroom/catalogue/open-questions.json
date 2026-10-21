@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "questions": [
+    {
+      "id": "Q-GENERALIZED-INSTANCE",
+      "status": "countermodel_checked_mapping_and_source_scope_need_expert_review",
+      "not_a_declared_erratum": true,
+      "claim_ids": [
+        "MT11-GENERALIZED-SYNTAX",
+        "MT11-SIMPLE-IP",
+        "MT11-BLANK-ASSIGNMENT",
+        "MT11-INSTANCE-ENTAILMENT",
+        "MT11-INTERPOLATION"
+      ],
+      "passage_ids": [
+        "generalized",
+        "interpretation",
+        "property-overlap",
+        "assignment",
+        "existential",
+        "consequences",
+        "instance-proof"
+      ],
+      "summary": "The unrestricted generalized-graph reading of the instance consequence conflicts with the current literal interpretation of simple-interpretation domains.",
+      "lean": [
+        "RDF11.GeneralizedScope.I",
+        "RDF11.GeneralizedScope.substituted_true",
+        "RDF11.GeneralizedScope.original_false",
+        "RDF11.GeneralizedScope.unrestricted_generalized_instance_consequence_fails"
+      ],
+      "example": {
+        "distinct_iris": [
+          "s",
+          "p"
+        ],
+        "IR": [
+          "r"
+        ],
+        "IP": [
+          "q"
+        ],
+        "r_not_equal_q": true,
+        "IS": {
+          "s": "r",
+          "p": "q",
+          "every_other_iri": "r"
+        },
+        "IEXT": {
+          "q": [
+            [
+              "r",
+              "r"
+            ]
+          ]
+        },
+        "IL": "undefined for every literal (permitted by simple semantics)",
+        "generalized_graph": "s _:b s .",
+        "instance": "s p s .",
+        "explanation": "The instance is true. A blank node maps into IR, so b cannot denote the sole property q; the original is false."
+      },
+      "limitations": [
+        "The general instance relation is not yet a Lean definition; the displayed singleton substitution is directly inspectable.",
+        "The countermodel proves a statement about the current formal model; fidelity and the scope of the W3C prose still require expert adjudication.",
+        "This does not refute the ordinary-RDF instance consequence: an ordinary RDF predicate cannot be a blank node."
+      ],
+      "review_question": "Does the generalized-syntax sentence carry this consequence unchanged, or does the intended instance/interpretation scope impose an additional qualification?",
+      "implementation_policy": "Keep the definitions as transcribed. Do not silently assume IP is a subset of IR, expand assignment codomains, or mark the general instance/interpolation claims discharged."
+    }
+  ]
+}

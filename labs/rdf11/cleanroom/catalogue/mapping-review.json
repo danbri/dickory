@@ -1,0 +1,899 @@
+{
+  "schema_version": 1,
+  "status": "draft_first_formalization_increment",
+  "selection_method": "Human-readable AI close reading; selectors locate already selected passages and do not extract assertions.",
+  "mappings": [
+    {
+      "claim_id": "MT11-GRAPH-SET",
+      "relation": "definition",
+      "symbol_linked_english": "An RDF graph G is a set of RDF triples; equality of G is equality of membership.",
+      "bindings": [
+        {
+          "symbol": "Graph",
+          "lean": "RDF11.Graph"
+        },
+        {
+          "symbol": "Triple",
+          "lean": "RDF11.Triple"
+        },
+        {
+          "symbol": "ext",
+          "lean": "RDF11.Set.ext"
+        }
+      ],
+      "limitations": "Concepts supplies the term domains; their concrete lexical constraints remain open.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-TRIPLE-TERM-DOMAINS",
+      "relation": "partial_definition",
+      "symbol_linked_english": "An ordinary RDF triple has subject in IRI or Blank, predicate in IRI, and object in IRI or Literal or Blank.",
+      "bindings": [
+        {
+          "symbol": "Triple",
+          "lean": "RDF11.Triple"
+        },
+        {
+          "symbol": "Subject",
+          "lean": "RDF11.Subject"
+        },
+        {
+          "symbol": "Term",
+          "lean": "RDF11.Term"
+        }
+      ],
+      "limitations": "Disjoint syntactic categories are enforced. IRI and Literal are abstract domains, not validated concrete strings.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-GENERALIZED-SYNTAX",
+      "relation": "definition",
+      "symbol_linked_english": "A generalized triple permits any RDF term in each of its three positions; a generalized graph is a set of generalized triples.",
+      "bindings": [
+        {
+          "symbol": "GeneralizedTriple",
+          "lean": "RDF11.GeneralizedTriple"
+        },
+        {
+          "symbol": "GeneralizedGraph",
+          "lean": "RDF11.GeneralizedGraph"
+        },
+        {
+          "symbol": "generalize",
+          "lean": "RDF11.Triple.generalize"
+        },
+        {
+          "symbol": "generalize",
+          "lean": "RDF11.Graph.generalize"
+        }
+      ],
+      "limitations": "Ordinary graphs embed into generalized graphs. Instance and interpolation claims for generalized syntax have not been discharged.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-EMPTY-GRAPH",
+      "relation": "definition",
+      "symbol_linked_english": "The empty graph contains no triples.",
+      "bindings": [
+        {
+          "symbol": "empty",
+          "lean": "RDF11.Set.empty"
+        }
+      ],
+      "limitations": "",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-SUBGRAPH",
+      "relation": "definition",
+      "symbol_linked_english": "H is a subgraph of G exactly when every member of H is a member of G.",
+      "bindings": [
+        {
+          "symbol": "subset",
+          "lean": "RDF11.Set.subset"
+        }
+      ],
+      "limitations": "",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-GROUND-GRAPH",
+      "relation": "definition",
+      "symbol_linked_english": "G is ground exactly when no blank node occurs in any triple of G.",
+      "bindings": [
+        {
+          "symbol": "ground",
+          "lean": "RDF11.GeneralizedGraph.ground"
+        },
+        {
+          "symbol": "hasBlank",
+          "lean": "RDF11.GeneralizedGraph.hasBlank"
+        },
+        {
+          "symbol": "hasBlank",
+          "lean": "RDF11.GeneralizedTriple.hasBlank"
+        },
+        {
+          "symbol": "hasBlank",
+          "lean": "RDF11.Term.hasBlank"
+        }
+      ],
+      "limitations": "",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-SET-IDEMPOTENCE",
+      "relation": "theorem",
+      "symbol_linked_english": "For every set G, G union G equals G; repeated occurrences of a triple in an input list denote the same set as one occurrence.",
+      "bindings": [
+        {
+          "symbol": "union_idempotent",
+          "lean": "RDF11.Set.union_idempotent"
+        },
+        {
+          "symbol": "ofList_repeat",
+          "lean": "RDF11.Set.ofList_repeat"
+        },
+        {
+          "symbol": "ext",
+          "lean": "RDF11.Set.ext"
+        }
+      ],
+      "limitations": "This is a mathematical consequence of the set definition, not a separately labelled W3C rule.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-UNION",
+      "relation": "definition",
+      "symbol_linked_english": "The union of G and H contains a triple exactly when G or H contains that triple, preserving blank-node identity.",
+      "bindings": [
+        {
+          "symbol": "union",
+          "lean": "RDF11.Set.union"
+        }
+      ],
+      "limitations": "Binary union; arbitrary families are not yet implemented.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-MERGE",
+      "relation": "partial_definition_and_theorem",
+      "symbol_linked_english": "The binary merge of G and H takes their union after placing their blank nodes in disjoint copies. I satisfies that merge exactly when I satisfies G and I satisfies H.",
+      "bindings": [
+        {
+          "symbol": "merge",
+          "lean": "RDF11.merge"
+        },
+        {
+          "symbol": "satisfies_merge",
+          "lean": "RDF11.satisfies_merge"
+        }
+      ],
+      "limitations": "Uses Sum B₁ B₂ for fresh identities. This is a representative up to blank-node renaming; literal equality to union for already-disjoint domains is not asserted.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-UNION-MERGE-RELATION",
+      "relation": "partial_theorem",
+      "symbol_linked_english": "For any G and H with a common blank-node domain, their union simply entails their merge.",
+      "bindings": [
+        {
+          "symbol": "union_entails_merge",
+          "lean": "RDF11.union_entails_merge"
+        }
+      ],
+      "limitations": "Semantic consequence only. The stated syntactic instance relation and no-shared-nodes equality remain open.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-SIMPLE-IR",
+      "relation": "definition",
+      "symbol_linked_english": "IR is a nonempty set of resources.",
+      "bindings": [
+        {
+          "symbol": "IR",
+          "lean": "RDF11.SimpleInterpretation.IR"
+        },
+        {
+          "symbol": "IR_nonempty",
+          "lean": "RDF11.SimpleInterpretation.IR_nonempty"
+        }
+      ],
+      "limitations": "IR and IP are predicates on an ambient type U; no finiteness assumption.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-SIMPLE-IP",
+      "relation": "definition",
+      "symbol_linked_english": "IP is a set of properties, permitted to overlap IR.",
+      "bindings": [
+        {
+          "symbol": "IP",
+          "lean": "RDF11.SimpleInterpretation.IP"
+        }
+      ],
+      "limitations": "No IP subset IR constraint is imposed in simple interpretations.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-SIMPLE-IEXT",
+      "relation": "definition",
+      "symbol_linked_english": "For every p in IP, IEXT(p) is a set of pairs of elements of IR.",
+      "bindings": [
+        {
+          "symbol": "IEXT",
+          "lean": "RDF11.SimpleInterpretation.IEXT"
+        },
+        {
+          "symbol": "Property",
+          "lean": "RDF11.SimpleInterpretation.Property"
+        },
+        {
+          "symbol": "Resource",
+          "lean": "RDF11.SimpleInterpretation.Resource"
+        }
+      ],
+      "limitations": "Subtype membership proofs express the domain and codomain restrictions.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-SIMPLE-IS",
+      "relation": "definition",
+      "symbol_linked_english": "For every IRI i, IS(i) belongs to IR union IP.",
+      "bindings": [
+        {
+          "symbol": "IS",
+          "lean": "RDF11.SimpleInterpretation.IS"
+        }
+      ],
+      "limitations": "The source IRI domain is an abstract parameter.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-SIMPLE-IL",
+      "relation": "definition",
+      "symbol_linked_english": "IL is a partial function from literals to IR.",
+      "bindings": [
+        {
+          "symbol": "IL",
+          "lean": "RDF11.SimpleInterpretation.IL"
+        }
+      ],
+      "limitations": "Option encodes undefinedness. It does not identify literals with their denoted values.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-TERM-DENOTATIONS",
+      "relation": "definition",
+      "symbol_linked_english": "For names, [I+A] agrees with IS on IRIs and IL on literals.",
+      "bindings": [
+        {
+          "symbol": "denote",
+          "lean": "RDF11.SimpleInterpretation.denote"
+        }
+      ],
+      "limitations": "The function is Option-valued because IL is partial.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-TRIPLE-TRUTH",
+      "relation": "definition",
+      "symbol_linked_english": "A triple s p o is true under [I+A] exactly when p denotes a property and s and o denote resources whose pair belongs to IEXT of that property.",
+      "bindings": [
+        {
+          "symbol": "TripleTrue",
+          "lean": "RDF11.SimpleInterpretation.TripleTrue"
+        }
+      ],
+      "limitations": "Undefined denotation makes the existential truth condition false.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-GRAPH-TRUTH",
+      "relation": "definition_and_theorem",
+      "symbol_linked_english": "A ground graph G is true exactly when every triple of G is true under I; no blank-node assignment is needed.",
+      "bindings": [
+        {
+          "symbol": "GraphTrue",
+          "lean": "RDF11.SimpleInterpretation.GraphTrue"
+        },
+        {
+          "symbol": "ground_satisfaction",
+          "lean": "RDF11.SimpleInterpretation.ground_satisfaction"
+        }
+      ],
+      "limitations": "GraphTrue also evaluates non-ground graphs under a specified A. ground_satisfaction proves agreement for ground graphs.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-UNDEFINED-LITERAL-FALSE",
+      "relation": "theorem",
+      "symbol_linked_english": "If IL(l) is undefined, any triple containing l in any position is false, and any graph containing that triple is false.",
+      "bindings": [
+        {
+          "symbol": "undefined_literal_any_position",
+          "lean": "RDF11.SimpleInterpretation.undefined_literal_any_position"
+        },
+        {
+          "symbol": "graph_with_undefined_literal_false",
+          "lean": "RDF11.SimpleInterpretation.graph_with_undefined_literal_false"
+        }
+      ],
+      "limitations": "Covers generalized positions as well as ordinary object literals.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-EMPTY-TRUE",
+      "relation": "theorem",
+      "symbol_linked_english": "Every simple interpretation satisfies the empty graph.",
+      "bindings": [
+        {
+          "symbol": "satisfies_empty",
+          "lean": "RDF11.SimpleInterpretation.satisfies_empty"
+        }
+      ],
+      "limitations": "Extension preservation follows when extensions retain the same Satisfies relation and admit empty syntax.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-BLANK-ASSIGNMENT",
+      "relation": "definition_with_equivalence",
+      "symbol_linked_english": "A maps exactly the blank nodes occurring in G to IR. [I+A] agrees with A on those blank nodes and with I on names.",
+      "bindings": [
+        {
+          "symbol": "Assignment",
+          "lean": "RDF11.SimpleInterpretation.Assignment"
+        },
+        {
+          "symbol": "AssignmentOn",
+          "lean": "RDF11.SimpleInterpretation.AssignmentOn"
+        },
+        {
+          "symbol": "denote",
+          "lean": "RDF11.SimpleInterpretation.denote"
+        },
+        {
+          "symbol": "satisfies_iff_exists_graphTrue",
+          "lean": "RDF11.SimpleInterpretation.satisfies_iff_exists_graphTrue"
+        }
+      ],
+      "limitations": "A partial ambient-domain function plus exact-domain condition represents the source's function on a subset. Restriction proves that unused extra assignments do not affect satisfaction.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-EXISTENTIAL-GRAPH-TRUTH",
+      "relation": "definition",
+      "symbol_linked_english": "I satisfies G exactly when one assignment A of G's blank nodes makes every triple in G true.",
+      "bindings": [
+        {
+          "symbol": "Satisfies",
+          "lean": "RDF11.SimpleInterpretation.Satisfies"
+        }
+      ],
+      "limitations": "The existential assignment quantifier is outside the universal triple quantifier.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-BLANK-ASSIGNMENT-NONGLOBAL",
+      "relation": "structural_definition",
+      "symbol_linked_english": "A blank-node assignment is a witness to graph truth and is not a component of the simple interpretation I.",
+      "bindings": [
+        {
+          "symbol": "SimpleInterpretation",
+          "lean": "RDF11.SimpleInterpretation"
+        },
+        {
+          "symbol": "Satisfies",
+          "lean": "RDF11.SimpleInterpretation.Satisfies"
+        }
+      ],
+      "limitations": "A structural modelling choice, not a separate theorem about all possible implementations.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-SHARED-BLANK-SCOPE",
+      "relation": "proved_illustration",
+      "symbol_linked_english": "There exist an interpretation I and graphs G and H sharing a blank node such that I satisfies G and H separately and their merge, but I does not satisfy their union.",
+      "bindings": [
+        {
+          "symbol": "each_satisfiable",
+          "lean": "RDF11.ScopeExample.each_satisfiable"
+        },
+        {
+          "symbol": "union_not_satisfied",
+          "lean": "RDF11.ScopeExample.union_not_satisfied"
+        },
+        {
+          "symbol": "merge_satisfied",
+          "lean": "RDF11.ScopeExample.merge_satisfied"
+        },
+        {
+          "symbol": "merge_does_not_entail_union",
+          "lean": "RDF11.ScopeExample.merge_does_not_entail_union"
+        }
+      ],
+      "limitations": "An abstract two-resource illustration of the informative discussion, not a transcription of the Alice/Bob drawing.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-SATISFACTION",
+      "relation": "partial_definition",
+      "symbol_linked_english": "I satisfies G exactly when G is true under I.",
+      "bindings": [
+        {
+          "symbol": "Satisfies",
+          "lean": "RDF11.SimpleInterpretation.Satisfies"
+        }
+      ],
+      "limitations": "Separate named predicates for satisfiable and unsatisfiable are not yet introduced.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-SIMPLE-ENTAILMENT",
+      "relation": "definition",
+      "symbol_linked_english": "G simply entails E exactly when every simple interpretation satisfying G also satisfies E.",
+      "bindings": [
+        {
+          "symbol": "SimplyEntails",
+          "lean": "RDF11.SimplyEntails"
+        }
+      ],
+      "limitations": "Universe-polymorphic family: all carrier types U in a fixed arbitrary Lean universe u. No claim to quantify over all universes inside one Lean proposition.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-LOGICAL-EQUIVALENCE",
+      "relation": "definition",
+      "symbol_linked_english": "G and E are logically equivalent exactly when G simply entails E and E simply entails G.",
+      "bindings": [
+        {
+          "symbol": "LogicallyEquivalent",
+          "lean": "RDF11.LogicallyEquivalent"
+        }
+      ],
+      "limitations": "",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-SIMPLE-SATISFIABILITY",
+      "relation": "theorem",
+      "symbol_linked_english": "For every graph G, including infinite graphs, there exists a simple interpretation satisfying G.",
+      "bindings": [
+        {
+          "symbol": "all_graphs_simply_satisfiable",
+          "lean": "RDF11.all_graphs_simply_satisfiable"
+        },
+        {
+          "symbol": "indiscriminate",
+          "lean": "RDF11.indiscriminate"
+        }
+      ],
+      "limitations": "A one-element resource/property universe is a witness, not a restriction on the model class.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-EMPTY-ENTAILMENTS",
+      "relation": "theorem",
+      "symbol_linked_english": "Every graph simply entails the empty graph; if the empty graph simply entails E then E is empty.",
+      "bindings": [
+        {
+          "symbol": "entails_empty",
+          "lean": "RDF11.entails_empty"
+        },
+        {
+          "symbol": "empty_entails_only_empty",
+          "lean": "RDF11.empty_entails_only_empty"
+        },
+        {
+          "symbol": "noPairs",
+          "lean": "RDF11.noPairs"
+        }
+      ],
+      "limitations": "The proof works without finite graphs.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-SUBGRAPH-ENTAILMENT",
+      "relation": "theorem",
+      "symbol_linked_english": "Every graph simply entails every subgraph of that graph.",
+      "bindings": [
+        {
+          "symbol": "subgraph_entailment",
+          "lean": "RDF11.subgraph_entailment"
+        },
+        {
+          "symbol": "satisfies_subgraph",
+          "lean": "RDF11.SimpleInterpretation.satisfies_subgraph"
+        }
+      ],
+      "limitations": "",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-PREMISE-MONOTONICITY",
+      "relation": "theorem",
+      "symbol_linked_english": "If G is a subgraph of H and G simply entails E, then H simply entails E.",
+      "bindings": [
+        {
+          "symbol": "premise_monotonicity",
+          "lean": "RDF11.premise_monotonicity"
+        }
+      ],
+      "limitations": "",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-SIMPLE-EXTENSION-BASE",
+      "relation": "partial_definition_and_theorem",
+      "symbol_linked_english": "For an extension represented by additional conditions C on simple interpretations, simple entailment implies entailment under C.",
+      "bindings": [
+        {
+          "symbol": "EntailsUnder",
+          "lean": "RDF11.EntailsUnder"
+        },
+        {
+          "symbol": "extension_preserves_simple_entailment",
+          "lean": "RDF11.extension_preserves_simple_entailment"
+        },
+        {
+          "symbol": "stronger_conditions_preserve_entailment",
+          "lean": "RDF11.stronger_conditions_preserve_entailment"
+        }
+      ],
+      "limitations": "Models only extensions over this graph syntax; does not formalize every permitted higher-level notation.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-INSTANCE-ENTAILMENT",
+      "relation": "partial_theorem",
+      "symbol_linked_english": "If f replaces blank nodes only by blank nodes, the resulting graph G.mapBlank f simply entails G.",
+      "bindings": [
+        {
+          "symbol": "renamed_entails_original",
+          "lean": "RDF11.renamed_entails_original"
+        },
+        {
+          "symbol": "mapBlank",
+          "lean": "RDF11.GeneralizedGraph.mapBlank"
+        }
+      ],
+      "limitations": "Only the blank-to-blank case. General substitution by names and interpolation are open.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-TRUTH-DUPLICATION-INVARIANCE",
+      "relation": "partial_theorem",
+      "symbol_linked_english": "Lists that denote equal sets of triples have the same graph identity and therefore the same Satisfies proposition.",
+      "bindings": [
+        {
+          "symbol": "ofList_repeat",
+          "lean": "RDF11.Set.ofList_repeat"
+        },
+        {
+          "symbol": "ext",
+          "lean": "RDF11.Set.ext"
+        },
+        {
+          "symbol": "Satisfies",
+          "lean": "RDF11.SimpleInterpretation.Satisfies"
+        }
+      ],
+      "limitations": "Set identity is proved; a separately named general list-permutation satisfaction theorem is not yet provided.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    }
+  ],
+  "passage_selectors": [
+    {
+      "id": "graph",
+      "source": "concepts",
+      "tag": "p",
+      "text": "An RDF graph is a set of RDF triples.",
+      "claims": [
+        "MT11-GRAPH-SET",
+        "MT11-SET-IDEMPOTENCE",
+        "MT11-TRUTH-DUPLICATION-INVARIANCE"
+      ]
+    },
+    {
+      "id": "triples",
+      "source": "concepts",
+      "tag": "section",
+      "text": "3.1 Triples",
+      "claims": [
+        "MT11-TRIPLE-TERM-DOMAINS"
+      ],
+      "element_id": "section-triples"
+    },
+    {
+      "id": "generalized",
+      "source": "mt",
+      "tag": "p",
+      "text": "This document uses the following terminology for describing RDF graph syntax",
+      "claims": [
+        "MT11-GENERALIZED-SYNTAX"
+      ]
+    },
+    {
+      "id": "empty",
+      "source": "mt",
+      "tag": "p",
+      "text": "The empty graph is the empty set of triples.",
+      "claims": [
+        "MT11-EMPTY-GRAPH"
+      ]
+    },
+    {
+      "id": "subgraph",
+      "source": "mt",
+      "tag": "p",
+      "text": "A subgraph of an RDF graph is a subset",
+      "claims": [
+        "MT11-SUBGRAPH"
+      ]
+    },
+    {
+      "id": "ground",
+      "source": "mt",
+      "tag": "p",
+      "text": "A ground RDF graph is one that contains no blank nodes.",
+      "claims": [
+        "MT11-GROUND-GRAPH"
+      ]
+    },
+    {
+      "id": "union",
+      "source": "mt",
+      "tag": "p",
+      "text": "It is possible for two or more graphs to share a blank node",
+      "claims": [
+        "MT11-UNION"
+      ]
+    },
+    {
+      "id": "merge",
+      "source": "mt",
+      "tag": "p",
+      "text": "A related operation",
+      "claims": [
+        "MT11-MERGE"
+      ]
+    },
+    {
+      "id": "union-instance",
+      "source": "mt",
+      "tag": "p",
+      "text": "The union is always an instance of the merge.",
+      "claims": [
+        "MT11-UNION-MERGE-RELATION"
+      ]
+    },
+    {
+      "id": "interpretation",
+      "source": "mt",
+      "tag": "table",
+      "text": "Definition of a simple interpretation.",
+      "claims": [
+        "MT11-SIMPLE-IR",
+        "MT11-SIMPLE-IP",
+        "MT11-SIMPLE-IEXT",
+        "MT11-SIMPLE-IS",
+        "MT11-SIMPLE-IL"
+      ]
+    },
+    {
+      "id": "ground-truth",
+      "source": "mt",
+      "tag": "table",
+      "text": "Semantic conditions for ground graphs.",
+      "claims": [
+        "MT11-TERM-DENOTATIONS",
+        "MT11-TRIPLE-TRUTH",
+        "MT11-GRAPH-TRUTH"
+      ]
+    },
+    {
+      "id": "undefined",
+      "source": "mt",
+      "tag": "p",
+      "text": "If IL(E) is undefined",
+      "claims": [
+        "MT11-UNDEFINED-LITERAL-FALSE"
+      ]
+    },
+    {
+      "id": "empty-true",
+      "source": "mt",
+      "tag": "p",
+      "text": "The final condition implies",
+      "claims": [
+        "MT11-EMPTY-TRUE"
+      ]
+    },
+    {
+      "id": "assignment",
+      "source": "mt",
+      "tag": "p",
+      "text": "Suppose I is a simple interpretation and A is a mapping",
+      "claims": [
+        "MT11-BLANK-ASSIGNMENT"
+      ]
+    },
+    {
+      "id": "existential",
+      "source": "mt",
+      "tag": "table",
+      "text": "Semantic condition for blank nodes.",
+      "claims": [
+        "MT11-EXISTENTIAL-GRAPH-TRUTH"
+      ]
+    },
+    {
+      "id": "nonglobal",
+      "source": "mt",
+      "tag": "p",
+      "text": "Mappings from blank nodes to referents are not part",
+      "claims": [
+        "MT11-BLANK-ASSIGNMENT-NONGLOBAL"
+      ]
+    },
+    {
+      "id": "scope",
+      "source": "mt",
+      "tag": "section",
+      "text": "5.1.1 Shared blank nodes",
+      "claims": [
+        "MT11-SHARED-BLANK-SCOPE"
+      ],
+      "element_id": "shared-blank-nodes-informative"
+    },
+    {
+      "id": "entailment",
+      "source": "mt",
+      "tag": "p",
+      "text": "Following standard terminology",
+      "claims": [
+        "MT11-SATISFACTION",
+        "MT11-SIMPLE-ENTAILMENT",
+        "MT11-LOGICAL-EQUIVALENCE"
+      ]
+    },
+    {
+      "id": "satisfiable",
+      "source": "mt",
+      "tag": "p",
+      "text": "Every graph is simply satisfiable.",
+      "claims": [
+        "MT11-SIMPLE-SATISFIABILITY"
+      ],
+      "within_section": "properties-of-simple-entailment-informative"
+    },
+    {
+      "id": "consequences",
+      "source": "mt",
+      "tag": "section",
+      "text": "5.3 Properties of simple entailment",
+      "claims": [
+        "MT11-EMPTY-ENTAILMENTS",
+        "MT11-SUBGRAPH-ENTAILMENT",
+        "MT11-PREMISE-MONOTONICITY",
+        "MT11-INSTANCE-ENTAILMENT"
+      ],
+      "element_id": "properties-of-simple-entailment-informative"
+    },
+    {
+      "id": "extension",
+      "source": "mt",
+      "tag": "p",
+      "text": "This section defines the basic notions of simple interpretation",
+      "claims": [
+        "MT11-SIMPLE-EXTENSION-BASE"
+      ]
+    },
+    {
+      "id": "property-overlap",
+      "source": "mt",
+      "tag": "p",
+      "text": "The sets IP and IR may overlap",
+      "claims": [
+        "MT11-RESOURCE-PROPERTY-OVERLAP"
+      ]
+    },
+    {
+      "id": "instance-proof",
+      "source": "mt",
+      "tag": "p",
+      "text": "Suppose H is an instance of G with the instantiation mapping M",
+      "claims": [
+        "MT11-INSTANCE-ENTAILMENT"
+      ]
+    }
+  ],
+  "context_resolutions": [
+    {
+      "claim_id": "MT11-EMPTY-TRUE",
+      "passage": "empty-true",
+      "source_phrase": "The final condition",
+      "antecedent_passage": "ground-truth",
+      "resolved_meaning": "The final row defining truth for a ground graph by the truth of its member triples.",
+      "inference": "Universal truth over the empty set of triples is vacuous.",
+      "review": "pending"
+    },
+    {
+      "claim_id": "MT11-INSTANCE-ENTAILMENT",
+      "passage": "consequences",
+      "source_phrase": "Interpolation has a number of direct consequences",
+      "antecedent_passage": "consequences",
+      "resolved_meaning": "The simple-entailment interpolation lemma in section 5.3; each listed consequence is separately reviewable.",
+      "inference": "The current partial theorem is proved directly from truth conditions; the full interpolation lemma remains open.",
+      "review": "pending"
+    }
+  ]
+}

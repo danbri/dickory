@@ -1,0 +1,9 @@
+name = "rdf11_spec"
+version = "0.1.0"
+defaultTargets = ["RDF11", "Audit"]
+
+[[lean_lib]]
+name = "RDF11"
+
+[[lean_lib]]
+name = "Audit"

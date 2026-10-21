@@ -1,0 +1,2 @@
+# Exact archived bytes are part of the source identity, including CRLF.
+labs/rdf11/specifications/*.html -text

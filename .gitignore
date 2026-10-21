@@ -1,0 +1,7 @@
+.DS_Store
+__pycache__/
+*.pyc
+.lake/
+_site/
+labs/rdf11/cleanroom/artifacts/*
+!labs/rdf11/cleanroom/artifacts/.gitkeep

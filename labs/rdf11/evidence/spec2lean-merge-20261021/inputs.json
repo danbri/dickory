@@ -1,0 +1,17 @@
+{
+  "recorded_at": "2026-10-21T11:49:57.658174+00:00",
+  "inputs": [
+    {
+      "source_path": "spec2lean-draft.md",
+      "snapshot": "_LEAN/evidence/spec2lean-merge-20261021/incoming-draft.md",
+      "bytes": 21595,
+      "sha256": "caea196dd4193803963990576208fc9c267224c83597cd22fa6c50ade87eec6e"
+    },
+    {
+      "source_path": "_LEAN/spec2lean-requirements.md",
+      "snapshot": "_LEAN/evidence/spec2lean-merge-20261021/requirements-before.md",
+      "bytes": 35686,
+      "sha256": "cff2d1a8f7288908c3b0f9e13553da7873d8d0ad6bbad0fbe1986ba40e4831d7"
+    }
+  ]
+}

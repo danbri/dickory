@@ -1,0 +1,225 @@
+--- requirements-before.md
++++ _LEAN/spec2lean-requirements.md
+@@ -3,6 +3,8 @@
+ **Status:** requirements draft for expert review and implementation.  
+ **Date:** 2026-10-21.  
+ **Workspace:** all implementation and generated artifacts for this experiment belong under `_LEAN/`.
++
++This draft incorporates the separately supplied `spec2lean-draft.md`; [merge review and provenance](docs/20261021-spec2lean-merge.md) record the additions and resolved differences. Existing requirement IDs are retained.
+ 
+ ## 1. Objective
+ 
+@@ -35,7 +37,7 @@
+ 
+ ## 3. Immutable source and coordinate model
+ 
+-**SRC-01 — Preserve bytes.** Store the exact downloaded document bytes and a manifest containing their SHA-256 digest, byte length, retrieval URL, final URL if redirected, retrieval time, declared publication version, media type, encoding, and retained license information. Hash the stored response body before decoding or parsing. Hash rendered HTML, extracted text, and annotations separately; none may replace the original source identity. Permit additional hash algorithms through an algorithm-tagged digest field.
++**SRC-01 — Preserve bytes.** Store the exact downloaded document bytes and a manifest containing their SHA-256 digest, byte length, retrieval URL, final URL if redirected, retrieval time, available HTTP metadata, fetching procedure, declared publication version, media type, encoding, and retained license information. Provide an offline copy consistent with the document's redistribution terms. Hash the stored response body before decoding or parsing. Hash rendered HTML, extracted text, and annotations separately; none may replace the original source identity. Permit additional hash algorithms through an algorithm-tagged digest field.
+ 
+ **SRC-02 — Decode explicitly.** For the initial UTF-8 corpus, use strict UTF-8 decoding. Preserve line endings, a leading BOM as U+FEFF if present, and all whitespace. Do not apply Unicode normalization, newline normalization, case folding, HTML entity expansion, or error replacement to the authoritative character sequence. Reject invalid decoding rather than substitute U+FFFD. Record the decoder policy and version. Other encodings require an explicit, reviewed decoding profile.
+ 
+@@ -43,11 +45,13 @@
+ 
+ **SRC-04 — Maintain translations.** Store or reproducibly derive mappings among original byte spans, scalar spans, parser/token locations, and browser UTF-16 offsets. Lean's character representation and the browser's string representation must be connected explicitly. A range must be resolvable against the archived source without relying on line numbers, section titles, CSS selectors or DOM paths. Those are useful secondary locators only.
+ 
+-**SRC-05 — Parse HTML faithfully.** These sources are HTML; do not assume that an XML parser will accept or preserve them. Use a specified HTML parsing profile with source locations. Preserve a concrete source/token representation alongside the DOM, because DOM serialization can change quotes, entities, attribute order, whitespace, omitted tags and repaired markup. Parsing must not redefine the authoritative scalar sequence.
++**SRC-05 — Parse HTML faithfully.** These sources are HTML; do not assume that an XML parser will accept or preserve them. Pin the parser implementation, version and HTML parsing profile, with source locations, DOM ancestry and element IDs. Preserve a concrete source/token representation alongside the DOM, because DOM serialization can change quotes, entities, attribute order, whitespace, omitted tags and repaired markup. Parsing must not redefine the authoritative scalar sequence.
+ 
+ **SRC-06 — Map transformed text.** Entity expansion and rendering require a relation between source intervals and displayed intervals, not a constant offset adjustment. For example, all five source characters of `&amp;` contribute to the displayed ampersand. Collapsed whitespace may map many source characters to one display position; some source characters have no visible glyph. Record these cases. Generated section numbers, toolbars or other viewer content must be marked as generated, not attributed to source characters.
+ 
+ **SRC-07 — Preserve revisions.** A changed byte hash creates a new document identity. Annotation migration may propose new ranges but must not silently rebind accepted records to new text. Store the old ranges, proposed ranges, diff and review decision. Recompute proofs and invalidate affected review/build results when their inputs change.
++
++**SRC-08 — Stable identities and evidence hashes.** Hash the extraction manifest, claim versions, symbol mappings, dependency inventories and review decisions independently using deterministic serialization. Keep stable human-readable claim IDs separate from content hashes; editing one claim must not renumber unrelated claims. Record split/merge lineage and bind approvals to exact content versions, not just mutable IDs. Noncontiguous source projections must retain all contributing ranges.
+ 
+ ### Initial local snapshots
+ 
+@@ -82,6 +86,22 @@
+ **CAT-07 — Preserve difficulties.** Ambiguities, apparent editorial errors, conflicting interpretations, missing dependencies and unformalized assertions are first-class records. Store alternative readings and their consequences. Link official errata when applicable; do not silently repair the archived text or treat an AI inference as an approved erratum. These records prevent a full-fidelity completion claim until resolved or explicitly bounded by a narrower claim.
+ 
+ **CAT-08 — Two review tracks.** Support separately solicitable expert reviews of (a) source → SCD completeness and accuracy, and (b) SCD → Lean completeness and accuracy. Each has its own decisions, unresolved comments, accepted revision and evidence. Acceptance of extraction must not imply acceptance of formalization, or vice versa. Reviewers may contribute to either track without being required to adjudicate the other. A third implementation-refinement review remains distinct from both.
++
++**CAT-09 — Orthogonal classifications.** Record source role, normative status, disposition and review state separately. For example, a table is a source role; normative/informative/uncertain is a status; extracted claim/context/excluded-with-reason/unresolved is a disposition. Derive claim normativity from its source spans and context, not its perceived importance. Use [Semantics §2](https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#conformance) as the initial policy: expressly non-normative sections, authoring guidelines, diagrams, examples and notes are non-normative; the remainder is normative. Record inheritance and local exceptions per span. Each normative text span must support a claim, a documented definitional/premise component, or an accepted explanation of why no formal proposition applies.
++
++**CAT-10 — Structure and relationships.** Preserve parent source units for paragraphs, tables and numbered conditions while allowing their atomic claims to be reviewed separately. Use explicit relationship types such as `defines`, `uses`, `refines`, `constrains`, `entails`, `equivalent_to`, `generalizes`, `exception_to`, `requires_external_spec` and `possible_conflict`. Give scopes stable identifiers for regimes, datatype sets, graph/dataset contexts and document versions. Preserve modality and logical strength, including permission, obligation, necessity, sufficiency, existence, uniqueness and negative assertions.
++
++### 4.1 Context closure and indexical references
++
++**CTX-01 — Resolve referents.** The precise English restatement and symbol-linked form must resolve semantic references whose meaning depends on surrounding discourse: “this”, “that”, “these”, “it”, “the former”, “the above”, “the following conditions”, “the same graph”, and comparable expressions. Replace them with explicit entity, variable, condition-set or claim references, or provide an unambiguous typed binding. Keep the original source unchanged. A mechanically banned-word list cannot establish context closure; seemingly explicit nouns may also rely on prior definitions.
++
++**CTX-02 — Preserve resolution provenance.** For each resolved occurrence, record its source range, antecedent range or ranges, selected referent, scope, rationale, and review decision. Alternatives remain unresolved until reviewed; do not choose an antecedent solely because it is the nearest preceding noun. The viewer must let a reviewer move from the expanded phrase back to both the original phrase and the passage supplying its meaning.
++
++**CTX-03 — Expose inherited context.** A claim's context frame must include variables and quantifiers introduced earlier, the interpretation/entailment regime, datatype assumptions, vocabulary restrictions, and relevant section/table qualifications. Make ellipsis explicit. Reusing a previously introduced graph variable must not create a new existential or universal quantifier. Every semantically necessary reference must resolve through this frame or a declared dependency; reading the preceding paragraph must not be the only way to discover it.
++
++**CTX-04 — Preserve inference links.** “Thus”, “therefore”, “hence”, “consequently” and similar expressions often introduce a consequence rather than refer to one object. Resolve them into explicit premise/conclusion relationships, including any background definitions or assumptions. Preserve the difference between a consequence asserted by the source and a consequence inferred by the extractor. Removing the connective without recording that relationship loses information. If the premises or direction are uncertain, retain an open obligation.
++
++**CTX-05 — Review contextual expansions.** Treat every expansion as part of extraction fidelity, and review its symbol binding again in the formalization track. Examples for the review tool must include an ambiguous pronoun, a condition inherited across paragraphs, a table-header restriction, and a “thus” conclusion requiring more than the previous sentence. Changing an antecedent or context frame invalidates affected claim approvals. Automated checks can establish reference closure; experts must establish that the resolved meaning is correct.
+ 
+ ## 5. Character coverage certificate
+ 
+@@ -116,9 +136,17 @@
+ 
+ **LEAN-04 — Make proof status reproducible.** Record proof/build results and the transitive axiom dependencies of mapped declarations. Reject placeholder proofs and unapproved user axioms in accepted completion evidence. Declare the permitted logical foundations and external trust boundaries explicitly. Changed declaration types, dependencies, source claims or toolchains must invalidate affected evidence until rechecked.
+ 
++The trust inventory must distinguish kernel-checked proof terms from admitted axioms, `sorry`/`admit`, unsafe or partial executable code, opaque declarations, native/foreign evaluators, reflection and external-prover certificates. Record whether each mechanism actually participates in the claimed proof or execution path. These mechanisms have different implications: `opaque`, for example, is not by itself an admission or a proof defect. Include the project lockfile and reproducible build procedure.
++
+ **LEAN-05 — Trace product use.** Map semantic objects to their raw representations, abstraction functions, admission boundaries, mutators, indexes, observations and exported operations. Require refinement statements where an implementation is claimed to realize a specification operation. Trace the relevant path through Lean compilation, WASM, host wrappers and the packaged artifact. A proof about an unused function cannot discharge a different function's obligation. Mark uncovered compiler/FFI/host steps explicitly rather than implying universal verification.
+ 
+ **LEAN-06 — Preserve honest outcomes.** Where an algorithm implements entailment or satisfiability, distinguish a proved positive answer, a proved negative answer, and failure to establish an answer. A search failing to find a contradiction is not automatically a proof of satisfiability. Record soundness and completeness separately, with the supported regimes and datatype assumptions.
++
++**LEAN-07 — State correspondence strength.** Classify the mathematical relationship separately from declaration role and completion status: exact definition, equivalent proposition, one-way soundness, one-way completeness, strengthening, weakening, embedding, approximation, or unassessed. State the direction, domains and conditions explicitly. Record definitional equality, isomorphism and propositional equivalence distinctly. Evidence may be a proved adequacy theorem, an axiom, finite tests, or an unfulfilled obligation; those are not interchangeable relationships.
++
++**LEAN-08 — Audit model differences.** Where Factoidal's model differs from the source model, require a comparison theorem or a documented partial simulation/embedding with its direction, conditions and known counterexamples. As a second worked example, audit `L4Factoidal/RDF/Semantics.lean`: the recorded baseline totalizes property extensions and blank-node assignments and includes an RDF 1.2 term operation. Its later `interpolationComplete` theorem is restricted to triple-term-free graphs, despite introductory commentary describing a missing completeness direction. Review the actual declarations, hypotheses and reference model; neither a comment nor a theorem name establishes equivalence with the W3C model.
++
++**LEAN-09 — Claim-specific fulfillment.** Give each claim an explicit fulfillment criterion and a separate list of proof/adequacy obligations. A correctly translated definition may need no independent theorem. A policy or metadata requirement may instead require an accepted `not_lean_applicable` explanation and a suitable process check. Preserve `unimplemented`, `blocked`, `axiomatized`, `test_only` and `approximate` states. None may silently become fully verified merely because its source range has been classified.
+ 
+ ### 6.1 Symbol-linked English and dependency completeness
+ 
+@@ -148,6 +176,8 @@
+ 
+ **BIND-08 — Dependency-sensitive acceptance.** A mapping can be locally reviewed while a required dependency remains unreviewed. Display that distinction. Full acceptance of an entry's formalization requires both its local fidelity decision and resolution of all required dependency obligations. Changes to a bound definition, assumption, intermediate statement or dependency boundary must invalidate affected dependent acceptance records until rechecked.
+ 
++**BIND-09 — Structured intermediate form.** Store semantic references, quantifier/binder structure, logical operators and dependency edges in a typed or schema-validated representation; the readable symbol-linked English can be generated from it. Structural validation must detect unbound references, scope errors and unresolved aliases. Missing or inappropriate semantic quantifiers still require fidelity review. Show a three-way comparison of source, English/intermediate form and Lean, with comments attachable to a subphrase, binding or premise.
++
+ #### Illustrative SCD entry
+ 
+ The identifiers and Lean names below illustrate the interface; they are not assertions that these declarations already exist.
+@@ -166,6 +196,24 @@
+ 
+ One SCD claim may require several Lean declarations and theorems, and one declaration may serve several SCD claims. The system must support these relationships without forcing an artificial one-claim/one-theorem correspondence. Derived implementation obligations must be labelled as such, with their derivation from source claims visible.
+ 
++### 6.2 Formal-artifact registry and grounding
++
++**ART-01 — Inventory the whole declared source tree.** Maintain a formal-artifact registry covering every file and declaration in the formalization's declared source roots, including untracked files and modules not imported by the usual build. Specify generated-output and dependency-cache boundaries; do not silently omit a file because it is absent from an import list. Record resolved paths and an explicit policy for symlinks or externally located dependencies. Unknown files and declarations are QA failures, not presumed harmless leftovers.
++
++**ART-02 — Require ownership and purpose.** Each file/module and declaration must have a stable artifact ID, target language/version, owner or review responsibility, lifecycle state, purpose, associated SCD or supporting-directory records, and build/review status. Distinguish active formalization, mathematical foundation, proof helper, executable implementation, adapter, test, experiment, generated artifact and retired material. Helpers and generated declarations may inherit a purpose through an explicit parent/generator record; they cannot inherit it merely by directory proximity. Retired material must not silently remain on an accepted production proof or execution path.
++
++**ART-03 — Use machine-validated labels.** Choose a canonical structured registry, with checked attributes, documentation tags or sidecars as appropriate for each target. Validate agreement between embedded labels, registry entries and elaborated declaration identities. Folder naming, comments and imported module names alone are insufficient. Keep source locations and hashes current, and provide a report of duplicate responsibilities, abandoned experiments, unreachable helpers and declarations with no grounding path. Do not automatically delete such material; require classification, justification, relocation or retirement.
++
++**ART-04 — Account for every term dependency.** Inspect elaborated types and bodies, including implicit arguments, typeclass instances, notation expansions, recursors and generated auxiliary declarations. Every referenced constant must resolve to the registry. Locally bound variables, literals, sorts and expression constructors must be accounted for by the target's binding and foundational rules, rather than incorrectly treated as missing named RDF claims. Give domain-significant constants, such as RDF vocabulary IRIs, explicit semantic grounding. A check over surface identifiers or import names does not satisfy this requirement.
++
++**ART-05 — Ground the directory recursively.** For every application-level declaration used to represent a claim, record a justified path to accepted SCD entries, declared derived implementation obligations, or explicitly catalogued mathematical/logical foundations. The codified directory must include these supporting records as well as source assertions, and distinguish their origins. Do not invent an RDF source sentence for Lean's logic or general mathematical machinery. Foundation boundaries require exact identities, versions, rationale and review; an unrestricted “everything imported is trusted” rule is not a grounding argument. Strongly connected components need a reviewed collective justification and external grounding, not circular approval among their members.
++
++**ART-06 — Prove registry coverage and closure.** Provide a machine-checkable certificate, with a Lean soundness theorem and concrete instantiation, establishing that every inventoried active declaration is classified, every referenced constant is registered, and every required grounding dependency is resolved under the declared policy. Bind it to the source-file manifest, elaborated environment and catalogue hashes. Also check that the file/declaration inventory is complete for the declared roots. State the trust placed in the filesystem scanner, elaborator and dependency extractor: a theorem over a supplied list cannot establish that a faulty extractor omitted nothing. This structural proof does not replace expert review of whether a grounding link conveys the right meaning.
++
++**ART-07 — Audit use and contracts together.** Link exported operations and their actual implementation dependencies to the obligations they must satisfy. Detect a call to an unregistered or differently justified implementation even when a proved function of a similar name exists elsewhere. Require active formal modules to be elaborated by an explicit build target; an unused file must not evade checks. Declare deliberately failing fixtures and draft experiments as such, with separate expectations, rather than allowing them to weaken production gates.
++
++**ART-08 — Support other formalization targets.** Keep source ranges, SCD claims, contextual expansions, review decisions and semantic dependency IDs independent of Lean. Use target profiles/adapters for symbol identity, term structure, elaboration, dependency extraction, proof obligations, foundational assumptions and checker evidence. Lean 4 is the first implemented profile. A future F*, Isabelle or other profile must discharge its own adapter and trust obligations; a mapping to one target does not certify another. File and declaration governance applies to each profile without requiring a new source-claim directory.
++
+ ### Required worked example: graph sethood
+ 
+ The first vertical slice must connect [Semantics §4](https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#notation), its incorporated [Concepts §3](https://www.w3.org/TR/2014/REC-rdf11-concepts-20140225/#section-rdf-graph) definition, and the member-based truth conditions to the implementation obligation that graph enumeration emits each RDF triple once.
+@@ -174,6 +222,23 @@
+ 
+ Show source ranges, extracted English claims, the relevant Lean predicates and proofs, and public-boundary regressions for parsing, enumeration, counts and mutation. Keep per-graph set semantics distinct from SPARQL solution multiplicities. An identical triple in two different graphs remains two different quads. Explicitly display the remaining gap if only some storage or API paths are certified.
+ 
++### Product obligations exposed by the npm 0.11.0 review
++
++The completed [npm review](../REVIEW-0.11.0.md) supplies concrete cases for implementation-mapping acceptance. The following are proposed structures/contracts, not claims that these protections are already implemented throughout Factoidal. RDF 1.2 and OWL examples remain separate from the primary RDF 1.1 formalization scope.
++
++| Review finding | Proposed structure or proof obligation |
++|---|---|
++| R02: repeated triples inflate enumeration/counts | Certified graphs with uniqueness under RDF term identity; datasets with unique graph names; raw parse output admitted before semantic use; membership, cardinality and mutation-preservation proofs |
++| Index/backend can diverge from stored data | An indexed-dataset structure whose index carries a `Represents index dataset` proof, including all lookup behavior used by evaluation |
++| R08: nested blank nodes escape scoping | A single parametric traversal `mapBNodes : (α → β) → Term α → Term β`, used by public scoping; structured scope/local identities; occurrence-preservation, injectivity and graph-isomorphism proofs |
++| R09/R12: versions drift between parsers, results and host types | Version-indexed terms, datasets, requests and graph results; explicit checked downgrade; one versioned protocol schema for codecs and host declarations |
++| R03/R13: SERVICE registry or output base is lost | A complete execution-context record carried through parsing/evaluation; distinct mapping-document and output bases; format selection operates on the same evaluated result |
++| R11: validation bypass and invalid emitted labels | Validated CSVW metadata required by conversion; separate internal blank-node identity and legal serialized label; injective encoding and parse/write round-trip up to isomorphism |
++| R10: candidate search state reported as a model | Verdict constructors requiring evidence of satisfiability or refutation for the original supported ontology/regime; `unknown` for unsupported, inconclusive or exhausted search; translation adequacy included |
++| R07: native and public resource budgets differ | Explicit resource policy in requests and capability metadata; budget exhaustion is a distinct outcome, with no transfer of a native budget claim to a different public configuration |
++
++**LEAN-10 — Do not trust type names.** A refinement is only as strong as its predicate. At the recorded baseline, `WfIri` checks nonemptiness and the presence of a colon; `WfLiteral` checks combinations of datatype, language-tag presence and direction. Neither name alone establishes all lexical constraints of its corresponding RDF concept. SCD mapping must inspect and justify the actual predicate, identify stronger admission/serialization requirements, and expose any remaining gap.
++
+ ## 7. Expert review interface
+ 
+ **UI-01 — Click anywhere.** Clicking or keyboard-selecting any specification text must open the records associated with the exact displayed location and its source ranges. This includes headings, punctuation, mathematics, table headers/cells, notes, examples, links and collapsed whitespace. If several claims apply, show all of them. If there is no claim, show the explicit disposition or unresolved status. A click must never silently do nothing because extraction missed that passage.
+@@ -182,8 +247,12 @@
+ 
+ **UI-03 — Preserve context.** Show the source passage with nearby context, exact source digest/ranges, English claim, normative status, assumptions, dependencies, review history, Lean declaration/type, proof status and implementation links. Allow navigation from any claim or Lean declaration back to every supporting range. Distinguish a direct statement range from a contextual reference.
+ 
++Show resolved indexicals and inherited context on demand, with links to antecedent passages. Display claim-to-Lean correspondence strength and unresolved dependency leaves alongside proof status. Rendering need not be pixel-identical across browsers; source coordinates and pinned content remain authoritative.
++
+ **UI-04 — Review operations.** Experts can propose, split, merge, correct, accept or reject claims and dispositions; adjust ranges; link dependencies; resolve ambiguities; and review Lean fidelity. Record reviewer identity, timestamp, rationale and before/after versions. AI proposals begin unreviewed. Do not overwrite accepted decisions or imply that a displayed reviewer name provides cryptographic authentication.
+ 
++Preserve disagreements and their resolutions. Define a release review policy specifying required reviewer roles, sign-off criteria and what independence means; optional reviewer qualifications may be recorded. An approval in one review track cannot satisfy another track's sign-off automatically.
++
+ **UI-05 — Useful views.** Provide filters for unaccounted source, unreviewed extraction, normative obligations, missing dependencies, unformalized claims, failed proofs, unproved implementation mappings, and test-only evidence. A heatmap may help navigation but must not replace textual status or collapse the four completion measures.
+ 
+ **UI-06 — Faithful, inert rendering.** Render archived HTML without executing its scripts or fetching unpinned resources. Use an explicit rendering profile and retain the source map through any sanitization. Reflow, CSS and accessibility adaptations must not alter provenance. Provide keyboard navigation and text equivalents; review must not depend on color or pointer use alone.
+@@ -199,6 +268,8 @@
+ **TEST-03.** Store per-test outcomes and the actual execution surface: pure Lean, native harness, WASM operation, or npm API, plus code/artifact hashes and invocation. Preserve failures, skips, unsupported cases and unrun cases. Test success cannot discharge a universal proof obligation; proof success cannot establish that a different product entry point ran correctly.
+ 
+ **TEST-04.** Add project-owned regressions for specification obligations absent from the external corpus. Clearly separate them from W3C tests. The sethood worked example must include repeated triples, lexical/value distinctions, named-graph scope and legitimate query multiplicities. Do not assert that any W3C repository promises complete specification coverage.
++
++**TEST-05 — Match comparisons to claims.** Record what each test comparator observes or intentionally quotients away. Graph isomorphism/canonical-set comparison cannot detect a raw enumeration duplicating the same triple; add separate API enumeration/cardinality checks. Test blank-node identity consistently across all nested occurrences and graph-name positions. Run relevant reproductions against the exact packed artifact, with nonempty test discovery, ordinary passes, expected failures, unsupported cases and environment-blocked cases reported separately. Native-only evidence cannot satisfy this product gate.
+ 
+ ## 9. Data model and deliverables
+ 
+@@ -209,9 +280,11 @@
+ | Corpus/document/asset | Scope, exact bytes, digests, decoding profile, version, license, dependency role |
+ | Range/atom/source map | Document identity, scalar endpoints, byte/display relationships, disposition references |
+ | Claim/disposition | English statement or classification, category, normativity, assumptions, source roles, review state |
++| Context/referent resolution | Original occurrence and antecedent ranges, bound referent, inherited context, inference links, alternatives and review decision |
+ | Symbol-linked claim/binding | Versioned intermediate statement, bound phrase occurrences, concept IDs, semantic roles, variable scopes, exact Lean resolutions, residual translation gaps |
+ | Dependency | Claim/document links, imported meaning, applicability, unresolved status |
+-| Lean mapping | Declaration identity/type, role, hypotheses, build/proof evidence, fidelity review |
++| Formal artifact/target profile | File and declaration identity, ownership, purpose, lifecycle, grounding, target-specific extraction/checking rules, inventory certificate |
++| Lean mapping | Declaration identity/type, role, correspondence strength/direction, hypotheses, fulfillment criteria, build/proof evidence, fidelity review |
+ | Implementation mapping | Representation and operation, abstraction/refinement, product path, remaining trust boundaries |
+ | Test/run | Manifest identity, expectation, surface, artifact versions, per-case outcome, claim links |
+ | Review/certificate | Immutable decision history, accepted versions, checker result, concrete proof, trust manifest |
+@@ -219,6 +292,29 @@
+ Deliver an offline-capable review viewer, a deterministic validator/certificate generator, the Lean checker and concrete source-coverage proof, the assertion catalogue, declaration/build extractors, pinned test metadata/results, and instructions to reproduce the evidence. Keep draft and accepted certificates separate. A reviewer must be able to inspect exported data without running the viewer.
+ 
+ Existing `_LEAN/ledger/` files are preliminary inputs. Their section links and file checks do not constitute the character-range catalogue, expert approval, declaration verification or concrete coverage proof required here. They must be migrated and reviewed, not grandfathered into accepted coverage.
++
++### 9.1 Continuous validation and evidence releases
++
++**CI-01 — Deterministic validation.** Regenerate and compare source fingerprints, offset indexes, DOM projections, catalogue schemas, range coverage, context resolution links, symbol bindings, artifact inventory, and dependency/assumption graphs. Reject broken coordinates, unbound symbols, dangling references, unregistered artifacts, stale evidence and claims of acceptance not justified by the declared review policy. Record toolchain versions and a machine-readable audit manifest alongside a static human-readable report.
++
++**CI-02 — Separate valid drafts from completed coverage.** A structurally valid draft may contain explicitly unresolved semantic obligations and report `pipeline_valid`; it must not report `coverage_complete`. The complete-source gate rejects unresolved source atoms. The strict declared-scope completion gate requires all normative dispositions reviewed, applicable claims faithfully mapped, required proofs checked, and dependency meanings justified. Reviewed non-applicability is permitted when a proposition is inappropriate; excluding a required normative obligation narrows the claim and prevents claiming full coverage of the original scope.
++
++**CI-03 — Mutate the evidence chain.** Demonstrate rejection or invalidation when a source character is omitted, an entity projection changes, an accepted disposition is altered, a symbol points to a different declaration, a premise disappears, an undeclared axiom enters the proof closure, an antecedent changes, an orphan Lean file appears, or a required grounding dependency loses approval. Use curated semantic challenge cases for wrongly excluded normative text or incorrect referents. CI can catch unauthorized changes and stale approvals; it cannot generally recognize an expert's newly approved but mistaken reading of English.
++
++**CI-04 — Publish precise statuses.** Every reported status must name its scope, input hashes, evidence version and required review policy. Use separate statuses with the following meanings:
++
++| Status | Meaning |
++|---|---|
++| `source_bytes_verified` | Archived bytes match the recorded source fingerprint; retrieval provenance is available |
++| `source_partition_complete` | Every source scalar has a valid accountability disposition |
++| `normative_disposition_reviewed` | No normative span in the stated scope awaits disposition review |
++| `formalization_mapped` | Applicable claims have reviewed structured mappings; proofs may still be pending |
++| `artifact_grounding_checked` | The declared formal source tree and term dependencies satisfy the registry and grounding policy |
++| `lean_obligations_checked` | The stated Lean obligations pass under the disclosed foundations and trust boundary |
++| `spec_mapping_audited` | Required independent reviews accept extraction, formal translation and dependency meanings for the pinned scope |
++| `implementation_refinement_audited` | The named executable/product paths have the separately specified refinement and artifact evidence |
++
++These are independent evidence dimensions, not a single pass badge. In particular, `spec_mapping_audited` does not imply that the npm API was audited. A release bundle may be signed under a declared identity/key policy; a signature authenticates the bundle and does not strengthen its semantic claims.
+ 
+ ## 10. Acceptance criteria and implementation sequence
+ 
+@@ -232,15 +328,21 @@
+ | F — Usable review | Clicks/selections in rendered and raw views resolve correctly; reverse navigation and review history work; unaccounted regions remain visible |
+ | G — Reproducible evidence | Exact Lean declarations and their assumptions resolve; stale proofs are rejected; test outcomes remain separate from proof status and product-surface claims |
+ | G2 — Mapping and dependency review | Both review tracks can be exported and adjudicated separately; unresolved bindings, missing dependencies and changed definitions invalidate the appropriate completion claims; locally accepted mappings with pending dependencies are visible |
++| G3 — Context and model adequacy | Indexicals and inference links have reviewed resolutions; the interpretation-model example exposes one-way results, restrictions and open comparison obligations |
++| G4 — Formal-artifact grounding | Every file and declaration in the declared roots is classified; concrete registry/closure checks detect orphan artifacts, unexplained term dependencies and stale support records |
+ | H — Full declared-scope completion | All in-scope assertions and imports have accepted fidelity review, required formalizations/proofs, and the implementation evidence necessary for the stated Factoidal coverage claim; no unresolved normative obligations are hidden |
+ 
+ Implement in this order:
+ 
+-1. Freeze sources and schemas; implement decoding, coordinates, source maps and partition validation.
++1. Inventory existing RDF/RDFS/Unified semantics, the theorem registry, source comments and actual declarations. Freeze sources and schemas; implement decoding, coordinates, source maps and partition validation.
+ 2. Build the rendered/raw viewer and review operations. Demonstrate character accountability with unresolved semantic regions visible.
+-3. Complete the graph-sethood vertical slice, including the concrete Lean coverage certificate and executable links.
+-4. Expand the AI-proposed, expert-reviewed inventory through all four assertion categories, section by section, including imported definitions and informative material.
+-5. Map and audit existing Lean definitions/proofs, fill formalization gaps, connect executable operations, and integrate pinned test evidence.
++3. Complete the graph-sethood vertical slice, including the concrete Lean coverage certificate and executable links; then audit the interpretation-model example and its comparison obligations.
++4. Expand the AI-proposed, expert-reviewed inventory through all four assertion categories, section by section, including imported definitions, informative material and explicit context/referent resolution.
++5. Map and audit existing Lean definitions/proofs, register the complete formal source tree and grounding dependencies, fill formalization gaps, connect executable operations, and integrate pinned test evidence.
+ 6. Seek acceptance of the full declared-scope claim only when Gate H is satisfied. Publish intermediate artifacts with their exact achieved gates and outstanding obligations.
+ 
+ Completion of this requirements document authorizes neither a claim of completed formalization nor a conformance certificate. Its purpose is to specify the evidence that those future claims must provide.
++
++### Decisions to settle during implementation review
++
++Choose the canonical structured format and typed-intermediate schema; select and pin the HTML/source-map and target-environment extractors; settle attribute/sidecar conventions and the foundation-grounding policy; and define reviewer independence, disagreement resolution and optional signing arrangements. Raw Unicode scalar coordinates, the two review tracks and explicit unresolved states are requirements, not open alternatives.
