@@ -29,6 +29,8 @@ Open <http://localhost:8000/>. Generated evidence and the viewer are rebuilt loc
 
 The workflow verifies the lab on pushes and pull requests. Publication runs only from `main`, after verification succeeds. The stricter `verify.py --require-complete` gate deliberately fails for this draft: unresolved coverage remains visible in the published evidence.
 
+CI also checks that the review viewer displays actual Lean definition/proof bodies, expands dependencies and retains claim links on reload. To run these browser checks after staging `_site/`, use `npm ci`, `npx playwright install chromium`, and `npm test` from `tools/viewer-browser/` (Node.js 20 or later). Screenshots and the check report go into the lab's ignored `artifacts/viewer-browser/` folder.
+
 ## GitHub Pages setup
 
 In **Settings → Pages → Build and deployment → Source**, select **GitHub Actions**. Then run the **Verify labs and publish Pages** workflow on `main` (or push a change). The expected address is <https://danbri.github.io/dickory/>. Pages must be enabled before the deployment job can succeed.

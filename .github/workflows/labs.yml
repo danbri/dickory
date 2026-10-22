@@ -33,9 +33,17 @@ jobs:
         run: python3 tools/negative_checks.py
       - name: Generate review viewer
         working-directory: labs/rdf11/cleanroom
-        run: python3 tools/review_viewer.py
+        run: |
+          python3 -m unittest discover -s tools -p 'test_lean_sources.py'
+          python3 tools/review_viewer.py
       - name: Stage site and check links
         run: python3 tools/build_site.py
+      - name: Check viewer interactions in Chromium
+        working-directory: tools/viewer-browser
+        run: |
+          npm ci
+          npx playwright install --with-deps chromium
+          npm test
       - name: Upload verified site
         uses: actions/upload-pages-artifact@7b1f4a764d45c48632c6b24a0339c27f5614fb0b # v4
         with:

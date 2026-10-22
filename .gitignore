@@ -3,5 +3,6 @@ __pycache__/
 *.pyc
 .lake/
 _site/
+node_modules/
 labs/rdf11/cleanroom/artifacts/*
 !labs/rdf11/cleanroom/artifacts/.gitkeep
