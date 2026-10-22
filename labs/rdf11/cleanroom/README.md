@@ -1,10 +1,12 @@
 # RDF 1.1 Semantics: fresh Lean 4 reconstruction
 
-**First working increment, 21 October 2026. Not complete RDF formalization or package verification.**
+**Second working increment, 22 October 2026. Not complete RDF formalization or package verification.**
 
 This project reconstructs definitions and proofs from the pinned RDF 1.1 specifications. It imports no Factoidal implementation modules and copies no existing Factoidal proofs. The author has previously reviewed that implementation: “clean-room” here means a separate, source-first reconstruction, not an independently isolated team with no prior exposure.
 
-Start with the [source review prototype](https://danbri.github.io/dickory/labs/rdf11/cleanroom/artifacts/source-review.html), [notation and assurance boundary](docs/20261021-first-increment.md), and [mapping records](catalogue/mapping-review.json). The prototype displays the original HTML as raw source with clickable scalar ranges. Claim entries show actual Lean definition and proof bodies, with expandable source context, elaborated types and dependency declarations. For example, [triple term domains](https://danbri.github.io/dickory/labs/rdf11/cleanroom/artifacts/source-review.html#claim=MT11-TRIPLE-TERM-DOMAINS) shows the `Triple`, `Subject` and `Term` source immediately. It is not yet the faithful rendered-document viewer specified in [Spec2Lean requirements](../spec2lean-requirements.md).
+Start with the [source review prototype](https://danbri.github.io/dickory/labs/rdf11/cleanroom/artifacts/source-review.html), [notation and assurance boundary](docs/20261021-first-increment.md), and [mapping records](catalogue/mapping-review.json). The viewer offers an annotated rendered reading copy and an exact original-HTML tab. Search and colour-coded status filters distinguish mapped, partial and unmapped claims. Every displayed local Lean declaration has an expandable **ⓘ Plain-English explanation**, including generated dependency helpers. Definitions and proof bodies remain visible; source links are pinned to the build commit. Try [ordinary instance entailment](https://danbri.github.io/dickory/labs/rdf11/cleanroom/artifacts/source-review.html#claim=MT11-INSTANCE-ENTAILMENT) or [isomorphism](https://danbri.github.io/dickory/labs/rdf11/cleanroom/artifacts/source-review.html#claim=MT11-ISOMORPHISM).
+
+The reading copy adapts styling and disables active content/external resources. Its annotations are attached at original source-element offsets, and original source characters remain authoritative. A highlighted element can contain unextracted statements; highlighting is not complete passage coverage. The glosses are draft explanatory prose, not kernel-checked translations. Curated glosses are required for authored declarations; generated helpers receive explicitly labelled role/parent explanations. These presentation checks do not replace the fuller [Spec2Lean requirements](../spec2lean-requirements.md).
 
 The viewer's trusted presentation tool, `tools/lean_sources.py`, obtains declaration ranges from Lean compiler metadata and slices the hash-checked source files at those Unicode positions. Missing source for a mapped declaration fails generation. File links are pinned to the build's Git commit; full-file context includes imports and namespaces. Dependencies come from the existing elaborated evidence, with library dependencies listed separately and compiler-generated declarations identified when they lack a source range. This adds presentation evidence, not expert approval or a proof of mapping fidelity.
 
@@ -18,9 +20,11 @@ The full library builds with **Lean 4.33.1**, using only its standard distributi
 - Graph truth requires one shared blank-node assignment. Assignment restriction, ground truth, empty-graph truth and undefined-literal falsity are proved.
 - Simple entailment is defined by all interpretations, with subgraph entailment, premise monotonicity, universal simple satisfiability, and the empty-graph entailment property proved.
 - Binary merge uses disjoint blank-node domains. Its satisfaction is equivalent to separately satisfying its two inputs. A proved counterexample distinguishes merge from union.
+- Partial term substitutions, instances, vocabulary restrictions and properness are defined. Identity, composition, triple origin and ordinary instance entailment are proved.
+- Graph isomorphisms use inverse renamings on occurring blanks; mutual instantiation and semantic equivalence are proved. Ground graphs are lean. One direction of interpolation is proved for ordinary conclusions.
 - Finite enumerations carry both membership and uniqueness proofs. Any two enumerations of the same set have the same length; each member occurs at most once.
 
-The source catalogue has **34 initial mappings among 195 preliminary claim records**. Several mappings are partial. These numbers are not a compliance percentage. No extraction or formalization review is marked accepted.
+The source catalogue has **42 mappings among 195 preliminary claim records**. Several mappings are partial. These numbers are not a compliance percentage. No extraction or formalization review is marked accepted.
 
 ## Where to read
 
@@ -31,6 +35,7 @@ The source catalogue has **34 initial mappings among 195 preliminary claim recor
 | [Simple.lean](RDF11/Simple.lean) | Interpretation components and truth conditions |
 | [Entailment.lean](RDF11/Entailment.lean) | Model-theoretic entailment and initial consequences |
 | [Merge.lean](RDF11/Merge.lean) | Disjoint-domain merge and assignment transport |
+| [Instances.lean](RDF11/Instances.lean) | Simultaneous substitution, properness, isomorphism, leanness and ordinary instance entailment |
 | [ScopeExample.lean](RDF11/ScopeExample.lean) | Checked shared-witness counterexample |
 | [GeneralizedScope.lean](RDF11/GeneralizedScope.lean) | Checked countermodel for an explicit source-scope review question |
 | [Enumeration.lean](RDF11/Enumeration.lean) | Finite implementation contract, separate from graph semantics |
@@ -38,7 +43,7 @@ The source catalogue has **34 initial mappings among 195 preliminary claim recor
 | [Snapshot.lean](Audit/Snapshot.lean) | Concrete draft certificates for both archived specifications |
 | [Export.lean](Audit/Export.lean) | Trusted extractor of actual elaborated types and dependencies |
 
-[registry.json](catalogue/registry.json) inventories every local Lean file and 370 declarations, including generated helpers. [declarations.json](https://danbri.github.io/dickory/labs/rdf11/cleanroom/artifacts/declarations.json) records their closure through 2,323 declarations. The checker rejects unregistered files even when they are not imported.
+[registry.json](catalogue/registry.json) inventories every local Lean file and 438 declarations, including generated helpers. [declarations.json](https://danbri.github.io/dickory/labs/rdf11/cleanroom/artifacts/declarations.json) records their closure through 2,396 declarations. The checker rejects unregistered files even when they are not imported.
 
 ## Reproduce
 
@@ -48,6 +53,7 @@ Use Python **3.14.7** (recorded in the frozen catalogue) and run from this direc
 export PATH="$HOME/.elan/bin:$PATH"
 python3 tools/verify.py
 python3 tools/negative_checks.py
+python3 -m unittest discover -s tools -p 'test_*.py'
 python3 tools/review_viewer.py
 ```
 
@@ -59,7 +65,9 @@ After an intentional formal edit, update the explicit registry and review the di
 
 ## Remaining work
 
-Concrete IRI/literal definitions and equality, general instances, graph isomorphism, interpolation and compactness, skolemization, datatype interpretations, RDF/RDFS conditions and rules, datasets, and the remaining informative/general requirements are open. The complete requirement set also needs a rendered HTML viewer, finer context-resolution ranges, independent expert review records, and a Lean proof of the declaration-grounding certificate itself.
+See the [second-increment audit and remaining obligations](docs/20261022-instances-and-review.md). The principal gaps are concrete IRI/literal definitions and equality; interpolation completeness, compactness and lean/proper-instance non-entailment; skolemization and conservativity; datatype interpretations; RDF/RDFS conditions and entailment rules; datasets; and remaining informative/general requirements. These are formalization gaps, not merely missing viewer links.
+
+The complete requirement set also needs finer context-resolution ranges, expert review records for both mapping stages, and a Lean proof of the declaration-grounding certificate itself. The current rendered view and glosses aid review but do not certify fidelity.
 
 The [generalized-instance review question](docs/generalized-instance-question.md) records a checked conflict between an unrestricted generalized-graph reading of the instance consequence and the currently transcribed interpretation domains. It is not a declared specification erratum and does not refute the ordinary-RDF consequence.
 

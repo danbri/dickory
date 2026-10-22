@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "status": "frozen_first_increment_inventory_not_expert_approved",
+  "status": "frozen_second_increment_inventory_not_expert_approved",
   "lean_version": "4.33.1",
   "allowed_axioms": [
     "propext",
@@ -134,6 +134,17 @@
         "MT11-BLANK-ASSIGNMENT",
         "MT11-INSTANCE-ENTAILMENT"
       ]
+    },
+    {
+      "id": "SUPPORT-INSTANCES",
+      "purpose": "Simultaneous term substitution, resource-valued pullbacks and inverse renaming on occurring blanks; generated helpers inherit these obligations.",
+      "requires": [
+        "MT11-GRAPH-INSTANCE",
+        "MT11-INSTANCE-PROPERTIES",
+        "MT11-ISOMORPHISM",
+        "MT11-INSTANCE-ENTAILMENT",
+        "SUPPORT-INTERPRETATIONS"
+      ]
     }
   ],
   "files": [
@@ -160,14 +171,14 @@
     },
     {
       "path": "Audit/Snapshot.lean",
-      "sha256": "ded3873e43fd9504e40c96701eeae61b5a24f432e543c7114b0e867e1c846934",
+      "sha256": "286e98686ee9d2db1f370ca99809a47b2185af14cc827b03176b7f6d176cbaa1",
       "role": "formal_source",
       "lifecycle": "active",
       "review": "pending_expert_review"
     },
     {
       "path": "RDF11.lean",
-      "sha256": "dc8d737e7c40fb87a0989fe26b4673385a79934d398b3e6950dee39d3bec3448",
+      "sha256": "f94feb97e0971437ffbaf5bcff961a9a22761c6f0711d442738137f88d0fc5e7",
       "role": "formal_source",
       "lifecycle": "active",
       "review": "pending_expert_review"
@@ -192,6 +203,13 @@
       "role": "formal_source",
       "lifecycle": "active",
       "review": "pending_expert_review"
+    },
+    {
+      "path": "RDF11/Instances.lean",
+      "role": "formal_source",
+      "lifecycle": "active",
+      "review": "pending_expert_review",
+      "sha256": "6ae4b1ea50a5620fe851a57587025d5400dd756fa8c1b842549d999ad6d379ef"
     },
     {
       "path": "RDF11/Merge.lean",
@@ -711,6 +729,18 @@
       "review": "pending_expert_review"
     },
     {
+      "name": "RDF11.GeneralizedGraph.mapBlank_comp",
+      "module": "RDF11.Instances",
+      "kind": "theorem",
+      "type": "∀ {B Iri Literal : Type} (f g : B → B) (G : RDF11.GeneralizedGraph Iri Literal B),\n  RDF11.GeneralizedGraph.mapBlank g (RDF11.GeneralizedGraph.mapBlank f G) = RDF11.GeneralizedGraph.mapBlank (g ∘ f) G",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
       "name": "RDF11.GeneralizedGraph.mapBlank_id",
       "module": "RDF11.Syntax",
       "kind": "theorem",
@@ -720,6 +750,67 @@
         "SUPPORT-SYNTAX"
       ],
       "parent_declaration_if_applicable": "RDF11.GeneralizedGraph",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GeneralizedGraph.mapBlank_of_fixes",
+      "module": "RDF11.Instances",
+      "kind": "theorem",
+      "type": "∀ {B Iri Literal : Type} (f : B → B) (G : RDF11.GeneralizedGraph Iri Literal B),\n  (∀ (b : B), G.hasBlank b → f b = b) → RDF11.GeneralizedGraph.mapBlank f G = G",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GeneralizedGraph.substitute",
+      "module": "RDF11.Instances",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  RDF11.Substitution Iri Literal B → RDF11.GeneralizedGraph Iri Literal B → RDF11.GeneralizedGraph Iri Literal B",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-GRAPH-INSTANCE",
+        "SUPPORT-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GeneralizedGraph.substitute.eq_1",
+      "module": "RDF11.Instances",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (μ : RDF11.Substitution Iri Literal B) (G : RDF11.GeneralizedGraph Iri Literal B),\n  RDF11.GeneralizedGraph.substitute μ G = RDF11.Set.image (RDF11.GeneralizedTriple.substitute μ) G",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GeneralizedGraph.substitute_comp",
+      "module": "RDF11.Instances",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (μ ν : RDF11.Substitution Iri Literal B) (G : RDF11.GeneralizedGraph Iri Literal B),\n  RDF11.GeneralizedGraph.substitute ν (RDF11.GeneralizedGraph.substitute μ G) =\n    RDF11.GeneralizedGraph.substitute (μ.then ν) G",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GeneralizedGraph.substitute_id",
+      "module": "RDF11.Instances",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (G : RDF11.GeneralizedGraph Iri Literal B),\n  RDF11.GeneralizedGraph.substitute (fun x => none) G = G",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": null,
       "review": "pending_expert_review"
     },
     {
@@ -1179,6 +1270,31 @@
       "review": "pending_expert_review"
     },
     {
+      "name": "RDF11.GeneralizedTriple.substitute",
+      "module": "RDF11.Instances",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  RDF11.Substitution Iri Literal B → RDF11.GeneralizedTriple Iri Literal B → RDF11.GeneralizedTriple Iri Literal B",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-GRAPH-INSTANCE",
+        "SUPPORT-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GeneralizedTriple.substitute.eq_1",
+      "module": "RDF11.Instances",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (μ : RDF11.Substitution Iri Literal B) (t : RDF11.GeneralizedTriple Iri Literal B),\n  RDF11.GeneralizedTriple.substitute μ t =\n    { subject := RDF11.Term.substitute μ t.subject, predicate := RDF11.Term.substitute μ t.predicate,\n      object := RDF11.Term.substitute μ t.object }",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
       "name": "RDF11.Graph",
       "module": "RDF11.Syntax",
       "kind": "definition",
@@ -1203,6 +1319,338 @@
       "review": "pending_expert_review"
     },
     {
+      "name": "RDF11.GraphIsomorphism",
+      "module": "RDF11.Instances",
+      "kind": "inductive",
+      "type": "{Iri Literal B : Type} → RDF11.GeneralizedGraph Iri Literal B → RDF11.GeneralizedGraph Iri Literal B → Type",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-ISOMORPHISM",
+        "SUPPORT-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GraphIsomorphism._sizeOf_1",
+      "module": "RDF11.Instances",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  {G H : RDF11.GeneralizedGraph Iri Literal B} →\n    [SizeOf Iri] →\n      [SizeOf Literal] →\n        [SizeOf B] →\n          [(a : RDF11.GeneralizedTriple Iri Literal B) → SizeOf (G a)] →\n            [(a : RDF11.GeneralizedTriple Iri Literal B) → SizeOf (H a)] → RDF11.GraphIsomorphism G H → Nat",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GraphIsomorphism._sizeOf_inst",
+      "module": "RDF11.Instances",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  (G H : RDF11.GeneralizedGraph Iri Literal B) →\n    [SizeOf Iri] →\n      [SizeOf Literal] →\n        [SizeOf B] →\n          [(a : RDF11.GeneralizedTriple Iri Literal B) → SizeOf (G a)] →\n            [(a : RDF11.GeneralizedTriple Iri Literal B) → SizeOf (H a)] → SizeOf (RDF11.GraphIsomorphism G H)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GraphIsomorphism.casesOn",
+      "module": "RDF11.Instances",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  {G H : RDF11.GeneralizedGraph Iri Literal B} →\n    {motive : RDF11.GraphIsomorphism G H → Sort u} →\n      (t : RDF11.GraphIsomorphism G H) →\n        ((toFun invFun : B → B) →\n            (left_inv : ∀ (b : B), G.hasBlank b → invFun (toFun b) = b) →\n              (right_inv : ∀ (b : B), H.hasBlank b → toFun (invFun b) = b) →\n                (image_eq : RDF11.GeneralizedGraph.mapBlank toFun G = H) →\n                  motive\n                    { toFun := toFun, invFun := invFun, left_inv := left_inv, right_inv := right_inv,\n                      image_eq := image_eq }) →\n          motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GraphIsomorphism.ctorIdx",
+      "module": "RDF11.Instances",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} → {G H : RDF11.GeneralizedGraph Iri Literal B} → RDF11.GraphIsomorphism G H → Nat",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GraphIsomorphism.equivalent",
+      "module": "RDF11.Instances",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {G H : RDF11.GeneralizedGraph Iri Literal B} (e : RDF11.GraphIsomorphism G H),\n  RDF11.LogicallyEquivalent G H",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-ISOMORPHISM",
+        "SUPPORT-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GraphIsomorphism.image_eq",
+      "module": "RDF11.Instances",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {G H : RDF11.GeneralizedGraph Iri Literal B} (self : RDF11.GraphIsomorphism G H),\n  RDF11.GeneralizedGraph.mapBlank self.toFun G = H",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GraphIsomorphism.invFun",
+      "module": "RDF11.Instances",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} → {G H : RDF11.GeneralizedGraph Iri Literal B} → RDF11.GraphIsomorphism G H → B → B",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GraphIsomorphism.inverse_image",
+      "module": "RDF11.Instances",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {G H : RDF11.GeneralizedGraph Iri Literal B} (e : RDF11.GraphIsomorphism G H),\n  RDF11.GeneralizedGraph.mapBlank e.invFun H = G",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-ISOMORPHISM",
+        "SUPPORT-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GraphIsomorphism.left_inv",
+      "module": "RDF11.Instances",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {G H : RDF11.GeneralizedGraph Iri Literal B} (self : RDF11.GraphIsomorphism G H) (b : B),\n  G.hasBlank b → self.invFun (self.toFun b) = b",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GraphIsomorphism.mk",
+      "module": "RDF11.Instances",
+      "kind": "constructor",
+      "type": "{Iri Literal B : Type} →\n  {G H : RDF11.GeneralizedGraph Iri Literal B} →\n    (toFun invFun : B → B) →\n      (∀ (b : B), G.hasBlank b → invFun (toFun b) = b) →\n        (∀ (b : B), H.hasBlank b → toFun (invFun b) = b) →\n          RDF11.GeneralizedGraph.mapBlank toFun G = H → RDF11.GraphIsomorphism G H",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GraphIsomorphism.mk._flat_ctor",
+      "module": "RDF11.Instances",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  {G H : RDF11.GeneralizedGraph Iri Literal B} →\n    (toFun invFun : B → B) →\n      (∀ (b : B), G.hasBlank b → invFun (toFun b) = b) →\n        (∀ (b : B), H.hasBlank b → toFun (invFun b) = b) →\n          RDF11.GeneralizedGraph.mapBlank toFun G = H → RDF11.GraphIsomorphism G H",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GraphIsomorphism.mk.inj",
+      "module": "RDF11.Instances",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {G H : RDF11.GeneralizedGraph Iri Literal B} {toFun invFun : B → B}\n  {left_inv : ∀ (b : B), G.hasBlank b → invFun (toFun b) = b}\n  {right_inv : ∀ (b : B), H.hasBlank b → toFun (invFun b) = b} {image_eq : RDF11.GeneralizedGraph.mapBlank toFun G = H}\n  {toFun_1 invFun_1 : B → B} {left_inv_1 : ∀ (b : B), G.hasBlank b → invFun_1 (toFun_1 b) = b}\n  {right_inv_1 : ∀ (b : B), H.hasBlank b → toFun_1 (invFun_1 b) = b}\n  {image_eq_1 : RDF11.GeneralizedGraph.mapBlank toFun_1 G = H},\n  { toFun := toFun, invFun := invFun, left_inv := left_inv, right_inv := right_inv, image_eq := image_eq } =\n      { toFun := toFun_1, invFun := invFun_1, left_inv := left_inv_1, right_inv := right_inv_1,\n        image_eq := image_eq_1 } →\n    toFun = toFun_1 ∧ invFun = invFun_1",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GraphIsomorphism.mk.injEq",
+      "module": "RDF11.Instances",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {G H : RDF11.GeneralizedGraph Iri Literal B} (toFun invFun : B → B)\n  (left_inv : ∀ (b : B), G.hasBlank b → invFun (toFun b) = b)\n  (right_inv : ∀ (b : B), H.hasBlank b → toFun (invFun b) = b) (image_eq : RDF11.GeneralizedGraph.mapBlank toFun G = H)\n  (toFun_1 invFun_1 : B → B) (left_inv_1 : ∀ (b : B), G.hasBlank b → invFun_1 (toFun_1 b) = b)\n  (right_inv_1 : ∀ (b : B), H.hasBlank b → toFun_1 (invFun_1 b) = b)\n  (image_eq_1 : RDF11.GeneralizedGraph.mapBlank toFun_1 G = H),\n  ({ toFun := toFun, invFun := invFun, left_inv := left_inv, right_inv := right_inv, image_eq := image_eq } =\n      { toFun := toFun_1, invFun := invFun_1, left_inv := left_inv_1, right_inv := right_inv_1,\n        image_eq := image_eq_1 }) =\n    (toFun = toFun_1 ∧ invFun = invFun_1)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GraphIsomorphism.mk.noConfusion",
+      "module": "RDF11.Instances",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  {G H : RDF11.GeneralizedGraph Iri Literal B} →\n    {P : Sort u} →\n      {toFun invFun : B → B} →\n        {left_inv : ∀ (b : B), G.hasBlank b → invFun (toFun b) = b} →\n          {right_inv : ∀ (b : B), H.hasBlank b → toFun (invFun b) = b} →\n            {image_eq : RDF11.GeneralizedGraph.mapBlank toFun G = H} →\n              {toFun' invFun' : B → B} →\n                {left_inv' : ∀ (b : B), G.hasBlank b → invFun' (toFun' b) = b} →\n                  {right_inv' : ∀ (b : B), H.hasBlank b → toFun' (invFun' b) = b} →\n                    {image_eq' : RDF11.GeneralizedGraph.mapBlank toFun' G = H} →\n                      { toFun := toFun, invFun := invFun, left_inv := left_inv, right_inv := right_inv,\n                            image_eq := image_eq } =\n                          { toFun := toFun', invFun := invFun', left_inv := left_inv', right_inv := right_inv',\n                            image_eq := image_eq' } →\n                        (toFun ≍ toFun' → invFun ≍ invFun' → P) → P",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GraphIsomorphism.mk.sizeOf_spec",
+      "module": "RDF11.Instances",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {G H : RDF11.GeneralizedGraph Iri Literal B} [inst : SizeOf Iri] [inst_1 : SizeOf Literal]\n  [inst_2 : SizeOf B] [inst_3 : (a : RDF11.GeneralizedTriple Iri Literal B) → SizeOf (G a)]\n  [inst_4 : (a : RDF11.GeneralizedTriple Iri Literal B) → SizeOf (H a)] (toFun invFun : B → B)\n  (left_inv : ∀ (b : B), G.hasBlank b → invFun (toFun b) = b)\n  (right_inv : ∀ (b : B), H.hasBlank b → toFun (invFun b) = b) (image_eq : RDF11.GeneralizedGraph.mapBlank toFun G = H),\n  sizeOf { toFun := toFun, invFun := invFun, left_inv := left_inv, right_inv := right_inv, image_eq := image_eq } =\n    1 + sizeOf image_eq",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GraphIsomorphism.mutual_instances",
+      "module": "RDF11.Instances",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {G H : RDF11.GeneralizedGraph Iri Literal B} (e : RDF11.GraphIsomorphism G H),\n  RDF11.IsInstance H G ∧ RDF11.IsInstance G H",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-ISOMORPHISM",
+        "SUPPORT-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GraphIsomorphism.noConfusion",
+      "module": "RDF11.Instances",
+      "kind": "definition",
+      "type": "{P : Sort u} →\n  {Iri Literal B : Type} →\n    {G H : RDF11.GeneralizedGraph Iri Literal B} →\n      {t : RDF11.GraphIsomorphism G H} →\n        {Iri' Literal' B' : Type} →\n          {G' H' : RDF11.GeneralizedGraph Iri' Literal' B'} →\n            {t' : RDF11.GraphIsomorphism G' H'} →\n              Iri = Iri' →\n                Literal = Literal' → B = B' → G ≍ G' → H ≍ H' → t ≍ t' → RDF11.GraphIsomorphism.noConfusionType P t t'",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GraphIsomorphism.noConfusionType",
+      "module": "RDF11.Instances",
+      "kind": "definition",
+      "type": "Sort u →\n  {Iri Literal B : Type} →\n    {G H : RDF11.GeneralizedGraph Iri Literal B} →\n      RDF11.GraphIsomorphism G H →\n        {Iri' Literal' B' : Type} →\n          {G' H' : RDF11.GeneralizedGraph Iri' Literal' B'} → RDF11.GraphIsomorphism G' H' → Sort u",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GraphIsomorphism.rec",
+      "module": "RDF11.Instances",
+      "kind": "recursor",
+      "type": "{Iri Literal B : Type} →\n  {G H : RDF11.GeneralizedGraph Iri Literal B} →\n    {motive : RDF11.GraphIsomorphism G H → Sort u} →\n      ((toFun invFun : B → B) →\n          (left_inv : ∀ (b : B), G.hasBlank b → invFun (toFun b) = b) →\n            (right_inv : ∀ (b : B), H.hasBlank b → toFun (invFun b) = b) →\n              (image_eq : RDF11.GeneralizedGraph.mapBlank toFun G = H) →\n                motive\n                  { toFun := toFun, invFun := invFun, left_inv := left_inv, right_inv := right_inv,\n                    image_eq := image_eq }) →\n        (t : RDF11.GraphIsomorphism G H) → motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GraphIsomorphism.recOn",
+      "module": "RDF11.Instances",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  {G H : RDF11.GeneralizedGraph Iri Literal B} →\n    {motive : RDF11.GraphIsomorphism G H → Sort u} →\n      (t : RDF11.GraphIsomorphism G H) →\n        ((toFun invFun : B → B) →\n            (left_inv : ∀ (b : B), G.hasBlank b → invFun (toFun b) = b) →\n              (right_inv : ∀ (b : B), H.hasBlank b → toFun (invFun b) = b) →\n                (image_eq : RDF11.GeneralizedGraph.mapBlank toFun G = H) →\n                  motive\n                    { toFun := toFun, invFun := invFun, left_inv := left_inv, right_inv := right_inv,\n                      image_eq := image_eq }) →\n          motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GraphIsomorphism.right_inv",
+      "module": "RDF11.Instances",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {G H : RDF11.GeneralizedGraph Iri Literal B} (self : RDF11.GraphIsomorphism G H) (b : B),\n  H.hasBlank b → self.toFun (self.invFun b) = b",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GraphIsomorphism.satisfies_iff",
+      "module": "RDF11.Instances",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {U : Type u_1} {G H : RDF11.GeneralizedGraph Iri Literal B} (e : RDF11.GraphIsomorphism G H)\n  (I : RDF11.SimpleInterpretation Iri Literal U), I.Satisfies G ↔ I.Satisfies H",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-ISOMORPHISM",
+        "SUPPORT-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GraphIsomorphism.toFun",
+      "module": "RDF11.Instances",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} → {G H : RDF11.GeneralizedGraph Iri Literal B} → RDF11.GraphIsomorphism G H → B → B",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.InstanceWithVocabulary",
+      "module": "RDF11.Instances",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  RDF11.Set (Iri ⊕ Literal) → RDF11.GeneralizedGraph Iri Literal B → RDF11.GeneralizedGraph Iri Literal B → Prop",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-VOCABULARY-INSTANCE",
+        "SUPPORT-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.IsInstance",
+      "module": "RDF11.Instances",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} → RDF11.GeneralizedGraph Iri Literal B → RDF11.GeneralizedGraph Iri Literal B → Prop",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-GRAPH-INSTANCE",
+        "SUPPORT-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.LeanGraph",
+      "module": "RDF11.Instances",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} → RDF11.GeneralizedGraph Iri Literal B → Prop",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-LEAN-GRAPH",
+        "SUPPORT-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
       "name": "RDF11.LogicallyEquivalent",
       "module": "RDF11.Entailment",
       "kind": "definition",
@@ -1210,6 +1658,32 @@
       "role": "source_mapping",
       "grounds": [
         "MT11-LOGICAL-EQUIVALENCE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ProperInstance",
+      "module": "RDF11.Instances",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} → RDF11.GeneralizedGraph Iri Literal B → RDF11.GeneralizedGraph Iri Literal B → Prop",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-PROPER-INSTANCE",
+        "SUPPORT-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ProperSubstitution",
+      "module": "RDF11.Instances",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} → RDF11.GeneralizedGraph Iri Literal B → RDF11.Substitution Iri Literal B → Prop",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-PROPER-INSTANCE",
+        "SUPPORT-INSTANCES"
       ],
       "parent_declaration_if_applicable": null,
       "review": "pending_expert_review"
@@ -1858,6 +2332,18 @@
       "review": "pending_expert_review"
     },
     {
+      "name": "RDF11.SimpleInterpretation.denote_pullback",
+      "module": "RDF11.Instances",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u_1} {B : Type} (I : RDF11.SimpleInterpretation Iri Literal U) (A : I.Assignment B)\n  (μ : RDF11.Substitution Iri Literal B) (q : RDF11.Term Iri Literal B) (r : I.Resource),\n  I.denote A (RDF11.Term.substitute μ q) = some r.val → I.denote (I.pullback A μ) q = some r.val",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
       "name": "RDF11.SimpleInterpretation.graphTrue_mapBlank",
       "module": "RDF11.Merge",
       "kind": "theorem",
@@ -2014,6 +2500,42 @@
       "review": "pending_expert_review"
     },
     {
+      "name": "RDF11.SimpleInterpretation.ordinary_triple_pullback",
+      "module": "RDF11.Instances",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u_1} {B : Type} (I : RDF11.SimpleInterpretation Iri Literal U) (A : I.Assignment B)\n  (μ : RDF11.Substitution Iri Literal B) (t : RDF11.Triple Iri Literal B),\n  I.TripleTrue A (RDF11.GeneralizedTriple.substitute μ t.generalize) → I.TripleTrue (I.pullback A μ) t.generalize",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.pullback",
+      "module": "RDF11.Instances",
+      "kind": "definition",
+      "type": "{Iri Literal : Type} →\n  {U : Type u_1} →\n    {B : Type} →\n      (I : RDF11.SimpleInterpretation Iri Literal U) →\n        I.Assignment B → RDF11.Substitution Iri Literal B → I.Assignment B",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.pullback.eq_1",
+      "module": "RDF11.Instances",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u_1} {B : Type} (I : RDF11.SimpleInterpretation Iri Literal U) (A : I.Assignment B)\n  (μ : RDF11.Substitution Iri Literal B) (b : B), I.pullback A μ b = I.resourceDenote A (μ.resolve b)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
       "name": "RDF11.SimpleInterpretation.rec",
       "module": "RDF11.Simple",
       "kind": "recursor",
@@ -2035,6 +2557,42 @@
         "SUPPORT-INTERPRETATIONS"
       ],
       "parent_declaration_if_applicable": "RDF11.SimpleInterpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.resourceDenote",
+      "module": "RDF11.Instances",
+      "kind": "definition",
+      "type": "{Iri Literal : Type} →\n  {U : Type u_1} →\n    {B : Type} →\n      (I : RDF11.SimpleInterpretation Iri Literal U) → I.Assignment B → RDF11.Term Iri Literal B → Option I.Resource",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.resourceDenote.eq_1",
+      "module": "RDF11.Instances",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u_1} {B : Type} (I : RDF11.SimpleInterpretation Iri Literal U) (A : I.Assignment B)\n  (q : RDF11.Term Iri Literal B),\n  I.resourceDenote A q = (I.denote A q).bind fun x => if h : I.IR x then some ⟨x, h⟩ else none",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.resourceDenote_of_resource",
+      "module": "RDF11.Instances",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u_1} {B : Type} (I : RDF11.SimpleInterpretation Iri Literal U) (A : I.Assignment B)\n  (q : RDF11.Term Iri Literal B) (r : I.Resource), I.denote A q = some r.val → I.resourceDenote A q = some r",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": null,
       "review": "pending_expert_review"
     },
     {
@@ -2482,6 +3040,45 @@
       "review": "pending_expert_review"
     },
     {
+      "name": "RDF11.Substitution",
+      "module": "RDF11.Instances",
+      "kind": "definition",
+      "type": "Type → Type → Type → Type",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-GRAPH-INSTANCE",
+        "SUPPORT-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Substitution.resolve",
+      "module": "RDF11.Instances",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} → RDF11.Substitution Iri Literal B → B → RDF11.Term Iri Literal B",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-GRAPH-INSTANCE",
+        "SUPPORT-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Substitution.then",
+      "module": "RDF11.Instances",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  RDF11.Substitution Iri Literal B → RDF11.Substitution Iri Literal B → RDF11.Substitution Iri Literal B",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-INSTANCE-PROPERTIES",
+        "SUPPORT-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
       "name": "RDF11.Term",
       "module": "RDF11.Syntax",
       "kind": "inductive",
@@ -2842,6 +3439,42 @@
       "review": "pending_expert_review"
     },
     {
+      "name": "RDF11.Term.mapBlank.eq_1",
+      "module": "RDF11.Instances",
+      "kind": "theorem",
+      "type": "∀ {A B Iri Literal : Type} (f : A → B) (i : Iri), RDF11.Term.mapBlank f (RDF11.Term.iri i) = RDF11.Term.iri i",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Term.mapBlank.eq_2",
+      "module": "RDF11.Instances",
+      "kind": "theorem",
+      "type": "∀ {A B Iri Literal : Type} (f : A → B) (l : Literal),\n  RDF11.Term.mapBlank f (RDF11.Term.literal l) = RDF11.Term.literal l",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Term.mapBlank.eq_3",
+      "module": "RDF11.Instances",
+      "kind": "theorem",
+      "type": "∀ {A B Iri Literal : Type} (f : A → B) (b : A), RDF11.Term.mapBlank f (RDF11.Term.blank b) = RDF11.Term.blank (f b)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
       "name": "RDF11.Term.mapBlank.match_1",
       "module": "RDF11.Syntax",
       "kind": "definition",
@@ -2923,6 +3556,55 @@
         "SUPPORT-SYNTAX"
       ],
       "parent_declaration_if_applicable": "RDF11.Term",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Term.substitute",
+      "module": "RDF11.Instances",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} → RDF11.Substitution Iri Literal B → RDF11.Term Iri Literal B → RDF11.Term Iri Literal B",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-GRAPH-INSTANCE",
+        "SUPPORT-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Term.substitute.match_1",
+      "module": "RDF11.Instances",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  (motive : RDF11.Term Iri Literal B → Sort u_1) →\n    (x : RDF11.Term Iri Literal B) →\n      ((i : Iri) → motive (RDF11.Term.iri i)) →\n        ((l : Literal) → motive (RDF11.Term.literal l)) → ((b : B) → motive (RDF11.Term.blank b)) → motive x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Term.substitute_comp",
+      "module": "RDF11.Instances",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (μ ν : RDF11.Substitution Iri Literal B) (t : RDF11.Term Iri Literal B),\n  RDF11.Term.substitute ν (RDF11.Term.substitute μ t) = RDF11.Term.substitute (μ.then ν) t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Term.substitute_id",
+      "module": "RDF11.Instances",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (t : RDF11.Term Iri Literal B), RDF11.Term.substitute (fun x => none) t = t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": null,
       "review": "pending_expert_review"
     },
     {
@@ -3198,6 +3880,32 @@
       "role": "source_mapping",
       "grounds": [
         "MT11-SIMPLE-EXTENSION-BASE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ground_is_lean",
+      "module": "RDF11.Instances",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (G : RDF11.GeneralizedGraph Iri Literal B), G.ground → RDF11.LeanGraph G",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-LEAN-CONSEQUENCES",
+        "SUPPORT-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ground_substitute",
+      "module": "RDF11.Instances",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (G : RDF11.GeneralizedGraph Iri Literal B),\n  G.ground → ∀ (μ : RDF11.Substitution Iri Literal B), RDF11.GeneralizedGraph.substitute μ G = G",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-LEAN-CONSEQUENCES",
+        "SUPPORT-INSTANCES"
       ],
       "parent_declaration_if_applicable": null,
       "review": "pending_expert_review"
@@ -3683,6 +4391,70 @@
       "review": "pending_expert_review"
     },
     {
+      "name": "RDF11.instance_refl",
+      "module": "RDF11.Instances",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (G : RDF11.GeneralizedGraph Iri Literal B), RDF11.IsInstance G G",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-INSTANCE-PROPERTIES",
+        "SUPPORT-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.instance_subgraph_entails",
+      "module": "RDF11.Instances",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (G : RDF11.GeneralizedGraph Iri Literal B) (E : RDF11.Graph Iri Literal B)\n  (μ : RDF11.Substitution Iri Literal B),\n  RDF11.Set.subset (RDF11.GeneralizedGraph.substitute μ E.generalize) G → RDF11.SimplyEntails G E.generalize",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-INTERPOLATION",
+        "SUPPORT-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.instance_trans",
+      "module": "RDF11.Instances",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {F G H : RDF11.GeneralizedGraph Iri Literal B},\n  RDF11.IsInstance H G → RDF11.IsInstance G F → RDF11.IsInstance H F",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-INSTANCE-PROPERTIES",
+        "SUPPORT-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.instance_triple_origin",
+      "module": "RDF11.Instances",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (μ : RDF11.Substitution Iri Literal B) (G : RDF11.GeneralizedGraph Iri Literal B)\n  {t : RDF11.GeneralizedTriple Iri Literal B},\n  RDF11.GeneralizedGraph.substitute μ G t → ∃ s, G s ∧ RDF11.GeneralizedTriple.substitute μ s = t",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-INSTANCE-PROPERTIES",
+        "SUPPORT-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.mapBlank_is_instance",
+      "module": "RDF11.Instances",
+      "kind": "theorem",
+      "type": "∀ {B Iri Literal : Type} (f : B → B) (G : RDF11.GeneralizedGraph Iri Literal B),\n  RDF11.IsInstance (RDF11.GeneralizedGraph.mapBlank f G) G",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
       "name": "RDF11.merge",
       "module": "RDF11.Merge",
       "kind": "definition",
@@ -3702,6 +4474,45 @@
       "role": "source_mapping",
       "grounds": [
         "MT11-EMPTY-ENTAILMENTS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ordinary_instance_entails",
+      "module": "RDF11.Instances",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {G H : RDF11.Graph Iri Literal B},\n  RDF11.IsInstance H.generalize G.generalize → RDF11.SimplyEntails H.generalize G.generalize",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-INSTANCE-ENTAILMENT",
+        "SUPPORT-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ordinary_instance_subgraph_equivalent",
+      "module": "RDF11.Instances",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {G H : RDF11.Graph Iri Literal B},\n  RDF11.IsInstance H.generalize G.generalize →\n    RDF11.Set.subset H.generalize G.generalize → RDF11.LogicallyEquivalent G.generalize H.generalize",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-LEAN-CONSEQUENCES",
+        "SUPPORT-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ordinary_substitution_entails",
+      "module": "RDF11.Instances",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (G : RDF11.Graph Iri Literal B) (μ : RDF11.Substitution Iri Literal B),\n  RDF11.SimplyEntails (RDF11.GeneralizedGraph.substitute μ G.generalize) G.generalize",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-INSTANCE-ENTAILMENT",
+        "SUPPORT-INSTANCES"
       ],
       "parent_declaration_if_applicable": null,
       "review": "pending_expert_review"
@@ -4628,6 +5439,54 @@
         "REFINEMENT-ENUMERATION"
       ],
       "parent_declaration_if_applicable": "RDF11.Enumeration",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.Instances.0.RDF11.Term.mapBlank.match_1.eq_1",
+      "module": "RDF11.Instances",
+      "kind": "theorem",
+      "type": "∀ {A Iri Literal : Type} (motive : RDF11.Term Iri Literal A → Sort u_1) (i : Iri)\n  (h_1 : (i : Iri) → motive (RDF11.Term.iri i)) (h_2 : (l : Literal) → motive (RDF11.Term.literal l))\n  (h_3 : (b : A) → motive (RDF11.Term.blank b)),\n  (match RDF11.Term.iri i with\n    | RDF11.Term.iri i => h_1 i\n    | RDF11.Term.literal l => h_2 l\n    | RDF11.Term.blank b => h_3 b) =\n    h_1 i",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.Instances.0.RDF11.Term.mapBlank.match_1.eq_2",
+      "module": "RDF11.Instances",
+      "kind": "theorem",
+      "type": "∀ {A Iri Literal : Type} (motive : RDF11.Term Iri Literal A → Sort u_1) (l : Literal)\n  (h_1 : (i : Iri) → motive (RDF11.Term.iri i)) (h_2 : (l : Literal) → motive (RDF11.Term.literal l))\n  (h_3 : (b : A) → motive (RDF11.Term.blank b)),\n  (match RDF11.Term.literal l with\n    | RDF11.Term.iri i => h_1 i\n    | RDF11.Term.literal l => h_2 l\n    | RDF11.Term.blank b => h_3 b) =\n    h_2 l",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.Instances.0.RDF11.Term.mapBlank.match_1.eq_3",
+      "module": "RDF11.Instances",
+      "kind": "theorem",
+      "type": "∀ {A Iri Literal : Type} (motive : RDF11.Term Iri Literal A → Sort u_1) (b : A)\n  (h_1 : (i : Iri) → motive (RDF11.Term.iri i)) (h_2 : (l : Literal) → motive (RDF11.Term.literal l))\n  (h_3 : (b : A) → motive (RDF11.Term.blank b)),\n  (match RDF11.Term.blank b with\n    | RDF11.Term.iri i => h_1 i\n    | RDF11.Term.literal l => h_2 l\n    | RDF11.Term.blank b => h_3 b) =\n    h_3 b",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.Instances.0.RDF11.Term.mapBlank.match_1.splitter",
+      "module": "RDF11.Instances",
+      "kind": "definition",
+      "type": "{A Iri Literal : Type} →\n  (motive : RDF11.Term Iri Literal A → Sort u_1) →\n    (x : RDF11.Term Iri Literal A) →\n      ((i : Iri) → motive (RDF11.Term.iri i)) →\n        ((l : Literal) → motive (RDF11.Term.literal l)) → ((b : A) → motive (RDF11.Term.blank b)) → motive x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": null,
       "review": "pending_expert_review"
     },
     {

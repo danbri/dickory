@@ -4,7 +4,7 @@
   "method": "Human-readable AI close reading; selectors locate already selected passages and do not extract assertions.",
   "source_inventory": "../ledger/semantics-inventory.json",
   "inventory_sha256": "acf9b60576a2c688a73e2c39f8e6346d199742a50a61baa2d4faafdadf20c390",
-  "mapping_input_sha256": "48e295824dbec99c51492a87783ba735495d83b458320c2efc3d76538eac6e89",
+  "mapping_input_sha256": "52650bf31ea0d25a9099d8784996028a94faab55ad4af69b87439f025dee438a",
   "documents": [
     {
       "id": "mt",
@@ -87,6 +87,104 @@
         },
         {
           "start": 29278,
+          "end": 29280,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 29280,
+          "end": 29738,
+          "refs": [
+            "MT11-GRAPH-INSTANCE",
+            "MT11-INSTANCE-PROPERTIES"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 29738,
+          "end": 29739,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 29739,
+          "end": 30103,
+          "refs": [
+            "MT11-VOCABULARY-INSTANCE"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 30103,
+          "end": 30104,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 30104,
+          "end": 30423,
+          "refs": [
+            "MT11-PROPER-INSTANCE"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 30423,
+          "end": 30424,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 30424,
+          "end": 30816,
+          "refs": [
+            "MT11-ISOMORPHISM"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 30816,
+          "end": 30818,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 30818,
+          "end": 31052,
+          "refs": [
+            "MT11-LEAN-CONSEQUENCES",
+            "MT11-LEAN-GRAPH"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 31052,
+          "end": 31195,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 31195,
+          "end": 31281,
+          "refs": [
+            "MT11-LEAN-CONSEQUENCES"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 31281,
           "end": 34371,
           "refs": [
             "UNRESOLVED-mt"
@@ -350,6 +448,29 @@
         },
         {
           "start": 50491,
+          "end": 50840,
+          "refs": [
+            "MT11-EMPTY-ENTAILMENTS",
+            "MT11-INSTANCE-ENTAILMENT",
+            "MT11-PREMISE-MONOTONICITY",
+            "MT11-SUBGRAPH-ENTAILMENT"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 50840,
+          "end": 50942,
+          "refs": [
+            "MT11-EMPTY-ENTAILMENTS",
+            "MT11-INSTANCE-ENTAILMENT",
+            "MT11-INTERPOLATION",
+            "MT11-PREMISE-MONOTONICITY",
+            "MT11-SUBGRAPH-ENTAILMENT"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 50942,
           "end": 53281,
           "refs": [
             "MT11-EMPTY-ENTAILMENTS",
@@ -779,6 +900,106 @@
         "MT11-INSTANCE-ENTAILMENT"
       ],
       "slice_sha256": "f2c7b69c2b362d1a6d7f977ffe9247e44a95b0bb33925bedb6e9b6aa1a9f08e1",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "instances",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 29280,
+      "end": 29738,
+      "claims": [
+        "MT11-GRAPH-INSTANCE",
+        "MT11-INSTANCE-PROPERTIES"
+      ],
+      "slice_sha256": "580208b88a023bbce4a1783283439adc3a60c0c0436db5f16d489bb870ba3e19",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "vocabulary-instance",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 29739,
+      "end": 30103,
+      "claims": [
+        "MT11-VOCABULARY-INSTANCE"
+      ],
+      "slice_sha256": "df1de0d21f2bc2bcd1800a852507d1583208448f722d4a184a4f80300f9932b8",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "proper-instance",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 30104,
+      "end": 30423,
+      "claims": [
+        "MT11-PROPER-INSTANCE"
+      ],
+      "slice_sha256": "055cd9381df233a5ad562c0332b2d560243693c1d540610a251f1df7bbdcae1c",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "isomorphism",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 30424,
+      "end": 30816,
+      "claims": [
+        "MT11-ISOMORPHISM"
+      ],
+      "slice_sha256": "6491d25e19ade1bb578fe224dd49c44b8781688c1b6854d2400f6dc1b61b1293",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "lean",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 30818,
+      "end": 31052,
+      "claims": [
+        "MT11-LEAN-GRAPH",
+        "MT11-LEAN-CONSEQUENCES"
+      ],
+      "slice_sha256": "2d3c032c982ca678b6a7b94ffb3ce371f53954f9d0e41c1230165f93a176d304",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "ground-lean",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 31195,
+      "end": 31281,
+      "claims": [
+        "MT11-LEAN-CONSEQUENCES"
+      ],
+      "slice_sha256": "035af3e66b03812d24572ceb4b8111e90d0de2a86d61475237da81ff2e62bc3c",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "interpolation",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 50840,
+      "end": 50942,
+      "claims": [
+        "MT11-INTERPOLATION"
+      ],
+      "slice_sha256": "8f810fe2b527b93f9b260cbed67196b5825f43466f3451caf7292b8e48951ce0",
       "locator_tag": "p",
       "review": "pending",
       "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
@@ -1394,10 +1615,46 @@
         "formal_proof": "unassessed",
         "test_mapping": "unassessed"
       },
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-GRAPH-INSTANCE",
+        "relation": "definition",
+        "symbol_linked_english": "H is an IsInstance of G exactly when one partial Substitution μ replaces each selected blank consistently, leaving omitted blanks and all names fixed, and H is the set of resulting triples.",
+        "bindings": [
+          {
+            "symbol": "Substitution",
+            "lean": "RDF11.Substitution"
+          },
+          {
+            "symbol": "resolve",
+            "lean": "RDF11.Substitution.resolve"
+          },
+          {
+            "symbol": "substitute",
+            "lean": "RDF11.Term.substitute"
+          },
+          {
+            "symbol": "substitute",
+            "lean": "RDF11.GeneralizedTriple.substitute"
+          },
+          {
+            "symbol": "substitute",
+            "lean": "RDF11.GeneralizedGraph.substitute"
+          },
+          {
+            "symbol": "IsInstance",
+            "lean": "RDF11.IsInstance"
+          }
+        ],
+        "limitations": "Shared ambient blank identities; the generalized syntax admits substitutions in every position. Use ordinary Graph endpoints when ordinary RDF syntax is required.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "instances"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-INSTANCE-PROPERTIES",
@@ -1418,10 +1675,38 @@
         "formal_proof": "unassessed",
         "test_mapping": "unassessed"
       },
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-INSTANCE-PROPERTIES",
+        "relation": "theorem",
+        "symbol_linked_english": "IsInstance is reflexive and transitive. For a fixed μ, every triple in G.substitute μ is the image of a triple in G.",
+        "bindings": [
+          {
+            "symbol": "instance_refl",
+            "lean": "RDF11.instance_refl"
+          },
+          {
+            "symbol": "instance_trans",
+            "lean": "RDF11.instance_trans"
+          },
+          {
+            "symbol": "instance_triple_origin",
+            "lean": "RDF11.instance_triple_origin"
+          },
+          {
+            "symbol": "then",
+            "lean": "RDF11.Substitution.then"
+          }
+        ],
+        "limitations": "No finiteness or injectivity assumption; different triples may have the same image.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "instances"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-VOCABULARY-INSTANCE",
@@ -1443,10 +1728,26 @@
         "formal_proof": "unassessed",
         "test_mapping": "unassessed"
       },
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-VOCABULARY-INSTANCE",
+        "relation": "definition",
+        "symbol_linked_english": "InstanceWithVocabulary V H G requires an instance mapping whose name-valued replacements of occurring blanks lie in V; existing names need not lie in V.",
+        "bindings": [
+          {
+            "symbol": "InstanceWithVocabulary",
+            "lean": "RDF11.InstanceWithVocabulary"
+          }
+        ],
+        "limitations": "V is a set of IRI-or-literal names, represented by Sum Iri Literal.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "vocabulary-instance"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-PROPER-INSTANCE",
@@ -1467,10 +1768,30 @@
         "formal_proof": "unassessed",
         "test_mapping": "unassessed"
       },
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-PROPER-INSTANCE",
+        "relation": "definition",
+        "symbol_linked_english": "ProperInstance H G has an instance mapping that replaces an occurring blank by a name, or maps two distinct occurring blanks to the same resolved term.",
+        "bindings": [
+          {
+            "symbol": "ProperSubstitution",
+            "lean": "RDF11.ProperSubstitution"
+          },
+          {
+            "symbol": "ProperInstance",
+            "lean": "RDF11.ProperInstance"
+          }
+        ],
+        "limitations": "Only blanks occurring in G count; omitted replacements resolve to the unchanged blank. Proper instance does not mean proper subgraph.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "proper-instance"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-ISOMORPHISM",
@@ -1493,10 +1814,42 @@
         "formal_proof": "unassessed",
         "test_mapping": "unassessed"
       },
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-ISOMORPHISM",
+        "relation": "definition_and_theorem",
+        "symbol_linked_english": "GraphIsomorphism G H supplies inverse blank renamings on the occurring blank nodes and a graph-image equality. The graphs are mutual instances and satisfy exactly the same simple interpretations.",
+        "bindings": [
+          {
+            "symbol": "GraphIsomorphism",
+            "lean": "RDF11.GraphIsomorphism"
+          },
+          {
+            "symbol": "inverse_image",
+            "lean": "RDF11.GraphIsomorphism.inverse_image"
+          },
+          {
+            "symbol": "mutual_instances",
+            "lean": "RDF11.GraphIsomorphism.mutual_instances"
+          },
+          {
+            "symbol": "satisfies_iff",
+            "lean": "RDF11.GraphIsomorphism.satisfies_iff"
+          },
+          {
+            "symbol": "equivalent",
+            "lean": "RDF11.GraphIsomorphism.equivalent"
+          }
+        ],
+        "limitations": "A common ambient identity domain; unused identities need not be bijective. Isomorphism does not assert literal set equality or preservation of blank sharing with other graphs. A separately packaged Concepts bijection over all graph nodes remains to be provided.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "isomorphism"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-LEAN-GRAPH",
@@ -1518,10 +1871,26 @@
         "formal_proof": "unassessed",
         "test_mapping": "unassessed"
       },
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-LEAN-GRAPH",
+        "relation": "definition",
+        "symbol_linked_english": "LeanGraph G means that every instance H of G that is a subgraph of G equals G: no instance is a proper subgraph.",
+        "bindings": [
+          {
+            "symbol": "LeanGraph",
+            "lean": "RDF11.LeanGraph"
+          }
+        ],
+        "limitations": "Lean here is the RDF mathematical property, unrelated to the name of the proof assistant.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "lean"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-LEAN-CONSEQUENCES",
@@ -1543,10 +1912,35 @@
         "formal_proof": "unassessed",
         "test_mapping": "unassessed"
       },
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-LEAN-CONSEQUENCES",
+        "relation": "partial_theorem",
+        "symbol_linked_english": "Every ground G is a LeanGraph. For ordinary graphs G and H, if H is both an instance and a subgraph of G, the graphs are LogicallyEquivalent.",
+        "bindings": [
+          {
+            "symbol": "ground_substitute",
+            "lean": "RDF11.ground_substitute"
+          },
+          {
+            "symbol": "ground_is_lean",
+            "lean": "RDF11.ground_is_lean"
+          },
+          {
+            "symbol": "ordinary_instance_subgraph_equivalent",
+            "lean": "RDF11.ordinary_instance_subgraph_equivalent"
+          }
+        ],
+        "limitations": "Does not prove existence of lean subgraphs, or the source’s entire informal redundancy discussion; no generalized instance theorem is assumed.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "lean",
+        "ground-lean"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-SET-IDEMPOTENCE",
@@ -2860,10 +3254,26 @@
       "supporting_source_urls": [
         "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#proofs"
       ],
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-INTERPOLATION",
+        "relation": "partial_theorem",
+        "symbol_linked_english": "If an instance of the ordinary conclusion E is a subgraph of G, then G SimplyEntails E.",
+        "bindings": [
+          {
+            "symbol": "instance_subgraph_entails",
+            "lean": "RDF11.instance_subgraph_entails"
+          }
+        ],
+        "limitations": "Only the sufficient direction, with an ordinary conclusion. The converse/interpolation completeness theorem remains open, as does the generalized source-scope question.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "interpolation"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-SIMPLE-DECIDABILITY",
@@ -3016,18 +3426,22 @@
       "cleanroom_mapping": {
         "claim_id": "MT11-INSTANCE-ENTAILMENT",
         "relation": "partial_theorem",
-        "symbol_linked_english": "If f replaces blank nodes only by blank nodes, the resulting graph G.mapBlank f simply entails G.",
+        "symbol_linked_english": "For ordinary graphs G and H, IsInstance H.generalize G.generalize implies H SimplyEntails G. More generally, every term substitution of an ordinary source G entails G; blank-to-blank renaming also works for generalized sources.",
         "bindings": [
+          {
+            "symbol": "ordinary_instance_entails",
+            "lean": "RDF11.ordinary_instance_entails"
+          },
+          {
+            "symbol": "ordinary_substitution_entails",
+            "lean": "RDF11.ordinary_substitution_entails"
+          },
           {
             "symbol": "renamed_entails_original",
             "lean": "RDF11.renamed_entails_original"
-          },
-          {
-            "symbol": "mapBlank",
-            "lean": "RDF11.GeneralizedGraph.mapBlank"
           }
         ],
-        "limitations": "Only the blank-to-blank case. General substitution by names and interpolation are open.",
+        "limitations": "Complete instance-entails-original theorem for ordinary RDF endpoints, proved directly from truth conditions. The unrestricted generalized-source reading remains an open source question; IP ⊆ IR is not assumed.",
         "extraction_review": "pending_expert_review",
         "formalization_review": "pending_expert_review",
         "implementation_refinement": "not_connected_to_published_package"

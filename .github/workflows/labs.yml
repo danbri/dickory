@@ -34,7 +34,7 @@ jobs:
       - name: Generate review viewer
         working-directory: labs/rdf11/cleanroom
         run: |
-          python3 -m unittest discover -s tools -p 'test_lean_sources.py'
+          python3 -m unittest discover -s tools -p 'test_*.py'
           python3 tools/review_viewer.py
       - name: Stage site and check links
         run: python3 tools/build_site.py

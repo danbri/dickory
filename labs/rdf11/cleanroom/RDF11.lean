@@ -5,3 +5,4 @@ import RDF11.Merge
 import RDF11.Enumeration
 import RDF11.ScopeExample
 import RDF11.GeneralizedScope
+import RDF11.Instances

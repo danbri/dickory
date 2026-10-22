@@ -17,7 +17,7 @@ Take distinct IRIs s and p. Use resources IR = {r}, properties IP = {q}, r ≠ q
 
 The first singleton is obtained from the second by substituting p for its blank node. Nevertheless it does not simply entail the second under this reading.
 
-[GeneralizedScope.lean](../RDF11/GeneralizedScope.lean) checks the countermodel for arbitrary IRI and literal domains with two distinct IRIs and decidable IRI equality. It interprets every IRI; it is not a restriction to a two-name vocabulary. The general instance relation is still open, so the specific substitution is displayed directly rather than certified by an already completed Instance predicate.
+[GeneralizedScope.lean](../RDF11/GeneralizedScope.lean) checks the countermodel for arbitrary IRI and literal domains with two distinct IRIs and decidable IRI equality. It interprets every IRI; it is not a restriction to a two-name vocabulary. The second increment defines `IsInstance` in [Instances.lean](../RDF11/Instances.lean) and proves the ordinary-source consequence. This original countermodel still displays its substitution directly; it has not yet been repackaged using the new predicate. The unrestricted generalized semantic consequence remains unresolved.
 
 **The ordinary RDF consequence is not refuted:** ordinary predicates are IRIs, and blank nodes occur only where truth forces resource denotations.
 

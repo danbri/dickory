@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "status": "draft_first_formalization_increment",
+  "status": "draft_second_formalization_increment",
   "selection_method": "Human-readable AI close reading; selectors locate already selected passages and do not extract assertions.",
   "mappings": [
     {
@@ -610,18 +610,22 @@
     {
       "claim_id": "MT11-INSTANCE-ENTAILMENT",
       "relation": "partial_theorem",
-      "symbol_linked_english": "If f replaces blank nodes only by blank nodes, the resulting graph G.mapBlank f simply entails G.",
+      "symbol_linked_english": "For ordinary graphs G and H, IsInstance H.generalize G.generalize implies H SimplyEntails G. More generally, every term substitution of an ordinary source G entails G; blank-to-blank renaming also works for generalized sources.",
       "bindings": [
+        {
+          "symbol": "ordinary_instance_entails",
+          "lean": "RDF11.ordinary_instance_entails"
+        },
+        {
+          "symbol": "ordinary_substitution_entails",
+          "lean": "RDF11.ordinary_substitution_entails"
+        },
         {
           "symbol": "renamed_entails_original",
           "lean": "RDF11.renamed_entails_original"
-        },
-        {
-          "symbol": "mapBlank",
-          "lean": "RDF11.GeneralizedGraph.mapBlank"
         }
       ],
-      "limitations": "Only the blank-to-blank case. General substitution by names and interpolation are open.",
+      "limitations": "Complete instance-entails-original theorem for ordinary RDF endpoints, proved directly from truth conditions. The unrestricted generalized-source reading remains an open source question; IP ⊆ IR is not assumed.",
       "extraction_review": "pending_expert_review",
       "formalization_review": "pending_expert_review",
       "implementation_refinement": "not_connected_to_published_package"
@@ -645,6 +649,186 @@
         }
       ],
       "limitations": "Set identity is proved; a separately named general list-permutation satisfaction theorem is not yet provided.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-GRAPH-INSTANCE",
+      "relation": "definition",
+      "symbol_linked_english": "H is an IsInstance of G exactly when one partial Substitution μ replaces each selected blank consistently, leaving omitted blanks and all names fixed, and H is the set of resulting triples.",
+      "bindings": [
+        {
+          "symbol": "Substitution",
+          "lean": "RDF11.Substitution"
+        },
+        {
+          "symbol": "resolve",
+          "lean": "RDF11.Substitution.resolve"
+        },
+        {
+          "symbol": "substitute",
+          "lean": "RDF11.Term.substitute"
+        },
+        {
+          "symbol": "substitute",
+          "lean": "RDF11.GeneralizedTriple.substitute"
+        },
+        {
+          "symbol": "substitute",
+          "lean": "RDF11.GeneralizedGraph.substitute"
+        },
+        {
+          "symbol": "IsInstance",
+          "lean": "RDF11.IsInstance"
+        }
+      ],
+      "limitations": "Shared ambient blank identities; the generalized syntax admits substitutions in every position. Use ordinary Graph endpoints when ordinary RDF syntax is required.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-INSTANCE-PROPERTIES",
+      "relation": "theorem",
+      "symbol_linked_english": "IsInstance is reflexive and transitive. For a fixed μ, every triple in G.substitute μ is the image of a triple in G.",
+      "bindings": [
+        {
+          "symbol": "instance_refl",
+          "lean": "RDF11.instance_refl"
+        },
+        {
+          "symbol": "instance_trans",
+          "lean": "RDF11.instance_trans"
+        },
+        {
+          "symbol": "instance_triple_origin",
+          "lean": "RDF11.instance_triple_origin"
+        },
+        {
+          "symbol": "then",
+          "lean": "RDF11.Substitution.then"
+        }
+      ],
+      "limitations": "No finiteness or injectivity assumption; different triples may have the same image.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-VOCABULARY-INSTANCE",
+      "relation": "definition",
+      "symbol_linked_english": "InstanceWithVocabulary V H G requires an instance mapping whose name-valued replacements of occurring blanks lie in V; existing names need not lie in V.",
+      "bindings": [
+        {
+          "symbol": "InstanceWithVocabulary",
+          "lean": "RDF11.InstanceWithVocabulary"
+        }
+      ],
+      "limitations": "V is a set of IRI-or-literal names, represented by Sum Iri Literal.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-PROPER-INSTANCE",
+      "relation": "definition",
+      "symbol_linked_english": "ProperInstance H G has an instance mapping that replaces an occurring blank by a name, or maps two distinct occurring blanks to the same resolved term.",
+      "bindings": [
+        {
+          "symbol": "ProperSubstitution",
+          "lean": "RDF11.ProperSubstitution"
+        },
+        {
+          "symbol": "ProperInstance",
+          "lean": "RDF11.ProperInstance"
+        }
+      ],
+      "limitations": "Only blanks occurring in G count; omitted replacements resolve to the unchanged blank. Proper instance does not mean proper subgraph.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-ISOMORPHISM",
+      "relation": "definition_and_theorem",
+      "symbol_linked_english": "GraphIsomorphism G H supplies inverse blank renamings on the occurring blank nodes and a graph-image equality. The graphs are mutual instances and satisfy exactly the same simple interpretations.",
+      "bindings": [
+        {
+          "symbol": "GraphIsomorphism",
+          "lean": "RDF11.GraphIsomorphism"
+        },
+        {
+          "symbol": "inverse_image",
+          "lean": "RDF11.GraphIsomorphism.inverse_image"
+        },
+        {
+          "symbol": "mutual_instances",
+          "lean": "RDF11.GraphIsomorphism.mutual_instances"
+        },
+        {
+          "symbol": "satisfies_iff",
+          "lean": "RDF11.GraphIsomorphism.satisfies_iff"
+        },
+        {
+          "symbol": "equivalent",
+          "lean": "RDF11.GraphIsomorphism.equivalent"
+        }
+      ],
+      "limitations": "A common ambient identity domain; unused identities need not be bijective. Isomorphism does not assert literal set equality or preservation of blank sharing with other graphs. A separately packaged Concepts bijection over all graph nodes remains to be provided.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-LEAN-GRAPH",
+      "relation": "definition",
+      "symbol_linked_english": "LeanGraph G means that every instance H of G that is a subgraph of G equals G: no instance is a proper subgraph.",
+      "bindings": [
+        {
+          "symbol": "LeanGraph",
+          "lean": "RDF11.LeanGraph"
+        }
+      ],
+      "limitations": "Lean here is the RDF mathematical property, unrelated to the name of the proof assistant.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-LEAN-CONSEQUENCES",
+      "relation": "partial_theorem",
+      "symbol_linked_english": "Every ground G is a LeanGraph. For ordinary graphs G and H, if H is both an instance and a subgraph of G, the graphs are LogicallyEquivalent.",
+      "bindings": [
+        {
+          "symbol": "ground_substitute",
+          "lean": "RDF11.ground_substitute"
+        },
+        {
+          "symbol": "ground_is_lean",
+          "lean": "RDF11.ground_is_lean"
+        },
+        {
+          "symbol": "ordinary_instance_subgraph_equivalent",
+          "lean": "RDF11.ordinary_instance_subgraph_equivalent"
+        }
+      ],
+      "limitations": "Does not prove existence of lean subgraphs, or the source’s entire informal redundancy discussion; no generalized instance theorem is assumed.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-INTERPOLATION",
+      "relation": "partial_theorem",
+      "symbol_linked_english": "If an instance of the ordinary conclusion E is a subgraph of G, then G SimplyEntails E.",
+      "bindings": [
+        {
+          "symbol": "instance_subgraph_entails",
+          "lean": "RDF11.instance_subgraph_entails"
+        }
+      ],
+      "limitations": "Only the sufficient direction, with an ordinary conclusion. The converse/interpolation completeness theorem remains open, as does the generalized source-scope question.",
       "extraction_review": "pending_expert_review",
       "formalization_review": "pending_expert_review",
       "implementation_refinement": "not_connected_to_published_package"
@@ -874,6 +1058,72 @@
       "claims": [
         "MT11-INSTANCE-ENTAILMENT"
       ]
+    },
+    {
+      "id": "instances",
+      "source": "mt",
+      "tag": "p",
+      "text": "Suppose that M is a functional mapping",
+      "claims": [
+        "MT11-GRAPH-INSTANCE",
+        "MT11-INSTANCE-PROPERTIES"
+      ]
+    },
+    {
+      "id": "vocabulary-instance",
+      "source": "mt",
+      "tag": "p",
+      "text": "An instance with respect to a vocabulary V",
+      "claims": [
+        "MT11-VOCABULARY-INSTANCE"
+      ]
+    },
+    {
+      "id": "proper-instance",
+      "source": "mt",
+      "tag": "p",
+      "text": "A proper instance of a graph",
+      "claims": [
+        "MT11-PROPER-INSTANCE"
+      ]
+    },
+    {
+      "id": "isomorphism",
+      "source": "mt",
+      "tag": "p",
+      "text": "Two graphs are isomorphic when",
+      "claims": [
+        "MT11-ISOMORPHISM"
+      ]
+    },
+    {
+      "id": "lean",
+      "source": "mt",
+      "tag": "p",
+      "text": "An RDF graph is lean if",
+      "claims": [
+        "MT11-LEAN-GRAPH",
+        "MT11-LEAN-CONSEQUENCES"
+      ]
+    },
+    {
+      "id": "ground-lean",
+      "source": "mt",
+      "tag": "p",
+      "text": "is lean. Ground graphs are lean.",
+      "claims": [
+        "MT11-LEAN-CONSEQUENCES"
+      ]
+    },
+    {
+      "id": "interpolation",
+      "source": "mt",
+      "tag": "p",
+      "text": "G simply entails a graph E if and only if",
+      "claims": [
+        "MT11-INTERPOLATION"
+      ],
+      "within_section": "properties-of-simple-entailment-informative"
     }
   ],
   "context_resolutions": [
