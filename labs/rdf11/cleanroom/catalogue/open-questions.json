@@ -225,6 +225,33 @@
       "review_question": "Is A on the right intended to be transported or composed with inverse naming? How should the printed proof explanation be qualified?",
       "implementation_policy": "The new proof works directly through interpretations, retaining IR/IP/IEXT/IL and modifying only selected IS denotations. Do not import the printed commutation as an axiom or silently change the archived text.",
       "review_status": "pending_expert_review"
+    },
+    {
+      "id": "Q-LEAN-PROPER-INFINITE-SCOPE",
+      "status": "finite_blank_scope_checked_unrestricted_self_instance_exclusion_open",
+      "not_a_declared_erratum": true,
+      "claim_ids": [
+        "MT11-LEAN-PROPER-INSTANCE-NONENTAILMENT",
+        "MT11-PROPER-INSTANCE",
+        "MT11-LEAN-GRAPH"
+      ],
+      "passage_ids": [
+        "proper-instance",
+        "lean",
+        "lean-proper-consequence",
+        "lean-proper-proof-statement",
+        "lean-proper-proof"
+      ],
+      "summary": "The source proof moves from a proper-instance subgraph to non-leanness without separately showing strict inclusion. Finite occurring blank support excludes proper self-instances. Infinite proper self-instances exist, but the checked example is not lean.",
+      "lean": [
+        "RDF11.lean_proper_nonentailment_iff",
+        "RDF11.lean_finite_blanks_not_entails_proper_instance",
+        "RDF11.InfiniteProperInstance.proper_self_instance",
+        "RDF11.InfiniteProperInstance.not_lean"
+      ],
+      "review_question": "Can a lean graph with infinitely many occurring blanks admit a proper self-instance under the stated definitions? What justifies the printed proof's strict-subgraph step without finiteness?",
+      "implementation_policy": "Keep the finite-blank hypothesis explicit and the unrestricted source statement open. Do not redefine LeanGraph or ProperInstance, label the non-lean example a counterexample to the theorem, or infer an erratum.",
+      "review_status": "pending_expert_review"
     }
   ]
 }

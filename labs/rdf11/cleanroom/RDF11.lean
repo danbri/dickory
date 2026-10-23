@@ -9,6 +9,8 @@ import RDF11.Instances
 import RDF11.Vocabulary
 import RDF11.Interpolation
 import RDF11.FiniteEntailment
+import RDF11.FiniteInstances
+import RDF11.InstanceExamples
 import RDF11.Skolemization
 import RDF11.Transformations
 import RDF11.VocabularyEntailment

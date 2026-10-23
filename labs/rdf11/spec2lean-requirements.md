@@ -1,8 +1,10 @@
 # Spec2Lean: RDF 1.1 source coverage and formalization traceability
 
-**Status:** requirements draft for expert review and implementation.  
-**Date:** 2026-10-21.  
-**Workspace:** all implementation and generated artifacts for this experiment belong under `_LEAN/`.
+**Status:** requirements draft for expert review and implementation.
+
+**Date:** 2026-10-21; version/family requirements added 2026-10-23.
+
+**Workspace:** the original `_LEAN/` experiment is now maintained in `labs/rdf11/` in `danbri/dickory`; the current Lean project is `labs/rdf11/cleanroom/`.
 
 This draft incorporates the separately supplied `spec2lean-draft.md`; [merge review and provenance](docs/20261021-spec2lean-merge.md) record the additions and resolved differences. Existing requirement IDs are retained.
 
@@ -34,6 +36,34 @@ The system must never turn the first achievement, or a passing test suite, into 
 **SCOPE-04.** RDF 1.2 is a separate corpus/version track. Do not use 1.2 behavior, tests or declarations to discharge a 1.1 obligation without an explicit applicability argument. Existing Factoidal types that admit 1.2 constructs may need a stated RDF 1.1 restriction in their theorems.
 
 **SCOPE-05.** Use [w3c/rdf-tests](https://github.com/w3c/rdf-tests), especially `rdf/rdf11/rdf-mt`, as essential executable evidence. Preserve the repository revision, test identifiers and approval metadata. The tests are not the definition of the obligation inventory, and their coverage must not be presumed exhaustive.
+
+### 2.1 Editions, errata, proposals and related specification families
+
+The [version and family design note](cleanroom/docs/20261023-spec-versions-and-families.md) gives concrete RDF, OWL and SPARQL examples. These are requirements for extension of the current prototype; existing single-baseline checks do not establish their implementation.
+
+**VER-01 — Separate work, edition and asset identity.** Identify a specification family, a document work within it, a dated edition or editor-draft commit, and each exact byte asset separately. Retain both the publisher's edition/status and the retrieved asset hash. A changed response body at the same URL is a new asset, not automatically a new semantic edition. Record the relationship and review differences. Mutable latest-version URLs are discovery pointers, never sufficient proof inputs.
+
+**VER-02 — Freeze a semantic baseline bundle.** A verification target names exact document/asset versions, adopted errata, regime/profile, datatype and other external dependencies, extraction and formalization revisions, toolchains and review policy. Resolve dependency versions from each source's actual references; do not substitute the latest RDF, XSD or Unicode specification by name. A proposed replacement needs a compatibility record. Keep document-scope, formalization-scope and implementation-surface scope distinct.
+
+**VER-03 — Preserve edition-specific claims and lineage.** Keep existing IDs such as MT11-* stable. A claim occurrence in another edition has its own versioned record and source ranges. A separate lineage relation may connect one or many old claims to one or many new claims, including splits, merges and omissions. Concept-family identifiers aid navigation but do not imply identical definitions. Equal words, anchors, rule codes, Lean names or text hashes cannot alone establish semantic equivalence when context or imports change.
+
+**VER-04 — Classify changes with evidence.** Record independently (a) source change: moved, editorial, added, removed, split, merged, qualification/dependency/modality/status changed, and (b) claimed mathematical relation: equivalence, strengthening, weakening, conservative extension, incompatibility, partial correspondence or unresolved. Every mathematical relation names its direction, fragment, hypotheses, symbol/term/model transport and proof or counterexample evidence. Human extraction decisions and kernel-checked comparison theorems remain distinct evidence dimensions. An editorial label requires review and cannot bypass dependency invalidation.
+
+**VER-05 — Adopt errata explicitly.** Preserve the original source and separately pin each erratum's text, issuer, date and status. Record proposed, official, withdrawn and disputed corrections without treating these statuses as interchangeable. A baseline may select an explicit correction overlay, producing a distinct bundle identity and affected claim revisions; an updated publisher edition is a separate source. The viewer must expose the original passage, correction and adopted reading. A later specification's retrospective change note is evidence to examine, not automatic authorization to rewrite an earlier Recommendation. Do not permit incompatible overlays in one accepted bundle.
+
+**VER-06 — Keep proposals experimental.** Pin proposals and editor drafts to exact snapshots/commits, record proponents and status, and maintain separate coverage and review state. Alternative proposals may coexist on main in explicitly identified tracks. Their proofs can be checked before adoption, but they must not satisfy baseline obligations or inherit standards approval. Experiments remain inventoried under the formal-artifact rules.
+
+**VER-07 — Share code through checked instantiation.** Permit a reviewed mathematical foundation or parameterized proof to serve multiple editions. Each edition retains its own source mapping, assumptions and dependency closure. Put edition-sensitive syntax and semantic conditions in explicit modules/namespaces or version-indexed interfaces; preserve the source's notation. Do not silently broaden RDF11 terms or replace its interpretation fields to accommodate RDF12. Transfers require typed translations and checked bridges, including failure conditions for partial translations. Library/target reuse is not automatic source-review reuse.
+
+**VER-08 — Prove the claimed compatibility direction.** A cross-edition or cross-family bridge states whether it preserves/reflects syntax, term identity, truth, entailment, query-result multiplicities, ordering or executable observations. A claim of entailment conservativity must cover both directions over the declared fragment and regimes, with explicit interpretation restriction/extension or equivalent evidence. A syntax embedding or one-way truth theorem is insufficient. Include blank scope, literal identity versus value equality, datatype parameters and any feature restrictions; do not silently add finiteness or omit new semantic conditions.
+
+**VER-09 — Keep review and coverage scoped.** Accepted evidence binds to immutable claim content, contextual/dependency versions, formal environment and baseline bundle. Changes invalidate the affected transitive closure; preserve prior acceptance as history. Carry-forward may be proposed with unchanged-input or proved-transport evidence, but needs a recorded policy decision. Report per-baseline and per-regime coverage, imported obligations, unresolved differences and bridge coverage separately. Sharing a theorem does not merge coverage denominators or close an unreviewed source range in another edition.
+
+**VER-10 — Provide a comparison view.** Let reviewers select two bundles, inspect their annotated sources, aligned claims, explicit English/symbol bindings, actual Lean bodies, changed hypotheses and dependencies, bridge evidence, open questions and review history. Mark changes with text labels as well as colour. Show unmatched ranges and removed claims. Distinguish original, corrected, proposed and adopted text. Search must expose family, edition, publication status, regime/profile and mapping status without requiring knowledge of a declaration name.
+
+**VER-11 — Introduce OWL and SPARQL as explicit tracks.** OWL 2 Direct Semantics and RDF-Based Semantics are distinct targets, connected only by a separately scoped correspondence theorem and syntax mappings; profiles and rule fragments need their own applicability obligations. For SPARQL, distinguish graph-pattern matching, algebra evaluation, solution multisets/sequences, expression errors, query forms, update and protocol surfaces. Preserve RDF graph sethood while retaining SPARQL solution multiplicity. Named entailment regimes connect query evaluation to RDF/RDFS/OWL under their specified restrictions; an arbitrary entailment predicate is not evidence of conformance. Honor the dated RDF dependencies actually cited by OWL/SPARQL before proposing bridges to RDF 1.1 or 1.2.
+
+**VER-12 — Version tests and exercise separation failures.** Bind each test manifest, approval status, expectation, comparator, dataset, query, regime and run to its baseline bundle. A fixture reused across versions needs explicit applicability; changed expectations may be legitimate differences. Reject source-range reuse across hashes, implicit cross-version symbol resolution, proposal evidence counted as baseline coverage, unadopted errata, stale dependency approvals and unproved bridge claims. Include separate tests for RDF set enumeration and SPARQL duplicate multiplicities. No test suite is presumed complete for its specification.
 
 ## 3. Immutable source and coordinate model
 
@@ -278,6 +308,8 @@ Use a portable, schema-validated source format with stable IDs and deterministic
 | Entity | Essential contents |
 |---|---|
 | Corpus/document/asset | Scope, exact bytes, digests, decoding profile, version, license, dependency role |
+| Specification family/edition/baseline | Publisher status, exact assets, adopted correction overlays, regime/profile, dependency versions and coverage scope |
+| Claim lineage/change/bridge | Versioned endpoints, split/merge alignment, change classification, transport maps, precise relation and review/proof evidence |
 | Range/atom/source map | Document identity, scalar endpoints, byte/display relationships, disposition references |
 | Claim/disposition | English statement or classification, category, normativity, assumptions, source roles, review state |
 | Context/referent resolution | Original occurrence and antecedent ranges, bound referent, inherited context, inference links, alternatives and review decision |
@@ -330,6 +362,8 @@ These are independent evidence dimensions, not a single pass badge. In particula
 | G2 — Mapping and dependency review | Both review tracks can be exported and adjudicated separately; unresolved bindings, missing dependencies and changed definitions invalidate the appropriate completion claims; locally accepted mappings with pending dependencies are visible |
 | G3 — Context and model adequacy | Indexicals and inference links have reviewed resolutions; the interpretation-model example exposes one-way results, restrictions and open comparison obligations |
 | G4 — Formal-artifact grounding | Every file and declaration in the declared roots is classified; concrete registry/closure checks detect orphan artifacts, unexplained term dependencies and stale support records |
+| G5 — Edition and correction separation | Two pinned editions, an erratum overlay and an experimental proposal coexist; ranges, review acceptance and coverage cannot leak between bundles; dependency changes invalidate affected evidence |
+| G6 — Cross-family and version bridges | A selected compatibility claim exposes and checks its transport, direction and conditions; OWL semantics and SPARQL multiplicities stay distinct; unsupported connections remain explicit obligations |
 | H — Full declared-scope completion | All in-scope assertions and imports have accepted fidelity review, required formalizations/proofs, and the implementation evidence necessary for the stated Factoidal coverage claim; no unresolved normative obligations are hidden |
 
 Implement in this order:

@@ -4061,6 +4061,45 @@
       "extraction_review": "pending_expert_review",
       "formalization_review": "pending_expert_review",
       "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-LEAN-PROPER-INSTANCE-NONENTAILMENT",
+      "relation": "partial_theorem",
+      "symbol_linked_english": "If G is a LeanGraph with FiniteBlankSupport and H is a ProperInstance of G, G does not SimplyEntail H. FiniteGraph implies FiniteBlankSupport. Without finiteness, lean_proper_nonentailment_iff proves that the entire proper-instance non-entailment property for a lean G is equivalent to not ProperInstance G G.",
+      "bindings": [
+        {
+          "symbol": "Statements.lean_proper_instance_finite_blank_lemma",
+          "lean": "RDF11.Statements.lean_proper_instance_finite_blank_lemma"
+        },
+        {
+          "symbol": "FiniteBlankSupport",
+          "lean": "RDF11.FiniteBlankSupport"
+        },
+        {
+          "symbol": "lean_finite_blanks_not_entails_proper_instance",
+          "lean": "RDF11.lean_finite_blanks_not_entails_proper_instance"
+        },
+        {
+          "symbol": "lean_finite_graph_not_entails_proper_instance",
+          "lean": "RDF11.lean_finite_graph_not_entails_proper_instance"
+        },
+        {
+          "symbol": "lean_proper_nonentailment_iff",
+          "lean": "RDF11.lean_proper_nonentailment_iff"
+        },
+        {
+          "symbol": "InfiniteProperInstance.proper_self_instance",
+          "lean": "RDF11.InfiniteProperInstance.proper_self_instance"
+        },
+        {
+          "symbol": "InfiniteProperInstance.not_lean",
+          "lean": "RDF11.InfiniteProperInstance.not_lean"
+        }
+      ],
+      "limitations": "The source does not impose the finite-blank premise. The proved finite-blank theorem permits generalized syntax and can apply to infinite triple sets; its finite-graph corollary is also checked. The unrestricted source consequence remains open. The constructed infinite ordinary graph is a proper instance of itself but is also proved non-lean; it illustrates the distinction between proper instance and proper subgraph, not a counterexample to the source theorem. Shared ambient blank identities are retained. No RDF/RDFS regime consequence, decision procedure or package refinement is claimed.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
     }
   ],
   "passage_selectors": [
@@ -4314,7 +4353,8 @@
       "tag": "p",
       "text": "A proper instance of a graph",
       "claims": [
-        "MT11-PROPER-INSTANCE"
+        "MT11-PROPER-INSTANCE",
+        "MT11-LEAN-PROPER-INSTANCE-NONENTAILMENT"
       ]
     },
     {
@@ -4333,7 +4373,8 @@
       "text": "An RDF graph is lean if",
       "claims": [
         "MT11-LEAN-GRAPH",
-        "MT11-LEAN-CONSEQUENCES"
+        "MT11-LEAN-CONSEQUENCES",
+        "MT11-LEAN-PROPER-INSTANCE-NONENTAILMENT"
       ]
     },
     {
@@ -5739,6 +5780,36 @@
         "MT11-SKOLEM-CONSEQUENCE-LIFTING"
       ],
       "within_section": "proofs-of-some-results-informative"
+    },
+    {
+      "id": "lean-proper-consequence",
+      "source": "mt",
+      "tag": "p",
+      "text": "If E is a lean graph and E' is a proper instance of E",
+      "claims": [
+        "MT11-LEAN-PROPER-INSTANCE-NONENTAILMENT"
+      ],
+      "within_section": "properties-of-simple-entailment-informative"
+    },
+    {
+      "id": "lean-proper-proof-statement",
+      "source": "mt",
+      "tag": "p",
+      "text": "if E is lean and E' is a proper instance of E",
+      "claims": [
+        "MT11-LEAN-PROPER-INSTANCE-NONENTAILMENT"
+      ],
+      "within_section": "proofs-of-some-results-informative"
+    },
+    {
+      "id": "lean-proper-proof",
+      "source": "mt",
+      "tag": "p",
+      "text": "Suppose E entails E', then a subgraph of E is an instance of E'",
+      "claims": [
+        "MT11-LEAN-PROPER-INSTANCE-NONENTAILMENT"
+      ],
+      "within_section": "proofs-of-some-results-informative"
     }
   ],
   "context_resolutions": [
@@ -5902,6 +5973,24 @@
       "antecedent_passage": "skolem-context",
       "resolved_meaning": "Application of the naming map for blanks occurring in the original G, extended to preserve unrelated conclusion blanks.",
       "inference": "Use separate copies of source and conclusion blanks explicitly; whether the printed equation presumes this standardization apart is an expert-review question.",
+      "review": "pending"
+    },
+    {
+      "claim_id": "MT11-LEAN-PROPER-INSTANCE-NONENTAILMENT",
+      "passage": "lean-proper-consequence",
+      "source_phrase": "lean graph",
+      "antecedent_passage": "lean",
+      "resolved_meaning": "A graph having no instance that is a strict subset of its triples.",
+      "inference": "Leanness uses proper subgraph, not an added prohibition of proper substitutions with unchanged image.",
+      "review": "pending"
+    },
+    {
+      "claim_id": "MT11-LEAN-PROPER-INSTANCE-NONENTAILMENT",
+      "passage": "lean-proper-proof",
+      "source_phrase": "so E is not lean",
+      "antecedent_passage": "lean",
+      "resolved_meaning": "The preceding instance subgraph must be a strict subset to contradict the definition of leanness.",
+      "inference": "The checked finite-blank argument establishes the missing strictness; unrestricted exclusion of proper self-instances remains open.",
       "review": "pending"
     }
   ]

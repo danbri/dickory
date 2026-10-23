@@ -1955,7 +1955,8 @@
       },
       "supporting_source_urls": [
         "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#proofs"
-      ]
+      ],
+      "formalization_note": "The source states the consequence without finiteness. The checked theorem assumes finite occurring blank support, which finite graphs satisfy. Under LeanGraph, the unrestricted consequence is equivalent to absence of a proper self-instance. An infinite ordinary self-instance example is proved non-lean and is not a counterexample to the source theorem. The missing unrestricted self-instance exclusion remains open."
     },
     {
       "id": "MT11-PREMISE-MONOTONICITY",

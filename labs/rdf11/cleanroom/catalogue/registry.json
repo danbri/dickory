@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "status": "frozen_thirteenth_increment_skolem_lifting_not_expert_approved",
+  "status": "frozen_fourteenth_increment_finite_instances_not_expert_approved",
   "lean_version": "4.33.1",
   "allowed_axioms": [
     "propext",
@@ -513,6 +513,17 @@
         "MT11-TRIPLE-TRUTH",
         "MT11-GRAPH-TRUTH"
       ]
+    },
+    {
+      "id": "SUPPORT-FINITE-INSTANCES",
+      "purpose": "Finite occurring blank support, finite injection/surjection, proper substitution composition and the exact self-instance obstruction for lean-graph non-entailment. Includes a derived infinite ordinary proper self-instance explicitly proved non-lean, plus compiler-generated support.",
+      "requires": [
+        "MT11-LEAN-PROPER-INSTANCE-NONENTAILMENT",
+        "MT11-PROPER-INSTANCE",
+        "MT11-LEAN-GRAPH",
+        "SUPPORT-INTERPOLATION",
+        "SUPPORT-INSTANCES"
+      ]
     }
   ],
   "files": [
@@ -539,14 +550,14 @@
     },
     {
       "path": "Audit/Snapshot.lean",
-      "sha256": "05d68584c521d17ab4d9d5f9c6a90acd616b131d4c7b16fbe9e8aae4b013b92f",
+      "sha256": "da148557ff7b596ec4295b92dd959e01f6ee175757b7499a486b8651dccaa365",
       "role": "formal_source",
       "lifecycle": "active",
       "review": "pending_expert_review"
     },
     {
       "path": "RDF11.lean",
-      "sha256": "b286272253c39d1d1a208b3a840b3623d0d685de00aefcf042ef3285b730d245",
+      "sha256": "4284c1cb3a924b4341968a9f17a08ea39690c7365117dad0f7aa93d25aeccac0",
       "role": "formal_source",
       "lifecycle": "active",
       "review": "pending_expert_review"
@@ -710,7 +721,7 @@
       "role": "formal_source",
       "lifecycle": "active",
       "review": "pending_expert_review",
-      "sha256": "3f4398ec1728f48e77ff235d05adf55bd951d314af7c1676fab98893614e861d"
+      "sha256": "6f5bbe61933ef676fac01c4e78b0ef47301039668ee26cb2b66a35f084843df6"
     },
     {
       "path": "RDF11/EntailmentClosure.lean",
@@ -890,6 +901,20 @@
     {
       "path": "RDF11/SkolemLifting.lean",
       "sha256": "a3d423ba15dcc59562fb84a64db56d09e37fe411ae5e68fb9a06a62678ab3db3",
+      "role": "formal_source",
+      "lifecycle": "active",
+      "review": "pending_expert_review"
+    },
+    {
+      "path": "RDF11/FiniteInstances.lean",
+      "sha256": "bb432b2a9e1bd8604367fd6561bb9b70fe8644de795e1070f501758350b68c7c",
+      "role": "formal_source",
+      "lifecycle": "active",
+      "review": "pending_expert_review"
+    },
+    {
+      "path": "RDF11/InstanceExamples.lean",
+      "sha256": "c568811be9583f68f789b567418318fd97c58819efa507cd00c74cd044bb7bfb",
       "role": "formal_source",
       "lifecycle": "active",
       "review": "pending_expert_review"
@@ -4813,7 +4838,7 @@
     },
     {
       "name": "RDF11.Term.hasBlank.eq_1",
-      "module": "RDF11.Skolemization",
+      "module": "RDF11.FiniteInstances",
       "kind": "theorem",
       "type": "∀ {Blank Iri Literal : Type} (b c : Blank), RDF11.Term.hasBlank b (RDF11.Term.blank c) = (c = b)",
       "role": "proof_support",
@@ -4825,7 +4850,7 @@
     },
     {
       "name": "RDF11.Term.hasBlank.eq_2",
-      "module": "RDF11.Skolemization",
+      "module": "RDF11.FiniteInstances",
       "kind": "theorem",
       "type": "∀ {Blank Iri Literal : Type} (b : Blank) (a : Iri), RDF11.Term.hasBlank b (RDF11.Term.iri a) = False",
       "role": "proof_support",
@@ -4837,7 +4862,7 @@
     },
     {
       "name": "RDF11.Term.hasBlank.eq_3",
-      "module": "RDF11.Skolemization",
+      "module": "RDF11.FiniteInstances",
       "kind": "theorem",
       "type": "∀ {Blank Iri Literal : Type} (b : Blank) (a : Literal), RDF11.Term.hasBlank b (RDF11.Term.literal a) = False",
       "role": "proof_support",
@@ -15342,7 +15367,7 @@
     },
     {
       "name": "RDF11.GeneralizedTriple.hasBlank.eq_1",
-      "module": "RDF11.Datasets",
+      "module": "RDF11.FiniteInstances",
       "kind": "theorem",
       "type": "∀ {Blank Iri Literal : Type} (b : Blank) (t : RDF11.GeneralizedTriple Iri Literal Blank),\n  RDF11.GeneralizedTriple.hasBlank b t =\n    (RDF11.Term.hasBlank b t.subject ∨ RDF11.Term.hasBlank b t.predicate ∨ RDF11.Term.hasBlank b t.object)",
       "role": "proof_support",
@@ -20545,6 +20570,505 @@
         "SUPPORT-SKOLEM-LIFTING"
       ],
       "parent_declaration_if_applicable": "RDF11.Subject.toTerm.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Enumeration.injective_surjective",
+      "module": "RDF11.FiniteInstances",
+      "kind": "theorem",
+      "type": "∀ {α : Type u} {S : RDF11.Set α} (e : RDF11.Enumeration S) (f : α → α),\n  (∀ (a : α), S a → S (f a)) →\n    (∀ (a : α), S a → ∀ (b : α), S b → f a = f b → a = b) → ∀ (b : α), S b → ∃ a, S a ∧ f a = b",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Enumeration",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.FiniteBlankSupport",
+      "module": "RDF11.FiniteInstances",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} → RDF11.GeneralizedGraph Iri Literal B → Prop",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCES",
+        "MT11-LEAN-PROPER-INSTANCE-NONENTAILMENT"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GeneralizedGraph.substitute_blank_origin",
+      "module": "RDF11.FiniteInstances",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (G : RDF11.GeneralizedGraph Iri Literal B) (μ : RDF11.Substitution Iri Literal B) (b : B),\n  (RDF11.GeneralizedGraph.substitute μ G).hasBlank b → ∃ a, G.hasBlank a ∧ μ.resolve a = RDF11.Term.blank b",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.GeneralizedGraph",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GeneralizedTriple.blankList",
+      "module": "RDF11.FiniteInstances",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} → RDF11.GeneralizedTriple Iri Literal B → List B",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.GeneralizedTriple",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GeneralizedTriple.blankList._sparseCasesOn_1",
+      "module": "RDF11.FiniteInstances",
+      "kind": "definition",
+      "type": "{Iri Literal Blank : Type} →\n  {motive : RDF11.Term Iri Literal Blank → Sort u} →\n    (t : RDF11.Term Iri Literal Blank) →\n      ((a : Blank) → motive (RDF11.Term.blank a)) → (Nat.hasNotBit 4 t.ctorIdx → motive t) → motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.GeneralizedTriple.blankList",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GeneralizedTriple.blankList._sparseCasesOn_1.else_eq",
+      "module": "RDF11.FiniteInstances",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Blank : Type} {motive : RDF11.Term Iri Literal Blank → Sort u} (t : RDF11.Term Iri Literal Blank)\n  (blank : (a : Blank) → motive (RDF11.Term.blank a)) («else» : Nat.hasNotBit 4 t.ctorIdx → motive t)\n  (h : Nat.hasNotBit 4 t.ctorIdx), RDF11.GeneralizedTriple.blankList._sparseCasesOn_1 t blank «else» = «else» h",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.GeneralizedTriple.blankList._sparseCasesOn_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GeneralizedTriple.blankList.eq_1",
+      "module": "RDF11.FiniteInstances",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (t : RDF11.GeneralizedTriple Iri Literal B),\n  t.blankList =\n    List.filterMap\n      (fun x =>\n        match x with\n        | RDF11.Term.blank b => some b\n        | x => none)\n      [t.subject, t.predicate, t.object]",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.GeneralizedTriple.blankList",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GeneralizedTriple.blankList.match_1",
+      "module": "RDF11.FiniteInstances",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  (motive : RDF11.Term Iri Literal B → Sort u_1) →\n    (x : RDF11.Term Iri Literal B) →\n      ((b : B) → motive (RDF11.Term.blank b)) → ((x : RDF11.Term Iri Literal B) → motive x) → motive x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.GeneralizedTriple.blankList",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GeneralizedTriple.mem_blankList",
+      "module": "RDF11.FiniteInstances",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (t : RDF11.GeneralizedTriple Iri Literal B) (b : B),\n  b ∈ t.blankList ↔ RDF11.GeneralizedTriple.hasBlank b t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.GeneralizedTriple",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GeneralizedTriple.mem_blankList._simp_1_7",
+      "module": "RDF11.FiniteInstances",
+      "kind": "theorem",
+      "type": "∀ {α : Sort u_1} {a b : α}, (a = b) = (b = a)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.GeneralizedTriple.mem_blankList",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.InfiniteProperInstance.fold",
+      "module": "RDF11.InstanceExamples",
+      "kind": "definition",
+      "type": "{Iri Literal : Type} → RDF11.Substitution Iri Literal Nat",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.InfiniteProperInstance.fold_image",
+      "module": "RDF11.InstanceExamples",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} (p o : Iri),\n  RDF11.GeneralizedGraph.substitute RDF11.InfiniteProperInstance.fold\n      (RDF11.InfiniteProperInstance.graph p o).generalize =\n    (RDF11.InfiniteProperInstance.graph p o).generalize",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.InfiniteProperInstance.fold_image._proof_1_1",
+      "module": "RDF11.InstanceExamples",
+      "kind": "theorem",
+      "type": "∀ (n : Nat), ¬2 * n / 2 = n → False",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.InfiniteProperInstance.fold_image",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.InfiniteProperInstance.fold_proper",
+      "module": "RDF11.InstanceExamples",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} (p o : Iri),\n  RDF11.ProperSubstitution (RDF11.InfiniteProperInstance.graph p o).generalize RDF11.InfiniteProperInstance.fold",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.InfiniteProperInstance.fold_triple",
+      "module": "RDF11.InstanceExamples",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} (p o : Iri) (n : Nat),\n  RDF11.GeneralizedTriple.substitute RDF11.InfiniteProperInstance.fold\n      (RDF11.InfiniteProperInstance.triple p o n).generalize =\n    (RDF11.InfiniteProperInstance.triple p o (n / 2)).generalize",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.InfiniteProperInstance.graph",
+      "module": "RDF11.InstanceExamples",
+      "kind": "definition",
+      "type": "{Iri Literal : Type} → Iri → Iri → RDF11.Graph Iri Literal Nat",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.InfiniteProperInstance.hasBlank",
+      "module": "RDF11.InstanceExamples",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} (p o : Iri) (n : Nat), (RDF11.InfiniteProperInstance.graph p o).generalize.hasBlank n",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.InfiniteProperInstance.infinite_blank_support",
+      "module": "RDF11.InstanceExamples",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} (p o : Iri), ¬RDF11.FiniteBlankSupport (RDF11.InfiniteProperInstance.graph p o).generalize",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.InfiniteProperInstance.infinite_graph",
+      "module": "RDF11.InstanceExamples",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} (p o : Iri), ¬RDF11.FiniteGraph (RDF11.InfiniteProperInstance.graph p o).generalize",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.InfiniteProperInstance.not_lean",
+      "module": "RDF11.InstanceExamples",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} (p o : Iri), ¬RDF11.LeanGraph (RDF11.InfiniteProperInstance.graph p o).generalize",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCES",
+        "MT11-LEAN-PROPER-INSTANCE-NONENTAILMENT"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.InfiniteProperInstance.proper_self_instance",
+      "module": "RDF11.InstanceExamples",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} (p o : Iri),\n  RDF11.ProperInstance (RDF11.InfiniteProperInstance.graph p o).generalize\n    (RDF11.InfiniteProperInstance.graph p o).generalize",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCES",
+        "MT11-LEAN-PROPER-INSTANCE-NONENTAILMENT"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.InfiniteProperInstance.triple",
+      "module": "RDF11.InstanceExamples",
+      "kind": "definition",
+      "type": "{Iri Literal : Type} → Iri → Iri → Nat → RDF11.Triple Iri Literal Nat",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ProperSubstitution.then",
+      "module": "RDF11.FiniteInstances",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {G : RDF11.GeneralizedGraph Iri Literal B} {μ : RDF11.Substitution Iri Literal B},\n  RDF11.ProperSubstitution G μ → ∀ (ν : RDF11.Substitution Iri Literal B), RDF11.ProperSubstitution G (μ.then ν)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ProperSubstitution",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Statements.lean_proper_instance_finite_blank_lemma",
+      "module": "RDF11.Statements",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (G H : RDF11.GeneralizedGraph Iri Literal B),\n  RDF11.LeanGraph G → RDF11.FiniteBlankSupport G → RDF11.ProperInstance H G → ¬RDF11.SimplyEntails G H",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCES",
+        "MT11-LEAN-PROPER-INSTANCE-NONENTAILMENT"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Term.substitute_blank_origin",
+      "module": "RDF11.FiniteInstances",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (q : RDF11.Term Iri Literal B) (μ : RDF11.Substitution Iri Literal B) (b : B),\n  RDF11.Term.hasBlank b (RDF11.Term.substitute μ q) → ∃ a, RDF11.Term.hasBlank a q ∧ μ.resolve a = RDF11.Term.blank b",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Term",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.finite_blank_no_proper_self_instance",
+      "module": "RDF11.FiniteInstances",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (G : RDF11.GeneralizedGraph Iri Literal B),\n  RDF11.FiniteBlankSupport G → ¬RDF11.ProperInstance G G",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.finite_blank_self_substitution_not_proper",
+      "module": "RDF11.FiniteInstances",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (G : RDF11.GeneralizedGraph Iri Literal B),\n  RDF11.FiniteBlankSupport G →\n    ∀ (μ : RDF11.Substitution Iri Literal B), RDF11.GeneralizedGraph.substitute μ G = G → ¬RDF11.ProperSubstitution G μ",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.finite_blank_support_of_finite_graph",
+      "module": "RDF11.FiniteInstances",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (G : RDF11.GeneralizedGraph Iri Literal B), RDF11.FiniteGraph G → RDF11.FiniteBlankSupport G",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.finite_blank_support_of_finite_graph._simp_1_1",
+      "module": "RDF11.FiniteInstances",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_1} {β : Type u_2} {f : α → List β} {b : β} {l : List α}, (b ∈ List.flatMap f l) = ∃ a, a ∈ l ∧ b ∈ f a",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.finite_blank_support_of_finite_graph",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.finite_blank_support_of_finite_graph._simp_1_2",
+      "module": "RDF11.FiniteInstances",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (t : RDF11.GeneralizedTriple Iri Literal B) (b : B),\n  (b ∈ t.blankList) = RDF11.GeneralizedTriple.hasBlank b t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.finite_blank_support_of_finite_graph",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.lean_entails_proper_gives_self_instance",
+      "module": "RDF11.FiniteInstances",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {G H : RDF11.GeneralizedGraph Iri Literal B},\n  RDF11.LeanGraph G → RDF11.ProperInstance H G → RDF11.SimplyEntails G H → RDF11.ProperInstance G G",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.lean_finite_blanks_not_entails_proper_instance",
+      "module": "RDF11.FiniteInstances",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (G H : RDF11.GeneralizedGraph Iri Literal B),\n  RDF11.LeanGraph G → RDF11.FiniteBlankSupport G → RDF11.ProperInstance H G → ¬RDF11.SimplyEntails G H",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCES",
+        "MT11-LEAN-PROPER-INSTANCE-NONENTAILMENT"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.lean_finite_graph_not_entails_proper_instance",
+      "module": "RDF11.FiniteInstances",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (G H : RDF11.GeneralizedGraph Iri Literal B),\n  RDF11.LeanGraph G → RDF11.FiniteGraph G → RDF11.ProperInstance H G → ¬RDF11.SimplyEntails G H",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCES",
+        "MT11-LEAN-PROPER-INSTANCE-NONENTAILMENT"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.lean_proper_nonentailment_iff",
+      "module": "RDF11.FiniteInstances",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (G : RDF11.GeneralizedGraph Iri Literal B),\n  RDF11.LeanGraph G →\n    ((∀ (H : RDF11.GeneralizedGraph Iri Literal B), RDF11.ProperInstance H G → ¬RDF11.SimplyEntails G H) ↔\n      ¬RDF11.ProperInstance G G)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCES",
+        "MT11-LEAN-PROPER-INSTANCE-NONENTAILMENT"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.FiniteInstances.0.RDF11.GeneralizedTriple.blankList.match_1.eq_1",
+      "module": "RDF11.FiniteInstances",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (motive : RDF11.Term Iri Literal B → Sort u_1) (b : B)\n  (h_1 : (b : B) → motive (RDF11.Term.blank b)) (h_2 : (x : RDF11.Term Iri Literal B) → motive x),\n  (match RDF11.Term.blank b with\n    | RDF11.Term.blank b => h_1 b\n    | x => h_2 x) =\n    h_1 b",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.GeneralizedTriple.blankList.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.FiniteInstances.0.RDF11.GeneralizedTriple.blankList.match_1.eq_2",
+      "module": "RDF11.FiniteInstances",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (motive : RDF11.Term Iri Literal B → Sort u_1) (x : RDF11.Term Iri Literal B)\n  (h_1 : (b : B) → motive (RDF11.Term.blank b)) (h_2 : (x : RDF11.Term Iri Literal B) → motive x),\n  (∀ (b : B), x = RDF11.Term.blank b → False) →\n    (match x with\n      | RDF11.Term.blank b => h_1 b\n      | x => h_2 x) =\n      h_2 x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.GeneralizedTriple.blankList.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.FiniteInstances.0.RDF11.GeneralizedTriple.blankList.match_1.splitter",
+      "module": "RDF11.FiniteInstances",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  (motive : RDF11.Term Iri Literal B → Sort u_1) →\n    (x : RDF11.Term Iri Literal B) →\n      ((b : B) → motive (RDF11.Term.blank b)) →\n        ((x : RDF11.Term Iri Literal B) → (∀ (b : B), x = RDF11.Term.blank b → False) → motive x) → motive x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.GeneralizedTriple.blankList.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.FiniteInstances.0.RDF11.Term.hasBlank.match_1.eq_1",
+      "module": "RDF11.FiniteInstances",
+      "kind": "theorem",
+      "type": "∀ {Blank Iri Literal : Type} (motive : RDF11.Term Iri Literal Blank → Sort u_1) (c : Blank)\n  (h_1 : (c : Blank) → motive (RDF11.Term.blank c)) (h_2 : (a : Iri) → motive (RDF11.Term.iri a))\n  (h_3 : (a : Literal) → motive (RDF11.Term.literal a)),\n  (match RDF11.Term.blank c with\n    | RDF11.Term.blank c => h_1 c\n    | RDF11.Term.iri a => h_2 a\n    | RDF11.Term.literal a => h_3 a) =\n    h_1 c",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Term.hasBlank.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.FiniteInstances.0.RDF11.Term.hasBlank.match_1.eq_2",
+      "module": "RDF11.FiniteInstances",
+      "kind": "theorem",
+      "type": "∀ {Blank Iri Literal : Type} (motive : RDF11.Term Iri Literal Blank → Sort u_1) (a : Iri)\n  (h_1 : (c : Blank) → motive (RDF11.Term.blank c)) (h_2 : (a : Iri) → motive (RDF11.Term.iri a))\n  (h_3 : (a : Literal) → motive (RDF11.Term.literal a)),\n  (match RDF11.Term.iri a with\n    | RDF11.Term.blank c => h_1 c\n    | RDF11.Term.iri a => h_2 a\n    | RDF11.Term.literal a => h_3 a) =\n    h_2 a",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Term.hasBlank.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.FiniteInstances.0.RDF11.Term.hasBlank.match_1.eq_3",
+      "module": "RDF11.FiniteInstances",
+      "kind": "theorem",
+      "type": "∀ {Blank Iri Literal : Type} (motive : RDF11.Term Iri Literal Blank → Sort u_1) (a : Literal)\n  (h_1 : (c : Blank) → motive (RDF11.Term.blank c)) (h_2 : (a : Iri) → motive (RDF11.Term.iri a))\n  (h_3 : (a : Literal) → motive (RDF11.Term.literal a)),\n  (match RDF11.Term.literal a with\n    | RDF11.Term.blank c => h_1 c\n    | RDF11.Term.iri a => h_2 a\n    | RDF11.Term.literal a => h_3 a) =\n    h_3 a",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Term.hasBlank.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.FiniteInstances.0.RDF11.Term.hasBlank.match_1.splitter",
+      "module": "RDF11.FiniteInstances",
+      "kind": "definition",
+      "type": "{Blank Iri Literal : Type} →\n  (motive : RDF11.Term Iri Literal Blank → Sort u_1) →\n    (x : RDF11.Term Iri Literal Blank) →\n      ((c : Blank) → motive (RDF11.Term.blank c)) →\n        ((a : Iri) → motive (RDF11.Term.iri a)) → ((a : Literal) → motive (RDF11.Term.literal a)) → motive x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Term.hasBlank.match_1",
       "review": "pending_expert_review"
     }
   ],

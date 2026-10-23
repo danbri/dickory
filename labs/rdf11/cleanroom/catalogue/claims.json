@@ -3,8 +3,8 @@
   "status": "draft_not_complete_coverage",
   "method": "Human-readable AI close reading; selectors locate already selected passages and do not extract assertions.",
   "source_inventory": "../ledger/semantics-inventory.json",
-  "inventory_sha256": "098773127af24e2f57a00556161daed9943725171ce27f0dcb0b70687fbec046",
-  "mapping_input_sha256": "212c2c69e4ba956de94a70e40398b849aa4265bd81ac38054532fe4ba5574925",
+  "inventory_sha256": "09009bc26f61c037c6ad45847137293800773253d5621e7398290624717568da",
+  "mapping_input_sha256": "b1fc0e42d4f1f812e02976b8d67cf17c083b36a70bebff3d766bfe59cd14878d",
   "documents": [
     {
       "id": "mt",
@@ -162,6 +162,7 @@
           "start": 30104,
           "end": 30423,
           "refs": [
+            "MT11-LEAN-PROPER-INSTANCE-NONENTAILMENT",
             "MT11-PROPER-INSTANCE"
           ],
           "disposition": "claim_passage_pending_review"
@@ -195,7 +196,8 @@
           "end": 31052,
           "refs": [
             "MT11-LEAN-CONSEQUENCES",
-            "MT11-LEAN-GRAPH"
+            "MT11-LEAN-GRAPH",
+            "MT11-LEAN-PROPER-INSTANCE-NONENTAILMENT"
           ],
           "disposition": "claim_passage_pending_review"
         },
@@ -577,6 +579,29 @@
         },
         {
           "start": 51785,
+          "end": 52468,
+          "refs": [
+            "MT11-EMPTY-ENTAILMENTS",
+            "MT11-INSTANCE-ENTAILMENT",
+            "MT11-PREMISE-MONOTONICITY",
+            "MT11-SUBGRAPH-ENTAILMENT"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 52468,
+          "end": 52681,
+          "refs": [
+            "MT11-EMPTY-ENTAILMENTS",
+            "MT11-INSTANCE-ENTAILMENT",
+            "MT11-LEAN-PROPER-INSTANCE-NONENTAILMENT",
+            "MT11-PREMISE-MONOTONICITY",
+            "MT11-SUBGRAPH-ENTAILMENT"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 52681,
           "end": 52852,
           "refs": [
             "MT11-EMPTY-ENTAILMENTS",
@@ -2067,6 +2092,38 @@
         },
         {
           "start": 111381,
+          "end": 112617,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 112617,
+          "end": 112717,
+          "refs": [
+            "MT11-LEAN-PROPER-INSTANCE-NONENTAILMENT"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 112717,
+          "end": 112718,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 112718,
+          "end": 112891,
+          "refs": [
+            "MT11-LEAN-PROPER-INSTANCE-NONENTAILMENT"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 112891,
           "end": 113130,
           "refs": [
             "UNRESOLVED-mt"
@@ -3124,7 +3181,8 @@
       "start": 30104,
       "end": 30423,
       "claims": [
-        "MT11-PROPER-INSTANCE"
+        "MT11-PROPER-INSTANCE",
+        "MT11-LEAN-PROPER-INSTANCE-NONENTAILMENT"
       ],
       "slice_sha256": "055cd9381df233a5ad562c0332b2d560243693c1d540610a251f1df7bbdcae1c",
       "locator_tag": "p",
@@ -3153,7 +3211,8 @@
       "end": 31052,
       "claims": [
         "MT11-LEAN-GRAPH",
-        "MT11-LEAN-CONSEQUENCES"
+        "MT11-LEAN-CONSEQUENCES",
+        "MT11-LEAN-PROPER-INSTANCE-NONENTAILMENT"
       ],
       "slice_sha256": "2d3c032c982ca678b6a7b94ffb3ce371f53954f9d0e41c1230165f93a176d304",
       "locator_tag": "p",
@@ -5086,6 +5145,48 @@
         "MT11-SKOLEM-CONSEQUENCE-LIFTING"
       ],
       "slice_sha256": "064942fce37fe400cb6d5a0fb4d9a8fc7156e4439c192fc5bee75a0fe0877617",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "lean-proper-consequence",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 52468,
+      "end": 52681,
+      "claims": [
+        "MT11-LEAN-PROPER-INSTANCE-NONENTAILMENT"
+      ],
+      "slice_sha256": "249b8a5eb34bf58093a8c8b8d3a532b780f3417509b6363dbd34a2055d9014b3",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "lean-proper-proof-statement",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 112617,
+      "end": 112717,
+      "claims": [
+        "MT11-LEAN-PROPER-INSTANCE-NONENTAILMENT"
+      ],
+      "slice_sha256": "6fd04c10f7311901cb976801a16e9725b4335c89f9ebd1d4cd331f395619d9fb",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "lean-proper-proof",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 112718,
+      "end": 112891,
+      "claims": [
+        "MT11-LEAN-PROPER-INSTANCE-NONENTAILMENT"
+      ],
+      "slice_sha256": "37163ddc1554105314c9dfeb8263380aae69e8179dd9dae1fc7c62a93b4ffacb",
       "locator_tag": "p",
       "review": "pending",
       "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
@@ -7732,10 +7833,55 @@
       "supporting_source_urls": [
         "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#proofs"
       ],
-      "cleanroom_mapping": null,
-      "passages": [],
+      "formalization_note": "The source states the consequence without finiteness. The checked theorem assumes finite occurring blank support, which finite graphs satisfy. Under LeanGraph, the unrestricted consequence is equivalent to absence of a proper self-instance. An infinite ordinary self-instance example is proved non-lean and is not a counterexample to the source theorem. The missing unrestricted self-instance exclusion remains open.",
+      "cleanroom_mapping": {
+        "claim_id": "MT11-LEAN-PROPER-INSTANCE-NONENTAILMENT",
+        "relation": "partial_theorem",
+        "symbol_linked_english": "If G is a LeanGraph with FiniteBlankSupport and H is a ProperInstance of G, G does not SimplyEntail H. FiniteGraph implies FiniteBlankSupport. Without finiteness, lean_proper_nonentailment_iff proves that the entire proper-instance non-entailment property for a lean G is equivalent to not ProperInstance G G.",
+        "bindings": [
+          {
+            "symbol": "Statements.lean_proper_instance_finite_blank_lemma",
+            "lean": "RDF11.Statements.lean_proper_instance_finite_blank_lemma"
+          },
+          {
+            "symbol": "FiniteBlankSupport",
+            "lean": "RDF11.FiniteBlankSupport"
+          },
+          {
+            "symbol": "lean_finite_blanks_not_entails_proper_instance",
+            "lean": "RDF11.lean_finite_blanks_not_entails_proper_instance"
+          },
+          {
+            "symbol": "lean_finite_graph_not_entails_proper_instance",
+            "lean": "RDF11.lean_finite_graph_not_entails_proper_instance"
+          },
+          {
+            "symbol": "lean_proper_nonentailment_iff",
+            "lean": "RDF11.lean_proper_nonentailment_iff"
+          },
+          {
+            "symbol": "InfiniteProperInstance.proper_self_instance",
+            "lean": "RDF11.InfiniteProperInstance.proper_self_instance"
+          },
+          {
+            "symbol": "InfiniteProperInstance.not_lean",
+            "lean": "RDF11.InfiniteProperInstance.not_lean"
+          }
+        ],
+        "limitations": "The source does not impose the finite-blank premise. The proved finite-blank theorem permits generalized syntax and can apply to infinite triple sets; its finite-graph corollary is also checked. The unrestricted source consequence remains open. The constructed infinite ordinary graph is a proper instance of itself but is also proved non-lean; it illustrates the distinction between proper instance and proper subgraph, not a counterexample to the source theorem. Shared ambient blank identities are retained. No RDF/RDFS regime consequence, decision procedure or package refinement is claimed.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "proper-instance",
+        "lean",
+        "lean-proper-consequence",
+        "lean-proper-proof-statement",
+        "lean-proper-proof"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-PREMISE-MONOTONICITY",
@@ -15291,6 +15437,24 @@
       "antecedent_passage": "skolem-context",
       "resolved_meaning": "Application of the naming map for blanks occurring in the original G, extended to preserve unrelated conclusion blanks.",
       "inference": "Use separate copies of source and conclusion blanks explicitly; whether the printed equation presumes this standardization apart is an expert-review question.",
+      "review": "pending"
+    },
+    {
+      "claim_id": "MT11-LEAN-PROPER-INSTANCE-NONENTAILMENT",
+      "passage": "lean-proper-consequence",
+      "source_phrase": "lean graph",
+      "antecedent_passage": "lean",
+      "resolved_meaning": "A graph having no instance that is a strict subset of its triples.",
+      "inference": "Leanness uses proper subgraph, not an added prohibition of proper substitutions with unchanged image.",
+      "review": "pending"
+    },
+    {
+      "claim_id": "MT11-LEAN-PROPER-INSTANCE-NONENTAILMENT",
+      "passage": "lean-proper-proof",
+      "source_phrase": "so E is not lean",
+      "antecedent_passage": "lean",
+      "resolved_meaning": "The preceding instance subgraph must be a strict subset to contradict the definition of leanness.",
+      "inference": "The checked finite-blank argument establishes the missing strictness; unrestricted exclusion of proper self-instances remains open.",
       "review": "pending"
     }
   ],

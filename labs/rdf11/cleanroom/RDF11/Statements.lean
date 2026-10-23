@@ -1,4 +1,4 @@
-import RDF11.FiniteEntailment
+import RDF11.FiniteInstances
 import RDF11.SkolemLifting
 
 /-!
@@ -37,6 +37,12 @@ theorem subgraph_lemma {G E : GeneralizedGraph Iri Literal B} (h : Set.subset E 
 §5.3 https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#simple_entailment_properties
 Both graphs here are ordinary; unrestricted generalized scope remains under review. -/
 theorem instance_lemma {G H : Graph Iri Literal B} (h : IsInstance H.generalize G.generalize) : SimplyEntails.{u} H.generalize G.generalize := RDF11.ordinary_instance_entails h
+
+/-- Lean/proper-instance consequence, proved for finite occurring blank support.
+§5.3 https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#simple_entailment_properties
+The source states this without finiteness; its unrestricted scope remains open.
+This proof permits generalized syntax and does not require finitely many triples. -/
+theorem lean_proper_instance_finite_blank_lemma (G H : GeneralizedGraph Iri Literal B) (hl : LeanGraph G) (hf : FiniteBlankSupport G) (hp : ProperInstance H G) : ¬ SimplyEntails.{u} G H := RDF11.lean_finite_blanks_not_entails_proper_instance G H hl hf hp
 
 /-- Merging lemma, binary model form: an interpretation satisfies the merge
 exactly when it satisfies both inputs separately. Blank domains are disjoint.
