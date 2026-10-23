@@ -31,3 +31,5 @@ import RDF11.DatasetPolicies
 import RDF11.DatasetPolicyExamples
 import RDF11.DatasetNameDenotation
 import RDF11.DatasetNamedComparison
+import RDF11.RDFModels
+import RDF11.RDFSModelConstraints

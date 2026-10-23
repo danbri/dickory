@@ -3,8 +3,8 @@
   "status": "draft_not_complete_coverage",
   "method": "Human-readable AI close reading; selectors locate already selected passages and do not extract assertions.",
   "source_inventory": "../ledger/semantics-inventory.json",
-  "inventory_sha256": "379ceec2364db578d1e7cd8f2acb838442c2fb185e986f63158bd417a3124b17",
-  "mapping_input_sha256": "48688326863fa17f70232ecd33a0fc4708d63958878c8c5343d3856aa4918f58",
+  "inventory_sha256": "c33972c99175ddcdaf5579d2290833dfc8ee7db44b754d27efd4e88df6c49977",
+  "mapping_input_sha256": "d05529512a58423088bd36905e1d7c375f03315a056401efe6637f6739e7211b",
   "documents": [
     {
       "id": "mt",
@@ -741,7 +741,9 @@
           "start": 57972,
           "end": 58558,
           "refs": [
-            "MT11-DATATYPE-IDENTIFICATION-FIXED"
+            "MT11-DATATYPE-ALIAS-COHERENCE",
+            "MT11-DATATYPE-IDENTIFICATION-FIXED",
+            "MT11-LANGSTRING-DENOTATION"
           ],
           "disposition": "claim_passage_pending_review"
         },
@@ -791,6 +793,8 @@
           "start": 62022,
           "end": 62555,
           "refs": [
+            "MT11-DATATYPE-ALIAS-COHERENCE",
+            "MT11-LANGSTRING-DENOTATION",
             "MT11-LANGSTRING-EXCEPTION"
           ],
           "disposition": "claim_passage_pending_review"
@@ -807,7 +811,8 @@
           "start": 63902,
           "end": 64216,
           "refs": [
-            "MT11-D-INTERPRETATION"
+            "MT11-D-INTERPRETATION",
+            "MT11-RDF-MODEL-EXISTENCE-CONSTRUCTION"
           ],
           "disposition": "claim_passage_pending_review"
         },
@@ -823,7 +828,9 @@
           "start": 64305,
           "end": 64551,
           "refs": [
-            "MT11-LANGSTRING-VALUE"
+            "MT11-LANGSTRING-DENOTATION",
+            "MT11-LANGSTRING-VALUE",
+            "MT11-RDFS-LANGUAGE-LITERAL-COVERAGE"
           ],
           "disposition": "claim_passage_pending_review"
         },
@@ -970,7 +977,8 @@
           "start": 71594,
           "end": 71867,
           "refs": [
-            "MT11-RDF-INTERPRETATION"
+            "MT11-RDF-INTERPRETATION",
+            "MT11-RDF-MODEL-EXISTENCE-CONSTRUCTION"
           ],
           "disposition": "claim_passage_pending_review"
         },
@@ -987,6 +995,7 @@
           "end": 72104,
           "refs": [
             "MT11-INSTANCE-ENTAILMENT",
+            "MT11-RDF-MODEL-EXISTENCE-CONSTRUCTION",
             "MT11-RDF-PROPERTY-TYPING"
           ],
           "disposition": "claim_passage_pending_review"
@@ -1003,7 +1012,10 @@
           "start": 72119,
           "end": 72296,
           "refs": [
-            "MT11-RDF-DATATYPE-EXTENSION"
+            "MT11-RDF-DATATYPE-EXTENSION",
+            "MT11-RDF-DATATYPE-PARAMETER-INCOMPATIBILITY",
+            "MT11-RDF-MODEL-EXISTENCE-CONSTRUCTION",
+            "MT11-RDFS-LANGUAGE-LITERAL-COVERAGE"
           ],
           "disposition": "claim_passage_pending_review"
         },
@@ -1021,12 +1033,30 @@
           "refs": [
             "MT11-RDF-AXIOM-CONTAINER-PROPERTIES",
             "MT11-RDF-AXIOM-NIL",
-            "MT11-RDF-AXIOM-PROPERTIES"
+            "MT11-RDF-AXIOM-PROPERTIES",
+            "MT11-RDF-DATATYPE-PARAMETER-INCOMPATIBILITY",
+            "MT11-RDF-MODEL-EXISTENCE-CONSTRUCTION"
           ],
           "disposition": "claim_passage_pending_review"
         },
         {
           "start": 73015,
+          "end": 73046,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 73046,
+          "end": 73223,
+          "refs": [
+            "MT11-RDF-VOCABULARY-LIMITS"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 73223,
           "end": 73580,
           "refs": [
             "UNRESOLVED-mt"
@@ -1053,6 +1083,7 @@
           "start": 74232,
           "end": 74804,
           "refs": [
+            "MT11-RDF-DATATYPE-PARAMETER-INCOMPATIBILITY",
             "MT11-RDF-ENTAILMENT"
           ],
           "disposition": "claim_passage_pending_review"
@@ -1237,7 +1268,8 @@
           "start": 81038,
           "end": 81130,
           "refs": [
-            "MT11-RDFS-LANGSTRING-EXTENSION"
+            "MT11-RDFS-LANGSTRING-EXTENSION",
+            "MT11-RDFS-LANGUAGE-LITERAL-COVERAGE"
           ],
           "disposition": "claim_passage_pending_review"
         },
@@ -2087,6 +2119,40 @@
         },
         {
           "start": 71571,
+          "end": 73977,
+          "refs": [
+            "UNRESOLVED-concepts"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 73977,
+          "end": 74367,
+          "refs": [
+            "MT11-DATATYPE-ALIAS-COHERENCE"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 74367,
+          "end": 95775,
+          "refs": [
+            "UNRESOLVED-concepts"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 95775,
+          "end": 96594,
+          "refs": [
+            "MT11-DATATYPE-ALIAS-COHERENCE",
+            "MT11-DATATYPE-IDENTIFICATION-FIXED",
+            "MT11-LANGSTRING-DENOTATION"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 96594,
           "end": 120796,
           "refs": [
             "UNRESOLVED-concepts"
@@ -2697,7 +2763,8 @@
       "end": 72104,
       "claims": [
         "MT11-RDF-PROPERTY-TYPING",
-        "MT11-INSTANCE-ENTAILMENT"
+        "MT11-INSTANCE-ENTAILMENT",
+        "MT11-RDF-MODEL-EXISTENCE-CONSTRUCTION"
       ],
       "slice_sha256": "8b4f67adb7488088dae6c2b6bbbca9819b428189ee2ba6d2b17a223a16b1ce2a",
       "locator_tag": "td",
@@ -2739,7 +2806,9 @@
       "start": 57972,
       "end": 58558,
       "claims": [
-        "MT11-DATATYPE-IDENTIFICATION-FIXED"
+        "MT11-DATATYPE-IDENTIFICATION-FIXED",
+        "MT11-LANGSTRING-DENOTATION",
+        "MT11-DATATYPE-ALIAS-COHERENCE"
       ],
       "slice_sha256": "91e0cd12703c1b3eff0a0f7100385db1f7f6db33301d53dd0441f1d23943222f",
       "locator_tag": "p",
@@ -2783,7 +2852,9 @@
       "start": 62022,
       "end": 62555,
       "claims": [
-        "MT11-LANGSTRING-EXCEPTION"
+        "MT11-LANGSTRING-EXCEPTION",
+        "MT11-LANGSTRING-DENOTATION",
+        "MT11-DATATYPE-ALIAS-COHERENCE"
       ],
       "slice_sha256": "631414efb86b47468379b36012fa53e40d6b45269dba217cdda164eae80b1bff",
       "locator_tag": "p",
@@ -2812,7 +2883,8 @@
       "start": 63902,
       "end": 64216,
       "claims": [
-        "MT11-D-INTERPRETATION"
+        "MT11-D-INTERPRETATION",
+        "MT11-RDF-MODEL-EXISTENCE-CONSTRUCTION"
       ],
       "slice_sha256": "006ec580af75f6a151eea9699af0fc8ed0c3acba3d0e16758ee3ae8e6f009a61",
       "locator_tag": "p",
@@ -2826,7 +2898,9 @@
       "start": 64305,
       "end": 64551,
       "claims": [
-        "MT11-LANGSTRING-VALUE"
+        "MT11-LANGSTRING-VALUE",
+        "MT11-RDFS-LANGUAGE-LITERAL-COVERAGE",
+        "MT11-LANGSTRING-DENOTATION"
       ],
       "slice_sha256": "6667247535ed048e544b58cfb36f822c2f11d58835a6b8320b5642bd81a31515",
       "locator_tag": "td",
@@ -2941,7 +3015,8 @@
       "start": 71594,
       "end": 71867,
       "claims": [
-        "MT11-RDF-INTERPRETATION"
+        "MT11-RDF-INTERPRETATION",
+        "MT11-RDF-MODEL-EXISTENCE-CONSTRUCTION"
       ],
       "slice_sha256": "5f99ba0992fc57f64315e21a3d17f51823d0950ef25d7a27525f033a3523fb90",
       "locator_tag": "p",
@@ -2955,7 +3030,10 @@
       "start": 72119,
       "end": 72296,
       "claims": [
-        "MT11-RDF-DATATYPE-EXTENSION"
+        "MT11-RDF-DATATYPE-EXTENSION",
+        "MT11-RDF-MODEL-EXISTENCE-CONSTRUCTION",
+        "MT11-RDF-DATATYPE-PARAMETER-INCOMPATIBILITY",
+        "MT11-RDFS-LANGUAGE-LITERAL-COVERAGE"
       ],
       "slice_sha256": "70400448e0633a9f1f675a752098462304e626066ebd6c4cc1db8a9d1df09fb8",
       "locator_tag": "td",
@@ -2971,7 +3049,9 @@
       "claims": [
         "MT11-RDF-AXIOM-PROPERTIES",
         "MT11-RDF-AXIOM-NIL",
-        "MT11-RDF-AXIOM-CONTAINER-PROPERTIES"
+        "MT11-RDF-AXIOM-CONTAINER-PROPERTIES",
+        "MT11-RDF-MODEL-EXISTENCE-CONSTRUCTION",
+        "MT11-RDF-DATATYPE-PARAMETER-INCOMPATIBILITY"
       ],
       "slice_sha256": "b5399e64a2d0f69bb6bb8f2f254b20b104ac500834b0de437d84e40bf6ba97a4",
       "locator_tag": "td",
@@ -2985,7 +3065,8 @@
       "start": 74232,
       "end": 74804,
       "claims": [
-        "MT11-RDF-ENTAILMENT"
+        "MT11-RDF-ENTAILMENT",
+        "MT11-RDF-DATATYPE-PARAMETER-INCOMPATIBILITY"
       ],
       "slice_sha256": "9b82510728ffcee7e38438dabb2c12b3c5c8c0baafa9faefd5b1867f905ac151",
       "locator_tag": "p",
@@ -3139,7 +3220,8 @@
       "start": 81038,
       "end": 81130,
       "claims": [
-        "MT11-RDFS-LANGSTRING-EXTENSION"
+        "MT11-RDFS-LANGSTRING-EXTENSION",
+        "MT11-RDFS-LANGUAGE-LITERAL-COVERAGE"
       ],
       "slice_sha256": "e7e70a3e521a62fa200921d31e38cbf3488906e079947b58cbba564d01db1e2a",
       "locator_tag": "p",
@@ -3859,6 +3941,50 @@
         "MT11-GLOBAL-NAME-DOMAIN"
       ],
       "slice_sha256": "ba7204808309c67c5f00f3559159d62320820c6c3be1985a76c31e18fa20ffe0",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "rdf-no-extra-vocabulary-conditions",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 73046,
+      "end": 73223,
+      "claims": [
+        "MT11-RDF-VOCABULARY-LIMITS"
+      ],
+      "slice_sha256": "3d2c3a6af27dd2b4ecfd511f66c66f8d710c84121f2bcb4d173072fb5a0f3918",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "concepts-fixed-datatype-referents",
+      "source": "concepts",
+      "source_sha256": "3838c992097f72ee8784b6c96194d9879f86f2e08f53ced5a05aa4031750c5ac",
+      "start": 95775,
+      "end": 96594,
+      "claims": [
+        "MT11-LANGSTRING-DENOTATION",
+        "MT11-DATATYPE-ALIAS-COHERENCE",
+        "MT11-DATATYPE-IDENTIFICATION-FIXED"
+      ],
+      "slice_sha256": "50476ce46cd43e596450996631bacab6ebb9b0009923dc10c2e27d0fc6c8c7a4",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "concepts-datatype-aliases",
+      "source": "concepts",
+      "source_sha256": "3838c992097f72ee8784b6c96194d9879f86f2e08f53ced5a05aa4031750c5ac",
+      "start": 73977,
+      "end": 74367,
+      "claims": [
+        "MT11-DATATYPE-ALIAS-COHERENCE"
+      ],
+      "slice_sha256": "a06e1409e1c9441fdcc1ba9fcd54e4a85366cd116316b46933da5818f4d9cae7",
       "locator_tag": "p",
       "review": "pending",
       "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
@@ -6971,6 +7097,14 @@
           {
             "symbol": "DEntails",
             "lean": "RDF11.DEntails"
+          },
+          {
+            "symbol": "SimpleInterpretation.recognized_datatype_denotation",
+            "lean": "RDF11.SimpleInterpretation.recognized_datatype_denotation"
+          },
+          {
+            "symbol": "SimpleInterpretation.recognized_datatype_aliases",
+            "lean": "RDF11.SimpleInterpretation.recognized_datatype_aliases"
           }
         ],
         "limitations": "Parameterized by abstract IRI/literal domains and a fixed external datatype theory; concrete XSD, XML Char and BCP47 implementations are not supplied. Expert mapping review remains pending. One theory T is fixed before quantifying over interpretations.",
@@ -6979,7 +7113,8 @@
         "implementation_refinement": "not_connected_to_published_package"
       },
       "passages": [
-        "d-fixed"
+        "d-fixed",
+        "concepts-fixed-datatype-referents"
       ],
       "extraction_review": "pending",
       "formalization_review": "pending"
@@ -7072,7 +7207,7 @@
       "cleanroom_mapping": {
         "claim_id": "MT11-LEXICAL-TO-VALUE",
         "relation": "definition",
-        "symbol_linked_english": "A datatype supplies a lexical space and a partial lexical-to-value mapping; L2V selects that mapping and its range is the value space.",
+        "symbol_linked_english": "For an ordinary datatype, L2V selects its partial lexical-to-value mapping; the mapping domain is lexicalSpace and its range is valueSpace. The exceptional language datatype instead uses its pair space, selected by datatypeSpace.",
         "bindings": [
           {
             "symbol": "L2V",
@@ -7085,9 +7220,13 @@
           {
             "symbol": "valueSpace",
             "lean": "RDF11.DatatypeTheory.valueSpace"
+          },
+          {
+            "symbol": "datatypeSpace",
+            "lean": "RDF11.DatatypeTheory.datatypeSpace"
           }
         ],
-        "limitations": "Parameterized by abstract IRI/literal domains and a fixed external datatype theory; concrete XSD, XML Char and BCP47 implementations are not supplied. Expert mapping review remains pending.",
+        "limitations": "Parameterized by abstract IRI/literal domains and a fixed external datatype theory; concrete XSD, XML Char and BCP47 implementations are not supplied. Expert mapping review remains pending. The range characterization has the explicit langString exception: its absent L2V is not its actual value space.",
         "extraction_review": "pending_expert_review",
         "formalization_review": "pending_expert_review",
         "implementation_refinement": "not_connected_to_published_package"
@@ -7280,9 +7419,21 @@
           {
             "symbol": "language",
             "lean": "RDF11.SimpleInterpretation.DConditions.language"
+          },
+          {
+            "symbol": "DatatypeTheory.language_noL2V",
+            "lean": "RDF11.DatatypeTheory.language_noL2V"
+          },
+          {
+            "symbol": "DatatypeTheory.datatypeSpace",
+            "lean": "RDF11.DatatypeTheory.datatypeSpace"
+          },
+          {
+            "symbol": "SimpleInterpretation.DConditions.language_denotation",
+            "lean": "RDF11.SimpleInterpretation.DConditions.language_denotation"
           }
         ],
-        "limitations": "Tag values use US-ASCII normalization as clarified by Concepts. No ordinary L2V is used for langString. The D table does not explicitly identify its IRI denotation with a canonical datatype entity; that equality is not invented here.",
+        "limitations": "Tag values use US-ASCII normalization as clarified by Concepts. The absent language L2V is represented by a nowhere-defined partial evaluator; the actual datatype value space is its pair space, selected by datatype identity even through aliases. The prose denotation requirement is now included; the earlier table-only omission has been corrected.",
         "extraction_review": "pending_expert_review",
         "formalization_review": "pending_expert_review",
         "implementation_refinement": "not_connected_to_published_package"
@@ -8076,9 +8227,17 @@
           {
             "symbol": "RDFModel",
             "lean": "RDF11.SimpleInterpretation.RDFModel"
+          },
+          {
+            "symbol": "RDFModelConstruction.conditions",
+            "lean": "RDF11.RDFModelConstruction.conditions"
+          },
+          {
+            "symbol": "RDFModelConstruction.base_empty_satisfiable",
+            "lean": "RDF11.RDFModelConstruction.base_empty_satisfiable"
           }
         ],
-        "limitations": "Parameterized by abstract IRI/literal domains and a fixed external datatype theory; concrete XSD, XML Char and BCP47 implementations are not supplied. Expert mapping review remains pending. Full recognized spaces are realized injectively in IR. Actual IRI spellings are an unimplemented vocabulary binding, including container n = rdf:_(n+1).",
+        "limitations": "Parameterized by abstract IRI/literal domains and a fixed external datatype theory; concrete XSD, XML Char and BCP47 implementations are not supplied. Expert mapping review remains pending. Full recognized spaces are realized injectively in IR. Actual IRI spellings are an unimplemented vocabulary binding, including container n = rdf:_(n+1). The separate model-construction record proves inhabitation under sufficient hypotheses, including the base recognition set; arbitrary external parameter consistency is not assumed.",
         "extraction_review": "pending_expert_review",
         "formalization_review": "pending_expert_review",
         "implementation_refinement": "not_connected_to_published_package"
@@ -8366,12 +8525,35 @@
         "formal_proof": "unassessed",
         "test_mapping": "unassessed"
       },
-      "cleanroom_mapping": null,
+      "cleanroom_mapping": {
+        "claim_id": "MT11-RDF-VOCABULARY-LIMITS",
+        "relation": "partial_theorem",
+        "symbol_linked_english": "For any unrecognized predicate p distinct from rdf:type, non_type_triple_independent constructs an RDF model satisfying a chosen all-IRI triple and an RDF model falsifying it, under the same compatible T, D and vocabulary v. Non-type property extensions are the arbitrary R parameter.",
+        "bindings": [
+          {
+            "symbol": "RDFModelConstruction.interpretation",
+            "lean": "RDF11.RDFModelConstruction.interpretation"
+          },
+          {
+            "symbol": "RDFModelConstruction.non_type_triple_iff",
+            "lean": "RDF11.RDFModelConstruction.non_type_triple_iff"
+          },
+          {
+            "symbol": "RDFModelConstruction.non_type_triple_independent",
+            "lean": "RDF11.RDFModelConstruction.non_type_triple_independent"
+          }
+        ],
+        "limitations": "A partial independence result for ordinary all-IRI triples and the stated construction hypotheses, not a characterization of all RDF entailments. It does not prove RDFS independence, supply XMLLiteral/HTML meanings or discharge their optional-recognition correspondence. The constructed interpretations still enforce every RDF axiom and recognized datatype extension.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
       "passages": [
-        "rdf-optional-types"
+        "rdf-optional-types",
+        "rdf-no-extra-vocabulary-conditions"
       ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-RDF-ENTAILMENT",
@@ -8895,9 +9077,13 @@
           {
             "symbol": "language_extension",
             "lean": "RDF11.SimpleInterpretation.RDFSConditions.language_extension"
+          },
+          {
+            "symbol": "SimpleInterpretation.rdfs_language_literal_coverage",
+            "lean": "RDF11.SimpleInterpretation.rdfs_language_literal_coverage"
           }
         ],
-        "limitations": "The image of actual tagged literal denotations is explicit. The abstract literal interface does not yet prove coverage of every legal lexical form/tag pair.",
+        "limitations": "The image of actual tagged literal denotations is explicit. The abstract literal interface does not yet prove coverage of every legal lexical form/tag pair. Combining this image equality with full value-space realization requires actual tagged-literal representatives; that necessary coverage is now proved, but not supplied by the abstract LiteralSyntax interface.",
         "extraction_review": "pending_expert_review",
         "formalization_review": "pending_expert_review",
         "implementation_refinement": "not_connected_to_published_package"
@@ -8939,7 +9125,7 @@
             "lean": "RDF11.SimpleInterpretation.rdfs_datatype_extension"
           }
         ],
-        "limitations": "For the source clause, specialize to recognized a distinct from rdf:langString: recognizedSpace reduces to the ordinary L2V range. This condition is inherited from RDF rather than duplicated.",
+        "limitations": "The class extension is the fixed datatype value space, indexed by the identified datatype rather than the IRI spelling. Ordinary datatype identities use their L2V range; the language datatype and any aliases use its pair space. This condition is inherited from RDF rather than duplicated.",
         "extraction_review": "pending_expert_review",
         "formalization_review": "pending_expert_review",
         "implementation_refinement": "not_connected_to_published_package"
@@ -12641,6 +12827,297 @@
       ],
       "extraction_review": "pending",
       "formalization_review": "not_started"
+    },
+    {
+      "id": "MT11-RDF-MODEL-EXISTENCE-CONSTRUCTION",
+      "section": "8",
+      "anchor": "rdf-interpretations",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#rdf-interpretations",
+      "category": "mathematical_consequence",
+      "source_status": "normative",
+      "assertion_basis": "derived",
+      "paraphrase": "The RDF interpretation conditions admit a full-domain model for the base recognition set, and for larger sets under explicit sufficient compatibility hypotheses. This is a constructed consequence, not a source assertion that every datatype parameter choice is consistent.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-RDF-INTERPRETATION",
+        "MT11-RDF-PROPERTY-TYPING",
+        "MT11-RDF-DATATYPE-EXTENSION",
+        "MT11-RDF-AXIOM-PROPERTIES",
+        "MT11-RDF-AXIOM-NIL",
+        "MT11-GLOBAL-NAME-DOMAIN"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "The chosen construction excludes rdf:type, rdf:Property and rdf:List from D, allows datatype aliases and realizes every external value. The exclusions are sufficient construction hypotheses, not required namespace restrictions. Fixed built-in datatype meanings and concrete literal/IRI bindings remain external correspondence obligations.",
+      "cleanroom_mapping": {
+        "claim_id": "MT11-RDF-MODEL-EXISTENCE-CONSTRUCTION",
+        "relation": "partial_theorem",
+        "symbol_linked_english": "Under Parameters T D v, interpretation T D v R satisfies all RDFConditions for every relation R on non-rdf:type properties. base_parameters discharges these hypotheses for D = v.baseDatatypes. base_empty_satisfiable exhibits a carrier and RDF model satisfying the empty graph.",
+        "bindings": [
+          {
+            "symbol": "RDFModelConstruction.Parameters",
+            "lean": "RDF11.RDFModelConstruction.Parameters"
+          },
+          {
+            "symbol": "RDFModelConstruction.interpretation",
+            "lean": "RDF11.RDFModelConstruction.interpretation"
+          },
+          {
+            "symbol": "RDFModelConstruction.conditions",
+            "lean": "RDF11.RDFModelConstruction.conditions"
+          },
+          {
+            "symbol": "RDFModelConstruction.model",
+            "lean": "RDF11.RDFModelConstruction.model"
+          },
+          {
+            "symbol": "RDFModelConstruction.empty_satisfiable",
+            "lean": "RDF11.RDFModelConstruction.empty_satisfiable"
+          },
+          {
+            "symbol": "RDFModelConstruction.base_parameters",
+            "lean": "RDF11.RDFModelConstruction.base_parameters"
+          },
+          {
+            "symbol": "RDFModelConstruction.base_empty_satisfiable",
+            "lean": "RDF11.RDFModelConstruction.base_empty_satisfiable"
+          }
+        ],
+        "limitations": "This is a sufficient family, not a characterization of all compatible datatype theories. The three recognition exclusions belong to the constructor, not the specification. It uses all supplied IRI/literal domains; concrete syntax and prescribed xsd:string/langString meanings remain external. Every recognized IRI, including langString, denotes its embedded fixed datatype. Aliases share the identity-indexed value space. No RDFS model-existence theorem, arbitrary-graph consistency criterion, or implementation refinement is established.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "rdf-property-condition",
+        "d-interpretation",
+        "rdf-interpretation",
+        "rdf-datatype-extension",
+        "rdf-axioms"
+      ],
+      "extraction_review": "pending",
+      "formalization_review": "pending"
+    },
+    {
+      "id": "MT11-RDF-DATATYPE-PARAMETER-INCOMPATIBILITY",
+      "section": "8",
+      "anchor": "rdfsemcond3",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#rdfsemcond3",
+      "category": "mathematical_consequence",
+      "source_status": "normative",
+      "assertion_basis": "derived",
+      "paraphrase": "If rdf:Property is recognized as a datatype with empty value space, no RDF interpretation exists: the rdf:type rdf:type rdf:Property axiom requires a member of that space.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-RDF-DATATYPE-EXTENSION",
+        "MT11-RDF-AXIOM-PROPERTIES",
+        "MT11-RDF-ENTAILMENT"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "A derived incompatibility of supplied datatype parameters, not a claim that the prescribed standard datatypes have this conflict. RDF-unsatisfiability then holds for every graph, including the empty graph; RDFS inherits the obstruction.",
+      "cleanroom_mapping": {
+        "claim_id": "MT11-RDF-DATATYPE-PARAMETER-INCOMPATIBILITY",
+        "relation": "theorem",
+        "symbol_linked_english": "In every RDFConditions model recognizing rdf:Property, rdf_property_datatype_nonempty proves that its recognizedSpace has a member. rdf_unsatisfiable_of_empty_property_datatype rules out every graph when that space is empty. The existing RDF-to-RDFS model inclusion transfers RDF-unsatisfiability.",
+        "bindings": [
+          {
+            "symbol": "SimpleInterpretation.rdf_property_datatype_nonempty",
+            "lean": "RDF11.SimpleInterpretation.rdf_property_datatype_nonempty"
+          },
+          {
+            "symbol": "rdf_unsatisfiable_of_empty_property_datatype",
+            "lean": "RDF11.rdf_unsatisfiable_of_empty_property_datatype"
+          },
+          {
+            "symbol": "rdf_unsatisfiable_implies_rdfs_unsatisfiable",
+            "lean": "RDF11.rdf_unsatisfiable_implies_rdfs_unsatisfiable"
+          }
+        ],
+        "limitations": "A derived theorem under an explicit incompatible external-parameter hypothesis. It does not assert that built-in datatype meanings are incompatible, or forbid recognizing other namespace IRIs. No accepted expert review is recorded.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "rdf-datatype-extension",
+        "rdf-axioms",
+        "rdf-entailment"
+      ],
+      "extraction_review": "pending",
+      "formalization_review": "pending"
+    },
+    {
+      "id": "MT11-RDFS-LANGUAGE-LITERAL-COVERAGE",
+      "section": "9",
+      "anchor": "rdfssemcond1",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#rdfssemcond1",
+      "category": "mathematical_consequence",
+      "source_status": "normative",
+      "assertion_basis": "derived",
+      "paraphrase": "Every value in the language-string value space must have a representing language-tagged literal in any RDFS interpretation. If an abstract literal domain omits such a representative, it admits no RDFS interpretation.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-RDF-DATATYPE-EXTENSION",
+        "MT11-RDFS-LANGSTRING-EXTENSION",
+        "MT11-LANGSTRING-VALUE"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "Derived by combining the full recognized value-space condition with the actual literal-image condition and injectivity of value realization. This is a representation obligation for abstract parameters, not an extra axiom imposed on RDF documents or an inconsistency in the standard.",
+      "cleanroom_mapping": {
+        "claim_id": "MT11-RDFS-LANGUAGE-LITERAL-COVERAGE",
+        "relation": "theorem",
+        "symbol_linked_english": "RDFSConditions imply that each w in T.languageSpace equals the languageValue of some actual tagged literal l with its ASCII-lowercased tag. A missing representative makes every graph RDFSUnsatisfiable for those parameters.",
+        "bindings": [
+          {
+            "symbol": "SimpleInterpretation.rdfs_language_literal_coverage",
+            "lean": "RDF11.SimpleInterpretation.rdfs_language_literal_coverage"
+          },
+          {
+            "symbol": "SimpleInterpretation.rdfsModel_language_literal_coverage",
+            "lean": "RDF11.SimpleInterpretation.rdfsModel_language_literal_coverage"
+          },
+          {
+            "symbol": "rdfs_unsatisfiable_of_missing_language_literal",
+            "lean": "RDF11.rdfs_unsatisfiable_of_missing_language_literal"
+          }
+        ],
+        "limitations": "This derives a necessary condition on the abstract literal/type parameters. It neither proves that current abstract LiteralSyntax has complete coverage nor constructs a concrete RDF literal domain. Full RDFS model existence remains open.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "d-language",
+        "rdf-datatype-extension",
+        "rdfs-language"
+      ],
+      "extraction_review": "pending",
+      "formalization_review": "pending"
+    },
+    {
+      "id": "MT11-LANGSTRING-DENOTATION",
+      "section": "7 / Concepts 5.4",
+      "anchor": "literals-and-datatypes",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#literals-and-datatypes",
+      "category": "semantic_constraint",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "A recognized rdf:langString IRI denotes its fixed exceptional datatype; the special evaluation of tagged literals does not remove that denotation requirement.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-DATATYPE-IDENTIFICATION-FIXED",
+        "MT11-LANGSTRING-EXCEPTION"
+      ],
+      "imports": [
+        "https://www.w3.org/TR/2014/REC-rdf11-concepts-20140225/#datatype-iris"
+      ],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "Normative section 7 prose and the incorporated Concepts fixed-referent rule supply this obligation beyond the two literal-evaluation table rows. The earlier reconstruction omitted it; this increment corrects DConditions and the model witnesses.",
+      "cleanroom_mapping": {
+        "claim_id": "MT11-LANGSTRING-DENOTATION",
+        "relation": "definition",
+        "symbol_linked_english": "DConditions.language_denotation requires recognized langString to denote T.identified langString through the same ValueRealization used for other fixed values. recognized_datatype_denotation now proves the equality for every recognized IRI.",
+        "bindings": [
+          {
+            "symbol": "SimpleInterpretation.DConditions.language_denotation",
+            "lean": "RDF11.SimpleInterpretation.DConditions.language_denotation"
+          },
+          {
+            "symbol": "SimpleInterpretation.recognized_datatype_denotation",
+            "lean": "RDF11.SimpleInterpretation.recognized_datatype_denotation"
+          }
+        ],
+        "limitations": "The fixed external datatype representation remains parameterized. This corrects a former underconstraint in the reconstruction, not a claimed error in W3C text. Expert review and concrete built-in correspondence remain pending.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "d-fixed",
+        "d-language-exception",
+        "d-language",
+        "concepts-fixed-datatype-referents"
+      ],
+      "extraction_review": "pending",
+      "formalization_review": "pending"
+    },
+    {
+      "id": "MT11-DATATYPE-ALIAS-COHERENCE",
+      "section": "7 / Concepts 5.4",
+      "anchor": "literals-and-datatypes",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#literals-and-datatypes",
+      "category": "mathematical_consequence",
+      "source_status": "normative",
+      "assertion_basis": "derived",
+      "paraphrase": "Recognized IRIs identifying the same datatype have the same denotation and datatype value space, including aliases of the language-string datatype. A noncanonical alias literal uses the ordinary branch, where the language datatype has no lexical-to-value evaluation.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-DATATYPE-IDENTIFICATION-FIXED",
+        "MT11-LANGSTRING-DENOTATION",
+        "MT11-LANGSTRING-EXCEPTION"
+      ],
+      "imports": [
+        "https://www.w3.org/TR/2014/REC-rdf11-concepts-20140225/#datatype-iris"
+      ],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "Datatype aliases are permitted; identification is not required to be injective. The ordinary noncanonical langString-alias behavior is a derived edge case, not an explicit source example, and remains subject to expert mapping review. No-L2V is encoded by an everywhere-undefined partial evaluator, while the actual language value space remains the normalized pair space.",
+      "cleanroom_mapping": {
+        "claim_id": "MT11-DATATYPE-ALIAS-COHERENCE",
+        "relation": "theorem",
+        "symbol_linked_english": "recognized_datatype_aliases equates recognized IRI denotations when T.identified agrees. datatypeSpace is indexed by that datatype identity; recognizedSpace_identified_eq therefore equates their class value spaces. language_alias_illTyped derives undefined evaluation for an ordinary literal using a recognized noncanonical alias of langString.",
+        "bindings": [
+          {
+            "symbol": "DatatypeTheory.datatypeSpace",
+            "lean": "RDF11.DatatypeTheory.datatypeSpace"
+          },
+          {
+            "symbol": "DatatypeTheory.recognizedSpace_identified_eq",
+            "lean": "RDF11.DatatypeTheory.recognizedSpace_identified_eq"
+          },
+          {
+            "symbol": "SimpleInterpretation.recognized_datatype_aliases",
+            "lean": "RDF11.SimpleInterpretation.recognized_datatype_aliases"
+          },
+          {
+            "symbol": "DatatypeTheory.language_alias_illTyped",
+            "lean": "RDF11.DatatypeTheory.language_alias_illTyped"
+          }
+        ],
+        "limitations": "The alias-literal clause is an explicit derived reading of the ordinary-IRI table row and absent language L2V, not a stated W3C example. It does not apply to canonical language-tagged literals. The nowhere-defined L2V placeholder does not turn the language datatype into an empty-valued datatype.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "d-fixed",
+        "d-language-exception",
+        "concepts-fixed-datatype-referents",
+        "concepts-datatype-aliases"
+      ],
+      "extraction_review": "pending",
+      "formalization_review": "pending"
     }
   ],
   "context_resolutions": [

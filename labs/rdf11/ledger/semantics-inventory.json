@@ -5065,7 +5065,128 @@
         "test_mapping": "unassessed"
       },
       "formalization_note": "This concerns the full name mappings, not a requirement that IR be infinite. No cardinality proof or concrete infinite IRI-domain binding is supplied yet; the finite pre-interpretation construction is discussed separately in informative Appendix B."
+    },
+    {
+      "id": "MT11-RDF-MODEL-EXISTENCE-CONSTRUCTION",
+      "section": "8",
+      "anchor": "rdf-interpretations",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#rdf-interpretations",
+      "category": "mathematical_consequence",
+      "source_status": "normative",
+      "assertion_basis": "derived",
+      "paraphrase": "The RDF interpretation conditions admit a full-domain model for the base recognition set, and for larger sets under explicit sufficient compatibility hypotheses. This is a constructed consequence, not a source assertion that every datatype parameter choice is consistent.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-RDF-INTERPRETATION",
+        "MT11-RDF-PROPERTY-TYPING",
+        "MT11-RDF-DATATYPE-EXTENSION",
+        "MT11-RDF-AXIOM-PROPERTIES",
+        "MT11-RDF-AXIOM-NIL",
+        "MT11-GLOBAL-NAME-DOMAIN"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "The chosen construction excludes rdf:type, rdf:Property and rdf:List from D, allows datatype aliases and realizes every external value. The exclusions are sufficient construction hypotheses, not required namespace restrictions. Fixed built-in datatype meanings and concrete literal/IRI bindings remain external correspondence obligations."
+    },
+    {
+      "id": "MT11-RDF-DATATYPE-PARAMETER-INCOMPATIBILITY",
+      "section": "8",
+      "anchor": "rdfsemcond3",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#rdfsemcond3",
+      "category": "mathematical_consequence",
+      "source_status": "normative",
+      "assertion_basis": "derived",
+      "paraphrase": "If rdf:Property is recognized as a datatype with empty value space, no RDF interpretation exists: the rdf:type rdf:type rdf:Property axiom requires a member of that space.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-RDF-DATATYPE-EXTENSION",
+        "MT11-RDF-AXIOM-PROPERTIES",
+        "MT11-RDF-ENTAILMENT"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "A derived incompatibility of supplied datatype parameters, not a claim that the prescribed standard datatypes have this conflict. RDF-unsatisfiability then holds for every graph, including the empty graph; RDFS inherits the obstruction."
+    },
+    {
+      "id": "MT11-RDFS-LANGUAGE-LITERAL-COVERAGE",
+      "section": "9",
+      "anchor": "rdfssemcond1",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#rdfssemcond1",
+      "category": "mathematical_consequence",
+      "source_status": "normative",
+      "assertion_basis": "derived",
+      "paraphrase": "Every value in the language-string value space must have a representing language-tagged literal in any RDFS interpretation. If an abstract literal domain omits such a representative, it admits no RDFS interpretation.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-RDF-DATATYPE-EXTENSION",
+        "MT11-RDFS-LANGSTRING-EXTENSION",
+        "MT11-LANGSTRING-VALUE"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "Derived by combining the full recognized value-space condition with the actual literal-image condition and injectivity of value realization. This is a representation obligation for abstract parameters, not an extra axiom imposed on RDF documents or an inconsistency in the standard."
+    },
+    {
+      "id": "MT11-LANGSTRING-DENOTATION",
+      "section": "7 / Concepts 5.4",
+      "anchor": "literals-and-datatypes",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#literals-and-datatypes",
+      "category": "semantic_constraint",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "A recognized rdf:langString IRI denotes its fixed exceptional datatype; the special evaluation of tagged literals does not remove that denotation requirement.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-DATATYPE-IDENTIFICATION-FIXED",
+        "MT11-LANGSTRING-EXCEPTION"
+      ],
+      "imports": [
+        "https://www.w3.org/TR/2014/REC-rdf11-concepts-20140225/#datatype-iris"
+      ],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "Normative section 7 prose and the incorporated Concepts fixed-referent rule supply this obligation beyond the two literal-evaluation table rows. The earlier reconstruction omitted it; this increment corrects DConditions and the model witnesses."
+    },
+    {
+      "id": "MT11-DATATYPE-ALIAS-COHERENCE",
+      "section": "7 / Concepts 5.4",
+      "anchor": "literals-and-datatypes",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#literals-and-datatypes",
+      "category": "mathematical_consequence",
+      "source_status": "normative",
+      "assertion_basis": "derived",
+      "paraphrase": "Recognized IRIs identifying the same datatype have the same denotation and datatype value space, including aliases of the language-string datatype. A noncanonical alias literal uses the ordinary branch, where the language datatype has no lexical-to-value evaluation.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-DATATYPE-IDENTIFICATION-FIXED",
+        "MT11-LANGSTRING-DENOTATION",
+        "MT11-LANGSTRING-EXCEPTION"
+      ],
+      "imports": [
+        "https://www.w3.org/TR/2014/REC-rdf11-concepts-20140225/#datatype-iris"
+      ],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "Datatype aliases are permitted; identification is not required to be injective. The ordinary noncanonical langString-alias behavior is a derived edge case, not an explicit source example, and remains subject to expert mapping review. No-L2V is encoded by an everywhere-undefined partial evaluator, while the actual language value space remains the normalized pair space."
     }
   ],
-  "record_count": 199
+  "record_count": 204
 }

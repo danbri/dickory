@@ -28,7 +28,7 @@ There are 125 mapped records among 195 preliminary claims, including partial map
 
 - Literal syntax and vocabulary spellings are still interfaces. Legal-form coverage, concrete equality and actual namespace/index encodings need separate proofs.
 - Concepts specifies lowercase tag values. The normalized pair space respects that distinction, but the abstract literal interface does not yet prove that every legal pair has a literal. RDFS retains the exact literal-image condition rather than assuming that coverage.
-- The D table explicitly fixes ordinary datatype IRI denotations. It does not separately state the corresponding langString equality. The reconstruction does not invent an extra equality to an arbitrary canonical datatype entity.
+- **Corrected in the eighth increment:** the original table-only encoding omitted the recognized langString denotation requirement. The surrounding normative prose fixes that referent. [The datatype-fidelity repair](20261023-rdf-model-existence.md) adds the equality, makes aliases share value spaces, and rebuilds the model witnesses. The earlier omission was a formalization gap, not source-granted freedom.
 - Recognized RDF value spaces must be fully realized in the model carrier. This requirement connects an external-value representation to the semantic set equality; it must not be confused with an executable conversion routine.
 - The printed datatype/RDFS entailment directions are recorded as source-review questions alongside the proved model-class directions. No official erratum status is claimed.
 - The additional-valid-triples table is not an axiom table. Its unqualified XMLLiteral/HTML class typings remain a recognition-scope question; optional recognition has not been silently strengthened.

@@ -2,7 +2,9 @@
 RDF 1.1 Semantics §7–7.2. D is a set of recognized IRIs; the datatype
 identification and lexical-to-value functions are fixed external parameters.
 One shared value domain permits overlapping datatype value spaces and aliases.
-The D-table predicate deliberately does not add a langString referent equality.
+The prose requirement fixing the recognized langString referent is retained
+alongside its special literal-evaluation row. Value spaces follow datatype
+identity, including aliases of the exceptional language-string datatype.
 -/
 import RDF11.Transformations
 import RDF11.Vocabulary
@@ -29,6 +31,7 @@ structure DatatypeTheory (Iri Literal Value : Type) where
   L2V : Value → String → Option Value
   languageValue : String → String → Value
   language_injective : ∀ s t s' t', languageValue s t = languageValue s' t' → s = s' ∧ t = t'
+  language_noL2V : ∀ s, L2V (identified literalSyntax.langString) s = none
 
 namespace DatatypeTheory
 
@@ -41,14 +44,46 @@ def valueSpace (T : DatatypeTheory Iri Literal Value) (d : Value) : Set Value :=
 def languageSpace (T : DatatypeTheory Iri Literal Value) : Set Value :=
   fun v => ∃ s tag, T.literalSyntax.languageTag tag ∧ T.languageValue s (asciiLower tag) = v
 
-/-- langString has its pair value space, with no L2V application. -/
-def recognizedSpace (T : DatatypeTheory Iri Literal Value) (a : Iri) : Set Value := by
+/-- Datatype identity selects the special pair space; aliases retain that identity.
+The absent langString L2V is represented by a nowhere-defined partial function. -/
+noncomputable def datatypeSpace (T : DatatypeTheory Iri Literal Value) (d : Value) : Set Value := by
   classical
-  exact if a = T.literalSyntax.langString then T.languageSpace else T.valueSpace (T.identified a)
+  exact if d = T.identified T.literalSyntax.langString then T.languageSpace else T.valueSpace d
+
+def recognizedSpace (T : DatatypeTheory Iri Literal Value) (a : Iri) : Set Value :=
+  T.datatypeSpace (T.identified a)
+
+theorem recognizedSpace_language (T : DatatypeTheory Iri Literal Value) :
+    T.recognizedSpace T.literalSyntax.langString = T.languageSpace := by
+  simp [recognizedSpace, datatypeSpace]
+
+theorem recognizedSpace_identified_eq (T : DatatypeTheory Iri Literal Value)
+    (h : T.identified a = T.identified b) : T.recognizedSpace a = T.recognizedSpace b :=
+  congrArg T.datatypeSpace h
+
+theorem l2v_in_datatypeSpace (T : DatatypeTheory Iri Literal Value)
+    (hv : T.L2V d s = some w) : T.datatypeSpace d w := by
+  have hn : d ≠ T.identified T.literalSyntax.langString := by
+    intro he
+    have hf := T.language_noL2V s
+    rw [← he, hv] at hf
+    cases hf
+  simp only [datatypeSpace, hn, ↓reduceIte]
+  exact ⟨s, hv⟩
 
 def IllTyped (T : DatatypeTheory Iri Literal Value) (D : Set Iri) (l : Literal) : Prop :=
   D (T.literalSyntax.datatype l) ∧ T.literalSyntax.datatype l ≠ T.literalSyntax.langString ∧
     T.L2V (T.identified (T.literalSyntax.datatype l)) (T.literalSyntax.lexical l) = none
+
+/-- A noncanonical alias has ordinary literal syntax and no L2V evaluation.
+This is a derived edge case; canonical tagged literals remain well-typed. -/
+theorem language_alias_illTyped (T : DatatypeTheory Iri Literal Value)
+    (ha : D a) (hne : a ≠ T.literalSyntax.langString)
+    (hid : T.identified a = T.identified T.literalSyntax.langString)
+    (hl : T.literalSyntax.datatype l = a) : T.IllTyped D l := by
+  refine ⟨hl ▸ ha, fun he => hne (hl.symm.trans he), ?_⟩
+  rw [hl, hid]
+  exact T.language_noL2V _
 
 theorem language_not_illTyped (T : DatatypeTheory Iri Literal Value) (D : Set Iri)
     (l : Literal) (h : T.literalSyntax.datatype l = T.literalSyntax.langString) : ¬ T.IllTyped D l :=
@@ -77,6 +112,8 @@ def LiteralValue (I : SimpleInterpretation Iri Literal U) (ρ : ValueRealization
 
 structure DConditions (I : SimpleInterpretation Iri Literal U)
     (T : DatatypeTheory Iri Literal Value) (D : Set Iri) (ρ : ValueRealization Value U) : Prop where
+  language_denotation : D T.literalSyntax.langString →
+    ρ.value (T.identified T.literalSyntax.langString) = some (I.IS T.literalSyntax.langString).val
   language : ∀ l tag, D T.literalSyntax.langString → T.literalSyntax.language l = some tag →
     I.LiteralValue ρ l (T.languageValue (T.literalSyntax.lexical l) (asciiLower tag))
   ordinary : ∀ a, D a → a ≠ T.literalSyntax.langString →
@@ -93,6 +130,7 @@ def DModel (I : SimpleInterpretation Iri Literal U)
 theorem dConditions_empty (I : SimpleInterpretation Iri Literal U)
     (T : DatatypeTheory Iri Literal Value) : I.DConditions T Set.empty ValueRealization.empty := by
   constructor
+  · intro h; exact False.elim h
   · intro _ _ h; exact False.elim h
   · intro _ h; exact False.elim h
 
@@ -101,6 +139,7 @@ theorem dModel_empty (I : SimpleInterpretation Iri Literal U) (T : DatatypeTheor
 
 theorem dConditions_restrict (I : SimpleInterpretation Iri Literal U)
     (h : I.DConditions T E ρ) (hDE : Set.subset D E) : I.DConditions T D ρ where
+  language_denotation := fun hd => h.language_denotation (hDE _ hd)
   language := fun l tag hd ht => h.language l tag (hDE _ hd) ht
   ordinary := fun a hd hn => h.ordinary a (hDE _ hd) hn
 
@@ -108,6 +147,22 @@ theorem dModel_restrict (I : SimpleInterpretation Iri Literal U)
     (h : I.DModel T E) (hDE : Set.subset D E) : I.DModel T D := by
   obtain ⟨ρ, hρ⟩ := h
   exact ⟨ρ, I.dConditions_restrict hρ hDE⟩
+
+/-- The prose denotation requirement applies to every recognized datatype IRI. -/
+theorem recognized_datatype_denotation (I : SimpleInterpretation Iri Literal U)
+    (h : I.DConditions T D ρ) (ha : D a) : ρ.value (T.identified a) = some (I.IS a).val := by
+  by_cases he : a = T.literalSyntax.langString
+  · subst a
+    exact h.language_denotation ha
+  · exact (h.ordinary a ha he).1
+
+theorem recognized_datatype_aliases (I : SimpleInterpretation Iri Literal U)
+    (h : I.DConditions T D ρ) (ha : D a) (hb : D b)
+    (he : T.identified a = T.identified b) : (I.IS a).val = (I.IS b).val := by
+  have hda := I.recognized_datatype_denotation h ha
+  have hdb := I.recognized_datatype_denotation h hb
+  rw [he, hdb] at hda
+  exact (Option.some.inj hda).symm
 
 theorem illTyped_undefined (I : SimpleInterpretation Iri Literal U)
     (h : I.DConditions T D ρ) (hi : T.IllTyped D l) : I.IL l = none := by
@@ -144,7 +199,7 @@ theorem recognized_literal_value (I : SimpleInterpretation Iri Literal U)
     obtain ⟨s, hs, hv⟩ := h.language l tag (hlang ▸ hd) htag
     have he : s = r := Option.some.inj (hs.symm.trans hr)
     refine ⟨T.languageValue (T.literalSyntax.lexical l) (asciiLower tag), ?_, he ▸ hv⟩
-    simp only [DatatypeTheory.recognizedSpace, hlang, ↓reduceIte]
+    rw [hlang, T.recognizedSpace_language]
     exact ⟨T.literalSyntax.lexical l, tag, T.literalSyntax.tag_valid l tag htag, rfl⟩
   · have hl := (h.ordinary _ hd hlang).2 l rfl
     cases hv : T.L2V (T.identified (T.literalSyntax.datatype l)) (T.literalSyntax.lexical l) with
@@ -154,8 +209,7 @@ theorem recognized_literal_value (I : SimpleInterpretation Iri Literal U)
       obtain ⟨s, hs, hvs⟩ := hl
       have he : s = r := Option.some.inj (hs.symm.trans hr)
       refine ⟨v, ?_, he ▸ hvs⟩
-      simp only [DatatypeTheory.recognizedSpace, hlang, ↓reduceIte]
-      exact ⟨T.literalSyntax.lexical l, hv⟩
+      exact T.l2v_in_datatypeSpace hv
 
 theorem literal_object_congruence (I : SimpleInterpretation Iri Literal U)
     (A : I.Assignment B) (s p : Term Iri Literal B) (he : I.IL l = I.IL k) :

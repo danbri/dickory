@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "status": "frozen_seventh_increment_global_domain_refinement_not_expert_approved",
+  "status": "frozen_eighth_increment_rdf_models_and_datatype_fidelity_not_expert_approved",
   "lean_version": "4.33.1",
   "allowed_axioms": [
     "propext",
@@ -83,6 +83,7 @@
     "Init.Data.UInt.BasicAux",
     "Init.Data.UInt.Bitwise",
     "Init.Data.UInt.Lemmas",
+    "Init.Data.ULift",
     "Init.Ext",
     "Init.GetElem",
     "Init.Omega.Coeffs",
@@ -273,7 +274,9 @@
         "FOUNDATION-LEAN",
         "MT11-D-INTERPRETATION",
         "MT11-LEXICAL-TO-VALUE",
-        "MT11-LANGSTRING-VALUE"
+        "MT11-LANGSTRING-VALUE",
+        "MT11-LANGSTRING-DENOTATION",
+        "MT11-DATATYPE-ALIAS-COHERENCE"
       ]
     },
     {
@@ -319,7 +322,9 @@
       "requires": [
         "FOUNDATION-LEAN",
         "MT11-SIMPLE-D-INCONSISTENCY-CHARACTERIZATION",
-        "MT11-D-MODEL-CLASS-MONOTONICITY"
+        "MT11-D-MODEL-CLASS-MONOTONICITY",
+        "MT11-LANGSTRING-DENOTATION",
+        "MT11-DATATYPE-ALIAS-COHERENCE"
       ]
     },
     {
@@ -417,6 +422,31 @@
         "MT11-DATASET-EXTENSIONS",
         "MT11-DATASET-EMPTY-NAMED-PRESENCE"
       ]
+    },
+    {
+      "id": "SUPPORT-RDF-MODELS",
+      "purpose": "Explicit full-domain RDF model construction, reuse of D-model literals, sufficient parameter assumptions and countermodels for non-type ground assertions. These choices do not redefine the RDF model class.",
+      "requires": [
+        "MT11-RDF-INTERPRETATION",
+        "MT11-D-INTERPRETATION",
+        "MT11-RDF-PROPERTY-TYPING",
+        "MT11-RDF-DATATYPE-EXTENSION",
+        "MT11-RDF-AXIOM-PROPERTIES",
+        "MT11-RDF-AXIOM-NIL",
+        "MT11-GLOBAL-NAME-DOMAIN",
+        "MT11-LANGSTRING-DENOTATION",
+        "MT11-DATATYPE-ALIAS-COHERENCE"
+      ]
+    },
+    {
+      "id": "SUPPORT-RDFS-MODEL-CONSTRAINTS",
+      "purpose": "Necessary compatibility consequences from the existing RDF/RDFS conditions: actual language-literal representatives and transfer of unsatisfiability through model inclusion. Not a model-existence assumption.",
+      "requires": [
+        "MT11-RDFS-LANGSTRING-EXTENSION",
+        "MT11-LANGSTRING-VALUE",
+        "MT11-RDF-DATATYPE-EXTENSION",
+        "MT11-RDFS-MODEL-CLASS-INCLUSION"
+      ]
     }
   ],
   "files": [
@@ -443,14 +473,14 @@
     },
     {
       "path": "Audit/Snapshot.lean",
-      "sha256": "a0bd8ca7e854a644bdce6fa5c6b35f13140bd90a44f25c30d330a22e734300e0",
+      "sha256": "a27c7e288694fda18912720d75687cdcb77b07c2275dcb6fcbb39abedaebe340",
       "role": "formal_source",
       "lifecycle": "active",
       "review": "pending_expert_review"
     },
     {
       "path": "RDF11.lean",
-      "sha256": "b4f53629fc2f28421d55fa38c21679c5181946c5195fc451d43619f72bc1bb5c",
+      "sha256": "60e6cf923e5dbf5573e2f33dd41f15814700dbb088278ac1fa0dcca7cbed6376",
       "role": "formal_source",
       "lifecycle": "active",
       "review": "pending_expert_review"
@@ -460,7 +490,7 @@
       "role": "formal_source",
       "lifecycle": "active",
       "review": "pending_expert_review",
-      "sha256": "c3cee667f64e83ecebe43ac4ed69d7f4062bf53c7d9ff7c130c00db76d6d05c9"
+      "sha256": "008f0d8b391f110033e7a62e279e8b821f9b7c66ef4a70e66a357587eecda719"
     },
     {
       "path": "RDF11/Entailment.lean",
@@ -628,7 +658,7 @@
       "role": "formal_source",
       "lifecycle": "active",
       "review": "pending_expert_review",
-      "sha256": "56cd54832d38959e66063ee8a58e72845d8e89f55d4402be393a065007e084f3"
+      "sha256": "d0d553b70185c0571d95de9cceb277b75432be32f9cf54fd63a753017ccb06d7"
     },
     {
       "path": "RDF11/ContainerEntailment.lean",
@@ -692,6 +722,20 @@
       "lifecycle": "active",
       "review": "pending_expert_review",
       "sha256": "12e562bcff1686c252bb19ff2892a6b8840920e4575d5c1591742d09d2a1bf2a"
+    },
+    {
+      "path": "RDF11/RDFModels.lean",
+      "sha256": "5c2d54d529e52ade5b8cff96ad47a346e564a1c652d96fd9b4f98067cc6a227e",
+      "role": "formal_source",
+      "lifecycle": "active",
+      "review": "pending_expert_review"
+    },
+    {
+      "path": "RDF11/RDFSModelConstraints.lean",
+      "sha256": "ac48a27ed0608032c3023c532b114c362f6b507bd92d5f6e9cc13f81b4569afe",
+      "role": "formal_source",
+      "lifecycle": "active",
+      "review": "pending_expert_review"
     }
   ],
   "declarations": [
@@ -7511,7 +7555,7 @@
       "name": "RDF11.DatatypeTheory.casesOn",
       "module": "RDF11.Datatypes",
       "kind": "definition",
-      "type": "{Iri Literal Value : Type} →\n  {motive : RDF11.DatatypeTheory Iri Literal Value → Sort u} →\n    (t : RDF11.DatatypeTheory Iri Literal Value) →\n      ((literalSyntax : RDF11.LiteralSyntax Iri Literal) →\n          (identified : Iri → Value) →\n            (L2V : Value → String → Option Value) →\n              (languageValue : String → String → Value) →\n                (language_injective :\n                    ∀ (s t s' t' : String), languageValue s t = languageValue s' t' → s = s' ∧ t = t') →\n                  motive\n                    { literalSyntax := literalSyntax, identified := identified, L2V := L2V,\n                      languageValue := languageValue, language_injective := language_injective }) →\n        motive t",
+      "type": "{Iri Literal Value : Type} →\n  {motive : RDF11.DatatypeTheory Iri Literal Value → Sort u} →\n    (t : RDF11.DatatypeTheory Iri Literal Value) →\n      ((literalSyntax : RDF11.LiteralSyntax Iri Literal) →\n          (identified : Iri → Value) →\n            (L2V : Value → String → Option Value) →\n              (languageValue : String → String → Value) →\n                (language_injective :\n                    ∀ (s t s' t' : String), languageValue s t = languageValue s' t' → s = s' ∧ t = t') →\n                  (language_noL2V : ∀ (s : String), L2V (identified literalSyntax.langString) s = none) →\n                    motive\n                      { literalSyntax := literalSyntax, identified := identified, L2V := L2V,\n                        languageValue := languageValue, language_injective := language_injective,\n                        language_noL2V := language_noL2V }) →\n        motive t",
       "role": "proof_support",
       "grounds": [
         "SUPPORT-DATATYPES"
@@ -7625,7 +7669,7 @@
       "name": "RDF11.DatatypeTheory.mk",
       "module": "RDF11.Datatypes",
       "kind": "constructor",
-      "type": "{Iri Literal Value : Type} →\n  RDF11.LiteralSyntax Iri Literal →\n    (Iri → Value) →\n      (Value → String → Option Value) →\n        (languageValue : String → String → Value) →\n          (∀ (s t s' t' : String), languageValue s t = languageValue s' t' → s = s' ∧ t = t') →\n            RDF11.DatatypeTheory Iri Literal Value",
+      "type": "{Iri Literal Value : Type} →\n  (literalSyntax : RDF11.LiteralSyntax Iri Literal) →\n    (identified : Iri → Value) →\n      (L2V : Value → String → Option Value) →\n        (languageValue : String → String → Value) →\n          (∀ (s t s' t' : String), languageValue s t = languageValue s' t' → s = s' ∧ t = t') →\n            (∀ (s : String), L2V (identified literalSyntax.langString) s = none) →\n              RDF11.DatatypeTheory Iri Literal Value",
       "role": "proof_support",
       "grounds": [
         "SUPPORT-DATATYPES"
@@ -7637,7 +7681,7 @@
       "name": "RDF11.DatatypeTheory.mk._flat_ctor",
       "module": "RDF11.Datatypes",
       "kind": "definition",
-      "type": "{Iri Literal Value : Type} →\n  RDF11.LiteralSyntax Iri Literal →\n    (Iri → Value) →\n      (Value → String → Option Value) →\n        (languageValue : String → String → Value) →\n          (∀ (s t s' t' : String), languageValue s t = languageValue s' t' → s = s' ∧ t = t') →\n            RDF11.DatatypeTheory Iri Literal Value",
+      "type": "{Iri Literal Value : Type} →\n  (literalSyntax : RDF11.LiteralSyntax Iri Literal) →\n    (identified : Iri → Value) →\n      (L2V : Value → String → Option Value) →\n        (languageValue : String → String → Value) →\n          (∀ (s t s' t' : String), languageValue s t = languageValue s' t' → s = s' ∧ t = t') →\n            (∀ (s : String), L2V (identified literalSyntax.langString) s = none) →\n              RDF11.DatatypeTheory Iri Literal Value",
       "role": "proof_support",
       "grounds": [
         "SUPPORT-DATATYPES"
@@ -7649,7 +7693,7 @@
       "name": "RDF11.DatatypeTheory.mk.inj",
       "module": "RDF11.Datatypes",
       "kind": "theorem",
-      "type": "∀ {Iri Literal Value : Type} {literalSyntax : RDF11.LiteralSyntax Iri Literal} {identified : Iri → Value}\n  {L2V : Value → String → Option Value} {languageValue : String → String → Value}\n  {language_injective : ∀ (s t s' t' : String), languageValue s t = languageValue s' t' → s = s' ∧ t = t'}\n  {literalSyntax_1 : RDF11.LiteralSyntax Iri Literal} {identified_1 : Iri → Value}\n  {L2V_1 : Value → String → Option Value} {languageValue_1 : String → String → Value}\n  {language_injective_1 : ∀ (s t s' t' : String), languageValue_1 s t = languageValue_1 s' t' → s = s' ∧ t = t'},\n  { literalSyntax := literalSyntax, identified := identified, L2V := L2V, languageValue := languageValue,\n        language_injective := language_injective } =\n      { literalSyntax := literalSyntax_1, identified := identified_1, L2V := L2V_1, languageValue := languageValue_1,\n        language_injective := language_injective_1 } →\n    literalSyntax = literalSyntax_1 ∧ identified = identified_1 ∧ L2V = L2V_1 ∧ languageValue = languageValue_1",
+      "type": "∀ {Iri Literal Value : Type} {literalSyntax : RDF11.LiteralSyntax Iri Literal} {identified : Iri → Value}\n  {L2V : Value → String → Option Value} {languageValue : String → String → Value}\n  {language_injective : ∀ (s t s' t' : String), languageValue s t = languageValue s' t' → s = s' ∧ t = t'}\n  {language_noL2V : ∀ (s : String), L2V (identified literalSyntax.langString) s = none}\n  {literalSyntax_1 : RDF11.LiteralSyntax Iri Literal} {identified_1 : Iri → Value}\n  {L2V_1 : Value → String → Option Value} {languageValue_1 : String → String → Value}\n  {language_injective_1 : ∀ (s t s' t' : String), languageValue_1 s t = languageValue_1 s' t' → s = s' ∧ t = t'}\n  {language_noL2V_1 : ∀ (s : String), L2V_1 (identified_1 literalSyntax_1.langString) s = none},\n  { literalSyntax := literalSyntax, identified := identified, L2V := L2V, languageValue := languageValue,\n        language_injective := language_injective, language_noL2V := language_noL2V } =\n      { literalSyntax := literalSyntax_1, identified := identified_1, L2V := L2V_1, languageValue := languageValue_1,\n        language_injective := language_injective_1, language_noL2V := language_noL2V_1 } →\n    literalSyntax = literalSyntax_1 ∧ identified = identified_1 ∧ L2V = L2V_1 ∧ languageValue = languageValue_1",
       "role": "proof_support",
       "grounds": [
         "SUPPORT-DATATYPES"
@@ -7661,7 +7705,7 @@
       "name": "RDF11.DatatypeTheory.mk.injEq",
       "module": "RDF11.Datatypes",
       "kind": "theorem",
-      "type": "∀ {Iri Literal Value : Type} (literalSyntax : RDF11.LiteralSyntax Iri Literal) (identified : Iri → Value)\n  (L2V : Value → String → Option Value) (languageValue : String → String → Value)\n  (language_injective : ∀ (s t s' t' : String), languageValue s t = languageValue s' t' → s = s' ∧ t = t')\n  (literalSyntax_1 : RDF11.LiteralSyntax Iri Literal) (identified_1 : Iri → Value)\n  (L2V_1 : Value → String → Option Value) (languageValue_1 : String → String → Value)\n  (language_injective_1 : ∀ (s t s' t' : String), languageValue_1 s t = languageValue_1 s' t' → s = s' ∧ t = t'),\n  ({ literalSyntax := literalSyntax, identified := identified, L2V := L2V, languageValue := languageValue,\n        language_injective := language_injective } =\n      { literalSyntax := literalSyntax_1, identified := identified_1, L2V := L2V_1, languageValue := languageValue_1,\n        language_injective := language_injective_1 }) =\n    (literalSyntax = literalSyntax_1 ∧ identified = identified_1 ∧ L2V = L2V_1 ∧ languageValue = languageValue_1)",
+      "type": "∀ {Iri Literal Value : Type} (literalSyntax : RDF11.LiteralSyntax Iri Literal) (identified : Iri → Value)\n  (L2V : Value → String → Option Value) (languageValue : String → String → Value)\n  (language_injective : ∀ (s t s' t' : String), languageValue s t = languageValue s' t' → s = s' ∧ t = t')\n  (language_noL2V : ∀ (s : String), L2V (identified literalSyntax.langString) s = none)\n  (literalSyntax_1 : RDF11.LiteralSyntax Iri Literal) (identified_1 : Iri → Value)\n  (L2V_1 : Value → String → Option Value) (languageValue_1 : String → String → Value)\n  (language_injective_1 : ∀ (s t s' t' : String), languageValue_1 s t = languageValue_1 s' t' → s = s' ∧ t = t')\n  (language_noL2V_1 : ∀ (s : String), L2V_1 (identified_1 literalSyntax_1.langString) s = none),\n  ({ literalSyntax := literalSyntax, identified := identified, L2V := L2V, languageValue := languageValue,\n        language_injective := language_injective, language_noL2V := language_noL2V } =\n      { literalSyntax := literalSyntax_1, identified := identified_1, L2V := L2V_1, languageValue := languageValue_1,\n        language_injective := language_injective_1, language_noL2V := language_noL2V_1 }) =\n    (literalSyntax = literalSyntax_1 ∧ identified = identified_1 ∧ L2V = L2V_1 ∧ languageValue = languageValue_1)",
       "role": "proof_support",
       "grounds": [
         "SUPPORT-DATATYPES"
@@ -7673,7 +7717,7 @@
       "name": "RDF11.DatatypeTheory.mk.noConfusion",
       "module": "RDF11.Datatypes",
       "kind": "definition",
-      "type": "{Iri Literal Value : Type} →\n  {P : Sort u} →\n    {literalSyntax : RDF11.LiteralSyntax Iri Literal} →\n      {identified : Iri → Value} →\n        {L2V : Value → String → Option Value} →\n          {languageValue : String → String → Value} →\n            {language_injective : ∀ (s t s' t' : String), languageValue s t = languageValue s' t' → s = s' ∧ t = t'} →\n              {literalSyntax' : RDF11.LiteralSyntax Iri Literal} →\n                {identified' : Iri → Value} →\n                  {L2V' : Value → String → Option Value} →\n                    {languageValue' : String → String → Value} →\n                      {language_injective' :\n                          ∀ (s t s' t' : String), languageValue' s t = languageValue' s' t' → s = s' ∧ t = t'} →\n                        { literalSyntax := literalSyntax, identified := identified, L2V := L2V,\n                              languageValue := languageValue, language_injective := language_injective } =\n                            { literalSyntax := literalSyntax', identified := identified', L2V := L2V',\n                              languageValue := languageValue', language_injective := language_injective' } →\n                          (literalSyntax ≍ literalSyntax' →\n                              identified ≍ identified' → L2V ≍ L2V' → languageValue ≍ languageValue' → P) →\n                            P",
+      "type": "{Iri Literal Value : Type} →\n  {P : Sort u} →\n    {literalSyntax : RDF11.LiteralSyntax Iri Literal} →\n      {identified : Iri → Value} →\n        {L2V : Value → String → Option Value} →\n          {languageValue : String → String → Value} →\n            {language_injective : ∀ (s t s' t' : String), languageValue s t = languageValue s' t' → s = s' ∧ t = t'} →\n              {language_noL2V : ∀ (s : String), L2V (identified literalSyntax.langString) s = none} →\n                {literalSyntax' : RDF11.LiteralSyntax Iri Literal} →\n                  {identified' : Iri → Value} →\n                    {L2V' : Value → String → Option Value} →\n                      {languageValue' : String → String → Value} →\n                        {language_injective' :\n                            ∀ (s t s' t' : String), languageValue' s t = languageValue' s' t' → s = s' ∧ t = t'} →\n                          {language_noL2V' : ∀ (s : String), L2V' (identified' literalSyntax'.langString) s = none} →\n                            { literalSyntax := literalSyntax, identified := identified, L2V := L2V,\n                                  languageValue := languageValue, language_injective := language_injective,\n                                  language_noL2V := language_noL2V } =\n                                { literalSyntax := literalSyntax', identified := identified', L2V := L2V',\n                                  languageValue := languageValue', language_injective := language_injective',\n                                  language_noL2V := language_noL2V' } →\n                              (literalSyntax ≍ literalSyntax' →\n                                  identified ≍ identified' → L2V ≍ L2V' → languageValue ≍ languageValue' → P) →\n                                P",
       "role": "proof_support",
       "grounds": [
         "SUPPORT-DATATYPES"
@@ -7685,7 +7729,7 @@
       "name": "RDF11.DatatypeTheory.mk.sizeOf_spec",
       "module": "RDF11.Datatypes",
       "kind": "theorem",
-      "type": "∀ {Iri Literal Value : Type} [inst : SizeOf Iri] [inst_1 : SizeOf Literal] [inst_2 : SizeOf Value]\n  (literalSyntax : RDF11.LiteralSyntax Iri Literal) (identified : Iri → Value) (L2V : Value → String → Option Value)\n  (languageValue : String → String → Value)\n  (language_injective : ∀ (s t s' t' : String), languageValue s t = languageValue s' t' → s = s' ∧ t = t'),\n  sizeOf\n      { literalSyntax := literalSyntax, identified := identified, L2V := L2V, languageValue := languageValue,\n        language_injective := language_injective } =\n    1 + sizeOf literalSyntax",
+      "type": "∀ {Iri Literal Value : Type} [inst : SizeOf Iri] [inst_1 : SizeOf Literal] [inst_2 : SizeOf Value]\n  (literalSyntax : RDF11.LiteralSyntax Iri Literal) (identified : Iri → Value) (L2V : Value → String → Option Value)\n  (languageValue : String → String → Value)\n  (language_injective : ∀ (s t s' t' : String), languageValue s t = languageValue s' t' → s = s' ∧ t = t')\n  (language_noL2V : ∀ (s : String), L2V (identified literalSyntax.langString) s = none),\n  sizeOf\n      { literalSyntax := literalSyntax, identified := identified, L2V := L2V, languageValue := languageValue,\n        language_injective := language_injective, language_noL2V := language_noL2V } =\n    1 + sizeOf literalSyntax",
       "role": "proof_support",
       "grounds": [
         "SUPPORT-DATATYPES"
@@ -7721,7 +7765,7 @@
       "name": "RDF11.DatatypeTheory.rec",
       "module": "RDF11.Datatypes",
       "kind": "recursor",
-      "type": "{Iri Literal Value : Type} →\n  {motive : RDF11.DatatypeTheory Iri Literal Value → Sort u} →\n    ((literalSyntax : RDF11.LiteralSyntax Iri Literal) →\n        (identified : Iri → Value) →\n          (L2V : Value → String → Option Value) →\n            (languageValue : String → String → Value) →\n              (language_injective : ∀ (s t s' t' : String), languageValue s t = languageValue s' t' → s = s' ∧ t = t') →\n                motive\n                  { literalSyntax := literalSyntax, identified := identified, L2V := L2V,\n                    languageValue := languageValue, language_injective := language_injective }) →\n      (t : RDF11.DatatypeTheory Iri Literal Value) → motive t",
+      "type": "{Iri Literal Value : Type} →\n  {motive : RDF11.DatatypeTheory Iri Literal Value → Sort u} →\n    ((literalSyntax : RDF11.LiteralSyntax Iri Literal) →\n        (identified : Iri → Value) →\n          (L2V : Value → String → Option Value) →\n            (languageValue : String → String → Value) →\n              (language_injective : ∀ (s t s' t' : String), languageValue s t = languageValue s' t' → s = s' ∧ t = t') →\n                (language_noL2V : ∀ (s : String), L2V (identified literalSyntax.langString) s = none) →\n                  motive\n                    { literalSyntax := literalSyntax, identified := identified, L2V := L2V,\n                      languageValue := languageValue, language_injective := language_injective,\n                      language_noL2V := language_noL2V }) →\n      (t : RDF11.DatatypeTheory Iri Literal Value) → motive t",
       "role": "proof_support",
       "grounds": [
         "SUPPORT-DATATYPES"
@@ -7733,7 +7777,7 @@
       "name": "RDF11.DatatypeTheory.recOn",
       "module": "RDF11.Datatypes",
       "kind": "definition",
-      "type": "{Iri Literal Value : Type} →\n  {motive : RDF11.DatatypeTheory Iri Literal Value → Sort u} →\n    (t : RDF11.DatatypeTheory Iri Literal Value) →\n      ((literalSyntax : RDF11.LiteralSyntax Iri Literal) →\n          (identified : Iri → Value) →\n            (L2V : Value → String → Option Value) →\n              (languageValue : String → String → Value) →\n                (language_injective :\n                    ∀ (s t s' t' : String), languageValue s t = languageValue s' t' → s = s' ∧ t = t') →\n                  motive\n                    { literalSyntax := literalSyntax, identified := identified, L2V := L2V,\n                      languageValue := languageValue, language_injective := language_injective }) →\n        motive t",
+      "type": "{Iri Literal Value : Type} →\n  {motive : RDF11.DatatypeTheory Iri Literal Value → Sort u} →\n    (t : RDF11.DatatypeTheory Iri Literal Value) →\n      ((literalSyntax : RDF11.LiteralSyntax Iri Literal) →\n          (identified : Iri → Value) →\n            (L2V : Value → String → Option Value) →\n              (languageValue : String → String → Value) →\n                (language_injective :\n                    ∀ (s t s' t' : String), languageValue s t = languageValue s' t' → s = s' ∧ t = t') →\n                  (language_noL2V : ∀ (s : String), L2V (identified literalSyntax.langString) s = none) →\n                    motive\n                      { literalSyntax := literalSyntax, identified := identified, L2V := L2V,\n                        languageValue := languageValue, language_injective := language_injective,\n                        language_noL2V := language_noL2V }) →\n        motive t",
       "role": "proof_support",
       "grounds": [
         "SUPPORT-DATATYPES"
@@ -7758,7 +7802,7 @@
       "name": "RDF11.DatatypeTheory.recognizedSpace.eq_1",
       "module": "RDF11.Datatypes",
       "kind": "theorem",
-      "type": "∀ {Iri Literal Value : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (a : Iri),\n  T.recognizedSpace a = if a = T.literalSyntax.langString then T.languageSpace else T.valueSpace (T.identified a)",
+      "type": "∀ {Iri Literal Value : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (a : Iri),\n  T.recognizedSpace a = T.datatypeSpace (T.identified a)",
       "role": "proof_support",
       "grounds": [
         "SUPPORT-DATATYPES"
@@ -10666,7 +10710,7 @@
       "name": "RDF11.SimpleInterpretation.DConditions.casesOn",
       "module": "RDF11.Datatypes",
       "kind": "definition",
-      "type": "{Iri Literal : Type} →\n  {U : Type u_1} →\n    {Value : Type} →\n      {I : RDF11.SimpleInterpretation Iri Literal U} →\n        {T : RDF11.DatatypeTheory Iri Literal Value} →\n          {D : RDF11.Set Iri} →\n            {ρ : RDF11.ValueRealization Value U} →\n              {motive : I.DConditions T D ρ → Sort u} →\n                (t : I.DConditions T D ρ) →\n                  ((language :\n                        ∀ (l : Literal) (tag : String),\n                          D T.literalSyntax.langString →\n                            T.literalSyntax.language l = some tag →\n                              I.LiteralValue ρ l (T.languageValue (T.literalSyntax.lexical l) (RDF11.asciiLower tag))) →\n                      (ordinary :\n                          ∀ (a : Iri),\n                            D a →\n                              a ≠ T.literalSyntax.langString →\n                                ρ.value (T.identified a) = some (I.IS a).val ∧\n                                  ∀ (l : Literal),\n                                    T.literalSyntax.datatype l = a →\n                                      match T.L2V (T.identified a) (T.literalSyntax.lexical l) with\n                                      | none => I.IL l = none\n                                      | some v => I.LiteralValue ρ l v) →\n                        motive ⋯) →\n                    motive t",
+      "type": "{Iri Literal : Type} →\n  {U : Type u_1} →\n    {Value : Type} →\n      {I : RDF11.SimpleInterpretation Iri Literal U} →\n        {T : RDF11.DatatypeTheory Iri Literal Value} →\n          {D : RDF11.Set Iri} →\n            {ρ : RDF11.ValueRealization Value U} →\n              {motive : I.DConditions T D ρ → Sort u} →\n                (t : I.DConditions T D ρ) →\n                  ((language_denotation :\n                        D T.literalSyntax.langString →\n                          ρ.value (T.identified T.literalSyntax.langString) =\n                            some (I.IS T.literalSyntax.langString).val) →\n                      (language :\n                          ∀ (l : Literal) (tag : String),\n                            D T.literalSyntax.langString →\n                              T.literalSyntax.language l = some tag →\n                                I.LiteralValue ρ l\n                                  (T.languageValue (T.literalSyntax.lexical l) (RDF11.asciiLower tag))) →\n                        (ordinary :\n                            ∀ (a : Iri),\n                              D a →\n                                a ≠ T.literalSyntax.langString →\n                                  ρ.value (T.identified a) = some (I.IS a).val ∧\n                                    ∀ (l : Literal),\n                                      T.literalSyntax.datatype l = a →\n                                        match T.L2V (T.identified a) (T.literalSyntax.lexical l) with\n                                        | none => I.IL l = none\n                                        | some v => I.LiteralValue ρ l v) →\n                          motive ⋯) →\n                    motive t",
       "role": "proof_support",
       "grounds": [
         "SUPPORT-DATATYPES"
@@ -10705,7 +10749,7 @@
       "name": "RDF11.SimpleInterpretation.DConditions.mk",
       "module": "RDF11.Datatypes",
       "kind": "constructor",
-      "type": "∀ {Iri Literal : Type} {U : Type u_1} {Value : Type} {I : RDF11.SimpleInterpretation Iri Literal U}\n  {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri} {ρ : RDF11.ValueRealization Value U},\n  (∀ (l : Literal) (tag : String),\n      D T.literalSyntax.langString →\n        T.literalSyntax.language l = some tag →\n          I.LiteralValue ρ l (T.languageValue (T.literalSyntax.lexical l) (RDF11.asciiLower tag))) →\n    (∀ (a : Iri),\n        D a →\n          a ≠ T.literalSyntax.langString →\n            ρ.value (T.identified a) = some (I.IS a).val ∧\n              ∀ (l : Literal),\n                T.literalSyntax.datatype l = a →\n                  match T.L2V (T.identified a) (T.literalSyntax.lexical l) with\n                  | none => I.IL l = none\n                  | some v => I.LiteralValue ρ l v) →\n      I.DConditions T D ρ",
+      "type": "∀ {Iri Literal : Type} {U : Type u_1} {Value : Type} {I : RDF11.SimpleInterpretation Iri Literal U}\n  {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri} {ρ : RDF11.ValueRealization Value U},\n  (D T.literalSyntax.langString →\n      ρ.value (T.identified T.literalSyntax.langString) = some (I.IS T.literalSyntax.langString).val) →\n    (∀ (l : Literal) (tag : String),\n        D T.literalSyntax.langString →\n          T.literalSyntax.language l = some tag →\n            I.LiteralValue ρ l (T.languageValue (T.literalSyntax.lexical l) (RDF11.asciiLower tag))) →\n      (∀ (a : Iri),\n          D a →\n            a ≠ T.literalSyntax.langString →\n              ρ.value (T.identified a) = some (I.IS a).val ∧\n                ∀ (l : Literal),\n                  T.literalSyntax.datatype l = a →\n                    match T.L2V (T.identified a) (T.literalSyntax.lexical l) with\n                    | none => I.IL l = none\n                    | some v => I.LiteralValue ρ l v) →\n        I.DConditions T D ρ",
       "role": "proof_support",
       "grounds": [
         "SUPPORT-DATATYPES"
@@ -10717,7 +10761,7 @@
       "name": "RDF11.SimpleInterpretation.DConditions.mk._flat_ctor",
       "module": "RDF11.Datatypes",
       "kind": "definition",
-      "type": "∀ {Iri Literal : Type} {U : Type u_1} {Value : Type} {I : RDF11.SimpleInterpretation Iri Literal U}\n  {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri} {ρ : RDF11.ValueRealization Value U},\n  (∀ (l : Literal) (tag : String),\n      D T.literalSyntax.langString →\n        T.literalSyntax.language l = some tag →\n          I.LiteralValue ρ l (T.languageValue (T.literalSyntax.lexical l) (RDF11.asciiLower tag))) →\n    (∀ (a : Iri),\n        D a →\n          a ≠ T.literalSyntax.langString →\n            ρ.value (T.identified a) = some (I.IS a).val ∧\n              ∀ (l : Literal),\n                T.literalSyntax.datatype l = a →\n                  match T.L2V (T.identified a) (T.literalSyntax.lexical l) with\n                  | none => I.IL l = none\n                  | some v => I.LiteralValue ρ l v) →\n      I.DConditions T D ρ",
+      "type": "∀ {Iri Literal : Type} {U : Type u_1} {Value : Type} {I : RDF11.SimpleInterpretation Iri Literal U}\n  {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri} {ρ : RDF11.ValueRealization Value U},\n  (D T.literalSyntax.langString →\n      ρ.value (T.identified T.literalSyntax.langString) = some (I.IS T.literalSyntax.langString).val) →\n    (∀ (l : Literal) (tag : String),\n        D T.literalSyntax.langString →\n          T.literalSyntax.language l = some tag →\n            I.LiteralValue ρ l (T.languageValue (T.literalSyntax.lexical l) (RDF11.asciiLower tag))) →\n      (∀ (a : Iri),\n          D a →\n            a ≠ T.literalSyntax.langString →\n              ρ.value (T.identified a) = some (I.IS a).val ∧\n                ∀ (l : Literal),\n                  T.literalSyntax.datatype l = a →\n                    match T.L2V (T.identified a) (T.literalSyntax.lexical l) with\n                    | none => I.IL l = none\n                    | some v => I.LiteralValue ρ l v) →\n        I.DConditions T D ρ",
       "role": "proof_support",
       "grounds": [
         "SUPPORT-DATATYPES"
@@ -10743,7 +10787,7 @@
       "name": "RDF11.SimpleInterpretation.DConditions.rec",
       "module": "RDF11.Datatypes",
       "kind": "recursor",
-      "type": "{Iri Literal : Type} →\n  {U : Type u_1} →\n    {Value : Type} →\n      {I : RDF11.SimpleInterpretation Iri Literal U} →\n        {T : RDF11.DatatypeTheory Iri Literal Value} →\n          {D : RDF11.Set Iri} →\n            {ρ : RDF11.ValueRealization Value U} →\n              {motive : I.DConditions T D ρ → Sort u} →\n                ((language :\n                      ∀ (l : Literal) (tag : String),\n                        D T.literalSyntax.langString →\n                          T.literalSyntax.language l = some tag →\n                            I.LiteralValue ρ l (T.languageValue (T.literalSyntax.lexical l) (RDF11.asciiLower tag))) →\n                    (ordinary :\n                        ∀ (a : Iri),\n                          D a →\n                            a ≠ T.literalSyntax.langString →\n                              ρ.value (T.identified a) = some (I.IS a).val ∧\n                                ∀ (l : Literal),\n                                  T.literalSyntax.datatype l = a →\n                                    match T.L2V (T.identified a) (T.literalSyntax.lexical l) with\n                                    | none => I.IL l = none\n                                    | some v => I.LiteralValue ρ l v) →\n                      motive ⋯) →\n                  (t : I.DConditions T D ρ) → motive t",
+      "type": "{Iri Literal : Type} →\n  {U : Type u_1} →\n    {Value : Type} →\n      {I : RDF11.SimpleInterpretation Iri Literal U} →\n        {T : RDF11.DatatypeTheory Iri Literal Value} →\n          {D : RDF11.Set Iri} →\n            {ρ : RDF11.ValueRealization Value U} →\n              {motive : I.DConditions T D ρ → Sort u} →\n                ((language_denotation :\n                      D T.literalSyntax.langString →\n                        ρ.value (T.identified T.literalSyntax.langString) =\n                          some (I.IS T.literalSyntax.langString).val) →\n                    (language :\n                        ∀ (l : Literal) (tag : String),\n                          D T.literalSyntax.langString →\n                            T.literalSyntax.language l = some tag →\n                              I.LiteralValue ρ l (T.languageValue (T.literalSyntax.lexical l) (RDF11.asciiLower tag))) →\n                      (ordinary :\n                          ∀ (a : Iri),\n                            D a →\n                              a ≠ T.literalSyntax.langString →\n                                ρ.value (T.identified a) = some (I.IS a).val ∧\n                                  ∀ (l : Literal),\n                                    T.literalSyntax.datatype l = a →\n                                      match T.L2V (T.identified a) (T.literalSyntax.lexical l) with\n                                      | none => I.IL l = none\n                                      | some v => I.LiteralValue ρ l v) →\n                        motive ⋯) →\n                  (t : I.DConditions T D ρ) → motive t",
       "role": "proof_support",
       "grounds": [
         "SUPPORT-DATATYPES"
@@ -10755,7 +10799,7 @@
       "name": "RDF11.SimpleInterpretation.DConditions.recOn",
       "module": "RDF11.Datatypes",
       "kind": "definition",
-      "type": "{Iri Literal : Type} →\n  {U : Type u_1} →\n    {Value : Type} →\n      {I : RDF11.SimpleInterpretation Iri Literal U} →\n        {T : RDF11.DatatypeTheory Iri Literal Value} →\n          {D : RDF11.Set Iri} →\n            {ρ : RDF11.ValueRealization Value U} →\n              {motive : I.DConditions T D ρ → Sort u} →\n                (t : I.DConditions T D ρ) →\n                  ((language :\n                        ∀ (l : Literal) (tag : String),\n                          D T.literalSyntax.langString →\n                            T.literalSyntax.language l = some tag →\n                              I.LiteralValue ρ l (T.languageValue (T.literalSyntax.lexical l) (RDF11.asciiLower tag))) →\n                      (ordinary :\n                          ∀ (a : Iri),\n                            D a →\n                              a ≠ T.literalSyntax.langString →\n                                ρ.value (T.identified a) = some (I.IS a).val ∧\n                                  ∀ (l : Literal),\n                                    T.literalSyntax.datatype l = a →\n                                      match T.L2V (T.identified a) (T.literalSyntax.lexical l) with\n                                      | none => I.IL l = none\n                                      | some v => I.LiteralValue ρ l v) →\n                        motive ⋯) →\n                    motive t",
+      "type": "{Iri Literal : Type} →\n  {U : Type u_1} →\n    {Value : Type} →\n      {I : RDF11.SimpleInterpretation Iri Literal U} →\n        {T : RDF11.DatatypeTheory Iri Literal Value} →\n          {D : RDF11.Set Iri} →\n            {ρ : RDF11.ValueRealization Value U} →\n              {motive : I.DConditions T D ρ → Sort u} →\n                (t : I.DConditions T D ρ) →\n                  ((language_denotation :\n                        D T.literalSyntax.langString →\n                          ρ.value (T.identified T.literalSyntax.langString) =\n                            some (I.IS T.literalSyntax.langString).val) →\n                      (language :\n                          ∀ (l : Literal) (tag : String),\n                            D T.literalSyntax.langString →\n                              T.literalSyntax.language l = some tag →\n                                I.LiteralValue ρ l\n                                  (T.languageValue (T.literalSyntax.lexical l) (RDF11.asciiLower tag))) →\n                        (ordinary :\n                            ∀ (a : Iri),\n                              D a →\n                                a ≠ T.literalSyntax.langString →\n                                  ρ.value (T.identified a) = some (I.IS a).val ∧\n                                    ∀ (l : Literal),\n                                      T.literalSyntax.datatype l = a →\n                                        match T.L2V (T.identified a) (T.literalSyntax.lexical l) with\n                                        | none => I.IL l = none\n                                        | some v => I.LiteralValue ρ l v) →\n                          motive ⋯) →\n                    motive t",
       "role": "proof_support",
       "grounds": [
         "SUPPORT-DATATYPES"
@@ -12751,7 +12795,7 @@
       "name": "RDF11.DatatypeModel.interpretation.eq_1",
       "module": "RDF11.DatatypeModels",
       "kind": "theorem",
-      "type": "∀ {Iri Literal Value : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri),\n  RDF11.DatatypeModel.interpretation T D =\n    { IR := fun x => True, IR_nonempty := ⋯, IP := fun x => True, IEXT := fun x x_1 => True,\n      IS := fun a =>\n        ⟨if D a ∧ a ≠ T.literalSyntax.langString then RDF11.DatatypeModel.embed (T.identified a)\n          else RDF11.DatatypeModel.unnamed,\n          ⋯⟩,\n      IL := fun l => Option.map (fun x => ⟨x, True.intro⟩) (RDF11.DatatypeModel.literal T D l) }",
+      "type": "∀ {Iri Literal Value : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri),\n  RDF11.DatatypeModel.interpretation T D =\n    { IR := fun x => True, IR_nonempty := ⋯, IP := fun x => True, IEXT := fun x x_1 => True,\n      IS := fun a => ⟨if D a then RDF11.DatatypeModel.embed (T.identified a) else RDF11.DatatypeModel.unnamed, ⋯⟩,\n      IL := fun l => Option.map (fun x => ⟨x, True.intro⟩) (RDF11.DatatypeModel.literal T D l) }",
       "role": "proof_support",
       "grounds": [
         "SUPPORT-DATATYPE-MODELS"
@@ -16887,6 +16931,769 @@
         "SUPPORT-DATASET-NAME-DENOTATION"
       ],
       "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFModelConstruction.Carrier",
+      "module": "RDF11.RDFModels",
+      "kind": "definition",
+      "type": "Type → Type → Type u",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDF-MODELS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFModelConstruction.Parameters",
+      "module": "RDF11.RDFModels",
+      "kind": "inductive",
+      "type": "{Iri Literal Value : Type} → RDF11.DatatypeTheory Iri Literal Value → RDF11.Set Iri → RDF11.RDFVocabulary Iri → Prop",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDF-MODELS",
+        "MT11-RDF-MODEL-EXISTENCE-CONSTRUCTION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFModelConstruction.Parameters.casesOn",
+      "module": "RDF11.RDFModels",
+      "kind": "definition",
+      "type": "{Iri Literal Value : Type} →\n  {T : RDF11.DatatypeTheory Iri Literal Value} →\n    {D : RDF11.Set Iri} →\n      {v : RDF11.RDFVocabulary Iri} →\n        {motive : RDF11.RDFModelConstruction.Parameters T D v → Sort u} →\n          (t : RDF11.RDFModelConstruction.Parameters T D v) →\n            ((language_iri : T.literalSyntax.langString = v.iri RDF11.RDFSymbol.rdfLangString) →\n                (recognize_language : D (v.iri RDF11.RDFSymbol.rdfLangString)) →\n                  (recognize_string : D (v.iri RDF11.RDFSymbol.xsdString)) →\n                    (type_not_datatype : ¬D (v.iri RDF11.RDFSymbol.rdfType)) →\n                      (property_not_datatype : ¬D (v.iri RDF11.RDFSymbol.rdfProperty)) →\n                        (list_not_datatype : ¬D (v.iri RDF11.RDFSymbol.rdfList)) → motive ⋯) →\n              motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDF-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.RDFModelConstruction.Parameters",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFModelConstruction.Parameters.language_iri",
+      "module": "RDF11.RDFModels",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri}\n  {v : RDF11.RDFVocabulary Iri},\n  RDF11.RDFModelConstruction.Parameters T D v → T.literalSyntax.langString = v.iri RDF11.RDFSymbol.rdfLangString",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDF-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.RDFModelConstruction.Parameters",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFModelConstruction.Parameters.list_not_datatype",
+      "module": "RDF11.RDFModels",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri}\n  {v : RDF11.RDFVocabulary Iri}, RDF11.RDFModelConstruction.Parameters T D v → ¬D (v.iri RDF11.RDFSymbol.rdfList)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDF-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.RDFModelConstruction.Parameters",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFModelConstruction.Parameters.mk",
+      "module": "RDF11.RDFModels",
+      "kind": "constructor",
+      "type": "∀ {Iri Literal Value : Type} {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri}\n  {v : RDF11.RDFVocabulary Iri},\n  T.literalSyntax.langString = v.iri RDF11.RDFSymbol.rdfLangString →\n    D (v.iri RDF11.RDFSymbol.rdfLangString) →\n      D (v.iri RDF11.RDFSymbol.xsdString) →\n        ¬D (v.iri RDF11.RDFSymbol.rdfType) →\n          ¬D (v.iri RDF11.RDFSymbol.rdfProperty) →\n            ¬D (v.iri RDF11.RDFSymbol.rdfList) → RDF11.RDFModelConstruction.Parameters T D v",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDF-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.RDFModelConstruction.Parameters",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFModelConstruction.Parameters.mk._flat_ctor",
+      "module": "RDF11.RDFModels",
+      "kind": "definition",
+      "type": "∀ {Iri Literal Value : Type} {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri}\n  {v : RDF11.RDFVocabulary Iri},\n  T.literalSyntax.langString = v.iri RDF11.RDFSymbol.rdfLangString →\n    D (v.iri RDF11.RDFSymbol.rdfLangString) →\n      D (v.iri RDF11.RDFSymbol.xsdString) →\n        ¬D (v.iri RDF11.RDFSymbol.rdfType) →\n          ¬D (v.iri RDF11.RDFSymbol.rdfProperty) →\n            ¬D (v.iri RDF11.RDFSymbol.rdfList) → RDF11.RDFModelConstruction.Parameters T D v",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDF-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.RDFModelConstruction.Parameters.mk",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFModelConstruction.Parameters.property_not_datatype",
+      "module": "RDF11.RDFModels",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri}\n  {v : RDF11.RDFVocabulary Iri}, RDF11.RDFModelConstruction.Parameters T D v → ¬D (v.iri RDF11.RDFSymbol.rdfProperty)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDF-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.RDFModelConstruction.Parameters",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFModelConstruction.Parameters.rec",
+      "module": "RDF11.RDFModels",
+      "kind": "recursor",
+      "type": "{Iri Literal Value : Type} →\n  {T : RDF11.DatatypeTheory Iri Literal Value} →\n    {D : RDF11.Set Iri} →\n      {v : RDF11.RDFVocabulary Iri} →\n        {motive : RDF11.RDFModelConstruction.Parameters T D v → Sort u} →\n          ((language_iri : T.literalSyntax.langString = v.iri RDF11.RDFSymbol.rdfLangString) →\n              (recognize_language : D (v.iri RDF11.RDFSymbol.rdfLangString)) →\n                (recognize_string : D (v.iri RDF11.RDFSymbol.xsdString)) →\n                  (type_not_datatype : ¬D (v.iri RDF11.RDFSymbol.rdfType)) →\n                    (property_not_datatype : ¬D (v.iri RDF11.RDFSymbol.rdfProperty)) →\n                      (list_not_datatype : ¬D (v.iri RDF11.RDFSymbol.rdfList)) → motive ⋯) →\n            (t : RDF11.RDFModelConstruction.Parameters T D v) → motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDF-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.RDFModelConstruction.Parameters",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFModelConstruction.Parameters.recOn",
+      "module": "RDF11.RDFModels",
+      "kind": "definition",
+      "type": "{Iri Literal Value : Type} →\n  {T : RDF11.DatatypeTheory Iri Literal Value} →\n    {D : RDF11.Set Iri} →\n      {v : RDF11.RDFVocabulary Iri} →\n        {motive : RDF11.RDFModelConstruction.Parameters T D v → Sort u} →\n          (t : RDF11.RDFModelConstruction.Parameters T D v) →\n            ((language_iri : T.literalSyntax.langString = v.iri RDF11.RDFSymbol.rdfLangString) →\n                (recognize_language : D (v.iri RDF11.RDFSymbol.rdfLangString)) →\n                  (recognize_string : D (v.iri RDF11.RDFSymbol.xsdString)) →\n                    (type_not_datatype : ¬D (v.iri RDF11.RDFSymbol.rdfType)) →\n                      (property_not_datatype : ¬D (v.iri RDF11.RDFSymbol.rdfProperty)) →\n                        (list_not_datatype : ¬D (v.iri RDF11.RDFSymbol.rdfList)) → motive ⋯) →\n              motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDF-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.RDFModelConstruction.Parameters",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFModelConstruction.Parameters.recognize_language",
+      "module": "RDF11.RDFModels",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri}\n  {v : RDF11.RDFVocabulary Iri}, RDF11.RDFModelConstruction.Parameters T D v → D (v.iri RDF11.RDFSymbol.rdfLangString)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDF-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.RDFModelConstruction.Parameters",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFModelConstruction.Parameters.recognize_string",
+      "module": "RDF11.RDFModels",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri}\n  {v : RDF11.RDFVocabulary Iri}, RDF11.RDFModelConstruction.Parameters T D v → D (v.iri RDF11.RDFSymbol.xsdString)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDF-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.RDFModelConstruction.Parameters",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFModelConstruction.Parameters.type_not_datatype",
+      "module": "RDF11.RDFModels",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri}\n  {v : RDF11.RDFVocabulary Iri}, RDF11.RDFModelConstruction.Parameters T D v → ¬D (v.iri RDF11.RDFSymbol.rdfType)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDF-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.RDFModelConstruction.Parameters",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFModelConstruction.base_empty_satisfiable",
+      "module": "RDF11.RDFModels",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (v : RDF11.RDFVocabulary Iri),\n  T.literalSyntax.langString = v.iri RDF11.RDFSymbol.rdfLangString →\n    ∃ U I, I.RDFModel T v.baseDatatypes v ∧ I.Satisfies RDF11.Set.empty",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDF-MODELS",
+        "MT11-RDF-INTERPRETATION",
+        "MT11-RDF-MODEL-EXISTENCE-CONSTRUCTION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFModelConstruction.base_parameters",
+      "module": "RDF11.RDFModels",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (v : RDF11.RDFVocabulary Iri),\n  T.literalSyntax.langString = v.iri RDF11.RDFSymbol.rdfLangString →\n    RDF11.RDFModelConstruction.Parameters T v.baseDatatypes v",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDF-MODELS",
+        "MT11-RDF-MODEL-EXISTENCE-CONSTRUCTION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFModelConstruction.conditions",
+      "module": "RDF11.RDFModels",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (v : RDF11.RDFVocabulary Iri),\n  RDF11.RDFModelConstruction.Parameters T D v →\n    ∀\n      (R :\n        RDF11.RDFModelConstruction.Carrier Iri Value →\n          RDF11.RDFModelConstruction.Carrier Iri Value → RDF11.RDFModelConstruction.Carrier Iri Value → Prop),\n      (RDF11.RDFModelConstruction.interpretation T D v R).RDFConditions T D v RDF11.RDFModelConstruction.realization",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDF-MODELS",
+        "MT11-RDF-INTERPRETATION",
+        "MT11-RDF-MODEL-EXISTENCE-CONSTRUCTION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFModelConstruction.datatype_column",
+      "module": "RDF11.RDFModels",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri) (a : Iri),\n  D a →\n    ∀ (x : RDF11.RDFModelConstruction.Carrier Iri Value),\n      RDF11.RDFModelConstruction.typeExtension T x (RDF11.RDFModelConstruction.iriValue T D a) ↔\n        ∃ w, T.recognizedSpace a w ∧ RDF11.RDFModelConstruction.realization.value w = some x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDF-MODELS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFModelConstruction.datatypes",
+      "module": "RDF11.RDFModels",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (v : RDF11.RDFVocabulary Iri)\n  (R :\n    RDF11.RDFModelConstruction.Carrier Iri Value →\n      RDF11.RDFModelConstruction.Carrier Iri Value → RDF11.RDFModelConstruction.Carrier Iri Value → Prop),\n  (RDF11.RDFModelConstruction.interpretation T D v R).DConditions T D RDF11.RDFModelConstruction.realization",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDF-MODELS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFModelConstruction.embed",
+      "module": "RDF11.RDFModels",
+      "kind": "definition",
+      "type": "{Value Iri : Type} → Value → RDF11.RDFModelConstruction.Carrier Iri Value",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDF-MODELS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFModelConstruction.embed.eq_1",
+      "module": "RDF11.RDFModels",
+      "kind": "theorem",
+      "type": "∀ {Value Iri : Type} (w : Value), RDF11.RDFModelConstruction.embed w = { down := Sum.inl w }",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDF-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.RDFModelConstruction.embed",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFModelConstruction.empty_satisfiable",
+      "module": "RDF11.RDFModels",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (v : RDF11.RDFVocabulary Iri),\n  RDF11.RDFModelConstruction.Parameters T D v → ∃ U I, I.RDFModel T D v ∧ I.Satisfies RDF11.Set.empty",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDF-MODELS",
+        "MT11-RDF-MODEL-EXISTENCE-CONSTRUCTION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFModelConstruction.interpretation",
+      "module": "RDF11.RDFModels",
+      "kind": "definition",
+      "type": "{Iri Literal Value : Type} →\n  RDF11.DatatypeTheory Iri Literal Value →\n    RDF11.Set Iri →\n      RDF11.RDFVocabulary Iri →\n        (RDF11.RDFModelConstruction.Carrier Iri Value →\n            RDF11.RDFModelConstruction.Carrier Iri Value → RDF11.RDFModelConstruction.Carrier Iri Value → Prop) →\n          RDF11.SimpleInterpretation Iri Literal (RDF11.RDFModelConstruction.Carrier Iri Value)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDF-MODELS",
+        "MT11-RDF-MODEL-EXISTENCE-CONSTRUCTION",
+        "MT11-RDF-VOCABULARY-LIMITS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFModelConstruction.interpretation._proof_1",
+      "module": "RDF11.RDFModels",
+      "kind": "theorem",
+      "type": "∀ {Iri Value : Type}, ∃ x, True",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDF-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.RDFModelConstruction.interpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFModelConstruction.interpretation.eq_1",
+      "module": "RDF11.RDFModels",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (v : RDF11.RDFVocabulary Iri)\n  (R :\n    RDF11.RDFModelConstruction.Carrier Iri Value →\n      RDF11.RDFModelConstruction.Carrier Iri Value → RDF11.RDFModelConstruction.Carrier Iri Value → Prop),\n  RDF11.RDFModelConstruction.interpretation T D v R =\n    { IR := fun x => True, IR_nonempty := ⋯, IP := fun x => True,\n      IEXT := fun p xy =>\n        if p.val = RDF11.RDFModelConstruction.name (v.iri RDF11.RDFSymbol.rdfType) then\n          RDF11.RDFModelConstruction.typeExtension T xy.fst.val xy.snd.val\n        else R p.val xy.fst.val xy.snd.val,\n      IS := fun a => ⟨RDF11.RDFModelConstruction.iriValue T D a, ⋯⟩,\n      IL := fun l =>\n        Option.map (fun r => ⟨RDF11.RDFModelConstruction.lift r.val, True.intro⟩)\n          ((RDF11.DatatypeModel.interpretation T D).IL l) }",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDF-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.RDFModelConstruction.interpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFModelConstruction.iriValue",
+      "module": "RDF11.RDFModels",
+      "kind": "definition",
+      "type": "{Iri Literal Value : Type} →\n  RDF11.DatatypeTheory Iri Literal Value → RDF11.Set Iri → Iri → RDF11.RDFModelConstruction.Carrier Iri Value",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDF-MODELS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFModelConstruction.iriValue.eq_1",
+      "module": "RDF11.RDFModels",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri) (a : Iri),\n  RDF11.RDFModelConstruction.iriValue T D a =\n    if D a then RDF11.RDFModelConstruction.embed (T.identified a) else RDF11.RDFModelConstruction.name a",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDF-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.RDFModelConstruction.iriValue",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFModelConstruction.iriValue_unrecognized",
+      "module": "RDF11.RDFModels",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri) (a : Iri),\n  ¬D a → RDF11.RDFModelConstruction.iriValue T D a = RDF11.RDFModelConstruction.name a",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDF-MODELS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFModelConstruction.lift",
+      "module": "RDF11.RDFModels",
+      "kind": "definition",
+      "type": "{Value Iri : Type} → RDF11.DatatypeModel.Carrier Value → RDF11.RDFModelConstruction.Carrier Iri Value",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDF-MODELS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFModelConstruction.lift.match_1",
+      "module": "RDF11.RDFModels",
+      "kind": "definition",
+      "type": "{Value : Type} →\n  (motive : RDF11.DatatypeModel.Carrier Value → Sort u_1) →\n    (x : RDF11.DatatypeModel.Carrier Value) →\n      ((w : Value) → motive { down := Sum.inl w }) → (Unit → motive { down := Sum.inr PUnit.unit }) → motive x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDF-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.RDFModelConstruction.lift",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFModelConstruction.literalValue_of_base",
+      "module": "RDF11.RDFModels",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} {l : Literal} {w : Value} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (v : RDF11.RDFVocabulary Iri)\n  (R :\n    RDF11.RDFModelConstruction.Carrier Iri Value →\n      RDF11.RDFModelConstruction.Carrier Iri Value → RDF11.RDFModelConstruction.Carrier Iri Value → Prop),\n  (RDF11.DatatypeModel.interpretation T D).LiteralValue RDF11.DatatypeModel.realization l w →\n    (RDF11.RDFModelConstruction.interpretation T D v R).LiteralValue RDF11.RDFModelConstruction.realization l w",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDF-MODELS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFModelConstruction.model",
+      "module": "RDF11.RDFModels",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (v : RDF11.RDFVocabulary Iri),\n  RDF11.RDFModelConstruction.Parameters T D v →\n    ∀\n      (R :\n        RDF11.RDFModelConstruction.Carrier Iri Value →\n          RDF11.RDFModelConstruction.Carrier Iri Value → RDF11.RDFModelConstruction.Carrier Iri Value → Prop),\n      (RDF11.RDFModelConstruction.interpretation T D v R).RDFModel T D v",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDF-MODELS",
+        "MT11-RDF-MODEL-EXISTENCE-CONSTRUCTION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFModelConstruction.name",
+      "module": "RDF11.RDFModels",
+      "kind": "definition",
+      "type": "{Iri Value : Type} → Iri → RDF11.RDFModelConstruction.Carrier Iri Value",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDF-MODELS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFModelConstruction.name.eq_1",
+      "module": "RDF11.RDFModels",
+      "kind": "theorem",
+      "type": "∀ {Iri Value : Type} (a : Iri), RDF11.RDFModelConstruction.name a = { down := Sum.inr (some a) }",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDF-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.RDFModelConstruction.name",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFModelConstruction.named_column",
+      "module": "RDF11.RDFModels",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri) (a : Iri),\n  ¬D a →\n    ∀ (x : RDF11.RDFModelConstruction.Carrier Iri Value),\n      RDF11.RDFModelConstruction.typeExtension T x (RDF11.RDFModelConstruction.iriValue T D a)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDF-MODELS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFModelConstruction.non_type_triple_iff",
+      "module": "RDF11.RDFModels",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (v : RDF11.RDFVocabulary Iri)\n  (R :\n    RDF11.RDFModelConstruction.Carrier Iri Value →\n      RDF11.RDFModelConstruction.Carrier Iri Value → RDF11.RDFModelConstruction.Carrier Iri Value → Prop)\n  (A : (RDF11.RDFModelConstruction.interpretation T D v R).Assignment B) (s p o : Iri),\n  ¬D p →\n    p ≠ v.iri RDF11.RDFSymbol.rdfType →\n      ((RDF11.RDFModelConstruction.interpretation T D v R).TripleTrue A\n          { subject := RDF11.Term.iri s, predicate := RDF11.Term.iri p, object := RDF11.Term.iri o } ↔\n        R (RDF11.RDFModelConstruction.name p) (RDF11.RDFModelConstruction.iriValue T D s)\n          (RDF11.RDFModelConstruction.iriValue T D o))",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDF-MODELS",
+        "MT11-RDF-VOCABULARY-LIMITS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFModelConstruction.non_type_triple_independent",
+      "module": "RDF11.RDFModels",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (v : RDF11.RDFVocabulary Iri),\n  RDF11.RDFModelConstruction.Parameters T D v →\n    ∀ (s p o : Iri),\n      ¬D p →\n        p ≠ v.iri RDF11.RDFSymbol.rdfType →\n          have G :=\n            RDF11.Set.singleton\n              { subject := RDF11.Term.iri s, predicate := RDF11.Term.iri p, object := RDF11.Term.iri o };\n          (∃ U I, I.RDFModel T D v ∧ I.Satisfies G) ∧ ¬RDF11.RDFEntails T D v RDF11.Set.empty G",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDF-MODELS",
+        "MT11-RDF-VOCABULARY-LIMITS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFModelConstruction.realization",
+      "module": "RDF11.RDFModels",
+      "kind": "definition",
+      "type": "{Value Iri : Type} → RDF11.ValueRealization Value (RDF11.RDFModelConstruction.Carrier Iri Value)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDF-MODELS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFModelConstruction.realization._proof_1",
+      "module": "RDF11.RDFModels",
+      "kind": "theorem",
+      "type": "∀ {Value Iri : Type} (x x_1 : Value) (x_2 : RDF11.RDFModelConstruction.Carrier Iri Value),\n  some (RDF11.RDFModelConstruction.embed x) = some x_2 →\n    some (RDF11.RDFModelConstruction.embed x_1) = some x_2 → x = x_1",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDF-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.RDFModelConstruction.realization",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFModelConstruction.realization.eq_1",
+      "module": "RDF11.RDFModels",
+      "kind": "theorem",
+      "type": "∀ {Value Iri : Type},\n  RDF11.RDFModelConstruction.realization =\n    { value := fun w => some (RDF11.RDFModelConstruction.embed w), injective := ⋯ }",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDF-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.RDFModelConstruction.realization",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFModelConstruction.relates_iff",
+      "module": "RDF11.RDFModels",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (v : RDF11.RDFVocabulary Iri)\n  (R :\n    RDF11.RDFModelConstruction.Carrier Iri Value →\n      RDF11.RDFModelConstruction.Carrier Iri Value → RDF11.RDFModelConstruction.Carrier Iri Value → Prop)\n  (p x y : RDF11.RDFModelConstruction.Carrier Iri Value),\n  (RDF11.RDFModelConstruction.interpretation T D v R).Relates p x y ↔\n    if p = RDF11.RDFModelConstruction.name (v.iri RDF11.RDFSymbol.rdfType) then\n      RDF11.RDFModelConstruction.typeExtension T x y\n    else R p x y",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDF-MODELS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFModelConstruction.typeExtension",
+      "module": "RDF11.RDFModels",
+      "kind": "definition",
+      "type": "{Iri Literal Value : Type} →\n  RDF11.DatatypeTheory Iri Literal Value →\n    RDF11.RDFModelConstruction.Carrier Iri Value → RDF11.RDFModelConstruction.Carrier Iri Value → Prop",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDF-MODELS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFModelConstruction.typeExtension.eq_1",
+      "module": "RDF11.RDFModels",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} (T : RDF11.DatatypeTheory Iri Literal Value)\n  (x y : RDF11.RDFModelConstruction.Carrier Iri Value),\n  RDF11.RDFModelConstruction.typeExtension T x y =\n    match y.down with\n    | Sum.inl d => ∃ w, T.datatypeSpace d w ∧ RDF11.RDFModelConstruction.embed w = x\n    | Sum.inr val => True",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDF-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.RDFModelConstruction.typeExtension",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFModelConstruction.typeExtension.match_1",
+      "module": "RDF11.RDFModels",
+      "kind": "definition",
+      "type": "{Iri Value : Type} →\n  (motive : Value ⊕ Option Iri → Sort u_1) →\n    (x : Value ⊕ Option Iri) →\n      ((d : Value) → motive (Sum.inl d)) → ((val : Option Iri) → motive (Sum.inr val)) → motive x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDF-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.RDFModelConstruction.typeExtension",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFModelConstruction.unnamed",
+      "module": "RDF11.RDFModels",
+      "kind": "definition",
+      "type": "{Iri Value : Type} → RDF11.RDFModelConstruction.Carrier Iri Value",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDF-MODELS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.Relates.eq_1",
+      "module": "RDF11.RDFModels",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u_1} (I : RDF11.SimpleInterpretation Iri Literal U) (p x y : U),\n  I.Relates p x y = ∃ hp hx hy, I.IEXT ⟨p, hp⟩ (⟨x, hx⟩, ⟨y, hy⟩)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDF-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation.Relates",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.rdf_property_datatype_nonempty",
+      "module": "RDF11.RDFModels",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u_1} {Value : Type} {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri}\n  {v : RDF11.RDFVocabulary Iri} {ρ : RDF11.ValueRealization Value U} (I : RDF11.SimpleInterpretation Iri Literal U),\n  I.RDFConditions T D v ρ →\n    D (v.iri RDF11.RDFSymbol.rdfProperty) → ∃ w, T.recognizedSpace (v.iri RDF11.RDFSymbol.rdfProperty) w",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDF-MODELS",
+        "MT11-RDF-DATATYPE-PARAMETER-INCOMPATIBILITY"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.rdfsModel_language_literal_coverage",
+      "module": "RDF11.RDFSModelConstraints",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} {U : Type u} {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri}\n  {v : RDF11.RDFSVocabulary Iri} (I : RDF11.SimpleInterpretation Iri Literal U),\n  I.RDFSModel T D v →\n    ∀ (w : Value),\n      T.languageSpace w →\n        ∃ l tag,\n          T.literalSyntax.language l = some tag ∧ T.languageValue (T.literalSyntax.lexical l) (RDF11.asciiLower tag) = w",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDFS-MODEL-CONSTRAINTS",
+        "MT11-RDFS-LANGUAGE-LITERAL-COVERAGE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.rdfs_language_literal_coverage",
+      "module": "RDF11.RDFSModelConstraints",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} {U : Type u} {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri}\n  {v : RDF11.RDFSVocabulary Iri} {ρ : RDF11.ValueRealization Value U} (I : RDF11.SimpleInterpretation Iri Literal U),\n  I.RDFSConditions T D v ρ →\n    ∀ (w : Value),\n      T.languageSpace w →\n        ∃ l tag,\n          T.literalSyntax.language l = some tag ∧ T.languageValue (T.literalSyntax.lexical l) (RDF11.asciiLower tag) = w",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDFS-MODEL-CONSTRAINTS",
+        "MT11-RDFS-LANGSTRING-EXTENSION",
+        "MT11-RDFS-LANGUAGE-LITERAL-COVERAGE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.rdf_unsatisfiable_implies_rdfs_unsatisfiable",
+      "module": "RDF11.RDFSModelConstraints",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (v : RDF11.RDFSVocabulary Iri) (G : RDF11.GeneralizedGraph Iri Literal B),\n  RDF11.RDFUnsatisfiable T D v.toRDF G → RDF11.RDFSUnsatisfiable T D v G",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDFS-MODEL-CONSTRAINTS",
+        "MT11-RDF-DATATYPE-PARAMETER-INCOMPATIBILITY"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.rdf_unsatisfiable_of_empty_property_datatype",
+      "module": "RDF11.RDFModels",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (v : RDF11.RDFVocabulary Iri),\n  D (v.iri RDF11.RDFSymbol.rdfProperty) →\n    (∀ (w : Value), ¬T.recognizedSpace (v.iri RDF11.RDFSymbol.rdfProperty) w) →\n      ∀ (G : RDF11.GeneralizedGraph Iri Literal B), RDF11.RDFUnsatisfiable T D v G",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDF-MODELS",
+        "MT11-RDF-DATATYPE-PARAMETER-INCOMPATIBILITY"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.rdfs_unsatisfiable_of_missing_language_literal",
+      "module": "RDF11.RDFSModelConstraints",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (v : RDF11.RDFSVocabulary Iri) (w : Value),\n  T.languageSpace w →\n    (¬∃ l tag,\n          T.literalSyntax.language l = some tag ∧\n            T.languageValue (T.literalSyntax.lexical l) (RDF11.asciiLower tag) = w) →\n      ∀ (G : RDF11.GeneralizedGraph Iri Literal B), RDF11.RDFSUnsatisfiable T D v G",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDFS-MODEL-CONSTRAINTS",
+        "MT11-RDFS-LANGUAGE-LITERAL-COVERAGE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeTheory.datatypeSpace",
+      "module": "RDF11.Datatypes",
+      "kind": "definition",
+      "type": "{Iri Literal Value : Type} → RDF11.DatatypeTheory Iri Literal Value → Value → RDF11.Set Value",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPES",
+        "MT11-LEXICAL-TO-VALUE",
+        "MT11-LANGSTRING-EXCEPTION",
+        "MT11-DATATYPE-ALIAS-COHERENCE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.DatatypeTheory",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeTheory.datatypeSpace.eq_1",
+      "module": "RDF11.Datatypes",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (d : Value),\n  T.datatypeSpace d = if d = T.identified T.literalSyntax.langString then T.languageSpace else T.valueSpace d",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.DatatypeTheory.datatypeSpace",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeTheory.l2v_in_datatypeSpace",
+      "module": "RDF11.Datatypes",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} {d : Value} {s : String} {w : Value} (T : RDF11.DatatypeTheory Iri Literal Value),\n  T.L2V d s = some w → T.datatypeSpace d w",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.DatatypeTheory",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeTheory.language_alias_illTyped",
+      "module": "RDF11.Datatypes",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} {D : RDF11.Set Iri} {a : Iri} {l : Literal} (T : RDF11.DatatypeTheory Iri Literal Value),\n  D a →\n    a ≠ T.literalSyntax.langString →\n      T.identified a = T.identified T.literalSyntax.langString → T.literalSyntax.datatype l = a → T.IllTyped D l",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPES",
+        "MT11-DATATYPE-ALIAS-COHERENCE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.DatatypeTheory",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeTheory.language_noL2V",
+      "module": "RDF11.Datatypes",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} (self : RDF11.DatatypeTheory Iri Literal Value) (s : String),\n  self.L2V (self.identified self.literalSyntax.langString) s = none",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPES",
+        "MT11-LANGSTRING-EXCEPTION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.DatatypeTheory",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeTheory.recognizedSpace_identified_eq",
+      "module": "RDF11.Datatypes",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} {a b : Iri} (T : RDF11.DatatypeTheory Iri Literal Value),\n  T.identified a = T.identified b → T.recognizedSpace a = T.recognizedSpace b",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPES",
+        "MT11-DATATYPE-ALIAS-COHERENCE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.DatatypeTheory",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeTheory.recognizedSpace_language",
+      "module": "RDF11.Datatypes",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} (T : RDF11.DatatypeTheory Iri Literal Value),\n  T.recognizedSpace T.literalSyntax.langString = T.languageSpace",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.DatatypeTheory",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.DConditions.language_denotation",
+      "module": "RDF11.Datatypes",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u_1} {Value : Type} {I : RDF11.SimpleInterpretation Iri Literal U}\n  {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri} {ρ : RDF11.ValueRealization Value U},\n  I.DConditions T D ρ →\n    D T.literalSyntax.langString →\n      ρ.value (T.identified T.literalSyntax.langString) = some (I.IS T.literalSyntax.langString).val",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPES",
+        "MT11-LANGSTRING-EXCEPTION",
+        "MT11-LANGSTRING-DENOTATION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation.DConditions",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.recognized_datatype_aliases",
+      "module": "RDF11.Datatypes",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u_1} {Value : Type} {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri}\n  {ρ : RDF11.ValueRealization Value U} {a b : Iri} (I : RDF11.SimpleInterpretation Iri Literal U),\n  I.DConditions T D ρ → D a → D b → T.identified a = T.identified b → (I.IS a).val = (I.IS b).val",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPES",
+        "MT11-DATATYPE-IDENTIFICATION-FIXED",
+        "MT11-DATATYPE-ALIAS-COHERENCE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.recognized_datatype_denotation",
+      "module": "RDF11.Datatypes",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u_1} {Value : Type} {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri}\n  {ρ : RDF11.ValueRealization Value U} {a : Iri} (I : RDF11.SimpleInterpretation Iri Literal U),\n  I.DConditions T D ρ → D a → ρ.value (T.identified a) = some (I.IS a).val",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPES",
+        "MT11-DATATYPE-IDENTIFICATION-FIXED",
+        "MT11-LANGSTRING-DENOTATION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation",
       "review": "pending_expert_review"
     }
   ],

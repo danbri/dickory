@@ -118,6 +118,28 @@ try {
   assert.match(await nameModel.locator(':scope > .lean-code').textContent(),/IS := fun _ =>[\s\S]*IL := fun _ => none/);
   await nameModel.locator(':scope > .gloss > summary').click();
   assert.match(await nameModel.locator(':scope > .gloss').innerText(),/simple interpretation/i);
+  await page.locator('#claim').selectOption('MT11-LANGSTRING-DENOTATION');
+  const languageDenotation=page.locator('#details > article > .lean-declaration[data-lean="RDF11.SimpleInterpretation.DConditions.language_denotation"]');
+  assert.match(await languageDenotation.locator(':scope > .lean-code').textContent(),/language_denotation : D T\.literalSyntax\.langString/);
+  await languageDenotation.locator(':scope > .gloss > summary').click();
+  assert.match(await languageDenotation.locator(':scope > .gloss').innerText(),/prose obligation omitted by the earlier table-only encoding/);
+  await page.locator('#claim').selectOption('MT11-DATATYPE-ALIAS-COHERENCE');
+  assert.match(await page.locator('#details > article > .lean-declaration[data-lean="RDF11.DatatypeTheory.datatypeSpace"] > .lean-code').textContent(),/if d = T\.identified T\.literalSyntax\.langString then T\.languageSpace else T\.valueSpace d/);
+  assert.match(await page.locator('#details > article > .lean-declaration[data-lean="RDF11.SimpleInterpretation.recognized_datatype_aliases"] > .lean-code').textContent(),/I\.recognized_datatype_denotation h ha/);
+  await page.locator('#claim').selectOption('MT11-RDF-MODEL-EXISTENCE-CONSTRUCTION');
+  const modelParameters=page.locator('#details > article > .lean-declaration[data-lean="RDF11.RDFModelConstruction.Parameters"]');
+  assert.match(await modelParameters.locator(':scope > .lean-code').textContent(),/type_not_datatype[\s\S]*property_not_datatype[\s\S]*list_not_datatype/);
+  await modelParameters.locator(':scope > .gloss > summary').click();
+  assert.match(await modelParameters.locator(':scope > .gloss').innerText(),/not specification requirements or necessary consistency conditions/);
+  assert.match(await page.locator('#details > article > .lean-declaration[data-lean="RDF11.RDFModelConstruction.base_empty_satisfiable"] > .lean-code').textContent(),/∃ \(U : Type u\)[\s\S]*empty_satisfiable T v\.baseDatatypes/);
+  assert.equal(await page.evaluate(()=>data.claims.find(c=>c.id==='MT11-RDF-MODEL-EXISTENCE-CONSTRUCTION').assertion_basis),'derived');
+  await page.locator('#claim').selectOption('MT11-RDF-DATATYPE-PARAMETER-INCOMPATIBILITY');
+  assert.match(await page.locator('#details > article > .lean-declaration[data-lean="RDF11.rdf_unsatisfiable_of_empty_property_datatype"] > .lean-code').textContent(),/hempty : ∀ w, ¬ T\.recognizedSpace[\s\S]*rdf_property_datatype_nonempty/);
+  await page.locator('#claim').selectOption('MT11-RDFS-LANGUAGE-LITERAL-COVERAGE');
+  const languageCoverage=page.locator('#details > article > .lean-declaration[data-lean="RDF11.SimpleInterpretation.rdfs_language_literal_coverage"]');
+  assert.match(await languageCoverage.locator(':scope > .lean-code').textContent(),/h\.rdf\.values_realized[\s\S]*h\.language_extension[\s\S]*ρ\.injective/);
+  await languageCoverage.locator(':scope > .gloss > summary').click();
+  assert.match(await languageCoverage.locator(':scope > .gloss').innerText(),/actual tagged-literal representative/);
   await page.locator('#claim').selectOption('MT11-GRAPH-SET');
   const proof=page.locator('#details > article > .lean-declaration[data-lean="RDF11.Set.ext"] > .lean-code');
   assert(await proof.isVisible());assert.match(await proof.textContent(),/theorem ext[\s\S]*:= by/);
@@ -133,7 +155,7 @@ try {
   assert.equal(await page.locator('#claim').inputValue(),'');
   assert(!page.url().includes('#claim='));
   assert.deepEqual(errors,[]);
-  const report={status:'pass',checks:['Visible Triple fields and Subject/Term constructors','Commit-pinned source links','Lazy dependency source expansion','Claim deep link survives reload','Visible theorem proof body','Mobile layout has no horizontal overflow','Unmapped claims remain explicit','Changing source clears stale selection','Rendered and raw tabs preserve selection and exact raw characters','Annotated rendered passages open their claims','Search and mapping filters','Plain-English glosses on every displayed declaration','Reading copy has no active embeds or external resources','Connected claims navigate actual declaration dependency paths','Headline alias with explicit statement and gloss','Source question without an example block renders safely','RDFS rule connects to derivation soundness','Dataset structure and empty-graph gloss','Shared-blank dataset non-isomorphism proof','Concepts dataset representation theorem','Optional default-content policy and scope gloss','Fixed-IRI presence policy and isomorphism proof','Simple-model name-denotation alternatives','No JavaScript errors'],dependencies};
+  const report={status:'pass',checks:['Visible Triple fields and Subject/Term constructors','Commit-pinned source links','Lazy dependency source expansion','Claim deep link survives reload','Visible theorem proof body','Mobile layout has no horizontal overflow','Unmapped claims remain explicit','Changing source clears stale selection','Rendered and raw tabs preserve selection and exact raw characters','Annotated rendered passages open their claims','Search and mapping filters','Plain-English glosses on every displayed declaration','Reading copy has no active embeds or external resources','Connected claims navigate actual declaration dependency paths','Headline alias with explicit statement and gloss','Source question without an example block renders safely','RDFS rule connects to derivation soundness','Dataset structure and empty-graph gloss','Shared-blank dataset non-isomorphism proof','Concepts dataset representation theorem','Optional default-content policy and scope gloss','Fixed-IRI presence policy and isomorphism proof','Simple-model name-denotation alternatives','Recognized langString denotation retains the prose obligation','Datatype aliases share identity-indexed value spaces','RDF model existence displays derived status and constructor hypotheses','Incompatible RDF datatype parameters expose unsatisfiability proof','RDFS language-literal coverage proof and gloss','No JavaScript errors'],dependencies};
   await fs.writeFile(new URL('result.json', evidenceDir),JSON.stringify(report,null,2)+'\n');
   console.log(JSON.stringify(report,null,2));
 } finally { await browser.close(); }

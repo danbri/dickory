@@ -38,7 +38,7 @@ noncomputable def interpretation (T : DatatypeTheory Iri Literal Value) (D : Set
     IR_nonempty := ⟨unnamed, True.intro⟩
     IP := fun _ => True
     IEXT := fun _ _ => True
-    IS := fun a => ⟨if D a ∧ a ≠ T.literalSyntax.langString then embed (T.identified a) else unnamed,
+    IS := fun a => ⟨if D a then embed (T.identified a) else unnamed,
       Or.inl True.intro⟩
     IL := fun l => (literal T D l).map (fun x => ⟨x, True.intro⟩)
   }
@@ -54,13 +54,15 @@ theorem conditions (T : DatatypeTheory Iri Literal Value) (D : Set Iri) :
     (interpretation.{u} T D).DConditions T D realization := by
   classical
   constructor
+  · intro hd
+    simp [realization, interpretation, hd]
   · intro l tag hd ht
     have htype := (T.literalSyntax.tagged_iff l).mp ⟨tag, ht⟩
     refine ⟨⟨embed (T.languageValue (T.literalSyntax.lexical l) (asciiLower tag)), True.intro⟩, ?_, rfl⟩
     simp [interpretation, literal, htype, hd, ht]
   · intro a ha hn
     constructor
-    · simp [realization, interpretation, ha, hn]
+    · simp [realization, interpretation, ha]
     · intro l hl
       have ht := language_none T l (fun he => hn (hl.symm.trans he))
       cases hv : T.L2V (T.identified a) (T.literalSyntax.lexical l) with
