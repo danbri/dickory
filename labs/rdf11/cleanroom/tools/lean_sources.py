@@ -54,6 +54,35 @@ def source_excerpt(text, start, end):
     return text[a:b]
 
 
+def expand_projection_sources(declarations):
+    """A projection's compiler range may select only its field identifier.
+
+    Reuse the compiler-located containing structure, never guessed text ranges.
+    Retain the original selection and label the expanded context for reviewers.
+    """
+    def position(p):
+        return p["line"], p["column"]
+
+    for name, row in declarations.items():
+        if row.get("code", "").strip() != name.rsplit(".", 1)[-1]:
+            continue
+        parent_name = name.rsplit(".", 1)[0]
+        parent = declarations.get(parent_name)
+        if not parent or parent.get("kind") != "inductive" or parent.get("path") != row.get("path"):
+            continue
+        code = parent.get("code", "")
+        if not re.search(r"\bstructure\s+", code):
+            continue
+        if not all("start" in r and "end" in r for r in (row, parent)):
+            continue
+        if not (position(parent["start"]) <= position(row["start"]) <
+                position(row["end"]) <= position(parent["end"])):
+            continue
+        row["identifier_range"] = {"start": row["start"], "end": row["end"]}
+        row["source_context_declaration"] = parent_name
+        row.update(code=code, start=parent["start"], end=parent["end"])
+
+
 def extract_sources(root, evidence, required):
     registry = json.loads((root / "catalogue/registry.json").read_text())
     files = {}
@@ -80,6 +109,8 @@ def extract_sources(root, evidence, required):
             entry.update(start=r["start"], end=r["end"])
             entry["code"] = source_excerpt(files[path]["text"], r["start"], r["end"])
         declarations[row["name"]] = entry
+
+    expand_projection_sources(declarations)
 
     missing = sorted(n for n in required if not declarations.get(n, {}).get("code"))
     if missing:

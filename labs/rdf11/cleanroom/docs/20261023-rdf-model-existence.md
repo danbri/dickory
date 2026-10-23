@@ -60,3 +60,7 @@ The only newly reached foundation module is the standard-library `Init.Data.ULif
 There are 144 draft mappings among 204 preliminary records, including partial mappings and explicitly labelled derived records. These counts are not compliance percentages. No expert review is marked accepted.
 
 The complete local Lean build and frozen registry audit pass, along with all seven rejection checks, eleven Python tests, source-viewer/gloss generation, skill validation, JavaScript syntax checking and the local site-link check. The complete-coverage gate still rejects this draft. Chromium CI checks the new model hypotheses, denotation repair, alias coherence and compatibility proofs in the review interface before publication.
+
+## Review presentation correction
+
+Inspection of the new denotation field found that Lean's projection metadata selected only `language_denotation`, hiding the actual condition in the code block. The viewer now expands name-only field ranges to the containing structure's compiler-located range, labels that context, and preserves the original identifier range in the generated evidence. It requires matching source files and containment of the original range, so unrelated source cannot be borrowed. Three new tests cover expansion, preservation of complete field excerpts, and rejection of wrong-file/out-of-range context; all 14 Python tests pass. This changes trusted presentation code, not the Lean proofs or frozen formal declarations.

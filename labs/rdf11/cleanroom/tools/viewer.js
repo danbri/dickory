@@ -34,6 +34,7 @@ function leanDeclaration(name,ancestors=[]){
  const gloss=element("details");gloss.className="gloss";
  gloss.append(element("summary","ⓘ Plain-English explanation"));
  gloss.append(element("p",row.gloss.text),element("small",row.gloss.note));box.append(gloss);
+ if(row.source_context_declaration){const note=element("p","Field shown in its containing structure: "+row.source_context_declaration);note.className="source-context-note";box.append(note)}
  if(row.code){const code=element("pre");code.className="lean-code";code.append(element("code",row.code));box.append(code)}
  else box.append(element("p","Compiler-generated declaration without a separate source range; open its defining file above."));
  const type=element("details");type.append(element("summary","Elaborated type"),element("pre",row.type));box.append(type);

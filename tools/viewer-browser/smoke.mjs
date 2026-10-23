@@ -121,6 +121,7 @@ try {
   await page.locator('#claim').selectOption('MT11-LANGSTRING-DENOTATION');
   const languageDenotation=page.locator('#details > article > .lean-declaration[data-lean="RDF11.SimpleInterpretation.DConditions.language_denotation"]');
   assert.match(await languageDenotation.locator(':scope > .lean-code').textContent(),/language_denotation : D T\.literalSyntax\.langString/);
+  assert.match(await languageDenotation.locator(':scope > .source-context-note').innerText(),/Field shown in its containing structure: RDF11\.SimpleInterpretation\.DConditions/);
   await languageDenotation.locator(':scope > .gloss > summary').click();
   assert.match(await languageDenotation.locator(':scope > .gloss').innerText(),/prose obligation omitted by the earlier table-only encoding/);
   await page.locator('#claim').selectOption('MT11-DATATYPE-ALIAS-COHERENCE');
