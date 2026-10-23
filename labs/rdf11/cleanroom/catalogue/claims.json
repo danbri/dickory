@@ -4,7 +4,7 @@
   "method": "Human-readable AI close reading; selectors locate already selected passages and do not extract assertions.",
   "source_inventory": "../ledger/semantics-inventory.json",
   "inventory_sha256": "97c89ac54af8d7d43533b2a95534860b77f3b3c94f69e75f4c4f95fe74ea4fd8",
-  "mapping_input_sha256": "57f80c2faf9b43875a6b809c929a72e8b996f7e8ef5445b2d4a2d6c176e523ef",
+  "mapping_input_sha256": "41dd495ac93122e3c51e3b3b1ded879247ccba58674fea64c120a34785f6e874",
   "documents": [
     {
       "id": "mt",
@@ -1730,6 +1730,38 @@
         },
         {
           "start": 97107,
+          "end": 97109,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 97109,
+          "end": 97483,
+          "refs": [
+            "MT11-DATASET-NAME-DENOTATION"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 97483,
+          "end": 97485,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 97485,
+          "end": 97766,
+          "refs": [
+            "MT11-DATASET-NAME-DENOTATION"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 97766,
           "end": 97768,
           "refs": [
             "UNRESOLVED-mt"
@@ -1747,6 +1779,22 @@
         },
         {
           "start": 98373,
+          "end": 98375,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 98375,
+          "end": 98912,
+          "refs": [
+            "MT11-DATASET-EXTENSIONS"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 98912,
           "end": 102737,
           "refs": [
             "UNRESOLVED-mt"
@@ -3705,6 +3753,48 @@
         "MT11-DATASET-DEFAULT-CONTENT"
       ],
       "slice_sha256": "162642f069b46554e592a586768b796aa02021620c65962309bdcc511bf30271",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "dataset-name-other-referent",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 97109,
+      "end": 97483,
+      "claims": [
+        "MT11-DATASET-NAME-DENOTATION"
+      ],
+      "slice_sha256": "0a9aad493e5fd10f727ed0d3ff4e194f358bc9ebc420d3b83d40dc116cee1377",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "dataset-name-no-presumption",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 97485,
+      "end": 97766,
+      "claims": [
+        "MT11-DATASET-NAME-DENOTATION"
+      ],
+      "slice_sha256": "fc995e5eb598975dc8d7762de8aba32495491aa43318f344132c20d5f7697a76",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "dataset-extension-permission",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 98375,
+      "end": 98912,
+      "claims": [
+        "MT11-DATASET-EXTENSIONS"
+      ],
+      "slice_sha256": "bc8bc98f01075f5a0c5d6c11a84c7063767eb4de8483e474a393c19ce42c83ea",
       "locator_tag": "p",
       "review": "pending",
       "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
@@ -11019,10 +11109,55 @@
         "formal_proof": "unassessed",
         "test_mapping": "unassessed"
       },
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-DATASET-NAME-DENOTATION",
+        "relation": "partial_theorem",
+        "symbol_linked_english": "DatasetNameExample keeps one syntactic named pair and the same true default/named triples while changing the simple interpretation. With graphObject explicitly embedding graphs in the resource carrier, name_can_denote_graph and name_can_denote_something_else establish both possibilities for the name IRI.",
+        "bindings": [
+          {
+            "symbol": "DatasetNameExample.graph",
+            "lean": "RDF11.DatasetNameExample.graph"
+          },
+          {
+            "symbol": "DatasetNameExample.dataset",
+            "lean": "RDF11.DatasetNameExample.dataset"
+          },
+          {
+            "symbol": "DatasetNameExample.graphObject",
+            "lean": "RDF11.DatasetNameExample.graphObject"
+          },
+          {
+            "symbol": "DatasetNameExample.graphObject_injective",
+            "lean": "RDF11.DatasetNameExample.graphObject_injective"
+          },
+          {
+            "symbol": "DatasetNameExample.interpretation",
+            "lean": "RDF11.DatasetNameExample.interpretation"
+          },
+          {
+            "symbol": "DatasetNameExample.named_pair",
+            "lean": "RDF11.DatasetNameExample.named_pair"
+          },
+          {
+            "symbol": "DatasetNameExample.all_components_satisfied",
+            "lean": "RDF11.DatasetNameExample.all_components_satisfied"
+          },
+          {
+            "symbol": "DatasetNameExample.pairing_and_component_truth_allow_both",
+            "lean": "RDF11.DatasetNameExample.pairing_and_component_truth_allow_both"
+          }
+        ],
+        "limitations": "The two concrete witnesses satisfy simple interpretation conditions and all component graphs, with the graph-name IRI itself occurring inside the true triples. They do not prove RDF/RDFS model existence or unrestricted freedom under additional graph assertions/semantic extensions. The graph-object embedding is explicit for this example, not required of all RDF interpretations. The source permits equality or inequality; it does not require inequality. Guidance against unsupported engine inference remains a review/implementation obligation.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "dataset-name-other-referent",
+        "dataset-name-no-presumption"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-DATASET-DEFAULT-CONTENT",
@@ -11044,12 +11179,82 @@
         "test_mapping": "unassessed"
       },
       "formalization_note": "MAY and SHOULD do not define a complete, uniquely mandated dataset entailment relation.",
-      "cleanroom_mapping": null,
+      "cleanroom_mapping": {
+        "claim_id": "MT11-DATASET-DEFAULT-CONTENT",
+        "relation": "partial_definition",
+        "symbol_linked_english": "DatasetRegime parameterizes a chosen model type and dataset truth. IncludesDefault U I is the explicitly adopted recommendation that this truth implies satisfaction of the default graph under a designated interpretation I. Under that assumption, default_graph_consequence and default_graph_consequence_under transfer graph consequences to the dataset policy.",
+        "bindings": [
+          {
+            "symbol": "DatasetRegime",
+            "lean": "RDF11.DatasetRegime"
+          },
+          {
+            "symbol": "DatasetRegime.IncludesDefault",
+            "lean": "RDF11.DatasetRegime.IncludesDefault"
+          },
+          {
+            "symbol": "DatasetRegime.EntailsGraph",
+            "lean": "RDF11.DatasetRegime.EntailsGraph"
+          },
+          {
+            "symbol": "DatasetRegime.default_content",
+            "lean": "RDF11.DatasetRegime.default_content"
+          },
+          {
+            "symbol": "DatasetRegime.default_graph_consequence",
+            "lean": "RDF11.DatasetRegime.default_graph_consequence"
+          },
+          {
+            "symbol": "DatasetRegime.default_graph_consequence_under",
+            "lean": "RDF11.DatasetRegime.default_graph_consequence_under"
+          },
+          {
+            "symbol": "DatasetRegime.graph_consequence_composition",
+            "lean": "RDF11.DatasetRegime.graph_consequence_composition"
+          },
+          {
+            "symbol": "DatasetRegime.simpleDefault",
+            "lean": "RDF11.DatasetRegime.simpleDefault"
+          },
+          {
+            "symbol": "DatasetRegime.simpleDefault_includes_default",
+            "lean": "RDF11.DatasetRegime.simpleDefault_includes_default"
+          },
+          {
+            "symbol": "DatasetRegime.simpleDefault_entails_iff",
+            "lean": "RDF11.DatasetRegime.simpleDefault_entails_iff"
+          },
+          {
+            "symbol": "DatasetRegime.simpleDefault_isomorphism_invariant",
+            "lean": "RDF11.DatasetRegime.simpleDefault_isomorphism_invariant"
+          },
+          {
+            "symbol": "DatasetRegime.defaultUnder",
+            "lean": "RDF11.DatasetRegime.defaultUnder"
+          },
+          {
+            "symbol": "DatasetRegime.defaultUnder_entails_iff",
+            "lean": "RDF11.DatasetRegime.defaultUnder_entails_iff"
+          },
+          {
+            "symbol": "DatasetRegime.defaultUnder_includes_default",
+            "lean": "RDF11.DatasetRegime.defaultUnder_includes_default"
+          },
+          {
+            "symbol": "DatasetRegime.defaultUnder_isomorphism_invariant",
+            "lean": "RDF11.DatasetRegime.defaultUnder_isomorphism_invariant"
+          }
+        ],
+        "limitations": "The source says MAY express RDF content and conditionally SHOULD retain default content. IncludesDefault is a policy assumption, never a requirement imposed on all DatasetRegime values. The concrete default-only policy is one choice; the normative force and treatment of justified SHOULD exceptions remain review/conformance obligations, not Lean theorems. The defaultUnder example exactly recovers the existing graph EntailsUnder relation between defaults; defining this selected model class does not prove model existence.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
       "passages": [
         "dataset-equivalent-default"
       ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-DATASET-EQUIVALENT-REPLACEMENT",
@@ -11131,10 +11336,102 @@
         "formal_proof": "unassessed",
         "test_mapping": "unassessed"
       },
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-DATASET-EXTENSIONS",
+        "relation": "partial_definition",
+        "symbol_linked_english": "A chosen DatasetRegime may restrict its model class while retaining Satisfies, or use a DatasetModelMap preserving truth to transfer entailments. NamedGraphComparison records the illustrative same-name graph consequence condition, filling missing names with an empty graph. These are declared policy choices rather than a universal dataset entailment definition.",
+        "bindings": [
+          {
+            "symbol": "DatasetRegime.Entails",
+            "lean": "RDF11.DatasetRegime.Entails"
+          },
+          {
+            "symbol": "DatasetRegime.EntailsUnder",
+            "lean": "RDF11.DatasetRegime.EntailsUnder"
+          },
+          {
+            "symbol": "DatasetRegime.restricted",
+            "lean": "RDF11.DatasetRegime.restricted"
+          },
+          {
+            "symbol": "DatasetRegime.stronger_models_preserve_entailment",
+            "lean": "RDF11.DatasetRegime.stronger_models_preserve_entailment"
+          },
+          {
+            "symbol": "DatasetRegime.restricted_entails_iff",
+            "lean": "RDF11.DatasetRegime.restricted_entails_iff"
+          },
+          {
+            "symbol": "DatasetModelMap",
+            "lean": "RDF11.DatasetModelMap"
+          },
+          {
+            "symbol": "DatasetModelMap.preserves_entailment",
+            "lean": "RDF11.DatasetModelMap.preserves_entailment"
+          },
+          {
+            "symbol": "DatasetPolicyExample.nameRequired",
+            "lean": "RDF11.DatasetPolicyExample.nameRequired"
+          },
+          {
+            "symbol": "DatasetPolicyExample.nameRequired_includes_default",
+            "lean": "RDF11.DatasetPolicyExample.nameRequired_includes_default"
+          },
+          {
+            "symbol": "DatasetPolicyExample.default_only_entails_absent",
+            "lean": "RDF11.DatasetPolicyExample.default_only_entails_absent"
+          },
+          {
+            "symbol": "DatasetPolicyExample.nameRequired_not_entails_absent",
+            "lean": "RDF11.DatasetPolicyExample.nameRequired_not_entails_absent"
+          },
+          {
+            "symbol": "Dataset.namedGraphOrEmpty",
+            "lean": "RDF11.Dataset.namedGraphOrEmpty"
+          },
+          {
+            "symbol": "NamedGraphComparison",
+            "lean": "RDF11.NamedGraphComparison"
+          },
+          {
+            "symbol": "SimpleNamedGraphComparison",
+            "lean": "RDF11.SimpleNamedGraphComparison"
+          },
+          {
+            "symbol": "matching_graphs_need_not_be_isomorphic",
+            "lean": "RDF11.matching_graphs_need_not_be_isomorphic"
+          },
+          {
+            "symbol": "DatasetPolicyExample.nameRequired_isomorphism_invariant",
+            "lean": "RDF11.DatasetPolicyExample.nameRequired_isomorphism_invariant"
+          },
+          {
+            "symbol": "DatasetRegime.defaultUnder",
+            "lean": "RDF11.DatasetRegime.defaultUnder"
+          },
+          {
+            "symbol": "DatasetRegime.defaultUnder_entails_iff",
+            "lean": "RDF11.DatasetRegime.defaultUnder_entails_iff"
+          },
+          {
+            "symbol": "DatasetRegime.defaultUnder_includes_default",
+            "lean": "RDF11.DatasetRegime.defaultUnder_includes_default"
+          },
+          {
+            "symbol": "DatasetRegime.defaultUnder_isomorphism_invariant",
+            "lean": "RDF11.DatasetRegime.defaultUnder_isomorphism_invariant"
+          }
+        ],
+        "limitations": "DatasetRegime is an arbitrary candidate truth relation, not a certificate that it is an admissible RDF semantic extension; §3 preservation obligations remain separate. DatasetModelMap is a sufficient transfer condition, not a characterization of every extension. Model can contain modal structure; a designated graph interpretation is only needed for graph-content consequences. Adding a dataset-dependent truth condition need not preserve old entailments: the checked presence policy uses a fixed IRI name, retains default content and respects dataset isomorphism, but changes entailment. Matching comparison uses exact syntactic graph-name keys, compares component graphs independently and omits the default; it neither aligns blank keys nor enforces shared witnesses. For its generic parameter, source correspondence requires a genuine graph-entailment relation; the simple specialization supplies one. The source illustration is a possible necessary condition, not a complete modal construction or biconditional. MAY permission remains a reviewed prose obligation. The defaultUnder example exactly recovers the existing graph EntailsUnder relation between defaults; defining this selected model class does not prove model existence.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "dataset-extension-permission"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-ORDINARY-RULE-CHECK-PROCEDURE",
@@ -12106,6 +12403,10 @@
           {
             "symbol": "DatasetIsomorphism.surjective_on_blanks",
             "lean": "RDF11.DatasetIsomorphism.surjective_on_blanks"
+          },
+          {
+            "symbol": "DatasetIsomorphism.iri_name_present_iff",
+            "lean": "RDF11.DatasetIsomorphism.iri_name_present_iff"
           }
         ],
         "limitations": "Both datasets use one ambient blank type. Total maps extend the source bijection, but inverse laws concern only occurring blanks. The named-pair iff is explicitly restricted to source-domain blanks; both-direction pair preservation also excludes extra target pairs. Semantic consequences concern each component graph, not an unspecified dataset semantics.",
@@ -12269,6 +12570,33 @@
       "antecedent_passage": "dataset-isomorphism-domain",
       "resolved_meaning": "The single bijection between occurring nodes, triples and graphs of the two datasets, not separately chosen bijections for each component graph.",
       "inference": "Renamings act only on blank identities, extend pointwise to triples/graphs, and preserve named pairs. The domain includes blank graph-name keys even for empty graphs.",
+      "review": "pending"
+    },
+    {
+      "claim_id": "MT11-DATASET-DEFAULT-CONTENT",
+      "passage": "dataset-equivalent-default",
+      "source_phrase": "When used in this way",
+      "antecedent_passage": "dataset-equivalent-default",
+      "resolved_meaning": "When the optional use of an RDF dataset to express RDF content is adopted, the default-content condition is a SHOULD recommendation.",
+      "inference": "Represent its logical content by an explicitly chosen policy condition, retaining the MAY/SHOULD force separately. Do not quantify the condition as a requirement over every dataset regime.",
+      "review": "pending"
+    },
+    {
+      "claim_id": "MT11-DATASET-EXTENSIONS",
+      "passage": "dataset-extension-permission",
+      "source_phrase": "One such extension, for example",
+      "antecedent_passage": "dataset-extension-permission",
+      "resolved_meaning": "One permitted additional dataset regime, among unspecified others, could require graph entailments for matching names. This is illustrative and not an exhaustive or mandatory dataset semantics.",
+      "inference": "Parameterize the model type and truth relation; record a matching-name condition separately and distinguish fixed-truth model restrictions from changes to dataset truth.",
+      "review": "pending"
+    },
+    {
+      "claim_id": "MT11-DATASET-NAME-DENOTATION",
+      "passage": "dataset-name-no-presumption",
+      "source_phrase": "the graph it names",
+      "antecedent_passage": "dataset-import",
+      "resolved_meaning": "The graph syntactically paired with the name in the dataset, not an object assumed already equal to the name's semantic referent.",
+      "inference": "Use an explicit graph-object embedding only in the witness. Pairing supplies neither an equality nor an inequality axiom; graph assertions and extensions may impose further constraints.",
       "review": "pending"
     }
   ],

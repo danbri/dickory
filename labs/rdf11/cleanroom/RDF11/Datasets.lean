@@ -49,6 +49,12 @@ theorem Triple.generalize_injective {s t : Triple Iri Literal B}
 def Graph.mapBlank (f : A → B) (G : Graph Iri Literal A) : Graph Iri Literal B :=
   Set.image (Triple.mapBlank f) G
 
+theorem Graph.generalize_empty :
+    Graph.generalize (Set.empty : Graph Iri Literal B) = Set.empty := by
+  apply Set.ext
+  intro t
+  simp [generalize, Set.image, Set.empty]
+
 theorem Graph.generalize_mapBlank (f : A → B) (G : Graph Iri Literal A) :
     (G.mapBlank f).generalize = G.generalize.mapBlank f := by
   apply Set.ext

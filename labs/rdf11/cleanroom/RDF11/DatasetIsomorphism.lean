@@ -136,5 +136,13 @@ theorem named_equivalent {D E : Dataset Iri Literal B} (e : DatasetIsomorphism D
     LogicallyEquivalent.{u} G.generalize (G.mapBlank e.toFun).generalize :=
   (e.named_isomorphism n G hn).equivalent
 
+theorem iri_name_present_iff {D E : Dataset Iri Literal B} (e : DatasetIsomorphism D E)
+    (n : Iri) : D.HasName (.iri n) ↔ E.HasName (.iri n) := by
+  constructor
+  · rintro ⟨G, hG⟩
+    exact ⟨G.mapBlank e.toFun, e.named_forward (.iri n) G hG⟩
+  · rintro ⟨G, hG⟩
+    exact ⟨G.mapBlank e.invFun, e.named_backward (.iri n) G hG⟩
+
 end DatasetIsomorphism
 end RDF11

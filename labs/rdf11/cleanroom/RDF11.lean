@@ -27,3 +27,7 @@ import RDF11.ContainerEntailment
 import RDF11.Datasets
 import RDF11.DatasetIsomorphism
 import RDF11.DatasetExamples
+import RDF11.DatasetPolicies
+import RDF11.DatasetPolicyExamples
+import RDF11.DatasetNameDenotation
+import RDF11.DatasetNamedComparison

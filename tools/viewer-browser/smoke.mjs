@@ -102,6 +102,20 @@ try {
   await page.locator('#claim').selectOption('MT11-DATASET-EMPTY-NAMED-PRESENCE');
   assert.match(await page.locator('#details > article > .lean-declaration[data-lean="RDF11.Dataset.eq_of_default_names_quads"] > .lean-code').textContent(),/hq : D\.quads = E\.quads/);
   await page.locator('#document').selectOption('mt');
+  await page.locator('#claim').selectOption('MT11-DATASET-DEFAULT-CONTENT');
+  const policy=page.locator('#details > article > .lean-declaration[data-lean="RDF11.DatasetRegime.IncludesDefault"]');
+  assert.match(await policy.locator(':scope > .lean-code').textContent(),/P\.Satisfies m D → \(I m\)\.Satisfies D\.defaultGraph\.generalize/);
+  await policy.locator(':scope > .gloss > summary').click();
+  assert.match(await policy.locator(':scope > .gloss').innerText(),/not imposed on every regime/);
+  assert.match(await page.locator('#details > article > .lean-declaration[data-lean="RDF11.DatasetRegime.defaultUnder_entails_iff"] > .lean-code').textContent(),/RDF11\.EntailsUnder C D\.defaultGraph\.generalize E\.defaultGraph\.generalize/);
+  await page.locator('#claim').selectOption('MT11-DATASET-EXTENSIONS');
+  assert.match(await page.locator('#details > article > .lean-declaration[data-lean="RDF11.DatasetPolicyExample.nameRequired_isomorphism_invariant"] > .lean-code').textContent(),/e\.iri_name_present_iff n/);
+  assert.match(await page.locator('#details > article > .lean-declaration[data-lean="RDF11.DatasetPolicyExample.nameRequired_not_entails_absent"] > .lean-code').textContent(),/\(n : Iri\)/);
+  await page.locator('#claim').selectOption('MT11-DATASET-NAME-DENOTATION');
+  assert.match(await page.locator('#details > article > .lean-declaration[data-lean="RDF11.DatasetNameExample.pairing_and_component_truth_allow_both"] > .lean-code').textContent(),/name_can_denote_graph, name_can_denote_something_else/);
+  const nameModel=page.locator('#details > article > .lean-declaration[data-lean="RDF11.DatasetNameExample.interpretation"]');
+  await nameModel.locator(':scope > .gloss > summary').click();
+  assert.match(await nameModel.locator(':scope > .gloss').innerText(),/simple interpretation/i);
   await page.locator('#claim').selectOption('MT11-GRAPH-SET');
   const proof=page.locator('#details > article > .lean-declaration[data-lean="RDF11.Set.ext"] > .lean-code');
   assert(await proof.isVisible());assert.match(await proof.textContent(),/theorem ext[\s\S]*:= by/);
@@ -117,7 +131,7 @@ try {
   assert.equal(await page.locator('#claim').inputValue(),'');
   assert(!page.url().includes('#claim='));
   assert.deepEqual(errors,[]);
-  const report={status:'pass',checks:['Visible Triple fields and Subject/Term constructors','Commit-pinned source links','Lazy dependency source expansion','Claim deep link survives reload','Visible theorem proof body','Mobile layout has no horizontal overflow','Unmapped claims remain explicit','Changing source clears stale selection','Rendered and raw tabs preserve selection and exact raw characters','Annotated rendered passages open their claims','Search and mapping filters','Plain-English glosses on every displayed declaration','Reading copy has no active embeds or external resources','Connected claims navigate actual declaration dependency paths','Headline alias with explicit statement and gloss','Source question without an example block renders safely','RDFS rule connects to derivation soundness','Dataset structure and empty-graph gloss','Shared-blank dataset non-isomorphism proof','Concepts dataset representation theorem','No JavaScript errors'],dependencies};
+  const report={status:'pass',checks:['Visible Triple fields and Subject/Term constructors','Commit-pinned source links','Lazy dependency source expansion','Claim deep link survives reload','Visible theorem proof body','Mobile layout has no horizontal overflow','Unmapped claims remain explicit','Changing source clears stale selection','Rendered and raw tabs preserve selection and exact raw characters','Annotated rendered passages open their claims','Search and mapping filters','Plain-English glosses on every displayed declaration','Reading copy has no active embeds or external resources','Connected claims navigate actual declaration dependency paths','Headline alias with explicit statement and gloss','Source question without an example block renders safely','RDFS rule connects to derivation soundness','Dataset structure and empty-graph gloss','Shared-blank dataset non-isomorphism proof','Concepts dataset representation theorem','Optional default-content policy and scope gloss','Fixed-IRI presence policy and isomorphism proof','Simple-model name-denotation alternatives','No JavaScript errors'],dependencies};
   await fs.writeFile(new URL('result.json', evidenceDir),JSON.stringify(report,null,2)+'\n');
   console.log(JSON.stringify(report,null,2));
 } finally { await browser.close(); }

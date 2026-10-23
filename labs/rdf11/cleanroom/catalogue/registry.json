@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "status": "frozen_sixth_increment_inventory_not_expert_approved",
+  "status": "frozen_seventh_increment_inventory_not_expert_approved",
   "lean_version": "4.33.1",
   "allowed_axioms": [
     "propext",
@@ -377,6 +377,45 @@
         "MT11-DATASET-EQUIVALENT-REPLACEMENT",
         "MT11-DATASET-EMPTY-NAMED-PRESENCE"
       ]
+    },
+    {
+      "id": "SUPPORT-DATASET-POLICIES",
+      "purpose": "Explicit candidate dataset regimes, adopted content conditions, model restrictions and conditional graph-consequence transfer.",
+      "requires": [
+        "FOUNDATION-LEAN",
+        "MT11-DATASET-DEFAULT-CONTENT",
+        "MT11-DATASET-EXTENSIONS",
+        "MT11-SIMPLE-ENTAILMENT"
+      ]
+    },
+    {
+      "id": "SUPPORT-DATASET-POLICY-EXAMPLES",
+      "purpose": "A fixed-IRI presence policy retains default content and isomorphism invariance while changing dataset entailment.",
+      "requires": [
+        "FOUNDATION-LEAN",
+        "MT11-DATASET-EXTENSIONS",
+        "MT11-DATASET-DEFAULT-CONTENT",
+        "MT11-DATASET-ISOMORPHISM"
+      ]
+    },
+    {
+      "id": "SUPPORT-DATASET-NAME-DENOTATION",
+      "purpose": "Two explicit simple-model witnesses with true component graphs and an example graph-object embedding; RDF/RDFS and engine guidance remain separate.",
+      "requires": [
+        "FOUNDATION-LEAN",
+        "MT11-DATASET-NAME-DENOTATION",
+        "MT11-SIMPLE-IS",
+        "MT11-SIMPLE-IEXT"
+      ]
+    },
+    {
+      "id": "SUPPORT-DATASET-NAMED-COMPARISON",
+      "purpose": "Illustrative fixed-name graph comparisons with empty fallback, and a checked distinction from structural dataset isomorphism.",
+      "requires": [
+        "FOUNDATION-LEAN",
+        "MT11-DATASET-EXTENSIONS",
+        "MT11-DATASET-EMPTY-NAMED-PRESENCE"
+      ]
     }
   ],
   "files": [
@@ -403,14 +442,14 @@
     },
     {
       "path": "Audit/Snapshot.lean",
-      "sha256": "a7697d625143dfe09c840036eafd04ec9be0eba68fe83dd86baa0215f1e872db",
+      "sha256": "fe613ef14185ad9b18663fb82ecfd2709d85d621665a043d440c0195f0b718eb",
       "role": "formal_source",
       "lifecycle": "active",
       "review": "pending_expert_review"
     },
     {
       "path": "RDF11.lean",
-      "sha256": "d6967a4e34bb8ff8c04937a0be7e89b7160e2b14fe5073cf909b9a82bc954ed4",
+      "sha256": "b4f53629fc2f28421d55fa38c21679c5181946c5195fc451d43619f72bc1bb5c",
       "role": "formal_source",
       "lifecycle": "active",
       "review": "pending_expert_review"
@@ -609,7 +648,7 @@
       "role": "formal_source",
       "lifecycle": "active",
       "review": "pending_expert_review",
-      "sha256": "f542e891eaa65c6178fb9111a1bfe35cf3087ff7c0611a2e917a0be8b682f22b"
+      "sha256": "50ccf14e2354498ddcec7ce317c3fa4ee155d048654e1c5a63d3e1d3bf5fe2dd"
     },
     {
       "path": "RDF11/DatasetExamples.lean",
@@ -623,7 +662,35 @@
       "role": "formal_source",
       "lifecycle": "active",
       "review": "pending_expert_review",
-      "sha256": "c03004a95207846c2d4c50952e5c8549a0232b6092a6960849f3d1ae323153ef"
+      "sha256": "901be3fc2f025bc7640f477fd8d6c0825f42db97467d10049ec98904aef974e5"
+    },
+    {
+      "path": "RDF11/DatasetPolicyExamples.lean",
+      "role": "formal_source",
+      "lifecycle": "active",
+      "review": "pending_expert_review",
+      "sha256": "53017c0c866e5d9262c54860b3a2a24be53e3775dffad1a82aee75d47b726a66"
+    },
+    {
+      "path": "RDF11/DatasetNameDenotation.lean",
+      "role": "formal_source",
+      "lifecycle": "active",
+      "review": "pending_expert_review",
+      "sha256": "24bf96aaa8257533d37ec07bab0fe52668a9db6be1114df2a44e7beb2cb4e576"
+    },
+    {
+      "path": "RDF11/DatasetNamedComparison.lean",
+      "role": "formal_source",
+      "lifecycle": "active",
+      "review": "pending_expert_review",
+      "sha256": "0a58d015afe2a3b594fdd613126d6dd8c45f0e2ed7951f90b3fed39c86e83751"
+    },
+    {
+      "path": "RDF11/DatasetPolicies.lean",
+      "role": "formal_source",
+      "lifecycle": "active",
+      "review": "pending_expert_review",
+      "sha256": "12e562bcff1686c252bb19ff2892a6b8840920e4575d5c1591742d09d2a1bf2a"
     }
   ],
   "declarations": [
@@ -15630,6 +15697,1166 @@
       "role": "proof_support",
       "grounds": [
         "SUPPORT-DATASETS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Dataset.emptyNamed_graphAt",
+      "module": "RDF11.DatasetNamedComparison",
+      "kind": "theorem",
+      "type": "∀ {Iri B Literal : Type} (n m : RDF11.GraphName Iri B),\n  (RDF11.Dataset.emptyNamed n).namedGraphOrEmpty m = RDF11.Set.empty",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-NAMED-COMPARISON"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Dataset.namedGraphOrEmpty",
+      "module": "RDF11.DatasetNamedComparison",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} → RDF11.Dataset Iri Literal B → RDF11.GraphName Iri B → RDF11.Graph Iri Literal B",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-DATASET-NAMED-COMPARISON",
+        "MT11-DATASET-EXTENSIONS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Dataset.namedGraphOrEmpty.eq_1",
+      "module": "RDF11.DatasetNamedComparison",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (D : RDF11.Dataset Iri Literal B) (n : RDF11.GraphName Iri B),\n  D.namedGraphOrEmpty n = (D.namedGraphs n).getD RDF11.Set.empty",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-NAMED-COMPARISON"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Dataset.namedGraphOrEmpty_of_absent",
+      "module": "RDF11.DatasetNamedComparison",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (D : RDF11.Dataset Iri Literal B) (n : RDF11.GraphName Iri B),\n  D.namedGraphs n = none → D.namedGraphOrEmpty n = RDF11.Set.empty",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-NAMED-COMPARISON"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Dataset.namedGraphOrEmpty_of_present",
+      "module": "RDF11.DatasetNamedComparison",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (D : RDF11.Dataset Iri Literal B) (n : RDF11.GraphName Iri B) (G : RDF11.Graph Iri Literal B),\n  D.HasNamedGraph n G → D.namedGraphOrEmpty n = G",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-NAMED-COMPARISON"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetIsomorphism.iri_name_present_iff",
+      "module": "RDF11.DatasetIsomorphism",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {D E : RDF11.Dataset Iri Literal B} (e : RDF11.DatasetIsomorphism D E) (n : Iri),\n  D.HasName (RDF11.Subject.iri n) ↔ E.HasName (RDF11.Subject.iri n)",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-DATASET-ISOMORPHISM",
+        "MT11-DATASET-ISOMORPHISM"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetModelMap",
+      "module": "RDF11.DatasetPolicies",
+      "kind": "inductive",
+      "type": "{Iri Literal B : Type} →\n  {M : Type u_1} →\n    {N : Type u_2} → RDF11.DatasetRegime Iri Literal B M → RDF11.DatasetRegime Iri Literal B N → Type (max u_1 u_2)",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-DATASET-POLICIES",
+        "MT11-DATASET-EXTENSIONS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetModelMap._sizeOf_1",
+      "module": "RDF11.DatasetPolicies",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  {M : Type u_1} →\n    {N : Type u_2} →\n      {P : RDF11.DatasetRegime Iri Literal B M} →\n        {Q : RDF11.DatasetRegime Iri Literal B N} →\n          [SizeOf Iri] → [SizeOf Literal] → [SizeOf B] → [SizeOf M] → [SizeOf N] → RDF11.DatasetModelMap P Q → Nat",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-POLICIES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetModelMap._sizeOf_inst",
+      "module": "RDF11.DatasetPolicies",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  {M : Type u_1} →\n    {N : Type u_2} →\n      (P : RDF11.DatasetRegime Iri Literal B M) →\n        (Q : RDF11.DatasetRegime Iri Literal B N) →\n          [SizeOf Iri] → [SizeOf Literal] → [SizeOf B] → [SizeOf M] → [SizeOf N] → SizeOf (RDF11.DatasetModelMap P Q)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-POLICIES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetModelMap.casesOn",
+      "module": "RDF11.DatasetPolicies",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  {M : Type u_1} →\n    {N : Type u_2} →\n      {P : RDF11.DatasetRegime Iri Literal B M} →\n        {Q : RDF11.DatasetRegime Iri Literal B N} →\n          {motive : RDF11.DatasetModelMap P Q → Sort u} →\n            (t : RDF11.DatasetModelMap P Q) →\n              ((toModel : N → M) →\n                  (truth_iff :\n                      ∀ (m : N) (D : RDF11.Dataset Iri Literal B), Q.Satisfies m D ↔ P.Satisfies (toModel m) D) →\n                    motive { toModel := toModel, truth_iff := truth_iff }) →\n                motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-POLICIES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetModelMap.ctorIdx",
+      "module": "RDF11.DatasetPolicies",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  {M : Type u_1} →\n    {N : Type u_2} →\n      {P : RDF11.DatasetRegime Iri Literal B M} →\n        {Q : RDF11.DatasetRegime Iri Literal B N} → RDF11.DatasetModelMap P Q → Nat",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-POLICIES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetModelMap.mk",
+      "module": "RDF11.DatasetPolicies",
+      "kind": "constructor",
+      "type": "{Iri Literal B : Type} →\n  {M : Type u_1} →\n    {N : Type u_2} →\n      {P : RDF11.DatasetRegime Iri Literal B M} →\n        {Q : RDF11.DatasetRegime Iri Literal B N} →\n          (toModel : N → M) →\n            (∀ (m : N) (D : RDF11.Dataset Iri Literal B), Q.Satisfies m D ↔ P.Satisfies (toModel m) D) →\n              RDF11.DatasetModelMap P Q",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-POLICIES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetModelMap.mk._flat_ctor",
+      "module": "RDF11.DatasetPolicies",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  {M : Type u_1} →\n    {N : Type u_2} →\n      {P : RDF11.DatasetRegime Iri Literal B M} →\n        {Q : RDF11.DatasetRegime Iri Literal B N} →\n          (toModel : N → M) →\n            (∀ (m : N) (D : RDF11.Dataset Iri Literal B), Q.Satisfies m D ↔ P.Satisfies (toModel m) D) →\n              RDF11.DatasetModelMap P Q",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-POLICIES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetModelMap.mk.inj",
+      "module": "RDF11.DatasetPolicies",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {M : Type u_1} {N : Type u_2} {P : RDF11.DatasetRegime Iri Literal B M}\n  {Q : RDF11.DatasetRegime Iri Literal B N} {toModel : N → M}\n  {truth_iff : ∀ (m : N) (D : RDF11.Dataset Iri Literal B), Q.Satisfies m D ↔ P.Satisfies (toModel m) D}\n  {toModel_1 : N → M}\n  {truth_iff_1 : ∀ (m : N) (D : RDF11.Dataset Iri Literal B), Q.Satisfies m D ↔ P.Satisfies (toModel_1 m) D},\n  { toModel := toModel, truth_iff := truth_iff } = { toModel := toModel_1, truth_iff := truth_iff_1 } →\n    toModel = toModel_1",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-POLICIES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetModelMap.mk.injEq",
+      "module": "RDF11.DatasetPolicies",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {M : Type u_1} {N : Type u_2} {P : RDF11.DatasetRegime Iri Literal B M}\n  {Q : RDF11.DatasetRegime Iri Literal B N} (toModel : N → M)\n  (truth_iff : ∀ (m : N) (D : RDF11.Dataset Iri Literal B), Q.Satisfies m D ↔ P.Satisfies (toModel m) D)\n  (toModel_1 : N → M)\n  (truth_iff_1 : ∀ (m : N) (D : RDF11.Dataset Iri Literal B), Q.Satisfies m D ↔ P.Satisfies (toModel_1 m) D),\n  ({ toModel := toModel, truth_iff := truth_iff } = { toModel := toModel_1, truth_iff := truth_iff_1 }) =\n    (toModel = toModel_1)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-POLICIES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetModelMap.mk.noConfusion",
+      "module": "RDF11.DatasetPolicies",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  {M : Type u_1} →\n    {N : Type u_2} →\n      {P : RDF11.DatasetRegime Iri Literal B M} →\n        {Q : RDF11.DatasetRegime Iri Literal B N} →\n          {P_1 : Sort u} →\n            {toModel : N → M} →\n              {truth_iff : ∀ (m : N) (D : RDF11.Dataset Iri Literal B), Q.Satisfies m D ↔ P.Satisfies (toModel m) D} →\n                {toModel' : N → M} →\n                  {truth_iff' :\n                      ∀ (m : N) (D : RDF11.Dataset Iri Literal B), Q.Satisfies m D ↔ P.Satisfies (toModel' m) D} →\n                    { toModel := toModel, truth_iff := truth_iff } = { toModel := toModel', truth_iff := truth_iff' } →\n                      (toModel ≍ toModel' → P_1) → P_1",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-POLICIES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetModelMap.mk.sizeOf_spec",
+      "module": "RDF11.DatasetPolicies",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {M : Type u_1} {N : Type u_2} {P : RDF11.DatasetRegime Iri Literal B M}\n  {Q : RDF11.DatasetRegime Iri Literal B N} [inst : SizeOf Iri] [inst_1 : SizeOf Literal] [inst_2 : SizeOf B]\n  [inst_3 : SizeOf M] [inst_4 : SizeOf N] (toModel : N → M)\n  (truth_iff : ∀ (m : N) (D : RDF11.Dataset Iri Literal B), Q.Satisfies m D ↔ P.Satisfies (toModel m) D),\n  sizeOf { toModel := toModel, truth_iff := truth_iff } = 1",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-POLICIES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetModelMap.noConfusion",
+      "module": "RDF11.DatasetPolicies",
+      "kind": "definition",
+      "type": "{P : Sort u} →\n  {Iri Literal B : Type} →\n    {M : Type u_1} →\n      {N : Type u_2} →\n        {P_1 : RDF11.DatasetRegime Iri Literal B M} →\n          {Q : RDF11.DatasetRegime Iri Literal B N} →\n            {t : RDF11.DatasetModelMap P_1 Q} →\n              {Iri' Literal' B' : Type} →\n                {M' : Type u_1} →\n                  {N' : Type u_2} →\n                    {P' : RDF11.DatasetRegime Iri' Literal' B' M'} →\n                      {Q' : RDF11.DatasetRegime Iri' Literal' B' N'} →\n                        {t' : RDF11.DatasetModelMap P' Q'} →\n                          Iri = Iri' →\n                            Literal = Literal' →\n                              B = B' →\n                                M = M' →\n                                  N = N' → P_1 ≍ P' → Q ≍ Q' → t ≍ t' → RDF11.DatasetModelMap.noConfusionType P t t'",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-POLICIES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetModelMap.noConfusionType",
+      "module": "RDF11.DatasetPolicies",
+      "kind": "definition",
+      "type": "Sort u →\n  {Iri Literal B : Type} →\n    {M : Type u_1} →\n      {N : Type u_2} →\n        {P : RDF11.DatasetRegime Iri Literal B M} →\n          {Q : RDF11.DatasetRegime Iri Literal B N} →\n            RDF11.DatasetModelMap P Q →\n              {Iri' Literal' B' : Type} →\n                {M' : Type u_1} →\n                  {N' : Type u_2} →\n                    {P' : RDF11.DatasetRegime Iri' Literal' B' M'} →\n                      {Q' : RDF11.DatasetRegime Iri' Literal' B' N'} → RDF11.DatasetModelMap P' Q' → Sort u",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-POLICIES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetModelMap.preserves_entailment",
+      "module": "RDF11.DatasetPolicies",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {M : Type u_1} {N : Type u_2} {P : RDF11.DatasetRegime Iri Literal B M}\n  {Q : RDF11.DatasetRegime Iri Literal B N} (f : RDF11.DatasetModelMap P Q) {D E : RDF11.Dataset Iri Literal B},\n  P.Entails D E → Q.Entails D E",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-DATASET-POLICIES",
+        "MT11-DATASET-EXTENSIONS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetModelMap.rec",
+      "module": "RDF11.DatasetPolicies",
+      "kind": "recursor",
+      "type": "{Iri Literal B : Type} →\n  {M : Type u_1} →\n    {N : Type u_2} →\n      {P : RDF11.DatasetRegime Iri Literal B M} →\n        {Q : RDF11.DatasetRegime Iri Literal B N} →\n          {motive : RDF11.DatasetModelMap P Q → Sort u} →\n            ((toModel : N → M) →\n                (truth_iff : ∀ (m : N) (D : RDF11.Dataset Iri Literal B), Q.Satisfies m D ↔ P.Satisfies (toModel m) D) →\n                  motive { toModel := toModel, truth_iff := truth_iff }) →\n              (t : RDF11.DatasetModelMap P Q) → motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-POLICIES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetModelMap.recOn",
+      "module": "RDF11.DatasetPolicies",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  {M : Type u_1} →\n    {N : Type u_2} →\n      {P : RDF11.DatasetRegime Iri Literal B M} →\n        {Q : RDF11.DatasetRegime Iri Literal B N} →\n          {motive : RDF11.DatasetModelMap P Q → Sort u} →\n            (t : RDF11.DatasetModelMap P Q) →\n              ((toModel : N → M) →\n                  (truth_iff :\n                      ∀ (m : N) (D : RDF11.Dataset Iri Literal B), Q.Satisfies m D ↔ P.Satisfies (toModel m) D) →\n                    motive { toModel := toModel, truth_iff := truth_iff }) →\n                motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-POLICIES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetModelMap.toModel",
+      "module": "RDF11.DatasetPolicies",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  {M : Type u_1} →\n    {N : Type u_2} →\n      {P : RDF11.DatasetRegime Iri Literal B M} →\n        {Q : RDF11.DatasetRegime Iri Literal B N} → RDF11.DatasetModelMap P Q → N → M",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-POLICIES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetModelMap.truth_iff",
+      "module": "RDF11.DatasetPolicies",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {M : Type u_1} {N : Type u_2} {P : RDF11.DatasetRegime Iri Literal B M}\n  {Q : RDF11.DatasetRegime Iri Literal B N} (self : RDF11.DatasetModelMap P Q) (m : N)\n  (D : RDF11.Dataset Iri Literal B), Q.Satisfies m D ↔ P.Satisfies (self.toModel m) D",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-POLICIES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetNameExample.Carrier",
+      "module": "RDF11.DatasetNameDenotation",
+      "kind": "definition",
+      "type": "Type",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-NAME-DENOTATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetNameExample.all_components_satisfied",
+      "module": "RDF11.DatasetNameDenotation",
+      "kind": "theorem",
+      "type": "∀ (refersToGraph : Bool),\n  (RDF11.DatasetNameExample.interpretation refersToGraph).Satisfies\n      RDF11.DatasetNameExample.dataset.defaultGraph.generalize ∧\n    ∀ (n : RDF11.GraphName Unit Empty) (G : RDF11.Graph Unit Empty Empty),\n      RDF11.DatasetNameExample.dataset.HasNamedGraph n G →\n        (RDF11.DatasetNameExample.interpretation refersToGraph).Satisfies G.generalize",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-DATASET-NAME-DENOTATION",
+        "MT11-DATASET-NAME-DENOTATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetNameExample.all_components_satisfied.match_1_1",
+      "module": "RDF11.DatasetNameDenotation",
+      "kind": "definition",
+      "type": "∀ (G : RDF11.Graph Unit Empty Empty)\n  (motive : (b : Empty) → RDF11.DatasetNameExample.dataset.HasNamedGraph (RDF11.Subject.blank b) G → Prop) (b : Empty)\n  (hn : RDF11.DatasetNameExample.dataset.HasNamedGraph (RDF11.Subject.blank b) G), motive b hn",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-NAME-DENOTATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetNameExample.dataset",
+      "module": "RDF11.DatasetNameDenotation",
+      "kind": "definition",
+      "type": "RDF11.Dataset Unit Empty Empty",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-DATASET-NAME-DENOTATION",
+        "MT11-DATASET-NAME-DENOTATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetNameExample.dataset.match_1",
+      "module": "RDF11.DatasetNameDenotation",
+      "kind": "definition",
+      "type": "(motive : Empty → Sort u_1) → (b : Empty) → motive b",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-NAME-DENOTATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetNameExample.dataset.match_3",
+      "module": "RDF11.DatasetNameDenotation",
+      "kind": "definition",
+      "type": "(motive : RDF11.GraphName Unit Empty → Sort u_1) →\n  (n : RDF11.GraphName Unit Empty) →\n    ((a : Unit) → motive (RDF11.Subject.iri a)) → ((b : Empty) → motive (RDF11.Subject.blank b)) → motive n",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-NAME-DENOTATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetNameExample.graph",
+      "module": "RDF11.DatasetNameDenotation",
+      "kind": "definition",
+      "type": "RDF11.Graph Unit Empty Empty",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-DATASET-NAME-DENOTATION",
+        "MT11-DATASET-NAME-DENOTATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetNameExample.graphObject",
+      "module": "RDF11.DatasetNameDenotation",
+      "kind": "definition",
+      "type": "RDF11.Graph Unit Empty Empty → RDF11.DatasetNameExample.Carrier",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-DATASET-NAME-DENOTATION",
+        "MT11-DATASET-NAME-DENOTATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetNameExample.graphObject_injective",
+      "module": "RDF11.DatasetNameDenotation",
+      "kind": "theorem",
+      "type": "∀ {G H : RDF11.Graph Unit Empty Empty},\n  RDF11.DatasetNameExample.graphObject G = RDF11.DatasetNameExample.graphObject H → G = H",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-DATASET-NAME-DENOTATION",
+        "MT11-DATASET-NAME-DENOTATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetNameExample.graph_satisfied",
+      "module": "RDF11.DatasetNameDenotation",
+      "kind": "theorem",
+      "type": "∀ (refersToGraph : Bool),\n  (RDF11.DatasetNameExample.interpretation refersToGraph).Satisfies RDF11.DatasetNameExample.graph.generalize",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-NAME-DENOTATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetNameExample.interpretation",
+      "module": "RDF11.DatasetNameDenotation",
+      "kind": "definition",
+      "type": "Bool → RDF11.SimpleInterpretation Unit Empty RDF11.DatasetNameExample.Carrier",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-DATASET-NAME-DENOTATION",
+        "MT11-DATASET-NAME-DENOTATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetNameExample.interpretation._proof_1",
+      "module": "RDF11.DatasetNameDenotation",
+      "kind": "theorem",
+      "type": "∃ x, True",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-NAME-DENOTATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetNameExample.nameValue",
+      "module": "RDF11.DatasetNameDenotation",
+      "kind": "definition",
+      "type": "Bool → RDF11.DatasetNameExample.Carrier",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-NAME-DENOTATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetNameExample.name_can_denote_graph",
+      "module": "RDF11.DatasetNameDenotation",
+      "kind": "theorem",
+      "type": "((RDF11.DatasetNameExample.interpretation true).IS ()).val =\n  RDF11.DatasetNameExample.graphObject RDF11.DatasetNameExample.graph",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-NAME-DENOTATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetNameExample.name_can_denote_something_else",
+      "module": "RDF11.DatasetNameDenotation",
+      "kind": "theorem",
+      "type": "((RDF11.DatasetNameExample.interpretation false).IS ()).val ≠\n  RDF11.DatasetNameExample.graphObject RDF11.DatasetNameExample.graph",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-NAME-DENOTATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetNameExample.named_pair",
+      "module": "RDF11.DatasetNameDenotation",
+      "kind": "theorem",
+      "type": "RDF11.DatasetNameExample.dataset.HasNamedGraph (RDF11.Subject.iri ()) RDF11.DatasetNameExample.graph",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-DATASET-NAME-DENOTATION",
+        "MT11-DATASET-NAME-DENOTATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetNameExample.pairing_and_component_truth_allow_both",
+      "module": "RDF11.DatasetNameDenotation",
+      "kind": "theorem",
+      "type": "RDF11.DatasetNameExample.dataset.HasNamedGraph (RDF11.Subject.iri ()) RDF11.DatasetNameExample.graph ∧\n  (RDF11.DatasetNameExample.interpretation true).Satisfies RDF11.DatasetNameExample.graph.generalize ∧\n    (RDF11.DatasetNameExample.interpretation false).Satisfies RDF11.DatasetNameExample.graph.generalize ∧\n      ((RDF11.DatasetNameExample.interpretation true).IS ()).val =\n          RDF11.DatasetNameExample.graphObject RDF11.DatasetNameExample.graph ∧\n        ((RDF11.DatasetNameExample.interpretation false).IS ()).val ≠\n          RDF11.DatasetNameExample.graphObject RDF11.DatasetNameExample.graph",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-DATASET-NAME-DENOTATION",
+        "MT11-DATASET-NAME-DENOTATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetPolicyExample.default_only_entails_absent",
+      "module": "RDF11.DatasetPolicyExamples",
+      "kind": "theorem",
+      "type": "∀ {Iri B Literal : Type} (n : RDF11.GraphName Iri B),\n  RDF11.DatasetRegime.simpleDefault.Entails (RDF11.Dataset.emptyNamed n) RDF11.Dataset.empty",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-DATASET-POLICY-EXAMPLES",
+        "MT11-DATASET-EXTENSIONS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetPolicyExample.nameRequired",
+      "module": "RDF11.DatasetPolicyExamples",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  Iri → RDF11.DatasetRegime Iri Literal B ((U : Type u) × RDF11.SimpleInterpretation Iri Literal U)",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-DATASET-POLICY-EXAMPLES",
+        "MT11-DATASET-EXTENSIONS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetPolicyExample.nameRequired_includes_default",
+      "module": "RDF11.DatasetPolicyExamples",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (n : Iri),\n  (RDF11.DatasetPolicyExample.nameRequired n).IncludesDefault (fun m => m.fst) fun m => m.snd",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-DATASET-POLICY-EXAMPLES",
+        "MT11-DATASET-EXTENSIONS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetPolicyExample.nameRequired_isomorphism_invariant",
+      "module": "RDF11.DatasetPolicyExamples",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (n : Iri) {D E : RDF11.Dataset Iri Literal B} (e : RDF11.DatasetIsomorphism D E)\n  (m : (U : Type u) × RDF11.SimpleInterpretation Iri Literal U),\n  (RDF11.DatasetPolicyExample.nameRequired n).Satisfies m D ↔ (RDF11.DatasetPolicyExample.nameRequired n).Satisfies m E",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-DATASET-POLICY-EXAMPLES",
+        "MT11-DATASET-EXTENSIONS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetPolicyExample.nameRequired_not_entails_absent",
+      "module": "RDF11.DatasetPolicyExamples",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (n : Iri),\n  ¬(RDF11.DatasetPolicyExample.nameRequired n).Entails (RDF11.Dataset.emptyNamed (RDF11.Subject.iri n))\n      RDF11.Dataset.empty",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-DATASET-POLICY-EXAMPLES",
+        "MT11-DATASET-EXTENSIONS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetRegime",
+      "module": "RDF11.DatasetPolicies",
+      "kind": "inductive",
+      "type": "Type → Type → Type → Type u → Type u",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-DATASET-POLICIES",
+        "MT11-DATASET-DEFAULT-CONTENT"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetRegime.Entails",
+      "module": "RDF11.DatasetPolicies",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  {Model : Type u_1} →\n    RDF11.DatasetRegime Iri Literal B Model → RDF11.Dataset Iri Literal B → RDF11.Dataset Iri Literal B → Prop",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-DATASET-POLICIES",
+        "MT11-DATASET-EXTENSIONS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetRegime.EntailsGraph",
+      "module": "RDF11.DatasetPolicies",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  {Model : Type u_1} →\n    {C : Type} →\n      RDF11.DatasetRegime Iri Literal B Model →\n        (U : Model → Type v) →\n          ((m : Model) → RDF11.SimpleInterpretation Iri Literal (U m)) →\n            RDF11.Dataset Iri Literal B → RDF11.GeneralizedGraph Iri Literal C → Prop",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-DATASET-POLICIES",
+        "MT11-DATASET-DEFAULT-CONTENT"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetRegime.EntailsUnder",
+      "module": "RDF11.DatasetPolicies",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  {Model : Type u_1} →\n    RDF11.DatasetRegime Iri Literal B Model →\n      RDF11.Set Model → RDF11.Dataset Iri Literal B → RDF11.Dataset Iri Literal B → Prop",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-DATASET-POLICIES",
+        "MT11-DATASET-EXTENSIONS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetRegime.IncludesDefault",
+      "module": "RDF11.DatasetPolicies",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  {Model : Type u_1} →\n    RDF11.DatasetRegime Iri Literal B Model →\n      (U : Model → Type v) → ((m : Model) → RDF11.SimpleInterpretation Iri Literal (U m)) → Prop",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-DATASET-POLICIES",
+        "MT11-DATASET-DEFAULT-CONTENT"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetRegime.Satisfies",
+      "module": "RDF11.DatasetPolicies",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  {Model : Type u} → RDF11.DatasetRegime Iri Literal B Model → Model → RDF11.Dataset Iri Literal B → Prop",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-POLICIES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetRegime._sizeOf_1",
+      "module": "RDF11.DatasetPolicies",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  {Model : Type u} →\n    [SizeOf Iri] → [SizeOf Literal] → [SizeOf B] → [SizeOf Model] → RDF11.DatasetRegime Iri Literal B Model → Nat",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-POLICIES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetRegime._sizeOf_inst",
+      "module": "RDF11.DatasetPolicies",
+      "kind": "definition",
+      "type": "(Iri Literal B : Type) →\n  (Model : Type u) →\n    [SizeOf Iri] → [SizeOf Literal] → [SizeOf B] → [SizeOf Model] → SizeOf (RDF11.DatasetRegime Iri Literal B Model)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-POLICIES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetRegime.casesOn",
+      "module": "RDF11.DatasetPolicies",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  {Model : Type u} →\n    {motive : RDF11.DatasetRegime Iri Literal B Model → Sort u_1} →\n      (t : RDF11.DatasetRegime Iri Literal B Model) →\n        ((Satisfies : Model → RDF11.Dataset Iri Literal B → Prop) → motive { Satisfies := Satisfies }) → motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-POLICIES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetRegime.ctorIdx",
+      "module": "RDF11.DatasetPolicies",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} → {Model : Type u} → RDF11.DatasetRegime Iri Literal B Model → Nat",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-POLICIES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetRegime.default_content",
+      "module": "RDF11.DatasetPolicies",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {Model : Type u_1} (P : RDF11.DatasetRegime Iri Literal B Model) (U : Model → Type v)\n  (I : (m : Model) → RDF11.SimpleInterpretation Iri Literal (U m)),\n  P.IncludesDefault U I → ∀ (D : RDF11.Dataset Iri Literal B), P.EntailsGraph U I D D.defaultGraph.generalize",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-DATASET-POLICIES",
+        "MT11-DATASET-DEFAULT-CONTENT"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetRegime.default_graph_consequence",
+      "module": "RDF11.DatasetPolicies",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {Model : Type u_1} {C : Type} (P : RDF11.DatasetRegime Iri Literal B Model)\n  (U : Model → Type v) (I : (m : Model) → RDF11.SimpleInterpretation Iri Literal (U m)),\n  P.IncludesDefault U I →\n    ∀ (D : RDF11.Dataset Iri Literal B) (G : RDF11.GeneralizedGraph Iri Literal C),\n      RDF11.SimplyEntails D.defaultGraph.generalize G → P.EntailsGraph U I D G",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-DATASET-POLICIES",
+        "MT11-DATASET-DEFAULT-CONTENT"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetRegime.default_graph_consequence_under",
+      "module": "RDF11.DatasetPolicies",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {Model : Type u_1} {A : Type} (P : RDF11.DatasetRegime Iri Literal B Model)\n  (U : Model → Type v) (I : (m : Model) → RDF11.SimpleInterpretation Iri Literal (U m)),\n  P.IncludesDefault U I →\n    ∀ (C : (V : Type v) → RDF11.SimpleInterpretation Iri Literal V → Prop),\n      (∀ (m : Model), C (U m) (I m)) →\n        ∀ (D : RDF11.Dataset Iri Literal B) (G : RDF11.GeneralizedGraph Iri Literal A),\n          RDF11.EntailsUnder C D.defaultGraph.generalize G → P.EntailsGraph U I D G",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-DATASET-POLICIES",
+        "MT11-DATASET-DEFAULT-CONTENT"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetRegime.entails_refl",
+      "module": "RDF11.DatasetPolicies",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {Model : Type u_1} (P : RDF11.DatasetRegime Iri Literal B Model)\n  (D : RDF11.Dataset Iri Literal B), P.Entails D D",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-POLICIES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetRegime.entails_trans",
+      "module": "RDF11.DatasetPolicies",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {Model : Type u_1} (P : RDF11.DatasetRegime Iri Literal B Model)\n  {D E F : RDF11.Dataset Iri Literal B}, P.Entails D E → P.Entails E F → P.Entails D F",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-POLICIES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetRegime.graph_consequence_composition",
+      "module": "RDF11.DatasetPolicies",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {Model : Type u_1} {A C : Type} (P : RDF11.DatasetRegime Iri Literal B Model)\n  (U : Model → Type v) (I : (m : Model) → RDF11.SimpleInterpretation Iri Literal (U m))\n  (D : RDF11.Dataset Iri Literal B) (G : RDF11.GeneralizedGraph Iri Literal A)\n  (H : RDF11.GeneralizedGraph Iri Literal C), P.EntailsGraph U I D G → RDF11.SimplyEntails G H → P.EntailsGraph U I D H",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-DATASET-POLICIES",
+        "MT11-DATASET-DEFAULT-CONTENT"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetRegime.mk",
+      "module": "RDF11.DatasetPolicies",
+      "kind": "constructor",
+      "type": "{Iri Literal B : Type} →\n  {Model : Type u} → (Model → RDF11.Dataset Iri Literal B → Prop) → RDF11.DatasetRegime Iri Literal B Model",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-POLICIES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetRegime.mk._flat_ctor",
+      "module": "RDF11.DatasetPolicies",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  {Model : Type u} → (Model → RDF11.Dataset Iri Literal B → Prop) → RDF11.DatasetRegime Iri Literal B Model",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-POLICIES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetRegime.mk.inj",
+      "module": "RDF11.DatasetPolicies",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {Model : Type u} {Satisfies Satisfies_1 : Model → RDF11.Dataset Iri Literal B → Prop},\n  { Satisfies := Satisfies } = { Satisfies := Satisfies_1 } → Satisfies = Satisfies_1",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-POLICIES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetRegime.mk.injEq",
+      "module": "RDF11.DatasetPolicies",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {Model : Type u} (Satisfies Satisfies_1 : Model → RDF11.Dataset Iri Literal B → Prop),\n  ({ Satisfies := Satisfies } = { Satisfies := Satisfies_1 }) = (Satisfies = Satisfies_1)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-POLICIES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetRegime.mk.noConfusion",
+      "module": "RDF11.DatasetPolicies",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  {Model : Type u} →\n    {P : Sort u_1} →\n      {Satisfies Satisfies' : Model → RDF11.Dataset Iri Literal B → Prop} →\n        { Satisfies := Satisfies } = { Satisfies := Satisfies' } → (Satisfies ≍ Satisfies' → P) → P",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-POLICIES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetRegime.mk.sizeOf_spec",
+      "module": "RDF11.DatasetPolicies",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {Model : Type u} [inst : SizeOf Iri] [inst_1 : SizeOf Literal] [inst_2 : SizeOf B]\n  [inst_3 : SizeOf Model] (Satisfies : Model → RDF11.Dataset Iri Literal B → Prop),\n  sizeOf { Satisfies := Satisfies } = 1",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-POLICIES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetRegime.noConfusion",
+      "module": "RDF11.DatasetPolicies",
+      "kind": "definition",
+      "type": "{P : Sort u_1} →\n  {Iri Literal B : Type} →\n    {Model : Type u} →\n      {t : RDF11.DatasetRegime Iri Literal B Model} →\n        {Iri' Literal' B' : Type} →\n          {Model' : Type u} →\n            {t' : RDF11.DatasetRegime Iri' Literal' B' Model'} →\n              Iri = Iri' →\n                Literal = Literal' → B = B' → Model = Model' → t ≍ t' → RDF11.DatasetRegime.noConfusionType P t t'",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-POLICIES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetRegime.noConfusionType",
+      "module": "RDF11.DatasetPolicies",
+      "kind": "definition",
+      "type": "Sort u_1 →\n  {Iri Literal B : Type} →\n    {Model : Type u} →\n      RDF11.DatasetRegime Iri Literal B Model →\n        {Iri' Literal' B' : Type} → {Model' : Type u} → RDF11.DatasetRegime Iri' Literal' B' Model' → Sort u_1",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-POLICIES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetRegime.rec",
+      "module": "RDF11.DatasetPolicies",
+      "kind": "recursor",
+      "type": "{Iri Literal B : Type} →\n  {Model : Type u} →\n    {motive : RDF11.DatasetRegime Iri Literal B Model → Sort u_1} →\n      ((Satisfies : Model → RDF11.Dataset Iri Literal B → Prop) → motive { Satisfies := Satisfies }) →\n        (t : RDF11.DatasetRegime Iri Literal B Model) → motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-POLICIES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetRegime.recOn",
+      "module": "RDF11.DatasetPolicies",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  {Model : Type u} →\n    {motive : RDF11.DatasetRegime Iri Literal B Model → Sort u_1} →\n      (t : RDF11.DatasetRegime Iri Literal B Model) →\n        ((Satisfies : Model → RDF11.Dataset Iri Literal B → Prop) → motive { Satisfies := Satisfies }) → motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-POLICIES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetRegime.restrict_entailment",
+      "module": "RDF11.DatasetPolicies",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {Model : Type u_1} (P : RDF11.DatasetRegime Iri Literal B Model) (models : RDF11.Set Model)\n  {D E : RDF11.Dataset Iri Literal B}, P.Entails D E → P.EntailsUnder models D E",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-POLICIES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetRegime.restricted",
+      "module": "RDF11.DatasetPolicies",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  {Model : Type u_1} →\n    RDF11.DatasetRegime Iri Literal B Model →\n      (models : RDF11.Set Model) → RDF11.DatasetRegime Iri Literal B { m // models m }",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-DATASET-POLICIES",
+        "MT11-DATASET-EXTENSIONS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetRegime.restricted_entails_iff",
+      "module": "RDF11.DatasetPolicies",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {Model : Type u_1} (P : RDF11.DatasetRegime Iri Literal B Model) (models : RDF11.Set Model)\n  (D E : RDF11.Dataset Iri Literal B), (P.restricted models).Entails D E ↔ P.EntailsUnder models D E",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-DATASET-POLICIES",
+        "MT11-DATASET-EXTENSIONS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetRegime.restriction_includes_default",
+      "module": "RDF11.DatasetPolicies",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {Model : Type u_1} (P : RDF11.DatasetRegime Iri Literal B Model) (U : Model → Type v)\n  (I : (m : Model) → RDF11.SimpleInterpretation Iri Literal (U m)),\n  P.IncludesDefault U I →\n    ∀ (models : RDF11.Set Model), (P.restricted models).IncludesDefault (fun m => U m.val) fun m => I m.val",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-POLICIES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetRegime.simpleDefault",
+      "module": "RDF11.DatasetPolicies",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} → RDF11.DatasetRegime Iri Literal B ((U : Type u) × RDF11.SimpleInterpretation Iri Literal U)",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-DATASET-POLICIES",
+        "MT11-DATASET-DEFAULT-CONTENT"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetRegime.simpleDefault_entails_iff",
+      "module": "RDF11.DatasetPolicies",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (D E : RDF11.Dataset Iri Literal B),\n  RDF11.DatasetRegime.simpleDefault.Entails D E ↔\n    RDF11.SimplyEntails D.defaultGraph.generalize E.defaultGraph.generalize",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-DATASET-POLICIES",
+        "MT11-DATASET-DEFAULT-CONTENT"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetRegime.simpleDefault_includes_default",
+      "module": "RDF11.DatasetPolicies",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type}, RDF11.DatasetRegime.simpleDefault.IncludesDefault (fun m => m.fst) fun m => m.snd",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-DATASET-POLICIES",
+        "MT11-DATASET-DEFAULT-CONTENT"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetRegime.simpleDefault_isomorphism_invariant",
+      "module": "RDF11.DatasetPolicies",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {D E : RDF11.Dataset Iri Literal B} (e : RDF11.DatasetIsomorphism D E)\n  (m : (U : Type u) × RDF11.SimpleInterpretation Iri Literal U),\n  RDF11.DatasetRegime.simpleDefault.Satisfies m D ↔ RDF11.DatasetRegime.simpleDefault.Satisfies m E",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-DATASET-POLICIES",
+        "MT11-DATASET-DEFAULT-CONTENT"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetRegime.stronger_models_preserve_entailment",
+      "module": "RDF11.DatasetPolicies",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {Model : Type u_1} (P : RDF11.DatasetRegime Iri Literal B Model) {C D : RDF11.Set Model},\n  D.subset C → ∀ {S E : RDF11.Dataset Iri Literal B}, P.EntailsUnder C S E → P.EntailsUnder D S E",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-DATASET-POLICIES",
+        "MT11-DATASET-EXTENSIONS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Graph.generalize.eq_1",
+      "module": "RDF11.Datasets",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Blank : Type} (g : RDF11.Graph Iri Literal Blank),\n  g.generalize = RDF11.Set.image RDF11.Triple.generalize g",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASETS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Graph.generalize_empty",
+      "module": "RDF11.Datasets",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type}, RDF11.Graph.generalize RDF11.Set.empty = RDF11.Set.empty",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASETS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.NamedGraphComparison",
+      "module": "RDF11.DatasetNamedComparison",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  (RDF11.Graph Iri Literal B → RDF11.Graph Iri Literal B → Prop) →\n    RDF11.Dataset Iri Literal B → RDF11.Dataset Iri Literal B → Prop",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-DATASET-NAMED-COMPARISON",
+        "MT11-DATASET-EXTENSIONS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleNamedGraphComparison",
+      "module": "RDF11.DatasetNamedComparison",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} → RDF11.Dataset Iri Literal B → RDF11.Dataset Iri Literal B → Prop",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-DATASET-NAMED-COMPARISON",
+        "MT11-DATASET-EXTENSIONS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.empty_named_matches_absent",
+      "module": "RDF11.DatasetNamedComparison",
+      "kind": "theorem",
+      "type": "∀ {Iri B Literal : Type} (n : RDF11.GraphName Iri B),\n  RDF11.SimpleNamedGraphComparison (RDF11.Dataset.emptyNamed n) RDF11.Dataset.empty ∧\n    RDF11.SimpleNamedGraphComparison RDF11.Dataset.empty (RDF11.Dataset.emptyNamed n)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-NAMED-COMPARISON"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.matching_graphs_need_not_be_isomorphic",
+      "module": "RDF11.DatasetNamedComparison",
+      "kind": "theorem",
+      "type": "∀ {Iri B Literal : Type} (n : RDF11.GraphName Iri B),\n  RDF11.SimpleNamedGraphComparison (RDF11.Dataset.emptyNamed n) RDF11.Dataset.empty ∧\n    RDF11.SimpleNamedGraphComparison RDF11.Dataset.empty (RDF11.Dataset.emptyNamed n) ∧\n      ¬Nonempty (RDF11.DatasetIsomorphism (RDF11.Dataset.emptyNamed n) RDF11.Dataset.empty)",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-DATASET-NAMED-COMPARISON",
+        "MT11-DATASET-EXTENSIONS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.namedGraphComparison_refl",
+      "module": "RDF11.DatasetNamedComparison",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (graphEntails : RDF11.Graph Iri Literal B → RDF11.Graph Iri Literal B → Prop),\n  (∀ (G : RDF11.Graph Iri Literal B), graphEntails G G) →\n    ∀ (D : RDF11.Dataset Iri Literal B), RDF11.NamedGraphComparison graphEntails D D",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-NAMED-COMPARISON"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.namedGraphComparison_trans",
+      "module": "RDF11.DatasetNamedComparison",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (graphEntails : RDF11.Graph Iri Literal B → RDF11.Graph Iri Literal B → Prop),\n  (∀ (G H K : RDF11.Graph Iri Literal B), graphEntails G H → graphEntails H K → graphEntails G K) →\n    ∀ {D E F : RDF11.Dataset Iri Literal B},\n      RDF11.NamedGraphComparison graphEntails D E →\n        RDF11.NamedGraphComparison graphEntails E F → RDF11.NamedGraphComparison graphEntails D F",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-NAMED-COMPARISON"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetRegime.defaultUnder",
+      "module": "RDF11.DatasetPolicies",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  (C : (U : Type u) → RDF11.SimpleInterpretation Iri Literal U → Prop) →\n    RDF11.DatasetRegime Iri Literal B { m // C m.fst m.snd }",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-DATASET-POLICIES",
+        "MT11-DATASET-DEFAULT-CONTENT",
+        "MT11-DATASET-EXTENSIONS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetRegime.defaultUnder_entails_iff",
+      "module": "RDF11.DatasetPolicies",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (C : (U : Type u) → RDF11.SimpleInterpretation Iri Literal U → Prop)\n  (D E : RDF11.Dataset Iri Literal B),\n  (RDF11.DatasetRegime.defaultUnder C).Entails D E ↔\n    RDF11.EntailsUnder C D.defaultGraph.generalize E.defaultGraph.generalize",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-DATASET-POLICIES",
+        "MT11-DATASET-DEFAULT-CONTENT",
+        "MT11-DATASET-EXTENSIONS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetRegime.defaultUnder_includes_default",
+      "module": "RDF11.DatasetPolicies",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (C : (U : Type u) → RDF11.SimpleInterpretation Iri Literal U → Prop),\n  (RDF11.DatasetRegime.defaultUnder C).IncludesDefault (fun m => m.val.fst) fun m => m.val.snd",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-DATASET-POLICIES",
+        "MT11-DATASET-DEFAULT-CONTENT",
+        "MT11-DATASET-EXTENSIONS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetRegime.defaultUnder_isomorphism_invariant",
+      "module": "RDF11.DatasetPolicies",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (C : (U : Type u) → RDF11.SimpleInterpretation Iri Literal U → Prop)\n  {D E : RDF11.Dataset Iri Literal B} (e : RDF11.DatasetIsomorphism D E) (m : { m // C m.fst m.snd }),\n  (RDF11.DatasetRegime.defaultUnder C).Satisfies m D ↔ (RDF11.DatasetRegime.defaultUnder C).Satisfies m E",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-DATASET-POLICIES",
+        "MT11-DATASET-DEFAULT-CONTENT",
+        "MT11-DATASET-EXTENSIONS"
       ],
       "parent_declaration_if_applicable": null,
       "review": "pending_expert_review"
