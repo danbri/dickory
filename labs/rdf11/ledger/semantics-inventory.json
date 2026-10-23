@@ -521,6 +521,7 @@
       "record_ids": [
         "MT11-PREINTERPRETATION",
         "MT11-FINITE-SIMPLE-PREINTERPRETATION",
+        "MT11-SIMPLE-PREINTERPRETATION-COMPLETION",
         "MT11-FINITE-DATATYPE-PREINTERPRETATION",
         "MT11-FINITE-RDF-RDFS-PRESERVATION"
       ]
@@ -4615,7 +4616,8 @@
         "implementation_mapping": "unassessed",
         "formal_proof": "unassessed",
         "test_mapping": "unassessed"
-      }
+      },
+      "formalization_note": "The precise refinement reuses normative section 5 on the two vocabulary subtypes: IS maps into IR union IP and IL remains partial. Appendix B informally describes a mapping into IR; the formalization choice is explicit and awaiting expert review."
     },
     {
       "id": "MT11-FINITE-SIMPLE-PREINTERPRETATION",
@@ -4637,7 +4639,32 @@
         "formal_proof": "unassessed",
         "test_mapping": "unassessed"
       },
-      "formalization_note": "This is an informative sketch without proof, for finite compared vocabularies; the exact treatment of unmentioned terms remains a formalization obligation."
+      "formalization_note": "Finite graph inputs have an exactly enumerated union vocabulary, and name-domain restriction/completion preserves truth and entailment. The N+B+1 resource bound and restriction to finite-carrier countermodels remain unproved. Name completion is separated into MT11-SIMPLE-PREINTERPRETATION-COMPLETION."
+    },
+    {
+      "id": "MT11-SIMPLE-PREINTERPRETATION-COMPLETION",
+      "section": "B",
+      "anchor": "finite_interpretations",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#finite_interpretations",
+      "category": "mathematical_consequence",
+      "source_status": "informative",
+      "assertion_basis": "explicit",
+      "paraphrase": "The simple pre-interpretations considered in Appendix B admit full-name completions preserving relevant truth; restricting name domains does not change satisfiability or entailment for graphs over those names.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-PREINTERPRETATION",
+        "MT11-SIMPLE-IS",
+        "MT11-SIMPLE-IL",
+        "MT11-NAMES-VOCABULARIES"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "This isolates name-domain completion and locality from the separate finite-resource bound. The precise construction retains normative section 5 typing and partial IL. The entailment equivalence quantifies over all V-preinterpretations, not only finite carriers.",
+      "split_from": "MT11-FINITE-SIMPLE-PREINTERPRETATION"
     },
     {
       "id": "MT11-FINITE-DATATYPE-PREINTERPRETATION",
@@ -5480,5 +5507,5 @@
       "formalization_note": "Derived conditional witness, not an explicitly printed D.3 assertion. This separates the empty-collection convention from outgoing-edge prohibition and acyclicity. The model retains all RDF/RDFS axioms."
     }
   ],
-  "record_count": 216
+  "record_count": 217
 }

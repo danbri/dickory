@@ -4193,6 +4193,119 @@
       "extraction_review": "pending_expert_review",
       "formalization_review": "pending_expert_review",
       "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-PREINTERPRETATION",
+      "relation": "partial_definition",
+      "symbol_linked_english": "PreInterpretation V U is the existing SimpleInterpretation on VocabularyIRI V and VocabularyLiteral V. IR, IP, IEXT and blank identities retain their existing meanings; only the name domains are restricted.",
+      "bindings": [
+        {
+          "symbol": "PreInterpretation",
+          "lean": "RDF11.PreInterpretation"
+        },
+        {
+          "symbol": "VocabularyIRI",
+          "lean": "RDF11.VocabularyIRI"
+        },
+        {
+          "symbol": "VocabularyLiteral",
+          "lean": "RDF11.VocabularyLiteral"
+        },
+        {
+          "symbol": "SimpleInterpretation.comapNames",
+          "lean": "RDF11.SimpleInterpretation.comapNames"
+        },
+        {
+          "symbol": "GeneralizedGraph.restrictNames",
+          "lean": "RDF11.GeneralizedGraph.restrictNames"
+        }
+      ],
+      "limitations": "Appendix B is an informative sketch and informally describes a mapping into IR. This precise refinement retains normative section 5 IS into IR union IP and partial IL; it does not assume IP is a subset of IR. V and the resource universe may be infinite. Concrete term syntax and source fidelity remain external review obligations.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-SIMPLE-PREINTERPRETATION-COMPLETION",
+      "relation": "theorem",
+      "symbol_linked_english": "PreInterpretation.extend completes all ambient IRI and literal name domains while keeping IR, IP and IEXT fixed. restrict_extend is a round trip. denote_extend, tripleTrue_extend and graphTrue_extend retain the same assignment; satisfies_extend and the two preinterpretation_*_iff theorems preserve satisfaction and model-theoretic comparison.",
+      "bindings": [
+        {
+          "symbol": "PreInterpretation.extend",
+          "lean": "RDF11.PreInterpretation.extend"
+        },
+        {
+          "symbol": "PreInterpretation.restrict_extend",
+          "lean": "RDF11.PreInterpretation.restrict_extend"
+        },
+        {
+          "symbol": "PreInterpretation.denote_extend",
+          "lean": "RDF11.PreInterpretation.denote_extend"
+        },
+        {
+          "symbol": "PreInterpretation.tripleTrue_extend",
+          "lean": "RDF11.PreInterpretation.tripleTrue_extend"
+        },
+        {
+          "symbol": "PreInterpretation.graphTrue_extend",
+          "lean": "RDF11.PreInterpretation.graphTrue_extend"
+        },
+        {
+          "symbol": "PreInterpretation.satisfies_extend",
+          "lean": "RDF11.PreInterpretation.satisfies_extend"
+        },
+        {
+          "symbol": "PreInterpretation.satisfies_of_restriction",
+          "lean": "RDF11.PreInterpretation.satisfies_of_restriction"
+        },
+        {
+          "symbol": "preinterpretation_satisfiable_iff",
+          "lean": "RDF11.preinterpretation_satisfiable_iff"
+        },
+        {
+          "symbol": "preinterpretation_entailment_iff",
+          "lean": "RDF11.preinterpretation_entailment_iff"
+        },
+        {
+          "symbol": "Graph.generalize_mapNames",
+          "lean": "RDF11.Graph.generalize_mapNames"
+        }
+      ],
+      "limitations": "This proves name-domain locality for simple semantics over all V-preinterpretations, retaining possibly infinite carriers. The chosen completion sends unused IRIs to an existing resource and leaves unused literals undefined. Other same-carrier completions whose restriction equals the original interpretation also preserve satisfaction. This does not prove the N+B+1 finite-resource bound, a decision procedure, or D/RDF/RDFS completion. Abstract IRI/literal domains retain their existing external correspondence obligation.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-FINITE-SIMPLE-PREINTERPRETATION",
+      "relation": "partial_theorem",
+      "symbol_linked_english": "finite_shared_vocabulary enumerates exactly the union of the names in G and E, including datatype IRIs contributed by literals. finite_vocabulary_comparison combines this finite vocabulary with equivalence of simple entailment over its preinterpretations and full interpretations.",
+      "bindings": [
+        {
+          "symbol": "finite_shared_vocabulary",
+          "lean": "RDF11.finite_shared_vocabulary"
+        },
+        {
+          "symbol": "finite_vocabulary_comparison",
+          "lean": "RDF11.finite_vocabulary_comparison"
+        },
+        {
+          "symbol": "finite_vocabulary_of_finite_graph",
+          "lean": "RDF11.finite_vocabulary_of_finite_graph"
+        },
+        {
+          "symbol": "Term.nameList",
+          "lean": "RDF11.Term.nameList"
+        },
+        {
+          "symbol": "GeneralizedGraph.include_restrictNames",
+          "lean": "RDF11.GeneralizedGraph.include_restrictNames"
+        }
+      ],
+      "limitations": "The N+B+1 resource bound and finite-carrier countermodel equivalence remain unproved. Finite vocabulary is not a finite resource universe, nor does it alone bound blank support. Both input graph finiteness hypotheses are explicit. The proof does not establish decidability or complexity. N counts names rather than denotations; literal datatype IRIs are included. The graph inputs may use different blank types, without identifying their independent satisfaction witnesses.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
     }
   ],
   "passage_selectors": [
@@ -5917,6 +6030,30 @@
         "MT11-RDFS-ADDITIONAL-VALID-TYPES",
         "MT11-RDFS-ADDITIONAL-VALID-PROPERTIES"
       ]
+    },
+    {
+      "id": "preinterpretation-sketch",
+      "source": "mt",
+      "tag": "p",
+      "text": "This appendix sketches, without proof, how to re-state the semantics using smaller semantic structures",
+      "within_section": "finite-interpretations-informative",
+      "claims": [
+        "MT11-PREINTERPRETATION",
+        "MT11-FINITE-SIMPLE-PREINTERPRETATION",
+        "MT11-SIMPLE-PREINTERPRETATION-COMPLETION"
+      ]
+    },
+    {
+      "id": "preinterpretation-simple",
+      "source": "mt",
+      "tag": "p",
+      "text": "Basically, it is only necessary for an interpretation structure to interpret the names actually used",
+      "within_section": "finite-interpretations-informative",
+      "claims": [
+        "MT11-PREINTERPRETATION",
+        "MT11-FINITE-SIMPLE-PREINTERPRETATION",
+        "MT11-SIMPLE-PREINTERPRETATION-COMPLETION"
+      ]
     }
   ],
   "context_resolutions": [
@@ -6107,6 +6244,15 @@
       "antecedent_passage": "rdfs-additional-types",
       "resolved_meaning": "The displayed family of valid typings is not an exhaustive enumeration of all RDFS-valid triples.",
       "inference": "The incompleteness qualifier does not weaken universal validity of each printed entry. The optional-datatype recognition question remains separate.",
+      "review": "pending"
+    },
+    {
+      "claim_id": "MT11-SIMPLE-PREINTERPRETATION-COMPLETION",
+      "passage": "preinterpretation-simple",
+      "source_phrase": "Any such pre-interpretation",
+      "antecedent_passage": "preinterpretation-simple",
+      "resolved_meaning": "The simple pre-interpretations on the comparison vocabulary just introduced, following the proposed N+B+1 bound.",
+      "inference": "The checked name-completion construction also works without a finite-carrier hypothesis; this does not prove that finite carriers suffice for entailment. Normative section 5 supplies the precise IS codomain and partial IL behavior omitted by the sketch.",
       "review": "pending"
     }
   ]

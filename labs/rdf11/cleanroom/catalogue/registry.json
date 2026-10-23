@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "status": "frozen_fifteenth_increment_rdfs_consequences_not_expert_approved",
+  "status": "frozen_sixteenth_increment_preinterpretations_not_expert_approved",
   "lean_version": "4.33.1",
   "allowed_axioms": [
     "propext",
@@ -538,6 +538,22 @@
         "MT11-RULE-rdfs3",
         "MT11-RULE-rdfs9"
       ]
+    },
+    {
+      "id": "SUPPORT-PREINTERPRETATIONS",
+      "purpose": "Explicit name-domain maps, simple-interpretation restriction/completion, truth with shared blank assignments, satisfiability and entailment locality, and finite comparison vocabulary. Does not establish a finite-resource bound or datatype/RDF/RDFS completion.",
+      "requires": [
+        "MT11-PREINTERPRETATION",
+        "MT11-SIMPLE-PREINTERPRETATION-COMPLETION",
+        "MT11-FINITE-SIMPLE-PREINTERPRETATION",
+        "MT11-NAMES-VOCABULARIES",
+        "MT11-SIMPLE-IR",
+        "MT11-SIMPLE-IP",
+        "MT11-SIMPLE-IS",
+        "MT11-SIMPLE-IL",
+        "MT11-TRIPLE-TRUTH",
+        "MT11-GRAPH-TRUTH"
+      ]
     }
   ],
   "files": [
@@ -564,14 +580,14 @@
     },
     {
       "path": "Audit/Snapshot.lean",
-      "sha256": "290e80774c18b12a0d94e6484b567820683824d3a5d0ba92bf6e292d748bfbf4",
+      "sha256": "7d1f589b60470ebdf7bf51bca1c0f2dd00329e3a597d9cf6d28abb7b695384a6",
       "role": "formal_source",
       "lifecycle": "active",
       "review": "pending_expert_review"
     },
     {
       "path": "RDF11.lean",
-      "sha256": "df9699296e2d0118015c4c71c23d402f40f44dcb5ca7f1aed1174c7593bd1b86",
+      "sha256": "a23c2cb3a44aea5495c00ff72829a49e9379d84868a9107fe24866516636d32a",
       "role": "formal_source",
       "lifecycle": "active",
       "review": "pending_expert_review"
@@ -936,6 +952,20 @@
     {
       "path": "RDF11/RDFSConsequences.lean",
       "sha256": "3c3af58b816aa204e019a596247b26a704551507f737c7c583c5f0796c04af08",
+      "role": "formal_source",
+      "lifecycle": "active",
+      "review": "pending_expert_review"
+    },
+    {
+      "path": "RDF11/NameMaps.lean",
+      "sha256": "1b3aa28488b83124b3f40e9ca6267b6e0508694765a6b54d7fe33f632bbdf8b5",
+      "role": "formal_source",
+      "lifecycle": "active",
+      "review": "pending_expert_review"
+    },
+    {
+      "path": "RDF11/Preinterpretations.lean",
+      "sha256": "abc97e6f999b73140c7985faf8199c90c9ada0255c71db614098d96ef49f29bb",
       "role": "formal_source",
       "lifecycle": "active",
       "review": "pending_expert_review"
@@ -21453,6 +21483,1010 @@
         "MT11-RDFS-ADDITIONAL-VALID-TYPES"
       ],
       "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GeneralizedGraph.include_restrictNames",
+      "module": "RDF11.Preinterpretations",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri B : Type} (datatype : Literal → Iri) (V : RDF11.Set (RDF11.Name Iri Literal))\n  (G : RDF11.GeneralizedGraph Iri Literal B) (h : (RDF11.GeneralizedGraph.vocabulary datatype G).subset V),\n  RDF11.GeneralizedGraph.mapNames Subtype.val Subtype.val (RDF11.GeneralizedGraph.restrictNames datatype V G h) = G",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-PREINTERPRETATIONS",
+        "MT11-FINITE-SIMPLE-PREINTERPRETATION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.GeneralizedGraph",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GeneralizedGraph.mapNames",
+      "module": "RDF11.NameMaps",
+      "kind": "definition",
+      "type": "{Iri₁ Iri₂ Literal₁ Literal₂ B : Type} →\n  (Iri₁ → Iri₂) →\n    (Literal₁ → Literal₂) → RDF11.GeneralizedGraph Iri₁ Literal₁ B → RDF11.GeneralizedGraph Iri₂ Literal₂ B",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-PREINTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.GeneralizedGraph",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GeneralizedGraph.restrictNames",
+      "module": "RDF11.Preinterpretations",
+      "kind": "definition",
+      "type": "{Literal Iri B : Type} →\n  (datatype : Literal → Iri) →\n    (V : RDF11.Set (RDF11.Name Iri Literal)) →\n      (G : RDF11.GeneralizedGraph Iri Literal B) →\n        (RDF11.GeneralizedGraph.vocabulary datatype G).subset V →\n          RDF11.GeneralizedGraph (RDF11.VocabularyIRI V) (RDF11.VocabularyLiteral V) B",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-PREINTERPRETATIONS",
+        "MT11-PREINTERPRETATION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.GeneralizedGraph",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GeneralizedGraph.restrictNames._proof_1",
+      "module": "RDF11.Preinterpretations",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri B : Type} (datatype : Literal → Iri) (V : RDF11.Set (RDF11.Name Iri Literal))\n  (G : RDF11.GeneralizedGraph Iri Literal B),\n  (RDF11.GeneralizedGraph.vocabulary datatype G).subset V →\n    ∀ (t : RDF11.GeneralizedTriple Iri Literal B),\n      G t → ∀ (n : RDF11.Name Iri Literal), RDF11.GeneralizedTriple.names datatype t n → V n",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-PREINTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.GeneralizedGraph.restrictNames",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GeneralizedTriple.include_restrictNames",
+      "module": "RDF11.Preinterpretations",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri B : Type} (datatype : Literal → Iri) (V : RDF11.Set (RDF11.Name Iri Literal))\n  (t : RDF11.GeneralizedTriple Iri Literal B) (h : (RDF11.GeneralizedTriple.names datatype t).subset V),\n  RDF11.GeneralizedTriple.mapNames Subtype.val Subtype.val (RDF11.GeneralizedTriple.restrictNames datatype V t h) = t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-PREINTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.GeneralizedTriple",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GeneralizedTriple.mapNames",
+      "module": "RDF11.NameMaps",
+      "kind": "definition",
+      "type": "{Iri₁ Iri₂ Literal₁ Literal₂ B : Type} →\n  (Iri₁ → Iri₂) →\n    (Literal₁ → Literal₂) → RDF11.GeneralizedTriple Iri₁ Literal₁ B → RDF11.GeneralizedTriple Iri₂ Literal₂ B",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-PREINTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.GeneralizedTriple",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GeneralizedTriple.mapNames.eq_1",
+      "module": "RDF11.NameMaps",
+      "kind": "theorem",
+      "type": "∀ {Iri₁ Iri₂ Literal₁ Literal₂ B : Type} (f : Iri₁ → Iri₂) (g : Literal₁ → Literal₂)\n  (t : RDF11.GeneralizedTriple Iri₁ Literal₁ B),\n  RDF11.GeneralizedTriple.mapNames f g t =\n    { subject := RDF11.Term.mapNames f g t.subject, predicate := RDF11.Term.mapNames f g t.predicate,\n      object := RDF11.Term.mapNames f g t.object }",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-PREINTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.GeneralizedTriple.mapNames",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GeneralizedTriple.mem_nameList",
+      "module": "RDF11.Preinterpretations",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri B : Type} (datatype : Literal → Iri) (t : RDF11.GeneralizedTriple Iri Literal B)\n  (n : RDF11.Name Iri Literal),\n  n ∈ RDF11.GeneralizedTriple.nameList datatype t ↔ RDF11.GeneralizedTriple.names datatype t n",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-PREINTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.GeneralizedTriple",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GeneralizedTriple.mem_nameList._simp_1_3",
+      "module": "RDF11.Preinterpretations",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri B : Type} (datatype : Literal → Iri) (t : RDF11.Term Iri Literal B) (n : RDF11.Name Iri Literal),\n  (n ∈ RDF11.Term.nameList datatype t) = RDF11.Term.names datatype t n",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-PREINTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.GeneralizedTriple.mem_nameList",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GeneralizedTriple.nameList",
+      "module": "RDF11.Preinterpretations",
+      "kind": "definition",
+      "type": "{Literal Iri B : Type} → (Literal → Iri) → RDF11.GeneralizedTriple Iri Literal B → List (RDF11.Name Iri Literal)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-PREINTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.GeneralizedTriple",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GeneralizedTriple.nameList.eq_1",
+      "module": "RDF11.Preinterpretations",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri B : Type} (datatype : Literal → Iri) (t : RDF11.GeneralizedTriple Iri Literal B),\n  RDF11.GeneralizedTriple.nameList datatype t =\n    RDF11.Term.nameList datatype t.subject ++ RDF11.Term.nameList datatype t.predicate ++\n      RDF11.Term.nameList datatype t.object",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-PREINTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.GeneralizedTriple.nameList",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GeneralizedTriple.names.eq_1",
+      "module": "RDF11.Preinterpretations",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri B : Type} (datatype : Literal → Iri) (t : RDF11.GeneralizedTriple Iri Literal B)\n  (n : RDF11.Name Iri Literal),\n  RDF11.GeneralizedTriple.names datatype t n =\n    (RDF11.Term.names datatype t.subject n ∨\n      RDF11.Term.names datatype t.predicate n ∨ RDF11.Term.names datatype t.object n)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-PREINTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.GeneralizedTriple.names",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GeneralizedTriple.restrictNames",
+      "module": "RDF11.Preinterpretations",
+      "kind": "definition",
+      "type": "{Literal Iri B : Type} →\n  (datatype : Literal → Iri) →\n    (V : RDF11.Set (RDF11.Name Iri Literal)) →\n      (t : RDF11.GeneralizedTriple Iri Literal B) →\n        (RDF11.GeneralizedTriple.names datatype t).subset V →\n          RDF11.GeneralizedTriple (RDF11.VocabularyIRI V) (RDF11.VocabularyLiteral V) B",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-PREINTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.GeneralizedTriple",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GeneralizedTriple.restrictNames._proof_1",
+      "module": "RDF11.Preinterpretations",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri B : Type} (datatype : Literal → Iri) (V : RDF11.Set (RDF11.Name Iri Literal))\n  (t : RDF11.GeneralizedTriple Iri Literal B),\n  (RDF11.GeneralizedTriple.names datatype t).subset V →\n    ∀ (n : RDF11.Name Iri Literal), RDF11.Term.names datatype t.subject n → V n",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-PREINTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.GeneralizedTriple.restrictNames",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GeneralizedTriple.restrictNames._proof_2",
+      "module": "RDF11.Preinterpretations",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri B : Type} (datatype : Literal → Iri) (V : RDF11.Set (RDF11.Name Iri Literal))\n  (t : RDF11.GeneralizedTriple Iri Literal B),\n  (RDF11.GeneralizedTriple.names datatype t).subset V →\n    ∀ (n : RDF11.Name Iri Literal), RDF11.Term.names datatype t.predicate n → V n",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-PREINTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.GeneralizedTriple.restrictNames",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GeneralizedTriple.restrictNames._proof_3",
+      "module": "RDF11.Preinterpretations",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri B : Type} (datatype : Literal → Iri) (V : RDF11.Set (RDF11.Name Iri Literal))\n  (t : RDF11.GeneralizedTriple Iri Literal B),\n  (RDF11.GeneralizedTriple.names datatype t).subset V →\n    ∀ (n : RDF11.Name Iri Literal), RDF11.Term.names datatype t.object n → V n",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-PREINTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.GeneralizedTriple.restrictNames",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Graph.generalize_mapNames",
+      "module": "RDF11.NameMaps",
+      "kind": "theorem",
+      "type": "∀ {Iri₁ Iri₂ Literal₁ Literal₂ B : Type} (f : Iri₁ → Iri₂) (g : Literal₁ → Literal₂) (G : RDF11.Graph Iri₁ Literal₁ B),\n  (RDF11.Graph.mapNames f g G).generalize = RDF11.GeneralizedGraph.mapNames f g G.generalize",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-PREINTERPRETATIONS",
+        "MT11-SIMPLE-PREINTERPRETATION-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Graph",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Graph.mapNames",
+      "module": "RDF11.NameMaps",
+      "kind": "definition",
+      "type": "{Iri₁ Iri₂ Literal₁ Literal₂ B : Type} →\n  (Iri₁ → Iri₂) → (Literal₁ → Literal₂) → RDF11.Graph Iri₁ Literal₁ B → RDF11.Graph Iri₂ Literal₂ B",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-PREINTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Graph",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.PreInterpretation",
+      "module": "RDF11.Preinterpretations",
+      "kind": "definition",
+      "type": "{Iri Literal : Type} → RDF11.Set (RDF11.Name Iri Literal) → Type u → Type u",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-PREINTERPRETATIONS",
+        "MT11-PREINTERPRETATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.PreInterpretation.denote_extend",
+      "module": "RDF11.Preinterpretations",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u_1} {B : Type} {V : RDF11.Set (RDF11.Name Iri Literal)}\n  (I : RDF11.PreInterpretation V U) (A : RDF11.SimpleInterpretation.Assignment I B)\n  (t : RDF11.Term (RDF11.VocabularyIRI V) (RDF11.VocabularyLiteral V) B),\n  I.extend.denote A (RDF11.Term.mapNames Subtype.val Subtype.val t) = RDF11.SimpleInterpretation.denote I A t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-PREINTERPRETATIONS",
+        "MT11-SIMPLE-PREINTERPRETATION-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.PreInterpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.PreInterpretation.entails_iff",
+      "module": "RDF11.Preinterpretations",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B₁ B₂ : Type} {V : RDF11.Set (RDF11.Name Iri Literal)}\n  (G : RDF11.GeneralizedGraph (RDF11.VocabularyIRI V) (RDF11.VocabularyLiteral V) B₁)\n  (E : RDF11.GeneralizedGraph (RDF11.VocabularyIRI V) (RDF11.VocabularyLiteral V) B₂),\n  RDF11.SimplyEntails G E ↔\n    RDF11.SimplyEntails (RDF11.GeneralizedGraph.mapNames Subtype.val Subtype.val G)\n      (RDF11.GeneralizedGraph.mapNames Subtype.val Subtype.val E)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-PREINTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.PreInterpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.PreInterpretation.extend",
+      "module": "RDF11.Preinterpretations",
+      "kind": "definition",
+      "type": "{Iri Literal : Type} →\n  {U : Type u_1} →\n    {V : RDF11.Set (RDF11.Name Iri Literal)} → RDF11.PreInterpretation V U → RDF11.SimpleInterpretation Iri Literal U",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-PREINTERPRETATIONS",
+        "MT11-SIMPLE-PREINTERPRETATION-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.PreInterpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.PreInterpretation.extend._proof_1",
+      "module": "RDF11.Preinterpretations",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u_1} {V : RDF11.Set (RDF11.Name Iri Literal)} (I : RDF11.PreInterpretation V U),\n  ∃ x, I.IR x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-PREINTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.PreInterpretation.extend",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.PreInterpretation.extend._proof_2",
+      "module": "RDF11.Preinterpretations",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u_1} {V : RDF11.Set (RDF11.Name Iri Literal)} (I : RDF11.PreInterpretation V U),\n  I.IR (Classical.choose ⋯) ∨ I.IP (Classical.choose ⋯)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-PREINTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.PreInterpretation.extend",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.PreInterpretation.extend.eq_1",
+      "module": "RDF11.Preinterpretations",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u_1} {V : RDF11.Set (RDF11.Name Iri Literal)} (I : RDF11.PreInterpretation V U),\n  I.extend =\n    { IR := I.IR, IR_nonempty := ⋯, IP := I.IP, IEXT := I.IEXT,\n      IS := fun i => if h : V (Sum.inl i) then I.IS ⟨i, h⟩ else ⟨Classical.choose ⋯, ⋯⟩,\n      IL := fun l => if h : V (Sum.inr l) then I.IL ⟨l, h⟩ else none }",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-PREINTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.PreInterpretation.extend",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.PreInterpretation.graphTrue_extend",
+      "module": "RDF11.Preinterpretations",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u_1} {B : Type} {V : RDF11.Set (RDF11.Name Iri Literal)}\n  (I : RDF11.PreInterpretation V U) (A : RDF11.SimpleInterpretation.Assignment I B)\n  (G : RDF11.GeneralizedGraph (RDF11.VocabularyIRI V) (RDF11.VocabularyLiteral V) B),\n  I.extend.GraphTrue A (RDF11.GeneralizedGraph.mapNames Subtype.val Subtype.val G) ↔\n    RDF11.SimpleInterpretation.GraphTrue I A G",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-PREINTERPRETATIONS",
+        "MT11-SIMPLE-PREINTERPRETATION-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.PreInterpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.PreInterpretation.restrict_extend",
+      "module": "RDF11.Preinterpretations",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u_1} {V : RDF11.Set (RDF11.Name Iri Literal)} (I : RDF11.PreInterpretation V U),\n  (I.extend.comapNames (fun i => i.val) fun l => l.val) = I",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-PREINTERPRETATIONS",
+        "MT11-SIMPLE-PREINTERPRETATION-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.PreInterpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.PreInterpretation.satisfiable_iff",
+      "module": "RDF11.Preinterpretations",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {V : RDF11.Set (RDF11.Name Iri Literal)}\n  (G : RDF11.GeneralizedGraph (RDF11.VocabularyIRI V) (RDF11.VocabularyLiteral V) B),\n  RDF11.SimplySatisfiable G ↔ RDF11.SimplySatisfiable (RDF11.GeneralizedGraph.mapNames Subtype.val Subtype.val G)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-PREINTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.PreInterpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.PreInterpretation.satisfies_extend",
+      "module": "RDF11.Preinterpretations",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u_1} {B : Type} {V : RDF11.Set (RDF11.Name Iri Literal)}\n  (I : RDF11.PreInterpretation V U) (G : RDF11.GeneralizedGraph (RDF11.VocabularyIRI V) (RDF11.VocabularyLiteral V) B),\n  I.extend.Satisfies (RDF11.GeneralizedGraph.mapNames Subtype.val Subtype.val G) ↔\n    RDF11.SimpleInterpretation.Satisfies I G",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-PREINTERPRETATIONS",
+        "MT11-SIMPLE-PREINTERPRETATION-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.PreInterpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.PreInterpretation.satisfies_of_restriction",
+      "module": "RDF11.Preinterpretations",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u_1} {B : Type} {V : RDF11.Set (RDF11.Name Iri Literal)}\n  (I : RDF11.PreInterpretation V U) (J : RDF11.SimpleInterpretation Iri Literal U),\n  (J.comapNames (fun i => i.val) fun l => l.val) = I →\n    ∀ (G : RDF11.GeneralizedGraph (RDF11.VocabularyIRI V) (RDF11.VocabularyLiteral V) B),\n      J.Satisfies (RDF11.GeneralizedGraph.mapNames Subtype.val Subtype.val G) ↔ RDF11.SimpleInterpretation.Satisfies I G",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-PREINTERPRETATIONS",
+        "MT11-SIMPLE-PREINTERPRETATION-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.PreInterpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.PreInterpretation.tripleTrue_extend",
+      "module": "RDF11.Preinterpretations",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u_1} {B : Type} {V : RDF11.Set (RDF11.Name Iri Literal)}\n  (I : RDF11.PreInterpretation V U) (A : RDF11.SimpleInterpretation.Assignment I B)\n  (t : RDF11.GeneralizedTriple (RDF11.VocabularyIRI V) (RDF11.VocabularyLiteral V) B),\n  I.extend.TripleTrue A (RDF11.GeneralizedTriple.mapNames Subtype.val Subtype.val t) ↔\n    RDF11.SimpleInterpretation.TripleTrue I A t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-PREINTERPRETATIONS",
+        "MT11-SIMPLE-PREINTERPRETATION-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.PreInterpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.comapNames",
+      "module": "RDF11.NameMaps",
+      "kind": "definition",
+      "type": "{Iri₂ Literal₂ : Type} →\n  {U : Type u_1} →\n    {Iri₁ Literal₁ : Type} →\n      RDF11.SimpleInterpretation Iri₂ Literal₂ U →\n        (Iri₁ → Iri₂) → (Literal₁ → Literal₂) → RDF11.SimpleInterpretation Iri₁ Literal₁ U",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-PREINTERPRETATIONS",
+        "MT11-PREINTERPRETATION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.comapNames.eq_1",
+      "module": "RDF11.Preinterpretations",
+      "kind": "theorem",
+      "type": "∀ {Iri₂ Literal₂ : Type} {U : Type u_1} {Iri₁ Literal₁ : Type} (I : RDF11.SimpleInterpretation Iri₂ Literal₂ U)\n  (f : Iri₁ → Iri₂) (g : Literal₁ → Literal₂),\n  I.comapNames f g = { IR := I.IR, IR_nonempty := ⋯, IP := I.IP, IEXT := I.IEXT, IS := I.IS ∘ f, IL := I.IL ∘ g }",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-PREINTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation.comapNames",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.denote_mapNames",
+      "module": "RDF11.NameMaps",
+      "kind": "theorem",
+      "type": "∀ {Iri₂ Literal₂ : Type} {U : Type u_1} {Iri₁ Literal₁ B : Type} (I : RDF11.SimpleInterpretation Iri₂ Literal₂ U)\n  (f : Iri₁ → Iri₂) (g : Literal₁ → Literal₂) (A : I.Assignment B) (t : RDF11.Term Iri₁ Literal₁ B),\n  I.denote A (RDF11.Term.mapNames f g t) = (I.comapNames f g).denote A t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-PREINTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.graphTrue_mapNames",
+      "module": "RDF11.NameMaps",
+      "kind": "theorem",
+      "type": "∀ {Iri₂ Literal₂ : Type} {U : Type u_1} {Iri₁ Literal₁ B : Type} (I : RDF11.SimpleInterpretation Iri₂ Literal₂ U)\n  (f : Iri₁ → Iri₂) (g : Literal₁ → Literal₂) (A : I.Assignment B) (G : RDF11.GeneralizedGraph Iri₁ Literal₁ B),\n  I.GraphTrue A (RDF11.GeneralizedGraph.mapNames f g G) ↔ (I.comapNames f g).GraphTrue A G",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-PREINTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.satisfies_mapNames",
+      "module": "RDF11.NameMaps",
+      "kind": "theorem",
+      "type": "∀ {Iri₂ Literal₂ : Type} {U : Type u_1} {Iri₁ Literal₁ B : Type} (I : RDF11.SimpleInterpretation Iri₂ Literal₂ U)\n  (f : Iri₁ → Iri₂) (g : Literal₁ → Literal₂) (G : RDF11.GeneralizedGraph Iri₁ Literal₁ B),\n  I.Satisfies (RDF11.GeneralizedGraph.mapNames f g G) ↔ (I.comapNames f g).Satisfies G",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-PREINTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.tripleTrue_mapNames",
+      "module": "RDF11.NameMaps",
+      "kind": "theorem",
+      "type": "∀ {Iri₂ Literal₂ : Type} {U : Type u_1} {Iri₁ Literal₁ B : Type} (I : RDF11.SimpleInterpretation Iri₂ Literal₂ U)\n  (f : Iri₁ → Iri₂) (g : Literal₁ → Literal₂) (A : I.Assignment B) (t : RDF11.GeneralizedTriple Iri₁ Literal₁ B),\n  I.TripleTrue A (RDF11.GeneralizedTriple.mapNames f g t) ↔ (I.comapNames f g).TripleTrue A t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-PREINTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Subject.mapNames",
+      "module": "RDF11.NameMaps",
+      "kind": "definition",
+      "type": "{Iri₁ Iri₂ B : Type} → (Iri₁ → Iri₂) → RDF11.Subject Iri₁ B → RDF11.Subject Iri₂ B",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-PREINTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Subject",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Subject.mapNames.match_1",
+      "module": "RDF11.NameMaps",
+      "kind": "definition",
+      "type": "{Iri₁ B : Type} →\n  (motive : RDF11.Subject Iri₁ B → Sort u_1) →\n    (x : RDF11.Subject Iri₁ B) →\n      ((i : Iri₁) → motive (RDF11.Subject.iri i)) → ((b : B) → motive (RDF11.Subject.blank b)) → motive x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-PREINTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Subject.mapNames",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Term.include_restrictNames",
+      "module": "RDF11.Preinterpretations",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri B : Type} (datatype : Literal → Iri) (V : RDF11.Set (RDF11.Name Iri Literal))\n  (t : RDF11.Term Iri Literal B) (h : (RDF11.Term.names datatype t).subset V),\n  RDF11.Term.mapNames Subtype.val Subtype.val (RDF11.Term.restrictNames datatype V t h) = t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-PREINTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Term",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Term.mapNames",
+      "module": "RDF11.NameMaps",
+      "kind": "definition",
+      "type": "{Iri₁ Iri₂ Literal₁ Literal₂ B : Type} →\n  (Iri₁ → Iri₂) → (Literal₁ → Literal₂) → RDF11.Term Iri₁ Literal₁ B → RDF11.Term Iri₂ Literal₂ B",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-PREINTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Term",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Term.mapNames.eq_1",
+      "module": "RDF11.Preinterpretations",
+      "kind": "theorem",
+      "type": "∀ {Iri₁ Iri₂ Literal₁ Literal₂ B : Type} (f : Iri₁ → Iri₂) (g : Literal₁ → Literal₂) (i : Iri₁),\n  RDF11.Term.mapNames f g (RDF11.Term.iri i) = RDF11.Term.iri (f i)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-PREINTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Term.mapNames",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Term.mapNames.eq_2",
+      "module": "RDF11.Preinterpretations",
+      "kind": "theorem",
+      "type": "∀ {Iri₁ Iri₂ Literal₁ Literal₂ B : Type} (f : Iri₁ → Iri₂) (g : Literal₁ → Literal₂) (l : Literal₁),\n  RDF11.Term.mapNames f g (RDF11.Term.literal l) = RDF11.Term.literal (g l)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-PREINTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Term.mapNames",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Term.mapNames.eq_3",
+      "module": "RDF11.Preinterpretations",
+      "kind": "theorem",
+      "type": "∀ {Iri₁ Iri₂ Literal₁ Literal₂ B : Type} (f : Iri₁ → Iri₂) (g : Literal₁ → Literal₂) (b : B),\n  RDF11.Term.mapNames f g (RDF11.Term.blank b) = RDF11.Term.blank b",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-PREINTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Term.mapNames",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Term.mapNames.match_1",
+      "module": "RDF11.NameMaps",
+      "kind": "definition",
+      "type": "{Iri₁ Literal₁ B : Type} →\n  (motive : RDF11.Term Iri₁ Literal₁ B → Sort u_1) →\n    (x : RDF11.Term Iri₁ Literal₁ B) →\n      ((i : Iri₁) → motive (RDF11.Term.iri i)) →\n        ((l : Literal₁) → motive (RDF11.Term.literal l)) → ((b : B) → motive (RDF11.Term.blank b)) → motive x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-PREINTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Term.mapNames",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Term.mem_nameList",
+      "module": "RDF11.Preinterpretations",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri B : Type} (datatype : Literal → Iri) (t : RDF11.Term Iri Literal B) (n : RDF11.Name Iri Literal),\n  n ∈ RDF11.Term.nameList datatype t ↔ RDF11.Term.names datatype t n",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-PREINTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Term",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Term.nameList",
+      "module": "RDF11.Preinterpretations",
+      "kind": "definition",
+      "type": "{Literal Iri B : Type} → (Literal → Iri) → RDF11.Term Iri Literal B → List (RDF11.Name Iri Literal)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-PREINTERPRETATIONS",
+        "MT11-FINITE-SIMPLE-PREINTERPRETATION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Term",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Term.nameList.eq_1",
+      "module": "RDF11.Preinterpretations",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri B : Type} (datatype : Literal → Iri) (i : Iri),\n  RDF11.Term.nameList datatype (RDF11.Term.iri i) = [Sum.inl i]",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-PREINTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Term.nameList",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Term.nameList.eq_2",
+      "module": "RDF11.Preinterpretations",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri B : Type} (datatype : Literal → Iri) (l : Literal),\n  RDF11.Term.nameList datatype (RDF11.Term.literal l) = [Sum.inr l, Sum.inl (datatype l)]",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-PREINTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Term.nameList",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Term.nameList.eq_3",
+      "module": "RDF11.Preinterpretations",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri B : Type} (datatype : Literal → Iri) (a : B), RDF11.Term.nameList datatype (RDF11.Term.blank a) = []",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-PREINTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Term.nameList",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Term.nameList.match_1",
+      "module": "RDF11.Preinterpretations",
+      "kind": "definition",
+      "type": "{Literal Iri B : Type} →\n  (motive : RDF11.Term Iri Literal B → Sort u_1) →\n    (x : RDF11.Term Iri Literal B) →\n      ((i : Iri) → motive (RDF11.Term.iri i)) →\n        ((l : Literal) → motive (RDF11.Term.literal l)) → ((a : B) → motive (RDF11.Term.blank a)) → motive x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-PREINTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Term.nameList",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Term.names.eq_1",
+      "module": "RDF11.Preinterpretations",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri B : Type} (datatype : Literal → Iri) (i : Iri),\n  RDF11.Term.names datatype (RDF11.Term.iri i) = fun n => n = Sum.inl i",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-PREINTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Term.names",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Term.names.eq_2",
+      "module": "RDF11.Preinterpretations",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri B : Type} (datatype : Literal → Iri) (l : Literal),\n  RDF11.Term.names datatype (RDF11.Term.literal l) = fun n => n = Sum.inr l ∨ n = Sum.inl (datatype l)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-PREINTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Term.names",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Term.names.eq_3",
+      "module": "RDF11.Preinterpretations",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri B : Type} (datatype : Literal → Iri) (a : B),\n  RDF11.Term.names datatype (RDF11.Term.blank a) = RDF11.Set.empty",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-PREINTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Term.names",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Term.restrictNames",
+      "module": "RDF11.Preinterpretations",
+      "kind": "definition",
+      "type": "{Literal Iri B : Type} →\n  (datatype : Literal → Iri) →\n    (V : RDF11.Set (RDF11.Name Iri Literal)) →\n      (t : RDF11.Term Iri Literal B) →\n        (RDF11.Term.names datatype t).subset V → RDF11.Term (RDF11.VocabularyIRI V) (RDF11.VocabularyLiteral V) B",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-PREINTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Term",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Term.restrictNames._proof_1",
+      "module": "RDF11.Preinterpretations",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri B : Type} (datatype : Literal → Iri) (V : RDF11.Set (RDF11.Name Iri Literal)) (i : Iri),\n  (RDF11.Term.names datatype (RDF11.Term.iri i)).subset V → V (Sum.inl i)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-PREINTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Term.restrictNames",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Term.restrictNames._proof_2",
+      "module": "RDF11.Preinterpretations",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri B : Type} (datatype : Literal → Iri) (V : RDF11.Set (RDF11.Name Iri Literal)) (l : Literal),\n  (RDF11.Term.names datatype (RDF11.Term.literal l)).subset V → V (Sum.inr l)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-PREINTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Term.restrictNames",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Term.restrictNames.match_1",
+      "module": "RDF11.Preinterpretations",
+      "kind": "definition",
+      "type": "{Literal Iri B : Type} →\n  (datatype : Literal → Iri) →\n    (V : RDF11.Set (RDF11.Name Iri Literal)) →\n      (motive : (t : RDF11.Term Iri Literal B) → (RDF11.Term.names datatype t).subset V → Sort u_1) →\n        (t : RDF11.Term Iri Literal B) →\n          (h : (RDF11.Term.names datatype t).subset V) →\n            ((i : Iri) → (h : (RDF11.Term.names datatype (RDF11.Term.iri i)).subset V) → motive (RDF11.Term.iri i) h) →\n              ((l : Literal) →\n                  (h : (RDF11.Term.names datatype (RDF11.Term.literal l)).subset V) → motive (RDF11.Term.literal l) h) →\n                ((b : B) →\n                    (h : (RDF11.Term.names datatype (RDF11.Term.blank b)).subset V) → motive (RDF11.Term.blank b) h) →\n                  motive t h",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-PREINTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Term.restrictNames",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Triple.generalize_mapNames",
+      "module": "RDF11.NameMaps",
+      "kind": "theorem",
+      "type": "∀ {Iri₁ Iri₂ Literal₁ Literal₂ B : Type} (f : Iri₁ → Iri₂) (g : Literal₁ → Literal₂) (t : RDF11.Triple Iri₁ Literal₁ B),\n  (RDF11.Triple.mapNames f g t).generalize = RDF11.GeneralizedTriple.mapNames f g t.generalize",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-PREINTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Triple",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Triple.mapNames",
+      "module": "RDF11.NameMaps",
+      "kind": "definition",
+      "type": "{Iri₁ Iri₂ Literal₁ Literal₂ B : Type} →\n  (Iri₁ → Iri₂) → (Literal₁ → Literal₂) → RDF11.Triple Iri₁ Literal₁ B → RDF11.Triple Iri₂ Literal₂ B",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-PREINTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Triple",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.VocabularyIRI",
+      "module": "RDF11.Preinterpretations",
+      "kind": "definition",
+      "type": "{Iri Literal : Type} → RDF11.Set (RDF11.Name Iri Literal) → Type",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-PREINTERPRETATIONS",
+        "MT11-PREINTERPRETATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.VocabularyLiteral",
+      "module": "RDF11.Preinterpretations",
+      "kind": "definition",
+      "type": "{Iri Literal : Type} → RDF11.Set (RDF11.Name Iri Literal) → Type",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-PREINTERPRETATIONS",
+        "MT11-PREINTERPRETATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.finite_shared_vocabulary",
+      "module": "RDF11.Preinterpretations",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri B₁ B₂ : Type} (datatype : Literal → Iri) (G : RDF11.GeneralizedGraph Iri Literal B₁)\n  (E : RDF11.GeneralizedGraph Iri Literal B₂),\n  RDF11.FiniteGraph G →\n    RDF11.FiniteGraph E →\n      Nonempty\n        (RDF11.Enumeration\n          ((RDF11.GeneralizedGraph.vocabulary datatype G).union (RDF11.GeneralizedGraph.vocabulary datatype E)))",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-PREINTERPRETATIONS",
+        "MT11-FINITE-SIMPLE-PREINTERPRETATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.finite_vocabulary_comparison",
+      "module": "RDF11.Preinterpretations",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri B₁ B₂ : Type} (datatype : Literal → Iri) (G : RDF11.GeneralizedGraph Iri Literal B₁)\n  (E : RDF11.GeneralizedGraph Iri Literal B₂),\n  RDF11.FiniteGraph G →\n    RDF11.FiniteGraph E →\n      let V := (RDF11.GeneralizedGraph.vocabulary datatype G).union (RDF11.GeneralizedGraph.vocabulary datatype E);\n      Nonempty (RDF11.Enumeration V) ∧\n        (RDF11.SimplyEntails (RDF11.GeneralizedGraph.restrictNames datatype V G ⋯)\n            (RDF11.GeneralizedGraph.restrictNames datatype V E ⋯) ↔\n          RDF11.SimplyEntails G E)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-PREINTERPRETATIONS",
+        "MT11-FINITE-SIMPLE-PREINTERPRETATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.finite_vocabulary_of_finite_graph",
+      "module": "RDF11.Preinterpretations",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri B : Type} (datatype : Literal → Iri) (G : RDF11.GeneralizedGraph Iri Literal B),\n  RDF11.FiniteGraph G → Nonempty (RDF11.Enumeration (RDF11.GeneralizedGraph.vocabulary datatype G))",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-PREINTERPRETATIONS",
+        "MT11-FINITE-SIMPLE-PREINTERPRETATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.finite_vocabulary_of_finite_graph._simp_1_1",
+      "module": "RDF11.Preinterpretations",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_1} {β : Type u_2} {f : α → List β} {b : β} {l : List α}, (b ∈ List.flatMap f l) = ∃ a, a ∈ l ∧ b ∈ f a",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-PREINTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.finite_vocabulary_of_finite_graph",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.finite_vocabulary_of_finite_graph._simp_1_2",
+      "module": "RDF11.Preinterpretations",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri B : Type} (datatype : Literal → Iri) (t : RDF11.GeneralizedTriple Iri Literal B)\n  (n : RDF11.Name Iri Literal),\n  (n ∈ RDF11.GeneralizedTriple.nameList datatype t) = RDF11.GeneralizedTriple.names datatype t n",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-PREINTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.finite_vocabulary_of_finite_graph",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.preinterpretation_entailment_iff",
+      "module": "RDF11.Preinterpretations",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri B₁ B₂ : Type} (datatype : Literal → Iri) (V : RDF11.Set (RDF11.Name Iri Literal))\n  (G : RDF11.GeneralizedGraph Iri Literal B₁) (E : RDF11.GeneralizedGraph Iri Literal B₂)\n  (hG : (RDF11.GeneralizedGraph.vocabulary datatype G).subset V)\n  (hE : (RDF11.GeneralizedGraph.vocabulary datatype E).subset V),\n  RDF11.SimplyEntails (RDF11.GeneralizedGraph.restrictNames datatype V G hG)\n      (RDF11.GeneralizedGraph.restrictNames datatype V E hE) ↔\n    RDF11.SimplyEntails G E",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-PREINTERPRETATIONS",
+        "MT11-SIMPLE-PREINTERPRETATION-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.preinterpretation_satisfiable_iff",
+      "module": "RDF11.Preinterpretations",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri B : Type} (datatype : Literal → Iri) (V : RDF11.Set (RDF11.Name Iri Literal))\n  (G : RDF11.GeneralizedGraph Iri Literal B) (hG : (RDF11.GeneralizedGraph.vocabulary datatype G).subset V),\n  RDF11.SimplySatisfiable (RDF11.GeneralizedGraph.restrictNames datatype V G hG) ↔ RDF11.SimplySatisfiable G",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-PREINTERPRETATIONS",
+        "MT11-SIMPLE-PREINTERPRETATION-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.simplyEntails_mapNames",
+      "module": "RDF11.NameMaps",
+      "kind": "theorem",
+      "type": "∀ {Iri₁ Iri₂ Literal₁ Literal₂ B₁ B₂ : Type} (f : Iri₁ → Iri₂) (g : Literal₁ → Literal₂)\n  {G : RDF11.GeneralizedGraph Iri₁ Literal₁ B₁} {E : RDF11.GeneralizedGraph Iri₁ Literal₁ B₂},\n  RDF11.SimplyEntails G E →\n    RDF11.SimplyEntails (RDF11.GeneralizedGraph.mapNames f g G) (RDF11.GeneralizedGraph.mapNames f g E)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-PREINTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.Preinterpretations.0.RDF11.Term.mapNames.match_1.eq_1",
+      "module": "RDF11.Preinterpretations",
+      "kind": "theorem",
+      "type": "∀ {Iri₁ Literal₁ B : Type} (motive : RDF11.Term Iri₁ Literal₁ B → Sort u_1) (i : Iri₁)\n  (h_1 : (i : Iri₁) → motive (RDF11.Term.iri i)) (h_2 : (l : Literal₁) → motive (RDF11.Term.literal l))\n  (h_3 : (b : B) → motive (RDF11.Term.blank b)),\n  (match RDF11.Term.iri i with\n    | RDF11.Term.iri i => h_1 i\n    | RDF11.Term.literal l => h_2 l\n    | RDF11.Term.blank b => h_3 b) =\n    h_1 i",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-PREINTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Term.mapNames.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.Preinterpretations.0.RDF11.Term.mapNames.match_1.eq_2",
+      "module": "RDF11.Preinterpretations",
+      "kind": "theorem",
+      "type": "∀ {Iri₁ Literal₁ B : Type} (motive : RDF11.Term Iri₁ Literal₁ B → Sort u_1) (l : Literal₁)\n  (h_1 : (i : Iri₁) → motive (RDF11.Term.iri i)) (h_2 : (l : Literal₁) → motive (RDF11.Term.literal l))\n  (h_3 : (b : B) → motive (RDF11.Term.blank b)),\n  (match RDF11.Term.literal l with\n    | RDF11.Term.iri i => h_1 i\n    | RDF11.Term.literal l => h_2 l\n    | RDF11.Term.blank b => h_3 b) =\n    h_2 l",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-PREINTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Term.mapNames.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.Preinterpretations.0.RDF11.Term.mapNames.match_1.eq_3",
+      "module": "RDF11.Preinterpretations",
+      "kind": "theorem",
+      "type": "∀ {Iri₁ Literal₁ B : Type} (motive : RDF11.Term Iri₁ Literal₁ B → Sort u_1) (b : B)\n  (h_1 : (i : Iri₁) → motive (RDF11.Term.iri i)) (h_2 : (l : Literal₁) → motive (RDF11.Term.literal l))\n  (h_3 : (b : B) → motive (RDF11.Term.blank b)),\n  (match RDF11.Term.blank b with\n    | RDF11.Term.iri i => h_1 i\n    | RDF11.Term.literal l => h_2 l\n    | RDF11.Term.blank b => h_3 b) =\n    h_3 b",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-PREINTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Term.mapNames.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.Preinterpretations.0.RDF11.Term.mapNames.match_1.splitter",
+      "module": "RDF11.Preinterpretations",
+      "kind": "definition",
+      "type": "{Iri₁ Literal₁ B : Type} →\n  (motive : RDF11.Term Iri₁ Literal₁ B → Sort u_1) →\n    (x : RDF11.Term Iri₁ Literal₁ B) →\n      ((i : Iri₁) → motive (RDF11.Term.iri i)) →\n        ((l : Literal₁) → motive (RDF11.Term.literal l)) → ((b : B) → motive (RDF11.Term.blank b)) → motive x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-PREINTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Term.mapNames.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.Preinterpretations.0.RDF11.Term.nameList.match_1.eq_1",
+      "module": "RDF11.Preinterpretations",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri B : Type} (motive : RDF11.Term Iri Literal B → Sort u_1) (i : Iri)\n  (h_1 : (i : Iri) → motive (RDF11.Term.iri i)) (h_2 : (l : Literal) → motive (RDF11.Term.literal l))\n  (h_3 : (a : B) → motive (RDF11.Term.blank a)),\n  (match RDF11.Term.iri i with\n    | RDF11.Term.iri i => h_1 i\n    | RDF11.Term.literal l => h_2 l\n    | RDF11.Term.blank a => h_3 a) =\n    h_1 i",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-PREINTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Term.nameList.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.Preinterpretations.0.RDF11.Term.nameList.match_1.eq_2",
+      "module": "RDF11.Preinterpretations",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri B : Type} (motive : RDF11.Term Iri Literal B → Sort u_1) (l : Literal)\n  (h_1 : (i : Iri) → motive (RDF11.Term.iri i)) (h_2 : (l : Literal) → motive (RDF11.Term.literal l))\n  (h_3 : (a : B) → motive (RDF11.Term.blank a)),\n  (match RDF11.Term.literal l with\n    | RDF11.Term.iri i => h_1 i\n    | RDF11.Term.literal l => h_2 l\n    | RDF11.Term.blank a => h_3 a) =\n    h_2 l",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-PREINTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Term.nameList.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.Preinterpretations.0.RDF11.Term.nameList.match_1.eq_3",
+      "module": "RDF11.Preinterpretations",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri B : Type} (motive : RDF11.Term Iri Literal B → Sort u_1) (a : B)\n  (h_1 : (i : Iri) → motive (RDF11.Term.iri i)) (h_2 : (l : Literal) → motive (RDF11.Term.literal l))\n  (h_3 : (a : B) → motive (RDF11.Term.blank a)),\n  (match RDF11.Term.blank a with\n    | RDF11.Term.iri i => h_1 i\n    | RDF11.Term.literal l => h_2 l\n    | RDF11.Term.blank a => h_3 a) =\n    h_3 a",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-PREINTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Term.nameList.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.Preinterpretations.0.RDF11.Term.nameList.match_1.splitter",
+      "module": "RDF11.Preinterpretations",
+      "kind": "definition",
+      "type": "{Literal Iri B : Type} →\n  (motive : RDF11.Term Iri Literal B → Sort u_1) →\n    (x : RDF11.Term Iri Literal B) →\n      ((i : Iri) → motive (RDF11.Term.iri i)) →\n        ((l : Literal) → motive (RDF11.Term.literal l)) → ((a : B) → motive (RDF11.Term.blank a)) → motive x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-PREINTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Term.nameList.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.Preinterpretations.0.RDF11.Term.names.match_1.eq_1",
+      "module": "RDF11.Preinterpretations",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri B : Type} (motive : RDF11.Term Iri Literal B → Sort u_1) (i : Iri)\n  (h_1 : (i : Iri) → motive (RDF11.Term.iri i)) (h_2 : (l : Literal) → motive (RDF11.Term.literal l))\n  (h_3 : (a : B) → motive (RDF11.Term.blank a)),\n  (match RDF11.Term.iri i with\n    | RDF11.Term.iri i => h_1 i\n    | RDF11.Term.literal l => h_2 l\n    | RDF11.Term.blank a => h_3 a) =\n    h_1 i",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-PREINTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Term.names.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.Preinterpretations.0.RDF11.Term.names.match_1.eq_2",
+      "module": "RDF11.Preinterpretations",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri B : Type} (motive : RDF11.Term Iri Literal B → Sort u_1) (l : Literal)\n  (h_1 : (i : Iri) → motive (RDF11.Term.iri i)) (h_2 : (l : Literal) → motive (RDF11.Term.literal l))\n  (h_3 : (a : B) → motive (RDF11.Term.blank a)),\n  (match RDF11.Term.literal l with\n    | RDF11.Term.iri i => h_1 i\n    | RDF11.Term.literal l => h_2 l\n    | RDF11.Term.blank a => h_3 a) =\n    h_2 l",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-PREINTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Term.names.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.Preinterpretations.0.RDF11.Term.names.match_1.eq_3",
+      "module": "RDF11.Preinterpretations",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri B : Type} (motive : RDF11.Term Iri Literal B → Sort u_1) (a : B)\n  (h_1 : (i : Iri) → motive (RDF11.Term.iri i)) (h_2 : (l : Literal) → motive (RDF11.Term.literal l))\n  (h_3 : (a : B) → motive (RDF11.Term.blank a)),\n  (match RDF11.Term.blank a with\n    | RDF11.Term.iri i => h_1 i\n    | RDF11.Term.literal l => h_2 l\n    | RDF11.Term.blank a => h_3 a) =\n    h_3 a",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-PREINTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Term.names.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.Preinterpretations.0.RDF11.Term.names.match_1.splitter",
+      "module": "RDF11.Preinterpretations",
+      "kind": "definition",
+      "type": "{Literal Iri B : Type} →\n  (motive : RDF11.Term Iri Literal B → Sort u_1) →\n    (x : RDF11.Term Iri Literal B) →\n      ((i : Iri) → motive (RDF11.Term.iri i)) →\n        ((l : Literal) → motive (RDF11.Term.literal l)) → ((a : B) → motive (RDF11.Term.blank a)) → motive x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-PREINTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Term.names.match_1",
       "review": "pending_expert_review"
     }
   ],
