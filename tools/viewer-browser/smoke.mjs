@@ -79,8 +79,14 @@ try {
   await page.locator('#claim').selectOption('MT11-D-MODEL-CLASS-MONOTONICITY');
   const direction=page.locator('#details > article > details').filter({has:page.locator('summary',{hasText:'Open source question: Q-D-ENTAILMENT-DIRECTION'})});
   await direction.locator(':scope > summary').click();
-  assert.match(await direction.innerText(),/printed entailment implications/);
-  assert.match(await direction.innerText(),/Keep the printed assertion unmapped/);
+  const expectedQuestion=await page.evaluate(()=>{
+    const q=data.questions.find(q=>q.id==='Q-D-ENTAILMENT-DIRECTION');
+    return {summary:q.summary,policy:q.implementation_policy,hasExample:!!q.example};
+  });
+  assert(expectedQuestion.summary && expectedQuestion.policy);
+  assert.equal(expectedQuestion.hasExample,false);
+  assert.equal(await direction.locator(':scope > p').first().textContent(),expectedQuestion.summary);
+  assert((await direction.innerText()).includes(expectedQuestion.policy));
   await page.locator('#claim').selectOption('MT11-RULE-rdfs9');
   assert.match(await page.locator('#details').innerText(),/rdfs_step_sound/);
   assert.match(await page.locator('#details').innerText(),/rdfs_derives_entailment/);
@@ -99,7 +105,7 @@ try {
   assert.equal(await page.locator('#claim').inputValue(),'');
   assert(!page.url().includes('#claim='));
   assert.deepEqual(errors,[]);
-  const report={status:'pass',checks:['Visible Triple fields and Subject/Term constructors','Commit-pinned source links','Lazy dependency source expansion','Claim deep link survives reload','Visible theorem proof body','Mobile layout has no horizontal overflow','Unmapped claims remain explicit','Changing source clears stale selection','Rendered and raw tabs preserve selection and exact raw characters','Annotated rendered passages open their claims','Search and mapping filters','Plain-English glosses on every displayed declaration','Reading copy has no active embeds or external resources','Connected claims navigate actual declaration dependency paths','Headline alias with explicit statement and gloss','Source question without a countermodel renders safely','RDFS rule connects to derivation soundness','No JavaScript errors'],dependencies};
+  const report={status:'pass',checks:['Visible Triple fields and Subject/Term constructors','Commit-pinned source links','Lazy dependency source expansion','Claim deep link survives reload','Visible theorem proof body','Mobile layout has no horizontal overflow','Unmapped claims remain explicit','Changing source clears stale selection','Rendered and raw tabs preserve selection and exact raw characters','Annotated rendered passages open their claims','Search and mapping filters','Plain-English glosses on every displayed declaration','Reading copy has no active embeds or external resources','Connected claims navigate actual declaration dependency paths','Headline alias with explicit statement and gloss','Source question without an example block renders safely','RDFS rule connects to derivation soundness','No JavaScript errors'],dependencies};
   await fs.writeFile(new URL('result.json', evidenceDir),JSON.stringify(report,null,2)+'\n');
   console.log(JSON.stringify(report,null,2));
 } finally { await browser.close(); }
