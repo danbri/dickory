@@ -24,3 +24,6 @@ import RDF11.DatatypeModels
 import RDF11.LiteralSubstitution
 import RDF11.EntailmentClosure
 import RDF11.ContainerEntailment
+import RDF11.Datasets
+import RDF11.DatasetIsomorphism
+import RDF11.DatasetExamples

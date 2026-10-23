@@ -3,8 +3,8 @@
   "status": "draft_not_complete_coverage",
   "method": "Human-readable AI close reading; selectors locate already selected passages and do not extract assertions.",
   "source_inventory": "../ledger/semantics-inventory.json",
-  "inventory_sha256": "acf9b60576a2c688a73e2c39f8e6346d199742a50a61baa2d4faafdadf20c390",
-  "mapping_input_sha256": "dddf9fc52b6de6523115dd2f3165b15f89bdc39ec906b5a9d7a1e3b1574f7210",
+  "inventory_sha256": "97c89ac54af8d7d43533b2a95534860b77f3b3c94f69e75f4c4f95fe74ea4fd8",
+  "mapping_input_sha256": "57f80c2faf9b43875a6b809c929a72e8b996f7e8ef5445b2d4a2d6c176e523ef",
   "documents": [
     {
       "id": "mt",
@@ -1713,6 +1713,40 @@
         },
         {
           "start": 95697,
+          "end": 96548,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 96548,
+          "end": 97107,
+          "refs": [
+            "MT11-DATASET-ISOMORPHISM",
+            "MT11-DATASET-STRUCTURE"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 97107,
+          "end": 97768,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 97768,
+          "end": 98373,
+          "refs": [
+            "MT11-DATASET-DEFAULT-CONTENT",
+            "MT11-DATASET-EQUIVALENT-REPLACEMENT"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 98373,
           "end": 102737,
           "refs": [
             "UNRESOLVED-mt"
@@ -1887,6 +1921,90 @@
         },
         {
           "start": 55078,
+          "end": 67019,
+          "refs": [
+            "UNRESOLVED-concepts"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 67019,
+          "end": 67260,
+          "refs": [
+            "MT11-DATASET-EMPTY-NAMED-PRESENCE",
+            "MT11-DATASET-STRUCTURE"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 67260,
+          "end": 67268,
+          "refs": [
+            "UNRESOLVED-concepts"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 67268,
+          "end": 67722,
+          "refs": [
+            "MT11-DATASET-EMPTY-NAMED-PRESENCE",
+            "MT11-DATASET-STRUCTURE"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 67722,
+          "end": 67741,
+          "refs": [
+            "UNRESOLVED-concepts"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 67741,
+          "end": 67954,
+          "refs": [
+            "MT11-DATASET-EQUIVALENT-REPLACEMENT",
+            "MT11-DATASET-STRUCTURE"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 67954,
+          "end": 70344,
+          "refs": [
+            "UNRESOLVED-concepts"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 70344,
+          "end": 70947,
+          "refs": [
+            "MT11-DATASET-ISOMORPHISM"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 70947,
+          "end": 70955,
+          "refs": [
+            "UNRESOLVED-concepts"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 70955,
+          "end": 71571,
+          "refs": [
+            "MT11-DATASET-EMPTY-NAMED-PRESENCE",
+            "MT11-DATASET-ISOMORPHISM"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 71571,
           "end": 120796,
           "refs": [
             "UNRESOLVED-concepts"
@@ -3483,6 +3601,110 @@
         "MT11-CONTAINERS-DESCRIPTION"
       ],
       "slice_sha256": "dbced0f08f020d752724b4084b5144fef93cb4ad933b1bc39edebb781d666d93",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "dataset-import",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 96548,
+      "end": 97107,
+      "claims": [
+        "MT11-DATASET-STRUCTURE",
+        "MT11-DATASET-ISOMORPHISM"
+      ],
+      "slice_sha256": "75c1b0472474b7af94ef354e6fe083fa3e66b782f27d02cc54166a214beb9f1d",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "dataset-default",
+      "source": "concepts",
+      "source_sha256": "3838c992097f72ee8784b6c96194d9879f86f2e08f53ced5a05aa4031750c5ac",
+      "start": 67019,
+      "end": 67260,
+      "claims": [
+        "MT11-DATASET-STRUCTURE",
+        "MT11-DATASET-EMPTY-NAMED-PRESENCE"
+      ],
+      "slice_sha256": "7bd9160df08311bf84e6aab6575437a5f08fa7dea729b72274dd700fbf96cf8e",
+      "locator_tag": "li",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "dataset-named-pairs",
+      "source": "concepts",
+      "source_sha256": "3838c992097f72ee8784b6c96194d9879f86f2e08f53ced5a05aa4031750c5ac",
+      "start": 67268,
+      "end": 67722,
+      "claims": [
+        "MT11-DATASET-STRUCTURE",
+        "MT11-DATASET-EMPTY-NAMED-PRESENCE"
+      ],
+      "slice_sha256": "c1ab6b2d07e9696cc74e644e55b0047d75f27087b0bcc3cccb4ac3b9f359b7d0",
+      "locator_tag": "li",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "dataset-shared-blanks",
+      "source": "concepts",
+      "source_sha256": "3838c992097f72ee8784b6c96194d9879f86f2e08f53ced5a05aa4031750c5ac",
+      "start": 67741,
+      "end": 67954,
+      "claims": [
+        "MT11-DATASET-STRUCTURE",
+        "MT11-DATASET-EQUIVALENT-REPLACEMENT"
+      ],
+      "slice_sha256": "e2e0bd5a6b23cc134c6defb4c2dd8ca623e381c9b82cfe0e0fd4dc8ef3e2881f",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "dataset-isomorphism-domain",
+      "source": "concepts",
+      "source_sha256": "3838c992097f72ee8784b6c96194d9879f86f2e08f53ced5a05aa4031750c5ac",
+      "start": 70344,
+      "end": 70947,
+      "claims": [
+        "MT11-DATASET-ISOMORPHISM"
+      ],
+      "slice_sha256": "980df8b07f95df18c6beb3d29e30110a2daba0b49e8f0f6931776c000419b001",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "dataset-isomorphism-conditions",
+      "source": "concepts",
+      "source_sha256": "3838c992097f72ee8784b6c96194d9879f86f2e08f53ced5a05aa4031750c5ac",
+      "start": 70955,
+      "end": 71571,
+      "claims": [
+        "MT11-DATASET-ISOMORPHISM",
+        "MT11-DATASET-EMPTY-NAMED-PRESENCE"
+      ],
+      "slice_sha256": "b86a9b2efc7e3f2c2902bde262054d94c88797948a533e9b62fcc877a7d5a2a9",
+      "locator_tag": "ol",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "dataset-equivalent-default",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 97768,
+      "end": 98373,
+      "claims": [
+        "MT11-DATASET-EQUIVALENT-REPLACEMENT",
+        "MT11-DATASET-DEFAULT-CONTENT"
+      ],
+      "slice_sha256": "162642f069b46554e592a586768b796aa02021620c65962309bdcc511bf30271",
       "locator_tag": "p",
       "review": "pending",
       "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
@@ -10729,10 +10951,53 @@
         "formal_proof": "unassessed",
         "test_mapping": "unassessed"
       },
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-DATASET-STRUCTURE",
+        "relation": "definition",
+        "symbol_linked_english": "A Dataset contains exactly one unnamed defaultGraph and a namedGraphs partial function from GraphName (IRI or blank) to Graph. Graphs and names share one blank-identity domain; each name selects at most one graph.",
+        "bindings": [
+          {
+            "symbol": "Dataset",
+            "lean": "RDF11.Dataset"
+          },
+          {
+            "symbol": "GraphName",
+            "lean": "RDF11.GraphName"
+          },
+          {
+            "symbol": "Dataset.HasNamedGraph",
+            "lean": "RDF11.Dataset.HasNamedGraph"
+          },
+          {
+            "symbol": "Dataset.name_unique",
+            "lean": "RDF11.Dataset.name_unique"
+          },
+          {
+            "symbol": "Dataset.hasBlank",
+            "lean": "RDF11.Dataset.hasBlank"
+          },
+          {
+            "symbol": "Dataset.ofPairs",
+            "lean": "RDF11.Dataset.ofPairs"
+          },
+          {
+            "symbol": "Dataset.ofPairs_named_iff",
+            "lean": "RDF11.Dataset.ofPairs_named_iff"
+          }
+        ],
+        "limitations": "Ordinary Graph is reused; no finiteness, graph-range injectivity or disjoint-blank assumption is added. IRI/literal lexical domains remain abstract. Syntactic graph-name pairing imposes no denotation equation and no dataset satisfaction regime.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "dataset-import",
+        "dataset-default",
+        "dataset-named-pairs",
+        "dataset-shared-blanks"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-DATASET-NAME-DENOTATION",
@@ -10780,7 +11045,9 @@
       },
       "formalization_note": "MAY and SHOULD do not define a complete, uniquely mandated dataset entailment relation.",
       "cleanroom_mapping": null,
-      "passages": [],
+      "passages": [
+        "dataset-equivalent-default"
+      ],
       "extraction_review": "pending",
       "formalization_review": "not_started"
     },
@@ -10806,10 +11073,43 @@
         "test_mapping": "unassessed"
       },
       "formalization_note": "The paragraph starts with an ordinary prose caution, not a styled note; structural isomorphism and logical equivalence remain distinct.",
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-DATASET-EQUIVALENT-REPLACEMENT",
+        "relation": "theorem",
+        "symbol_linked_english": "DatasetSharingExample.dataset false and dataset true have LogicallyEquivalent (simple graph equivalence) default graphs and unchanged namedGraphs, but there is no DatasetIsomorphism between them: the one shared blank would have to map both to true and to false.",
+        "bindings": [
+          {
+            "symbol": "DatasetSharingExample.dataset",
+            "lean": "RDF11.DatasetSharingExample.dataset"
+          },
+          {
+            "symbol": "DatasetSharingExample.default_isomorphism",
+            "lean": "RDF11.DatasetSharingExample.default_isomorphism"
+          },
+          {
+            "symbol": "DatasetSharingExample.defaults_equivalent",
+            "lean": "RDF11.DatasetSharingExample.defaults_equivalent"
+          },
+          {
+            "symbol": "DatasetSharingExample.named_graphs_unchanged",
+            "lean": "RDF11.DatasetSharingExample.named_graphs_unchanged"
+          },
+          {
+            "symbol": "DatasetSharingExample.no_dataset_isomorphism",
+            "lean": "RDF11.DatasetSharingExample.no_dataset_isomorphism"
+          }
+        ],
+        "limitations": "A concrete finite structural witness uses one abstract IRI and two blank identities, without literals. The source says structurally similar; the checkable distinction used here is Concepts dataset isomorphism. No dataset logical-equivalence or entailment relation is inferred.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "dataset-shared-blanks",
+        "dataset-equivalent-default"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-DATASET-EXTENSIONS",
@@ -11732,6 +12032,170 @@
       "passages": [],
       "extraction_review": "pending",
       "formalization_review": "not_started"
+    },
+    {
+      "id": "MT11-DATASET-ISOMORPHISM",
+      "section": "Concepts 4.1 (incorporated by Semantics 10)",
+      "anchor": "section-dataset-isomorphism",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-concepts-20140225/#section-dataset-isomorphism",
+      "category": "definition",
+      "source_status": "normative",
+      "assertion_basis": "incorporated",
+      "paraphrase": "Two datasets are isomorphic exactly when one bijection on their nodes, triples and graphs fixes IRIs and literals, maps blank nodes to blank nodes, preserves the default graph and preserves all named pairs in both directions.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-DATASET-STRUCTURE",
+        "MT11-ISOMORPHISM"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "The same blank mapping applies to graph-name keys and every graph; empty named pairs must be preserved.",
+      "cleanroom_mapping": {
+        "claim_id": "MT11-DATASET-ISOMORPHISM",
+        "relation": "definition",
+        "symbol_linked_english": "DatasetIsomorphism is one global pair of inverse blank renamings on all occurring blanks, including graph-name keys. It fixes IRIs/literals, maps ordinary triples and graphs pointwise, preserves the default graph and named pairs in both directions, and induces GraphIsomorphism on corresponding component graphs.",
+        "bindings": [
+          {
+            "symbol": "DatasetIsomorphism",
+            "lean": "RDF11.DatasetIsomorphism"
+          },
+          {
+            "symbol": "DatasetIsomorphism.named_iff",
+            "lean": "RDF11.DatasetIsomorphism.named_iff"
+          },
+          {
+            "symbol": "DatasetIsomorphism.maps_blank",
+            "lean": "RDF11.DatasetIsomorphism.maps_blank"
+          },
+          {
+            "symbol": "DatasetIsomorphism.injective_on_blanks",
+            "lean": "RDF11.DatasetIsomorphism.injective_on_blanks"
+          },
+          {
+            "symbol": "DatasetIsomorphism.refl",
+            "lean": "RDF11.DatasetIsomorphism.refl"
+          },
+          {
+            "symbol": "DatasetIsomorphism.symm",
+            "lean": "RDF11.DatasetIsomorphism.symm"
+          },
+          {
+            "symbol": "DatasetIsomorphism.trans",
+            "lean": "RDF11.DatasetIsomorphism.trans"
+          },
+          {
+            "symbol": "DatasetIsomorphism.default_isomorphism",
+            "lean": "RDF11.DatasetIsomorphism.default_isomorphism"
+          },
+          {
+            "symbol": "DatasetIsomorphism.named_isomorphism",
+            "lean": "RDF11.DatasetIsomorphism.named_isomorphism"
+          },
+          {
+            "symbol": "DatasetIsomorphism.default_equivalent",
+            "lean": "RDF11.DatasetIsomorphism.default_equivalent"
+          },
+          {
+            "symbol": "DatasetIsomorphism.named_equivalent",
+            "lean": "RDF11.DatasetIsomorphism.named_equivalent"
+          },
+          {
+            "symbol": "DatasetIsomorphism.surjective_on_blanks",
+            "lean": "RDF11.DatasetIsomorphism.surjective_on_blanks"
+          }
+        ],
+        "limitations": "Both datasets use one ambient blank type. Total maps extend the source bijection, but inverse laws concern only occurring blanks. The named-pair iff is explicitly restricted to source-domain blanks; both-direction pair preservation also excludes extra target pairs. Semantic consequences concern each component graph, not an unspecified dataset semantics.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "dataset-import",
+        "dataset-isomorphism-domain",
+        "dataset-isomorphism-conditions"
+      ],
+      "extraction_review": "pending",
+      "formalization_review": "pending"
+    },
+    {
+      "id": "MT11-DATASET-EMPTY-NAMED-PRESENCE",
+      "section": "Concepts 4 (incorporated by Semantics 10)",
+      "anchor": "section-dataset",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-concepts-20140225/#section-dataset",
+      "category": "mathematical_consequence",
+      "source_status": "normative",
+      "assertion_basis": "derived",
+      "paraphrase": "A present empty named graph and an absent graph name are distinct dataset structures. Forgetting empty named graphs when projecting to quads loses information; default graph, named-graph presence and quad membership together determine the dataset.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-DATASET-STRUCTURE",
+        "MT11-GRAPH-SET"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "The distinction follows from the normative pair-set definition. Quad projection is an explicitly defined derived engineering abstraction. The informative note about interoperability does not require applications to treat the distinction as significant.",
+      "cleanroom_mapping": {
+        "claim_id": "MT11-DATASET-EMPTY-NAMED-PRESENCE",
+        "relation": "theorem",
+        "symbol_linked_english": "Dataset.emptyNamed n differs from Dataset.empty and is not DatasetIsomorphism-related to it, although their named-quad membership is identical. Dataset.eq_of_default_names_quads recovers exact equality from defaultGraph equality, HasName equivalence and quads equality.",
+        "bindings": [
+          {
+            "symbol": "Dataset.HasName",
+            "lean": "RDF11.Dataset.HasName"
+          },
+          {
+            "symbol": "Dataset.quads",
+            "lean": "RDF11.Dataset.quads"
+          },
+          {
+            "symbol": "Dataset.emptyNamed",
+            "lean": "RDF11.Dataset.emptyNamed"
+          },
+          {
+            "symbol": "Dataset.emptyNamed_present",
+            "lean": "RDF11.Dataset.emptyNamed_present"
+          },
+          {
+            "symbol": "Dataset.emptyNamed_ne_empty",
+            "lean": "RDF11.Dataset.emptyNamed_ne_empty"
+          },
+          {
+            "symbol": "Dataset.emptyNamed_same_quads",
+            "lean": "RDF11.Dataset.emptyNamed_same_quads"
+          },
+          {
+            "symbol": "Dataset.eq_of_default_names_quads",
+            "lean": "RDF11.Dataset.eq_of_default_names_quads"
+          },
+          {
+            "symbol": "DatasetSharingExample.empty_blank_name_occurs",
+            "lean": "RDF11.DatasetSharingExample.empty_blank_name_occurs"
+          },
+          {
+            "symbol": "DatasetSharingExample.empty_named_not_isomorphic_to_empty",
+            "lean": "RDF11.DatasetSharingExample.empty_named_not_isomorphic_to_empty"
+          }
+        ],
+        "limitations": "Derived from the normative pair-set definition. Quad projection is an explicitly defined engineering abstraction, not a separately stated W3C axiom. The informative advice about applications tolerating untracked empty graphs does not identify the abstract datasets; no storage implementation is refined yet.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "dataset-default",
+        "dataset-named-pairs",
+        "dataset-isomorphism-conditions"
+      ],
+      "extraction_review": "pending",
+      "formalization_review": "pending"
     }
   ],
   "context_resolutions": [
@@ -11787,6 +12251,24 @@
       "antecedent_passage": "closure-procedure",
       "resolved_meaning": "The axioms selected by container IRIs occurring in E are already a subset of S union the non-container axioms added in step 1.",
       "inference": "Literal set-growth reading of the printed procedure. A possible intended shorthand for no container IRIs in E is not silently substituted.",
+      "review": "pending"
+    },
+    {
+      "claim_id": "MT11-DATASET-EQUIVALENT-REPLACEMENT",
+      "passage": "dataset-equivalent-default",
+      "source_phrase": "it may for example disrupt co-occurrences",
+      "antecedent_passage": "dataset-shared-blanks",
+      "resolved_meaning": "Replacing only the default graph may change the identity sharing between blank nodes occurring there and in the unchanged named graphs.",
+      "inference": "The witness keeps all named pairs fixed and distinguishes datasets by the global bijection required by Concepts §4.1.",
+      "review": "pending"
+    },
+    {
+      "claim_id": "MT11-DATASET-ISOMORPHISM",
+      "passage": "dataset-isomorphism-conditions",
+      "source_phrase": "M",
+      "antecedent_passage": "dataset-isomorphism-domain",
+      "resolved_meaning": "The single bijection between occurring nodes, triples and graphs of the two datasets, not separately chosen bijections for each component graph.",
+      "inference": "Renamings act only on blank identities, extend pointwise to triples/graphs, and preserve named pairs. The domain includes blank graph-name keys even for empty graphs.",
       "review": "pending"
     }
   ],

@@ -27,6 +27,8 @@ When formalizing a stated procedure, preserve its exact axiom selection, fallbac
 
 Datatype meanings are fixed external parameters until a concrete library is proved. One shared value domain permits overlapping value spaces. `rdf:langString` uses normalized string/tag pairs, with ASCII-only lowercase tag values. Keep its literal-image condition explicit. Do not require a global injection of all datatype values into every simple model when D is empty. Record literal/vocabulary coverage and representation obligations rather than silently assuming concrete XSD or BCP47 correctness.
 
+For datasets, reuse ordinary graph syntax and one blank domain across the default graph, named-graph contents and graph-name keys. Preserve present empty named graphs separately from absent keys. Use one global blank bijection for dataset isomorphism, including blanks appearing only as names of empty graphs; per-graph equivalence does not preserve sharing. Keep graph-name pairing separate from denotation. Semantics §10's MAY/SHOULD language does not mandate one dataset satisfaction relation. Label quad projections and their information-loss results as derived representation obligations, distinct from the informative interoperability advice.
+
 No `sorry`, added axioms, unsafe local definitions or native-decision proof shortcuts. Preserve unresolved source questions rather than changing a formal definition to make a desired result compile. The reversed entailment arrows and optional datatype typing questions require expert disposition, not silent correction or unqualified erratum claims.
 
 ## Map and explain

@@ -1,6 +1,6 @@
 # RDF 1.1 Semantics: fresh Lean 4 reconstruction
 
-**Fifth working increment, 23 October 2026. Not complete RDF formalization or package verification.**
+**Sixth working increment, 23 October 2026. Not complete RDF formalization or package verification.**
 
 This project reconstructs definitions and proofs from the pinned RDF 1.1 specifications. It imports no Factoidal implementation modules and copies no existing Factoidal proofs. The author has previously reviewed that implementation: “clean-room” here means a separate, source-first reconstruction, not an independently isolated team with no prior exposure.
 
@@ -32,9 +32,10 @@ The full library builds with **Lean 4.33.1**, using only its standard distributi
 - RDF conditions and the full infinite axiom family are represented. rdfD1 uses one fresh shared witness; rdfD2 reuses the existing property proof. Generalized instance entailment remains conditional at the simple-semantics level.
 - RDFS conditions define ICEXT through rdf:type, keeping classes, properties and literal values in one universe. Both finite axiom lists, the hierarchy axioms and all positive container indices are included. All 14 named RDFS rules have a shared-assignment soundness proof; derivations compose into graph entailment and disjoint-datatype inconsistency.
 - Generalized RDF/RDFS closure uses Appendix A's conclusion-specific axiom seed, base datatype set, object-literal GrdfD1 and rdfD2. Rule saturation and positive instance checks are proved sound. Finite generation and completeness remain open, including a recorded container-axiom selection question.
+- Datasets retain unique IRI-or-blank graph names and distinguish present empty graphs from absent names. One global isomorphism preserves blank sharing across keys and contents. A checked example shows that equivalent default-graph replacement can destroy dataset isomorphism; another proof identifies the graph-name presence information that quad-only storage loses.
 - Finite enumerations carry both membership and uniqueness proofs. Any two enumerations of the same set have the same length; each member occurs at most once.
 
-The source catalogue has **130 mappings among 195 preliminary claim records**. Several mappings are partial. These numbers are not a compliance percentage. No extraction or formalization review is marked accepted.
+The source catalogue has **134 mappings among 197 preliminary claim records**. Several mappings are partial. These numbers are not a compliance percentage. No extraction or formalization review is marked accepted.
 
 ## Where to read
 
@@ -61,6 +62,9 @@ The source catalogue has **130 mappings among 195 preliminary claim records**. S
 | [Relations.lean](RDF11/Relations.lean) | Bridges between typed IEXT, relation notation and triple truth |
 | [EntailmentClosure.lean](RDF11/EntailmentClosure.lean) | Appendix A axiom selection, generalized saturation and positive-check soundness |
 | [ContainerEntailment.lean](RDF11/ContainerEntailment.lean) | Indexed-to-generic membership through the full RDFS axioms and rules |
+| [Datasets.lean](RDF11/Datasets.lean) | Ordinary dataset structure, name uniqueness, empty-graph presence and representation equality |
+| [DatasetIsomorphism.lean](RDF11/DatasetIsomorphism.lean) | Global blank bijections, component isomorphisms and equivalence |
+| [DatasetExamples.lean](RDF11/DatasetExamples.lean) | Equivalent-default replacement breaks sharing; empty named graphs cannot disappear |
 | [ScopeExample.lean](RDF11/ScopeExample.lean) | Checked shared-witness counterexample |
 | [GeneralizedScope.lean](RDF11/GeneralizedScope.lean) | Checked countermodel for an explicit source-scope review question |
 | [Enumeration.lean](RDF11/Enumeration.lean) | Finite implementation contract, separate from graph semantics |
@@ -68,7 +72,7 @@ The source catalogue has **130 mappings among 195 preliminary claim records**. S
 | [Snapshot.lean](Audit/Snapshot.lean) | Concrete draft certificates for both archived specifications |
 | [Export.lean](Audit/Export.lean) | Trusted extractor of actual elaborated types and dependencies |
 
-[registry.json](catalogue/registry.json) inventories every local Lean file and 1,070 declarations, including generated helpers. [declarations.json](https://danbri.github.io/dickory/labs/rdf11/cleanroom/artifacts/declarations.json) records their closure through 5,535 declarations. The checker rejects unregistered files even when they are not imported.
+[registry.json](catalogue/registry.json) inventories every local Lean file and 1,222 declarations, including generated helpers. [declarations.json](https://danbri.github.io/dickory/labs/rdf11/cleanroom/artifacts/declarations.json) records their closure through 5,699 declarations. The checker rejects unregistered files even when they are not imported.
 
 ## Reproduce
 
@@ -90,7 +94,7 @@ After an intentional formal edit, update the explicit registry and review the di
 
 ## Remaining work
 
-See the [D-models and generalized-closure increment](docs/20261023-models-and-closure.md), [datatype/RDF/RDFS review method](docs/20261023-datatypes-rdfs-review.md) and earlier [connected-proof audit](docs/20261023-connected-entailment.md). The principal gaps are concrete IRI/literal definitions and equality; literal/vocabulary coverage and concrete datatype libraries; generalized interpolation scope, lean/proper-instance non-entailment and exact skolem lifting; RDF/RDFS model-existence and full rule-completeness proofs; finite decision procedures; datasets; and remaining informative/general requirements. D-model existence is now proved, but defining the stronger RDF/RDFS classes does not prove they have models for every external parameter choice.
+See the [dataset increment](docs/20261023-datasets.md), [D-models and generalized-closure increment](docs/20261023-models-and-closure.md), [datatype/RDF/RDFS review method](docs/20261023-datatypes-rdfs-review.md) and earlier [connected-proof audit](docs/20261023-connected-entailment.md). The principal gaps are concrete IRI/literal definitions and equality; literal/vocabulary coverage and concrete datatype libraries; generalized interpolation scope, lean/proper-instance non-entailment and exact skolem lifting; RDF/RDFS model-existence and full rule-completeness proofs; finite decision procedures; dataset denotation/default-content/extension requirements; and remaining informative/general requirements. D-model existence is now proved, but defining the stronger RDF/RDFS classes does not prove they have models for every external parameter choice.
 
 The complete requirement set also needs finer context-resolution ranges, expert review records for both mapping stages, and a Lean proof of the declaration-grounding certificate itself. The current rendered view and glosses aid review but do not certify fidelity.
 

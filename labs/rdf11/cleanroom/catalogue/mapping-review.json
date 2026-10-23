@@ -2920,6 +2920,182 @@
       "extraction_review": "pending_expert_review",
       "formalization_review": "pending_expert_review",
       "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-DATASET-STRUCTURE",
+      "relation": "definition",
+      "symbol_linked_english": "A Dataset contains exactly one unnamed defaultGraph and a namedGraphs partial function from GraphName (IRI or blank) to Graph. Graphs and names share one blank-identity domain; each name selects at most one graph.",
+      "bindings": [
+        {
+          "symbol": "Dataset",
+          "lean": "RDF11.Dataset"
+        },
+        {
+          "symbol": "GraphName",
+          "lean": "RDF11.GraphName"
+        },
+        {
+          "symbol": "Dataset.HasNamedGraph",
+          "lean": "RDF11.Dataset.HasNamedGraph"
+        },
+        {
+          "symbol": "Dataset.name_unique",
+          "lean": "RDF11.Dataset.name_unique"
+        },
+        {
+          "symbol": "Dataset.hasBlank",
+          "lean": "RDF11.Dataset.hasBlank"
+        },
+        {
+          "symbol": "Dataset.ofPairs",
+          "lean": "RDF11.Dataset.ofPairs"
+        },
+        {
+          "symbol": "Dataset.ofPairs_named_iff",
+          "lean": "RDF11.Dataset.ofPairs_named_iff"
+        }
+      ],
+      "limitations": "Ordinary Graph is reused; no finiteness, graph-range injectivity or disjoint-blank assumption is added. IRI/literal lexical domains remain abstract. Syntactic graph-name pairing imposes no denotation equation and no dataset satisfaction regime.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-DATASET-EQUIVALENT-REPLACEMENT",
+      "relation": "theorem",
+      "symbol_linked_english": "DatasetSharingExample.dataset false and dataset true have LogicallyEquivalent (simple graph equivalence) default graphs and unchanged namedGraphs, but there is no DatasetIsomorphism between them: the one shared blank would have to map both to true and to false.",
+      "bindings": [
+        {
+          "symbol": "DatasetSharingExample.dataset",
+          "lean": "RDF11.DatasetSharingExample.dataset"
+        },
+        {
+          "symbol": "DatasetSharingExample.default_isomorphism",
+          "lean": "RDF11.DatasetSharingExample.default_isomorphism"
+        },
+        {
+          "symbol": "DatasetSharingExample.defaults_equivalent",
+          "lean": "RDF11.DatasetSharingExample.defaults_equivalent"
+        },
+        {
+          "symbol": "DatasetSharingExample.named_graphs_unchanged",
+          "lean": "RDF11.DatasetSharingExample.named_graphs_unchanged"
+        },
+        {
+          "symbol": "DatasetSharingExample.no_dataset_isomorphism",
+          "lean": "RDF11.DatasetSharingExample.no_dataset_isomorphism"
+        }
+      ],
+      "limitations": "A concrete finite structural witness uses one abstract IRI and two blank identities, without literals. The source says structurally similar; the checkable distinction used here is Concepts dataset isomorphism. No dataset logical-equivalence or entailment relation is inferred.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-DATASET-ISOMORPHISM",
+      "relation": "definition",
+      "symbol_linked_english": "DatasetIsomorphism is one global pair of inverse blank renamings on all occurring blanks, including graph-name keys. It fixes IRIs/literals, maps ordinary triples and graphs pointwise, preserves the default graph and named pairs in both directions, and induces GraphIsomorphism on corresponding component graphs.",
+      "bindings": [
+        {
+          "symbol": "DatasetIsomorphism",
+          "lean": "RDF11.DatasetIsomorphism"
+        },
+        {
+          "symbol": "DatasetIsomorphism.named_iff",
+          "lean": "RDF11.DatasetIsomorphism.named_iff"
+        },
+        {
+          "symbol": "DatasetIsomorphism.maps_blank",
+          "lean": "RDF11.DatasetIsomorphism.maps_blank"
+        },
+        {
+          "symbol": "DatasetIsomorphism.injective_on_blanks",
+          "lean": "RDF11.DatasetIsomorphism.injective_on_blanks"
+        },
+        {
+          "symbol": "DatasetIsomorphism.refl",
+          "lean": "RDF11.DatasetIsomorphism.refl"
+        },
+        {
+          "symbol": "DatasetIsomorphism.symm",
+          "lean": "RDF11.DatasetIsomorphism.symm"
+        },
+        {
+          "symbol": "DatasetIsomorphism.trans",
+          "lean": "RDF11.DatasetIsomorphism.trans"
+        },
+        {
+          "symbol": "DatasetIsomorphism.default_isomorphism",
+          "lean": "RDF11.DatasetIsomorphism.default_isomorphism"
+        },
+        {
+          "symbol": "DatasetIsomorphism.named_isomorphism",
+          "lean": "RDF11.DatasetIsomorphism.named_isomorphism"
+        },
+        {
+          "symbol": "DatasetIsomorphism.default_equivalent",
+          "lean": "RDF11.DatasetIsomorphism.default_equivalent"
+        },
+        {
+          "symbol": "DatasetIsomorphism.named_equivalent",
+          "lean": "RDF11.DatasetIsomorphism.named_equivalent"
+        },
+        {
+          "symbol": "DatasetIsomorphism.surjective_on_blanks",
+          "lean": "RDF11.DatasetIsomorphism.surjective_on_blanks"
+        }
+      ],
+      "limitations": "Both datasets use one ambient blank type. Total maps extend the source bijection, but inverse laws concern only occurring blanks. The named-pair iff is explicitly restricted to source-domain blanks; both-direction pair preservation also excludes extra target pairs. Semantic consequences concern each component graph, not an unspecified dataset semantics.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-DATASET-EMPTY-NAMED-PRESENCE",
+      "relation": "theorem",
+      "symbol_linked_english": "Dataset.emptyNamed n differs from Dataset.empty and is not DatasetIsomorphism-related to it, although their named-quad membership is identical. Dataset.eq_of_default_names_quads recovers exact equality from defaultGraph equality, HasName equivalence and quads equality.",
+      "bindings": [
+        {
+          "symbol": "Dataset.HasName",
+          "lean": "RDF11.Dataset.HasName"
+        },
+        {
+          "symbol": "Dataset.quads",
+          "lean": "RDF11.Dataset.quads"
+        },
+        {
+          "symbol": "Dataset.emptyNamed",
+          "lean": "RDF11.Dataset.emptyNamed"
+        },
+        {
+          "symbol": "Dataset.emptyNamed_present",
+          "lean": "RDF11.Dataset.emptyNamed_present"
+        },
+        {
+          "symbol": "Dataset.emptyNamed_ne_empty",
+          "lean": "RDF11.Dataset.emptyNamed_ne_empty"
+        },
+        {
+          "symbol": "Dataset.emptyNamed_same_quads",
+          "lean": "RDF11.Dataset.emptyNamed_same_quads"
+        },
+        {
+          "symbol": "Dataset.eq_of_default_names_quads",
+          "lean": "RDF11.Dataset.eq_of_default_names_quads"
+        },
+        {
+          "symbol": "DatasetSharingExample.empty_blank_name_occurs",
+          "lean": "RDF11.DatasetSharingExample.empty_blank_name_occurs"
+        },
+        {
+          "symbol": "DatasetSharingExample.empty_named_not_isomorphic_to_empty",
+          "lean": "RDF11.DatasetSharingExample.empty_named_not_isomorphic_to_empty"
+        }
+      ],
+      "limitations": "Derived from the normative pair-set definition. Quad projection is an explicitly defined engineering abstraction, not a separately stated W3C axiom. The informative advice about applications tolerating untracked empty graphs does not identify the abstract datasets; no storage implementation is refined yet.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
     }
   ],
   "passage_selectors": [
@@ -4040,6 +4216,82 @@
         "MT11-CONTAINERS-DESCRIPTION"
       ],
       "within_section": "rdf-containers"
+    },
+    {
+      "id": "dataset-import",
+      "source": "mt",
+      "tag": "p",
+      "text": "RDF datasets, defined in RDF Concepts",
+      "claims": [
+        "MT11-DATASET-STRUCTURE",
+        "MT11-DATASET-ISOMORPHISM"
+      ],
+      "within_section": "rdf-datasets"
+    },
+    {
+      "id": "dataset-default",
+      "source": "concepts",
+      "tag": "li",
+      "text": "Exactly one default graph",
+      "claims": [
+        "MT11-DATASET-STRUCTURE",
+        "MT11-DATASET-EMPTY-NAMED-PRESENCE"
+      ],
+      "within_section": "section-dataset"
+    },
+    {
+      "id": "dataset-named-pairs",
+      "source": "concepts",
+      "tag": "li",
+      "text": "Zero or more named graphs.",
+      "claims": [
+        "MT11-DATASET-STRUCTURE",
+        "MT11-DATASET-EMPTY-NAMED-PRESENCE"
+      ],
+      "within_section": "section-dataset"
+    },
+    {
+      "id": "dataset-shared-blanks",
+      "source": "concepts",
+      "tag": "p",
+      "text": "Blank nodes can be shared between graphs",
+      "claims": [
+        "MT11-DATASET-STRUCTURE",
+        "MT11-DATASET-EQUIVALENT-REPLACEMENT"
+      ],
+      "within_section": "section-dataset"
+    },
+    {
+      "id": "dataset-isomorphism-domain",
+      "source": "concepts",
+      "tag": "p",
+      "text": "Two RDF datasets (the RDF dataset D1",
+      "claims": [
+        "MT11-DATASET-ISOMORPHISM"
+      ],
+      "within_section": "section-dataset-isomorphism"
+    },
+    {
+      "id": "dataset-isomorphism-conditions",
+      "source": "concepts",
+      "tag": "ol",
+      "text": "M maps blank nodes to blank nodes;",
+      "claims": [
+        "MT11-DATASET-ISOMORPHISM",
+        "MT11-DATASET-EMPTY-NAMED-PRESENCE"
+      ],
+      "within_section": "section-dataset-isomorphism"
+    },
+    {
+      "id": "dataset-equivalent-default",
+      "source": "mt",
+      "tag": "p",
+      "text": "Note however that replacing the default graph",
+      "claims": [
+        "MT11-DATASET-EQUIVALENT-REPLACEMENT",
+        "MT11-DATASET-DEFAULT-CONTENT"
+      ],
+      "within_section": "rdf-datasets"
     }
   ],
   "context_resolutions": [
@@ -4095,6 +4347,24 @@
       "antecedent_passage": "closure-procedure",
       "resolved_meaning": "The axioms selected by container IRIs occurring in E are already a subset of S union the non-container axioms added in step 1.",
       "inference": "Literal set-growth reading of the printed procedure. A possible intended shorthand for no container IRIs in E is not silently substituted.",
+      "review": "pending"
+    },
+    {
+      "claim_id": "MT11-DATASET-EQUIVALENT-REPLACEMENT",
+      "passage": "dataset-equivalent-default",
+      "source_phrase": "it may for example disrupt co-occurrences",
+      "antecedent_passage": "dataset-shared-blanks",
+      "resolved_meaning": "Replacing only the default graph may change the identity sharing between blank nodes occurring there and in the unchanged named graphs.",
+      "inference": "The witness keeps all named pairs fixed and distinguishes datasets by the global bijection required by Concepts §4.1.",
+      "review": "pending"
+    },
+    {
+      "claim_id": "MT11-DATASET-ISOMORPHISM",
+      "passage": "dataset-isomorphism-conditions",
+      "source_phrase": "M",
+      "antecedent_passage": "dataset-isomorphism-domain",
+      "resolved_meaning": "The single bijection between occurring nodes, triples and graphs of the two datasets, not separately chosen bijections for each component graph.",
+      "inference": "Renamings act only on blank identities, extend pointwise to triples/graphs, and preserve named pairs. The domain includes blank graph-name keys even for empty graphs.",
       "review": "pending"
     }
   ]

@@ -41,10 +41,10 @@
       "Appendix C proof steps are not individually inventoried; theorem assumptions and supporting proof locations are retained.",
       "Externally defined datatype lexical spaces, XML canonicalization algorithms and all RFC grammar productions are referenced dependencies, not recursively expanded here.",
       "No claim is made to enumerate all logical consequences of the normative semantics.",
-      "No Lean declarations, implementation behavior or W3C test files have been assessed."
+      "This first-pass inventory is not itself proof or implementation evidence. Current Lean mappings and checks are recorded separately in the cleanroom catalogue; implementation refinement and test-to-record mapping remain open."
     ],
     "source_ambiguities": "Potential contradictions or omitted assumptions are review questions. The pinned text is preserved separately from a proposed mathematical reading; none is labelled confirmed W3C errata.",
-    "character_traceability": "Not implemented: no content hash, character offsets, DOM/text projection or clickable claim-to-source spans are asserted. Verified HTML anchors provide section/condition references only.",
+    "character_traceability": "The historical first-pass inventory carries section anchors. The separate cleanroom catalogue now binds selected passages to hash-pinned source bytes and Unicode scalar ranges, with unresolved intervals and pending expert review explicit.",
     "remaining_inventory_review": [
       "Review grouped prose assertions and example-derived scope limitations for any further useful splitting.",
       "Expand imported Concepts definitions and external datatype specifications only as needed by the chosen formalization scope.",
@@ -476,7 +476,9 @@
         "MT11-DATASET-NAME-DENOTATION",
         "MT11-DATASET-DEFAULT-CONTENT",
         "MT11-DATASET-EQUIVALENT-REPLACEMENT",
-        "MT11-DATASET-EXTENSIONS"
+        "MT11-DATASET-EXTENSIONS",
+        "MT11-DATASET-ISOMORPHISM",
+        "MT11-DATASET-EMPTY-NAMED-PRESENCE"
       ]
     },
     {
@@ -4973,7 +4975,51 @@
         "formal_proof": "unassessed",
         "test_mapping": "unassessed"
       }
+    },
+    {
+      "id": "MT11-DATASET-ISOMORPHISM",
+      "section": "Concepts 4.1 (incorporated by Semantics 10)",
+      "anchor": "section-dataset-isomorphism",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-concepts-20140225/#section-dataset-isomorphism",
+      "category": "definition",
+      "source_status": "normative",
+      "assertion_basis": "incorporated",
+      "paraphrase": "Two datasets are isomorphic exactly when one bijection on their nodes, triples and graphs fixes IRIs and literals, maps blank nodes to blank nodes, preserves the default graph and preserves all named pairs in both directions.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-DATASET-STRUCTURE",
+        "MT11-ISOMORPHISM"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "The same blank mapping applies to graph-name keys and every graph; empty named pairs must be preserved."
+    },
+    {
+      "id": "MT11-DATASET-EMPTY-NAMED-PRESENCE",
+      "section": "Concepts 4 (incorporated by Semantics 10)",
+      "anchor": "section-dataset",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-concepts-20140225/#section-dataset",
+      "category": "mathematical_consequence",
+      "source_status": "normative",
+      "assertion_basis": "derived",
+      "paraphrase": "A present empty named graph and an absent graph name are distinct dataset structures. Forgetting empty named graphs when projecting to quads loses information; default graph, named-graph presence and quad membership together determine the dataset.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-DATASET-STRUCTURE",
+        "MT11-GRAPH-SET"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "The distinction follows from the normative pair-set definition. Quad projection is an explicitly defined derived engineering abstraction. The informative note about interoperability does not require applications to treat the distinction as significant."
     }
   ],
-  "record_count": 195
+  "record_count": 197
 }

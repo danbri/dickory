@@ -90,6 +90,18 @@ try {
   await page.locator('#claim').selectOption('MT11-RULE-rdfs9');
   assert.match(await page.locator('#details').innerText(),/rdfs_step_sound/);
   assert.match(await page.locator('#details').innerText(),/rdfs_derives_entailment/);
+  await page.locator('#claim').selectOption('MT11-DATASET-STRUCTURE');
+  const dataset=page.locator('#details > article > .lean-declaration[data-lean="RDF11.Dataset"]');
+  assert.match(await dataset.locator(':scope > .lean-code').textContent(),/structure Dataset[\s\S]*namedGraphs : GraphName Iri B → Option/);
+  await dataset.locator(':scope > .gloss > summary').click();
+  assert.match(await dataset.locator(':scope > .gloss').innerText(),/present empty graphs remain distinct from missing keys/i);
+  await page.locator('#claim').selectOption('MT11-DATASET-EQUIVALENT-REPLACEMENT');
+  const sharing=page.locator('#details > article > .lean-declaration[data-lean="RDF11.DatasetSharingExample.no_dataset_isomorphism"]');
+  assert.match(await sharing.locator(':scope > .lean-code').textContent(),/theorem no_dataset_isomorphism[\s\S]*e\.named_forward/);
+  await page.locator('#document').selectOption('concepts');
+  await page.locator('#claim').selectOption('MT11-DATASET-EMPTY-NAMED-PRESENCE');
+  assert.match(await page.locator('#details > article > .lean-declaration[data-lean="RDF11.Dataset.eq_of_default_names_quads"] > .lean-code').textContent(),/hq : D\.quads = E\.quads/);
+  await page.locator('#document').selectOption('mt');
   await page.locator('#claim').selectOption('MT11-GRAPH-SET');
   const proof=page.locator('#details > article > .lean-declaration[data-lean="RDF11.Set.ext"] > .lean-code');
   assert(await proof.isVisible());assert.match(await proof.textContent(),/theorem ext[\s\S]*:= by/);
@@ -105,7 +117,7 @@ try {
   assert.equal(await page.locator('#claim').inputValue(),'');
   assert(!page.url().includes('#claim='));
   assert.deepEqual(errors,[]);
-  const report={status:'pass',checks:['Visible Triple fields and Subject/Term constructors','Commit-pinned source links','Lazy dependency source expansion','Claim deep link survives reload','Visible theorem proof body','Mobile layout has no horizontal overflow','Unmapped claims remain explicit','Changing source clears stale selection','Rendered and raw tabs preserve selection and exact raw characters','Annotated rendered passages open their claims','Search and mapping filters','Plain-English glosses on every displayed declaration','Reading copy has no active embeds or external resources','Connected claims navigate actual declaration dependency paths','Headline alias with explicit statement and gloss','Source question without an example block renders safely','RDFS rule connects to derivation soundness','No JavaScript errors'],dependencies};
+  const report={status:'pass',checks:['Visible Triple fields and Subject/Term constructors','Commit-pinned source links','Lazy dependency source expansion','Claim deep link survives reload','Visible theorem proof body','Mobile layout has no horizontal overflow','Unmapped claims remain explicit','Changing source clears stale selection','Rendered and raw tabs preserve selection and exact raw characters','Annotated rendered passages open their claims','Search and mapping filters','Plain-English glosses on every displayed declaration','Reading copy has no active embeds or external resources','Connected claims navigate actual declaration dependency paths','Headline alias with explicit statement and gloss','Source question without an example block renders safely','RDFS rule connects to derivation soundness','Dataset structure and empty-graph gloss','Shared-blank dataset non-isomorphism proof','Concepts dataset representation theorem','No JavaScript errors'],dependencies};
   await fs.writeFile(new URL('result.json', evidenceDir),JSON.stringify(report,null,2)+'\n');
   console.log(JSON.stringify(report,null,2));
 } finally { await browser.close(); }

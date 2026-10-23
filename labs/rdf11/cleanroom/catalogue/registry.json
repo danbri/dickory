@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "status": "frozen_fifth_increment_inventory_not_expert_approved",
+  "status": "frozen_sixth_increment_inventory_not_expert_approved",
   "lean_version": "4.33.1",
   "allowed_axioms": [
     "propext",
@@ -349,6 +349,34 @@
         "MT11-CONTAINERS-DESCRIPTION",
         "MT11-RDFS-AXIOM-CONTAINER-FAMILY"
       ]
+    },
+    {
+      "id": "SUPPORT-DATASETS",
+      "purpose": "Ordinary dataset syntax, equivalence with unique-name pairs, global occurrence support and presence-sensitive representation equality.",
+      "requires": [
+        "FOUNDATION-LEAN",
+        "MT11-DATASET-STRUCTURE",
+        "MT11-DATASET-ISOMORPHISM",
+        "MT11-DATASET-EMPTY-NAMED-PRESENCE"
+      ]
+    },
+    {
+      "id": "SUPPORT-DATASET-ISOMORPHISM",
+      "purpose": "Global blank bijections preserving default and named graphs, with induced component graph isomorphisms and equivalence.",
+      "requires": [
+        "FOUNDATION-LEAN",
+        "MT11-DATASET-ISOMORPHISM",
+        "MT11-ISOMORPHISM"
+      ]
+    },
+    {
+      "id": "SUPPORT-DATASET-EXAMPLES",
+      "purpose": "Checked witnesses for loss of cross-graph sharing and loss of empty-named-graph presence under quad projection.",
+      "requires": [
+        "FOUNDATION-LEAN",
+        "MT11-DATASET-EQUIVALENT-REPLACEMENT",
+        "MT11-DATASET-EMPTY-NAMED-PRESENCE"
+      ]
     }
   ],
   "files": [
@@ -375,14 +403,14 @@
     },
     {
       "path": "Audit/Snapshot.lean",
-      "sha256": "89d251e26166265d7a83804b031c1699fe7c626542ff22ec255bfa626e36b4ca",
+      "sha256": "a7697d625143dfe09c840036eafd04ec9be0eba68fe83dd86baa0215f1e872db",
       "role": "formal_source",
       "lifecycle": "active",
       "review": "pending_expert_review"
     },
     {
       "path": "RDF11.lean",
-      "sha256": "d4d4ed6312a76e1ed80f480f3d23af3158591f7ab748d832503acc19e78b3bf6",
+      "sha256": "d6967a4e34bb8ff8c04937a0be7e89b7160e2b14fe5073cf909b9a82bc954ed4",
       "role": "formal_source",
       "lifecycle": "active",
       "review": "pending_expert_review"
@@ -575,6 +603,27 @@
       "lifecycle": "active",
       "review": "pending_expert_review",
       "sha256": "169f539e9d4ed7d86854148310123d009bb5d2fc6e50e0e907f308586b4283b2"
+    },
+    {
+      "path": "RDF11/Datasets.lean",
+      "role": "formal_source",
+      "lifecycle": "active",
+      "review": "pending_expert_review",
+      "sha256": "f542e891eaa65c6178fb9111a1bfe35cf3087ff7c0611a2e917a0be8b682f22b"
+    },
+    {
+      "path": "RDF11/DatasetExamples.lean",
+      "role": "formal_source",
+      "lifecycle": "active",
+      "review": "pending_expert_review",
+      "sha256": "083fcfbf56c61536c4796de18d7a8a3f122c4dccc0d9ce4c18b7b787a596008a"
+    },
+    {
+      "path": "RDF11/DatasetIsomorphism.lean",
+      "role": "formal_source",
+      "lifecycle": "active",
+      "review": "pending_expert_review",
+      "sha256": "c03004a95207846c2d4c50952e5c8549a0232b6092a6960849f3d1ae323153ef"
     }
   ],
   "declarations": [
@@ -13724,6 +13773,1863 @@
       "role": "proof_support",
       "grounds": [
         "SUPPORT-LITERAL-SUBSTITUTION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Dataset",
+      "module": "RDF11.Datasets",
+      "kind": "inductive",
+      "type": "Type → Type → Type → Type",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-DATASETS",
+        "MT11-DATASET-STRUCTURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Dataset.HasName",
+      "module": "RDF11.Datasets",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} → RDF11.Dataset Iri Literal B → RDF11.GraphName Iri B → Prop",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-DATASETS",
+        "MT11-DATASET-EMPTY-NAMED-PRESENCE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Dataset.HasNamedGraph",
+      "module": "RDF11.Datasets",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} → RDF11.Dataset Iri Literal B → RDF11.GraphName Iri B → RDF11.Graph Iri Literal B → Prop",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-DATASETS",
+        "MT11-DATASET-STRUCTURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Dataset.HasNamedGraph.eq_1",
+      "module": "RDF11.Datasets",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (D : RDF11.Dataset Iri Literal B) (n : RDF11.GraphName Iri B) (G : RDF11.Graph Iri Literal B),\n  D.HasNamedGraph n G = (D.namedGraphs n = some G)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASETS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Dataset._sizeOf_1",
+      "module": "RDF11.Datasets",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} → [SizeOf Iri] → [SizeOf Literal] → [SizeOf B] → RDF11.Dataset Iri Literal B → Nat",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASETS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Dataset._sizeOf_inst",
+      "module": "RDF11.Datasets",
+      "kind": "definition",
+      "type": "(Iri Literal B : Type) → [SizeOf Iri] → [SizeOf Literal] → [SizeOf B] → SizeOf (RDF11.Dataset Iri Literal B)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASETS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Dataset.casesOn",
+      "module": "RDF11.Datasets",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  {motive : RDF11.Dataset Iri Literal B → Sort u} →\n    (t : RDF11.Dataset Iri Literal B) →\n      ((defaultGraph : RDF11.Graph Iri Literal B) →\n          (namedGraphs : RDF11.GraphName Iri B → Option (RDF11.Graph Iri Literal B)) →\n            motive { defaultGraph := defaultGraph, namedGraphs := namedGraphs }) →\n        motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASETS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Dataset.ctorIdx",
+      "module": "RDF11.Datasets",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} → RDF11.Dataset Iri Literal B → Nat",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASETS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Dataset.defaultGraph",
+      "module": "RDF11.Datasets",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} → RDF11.Dataset Iri Literal B → RDF11.Graph Iri Literal B",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASETS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Dataset.empty",
+      "module": "RDF11.Datasets",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} → RDF11.Dataset Iri Literal B",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASETS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Dataset.empty.eq_1",
+      "module": "RDF11.Datasets",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type}, RDF11.Dataset.empty = { defaultGraph := RDF11.Set.empty, namedGraphs := fun x => none }",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASETS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Dataset.emptyNamed",
+      "module": "RDF11.Datasets",
+      "kind": "definition",
+      "type": "{Iri B Literal : Type} → RDF11.GraphName Iri B → RDF11.Dataset Iri Literal B",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-DATASETS",
+        "MT11-DATASET-EMPTY-NAMED-PRESENCE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Dataset.emptyNamed.eq_1",
+      "module": "RDF11.Datasets",
+      "kind": "theorem",
+      "type": "∀ {Iri B Literal : Type} (n : RDF11.GraphName Iri B),\n  RDF11.Dataset.emptyNamed n =\n    { defaultGraph := RDF11.Set.empty, namedGraphs := fun m => if m = n then some RDF11.Set.empty else none }",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASETS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Dataset.emptyNamed_ne_empty",
+      "module": "RDF11.Datasets",
+      "kind": "theorem",
+      "type": "∀ {Iri B Literal : Type} (n : RDF11.GraphName Iri B), RDF11.Dataset.emptyNamed n ≠ RDF11.Dataset.empty",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-DATASETS",
+        "MT11-DATASET-EMPTY-NAMED-PRESENCE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Dataset.emptyNamed_present",
+      "module": "RDF11.Datasets",
+      "kind": "theorem",
+      "type": "∀ {Iri B Literal : Type} (n : RDF11.GraphName Iri B), (RDF11.Dataset.emptyNamed n).HasNamedGraph n RDF11.Set.empty",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-DATASETS",
+        "MT11-DATASET-EMPTY-NAMED-PRESENCE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Dataset.emptyNamed_same_quads",
+      "module": "RDF11.Datasets",
+      "kind": "theorem",
+      "type": "∀ {Iri B Literal : Type} (n : RDF11.GraphName Iri B), (RDF11.Dataset.emptyNamed n).quads = RDF11.Dataset.empty.quads",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-DATASETS",
+        "MT11-DATASET-EMPTY-NAMED-PRESENCE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Dataset.eq_of_default_names_quads",
+      "module": "RDF11.Datasets",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (D E : RDF11.Dataset Iri Literal B),\n  D.defaultGraph = E.defaultGraph →\n    (∀ (n : RDF11.GraphName Iri B), D.HasName n ↔ E.HasName n) → D.quads = E.quads → D = E",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-DATASETS",
+        "MT11-DATASET-EMPTY-NAMED-PRESENCE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Dataset.hasBlank",
+      "module": "RDF11.Datasets",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} → RDF11.Dataset Iri Literal B → B → Prop",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-DATASETS",
+        "MT11-DATASET-STRUCTURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Dataset.mk",
+      "module": "RDF11.Datasets",
+      "kind": "constructor",
+      "type": "{Iri Literal B : Type} →\n  RDF11.Graph Iri Literal B → (RDF11.GraphName Iri B → Option (RDF11.Graph Iri Literal B)) → RDF11.Dataset Iri Literal B",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASETS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Dataset.mk._flat_ctor",
+      "module": "RDF11.Datasets",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  RDF11.Graph Iri Literal B → (RDF11.GraphName Iri B → Option (RDF11.Graph Iri Literal B)) → RDF11.Dataset Iri Literal B",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASETS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Dataset.mk.inj",
+      "module": "RDF11.Datasets",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {defaultGraph : RDF11.Graph Iri Literal B}\n  {namedGraphs : RDF11.GraphName Iri B → Option (RDF11.Graph Iri Literal B)}\n  {defaultGraph_1 : RDF11.Graph Iri Literal B}\n  {namedGraphs_1 : RDF11.GraphName Iri B → Option (RDF11.Graph Iri Literal B)},\n  { defaultGraph := defaultGraph, namedGraphs := namedGraphs } =\n      { defaultGraph := defaultGraph_1, namedGraphs := namedGraphs_1 } →\n    defaultGraph = defaultGraph_1 ∧ namedGraphs = namedGraphs_1",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASETS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Dataset.mk.injEq",
+      "module": "RDF11.Datasets",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (defaultGraph : RDF11.Graph Iri Literal B)\n  (namedGraphs : RDF11.GraphName Iri B → Option (RDF11.Graph Iri Literal B))\n  (defaultGraph_1 : RDF11.Graph Iri Literal B)\n  (namedGraphs_1 : RDF11.GraphName Iri B → Option (RDF11.Graph Iri Literal B)),\n  ({ defaultGraph := defaultGraph, namedGraphs := namedGraphs } =\n      { defaultGraph := defaultGraph_1, namedGraphs := namedGraphs_1 }) =\n    (defaultGraph = defaultGraph_1 ∧ namedGraphs = namedGraphs_1)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASETS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Dataset.mk.noConfusion",
+      "module": "RDF11.Datasets",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  {P : Sort u} →\n    {defaultGraph : RDF11.Graph Iri Literal B} →\n      {namedGraphs : RDF11.GraphName Iri B → Option (RDF11.Graph Iri Literal B)} →\n        {defaultGraph' : RDF11.Graph Iri Literal B} →\n          {namedGraphs' : RDF11.GraphName Iri B → Option (RDF11.Graph Iri Literal B)} →\n            { defaultGraph := defaultGraph, namedGraphs := namedGraphs } =\n                { defaultGraph := defaultGraph', namedGraphs := namedGraphs' } →\n              (defaultGraph ≍ defaultGraph' → namedGraphs ≍ namedGraphs' → P) → P",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASETS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Dataset.mk.sizeOf_spec",
+      "module": "RDF11.Datasets",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} [inst : SizeOf Iri] [inst_1 : SizeOf Literal] [inst_2 : SizeOf B]\n  (defaultGraph : RDF11.Graph Iri Literal B) (namedGraphs : RDF11.GraphName Iri B → Option (RDF11.Graph Iri Literal B)),\n  sizeOf { defaultGraph := defaultGraph, namedGraphs := namedGraphs } = 1",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASETS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Dataset.name_unique",
+      "module": "RDF11.Datasets",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (D : RDF11.Dataset Iri Literal B) (n : RDF11.GraphName Iri B)\n  {G H : RDF11.Graph Iri Literal B}, D.HasNamedGraph n G → D.HasNamedGraph n H → G = H",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-DATASETS",
+        "MT11-DATASET-STRUCTURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Dataset.namedGraphs",
+      "module": "RDF11.Datasets",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} → RDF11.Dataset Iri Literal B → RDF11.GraphName Iri B → Option (RDF11.Graph Iri Literal B)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASETS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Dataset.noConfusion",
+      "module": "RDF11.Datasets",
+      "kind": "definition",
+      "type": "{P : Sort u} →\n  {Iri Literal B : Type} →\n    {t : RDF11.Dataset Iri Literal B} →\n      {Iri' Literal' B' : Type} →\n        {t' : RDF11.Dataset Iri' Literal' B'} →\n          Iri = Iri' → Literal = Literal' → B = B' → t ≍ t' → RDF11.Dataset.noConfusionType P t t'",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASETS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Dataset.noConfusionType",
+      "module": "RDF11.Datasets",
+      "kind": "definition",
+      "type": "Sort u →\n  {Iri Literal B : Type} →\n    RDF11.Dataset Iri Literal B → {Iri' Literal' B' : Type} → RDF11.Dataset Iri' Literal' B' → Sort u",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASETS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Dataset.ofPairs",
+      "module": "RDF11.Datasets",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  RDF11.Graph Iri Literal B →\n    (pairs : RDF11.GraphName Iri B → RDF11.Graph Iri Literal B → Prop) →\n      (∀ (n : RDF11.GraphName Iri B) (G H : RDF11.Graph Iri Literal B), pairs n G → pairs n H → G = H) →\n        RDF11.Dataset Iri Literal B",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-DATASETS",
+        "MT11-DATASET-STRUCTURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Dataset.ofPairs.eq_1",
+      "module": "RDF11.Datasets",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (defaultGraph : RDF11.Graph Iri Literal B)\n  (pairs : RDF11.GraphName Iri B → RDF11.Graph Iri Literal B → Prop)\n  (_unique : ∀ (n : RDF11.GraphName Iri B) (G H : RDF11.Graph Iri Literal B), pairs n G → pairs n H → G = H),\n  RDF11.Dataset.ofPairs defaultGraph pairs _unique =\n    { defaultGraph := defaultGraph,\n      namedGraphs := fun n => if h : ∃ G, pairs n G then some (Classical.choose h) else none }",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASETS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Dataset.ofPairs_named_iff",
+      "module": "RDF11.Datasets",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (defaultGraph : RDF11.Graph Iri Literal B)\n  (pairs : RDF11.GraphName Iri B → RDF11.Graph Iri Literal B → Prop)\n  (unique : ∀ (n : RDF11.GraphName Iri B) (G H : RDF11.Graph Iri Literal B), pairs n G → pairs n H → G = H)\n  (n : RDF11.GraphName Iri B) (G : RDF11.Graph Iri Literal B),\n  (RDF11.Dataset.ofPairs defaultGraph pairs unique).HasNamedGraph n G ↔ pairs n G",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-DATASETS",
+        "MT11-DATASET-STRUCTURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Dataset.quads",
+      "module": "RDF11.Datasets",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} → RDF11.Dataset Iri Literal B → RDF11.GraphName Iri B → RDF11.Triple Iri Literal B → Prop",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-DATASETS",
+        "MT11-DATASET-EMPTY-NAMED-PRESENCE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Dataset.quads.eq_1",
+      "module": "RDF11.Datasets",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (D : RDF11.Dataset Iri Literal B) (n : RDF11.GraphName Iri B) (t : RDF11.Triple Iri Literal B),\n  D.quads n t = ∃ G, D.HasNamedGraph n G ∧ G t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASETS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Dataset.rec",
+      "module": "RDF11.Datasets",
+      "kind": "recursor",
+      "type": "{Iri Literal B : Type} →\n  {motive : RDF11.Dataset Iri Literal B → Sort u} →\n    ((defaultGraph : RDF11.Graph Iri Literal B) →\n        (namedGraphs : RDF11.GraphName Iri B → Option (RDF11.Graph Iri Literal B)) →\n          motive { defaultGraph := defaultGraph, namedGraphs := namedGraphs }) →\n      (t : RDF11.Dataset Iri Literal B) → motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASETS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Dataset.recOn",
+      "module": "RDF11.Datasets",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  {motive : RDF11.Dataset Iri Literal B → Sort u} →\n    (t : RDF11.Dataset Iri Literal B) →\n      ((defaultGraph : RDF11.Graph Iri Literal B) →\n          (namedGraphs : RDF11.GraphName Iri B → Option (RDF11.Graph Iri Literal B)) →\n            motive { defaultGraph := defaultGraph, namedGraphs := namedGraphs }) →\n        motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASETS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetIsomorphism",
+      "module": "RDF11.DatasetIsomorphism",
+      "kind": "inductive",
+      "type": "{Iri Literal B : Type} → RDF11.Dataset Iri Literal B → RDF11.Dataset Iri Literal B → Type",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-DATASET-ISOMORPHISM",
+        "MT11-DATASET-ISOMORPHISM"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetIsomorphism._sizeOf_1",
+      "module": "RDF11.DatasetIsomorphism",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  {D E : RDF11.Dataset Iri Literal B} →\n    [SizeOf Iri] → [SizeOf Literal] → [SizeOf B] → RDF11.DatasetIsomorphism D E → Nat",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-ISOMORPHISM"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetIsomorphism._sizeOf_inst",
+      "module": "RDF11.DatasetIsomorphism",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  (D E : RDF11.Dataset Iri Literal B) →\n    [SizeOf Iri] → [SizeOf Literal] → [SizeOf B] → SizeOf (RDF11.DatasetIsomorphism D E)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-ISOMORPHISM"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetIsomorphism.casesOn",
+      "module": "RDF11.DatasetIsomorphism",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  {D E : RDF11.Dataset Iri Literal B} →\n    {motive : RDF11.DatasetIsomorphism D E → Sort u} →\n      (t : RDF11.DatasetIsomorphism D E) →\n        ((toFun invFun : B → B) →\n            (left_inv : ∀ (b : B), D.hasBlank b → invFun (toFun b) = b) →\n              (right_inv : ∀ (b : B), E.hasBlank b → toFun (invFun b) = b) →\n                (default_eq : RDF11.Graph.mapBlank toFun D.defaultGraph = E.defaultGraph) →\n                  (named_forward :\n                      ∀ (n : RDF11.GraphName Iri B) (G : RDF11.Graph Iri Literal B),\n                        D.HasNamedGraph n G →\n                          E.HasNamedGraph (RDF11.Subject.mapBlank toFun n) (RDF11.Graph.mapBlank toFun G)) →\n                    (named_backward :\n                        ∀ (n : RDF11.GraphName Iri B) (G : RDF11.Graph Iri Literal B),\n                          E.HasNamedGraph n G →\n                            D.HasNamedGraph (RDF11.Subject.mapBlank invFun n) (RDF11.Graph.mapBlank invFun G)) →\n                      motive\n                        { toFun := toFun, invFun := invFun, left_inv := left_inv, right_inv := right_inv,\n                          default_eq := default_eq, named_forward := named_forward,\n                          named_backward := named_backward }) →\n          motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-ISOMORPHISM"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetIsomorphism.ctorIdx",
+      "module": "RDF11.DatasetIsomorphism",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} → {D E : RDF11.Dataset Iri Literal B} → RDF11.DatasetIsomorphism D E → Nat",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-ISOMORPHISM"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetIsomorphism.default_eq",
+      "module": "RDF11.DatasetIsomorphism",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {D E : RDF11.Dataset Iri Literal B} (self : RDF11.DatasetIsomorphism D E),\n  RDF11.Graph.mapBlank self.toFun D.defaultGraph = E.defaultGraph",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-ISOMORPHISM"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetIsomorphism.default_equivalent",
+      "module": "RDF11.DatasetIsomorphism",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {D E : RDF11.Dataset Iri Literal B} (e : RDF11.DatasetIsomorphism D E),\n  RDF11.LogicallyEquivalent D.defaultGraph.generalize E.defaultGraph.generalize",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-DATASET-ISOMORPHISM",
+        "MT11-DATASET-ISOMORPHISM"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetIsomorphism.default_isomorphism",
+      "module": "RDF11.DatasetIsomorphism",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  {D E : RDF11.Dataset Iri Literal B} →\n    RDF11.DatasetIsomorphism D E → RDF11.GraphIsomorphism D.defaultGraph.generalize E.defaultGraph.generalize",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-DATASET-ISOMORPHISM",
+        "MT11-DATASET-ISOMORPHISM"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetIsomorphism.default_isomorphism._proof_1",
+      "module": "RDF11.DatasetIsomorphism",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {D E : RDF11.Dataset Iri Literal B} (e : RDF11.DatasetIsomorphism D E) (b : B),\n  D.defaultGraph.generalize.hasBlank b → e.invFun (e.toFun b) = b",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-ISOMORPHISM"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetIsomorphism.default_isomorphism._proof_2",
+      "module": "RDF11.DatasetIsomorphism",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {D E : RDF11.Dataset Iri Literal B} (e : RDF11.DatasetIsomorphism D E) (b : B),\n  E.defaultGraph.generalize.hasBlank b → e.toFun (e.invFun b) = b",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-ISOMORPHISM"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetIsomorphism.default_isomorphism._proof_3",
+      "module": "RDF11.DatasetIsomorphism",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {D E : RDF11.Dataset Iri Literal B} (e : RDF11.DatasetIsomorphism D E),\n  RDF11.GeneralizedGraph.mapBlank e.toFun D.defaultGraph.generalize = E.defaultGraph.generalize",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-ISOMORPHISM"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetIsomorphism.injective_on_blanks",
+      "module": "RDF11.DatasetIsomorphism",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {D E : RDF11.Dataset Iri Literal B} (e : RDF11.DatasetIsomorphism D E) (b c : B),\n  D.hasBlank b → D.hasBlank c → e.toFun b = e.toFun c → b = c",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-DATASET-ISOMORPHISM",
+        "MT11-DATASET-ISOMORPHISM"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetIsomorphism.invFun",
+      "module": "RDF11.DatasetIsomorphism",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} → {D E : RDF11.Dataset Iri Literal B} → RDF11.DatasetIsomorphism D E → B → B",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-ISOMORPHISM"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetIsomorphism.inverse_default",
+      "module": "RDF11.DatasetIsomorphism",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {D E : RDF11.Dataset Iri Literal B} (e : RDF11.DatasetIsomorphism D E),\n  RDF11.Graph.mapBlank e.invFun E.defaultGraph = D.defaultGraph",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-ISOMORPHISM"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetIsomorphism.left_inv",
+      "module": "RDF11.DatasetIsomorphism",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {D E : RDF11.Dataset Iri Literal B} (self : RDF11.DatasetIsomorphism D E) (b : B),\n  D.hasBlank b → self.invFun (self.toFun b) = b",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-ISOMORPHISM"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetIsomorphism.maps_blank",
+      "module": "RDF11.DatasetIsomorphism",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {D E : RDF11.Dataset Iri Literal B} (e : RDF11.DatasetIsomorphism D E) (b : B),\n  D.hasBlank b → E.hasBlank (e.toFun b)",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-DATASET-ISOMORPHISM",
+        "MT11-DATASET-ISOMORPHISM"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetIsomorphism.mk",
+      "module": "RDF11.DatasetIsomorphism",
+      "kind": "constructor",
+      "type": "{Iri Literal B : Type} →\n  {D E : RDF11.Dataset Iri Literal B} →\n    (toFun invFun : B → B) →\n      (∀ (b : B), D.hasBlank b → invFun (toFun b) = b) →\n        (∀ (b : B), E.hasBlank b → toFun (invFun b) = b) →\n          RDF11.Graph.mapBlank toFun D.defaultGraph = E.defaultGraph →\n            (∀ (n : RDF11.GraphName Iri B) (G : RDF11.Graph Iri Literal B),\n                D.HasNamedGraph n G → E.HasNamedGraph (RDF11.Subject.mapBlank toFun n) (RDF11.Graph.mapBlank toFun G)) →\n              (∀ (n : RDF11.GraphName Iri B) (G : RDF11.Graph Iri Literal B),\n                  E.HasNamedGraph n G →\n                    D.HasNamedGraph (RDF11.Subject.mapBlank invFun n) (RDF11.Graph.mapBlank invFun G)) →\n                RDF11.DatasetIsomorphism D E",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-ISOMORPHISM"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetIsomorphism.mk._flat_ctor",
+      "module": "RDF11.DatasetIsomorphism",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  {D E : RDF11.Dataset Iri Literal B} →\n    (toFun invFun : B → B) →\n      (∀ (b : B), D.hasBlank b → invFun (toFun b) = b) →\n        (∀ (b : B), E.hasBlank b → toFun (invFun b) = b) →\n          RDF11.Graph.mapBlank toFun D.defaultGraph = E.defaultGraph →\n            (∀ (n : RDF11.GraphName Iri B) (G : RDF11.Graph Iri Literal B),\n                D.HasNamedGraph n G → E.HasNamedGraph (RDF11.Subject.mapBlank toFun n) (RDF11.Graph.mapBlank toFun G)) →\n              (∀ (n : RDF11.GraphName Iri B) (G : RDF11.Graph Iri Literal B),\n                  E.HasNamedGraph n G →\n                    D.HasNamedGraph (RDF11.Subject.mapBlank invFun n) (RDF11.Graph.mapBlank invFun G)) →\n                RDF11.DatasetIsomorphism D E",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-ISOMORPHISM"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetIsomorphism.mk.inj",
+      "module": "RDF11.DatasetIsomorphism",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {D E : RDF11.Dataset Iri Literal B} {toFun invFun : B → B}\n  {left_inv : ∀ (b : B), D.hasBlank b → invFun (toFun b) = b}\n  {right_inv : ∀ (b : B), E.hasBlank b → toFun (invFun b) = b}\n  {default_eq : RDF11.Graph.mapBlank toFun D.defaultGraph = E.defaultGraph}\n  {named_forward :\n    ∀ (n : RDF11.GraphName Iri B) (G : RDF11.Graph Iri Literal B),\n      D.HasNamedGraph n G → E.HasNamedGraph (RDF11.Subject.mapBlank toFun n) (RDF11.Graph.mapBlank toFun G)}\n  {named_backward :\n    ∀ (n : RDF11.GraphName Iri B) (G : RDF11.Graph Iri Literal B),\n      E.HasNamedGraph n G → D.HasNamedGraph (RDF11.Subject.mapBlank invFun n) (RDF11.Graph.mapBlank invFun G)}\n  {toFun_1 invFun_1 : B → B} {left_inv_1 : ∀ (b : B), D.hasBlank b → invFun_1 (toFun_1 b) = b}\n  {right_inv_1 : ∀ (b : B), E.hasBlank b → toFun_1 (invFun_1 b) = b}\n  {default_eq_1 : RDF11.Graph.mapBlank toFun_1 D.defaultGraph = E.defaultGraph}\n  {named_forward_1 :\n    ∀ (n : RDF11.GraphName Iri B) (G : RDF11.Graph Iri Literal B),\n      D.HasNamedGraph n G → E.HasNamedGraph (RDF11.Subject.mapBlank toFun_1 n) (RDF11.Graph.mapBlank toFun_1 G)}\n  {named_backward_1 :\n    ∀ (n : RDF11.GraphName Iri B) (G : RDF11.Graph Iri Literal B),\n      E.HasNamedGraph n G → D.HasNamedGraph (RDF11.Subject.mapBlank invFun_1 n) (RDF11.Graph.mapBlank invFun_1 G)},\n  { toFun := toFun, invFun := invFun, left_inv := left_inv, right_inv := right_inv, default_eq := default_eq,\n        named_forward := named_forward, named_backward := named_backward } =\n      { toFun := toFun_1, invFun := invFun_1, left_inv := left_inv_1, right_inv := right_inv_1,\n        default_eq := default_eq_1, named_forward := named_forward_1, named_backward := named_backward_1 } →\n    toFun = toFun_1 ∧ invFun = invFun_1",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-ISOMORPHISM"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetIsomorphism.mk.injEq",
+      "module": "RDF11.DatasetIsomorphism",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {D E : RDF11.Dataset Iri Literal B} (toFun invFun : B → B)\n  (left_inv : ∀ (b : B), D.hasBlank b → invFun (toFun b) = b)\n  (right_inv : ∀ (b : B), E.hasBlank b → toFun (invFun b) = b)\n  (default_eq : RDF11.Graph.mapBlank toFun D.defaultGraph = E.defaultGraph)\n  (named_forward :\n    ∀ (n : RDF11.GraphName Iri B) (G : RDF11.Graph Iri Literal B),\n      D.HasNamedGraph n G → E.HasNamedGraph (RDF11.Subject.mapBlank toFun n) (RDF11.Graph.mapBlank toFun G))\n  (named_backward :\n    ∀ (n : RDF11.GraphName Iri B) (G : RDF11.Graph Iri Literal B),\n      E.HasNamedGraph n G → D.HasNamedGraph (RDF11.Subject.mapBlank invFun n) (RDF11.Graph.mapBlank invFun G))\n  (toFun_1 invFun_1 : B → B) (left_inv_1 : ∀ (b : B), D.hasBlank b → invFun_1 (toFun_1 b) = b)\n  (right_inv_1 : ∀ (b : B), E.hasBlank b → toFun_1 (invFun_1 b) = b)\n  (default_eq_1 : RDF11.Graph.mapBlank toFun_1 D.defaultGraph = E.defaultGraph)\n  (named_forward_1 :\n    ∀ (n : RDF11.GraphName Iri B) (G : RDF11.Graph Iri Literal B),\n      D.HasNamedGraph n G → E.HasNamedGraph (RDF11.Subject.mapBlank toFun_1 n) (RDF11.Graph.mapBlank toFun_1 G))\n  (named_backward_1 :\n    ∀ (n : RDF11.GraphName Iri B) (G : RDF11.Graph Iri Literal B),\n      E.HasNamedGraph n G → D.HasNamedGraph (RDF11.Subject.mapBlank invFun_1 n) (RDF11.Graph.mapBlank invFun_1 G)),\n  ({ toFun := toFun, invFun := invFun, left_inv := left_inv, right_inv := right_inv, default_eq := default_eq,\n        named_forward := named_forward, named_backward := named_backward } =\n      { toFun := toFun_1, invFun := invFun_1, left_inv := left_inv_1, right_inv := right_inv_1,\n        default_eq := default_eq_1, named_forward := named_forward_1, named_backward := named_backward_1 }) =\n    (toFun = toFun_1 ∧ invFun = invFun_1)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-ISOMORPHISM"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetIsomorphism.mk.noConfusion",
+      "module": "RDF11.DatasetIsomorphism",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  {D E : RDF11.Dataset Iri Literal B} →\n    {P : Sort u} →\n      {toFun invFun : B → B} →\n        {left_inv : ∀ (b : B), D.hasBlank b → invFun (toFun b) = b} →\n          {right_inv : ∀ (b : B), E.hasBlank b → toFun (invFun b) = b} →\n            {default_eq : RDF11.Graph.mapBlank toFun D.defaultGraph = E.defaultGraph} →\n              {named_forward :\n                  ∀ (n : RDF11.GraphName Iri B) (G : RDF11.Graph Iri Literal B),\n                    D.HasNamedGraph n G →\n                      E.HasNamedGraph (RDF11.Subject.mapBlank toFun n) (RDF11.Graph.mapBlank toFun G)} →\n                {named_backward :\n                    ∀ (n : RDF11.GraphName Iri B) (G : RDF11.Graph Iri Literal B),\n                      E.HasNamedGraph n G →\n                        D.HasNamedGraph (RDF11.Subject.mapBlank invFun n) (RDF11.Graph.mapBlank invFun G)} →\n                  {toFun' invFun' : B → B} →\n                    {left_inv' : ∀ (b : B), D.hasBlank b → invFun' (toFun' b) = b} →\n                      {right_inv' : ∀ (b : B), E.hasBlank b → toFun' (invFun' b) = b} →\n                        {default_eq' : RDF11.Graph.mapBlank toFun' D.defaultGraph = E.defaultGraph} →\n                          {named_forward' :\n                              ∀ (n : RDF11.GraphName Iri B) (G : RDF11.Graph Iri Literal B),\n                                D.HasNamedGraph n G →\n                                  E.HasNamedGraph (RDF11.Subject.mapBlank toFun' n) (RDF11.Graph.mapBlank toFun' G)} →\n                            {named_backward' :\n                                ∀ (n : RDF11.GraphName Iri B) (G : RDF11.Graph Iri Literal B),\n                                  E.HasNamedGraph n G →\n                                    D.HasNamedGraph (RDF11.Subject.mapBlank invFun' n)\n                                      (RDF11.Graph.mapBlank invFun' G)} →\n                              { toFun := toFun, invFun := invFun, left_inv := left_inv, right_inv := right_inv,\n                                    default_eq := default_eq, named_forward := named_forward,\n                                    named_backward := named_backward } =\n                                  { toFun := toFun', invFun := invFun', left_inv := left_inv', right_inv := right_inv',\n                                    default_eq := default_eq', named_forward := named_forward',\n                                    named_backward := named_backward' } →\n                                (toFun ≍ toFun' → invFun ≍ invFun' → P) → P",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-ISOMORPHISM"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetIsomorphism.mk.sizeOf_spec",
+      "module": "RDF11.DatasetIsomorphism",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {D E : RDF11.Dataset Iri Literal B} [inst : SizeOf Iri] [inst_1 : SizeOf Literal]\n  [inst_2 : SizeOf B] (toFun invFun : B → B) (left_inv : ∀ (b : B), D.hasBlank b → invFun (toFun b) = b)\n  (right_inv : ∀ (b : B), E.hasBlank b → toFun (invFun b) = b)\n  (default_eq : RDF11.Graph.mapBlank toFun D.defaultGraph = E.defaultGraph)\n  (named_forward :\n    ∀ (n : RDF11.GraphName Iri B) (G : RDF11.Graph Iri Literal B),\n      D.HasNamedGraph n G → E.HasNamedGraph (RDF11.Subject.mapBlank toFun n) (RDF11.Graph.mapBlank toFun G))\n  (named_backward :\n    ∀ (n : RDF11.GraphName Iri B) (G : RDF11.Graph Iri Literal B),\n      E.HasNamedGraph n G → D.HasNamedGraph (RDF11.Subject.mapBlank invFun n) (RDF11.Graph.mapBlank invFun G)),\n  sizeOf\n      { toFun := toFun, invFun := invFun, left_inv := left_inv, right_inv := right_inv, default_eq := default_eq,\n        named_forward := named_forward, named_backward := named_backward } =\n    1 + sizeOf default_eq",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-ISOMORPHISM"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetIsomorphism.named_backward",
+      "module": "RDF11.DatasetIsomorphism",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {D E : RDF11.Dataset Iri Literal B} (self : RDF11.DatasetIsomorphism D E)\n  (n : RDF11.GraphName Iri B) (G : RDF11.Graph Iri Literal B),\n  E.HasNamedGraph n G → D.HasNamedGraph (RDF11.Subject.mapBlank self.invFun n) (RDF11.Graph.mapBlank self.invFun G)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-ISOMORPHISM"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetIsomorphism.named_equivalent",
+      "module": "RDF11.DatasetIsomorphism",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {D E : RDF11.Dataset Iri Literal B} (e : RDF11.DatasetIsomorphism D E)\n  (n : RDF11.GraphName Iri B) (G : RDF11.Graph Iri Literal B),\n  D.HasNamedGraph n G → RDF11.LogicallyEquivalent G.generalize (RDF11.Graph.mapBlank e.toFun G).generalize",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-DATASET-ISOMORPHISM",
+        "MT11-DATASET-ISOMORPHISM"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetIsomorphism.named_forward",
+      "module": "RDF11.DatasetIsomorphism",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {D E : RDF11.Dataset Iri Literal B} (self : RDF11.DatasetIsomorphism D E)\n  (n : RDF11.GraphName Iri B) (G : RDF11.Graph Iri Literal B),\n  D.HasNamedGraph n G → E.HasNamedGraph (RDF11.Subject.mapBlank self.toFun n) (RDF11.Graph.mapBlank self.toFun G)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-ISOMORPHISM"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetIsomorphism.named_iff",
+      "module": "RDF11.DatasetIsomorphism",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {D E : RDF11.Dataset Iri Literal B} (e : RDF11.DatasetIsomorphism D E)\n  (n : RDF11.GraphName Iri B) (G : RDF11.Graph Iri Literal B),\n  (∀ (b : B), RDF11.Term.hasBlank b (RDF11.Subject.toTerm n) → D.hasBlank b) →\n    (∀ (b : B), G.generalize.hasBlank b → D.hasBlank b) →\n      (D.HasNamedGraph n G ↔ E.HasNamedGraph (RDF11.Subject.mapBlank e.toFun n) (RDF11.Graph.mapBlank e.toFun G))",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-DATASET-ISOMORPHISM",
+        "MT11-DATASET-ISOMORPHISM"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetIsomorphism.named_isomorphism",
+      "module": "RDF11.DatasetIsomorphism",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  {D E : RDF11.Dataset Iri Literal B} →\n    (e : RDF11.DatasetIsomorphism D E) →\n      (n : RDF11.GraphName Iri B) →\n        (G : RDF11.Graph Iri Literal B) →\n          D.HasNamedGraph n G → RDF11.GraphIsomorphism G.generalize (RDF11.Graph.mapBlank e.toFun G).generalize",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-DATASET-ISOMORPHISM",
+        "MT11-DATASET-ISOMORPHISM"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetIsomorphism.named_isomorphism._proof_1",
+      "module": "RDF11.DatasetIsomorphism",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {D E : RDF11.Dataset Iri Literal B} (e : RDF11.DatasetIsomorphism D E)\n  (n : RDF11.GraphName Iri B) (G : RDF11.Graph Iri Literal B),\n  D.HasNamedGraph n G → ∀ (b : B), G.generalize.hasBlank b → e.invFun (e.toFun b) = b",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-ISOMORPHISM"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetIsomorphism.named_isomorphism._proof_2",
+      "module": "RDF11.DatasetIsomorphism",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {D E : RDF11.Dataset Iri Literal B} (e : RDF11.DatasetIsomorphism D E)\n  (n : RDF11.GraphName Iri B) (G : RDF11.Graph Iri Literal B),\n  D.HasNamedGraph n G → ∀ (b : B), (RDF11.Graph.mapBlank e.toFun G).generalize.hasBlank b → e.toFun (e.invFun b) = b",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-ISOMORPHISM"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetIsomorphism.named_isomorphism._proof_3",
+      "module": "RDF11.DatasetIsomorphism",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {D E : RDF11.Dataset Iri Literal B} (e : RDF11.DatasetIsomorphism D E)\n  (G : RDF11.Graph Iri Literal B),\n  RDF11.GeneralizedGraph.mapBlank e.toFun G.generalize = (RDF11.Graph.mapBlank e.toFun G).generalize",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-ISOMORPHISM"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetIsomorphism.noConfusion",
+      "module": "RDF11.DatasetIsomorphism",
+      "kind": "definition",
+      "type": "{P : Sort u} →\n  {Iri Literal B : Type} →\n    {D E : RDF11.Dataset Iri Literal B} →\n      {t : RDF11.DatasetIsomorphism D E} →\n        {Iri' Literal' B' : Type} →\n          {D' E' : RDF11.Dataset Iri' Literal' B'} →\n            {t' : RDF11.DatasetIsomorphism D' E'} →\n              Iri = Iri' →\n                Literal = Literal' → B = B' → D ≍ D' → E ≍ E' → t ≍ t' → RDF11.DatasetIsomorphism.noConfusionType P t t'",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-ISOMORPHISM"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetIsomorphism.noConfusionType",
+      "module": "RDF11.DatasetIsomorphism",
+      "kind": "definition",
+      "type": "Sort u →\n  {Iri Literal B : Type} →\n    {D E : RDF11.Dataset Iri Literal B} →\n      RDF11.DatasetIsomorphism D E →\n        {Iri' Literal' B' : Type} → {D' E' : RDF11.Dataset Iri' Literal' B'} → RDF11.DatasetIsomorphism D' E' → Sort u",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-ISOMORPHISM"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetIsomorphism.rec",
+      "module": "RDF11.DatasetIsomorphism",
+      "kind": "recursor",
+      "type": "{Iri Literal B : Type} →\n  {D E : RDF11.Dataset Iri Literal B} →\n    {motive : RDF11.DatasetIsomorphism D E → Sort u} →\n      ((toFun invFun : B → B) →\n          (left_inv : ∀ (b : B), D.hasBlank b → invFun (toFun b) = b) →\n            (right_inv : ∀ (b : B), E.hasBlank b → toFun (invFun b) = b) →\n              (default_eq : RDF11.Graph.mapBlank toFun D.defaultGraph = E.defaultGraph) →\n                (named_forward :\n                    ∀ (n : RDF11.GraphName Iri B) (G : RDF11.Graph Iri Literal B),\n                      D.HasNamedGraph n G →\n                        E.HasNamedGraph (RDF11.Subject.mapBlank toFun n) (RDF11.Graph.mapBlank toFun G)) →\n                  (named_backward :\n                      ∀ (n : RDF11.GraphName Iri B) (G : RDF11.Graph Iri Literal B),\n                        E.HasNamedGraph n G →\n                          D.HasNamedGraph (RDF11.Subject.mapBlank invFun n) (RDF11.Graph.mapBlank invFun G)) →\n                    motive\n                      { toFun := toFun, invFun := invFun, left_inv := left_inv, right_inv := right_inv,\n                        default_eq := default_eq, named_forward := named_forward, named_backward := named_backward }) →\n        (t : RDF11.DatasetIsomorphism D E) → motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-ISOMORPHISM"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetIsomorphism.recOn",
+      "module": "RDF11.DatasetIsomorphism",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  {D E : RDF11.Dataset Iri Literal B} →\n    {motive : RDF11.DatasetIsomorphism D E → Sort u} →\n      (t : RDF11.DatasetIsomorphism D E) →\n        ((toFun invFun : B → B) →\n            (left_inv : ∀ (b : B), D.hasBlank b → invFun (toFun b) = b) →\n              (right_inv : ∀ (b : B), E.hasBlank b → toFun (invFun b) = b) →\n                (default_eq : RDF11.Graph.mapBlank toFun D.defaultGraph = E.defaultGraph) →\n                  (named_forward :\n                      ∀ (n : RDF11.GraphName Iri B) (G : RDF11.Graph Iri Literal B),\n                        D.HasNamedGraph n G →\n                          E.HasNamedGraph (RDF11.Subject.mapBlank toFun n) (RDF11.Graph.mapBlank toFun G)) →\n                    (named_backward :\n                        ∀ (n : RDF11.GraphName Iri B) (G : RDF11.Graph Iri Literal B),\n                          E.HasNamedGraph n G →\n                            D.HasNamedGraph (RDF11.Subject.mapBlank invFun n) (RDF11.Graph.mapBlank invFun G)) →\n                      motive\n                        { toFun := toFun, invFun := invFun, left_inv := left_inv, right_inv := right_inv,\n                          default_eq := default_eq, named_forward := named_forward,\n                          named_backward := named_backward }) →\n          motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-ISOMORPHISM"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetIsomorphism.refl",
+      "module": "RDF11.DatasetIsomorphism",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} → (D : RDF11.Dataset Iri Literal B) → RDF11.DatasetIsomorphism D D",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-DATASET-ISOMORPHISM",
+        "MT11-DATASET-ISOMORPHISM"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetIsomorphism.refl._proof_1",
+      "module": "RDF11.DatasetIsomorphism",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (D : RDF11.Dataset Iri Literal B) (x : B), D.hasBlank x → id (id x) = id (id x)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-ISOMORPHISM"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetIsomorphism.refl._proof_2",
+      "module": "RDF11.DatasetIsomorphism",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (D : RDF11.Dataset Iri Literal B), RDF11.Graph.mapBlank id D.defaultGraph = D.defaultGraph",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-ISOMORPHISM"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetIsomorphism.refl._proof_3",
+      "module": "RDF11.DatasetIsomorphism",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (D : RDF11.Dataset Iri Literal B) (n : RDF11.GraphName Iri B) (G : RDF11.Graph Iri Literal B),\n  D.HasNamedGraph n G → D.HasNamedGraph (RDF11.Subject.mapBlank id n) (RDF11.Graph.mapBlank id G)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-ISOMORPHISM"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetIsomorphism.right_inv",
+      "module": "RDF11.DatasetIsomorphism",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {D E : RDF11.Dataset Iri Literal B} (self : RDF11.DatasetIsomorphism D E) (b : B),\n  E.hasBlank b → self.toFun (self.invFun b) = b",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-ISOMORPHISM"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetIsomorphism.surjective_on_blanks",
+      "module": "RDF11.DatasetIsomorphism",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {D E : RDF11.Dataset Iri Literal B} (e : RDF11.DatasetIsomorphism D E) (b : B),\n  E.hasBlank b → ∃ a, D.hasBlank a ∧ e.toFun a = b",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-DATASET-ISOMORPHISM",
+        "MT11-DATASET-ISOMORPHISM"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetIsomorphism.symm",
+      "module": "RDF11.DatasetIsomorphism",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  {D E : RDF11.Dataset Iri Literal B} → RDF11.DatasetIsomorphism D E → RDF11.DatasetIsomorphism E D",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-DATASET-ISOMORPHISM",
+        "MT11-DATASET-ISOMORPHISM"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetIsomorphism.toFun",
+      "module": "RDF11.DatasetIsomorphism",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} → {D E : RDF11.Dataset Iri Literal B} → RDF11.DatasetIsomorphism D E → B → B",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-ISOMORPHISM"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetIsomorphism.trans",
+      "module": "RDF11.DatasetIsomorphism",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  {D E F : RDF11.Dataset Iri Literal B} →\n    RDF11.DatasetIsomorphism D E → RDF11.DatasetIsomorphism E F → RDF11.DatasetIsomorphism D F",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-DATASET-ISOMORPHISM",
+        "MT11-DATASET-ISOMORPHISM"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetIsomorphism.trans._proof_1",
+      "module": "RDF11.DatasetIsomorphism",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {D E F : RDF11.Dataset Iri Literal B} (e : RDF11.DatasetIsomorphism D E)\n  (h : RDF11.DatasetIsomorphism E F) (b : B), D.hasBlank b → (e.invFun ∘ h.invFun) ((h.toFun ∘ e.toFun) b) = b",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-ISOMORPHISM"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetIsomorphism.trans._proof_2",
+      "module": "RDF11.DatasetIsomorphism",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {D E F : RDF11.Dataset Iri Literal B} (e : RDF11.DatasetIsomorphism D E)\n  (h : RDF11.DatasetIsomorphism E F) (b : B), F.hasBlank b → (h.toFun ∘ e.toFun) ((e.invFun ∘ h.invFun) b) = b",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-ISOMORPHISM"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetIsomorphism.trans._proof_3",
+      "module": "RDF11.DatasetIsomorphism",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {D E F : RDF11.Dataset Iri Literal B} (e : RDF11.DatasetIsomorphism D E)\n  (h : RDF11.DatasetIsomorphism E F), RDF11.Graph.mapBlank (h.toFun ∘ e.toFun) D.defaultGraph = F.defaultGraph",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-ISOMORPHISM"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetIsomorphism.trans._proof_4",
+      "module": "RDF11.DatasetIsomorphism",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {D E F : RDF11.Dataset Iri Literal B} (e : RDF11.DatasetIsomorphism D E)\n  (h : RDF11.DatasetIsomorphism E F) (n : RDF11.GraphName Iri B) (G : RDF11.Graph Iri Literal B),\n  D.HasNamedGraph n G →\n    F.HasNamedGraph (RDF11.Subject.mapBlank (h.toFun ∘ e.toFun) n) (RDF11.Graph.mapBlank (h.toFun ∘ e.toFun) G)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-ISOMORPHISM"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetIsomorphism.trans._proof_5",
+      "module": "RDF11.DatasetIsomorphism",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {D E F : RDF11.Dataset Iri Literal B} (e : RDF11.DatasetIsomorphism D E)\n  (h : RDF11.DatasetIsomorphism E F) (n : RDF11.GraphName Iri B) (G : RDF11.Graph Iri Literal B),\n  F.HasNamedGraph n G →\n    D.HasNamedGraph (RDF11.Subject.mapBlank (e.invFun ∘ h.invFun) n) (RDF11.Graph.mapBlank (e.invFun ∘ h.invFun) G)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-ISOMORPHISM"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetSharingExample.dataset",
+      "module": "RDF11.DatasetExamples",
+      "kind": "definition",
+      "type": "Bool → RDF11.Dataset Unit Empty Bool",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-DATASET-EXAMPLES",
+        "MT11-DATASET-EQUIVALENT-REPLACEMENT"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetSharingExample.dataset.match_1",
+      "module": "RDF11.DatasetExamples",
+      "kind": "definition",
+      "type": "(motive : RDF11.GraphName Unit Bool → Sort u_1) →\n  (n : RDF11.GraphName Unit Bool) →\n    ((a : Unit) → motive (RDF11.Subject.iri a)) → ((a : Bool) → motive (RDF11.Subject.blank a)) → motive n",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-EXAMPLES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetSharingExample.defaultFor",
+      "module": "RDF11.DatasetExamples",
+      "kind": "definition",
+      "type": "Bool → RDF11.Graph Unit Empty Bool",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-EXAMPLES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetSharingExample.defaultFor.eq_1",
+      "module": "RDF11.DatasetExamples",
+      "kind": "theorem",
+      "type": "∀ (b : Bool),\n  RDF11.DatasetSharingExample.defaultFor b =\n    RDF11.Set.singleton { subject := RDF11.Subject.iri (), predicate := (), object := RDF11.Term.blank b }",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-EXAMPLES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetSharingExample.default_injective",
+      "module": "RDF11.DatasetExamples",
+      "kind": "theorem",
+      "type": "∀ {b c : Bool}, RDF11.DatasetSharingExample.defaultFor b = RDF11.DatasetSharingExample.defaultFor c → b = c",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-EXAMPLES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetSharingExample.default_isomorphism",
+      "module": "RDF11.DatasetExamples",
+      "kind": "definition",
+      "type": "RDF11.GraphIsomorphism (RDF11.DatasetSharingExample.dataset false).defaultGraph.generalize\n  (RDF11.DatasetSharingExample.dataset true).defaultGraph.generalize",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-DATASET-EXAMPLES",
+        "MT11-DATASET-EQUIVALENT-REPLACEMENT"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetSharingExample.default_isomorphism._proof_1",
+      "module": "RDF11.DatasetExamples",
+      "kind": "theorem",
+      "type": "∀ (b : Bool), (RDF11.DatasetSharingExample.dataset false).defaultGraph.generalize.hasBlank b → (!!b) = b",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-EXAMPLES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetSharingExample.default_isomorphism._proof_2",
+      "module": "RDF11.DatasetExamples",
+      "kind": "theorem",
+      "type": "∀ (b : Bool), (RDF11.DatasetSharingExample.dataset true).defaultGraph.generalize.hasBlank b → (!!b) = b",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-EXAMPLES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetSharingExample.default_isomorphism._proof_3",
+      "module": "RDF11.DatasetExamples",
+      "kind": "theorem",
+      "type": "RDF11.GeneralizedGraph.mapBlank not (RDF11.DatasetSharingExample.dataset false).defaultGraph.generalize =\n  (RDF11.DatasetSharingExample.dataset true).defaultGraph.generalize",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-EXAMPLES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetSharingExample.default_map",
+      "module": "RDF11.DatasetExamples",
+      "kind": "theorem",
+      "type": "∀ (f : Bool → Bool) (b : Bool),\n  RDF11.Graph.mapBlank f (RDF11.DatasetSharingExample.defaultFor b) = RDF11.DatasetSharingExample.defaultFor (f b)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-EXAMPLES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetSharingExample.default_map._simp_1_7",
+      "module": "RDF11.DatasetExamples",
+      "kind": "theorem",
+      "type": "∀ {α : Sort u_1} {a b : α}, (a = b) = (b = a)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-EXAMPLES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetSharingExample.defaults_equivalent",
+      "module": "RDF11.DatasetExamples",
+      "kind": "theorem",
+      "type": "RDF11.LogicallyEquivalent (RDF11.DatasetSharingExample.dataset false).defaultGraph.generalize\n  (RDF11.DatasetSharingExample.dataset true).defaultGraph.generalize",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-DATASET-EXAMPLES",
+        "MT11-DATASET-EQUIVALENT-REPLACEMENT"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetSharingExample.empty_blank_name_occurs",
+      "module": "RDF11.DatasetExamples",
+      "kind": "theorem",
+      "type": "∀ {B Iri Literal : Type} (b : B), (RDF11.Dataset.emptyNamed (RDF11.Subject.blank b)).hasBlank b",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-DATASET-EXAMPLES",
+        "MT11-DATASET-EMPTY-NAMED-PRESENCE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetSharingExample.empty_named_not_isomorphic_to_empty",
+      "module": "RDF11.DatasetExamples",
+      "kind": "theorem",
+      "type": "∀ {Iri B Literal : Type} (n : RDF11.GraphName Iri B),\n  ¬Nonempty (RDF11.DatasetIsomorphism (RDF11.Dataset.emptyNamed n) RDF11.Dataset.empty)",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-DATASET-EXAMPLES",
+        "MT11-DATASET-EMPTY-NAMED-PRESENCE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetSharingExample.namedFor",
+      "module": "RDF11.DatasetExamples",
+      "kind": "definition",
+      "type": "Bool → RDF11.Graph Unit Empty Bool",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-EXAMPLES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetSharingExample.namedFor.eq_1",
+      "module": "RDF11.DatasetExamples",
+      "kind": "theorem",
+      "type": "∀ (b : Bool),\n  RDF11.DatasetSharingExample.namedFor b =\n    RDF11.Set.singleton { subject := RDF11.Subject.blank b, predicate := (), object := RDF11.Term.iri () }",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-EXAMPLES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetSharingExample.named_graphs_unchanged",
+      "module": "RDF11.DatasetExamples",
+      "kind": "theorem",
+      "type": "(RDF11.DatasetSharingExample.dataset false).namedGraphs = (RDF11.DatasetSharingExample.dataset true).namedGraphs",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-DATASET-EXAMPLES",
+        "MT11-DATASET-EQUIVALENT-REPLACEMENT"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetSharingExample.named_injective",
+      "module": "RDF11.DatasetExamples",
+      "kind": "theorem",
+      "type": "∀ {b c : Bool}, RDF11.DatasetSharingExample.namedFor b = RDF11.DatasetSharingExample.namedFor c → b = c",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-EXAMPLES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetSharingExample.named_map",
+      "module": "RDF11.DatasetExamples",
+      "kind": "theorem",
+      "type": "∀ (f : Bool → Bool) (b : Bool),\n  RDF11.Graph.mapBlank f (RDF11.DatasetSharingExample.namedFor b) = RDF11.DatasetSharingExample.namedFor (f b)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-EXAMPLES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetSharingExample.named_map._simp_1_7",
+      "module": "RDF11.DatasetExamples",
+      "kind": "theorem",
+      "type": "∀ {α : Sort u_1} {a b : α}, (a = b) = (b = a)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-EXAMPLES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetSharingExample.no_dataset_isomorphism",
+      "module": "RDF11.DatasetExamples",
+      "kind": "theorem",
+      "type": "¬Nonempty\n    (RDF11.DatasetIsomorphism (RDF11.DatasetSharingExample.dataset false) (RDF11.DatasetSharingExample.dataset true))",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-DATASET-EXAMPLES",
+        "MT11-DATASET-EQUIVALENT-REPLACEMENT"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GeneralizedGraph.hasBlank_mapBlank",
+      "module": "RDF11.Datasets",
+      "kind": "theorem",
+      "type": "∀ {A B Iri Literal : Type} (f : A → B) (G : RDF11.GeneralizedGraph Iri Literal A) (b : B),\n  (RDF11.GeneralizedGraph.mapBlank f G).hasBlank b ↔ ∃ a, G.hasBlank a ∧ f a = b",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASETS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GeneralizedTriple.hasBlank.eq_1",
+      "module": "RDF11.Datasets",
+      "kind": "theorem",
+      "type": "∀ {Blank Iri Literal : Type} (b : Blank) (t : RDF11.GeneralizedTriple Iri Literal Blank),\n  RDF11.GeneralizedTriple.hasBlank b t =\n    (RDF11.Term.hasBlank b t.subject ∨ RDF11.Term.hasBlank b t.predicate ∨ RDF11.Term.hasBlank b t.object)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASETS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GeneralizedTriple.hasBlank_mapBlank",
+      "module": "RDF11.Datasets",
+      "kind": "theorem",
+      "type": "∀ {A B Iri Literal : Type} (f : A → B) (t : RDF11.GeneralizedTriple Iri Literal A) (b : B),\n  RDF11.GeneralizedTriple.hasBlank b (RDF11.GeneralizedTriple.mapBlank f t) ↔\n    ∃ a, RDF11.GeneralizedTriple.hasBlank a t ∧ f a = b",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASETS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GeneralizedTriple.hasBlank_mapBlank._simp_1_2",
+      "module": "RDF11.Datasets",
+      "kind": "theorem",
+      "type": "∀ {A B Iri Literal : Type} (f : A → B) (t : RDF11.Term Iri Literal A) (b : B),\n  RDF11.Term.hasBlank b (RDF11.Term.mapBlank f t) = ∃ a, RDF11.Term.hasBlank a t ∧ f a = b",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASETS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Graph.generalize_injective",
+      "module": "RDF11.Datasets",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {G H : RDF11.Graph Iri Literal B}, G.generalize = H.generalize → G = H",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASETS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Graph.generalize_mapBlank",
+      "module": "RDF11.Datasets",
+      "kind": "theorem",
+      "type": "∀ {A B Iri Literal : Type} (f : A → B) (G : RDF11.Graph Iri Literal A),\n  (RDF11.Graph.mapBlank f G).generalize = RDF11.GeneralizedGraph.mapBlank f G.generalize",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASETS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Graph.mapBlank",
+      "module": "RDF11.Datasets",
+      "kind": "definition",
+      "type": "{A B Iri Literal : Type} → (A → B) → RDF11.Graph Iri Literal A → RDF11.Graph Iri Literal B",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASETS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Graph.mapBlank.eq_1",
+      "module": "RDF11.DatasetExamples",
+      "kind": "theorem",
+      "type": "∀ {A B Iri Literal : Type} (f : A → B) (G : RDF11.Graph Iri Literal A),\n  RDF11.Graph.mapBlank f G = RDF11.Set.image (RDF11.Triple.mapBlank f) G",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-EXAMPLES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Graph.mapBlank_comp",
+      "module": "RDF11.Datasets",
+      "kind": "theorem",
+      "type": "∀ {B Iri Literal : Type} (f g : B → B) (G : RDF11.Graph Iri Literal B),\n  RDF11.Graph.mapBlank g (RDF11.Graph.mapBlank f G) = RDF11.Graph.mapBlank (g ∘ f) G",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASETS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Graph.mapBlank_id",
+      "module": "RDF11.Datasets",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (G : RDF11.Graph Iri Literal B), RDF11.Graph.mapBlank id G = G",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASETS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Graph.mapBlank_of_fixes",
+      "module": "RDF11.Datasets",
+      "kind": "theorem",
+      "type": "∀ {B Iri Literal : Type} (f : B → B) (G : RDF11.Graph Iri Literal B),\n  (∀ (b : B), G.generalize.hasBlank b → f b = b) → RDF11.Graph.mapBlank f G = G",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASETS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GraphName",
+      "module": "RDF11.Datasets",
+      "kind": "definition",
+      "type": "Type → Type → Type",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-DATASETS",
+        "MT11-DATASET-STRUCTURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Set.empty.eq_1",
+      "module": "RDF11.Datasets",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_1} (x : α), RDF11.Set.empty x = False",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASETS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Set.singleton.eq_1",
+      "module": "RDF11.DatasetExamples",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_1} (a b : α), RDF11.Set.singleton a b = (b = a)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-EXAMPLES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Subject.mapBlank",
+      "module": "RDF11.Datasets",
+      "kind": "definition",
+      "type": "{A B Iri : Type} → (A → B) → RDF11.Subject Iri A → RDF11.Subject Iri B",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASETS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Subject.mapBlank.eq_1",
+      "module": "RDF11.DatasetExamples",
+      "kind": "theorem",
+      "type": "∀ {A B Iri : Type} (f : A → B) (i : Iri), RDF11.Subject.mapBlank f (RDF11.Subject.iri i) = RDF11.Subject.iri i",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-EXAMPLES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Subject.mapBlank.eq_2",
+      "module": "RDF11.DatasetExamples",
+      "kind": "theorem",
+      "type": "∀ {A B Iri : Type} (f : A → B) (b : A), RDF11.Subject.mapBlank f (RDF11.Subject.blank b) = RDF11.Subject.blank (f b)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-EXAMPLES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Subject.mapBlank.match_1",
+      "module": "RDF11.Datasets",
+      "kind": "definition",
+      "type": "{A Iri : Type} →\n  (motive : RDF11.Subject Iri A → Sort u_1) →\n    (x : RDF11.Subject Iri A) →\n      ((i : Iri) → motive (RDF11.Subject.iri i)) → ((b : A) → motive (RDF11.Subject.blank b)) → motive x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASETS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Subject.mapBlank_comp",
+      "module": "RDF11.Datasets",
+      "kind": "theorem",
+      "type": "∀ {A B C Iri : Type} (f : A → B) (g : B → C) (s : RDF11.Subject Iri A),\n  RDF11.Subject.mapBlank g (RDF11.Subject.mapBlank f s) = RDF11.Subject.mapBlank (g ∘ f) s",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASETS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Subject.mapBlank_id",
+      "module": "RDF11.Datasets",
+      "kind": "theorem",
+      "type": "∀ {Iri B : Type} (s : RDF11.Subject Iri B), RDF11.Subject.mapBlank id s = s",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASETS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Subject.mapBlank_of_fixes",
+      "module": "RDF11.Datasets",
+      "kind": "theorem",
+      "type": "∀ {B Iri Literal : Type} (f : B → B) (s : RDF11.Subject Iri B),\n  (∀ (b : B), RDF11.Term.hasBlank b s.toTerm → f b = b) → RDF11.Subject.mapBlank f s = s",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASETS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Subject.toTerm.eq_1",
+      "module": "RDF11.Datasets",
+      "kind": "theorem",
+      "type": "∀ {Iri Blank Literal : Type} (i : Iri), (RDF11.Subject.iri i).toTerm = RDF11.Term.iri i",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASETS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Subject.toTerm.eq_2",
+      "module": "RDF11.Datasets",
+      "kind": "theorem",
+      "type": "∀ {Iri Blank Literal : Type} (b : Blank), (RDF11.Subject.blank b).toTerm = RDF11.Term.blank b",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASETS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Subject.toTerm_mapBlank",
+      "module": "RDF11.Datasets",
+      "kind": "theorem",
+      "type": "∀ {A B Iri Literal : Type} (f : A → B) (s : RDF11.Subject Iri A),\n  (RDF11.Subject.mapBlank f s).toTerm = RDF11.Term.mapBlank f s.toTerm",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASETS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Term.hasBlank_mapBlank",
+      "module": "RDF11.Datasets",
+      "kind": "theorem",
+      "type": "∀ {A B Iri Literal : Type} (f : A → B) (t : RDF11.Term Iri Literal A) (b : B),\n  RDF11.Term.hasBlank b (RDF11.Term.mapBlank f t) ↔ ∃ a, RDF11.Term.hasBlank a t ∧ f a = b",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASETS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Triple.generalize.eq_1",
+      "module": "RDF11.Datasets",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Blank : Type} (t : RDF11.Triple Iri Literal Blank),\n  t.generalize = { subject := t.subject.toTerm, predicate := RDF11.Term.iri t.predicate, object := t.object }",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASETS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Triple.generalize_injective",
+      "module": "RDF11.Datasets",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {s t : RDF11.Triple Iri Literal B}, s.generalize = t.generalize → s = t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASETS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Triple.generalize_mapBlank",
+      "module": "RDF11.Datasets",
+      "kind": "theorem",
+      "type": "∀ {A B Iri Literal : Type} (f : A → B) (t : RDF11.Triple Iri Literal A),\n  (RDF11.Triple.mapBlank f t).generalize = RDF11.GeneralizedTriple.mapBlank f t.generalize",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASETS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Triple.mapBlank",
+      "module": "RDF11.Datasets",
+      "kind": "definition",
+      "type": "{A B Iri Literal : Type} → (A → B) → RDF11.Triple Iri Literal A → RDF11.Triple Iri Literal B",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASETS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Triple.mapBlank.eq_1",
+      "module": "RDF11.Datasets",
+      "kind": "theorem",
+      "type": "∀ {A B Iri Literal : Type} (f : A → B) (t : RDF11.Triple Iri Literal A),\n  RDF11.Triple.mapBlank f t =\n    { subject := RDF11.Subject.mapBlank f t.subject, predicate := t.predicate,\n      object := RDF11.Term.mapBlank f t.object }",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASETS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.DatasetExamples.0.RDF11.Subject.mapBlank.match_1.eq_1",
+      "module": "RDF11.DatasetExamples",
+      "kind": "theorem",
+      "type": "∀ {A Iri : Type} (motive : RDF11.Subject Iri A → Sort u_1) (i : Iri) (h_1 : (i : Iri) → motive (RDF11.Subject.iri i))\n  (h_2 : (b : A) → motive (RDF11.Subject.blank b)),\n  (match RDF11.Subject.iri i with\n    | RDF11.Subject.iri i => h_1 i\n    | RDF11.Subject.blank b => h_2 b) =\n    h_1 i",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-EXAMPLES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.DatasetExamples.0.RDF11.Subject.mapBlank.match_1.eq_2",
+      "module": "RDF11.DatasetExamples",
+      "kind": "theorem",
+      "type": "∀ {A Iri : Type} (motive : RDF11.Subject Iri A → Sort u_1) (b : A) (h_1 : (i : Iri) → motive (RDF11.Subject.iri i))\n  (h_2 : (b : A) → motive (RDF11.Subject.blank b)),\n  (match RDF11.Subject.blank b with\n    | RDF11.Subject.iri i => h_1 i\n    | RDF11.Subject.blank b => h_2 b) =\n    h_2 b",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-EXAMPLES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.DatasetExamples.0.RDF11.Subject.mapBlank.match_1.splitter",
+      "module": "RDF11.DatasetExamples",
+      "kind": "definition",
+      "type": "{A Iri : Type} →\n  (motive : RDF11.Subject Iri A → Sort u_1) →\n    (x : RDF11.Subject Iri A) →\n      ((i : Iri) → motive (RDF11.Subject.iri i)) → ((b : A) → motive (RDF11.Subject.blank b)) → motive x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-EXAMPLES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.DatasetExamples.0.RDF11.Term.mapBlank.match_1.eq_1",
+      "module": "RDF11.DatasetExamples",
+      "kind": "theorem",
+      "type": "∀ {A Iri Literal : Type} (motive : RDF11.Term Iri Literal A → Sort u_1) (i : Iri)\n  (h_1 : (i : Iri) → motive (RDF11.Term.iri i)) (h_2 : (l : Literal) → motive (RDF11.Term.literal l))\n  (h_3 : (b : A) → motive (RDF11.Term.blank b)),\n  (match RDF11.Term.iri i with\n    | RDF11.Term.iri i => h_1 i\n    | RDF11.Term.literal l => h_2 l\n    | RDF11.Term.blank b => h_3 b) =\n    h_1 i",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-EXAMPLES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.DatasetExamples.0.RDF11.Term.mapBlank.match_1.eq_2",
+      "module": "RDF11.DatasetExamples",
+      "kind": "theorem",
+      "type": "∀ {A Iri Literal : Type} (motive : RDF11.Term Iri Literal A → Sort u_1) (l : Literal)\n  (h_1 : (i : Iri) → motive (RDF11.Term.iri i)) (h_2 : (l : Literal) → motive (RDF11.Term.literal l))\n  (h_3 : (b : A) → motive (RDF11.Term.blank b)),\n  (match RDF11.Term.literal l with\n    | RDF11.Term.iri i => h_1 i\n    | RDF11.Term.literal l => h_2 l\n    | RDF11.Term.blank b => h_3 b) =\n    h_2 l",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-EXAMPLES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.DatasetExamples.0.RDF11.Term.mapBlank.match_1.eq_3",
+      "module": "RDF11.DatasetExamples",
+      "kind": "theorem",
+      "type": "∀ {A Iri Literal : Type} (motive : RDF11.Term Iri Literal A → Sort u_1) (b : A)\n  (h_1 : (i : Iri) → motive (RDF11.Term.iri i)) (h_2 : (l : Literal) → motive (RDF11.Term.literal l))\n  (h_3 : (b : A) → motive (RDF11.Term.blank b)),\n  (match RDF11.Term.blank b with\n    | RDF11.Term.iri i => h_1 i\n    | RDF11.Term.literal l => h_2 l\n    | RDF11.Term.blank b => h_3 b) =\n    h_3 b",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-EXAMPLES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.DatasetExamples.0.RDF11.Term.mapBlank.match_1.splitter",
+      "module": "RDF11.DatasetExamples",
+      "kind": "definition",
+      "type": "{A Iri Literal : Type} →\n  (motive : RDF11.Term Iri Literal A → Sort u_1) →\n    (x : RDF11.Term Iri Literal A) →\n      ((i : Iri) → motive (RDF11.Term.iri i)) →\n        ((l : Literal) → motive (RDF11.Term.literal l)) → ((b : A) → motive (RDF11.Term.blank b)) → motive x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-EXAMPLES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.Datasets.0.RDF11.Subject.toTerm.match_1.eq_1",
+      "module": "RDF11.Datasets",
+      "kind": "theorem",
+      "type": "∀ {Iri Blank : Type} (motive : RDF11.Subject Iri Blank → Sort u_1) (i : Iri)\n  (h_1 : (i : Iri) → motive (RDF11.Subject.iri i)) (h_2 : (b : Blank) → motive (RDF11.Subject.blank b)),\n  (match RDF11.Subject.iri i with\n    | RDF11.Subject.iri i => h_1 i\n    | RDF11.Subject.blank b => h_2 b) =\n    h_1 i",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASETS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.Datasets.0.RDF11.Subject.toTerm.match_1.eq_2",
+      "module": "RDF11.Datasets",
+      "kind": "theorem",
+      "type": "∀ {Iri Blank : Type} (motive : RDF11.Subject Iri Blank → Sort u_1) (b : Blank)\n  (h_1 : (i : Iri) → motive (RDF11.Subject.iri i)) (h_2 : (b : Blank) → motive (RDF11.Subject.blank b)),\n  (match RDF11.Subject.blank b with\n    | RDF11.Subject.iri i => h_1 i\n    | RDF11.Subject.blank b => h_2 b) =\n    h_2 b",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASETS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.Datasets.0.RDF11.Subject.toTerm.match_1.splitter",
+      "module": "RDF11.Datasets",
+      "kind": "definition",
+      "type": "{Iri Blank : Type} →\n  (motive : RDF11.Subject Iri Blank → Sort u_1) →\n    (x : RDF11.Subject Iri Blank) →\n      ((i : Iri) → motive (RDF11.Subject.iri i)) → ((b : Blank) → motive (RDF11.Subject.blank b)) → motive x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASETS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.Datasets.0.RDF11.Term.hasBlank.match_1.eq_1",
+      "module": "RDF11.Datasets",
+      "kind": "theorem",
+      "type": "∀ {Blank Iri Literal : Type} (motive : RDF11.Term Iri Literal Blank → Sort u_1) (c : Blank)\n  (h_1 : (c : Blank) → motive (RDF11.Term.blank c)) (h_2 : (a : Iri) → motive (RDF11.Term.iri a))\n  (h_3 : (a : Literal) → motive (RDF11.Term.literal a)),\n  (match RDF11.Term.blank c with\n    | RDF11.Term.blank c => h_1 c\n    | RDF11.Term.iri a => h_2 a\n    | RDF11.Term.literal a => h_3 a) =\n    h_1 c",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASETS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.Datasets.0.RDF11.Term.hasBlank.match_1.eq_2",
+      "module": "RDF11.Datasets",
+      "kind": "theorem",
+      "type": "∀ {Blank Iri Literal : Type} (motive : RDF11.Term Iri Literal Blank → Sort u_1) (a : Iri)\n  (h_1 : (c : Blank) → motive (RDF11.Term.blank c)) (h_2 : (a : Iri) → motive (RDF11.Term.iri a))\n  (h_3 : (a : Literal) → motive (RDF11.Term.literal a)),\n  (match RDF11.Term.iri a with\n    | RDF11.Term.blank c => h_1 c\n    | RDF11.Term.iri a => h_2 a\n    | RDF11.Term.literal a => h_3 a) =\n    h_2 a",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASETS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.Datasets.0.RDF11.Term.hasBlank.match_1.eq_3",
+      "module": "RDF11.Datasets",
+      "kind": "theorem",
+      "type": "∀ {Blank Iri Literal : Type} (motive : RDF11.Term Iri Literal Blank → Sort u_1) (a : Literal)\n  (h_1 : (c : Blank) → motive (RDF11.Term.blank c)) (h_2 : (a : Iri) → motive (RDF11.Term.iri a))\n  (h_3 : (a : Literal) → motive (RDF11.Term.literal a)),\n  (match RDF11.Term.literal a with\n    | RDF11.Term.blank c => h_1 c\n    | RDF11.Term.iri a => h_2 a\n    | RDF11.Term.literal a => h_3 a) =\n    h_3 a",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASETS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.Datasets.0.RDF11.Term.hasBlank.match_1.splitter",
+      "module": "RDF11.Datasets",
+      "kind": "definition",
+      "type": "{Blank Iri Literal : Type} →\n  (motive : RDF11.Term Iri Literal Blank → Sort u_1) →\n    (x : RDF11.Term Iri Literal Blank) →\n      ((c : Blank) → motive (RDF11.Term.blank c)) →\n        ((a : Iri) → motive (RDF11.Term.iri a)) → ((a : Literal) → motive (RDF11.Term.literal a)) → motive x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASETS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.Datasets.0.RDF11.Term.mapBlank.match_1.eq_1",
+      "module": "RDF11.Datasets",
+      "kind": "theorem",
+      "type": "∀ {A Iri Literal : Type} (motive : RDF11.Term Iri Literal A → Sort u_1) (i : Iri)\n  (h_1 : (i : Iri) → motive (RDF11.Term.iri i)) (h_2 : (l : Literal) → motive (RDF11.Term.literal l))\n  (h_3 : (b : A) → motive (RDF11.Term.blank b)),\n  (match RDF11.Term.iri i with\n    | RDF11.Term.iri i => h_1 i\n    | RDF11.Term.literal l => h_2 l\n    | RDF11.Term.blank b => h_3 b) =\n    h_1 i",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASETS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.Datasets.0.RDF11.Term.mapBlank.match_1.eq_2",
+      "module": "RDF11.Datasets",
+      "kind": "theorem",
+      "type": "∀ {A Iri Literal : Type} (motive : RDF11.Term Iri Literal A → Sort u_1) (l : Literal)\n  (h_1 : (i : Iri) → motive (RDF11.Term.iri i)) (h_2 : (l : Literal) → motive (RDF11.Term.literal l))\n  (h_3 : (b : A) → motive (RDF11.Term.blank b)),\n  (match RDF11.Term.literal l with\n    | RDF11.Term.iri i => h_1 i\n    | RDF11.Term.literal l => h_2 l\n    | RDF11.Term.blank b => h_3 b) =\n    h_2 l",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASETS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.Datasets.0.RDF11.Term.mapBlank.match_1.eq_3",
+      "module": "RDF11.Datasets",
+      "kind": "theorem",
+      "type": "∀ {A Iri Literal : Type} (motive : RDF11.Term Iri Literal A → Sort u_1) (b : A)\n  (h_1 : (i : Iri) → motive (RDF11.Term.iri i)) (h_2 : (l : Literal) → motive (RDF11.Term.literal l))\n  (h_3 : (b : A) → motive (RDF11.Term.blank b)),\n  (match RDF11.Term.blank b with\n    | RDF11.Term.iri i => h_1 i\n    | RDF11.Term.literal l => h_2 l\n    | RDF11.Term.blank b => h_3 b) =\n    h_3 b",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASETS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.Datasets.0.RDF11.Term.mapBlank.match_1.splitter",
+      "module": "RDF11.Datasets",
+      "kind": "definition",
+      "type": "{A Iri Literal : Type} →\n  (motive : RDF11.Term Iri Literal A → Sort u_1) →\n    (x : RDF11.Term Iri Literal A) →\n      ((i : Iri) → motive (RDF11.Term.iri i)) →\n        ((l : Literal) → motive (RDF11.Term.literal l)) → ((b : A) → motive (RDF11.Term.blank b)) → motive x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASETS"
       ],
       "parent_declaration_if_applicable": null,
       "review": "pending_expert_review"
