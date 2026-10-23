@@ -185,7 +185,9 @@
         "MT11-UNDEFINED-LITERAL-FALSE",
         "MT11-EMPTY-TRUE",
         "MT11-RESOURCE-PROPERTY-OVERLAP",
-        "MT11-IRI-ADDITIONAL-CONSTRAINTS"
+        "MT11-IRI-ADDITIONAL-CONSTRAINTS",
+        "MT11-GLOBAL-NAME-DOMAIN",
+        "MT11-INTERPRETATION-INFINITE-NAME-STRUCTURE"
       ]
     },
     {
@@ -5019,7 +5021,51 @@
         "test_mapping": "unassessed"
       },
       "formalization_note": "The distinction follows from the normative pair-set definition. Quad projection is an explicitly defined derived engineering abstraction. The informative note about interoperability does not require applications to treat the distinction as significant."
+    },
+    {
+      "id": "MT11-GLOBAL-NAME-DOMAIN",
+      "section": "5",
+      "anchor": "simple-interpretations",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#simple-interpretations",
+      "category": "general_requirement",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "Simple interpretations cover the global name domains rather than a vocabulary selected for one graph; vocabulary-relative pre-interpretations are a separate construction.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-SIMPLE-IS",
+        "MT11-SIMPLE-IL"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "Global literal coverage permits undefined denotations because IL is partial. It does not require an infinite IR. The concrete full IRI/literal domains still need an explicit binding."
+    },
+    {
+      "id": "MT11-INTERPRETATION-INFINITE-NAME-STRUCTURE",
+      "section": "5",
+      "anchor": "simple-interpretations",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#simple-interpretations",
+      "category": "mathematical_consequence",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "Because simple interpretations cover all names, their name-mapping structure is infinite.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-GLOBAL-NAME-DOMAIN",
+        "MT11-SYNTAX-IMPORT"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "This concerns the full name mappings, not a requirement that IR be infinite. No cardinality proof or concrete infinite IRI-domain binding is supplied yet; the finite pre-interpretation construction is discussed separately in informative Appendix B."
     }
   ],
-  "record_count": 197
+  "record_count": 199
 }

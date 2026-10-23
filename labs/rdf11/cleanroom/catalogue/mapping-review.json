@@ -3266,7 +3266,7 @@
     {
       "claim_id": "MT11-DATASET-NAME-DENOTATION",
       "relation": "partial_theorem",
-      "symbol_linked_english": "DatasetNameExample keeps one syntactic named pair and the same true default/named triples while changing the simple interpretation. With graphObject explicitly embedding graphs in the resource carrier, name_can_denote_graph and name_can_denote_something_else establish both possibilities for the name IRI.",
+      "symbol_linked_english": "For arbitrary Iri, Literal and blank domains and one selected IRI name, DatasetNameExample fixes one dataset with that named pair and constructs two full-domain simple interpretations. IS assigns every IRI; IL is a permitted everywhere-undefined partial map. The selected IRI occurs in the true component triple. With graphObject explicitly embedding graphs, the name denotes its paired graph in one interpretation and a distinct object in the other.",
       "bindings": [
         {
           "symbol": "DatasetNameExample.graph",
@@ -3301,7 +3301,30 @@
           "lean": "RDF11.DatasetNameExample.pairing_and_component_truth_allow_both"
         }
       ],
-      "limitations": "The two concrete witnesses satisfy simple interpretation conditions and all component graphs, with the graph-name IRI itself occurring inside the true triples. They do not prove RDF/RDFS model existence or unrestricted freedom under additional graph assertions/semantic extensions. The graph-object embedding is explicit for this example, not required of all RDF interpretations. The source permits equality or inequality; it does not require inequality. Guidance against unsupported engine inference remains a review/implementation obligation.",
+      "limitations": "The witnesses quantify over arbitrary name domains, so they can be instantiated with the full RDF syntactic domains rather than a reduced finite vocabulary. Actual lexical-domain bindings remain external. They satisfy simple interpretation conditions and all component graphs; they do not prove RDF/RDFS model existence or unrestricted freedom under additional graph assertions/extensions. The graph-object embedding is chosen only for the example. The source permits equality or inequality and requires neither from pairing alone. Engine-inference guidance remains a review/implementation obligation.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-GLOBAL-NAME-DOMAIN",
+      "relation": "partial_definition",
+      "symbol_linked_english": "SimpleInterpretation.IS is total on the supplied Iri domain and IL is an Option-valued partial map on the supplied Literal domain. DatasetNameExample.interpretation and indiscriminate are generic in those domains and assign every IRI, including names unused by the witness graph.",
+      "bindings": [
+        {
+          "symbol": "SimpleInterpretation",
+          "lean": "RDF11.SimpleInterpretation"
+        },
+        {
+          "symbol": "DatasetNameExample.interpretation",
+          "lean": "RDF11.DatasetNameExample.interpretation"
+        },
+        {
+          "symbol": "indiscriminate",
+          "lean": "RDF11.indiscriminate"
+        }
+      ],
+      "limitations": "These definitions and model families can instantiate the full RDF syntactic domains and do not restrict interpretation to occurring names. Concrete full IRI/literal domain bindings remain external. Infinitude of the name-mapping structure is a separate unproved claim; finite resource carriers remain allowed. A reduced finite vocabulary is a pre-interpretation and needs an extension argument before it can stand for a full RDF 1.1 interpretation.",
       "extraction_review": "pending_expert_review",
       "formalization_review": "pending_expert_review",
       "implementation_refinement": "not_connected_to_published_package"
@@ -4531,6 +4554,28 @@
         "MT11-DATASET-EXTENSIONS"
       ],
       "within_section": "rdf-datasets"
+    },
+    {
+      "id": "global-interpretation-name-scope",
+      "source": "mt",
+      "tag": "p",
+      "text": "Simple interpretations are required to interpret all names",
+      "claims": [
+        "MT11-GLOBAL-NAME-DOMAIN",
+        "MT11-INTERPRETATION-INFINITE-NAME-STRUCTURE",
+        "MT11-DATASET-NAME-DENOTATION"
+      ],
+      "within_section": "simple-interpretations"
+    },
+    {
+      "id": "vocabulary-relative-historical-contrast",
+      "source": "mt",
+      "tag": "p",
+      "text": "The 2004 RDF 1.0 semantics defined simple interpretations relative to a vocabulary.",
+      "claims": [
+        "MT11-GLOBAL-NAME-DOMAIN"
+      ],
+      "within_section": "simple-interpretations"
     }
   ],
   "context_resolutions": [
@@ -4631,6 +4676,15 @@
       "antecedent_passage": "dataset-import",
       "resolved_meaning": "The graph syntactically paired with the name in the dataset, not an object assumed already equal to the name's semantic referent.",
       "inference": "Use an explicit graph-object embedding only in the witness. Pairing supplies neither an equality nor an inequality axiom; graph assertions and extensions may impose further constraints.",
+      "review": "pending"
+    },
+    {
+      "claim_id": "MT11-GLOBAL-NAME-DOMAIN",
+      "passage": "global-interpretation-name-scope",
+      "source_phrase": "all names",
+      "antecedent_passage": "vocabulary-relative-historical-contrast",
+      "resolved_meaning": "The global RDF IRI/literal domains, rather than a vocabulary selected for a graph as in the contrasted RDF 1.0 presentation. IL may still be undefined on a literal because it is partial.",
+      "inference": "Use arbitrary-domain model constructions with total IS and a permitted partial IL. Full-domain coverage does not imply infinitely many distinct resource denotations. The source infinitude assertion is retained separately and is not claimed proved.",
       "review": "pending"
     }
   ]

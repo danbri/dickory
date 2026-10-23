@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "status": "frozen_seventh_increment_inventory_not_expert_approved",
+  "status": "frozen_seventh_increment_global_domain_refinement_not_expert_approved",
   "lean_version": "4.33.1",
   "allowed_axioms": [
     "propext",
@@ -405,7 +405,8 @@
         "FOUNDATION-LEAN",
         "MT11-DATASET-NAME-DENOTATION",
         "MT11-SIMPLE-IS",
-        "MT11-SIMPLE-IEXT"
+        "MT11-SIMPLE-IEXT",
+        "MT11-GLOBAL-NAME-DOMAIN"
       ]
     },
     {
@@ -442,7 +443,7 @@
     },
     {
       "path": "Audit/Snapshot.lean",
-      "sha256": "fe613ef14185ad9b18663fb82ecfd2709d85d621665a043d440c0195f0b718eb",
+      "sha256": "a0bd8ca7e854a644bdce6fa5c6b35f13140bd90a44f25c30d330a22e734300e0",
       "role": "formal_source",
       "lifecycle": "active",
       "review": "pending_expert_review"
@@ -676,7 +677,7 @@
       "role": "formal_source",
       "lifecycle": "active",
       "review": "pending_expert_review",
-      "sha256": "24bf96aaa8257533d37ec07bab0fe52668a9db6be1114df2a44e7beb2cb4e576"
+      "sha256": "c2148d34515d3eb830147cd6d21e996786397a6805fdff930ba9e07471f3e40b"
     },
     {
       "path": "RDF11/DatasetNamedComparison.lean",
@@ -2715,7 +2716,8 @@
       "type": "Type → Type → Type u → Type u",
       "role": "source_mapping",
       "grounds": [
-        "MT11-BLANK-ASSIGNMENT-NONGLOBAL"
+        "MT11-BLANK-ASSIGNMENT-NONGLOBAL",
+        "MT11-GLOBAL-NAME-DOMAIN"
       ],
       "parent_declaration_if_applicable": null,
       "review": "pending_expert_review"
@@ -5454,7 +5456,8 @@
       "type": "{Iri Literal : Type} → RDF11.SimpleInterpretation Iri Literal (ULift Unit)",
       "role": "source_mapping",
       "grounds": [
-        "MT11-SIMPLE-SATISFIABILITY"
+        "MT11-SIMPLE-SATISFIABILITY",
+        "MT11-GLOBAL-NAME-DOMAIN"
       ],
       "parent_declaration_if_applicable": null,
       "review": "pending_expert_review"
@@ -15997,7 +16000,7 @@
       "name": "RDF11.DatasetNameExample.Carrier",
       "module": "RDF11.DatasetNameDenotation",
       "kind": "definition",
-      "type": "Type",
+      "type": "Type → Type → Type → Type",
       "role": "proof_support",
       "grounds": [
         "SUPPORT-DATASET-NAME-DENOTATION"
@@ -16009,7 +16012,7 @@
       "name": "RDF11.DatasetNameExample.all_components_satisfied",
       "module": "RDF11.DatasetNameDenotation",
       "kind": "theorem",
-      "type": "∀ (refersToGraph : Bool),\n  (RDF11.DatasetNameExample.interpretation refersToGraph).Satisfies\n      RDF11.DatasetNameExample.dataset.defaultGraph.generalize ∧\n    ∀ (n : RDF11.GraphName Unit Empty) (G : RDF11.Graph Unit Empty Empty),\n      RDF11.DatasetNameExample.dataset.HasNamedGraph n G →\n        (RDF11.DatasetNameExample.interpretation refersToGraph).Satisfies G.generalize",
+      "type": "∀ {Iri Literal B : Type} (name : Iri) (refersToGraph : Bool),\n  (RDF11.DatasetNameExample.interpretation name refersToGraph).Satisfies\n      (RDF11.DatasetNameExample.dataset name).defaultGraph.generalize ∧\n    ∀ (n : RDF11.GraphName Iri B) (G : RDF11.Graph Iri Literal B),\n      (RDF11.DatasetNameExample.dataset name).HasNamedGraph n G →\n        (RDF11.DatasetNameExample.interpretation name refersToGraph).Satisfies G.generalize",
       "role": "source_mapping",
       "grounds": [
         "SUPPORT-DATASET-NAME-DENOTATION",
@@ -16019,22 +16022,10 @@
       "review": "pending_expert_review"
     },
     {
-      "name": "RDF11.DatasetNameExample.all_components_satisfied.match_1_1",
-      "module": "RDF11.DatasetNameDenotation",
-      "kind": "definition",
-      "type": "∀ (G : RDF11.Graph Unit Empty Empty)\n  (motive : (b : Empty) → RDF11.DatasetNameExample.dataset.HasNamedGraph (RDF11.Subject.blank b) G → Prop) (b : Empty)\n  (hn : RDF11.DatasetNameExample.dataset.HasNamedGraph (RDF11.Subject.blank b) G), motive b hn",
-      "role": "proof_support",
-      "grounds": [
-        "SUPPORT-DATASET-NAME-DENOTATION"
-      ],
-      "parent_declaration_if_applicable": null,
-      "review": "pending_expert_review"
-    },
-    {
       "name": "RDF11.DatasetNameExample.dataset",
       "module": "RDF11.DatasetNameDenotation",
       "kind": "definition",
-      "type": "RDF11.Dataset Unit Empty Empty",
+      "type": "{Iri Literal B : Type} → Iri → RDF11.Dataset Iri Literal B",
       "role": "source_mapping",
       "grounds": [
         "SUPPORT-DATASET-NAME-DENOTATION",
@@ -16047,19 +16038,7 @@
       "name": "RDF11.DatasetNameExample.dataset.match_1",
       "module": "RDF11.DatasetNameDenotation",
       "kind": "definition",
-      "type": "(motive : Empty → Sort u_1) → (b : Empty) → motive b",
-      "role": "proof_support",
-      "grounds": [
-        "SUPPORT-DATASET-NAME-DENOTATION"
-      ],
-      "parent_declaration_if_applicable": null,
-      "review": "pending_expert_review"
-    },
-    {
-      "name": "RDF11.DatasetNameExample.dataset.match_3",
-      "module": "RDF11.DatasetNameDenotation",
-      "kind": "definition",
-      "type": "(motive : RDF11.GraphName Unit Empty → Sort u_1) →\n  (n : RDF11.GraphName Unit Empty) →\n    ((a : Unit) → motive (RDF11.Subject.iri a)) → ((b : Empty) → motive (RDF11.Subject.blank b)) → motive n",
+      "type": "{Iri B : Type} →\n  (motive : RDF11.GraphName Iri B → Sort u_1) →\n    (n : RDF11.GraphName Iri B) →\n      ((i : Iri) → motive (RDF11.Subject.iri i)) → ((a : B) → motive (RDF11.Subject.blank a)) → motive n",
       "role": "proof_support",
       "grounds": [
         "SUPPORT-DATASET-NAME-DENOTATION"
@@ -16071,7 +16050,7 @@
       "name": "RDF11.DatasetNameExample.graph",
       "module": "RDF11.DatasetNameDenotation",
       "kind": "definition",
-      "type": "RDF11.Graph Unit Empty Empty",
+      "type": "{Iri Literal B : Type} → Iri → RDF11.Graph Iri Literal B",
       "role": "source_mapping",
       "grounds": [
         "SUPPORT-DATASET-NAME-DENOTATION",
@@ -16084,7 +16063,7 @@
       "name": "RDF11.DatasetNameExample.graphObject",
       "module": "RDF11.DatasetNameDenotation",
       "kind": "definition",
-      "type": "RDF11.Graph Unit Empty Empty → RDF11.DatasetNameExample.Carrier",
+      "type": "{Iri Literal B : Type} → RDF11.Graph Iri Literal B → RDF11.DatasetNameExample.Carrier Iri Literal B",
       "role": "source_mapping",
       "grounds": [
         "SUPPORT-DATASET-NAME-DENOTATION",
@@ -16097,7 +16076,7 @@
       "name": "RDF11.DatasetNameExample.graphObject_injective",
       "module": "RDF11.DatasetNameDenotation",
       "kind": "theorem",
-      "type": "∀ {G H : RDF11.Graph Unit Empty Empty},\n  RDF11.DatasetNameExample.graphObject G = RDF11.DatasetNameExample.graphObject H → G = H",
+      "type": "∀ {Iri Literal B : Type} {G H : RDF11.Graph Iri Literal B},\n  RDF11.DatasetNameExample.graphObject G = RDF11.DatasetNameExample.graphObject H → G = H",
       "role": "source_mapping",
       "grounds": [
         "SUPPORT-DATASET-NAME-DENOTATION",
@@ -16110,7 +16089,7 @@
       "name": "RDF11.DatasetNameExample.graph_satisfied",
       "module": "RDF11.DatasetNameDenotation",
       "kind": "theorem",
-      "type": "∀ (refersToGraph : Bool),\n  (RDF11.DatasetNameExample.interpretation refersToGraph).Satisfies RDF11.DatasetNameExample.graph.generalize",
+      "type": "∀ {Iri Literal B : Type} (name : Iri) (refersToGraph : Bool),\n  (RDF11.DatasetNameExample.interpretation name refersToGraph).Satisfies\n    (RDF11.DatasetNameExample.graph name).generalize",
       "role": "proof_support",
       "grounds": [
         "SUPPORT-DATASET-NAME-DENOTATION"
@@ -16122,11 +16101,12 @@
       "name": "RDF11.DatasetNameExample.interpretation",
       "module": "RDF11.DatasetNameDenotation",
       "kind": "definition",
-      "type": "Bool → RDF11.SimpleInterpretation Unit Empty RDF11.DatasetNameExample.Carrier",
+      "type": "{Iri Literal B : Type} →\n  Iri → Bool → RDF11.SimpleInterpretation Iri Literal (RDF11.DatasetNameExample.Carrier Iri Literal B)",
       "role": "source_mapping",
       "grounds": [
         "SUPPORT-DATASET-NAME-DENOTATION",
-        "MT11-DATASET-NAME-DENOTATION"
+        "MT11-DATASET-NAME-DENOTATION",
+        "MT11-GLOBAL-NAME-DOMAIN"
       ],
       "parent_declaration_if_applicable": null,
       "review": "pending_expert_review"
@@ -16135,7 +16115,7 @@
       "name": "RDF11.DatasetNameExample.interpretation._proof_1",
       "module": "RDF11.DatasetNameDenotation",
       "kind": "theorem",
-      "type": "∃ x, True",
+      "type": "∀ {Iri Literal B : Type}, ∃ x, True",
       "role": "proof_support",
       "grounds": [
         "SUPPORT-DATASET-NAME-DENOTATION"
@@ -16147,7 +16127,7 @@
       "name": "RDF11.DatasetNameExample.nameValue",
       "module": "RDF11.DatasetNameDenotation",
       "kind": "definition",
-      "type": "Bool → RDF11.DatasetNameExample.Carrier",
+      "type": "{Iri Literal B : Type} → Iri → Bool → RDF11.DatasetNameExample.Carrier Iri Literal B",
       "role": "proof_support",
       "grounds": [
         "SUPPORT-DATASET-NAME-DENOTATION"
@@ -16159,7 +16139,7 @@
       "name": "RDF11.DatasetNameExample.name_can_denote_graph",
       "module": "RDF11.DatasetNameDenotation",
       "kind": "theorem",
-      "type": "((RDF11.DatasetNameExample.interpretation true).IS ()).val =\n  RDF11.DatasetNameExample.graphObject RDF11.DatasetNameExample.graph",
+      "type": "∀ {Iri Literal B : Type} (name : Iri),\n  ((RDF11.DatasetNameExample.interpretation name true).IS name).val =\n    RDF11.DatasetNameExample.graphObject (RDF11.DatasetNameExample.graph name)",
       "role": "proof_support",
       "grounds": [
         "SUPPORT-DATASET-NAME-DENOTATION"
@@ -16171,7 +16151,7 @@
       "name": "RDF11.DatasetNameExample.name_can_denote_something_else",
       "module": "RDF11.DatasetNameDenotation",
       "kind": "theorem",
-      "type": "((RDF11.DatasetNameExample.interpretation false).IS ()).val ≠\n  RDF11.DatasetNameExample.graphObject RDF11.DatasetNameExample.graph",
+      "type": "∀ {Iri Literal B : Type} (name : Iri),\n  ((RDF11.DatasetNameExample.interpretation name false).IS name).val ≠\n    RDF11.DatasetNameExample.graphObject (RDF11.DatasetNameExample.graph name)",
       "role": "proof_support",
       "grounds": [
         "SUPPORT-DATASET-NAME-DENOTATION"
@@ -16183,7 +16163,7 @@
       "name": "RDF11.DatasetNameExample.named_pair",
       "module": "RDF11.DatasetNameDenotation",
       "kind": "theorem",
-      "type": "RDF11.DatasetNameExample.dataset.HasNamedGraph (RDF11.Subject.iri ()) RDF11.DatasetNameExample.graph",
+      "type": "∀ {Iri Literal B : Type} (name : Iri),\n  (RDF11.DatasetNameExample.dataset name).HasNamedGraph (RDF11.Subject.iri name) (RDF11.DatasetNameExample.graph name)",
       "role": "source_mapping",
       "grounds": [
         "SUPPORT-DATASET-NAME-DENOTATION",
@@ -16196,7 +16176,7 @@
       "name": "RDF11.DatasetNameExample.pairing_and_component_truth_allow_both",
       "module": "RDF11.DatasetNameDenotation",
       "kind": "theorem",
-      "type": "RDF11.DatasetNameExample.dataset.HasNamedGraph (RDF11.Subject.iri ()) RDF11.DatasetNameExample.graph ∧\n  (RDF11.DatasetNameExample.interpretation true).Satisfies RDF11.DatasetNameExample.graph.generalize ∧\n    (RDF11.DatasetNameExample.interpretation false).Satisfies RDF11.DatasetNameExample.graph.generalize ∧\n      ((RDF11.DatasetNameExample.interpretation true).IS ()).val =\n          RDF11.DatasetNameExample.graphObject RDF11.DatasetNameExample.graph ∧\n        ((RDF11.DatasetNameExample.interpretation false).IS ()).val ≠\n          RDF11.DatasetNameExample.graphObject RDF11.DatasetNameExample.graph",
+      "type": "∀ {Iri Literal B : Type} (name : Iri),\n  (RDF11.DatasetNameExample.dataset name).HasNamedGraph (RDF11.Subject.iri name) (RDF11.DatasetNameExample.graph name) ∧\n    (RDF11.DatasetNameExample.interpretation name true).Satisfies (RDF11.DatasetNameExample.graph name).generalize ∧\n      (RDF11.DatasetNameExample.interpretation name false).Satisfies (RDF11.DatasetNameExample.graph name).generalize ∧\n        ((RDF11.DatasetNameExample.interpretation name true).IS name).val =\n            RDF11.DatasetNameExample.graphObject (RDF11.DatasetNameExample.graph name) ∧\n          ((RDF11.DatasetNameExample.interpretation name false).IS name).val ≠\n            RDF11.DatasetNameExample.graphObject (RDF11.DatasetNameExample.graph name)",
       "role": "source_mapping",
       "grounds": [
         "SUPPORT-DATASET-NAME-DENOTATION",
@@ -16857,6 +16837,54 @@
         "SUPPORT-DATASET-POLICIES",
         "MT11-DATASET-DEFAULT-CONTENT",
         "MT11-DATASET-EXTENSIONS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatasetNameExample.dataset.eq_1",
+      "module": "RDF11.DatasetNameDenotation",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (name : Iri),\n  RDF11.DatasetNameExample.dataset name =\n    { defaultGraph := RDF11.DatasetNameExample.graph name,\n      namedGraphs := fun n =>\n        match n with\n        | RDF11.Subject.iri i => if i = name then some (RDF11.DatasetNameExample.graph name) else none\n        | RDF11.Subject.blank a => none }",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-NAME-DENOTATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.DatasetNameDenotation.0.RDF11.DatasetNameExample.dataset.match_1.eq_1",
+      "module": "RDF11.DatasetNameDenotation",
+      "kind": "theorem",
+      "type": "∀ {Iri B : Type} (motive : RDF11.GraphName Iri B → Sort u_1) (i : Iri) (h_1 : (i : Iri) → motive (RDF11.Subject.iri i))\n  (h_2 : (a : B) → motive (RDF11.Subject.blank a)),\n  (match RDF11.Subject.iri i with\n    | RDF11.Subject.iri i => h_1 i\n    | RDF11.Subject.blank a => h_2 a) =\n    h_1 i",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-NAME-DENOTATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.DatasetNameDenotation.0.RDF11.DatasetNameExample.dataset.match_1.eq_2",
+      "module": "RDF11.DatasetNameDenotation",
+      "kind": "theorem",
+      "type": "∀ {Iri B : Type} (motive : RDF11.GraphName Iri B → Sort u_1) (a : B) (h_1 : (i : Iri) → motive (RDF11.Subject.iri i))\n  (h_2 : (a : B) → motive (RDF11.Subject.blank a)),\n  (match RDF11.Subject.blank a with\n    | RDF11.Subject.iri i => h_1 i\n    | RDF11.Subject.blank a => h_2 a) =\n    h_2 a",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-NAME-DENOTATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.DatasetNameDenotation.0.RDF11.DatasetNameExample.dataset.match_1.splitter",
+      "module": "RDF11.DatasetNameDenotation",
+      "kind": "definition",
+      "type": "{Iri B : Type} →\n  (motive : RDF11.GraphName Iri B → Sort u_1) →\n    (n : RDF11.GraphName Iri B) →\n      ((i : Iri) → motive (RDF11.Subject.iri i)) → ((a : B) → motive (RDF11.Subject.blank a)) → motive n",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATASET-NAME-DENOTATION"
       ],
       "parent_declaration_if_applicable": null,
       "review": "pending_expert_review"

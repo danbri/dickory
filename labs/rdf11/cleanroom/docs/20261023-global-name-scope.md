@@ -1,0 +1,15 @@
+# Extending the denotation witness to the full name domains
+
+A follow-up AI close reading of Semantics §5 found a scope gap in the first dataset-name witness. RDF 1.1 simple interpretations must cover all names. The source explicitly contrasts RDF 1.0's vocabulary-relative presentation; informative Appendix B discusses finite pre-interpretations separately. The earlier `Iri = Unit`, `Literal = Empty` construction was reduced-domain evidence, not directly an interpretation of the full RDF name vocabulary.
+
+`DatasetNameDenotation.lean` now quantifies over arbitrary IRI, literal and blank types, with one selected IRI. It can therefore instantiate the full syntactic domains. Its `IS` is defined for every IRI, including all names unused by the witness graph. Its `IL` is an everywhere-undefined partial map on the entire literal type, which simple semantics permits. All names may share a referent; global scope does not require distinct referents or an infinite resource set.
+
+The chosen dataset pairs the selected IRI with a singleton ground graph and uses the same graph as its default. The graph-name IRI occurs in all three triple positions. The two interpretations satisfy every component graph, while one maps the name to its graph object and the other maps it to a distinct resource. The graph-object embedding remains an explicit example choice. RDF/RDFS interpretation conditions and actual lexical-domain bindings remain separate obligations.
+
+The name-domain requirement is now a separate catalogue entry, linked to both the global-scope paragraph and its historical contrast. The source's additional assertion that these full name-mapping structures are infinite is also inventoried, but remains unmapped: no concrete infinite syntactic domain or cardinality theorem has been proved. Treating an infinite name mapping as a requirement for an infinite `IR` would be a different claim.
+
+This correction strengthens the witness's public quantification rather than changing the RDF truth conditions. The frozen registry must explicitly review the resulting signature changes and regenerated helpers. Source mappings, English glosses, README, methodology and browser assertions are updated. The overall formalization and accepted-review obligations remain incomplete.
+
+The reviewed registry change generalizes 15 signatures in the witness module, including generated helpers, retires two obsolete generated match helpers and adds four regenerated helpers. There are now 1,317 local declarations in 39 formal files, with a closure through 5,800 declarations. No foundation module or allowed logical axiom changed. The catalogue has 138 mapped records among 199 preliminary claims, including partial mappings.
+
+The full Lean build, frozen-registry audit, seven rejection checks, eleven Python tests, source viewer/gloss generation, skill validator and local site-link check pass. Browser checks now inspect the generic interpretation signature, total IS and partial IL in the displayed source. Chromium CI remains the publication gate.

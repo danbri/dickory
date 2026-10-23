@@ -112,8 +112,10 @@ try {
   assert.match(await page.locator('#details > article > .lean-declaration[data-lean="RDF11.DatasetPolicyExample.nameRequired_isomorphism_invariant"] > .lean-code').textContent(),/e\.iri_name_present_iff n/);
   assert.match(await page.locator('#details > article > .lean-declaration[data-lean="RDF11.DatasetPolicyExample.nameRequired_not_entails_absent"] > .lean-code').textContent(),/\(n : Iri\)/);
   await page.locator('#claim').selectOption('MT11-DATASET-NAME-DENOTATION');
-  assert.match(await page.locator('#details > article > .lean-declaration[data-lean="RDF11.DatasetNameExample.pairing_and_component_truth_allow_both"] > .lean-code').textContent(),/name_can_denote_graph, name_can_denote_something_else/);
+  assert.match(await page.locator('#details > article > .lean-declaration[data-lean="RDF11.DatasetNameExample.pairing_and_component_truth_allow_both"] > .lean-code').textContent(),/name_can_denote_graph name, name_can_denote_something_else name/);
   const nameModel=page.locator('#details > article > .lean-declaration[data-lean="RDF11.DatasetNameExample.interpretation"]');
+  assert.match(await nameModel.locator(':scope > .lean-code').textContent(),/SimpleInterpretation Iri Literal \(Carrier Iri Literal B\)/);
+  assert.match(await nameModel.locator(':scope > .lean-code').textContent(),/IS := fun _ =>[\s\S]*IL := fun _ => none/);
   await nameModel.locator(':scope > .gloss > summary').click();
   assert.match(await nameModel.locator(':scope > .gloss').innerText(),/simple interpretation/i);
   await page.locator('#claim').selectOption('MT11-GRAPH-SET');

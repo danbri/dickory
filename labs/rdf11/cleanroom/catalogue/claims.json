@@ -3,8 +3,8 @@
   "status": "draft_not_complete_coverage",
   "method": "Human-readable AI close reading; selectors locate already selected passages and do not extract assertions.",
   "source_inventory": "../ledger/semantics-inventory.json",
-  "inventory_sha256": "97c89ac54af8d7d43533b2a95534860b77f3b3c94f69e75f4c4f95fe74ea4fd8",
-  "mapping_input_sha256": "41dd495ac93122e3c51e3b3b1ded879247ccba58674fea64c120a34785f6e874",
+  "inventory_sha256": "379ceec2364db578d1e7cd8f2acb838442c2fb185e986f63158bd417a3124b17",
+  "mapping_input_sha256": "48688326863fa17f70232ecd33a0fc4708d63958878c8c5343d3856aa4918f58",
   "documents": [
     {
       "id": "mt",
@@ -301,6 +301,40 @@
         },
         {
           "start": 37611,
+          "end": 37613,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 37613,
+          "end": 38381,
+          "refs": [
+            "MT11-GLOBAL-NAME-DOMAIN"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 38381,
+          "end": 38383,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 38383,
+          "end": 38695,
+          "refs": [
+            "MT11-DATASET-NAME-DENOTATION",
+            "MT11-GLOBAL-NAME-DOMAIN",
+            "MT11-INTERPRETATION-INFINITE-NAME-STRUCTURE"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 38695,
           "end": 40152,
           "refs": [
             "UNRESOLVED-mt"
@@ -3795,6 +3829,36 @@
         "MT11-DATASET-EXTENSIONS"
       ],
       "slice_sha256": "bc8bc98f01075f5a0c5d6c11a84c7063767eb4de8483e474a393c19ce42c83ea",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "global-interpretation-name-scope",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 38383,
+      "end": 38695,
+      "claims": [
+        "MT11-GLOBAL-NAME-DOMAIN",
+        "MT11-INTERPRETATION-INFINITE-NAME-STRUCTURE",
+        "MT11-DATASET-NAME-DENOTATION"
+      ],
+      "slice_sha256": "8526aa39e1e61d7a4a090a6b9e7da9194eef81222fdf36f5b66899bdb0dbd3f4",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "vocabulary-relative-historical-contrast",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 37613,
+      "end": 38381,
+      "claims": [
+        "MT11-GLOBAL-NAME-DOMAIN"
+      ],
+      "slice_sha256": "ba7204808309c67c5f00f3559159d62320820c6c3be1985a76c31e18fa20ffe0",
       "locator_tag": "p",
       "review": "pending",
       "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
@@ -11112,7 +11176,7 @@
       "cleanroom_mapping": {
         "claim_id": "MT11-DATASET-NAME-DENOTATION",
         "relation": "partial_theorem",
-        "symbol_linked_english": "DatasetNameExample keeps one syntactic named pair and the same true default/named triples while changing the simple interpretation. With graphObject explicitly embedding graphs in the resource carrier, name_can_denote_graph and name_can_denote_something_else establish both possibilities for the name IRI.",
+        "symbol_linked_english": "For arbitrary Iri, Literal and blank domains and one selected IRI name, DatasetNameExample fixes one dataset with that named pair and constructs two full-domain simple interpretations. IS assigns every IRI; IL is a permitted everywhere-undefined partial map. The selected IRI occurs in the true component triple. With graphObject explicitly embedding graphs, the name denotes its paired graph in one interpretation and a distinct object in the other.",
         "bindings": [
           {
             "symbol": "DatasetNameExample.graph",
@@ -11147,14 +11211,15 @@
             "lean": "RDF11.DatasetNameExample.pairing_and_component_truth_allow_both"
           }
         ],
-        "limitations": "The two concrete witnesses satisfy simple interpretation conditions and all component graphs, with the graph-name IRI itself occurring inside the true triples. They do not prove RDF/RDFS model existence or unrestricted freedom under additional graph assertions/semantic extensions. The graph-object embedding is explicit for this example, not required of all RDF interpretations. The source permits equality or inequality; it does not require inequality. Guidance against unsupported engine inference remains a review/implementation obligation.",
+        "limitations": "The witnesses quantify over arbitrary name domains, so they can be instantiated with the full RDF syntactic domains rather than a reduced finite vocabulary. Actual lexical-domain bindings remain external. They satisfy simple interpretation conditions and all component graphs; they do not prove RDF/RDFS model existence or unrestricted freedom under additional graph assertions/extensions. The graph-object embedding is chosen only for the example. The source permits equality or inequality and requires neither from pairing alone. Engine-inference guidance remains a review/implementation obligation.",
         "extraction_review": "pending_expert_review",
         "formalization_review": "pending_expert_review",
         "implementation_refinement": "not_connected_to_published_package"
       },
       "passages": [
         "dataset-name-other-referent",
-        "dataset-name-no-presumption"
+        "dataset-name-no-presumption",
+        "global-interpretation-name-scope"
       ],
       "extraction_review": "pending",
       "formalization_review": "pending"
@@ -12497,6 +12562,85 @@
       ],
       "extraction_review": "pending",
       "formalization_review": "pending"
+    },
+    {
+      "id": "MT11-GLOBAL-NAME-DOMAIN",
+      "section": "5",
+      "anchor": "simple-interpretations",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#simple-interpretations",
+      "category": "general_requirement",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "Simple interpretations cover the global name domains rather than a vocabulary selected for one graph; vocabulary-relative pre-interpretations are a separate construction.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-SIMPLE-IS",
+        "MT11-SIMPLE-IL"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "Global literal coverage permits undefined denotations because IL is partial. It does not require an infinite IR. The concrete full IRI/literal domains still need an explicit binding.",
+      "cleanroom_mapping": {
+        "claim_id": "MT11-GLOBAL-NAME-DOMAIN",
+        "relation": "partial_definition",
+        "symbol_linked_english": "SimpleInterpretation.IS is total on the supplied Iri domain and IL is an Option-valued partial map on the supplied Literal domain. DatasetNameExample.interpretation and indiscriminate are generic in those domains and assign every IRI, including names unused by the witness graph.",
+        "bindings": [
+          {
+            "symbol": "SimpleInterpretation",
+            "lean": "RDF11.SimpleInterpretation"
+          },
+          {
+            "symbol": "DatasetNameExample.interpretation",
+            "lean": "RDF11.DatasetNameExample.interpretation"
+          },
+          {
+            "symbol": "indiscriminate",
+            "lean": "RDF11.indiscriminate"
+          }
+        ],
+        "limitations": "These definitions and model families can instantiate the full RDF syntactic domains and do not restrict interpretation to occurring names. Concrete full IRI/literal domain bindings remain external. Infinitude of the name-mapping structure is a separate unproved claim; finite resource carriers remain allowed. A reduced finite vocabulary is a pre-interpretation and needs an extension argument before it can stand for a full RDF 1.1 interpretation.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "global-interpretation-name-scope",
+        "vocabulary-relative-historical-contrast"
+      ],
+      "extraction_review": "pending",
+      "formalization_review": "pending"
+    },
+    {
+      "id": "MT11-INTERPRETATION-INFINITE-NAME-STRUCTURE",
+      "section": "5",
+      "anchor": "simple-interpretations",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#simple-interpretations",
+      "category": "mathematical_consequence",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "Because simple interpretations cover all names, their name-mapping structure is infinite.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-GLOBAL-NAME-DOMAIN",
+        "MT11-SYNTAX-IMPORT"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "This concerns the full name mappings, not a requirement that IR be infinite. No cardinality proof or concrete infinite IRI-domain binding is supplied yet; the finite pre-interpretation construction is discussed separately in informative Appendix B.",
+      "cleanroom_mapping": null,
+      "passages": [
+        "global-interpretation-name-scope"
+      ],
+      "extraction_review": "pending",
+      "formalization_review": "not_started"
     }
   ],
   "context_resolutions": [
@@ -12597,6 +12741,15 @@
       "antecedent_passage": "dataset-import",
       "resolved_meaning": "The graph syntactically paired with the name in the dataset, not an object assumed already equal to the name's semantic referent.",
       "inference": "Use an explicit graph-object embedding only in the witness. Pairing supplies neither an equality nor an inequality axiom; graph assertions and extensions may impose further constraints.",
+      "review": "pending"
+    },
+    {
+      "claim_id": "MT11-GLOBAL-NAME-DOMAIN",
+      "passage": "global-interpretation-name-scope",
+      "source_phrase": "all names",
+      "antecedent_passage": "vocabulary-relative-historical-contrast",
+      "resolved_meaning": "The global RDF IRI/literal domains, rather than a vocabulary selected for a graph as in the contrasted RDF 1.0 presentation. IL may still be undefined on a literal because it is partial.",
+      "inference": "Use arbitrary-domain model constructions with total IS and a permitted partial IL. Full-domain coverage does not imply infinitely many distinct resource denotations. The source infinitude assertion is retained separately and is not claimed proved.",
       "review": "pending"
     }
   ],

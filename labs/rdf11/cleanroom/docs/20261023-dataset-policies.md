@@ -20,16 +20,16 @@ Restricting a regime's models while retaining its truth relation preserves entai
 
 ## Name pairing is not denotation
 
-`DatasetNameDenotation.lean` fixes one dataset whose graph-name IRI also occurs as subject, predicate and object in a true component triple. An explicit injective embedding places graph objects in the resource carrier alongside a distinct non-graph object. Two simple interpretations satisfy the default graph and all named graphs. In one, the name denotes its paired graph object; in the other, it denotes the distinct object.
+The current `DatasetNameDenotation.lean`, strengthened by the [global-name refinement](20261023-global-name-scope.md), quantifies over arbitrary IRI/literal/blank domains and a selected IRI, then fixes one dataset whose graph-name IRI also occurs as subject, predicate and object in a true component triple. An explicit injective embedding places graph objects in the resource carrier alongside a distinct non-graph object. Two simple interpretations satisfy the default graph and all named graphs. In one, the name denotes its paired graph object; in the other, it denotes the distinct object.
 
 The result is existential and limited to simple interpretations. It does not prove RDF/RDFS model existence, unconstrained denotation for every dataset, or independence from additional assertions and extensions. The embedding belongs to the example and is not required of all RDF interpretations. The source permits identity or nonidentity; it requires neither a general equality nor a general inequality based solely on pairing. Its engine-inference guidance remains an implementation/review obligation.
 
 ## Review boundary
 
-The catalogue now has 137 mappings among 197 preliminary records, including partial mappings. All source extraction and formalization approvals remain pending. The three new mappings cover logical interfaces and conditional results; they do not discharge recommendation conformance, extension admissibility, the entire dataset section, or implementation refinement.
+This policy increment initially brought the catalogue to 137 mappings among 197 preliminary records, including partial mappings. All source extraction and formalization approvals remain pending. The three new mappings cover logical interfaces and conditional results; they do not discharge recommendation conformance, extension admissibility, the entire dataset section, or implementation refinement.
 
 The compact Statements/Syntax/Simple review route remains 359 lines. README, methodology, glosses and browser checks expose the new scope assumptions. The complete-coverage gate continues to reject the outstanding source, proof, review and implementation obligations.
 
-The frozen inventory contains 39 formal files and 1,315 local declarations, with 5,798 declarations in the elaborated dependency closure. The 93 new declarations include generated helpers; all 56 new authored declarations have curated English glosses. No existing declaration signature, foundation module or allowed logical axiom changed.
+Before the later global-name refinement, the frozen inventory contained 39 formal files and 1,315 local declarations, with 5,798 declarations in the elaborated dependency closure. The 93 new declarations include generated helpers; all 56 new authored declarations have curated English glosses. No existing declaration signature, foundation module or allowed logical axiom changed.
 
 Validation passed the full Lean build and registry audit, all seven rejection checks, eleven Python tests, viewer generation with all authored glosses, the methodology skill validator, and the site-link check. Three additional Chromium checks exercise the optional policy scope, fixed-IRI presence counterexample and simple-model denotation alternatives; CI gates publication.
