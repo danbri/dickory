@@ -10,6 +10,26 @@ namespace RDFSModelConstruction
 
 open RDFModelConstruction
 
+/-- The extra unnamed resource is a class with no members in this model family. -/
+theorem unnamed_empty_class (T : DatatypeTheory Iri Literal Value) (D : Set Iri)
+    (v : RDFSVocabulary Iri) (h : Parameters T D v)
+    (Q : Carrier.{u} Iri Value → Carrier.{u} Iri Value → Carrier.{u} Iri Value → Prop) :
+    let I := interpretation T D v Q
+    I.IC v unnamed ∧ I.ICEXT (v.iri (.rdf .rdfType)) unnamed = Set.empty := by
+  dsimp only
+  refine ⟨all_classes T D v h Q unnamed, ?_⟩
+  apply Set.ext
+  intro x
+  rw [icext_iff T D v h Q]
+  rfl
+
+theorem empty_class_model (T : DatatypeTheory Iri Literal Value) (D : Set Iri)
+    (v : RDFSVocabulary Iri) (h : Parameters T D v) :
+    ∃ (U : Type u) (I : SimpleInterpretation Iri Literal U), I.RDFSModel T D v ∧
+      ∃ c, I.IC v c ∧ I.ICEXT (v.iri (.rdf .rdfType)) c = Set.empty :=
+  ⟨Carrier Iri Value, interpretation T D v (fun _ _ _ => False), model T D v h _,
+    unnamed, unnamed_empty_class T D v h _⟩
+
 theorem iri_literal_true (T : DatatypeTheory Iri Literal Value) (D : Set Iri)
     (v : RDFSVocabulary Iri) (h : Parameters T D v)
     (Q : Carrier.{u} Iri Value → Carrier.{u} Iri Value → Carrier.{u} Iri Value → Prop)

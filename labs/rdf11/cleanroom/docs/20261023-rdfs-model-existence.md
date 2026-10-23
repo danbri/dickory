@@ -20,7 +20,7 @@ Subclass is column inclusion. The selected subproperty relation is reflexive, po
 
 ## New source-facing consequences
 
-- §9 paragraph 4: rdfs:Class and rdfs:Resource have distinct denotations and equal class extensions in the family. An empty-class witness remains open.
+- §9 paragraph 4: rdfs:Class and rdfs:Resource have distinct denotations and equal class extensions in the family. The later [RDFS consequence increment](20261023-rdfs-consequences.md) supplies an unnamed empty-class witness by refining the spare resource's column.
 - §9 paragraph 14: a model permits overlapping semantic roles. Further witnesses give class self-membership and property self-application. These are permitted configurations, not universal requirements on models.
 - The same paragraph's class/member observation: two explicit countermodels refute transferring an rdf:value assertion from a class to an individual typed member, and the converse. They do not address properties asserted of every member, or prohibit transfer supported by additional premises.
 - §9.1 paragraphs 3–5: a singleton triple with IRI subject and object rdfs:Literal is satisfiable under the constructor assumptions. This is the note's consistency consequence. The mapping remains partial: no general theorem excluding literal syntax objects from LV, or equating LV with denotation images, has been supplied.

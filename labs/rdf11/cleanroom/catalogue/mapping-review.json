@@ -1770,7 +1770,7 @@
     {
       "claim_id": "MT11-RDFS-CLASS-STRUCTURE",
       "relation": "partial_definition",
-      "symbol_linked_english": "Classes are resources typed rdfs:Class; IC collects them, and ICEXT maps classes to subsets of IR. A class may have an empty extension, and distinct classes can share an extension.",
+      "symbol_linked_english": "Classes are resources typed rdfs:Class; IC collects them, and ICEXT maps classes to subsets of IR. Distinct classes can share an extension.",
       "bindings": [
         {
           "symbol": "ICEXT",
@@ -1791,9 +1791,13 @@
         {
           "symbol": "RDFSModelConstruction.distinct_coextensive_classes",
           "lean": "RDF11.RDFSModelConstruction.distinct_coextensive_classes"
+        },
+        {
+          "symbol": "rdfs_class_self_membership",
+          "lean": "RDF11.SimpleInterpretation.rdfs_class_self_membership"
         }
       ],
-      "limitations": "Class extensions are relation slices on the same universe. No extensional equality of class identities is assumed. The constructor gives distinct rdfs:Class and rdfs:Resource denotations with equal extensions under Parameters. An empty-class witness is not yet supplied.",
+      "limitations": "Class extensions are relation slices on the same universe. No extensional equality of class identities is assumed. The constructor gives distinct rdfs:Class and rdfs:Resource denotations with equal extensions under Parameters. Empty-class permission now has its own source record and witness.",
       "extraction_review": "pending_expert_review",
       "formalization_review": "pending_expert_review",
       "implementation_refinement": "not_connected_to_published_package"
@@ -4100,6 +4104,95 @@
       "extraction_review": "pending_expert_review",
       "formalization_review": "pending_expert_review",
       "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-RDFS-ADDITIONAL-VALID-TYPES",
+      "relation": "partial_theorem",
+      "symbol_linked_english": "rdfsAdditionalClassSymbols lists the twelve core class entries. Each has an RDFSDerives proof and the whole family is RDFS-entailed from any premise graph. rdfs_recognized_datatype_class_entailed derives class typing for any a in D; this supplies the conditional XMLLiteral/HTML route. rdfs_class_self_membership holds in every RDFSModel.",
+      "bindings": [
+        {
+          "symbol": "rdfsAdditionalClassSymbols",
+          "lean": "RDF11.rdfsAdditionalClassSymbols"
+        },
+        {
+          "symbol": "rdfs_additional_class_derivable",
+          "lean": "RDF11.rdfs_additional_class_derivable"
+        },
+        {
+          "symbol": "rdfs_additional_types_entailed",
+          "lean": "RDF11.rdfs_additional_types_entailed"
+        },
+        {
+          "symbol": "rdfs_recognized_datatype_class_entailed",
+          "lean": "RDF11.rdfs_recognized_datatype_class_entailed"
+        },
+        {
+          "symbol": "SimpleInterpretation.rdfs_class_self_membership",
+          "lean": "RDF11.SimpleInterpretation.rdfs_class_self_membership"
+        }
+      ],
+      "limitations": "The source lists fourteen entries without recognition qualifiers; the two optional-datatype entries are only conditionally covered. Do not count the printed unqualified claim as discharged or treat the table as axioms. The twelve-symbol list deliberately excludes XMLLiteral and HTML. It does not enumerate every valid class typing. Concrete vocabulary/datatype correspondence and expert acceptance remain external.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-RDFS-ADDITIONAL-VALID-PROPERTIES",
+      "relation": "theorem",
+      "symbol_linked_english": "Every one of the nine listed rdfsAdditionalPropertySymbols has a derived rdf:Property typing. rdfs_additional_properties_entailed uses existing derivation soundness to show the set of those conclusions is RDFS-entailed by any graph, including the empty graph.",
+      "bindings": [
+        {
+          "symbol": "rdfsAdditionalPropertySymbols",
+          "lean": "RDF11.rdfsAdditionalPropertySymbols"
+        },
+        {
+          "symbol": "RDFSVocabulary.additionalPropertyTriples",
+          "lean": "RDF11.RDFSVocabulary.additionalPropertyTriples"
+        },
+        {
+          "symbol": "rdfs_additional_property_derivable",
+          "lean": "RDF11.rdfs_additional_property_derivable"
+        },
+        {
+          "symbol": "rdfs_additional_properties_entailed",
+          "lean": "RDF11.rdfs_additional_properties_entailed"
+        }
+      ],
+      "limitations": "The table is treated as consequences, never promoted to axioms. These nine entries are not claimed to exhaust all valid property typings. Vocabulary IRIs and datatype meanings retain the existing abstract interfaces; source review and implementation refinement remain pending.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-RDFS-EMPTY-CLASS-PERMITTED",
+      "relation": "partial_theorem",
+      "symbol_linked_english": "empty_class_model supplies an actual RDFSModel with a class c whose ICEXT is Set.empty. unnamed_empty_class identifies c in the existing constructor. Universal class self-membership and Resource nonemptiness prevent reading this permission as allowing every class to be empty.",
+      "bindings": [
+        {
+          "symbol": "RDFSModelConstruction.empty_class_model",
+          "lean": "RDF11.RDFSModelConstruction.empty_class_model"
+        },
+        {
+          "symbol": "RDFSModelConstruction.unnamed_empty_class",
+          "lean": "RDF11.RDFSModelConstruction.unnamed_empty_class"
+        },
+        {
+          "symbol": "RDFModelConstruction.typeExtension",
+          "lean": "RDF11.RDFModelConstruction.typeExtension"
+        },
+        {
+          "symbol": "SimpleInterpretation.rdfs_class_self_membership",
+          "lean": "RDF11.SimpleInterpretation.rdfs_class_self_membership"
+        },
+        {
+          "symbol": "SimpleInterpretation.rdfs_resource_nonempty",
+          "lean": "RDF11.SimpleInterpretation.rdfs_resource_nonempty"
+        }
+      ],
+      "limitations": "The witness uses the existing sufficient Parameters: aligned vocabulary, recognized built-ins, schema recognition exclusions and actual language-literal coverage. These are constructor hypotheses, not new requirements on every RDFS interpretation. The empty class is an unnamed carrier resource; no named empty-class vocabulary or closed-world rule is introduced. No special empty datatype value space is assumed. Concrete parameter correspondence and expert review remain open.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
     }
   ],
   "passage_selectors": [
@@ -4788,7 +4881,9 @@
       "text": "A class may have an empty class extension.",
       "claims": [
         "MT11-RDFS-CLASS-STRUCTURE",
-        "MT11-RDFS-NONSEPARATION"
+        "MT11-RDFS-NONSEPARATION",
+        "MT11-RDFS-EMPTY-CLASS-PERMITTED",
+        "MT11-RDFS-ADDITIONAL-VALID-TYPES"
       ],
       "within_section": "rdfs-interpretations"
     },
@@ -5035,7 +5130,8 @@
       "tag": "table",
       "text": "Some rdfs-valid triples.",
       "claims": [
-        "MT11-RDFS-ADDITIONAL-VALID-TYPES"
+        "MT11-RDFS-ADDITIONAL-VALID-TYPES",
+        "MT11-RDFS-ADDITIONAL-VALID-PROPERTIES"
       ],
       "within_section": "rdfs-interpretations"
     },
@@ -5810,6 +5906,17 @@
         "MT11-LEAN-PROPER-INSTANCE-NONENTAILMENT"
       ],
       "within_section": "proofs-of-some-results-informative"
+    },
+    {
+      "id": "rdfs-additional-introduction",
+      "source": "mt",
+      "tag": "p",
+      "text": "Other triples which must be true in all RDFS interpretations include the following.",
+      "within_section": "rdfs-interpretations",
+      "claims": [
+        "MT11-RDFS-ADDITIONAL-VALID-TYPES",
+        "MT11-RDFS-ADDITIONAL-VALID-PROPERTIES"
+      ]
     }
   ],
   "context_resolutions": [
@@ -5991,6 +6098,15 @@
       "antecedent_passage": "lean",
       "resolved_meaning": "The preceding instance subgraph must be a strict subset to contradict the definition of leanness.",
       "inference": "The checked finite-blank argument establishes the missing strictness; unrestricted exclusion of proper self-instances remains open.",
+      "review": "pending"
+    },
+    {
+      "claim_id": "MT11-RDFS-ADDITIONAL-VALID-TYPES",
+      "passage": "rdfs-additional-introduction",
+      "source_phrase": "This is not a complete set",
+      "antecedent_passage": "rdfs-additional-types",
+      "resolved_meaning": "The displayed family of valid typings is not an exhaustive enumeration of all RDFS-valid triples.",
+      "inference": "The incompleteness qualifier does not weaken universal validity of each printed entry. The optional-datatype recognition question remains separate.",
       "review": "pending"
     }
   ]

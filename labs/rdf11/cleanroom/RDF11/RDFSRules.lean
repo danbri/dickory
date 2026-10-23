@@ -123,6 +123,24 @@ inductive RDFSDerives (T : DatatypeTheory Iri Literal Value) (D : Set Iri)
   | rule (H : GeneralizedGraph Iri Literal B) :
       (∀ t, H t → RDFSDerives T D v G t) → RDFSStep T D v H t → RDFSDerives T D v G t
 
+theorem RDFSDerives.domain
+    (hd : RDFSDerives T D v G ⟨p, .iri (v.iri .domain), c⟩)
+    (ht : RDFSDerives T D v G ⟨s, p, o⟩) :
+    RDFSDerives T D v G ⟨s, .iri (v.iri (.rdf .rdfType)), c⟩ :=
+  .rule (RDFSDerives T D v G) (fun _ h => h) (.rdfs2 p c s o hd ht)
+
+theorem RDFSDerives.range
+    (hr : RDFSDerives T D v G ⟨p, .iri (v.iri .range), c⟩)
+    (ht : RDFSDerives T D v G ⟨s, p, o⟩) :
+    RDFSDerives T D v G ⟨o, .iri (v.iri (.rdf .rdfType)), c⟩ :=
+  .rule (RDFSDerives T D v G) (fun _ h => h) (.rdfs3 p c s o hr ht)
+
+theorem RDFSDerives.subclass
+    (hs : RDFSDerives T D v G ⟨c, .iri (v.iri .subClassOf), d⟩)
+    (ht : RDFSDerives T D v G ⟨x, .iri (v.iri (.rdf .rdfType)), c⟩) :
+    RDFSDerives T D v G ⟨x, .iri (v.iri (.rdf .rdfType)), d⟩ :=
+  .rule (RDFSDerives T D v G) (fun _ h => h) (.rdfs9 c d x hs ht)
+
 theorem SimpleInterpretation.rdfs_derivation_sound (I : SimpleInterpretation Iri Literal U)
     (h : I.RDFSConditions T D v ρ) (A : I.Assignment B) (hG : I.GraphTrue A G)
     (derivation : RDFSDerives T D v G t) : I.TripleTrue A t := by

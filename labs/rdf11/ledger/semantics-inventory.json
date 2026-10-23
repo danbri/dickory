@@ -393,6 +393,7 @@
       "inventory_status": "first_pass_not_certified_exhaustive",
       "record_ids": [
         "MT11-RDFS-CLASS-STRUCTURE",
+        "MT11-RDFS-EMPTY-CLASS-PERMITTED",
         "MT11-RDFS-INTERPRETATION",
         "MT11-RDFS-ICEXT",
         "MT11-RDFS-IC",
@@ -2990,7 +2991,7 @@
       "category": "definition",
       "source_status": "normative",
       "assertion_basis": "explicit",
-      "paraphrase": "Classes are resources typed rdfs:Class; IC collects them, and ICEXT maps classes to subsets of IR. A class may have an empty extension, and distinct classes can share an extension.",
+      "paraphrase": "Classes are resources typed rdfs:Class; IC collects them, and ICEXT maps classes to subsets of IR. Distinct classes can share an extension.",
       "official_rule_code": null,
       "dependencies": [
         "MT11-SIMPLE-IR"
@@ -3000,7 +3001,31 @@
         "implementation_mapping": "unassessed",
         "formal_proof": "unassessed",
         "test_mapping": "unassessed"
-      }
+      },
+      "formalization_note": "Empty-extension permission is split into MT11-RDFS-EMPTY-CLASS-PERMITTED. The same source paragraph also states universal rdfs:Class self-membership, connected to the additional-valid-types proof rather than only a permitted-model example."
+    },
+    {
+      "id": "MT11-RDFS-EMPTY-CLASS-PERMITTED",
+      "section": "9",
+      "anchor": "dfn-class",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#dfn-class",
+      "category": "mathematical_consequence",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "An RDFS class may have an empty class extension.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-RDFS-CLASS-STRUCTURE",
+        "MT11-RDFS-INTERPRETATION"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "A constructed RDFS model has an unnamed class whose ICEXT is exactly empty. This is an existence witness under the existing sufficient constructor Parameters, not a requirement that every model contain an empty class or that every class can be empty.",
+      "split_from": "MT11-RDFS-CLASS-STRUCTURE"
     },
     {
       "id": "MT11-RDFS-INTERPRETATION",
@@ -3760,7 +3785,8 @@
         "rdfs:ContainerMembershipProperty",
         "rdf:Property",
         "rdf:Statement"
-      ]
+      ],
+      "formalization_note": "Twelve core class entries are derived from existing axioms and rules. The separate recognized-datatype theorem covers XMLLiteral/HTML only with a D-recognition premise. Their printed unqualified validity remains an open source question. The list is explicitly non-exhaustive."
     },
     {
       "id": "MT11-RDFS-ADDITIONAL-VALID-PROPERTIES",
@@ -5454,5 +5480,5 @@
       "formalization_note": "Derived conditional witness, not an explicitly printed D.3 assertion. This separates the empty-collection convention from outgoing-edge prohibition and acyclicity. The model retains all RDF/RDFS axioms."
     }
   ],
-  "record_count": 215
+  "record_count": 216
 }

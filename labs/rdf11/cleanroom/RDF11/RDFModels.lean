@@ -39,12 +39,14 @@ noncomputable def iriValue (T : DatatypeTheory Iri Literal Value) (D : Set Iri)
   exact if D a then embed (T.identified a) else name a
 
 /-- Datatype objects classify their identity-indexed value spaces, including
-langString and its aliases. Other name columns are unrestricted. -/
+langString and its aliases. Named columns are universal; the extra unnamed
+resource has an empty column, allowing an empty class in the RDFS extension. -/
 def typeExtension (T : DatatypeTheory Iri Literal Value)
     (x y : Carrier.{u} Iri Value) : Prop :=
   match y.down with
   | .inl d => ∃ w, T.datatypeSpace d w ∧ embed w = x
-  | .inr _ => True
+  | .inr (some _) => True
+  | .inr none => False
 
 noncomputable def interpretation (T : DatatypeTheory Iri Literal Value) (D : Set Iri)
     (v : RDFVocabulary Iri) (R : Carrier.{u} Iri Value → Carrier.{u} Iri Value → Carrier.{u} Iri Value → Prop) :

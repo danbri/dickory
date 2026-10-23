@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "status": "frozen_fourteenth_increment_finite_instances_not_expert_approved",
+  "status": "frozen_fifteenth_increment_rdfs_consequences_not_expert_approved",
   "lean_version": "4.33.1",
   "allowed_axioms": [
     "propext",
@@ -524,6 +524,20 @@
         "SUPPORT-INTERPOLATION",
         "SUPPORT-INSTANCES"
       ]
+    },
+    {
+      "id": "SUPPORT-RDFS-CONSEQUENCES",
+      "purpose": "Derived additional class/property typing families, recognition-scoped datatype typing, shared rule-composition helpers and universal class/resource consequences. Includes an empty-class model witness using the refined unnamed column while preserving the existing semantic conditions.",
+      "requires": [
+        "MT11-RDFS-ADDITIONAL-VALID-TYPES",
+        "MT11-RDFS-ADDITIONAL-VALID-PROPERTIES",
+        "MT11-RDFS-EMPTY-CLASS-PERMITTED",
+        "MT11-RDFS-CLASS-STRUCTURE",
+        "MT11-RDFS-INTERPRETATION",
+        "MT11-RULE-rdfs2",
+        "MT11-RULE-rdfs3",
+        "MT11-RULE-rdfs9"
+      ]
     }
   ],
   "files": [
@@ -550,14 +564,14 @@
     },
     {
       "path": "Audit/Snapshot.lean",
-      "sha256": "da148557ff7b596ec4295b92dd959e01f6ee175757b7499a486b8651dccaa365",
+      "sha256": "290e80774c18b12a0d94e6484b567820683824d3a5d0ba92bf6e292d748bfbf4",
       "role": "formal_source",
       "lifecycle": "active",
       "review": "pending_expert_review"
     },
     {
       "path": "RDF11.lean",
-      "sha256": "4284c1cb3a924b4341968a9f17a08ea39690c7365117dad0f7aa93d25aeccac0",
+      "sha256": "df9699296e2d0118015c4c71c23d402f40f44dcb5ca7f1aed1174c7593bd1b86",
       "role": "formal_source",
       "lifecycle": "active",
       "review": "pending_expert_review"
@@ -651,7 +665,7 @@
       "role": "formal_source",
       "lifecycle": "active",
       "review": "pending_expert_review",
-      "sha256": "74c39da205221c64551460423b314272d5335b7597942b51ee285acd61f037b1"
+      "sha256": "06fd58088073bf5201355b436e0956fc4be1ccee67675e9e1ab9624a198485d8"
     },
     {
       "path": "RDF11/Relations.lean",
@@ -802,7 +816,7 @@
     },
     {
       "path": "RDF11/RDFModels.lean",
-      "sha256": "5c2d54d529e52ade5b8cff96ad47a346e564a1c652d96fd9b4f98067cc6a227e",
+      "sha256": "f40524dfbd82f32d1f86fd0959228f31844a49a5309a316f9b9e052a8fbaf536",
       "role": "formal_source",
       "lifecycle": "active",
       "review": "pending_expert_review"
@@ -830,7 +844,7 @@
     },
     {
       "path": "RDF11/RDFSModelExamples.lean",
-      "sha256": "e8d5f25599195924d64be7dadc35be4348c3b9b5fd8808395132e051a7516212",
+      "sha256": "effc270702ad0cc1d07ca4548bf627517b34e0317b0a7396f9a40574b2cc0ca6",
       "role": "formal_source",
       "lifecycle": "active",
       "review": "pending_expert_review"
@@ -886,7 +900,7 @@
     },
     {
       "path": "RDF11/CollectionEntailment.lean",
-      "sha256": "b59c5429c1412508b40683cf9626dcc7d49450691f4b3b1da9ada8df460258ac",
+      "sha256": "076f4dfbeff6d1f78506f6145c741a65ea530e3c01449f81f79a969a73f155ea",
       "role": "formal_source",
       "lifecycle": "active",
       "review": "pending_expert_review"
@@ -915,6 +929,13 @@
     {
       "path": "RDF11/InstanceExamples.lean",
       "sha256": "c568811be9583f68f789b567418318fd97c58819efa507cd00c74cd044bb7bfb",
+      "role": "formal_source",
+      "lifecycle": "active",
+      "review": "pending_expert_review"
+    },
+    {
+      "path": "RDF11/RDFSConsequences.lean",
+      "sha256": "3c3af58b816aa204e019a596247b26a704551507f737c7c583c5f0796c04af08",
       "role": "formal_source",
       "lifecycle": "active",
       "review": "pending_expert_review"
@@ -17614,7 +17635,8 @@
       "type": "{Iri Literal Value : Type} →\n  RDF11.DatatypeTheory Iri Literal Value →\n    RDF11.RDFModelConstruction.Carrier Iri Value → RDF11.RDFModelConstruction.Carrier Iri Value → Prop",
       "role": "proof_support",
       "grounds": [
-        "SUPPORT-RDF-MODELS"
+        "SUPPORT-RDF-MODELS",
+        "MT11-RDFS-EMPTY-CLASS-PERMITTED"
       ],
       "parent_declaration_if_applicable": null,
       "review": "pending_expert_review"
@@ -17623,7 +17645,7 @@
       "name": "RDF11.RDFModelConstruction.typeExtension.eq_1",
       "module": "RDF11.RDFModels",
       "kind": "theorem",
-      "type": "∀ {Iri Literal Value : Type} (T : RDF11.DatatypeTheory Iri Literal Value)\n  (x y : RDF11.RDFModelConstruction.Carrier Iri Value),\n  RDF11.RDFModelConstruction.typeExtension T x y =\n    match y.down with\n    | Sum.inl d => ∃ w, T.datatypeSpace d w ∧ RDF11.RDFModelConstruction.embed w = x\n    | Sum.inr val => True",
+      "type": "∀ {Iri Literal Value : Type} (T : RDF11.DatatypeTheory Iri Literal Value)\n  (x y : RDF11.RDFModelConstruction.Carrier Iri Value),\n  RDF11.RDFModelConstruction.typeExtension T x y =\n    match y.down with\n    | Sum.inl d => ∃ w, T.datatypeSpace d w ∧ RDF11.RDFModelConstruction.embed w = x\n    | Sum.inr (some val) => True\n    | Sum.inr none => False",
       "role": "proof_support",
       "grounds": [
         "SUPPORT-RDF-MODELS"
@@ -17635,7 +17657,7 @@
       "name": "RDF11.RDFModelConstruction.typeExtension.match_1",
       "module": "RDF11.RDFModels",
       "kind": "definition",
-      "type": "{Iri Value : Type} →\n  (motive : Value ⊕ Option Iri → Sort u_1) →\n    (x : Value ⊕ Option Iri) →\n      ((d : Value) → motive (Sum.inl d)) → ((val : Option Iri) → motive (Sum.inr val)) → motive x",
+      "type": "{Iri Value : Type} →\n  (motive : Value ⊕ Option Iri → Sort u_1) →\n    (x : Value ⊕ Option Iri) →\n      ((d : Value) → motive (Sum.inl d)) →\n        ((val : Iri) → motive (Sum.inr (some val))) → (Unit → motive (Sum.inr none)) → motive x",
       "role": "proof_support",
       "grounds": [
         "SUPPORT-RDF-MODELS"
@@ -18610,7 +18632,7 @@
     },
     {
       "name": "RDF11.rdfsDomainAxioms.eq_1",
-      "module": "RDF11.RDFSModels",
+      "module": "RDF11.RDFSConsequences",
       "kind": "theorem",
       "type": "RDF11.rdfsDomainAxioms =\n  [(RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfType, RDF11.RDFSSymbol.resource),\n    (RDF11.RDFSSymbol.domain, RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfProperty),\n    (RDF11.RDFSSymbol.range, RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfProperty),\n    (RDF11.RDFSSymbol.subPropertyOf, RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfProperty),\n    (RDF11.RDFSSymbol.subClassOf, RDF11.RDFSSymbol.class_),\n    (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfSubject, RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfStatement),\n    (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfPredicate, RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfStatement),\n    (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfObject, RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfStatement),\n    (RDF11.RDFSSymbol.member, RDF11.RDFSSymbol.resource),\n    (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfFirst, RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfList),\n    (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfRest, RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfList),\n    (RDF11.RDFSSymbol.seeAlso, RDF11.RDFSSymbol.resource), (RDF11.RDFSSymbol.isDefinedBy, RDF11.RDFSSymbol.resource),\n    (RDF11.RDFSSymbol.comment, RDF11.RDFSSymbol.resource), (RDF11.RDFSSymbol.label, RDF11.RDFSSymbol.resource),\n    (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfValue, RDF11.RDFSSymbol.resource)]",
       "role": "proof_support",
@@ -18622,7 +18644,7 @@
     },
     {
       "name": "RDF11.rdfsHierarchyAxioms.eq_1",
-      "module": "RDF11.RDFSModels",
+      "module": "RDF11.RDFSConsequences",
       "kind": "theorem",
       "type": "RDF11.rdfsHierarchyAxioms =\n  [(RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfAlt, RDF11.RDFSSymbol.subClassOf, RDF11.RDFSSymbol.container),\n    (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfBag, RDF11.RDFSSymbol.subClassOf, RDF11.RDFSSymbol.container),\n    (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfSeq, RDF11.RDFSSymbol.subClassOf, RDF11.RDFSSymbol.container),\n    (RDF11.RDFSSymbol.containerMembershipProperty, RDF11.RDFSSymbol.subClassOf,\n      RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfProperty),\n    (RDF11.RDFSSymbol.isDefinedBy, RDF11.RDFSSymbol.subPropertyOf, RDF11.RDFSSymbol.seeAlso),\n    (RDF11.RDFSSymbol.datatype, RDF11.RDFSSymbol.subClassOf, RDF11.RDFSSymbol.class_)]",
       "role": "proof_support",
@@ -18634,7 +18656,7 @@
     },
     {
       "name": "RDF11.rdfsRangeAxioms.eq_1",
-      "module": "RDF11.RDFSModels",
+      "module": "RDF11.RDFSConsequences",
       "kind": "theorem",
       "type": "RDF11.rdfsRangeAxioms =\n  [(RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfType, RDF11.RDFSSymbol.class_),\n    (RDF11.RDFSSymbol.domain, RDF11.RDFSSymbol.class_), (RDF11.RDFSSymbol.range, RDF11.RDFSSymbol.class_),\n    (RDF11.RDFSSymbol.subPropertyOf, RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfProperty),\n    (RDF11.RDFSSymbol.subClassOf, RDF11.RDFSSymbol.class_),\n    (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfSubject, RDF11.RDFSSymbol.resource),\n    (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfPredicate, RDF11.RDFSSymbol.resource),\n    (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfObject, RDF11.RDFSSymbol.resource),\n    (RDF11.RDFSSymbol.member, RDF11.RDFSSymbol.resource),\n    (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfFirst, RDF11.RDFSSymbol.resource),\n    (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfRest, RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfList),\n    (RDF11.RDFSSymbol.seeAlso, RDF11.RDFSSymbol.resource), (RDF11.RDFSSymbol.isDefinedBy, RDF11.RDFSSymbol.resource),\n    (RDF11.RDFSSymbol.comment, RDF11.RDFSSymbol.literal), (RDF11.RDFSSymbol.label, RDF11.RDFSSymbol.literal),\n    (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfValue, RDF11.RDFSSymbol.resource)]",
       "role": "proof_support",
@@ -21069,6 +21091,368 @@
         "SUPPORT-FINITE-INSTANCES"
       ],
       "parent_declaration_if_applicable": "RDF11.Term.hasBlank.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFSDerives.domain",
+      "module": "RDF11.RDFSRules",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri}\n  {v : RDF11.RDFSVocabulary Iri} {Blank : Type} {G : RDF11.GeneralizedGraph Iri Literal Blank}\n  {p c s o : RDF11.Term Iri Literal Blank},\n  RDF11.RDFSDerives T D v G { subject := p, predicate := RDF11.Term.iri (v.iri RDF11.RDFSSymbol.domain), object := c } →\n    RDF11.RDFSDerives T D v G { subject := s, predicate := p, object := o } →\n      RDF11.RDFSDerives T D v G\n        { subject := s, predicate := RDF11.Term.iri (v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfType)),\n          object := c }",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDFS-CONSEQUENCES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.RDFSDerives",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFSDerives.range",
+      "module": "RDF11.RDFSRules",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri}\n  {v : RDF11.RDFSVocabulary Iri} {Blank : Type} {G : RDF11.GeneralizedGraph Iri Literal Blank}\n  {p c s o : RDF11.Term Iri Literal Blank},\n  RDF11.RDFSDerives T D v G { subject := p, predicate := RDF11.Term.iri (v.iri RDF11.RDFSSymbol.range), object := c } →\n    RDF11.RDFSDerives T D v G { subject := s, predicate := p, object := o } →\n      RDF11.RDFSDerives T D v G\n        { subject := o, predicate := RDF11.Term.iri (v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfType)),\n          object := c }",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDFS-CONSEQUENCES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.RDFSDerives",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFSDerives.subclass",
+      "module": "RDF11.RDFSRules",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri}\n  {v : RDF11.RDFSVocabulary Iri} {Blank : Type} {G : RDF11.GeneralizedGraph Iri Literal Blank}\n  {c d x : RDF11.Term Iri Literal Blank},\n  RDF11.RDFSDerives T D v G\n      { subject := c, predicate := RDF11.Term.iri (v.iri RDF11.RDFSSymbol.subClassOf), object := d } →\n    RDF11.RDFSDerives T D v G\n        { subject := x, predicate := RDF11.Term.iri (v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfType)),\n          object := c } →\n      RDF11.RDFSDerives T D v G\n        { subject := x, predicate := RDF11.Term.iri (v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfType)),\n          object := d }",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDFS-CONSEQUENCES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.RDFSDerives",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFSModelConstruction.empty_class_model",
+      "module": "RDF11.RDFSModelExamples",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (v : RDF11.RDFSVocabulary Iri),\n  RDF11.RDFSModelConstruction.Parameters T D v →\n    ∃ U I,\n      I.RDFSModel T D v ∧\n        ∃ c, I.IC v c ∧ I.ICEXT (v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfType)) c = RDF11.Set.empty",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDFS-CONSEQUENCES",
+        "MT11-RDFS-EMPTY-CLASS-PERMITTED"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFSModelConstruction.unnamed_empty_class",
+      "module": "RDF11.RDFSModelExamples",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (v : RDF11.RDFSVocabulary Iri),\n  RDF11.RDFSModelConstruction.Parameters T D v →\n    ∀\n      (Q :\n        RDF11.RDFModelConstruction.Carrier Iri Value →\n          RDF11.RDFModelConstruction.Carrier Iri Value → RDF11.RDFModelConstruction.Carrier Iri Value → Prop),\n      have I := RDF11.RDFSModelConstruction.interpretation T D v Q;\n      I.IC v RDF11.RDFModelConstruction.unnamed ∧\n        I.ICEXT (v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfType)) RDF11.RDFModelConstruction.unnamed =\n          RDF11.Set.empty",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDFS-CONSEQUENCES",
+        "MT11-RDFS-EMPTY-CLASS-PERMITTED"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFSVocabulary.additionalClassTriples",
+      "module": "RDF11.RDFSConsequences",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} → RDF11.RDFSVocabulary Iri → RDF11.GeneralizedGraph Iri Literal B",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDFS-CONSEQUENCES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.RDFSVocabulary",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFSVocabulary.additionalPropertyTriples",
+      "module": "RDF11.RDFSConsequences",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} → RDF11.RDFSVocabulary Iri → RDF11.GeneralizedGraph Iri Literal B",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDFS-CONSEQUENCES",
+        "MT11-RDFS-ADDITIONAL-VALID-PROPERTIES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.RDFSVocabulary",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.rdfs_class_self_membership",
+      "module": "RDF11.RDFSConsequences",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u_1} {Value : Type} {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri}\n  {v : RDF11.RDFSVocabulary Iri} (I : RDF11.SimpleInterpretation Iri Literal U),\n  I.RDFSModel T D v →\n    I.ICEXT (v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfType)) (I.IS (v.iri RDF11.RDFSSymbol.class_)).val\n      (I.IS (v.iri RDF11.RDFSSymbol.class_)).val",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDFS-CONSEQUENCES",
+        "MT11-RDFS-CLASS-STRUCTURE",
+        "MT11-RDFS-ADDITIONAL-VALID-TYPES",
+        "MT11-RDFS-EMPTY-CLASS-PERMITTED"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.rdfs_resource_nonempty",
+      "module": "RDF11.RDFSConsequences",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u_1} {Value : Type} {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri}\n  {v : RDF11.RDFSVocabulary Iri} (I : RDF11.SimpleInterpretation Iri Literal U),\n  I.RDFSModel T D v →\n    ∃ x, I.ICEXT (v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfType)) (I.IS (v.iri RDF11.RDFSSymbol.resource)).val x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDFS-CONSEQUENCES",
+        "MT11-RDFS-EMPTY-CLASS-PERMITTED"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.rdfsAdditionalClassSymbols",
+      "module": "RDF11.RDFSConsequences",
+      "kind": "definition",
+      "type": "List RDF11.RDFSSymbol",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDFS-CONSEQUENCES",
+        "MT11-RDFS-ADDITIONAL-VALID-TYPES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.rdfsAdditionalClassSymbols.eq_1",
+      "module": "RDF11.RDFSConsequences",
+      "kind": "theorem",
+      "type": "RDF11.rdfsAdditionalClassSymbols =\n  [RDF11.RDFSSymbol.resource, RDF11.RDFSSymbol.class_, RDF11.RDFSSymbol.literal, RDF11.RDFSSymbol.datatype,\n    RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfSeq, RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfBag,\n    RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfAlt, RDF11.RDFSSymbol.container,\n    RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfList, RDF11.RDFSSymbol.containerMembershipProperty,\n    RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfProperty, RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfStatement]",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDFS-CONSEQUENCES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.rdfsAdditionalClassSymbols",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.rdfsAdditionalPropertySymbols",
+      "module": "RDF11.RDFSConsequences",
+      "kind": "definition",
+      "type": "List RDF11.RDFSSymbol",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDFS-CONSEQUENCES",
+        "MT11-RDFS-ADDITIONAL-VALID-PROPERTIES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.rdfsAdditionalPropertySymbols.eq_1",
+      "module": "RDF11.RDFSConsequences",
+      "kind": "theorem",
+      "type": "RDF11.rdfsAdditionalPropertySymbols =\n  [RDF11.RDFSSymbol.domain, RDF11.RDFSSymbol.range, RDF11.RDFSSymbol.subPropertyOf, RDF11.RDFSSymbol.subClassOf,\n    RDF11.RDFSSymbol.member, RDF11.RDFSSymbol.seeAlso, RDF11.RDFSSymbol.isDefinedBy, RDF11.RDFSSymbol.comment,\n    RDF11.RDFSSymbol.label]",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDFS-CONSEQUENCES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.rdfsAdditionalPropertySymbols",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.rdfs_additional_class_derivable",
+      "module": "RDF11.RDFSConsequences",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (v : RDF11.RDFSVocabulary Iri) (G : RDF11.GeneralizedGraph Iri Literal B) (c : RDF11.RDFSSymbol),\n  c ∈ RDF11.rdfsAdditionalClassSymbols →\n    RDF11.RDFSDerives T D v G\n      { subject := RDF11.Term.iri (v.iri c),\n        predicate := RDF11.Term.iri (v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfType)),\n        object := RDF11.Term.iri (v.iri RDF11.RDFSSymbol.class_) }",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDFS-CONSEQUENCES",
+        "MT11-RDFS-ADDITIONAL-VALID-TYPES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.rdfs_additional_class_derivable._simp_1_3",
+      "module": "RDF11.RDFSConsequences",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_1} {b : α} {l : List α} {a : α}, (a ∈ b :: l) = (a = b ∨ a ∈ l)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDFS-CONSEQUENCES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.rdfs_additional_class_derivable",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.rdfs_additional_class_derivable._simp_1_4",
+      "module": "RDF11.RDFSConsequences",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_1} {a : α}, (a ∈ []) = False",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDFS-CONSEQUENCES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.rdfs_additional_class_derivable",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.rdfs_additional_properties_entailed",
+      "module": "RDF11.RDFSConsequences",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (v : RDF11.RDFSVocabulary Iri) (G : RDF11.GeneralizedGraph Iri Literal B),\n  RDF11.RDFSEntails T D v G v.additionalPropertyTriples",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDFS-CONSEQUENCES",
+        "MT11-RDFS-ADDITIONAL-VALID-PROPERTIES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.rdfs_additional_property_derivable",
+      "module": "RDF11.RDFSConsequences",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (v : RDF11.RDFSVocabulary Iri) (G : RDF11.GeneralizedGraph Iri Literal B) (p : RDF11.RDFSSymbol),\n  p ∈ RDF11.rdfsAdditionalPropertySymbols →\n    RDF11.RDFSDerives T D v G\n      { subject := RDF11.Term.iri (v.iri p),\n        predicate := RDF11.Term.iri (v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfType)),\n        object := RDF11.Term.iri (v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfProperty)) }",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDFS-CONSEQUENCES",
+        "MT11-RDFS-ADDITIONAL-VALID-PROPERTIES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.rdfs_additional_property_derivable._simp_1_2",
+      "module": "RDF11.RDFSConsequences",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_1} {b : α} {l : List α} {a : α}, (a ∈ b :: l) = (a = b ∨ a ∈ l)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDFS-CONSEQUENCES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.rdfs_additional_property_derivable",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.rdfs_additional_property_derivable._simp_1_3",
+      "module": "RDF11.RDFSConsequences",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_1} {a : α}, (a ∈ []) = False",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDFS-CONSEQUENCES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.rdfs_additional_property_derivable",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.rdfs_additional_types_entailed",
+      "module": "RDF11.RDFSConsequences",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (v : RDF11.RDFSVocabulary Iri) (G : RDF11.GeneralizedGraph Iri Literal B),\n  RDF11.RDFSEntails T D v G v.additionalClassTriples",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDFS-CONSEQUENCES",
+        "MT11-RDFS-ADDITIONAL-VALID-TYPES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.rdfs_domain_axiom_derivable",
+      "module": "RDF11.RDFSConsequences",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (v : RDF11.RDFSVocabulary Iri) (G : RDF11.GeneralizedGraph Iri Literal B) (p c : RDF11.RDFSSymbol),\n  (p, c) ∈ RDF11.rdfsDomainAxioms →\n    RDF11.RDFSDerives T D v G\n      { subject := RDF11.Term.iri (v.iri p), predicate := RDF11.Term.iri (v.iri RDF11.RDFSSymbol.domain),\n        object := RDF11.Term.iri (v.iri c) }",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDFS-CONSEQUENCES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.rdfs_domain_property_derivable",
+      "module": "RDF11.RDFSConsequences",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (v : RDF11.RDFSVocabulary Iri) (G : RDF11.GeneralizedGraph Iri Literal B) (p c : RDF11.RDFSSymbol),\n  (p, c) ∈ RDF11.rdfsDomainAxioms →\n    RDF11.RDFSDerives T D v G\n      { subject := RDF11.Term.iri (v.iri p),\n        predicate := RDF11.Term.iri (v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfType)),\n        object := RDF11.Term.iri (v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfProperty)) }",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDFS-CONSEQUENCES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.rdfs_domain_target_class_derivable",
+      "module": "RDF11.RDFSConsequences",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (v : RDF11.RDFSVocabulary Iri) (G : RDF11.GeneralizedGraph Iri Literal B) (p c : RDF11.RDFSSymbol),\n  (p, c) ∈ RDF11.rdfsDomainAxioms →\n    RDF11.RDFSDerives T D v G\n      { subject := RDF11.Term.iri (v.iri c),\n        predicate := RDF11.Term.iri (v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfType)),\n        object := RDF11.Term.iri (v.iri RDF11.RDFSSymbol.class_) }",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDFS-CONSEQUENCES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.rdfs_hierarchy_axiom_derivable",
+      "module": "RDF11.RDFSConsequences",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (v : RDF11.RDFSVocabulary Iri) (G : RDF11.GeneralizedGraph Iri Literal B) (s p o : RDF11.RDFSSymbol),\n  (s, p, o) ∈ RDF11.rdfsHierarchyAxioms →\n    RDF11.RDFSDerives T D v G\n      { subject := RDF11.Term.iri (v.iri s), predicate := RDF11.Term.iri (v.iri p), object := RDF11.Term.iri (v.iri o) }",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDFS-CONSEQUENCES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.rdfs_range_axiom_derivable",
+      "module": "RDF11.RDFSConsequences",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (v : RDF11.RDFSVocabulary Iri) (G : RDF11.GeneralizedGraph Iri Literal B) (p c : RDF11.RDFSSymbol),\n  (p, c) ∈ RDF11.rdfsRangeAxioms →\n    RDF11.RDFSDerives T D v G\n      { subject := RDF11.Term.iri (v.iri p), predicate := RDF11.Term.iri (v.iri RDF11.RDFSSymbol.range),\n        object := RDF11.Term.iri (v.iri c) }",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDFS-CONSEQUENCES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.rdfs_range_target_class_derivable",
+      "module": "RDF11.RDFSConsequences",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (v : RDF11.RDFSVocabulary Iri) (G : RDF11.GeneralizedGraph Iri Literal B) (p c : RDF11.RDFSSymbol),\n  (p, c) ∈ RDF11.rdfsRangeAxioms →\n    RDF11.RDFSDerives T D v G\n      { subject := RDF11.Term.iri (v.iri c),\n        predicate := RDF11.Term.iri (v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfType)),\n        object := RDF11.Term.iri (v.iri RDF11.RDFSSymbol.class_) }",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDFS-CONSEQUENCES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.rdfs_recognized_datatype_class_derivable",
+      "module": "RDF11.RDFSConsequences",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (v : RDF11.RDFSVocabulary Iri) (G : RDF11.GeneralizedGraph Iri Literal B) (a : Iri),\n  D a →\n    RDF11.RDFSDerives T D v G\n      { subject := RDF11.Term.iri a, predicate := RDF11.Term.iri (v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfType)),\n        object := RDF11.Term.iri (v.iri RDF11.RDFSSymbol.class_) }",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDFS-CONSEQUENCES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.rdfs_recognized_datatype_class_entailed",
+      "module": "RDF11.RDFSConsequences",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (v : RDF11.RDFSVocabulary Iri) (G : RDF11.GeneralizedGraph Iri Literal B) (a : Iri),\n  D a →\n    RDF11.RDFSEntails T D v G\n      (RDF11.Set.singleton\n        { subject := RDF11.Term.iri a,\n          predicate := RDF11.Term.iri (v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfType)),\n          object := RDF11.Term.iri (v.iri RDF11.RDFSSymbol.class_) })",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDFS-CONSEQUENCES",
+        "MT11-RDFS-ADDITIONAL-VALID-TYPES"
+      ],
+      "parent_declaration_if_applicable": null,
       "review": "pending_expert_review"
     }
   ],

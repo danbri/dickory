@@ -13,7 +13,7 @@ theorem vocabulary_domain_derivable (T : DatatypeTheory Iri Literal Value) (D : 
   let H := RDFSDerives T D v G
   have ha : H ⟨.iri (v.iri p), .iri (v.iri .domain), .iri (v.iri c)⟩ :=
     .rdfsAxiom ⟨p, .domain, c, Or.inl ⟨rfl, hpc⟩, rfl⟩
-  exact .rule H (fun _ h => h) (.rdfs2 _ _ s o ha (.premise hg))
+  exact ha.domain (.premise hg)
 
 theorem vocabulary_range_derivable (T : DatatypeTheory Iri Literal Value) (D : Set Iri)
     (v : RDFSVocabulary Iri) (G : GeneralizedGraph Iri Literal B)
@@ -23,7 +23,7 @@ theorem vocabulary_range_derivable (T : DatatypeTheory Iri Literal Value) (D : S
   let H := RDFSDerives T D v G
   have ha : H ⟨.iri (v.iri p), .iri (v.iri .range), .iri (v.iri c)⟩ :=
     .rdfsAxiom ⟨p, .range, c, Or.inr (Or.inl ⟨rfl, hpc⟩), rfl⟩
-  exact .rule H (fun _ h => h) (.rdfs3 _ _ s o ha (.premise hg))
+  exact ha.range (.premise hg)
 
 theorem collection_first_subject_derivable (T : DatatypeTheory Iri Literal Value) (D : Set Iri)
     (v : RDFSVocabulary Iri) (G : GeneralizedGraph Iri Literal B)

@@ -112,7 +112,7 @@
     },
     {
       "id": "Q-OPTIONAL-DATATYPE-CLASSES",
-      "status": "source_scope_question_not_yet_countermodel_checked",
+      "status": "recognized_scope_proved_unqualified_claim_not_countermodel_checked",
       "claim_ids": [
         "MT11-RDFS-ADDITIONAL-VALID-TYPES",
         "MT11-RDF-VOCABULARY-LIMITS",
@@ -125,7 +125,8 @@
       ],
       "summary": "The additional-valid-triples table lists XMLLiteral and HTML class typings without a recognition premise, although RDF allows them to remain unrecognized.",
       "lean": [
-        "RDF11.SimpleInterpretation.RDFSConditions.datatype_typing"
+        "RDF11.SimpleInterpretation.RDFSConditions.datatype_typing",
+        "RDF11.rdfs_recognized_datatype_class_entailed"
       ],
       "review_question": "Are these additional validity claims intended to assume recognition of XMLLiteral and HTML?",
       "implementation_policy": "Do not promote the additional-validity table to axioms. Keep the recognition premise on datatype consequences.",
