@@ -42,3 +42,6 @@ import RDF11.ReificationExamples
 import RDF11.ContainerExamples
 import RDF11.NameInfinitude
 import RDF11.ContainerInfinitude
+import RDF11.Collections
+import RDF11.CollectionEntailment
+import RDF11.CollectionExamples

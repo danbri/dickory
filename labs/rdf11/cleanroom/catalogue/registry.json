@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "status": "frozen_eleventh_increment_infinitude_not_expert_approved",
+  "status": "frozen_twelfth_increment_collections_not_expert_approved",
   "lean_version": "4.33.1",
   "allowed_axioms": [
     "propext",
@@ -488,6 +488,20 @@
         "MT11-INFINITE-GRAPHS-PERMITTED",
         "MT11-CONTAINER-INFINITE-MEMBERS-PERMITTED"
       ]
+    },
+    {
+      "id": "SUPPORT-COLLECTIONS",
+      "purpose": "Ordinary collection-description shapes; domain/range and nil typing via existing rules; shared-assignment countermodels for permutation, branching, missing rest and derived nil self-edges. Arbitrary unrecognized item IRIs and explicit constructor hypotheses retain the source scopes.",
+      "requires": [
+        "MT11-COLLECTION-LINKED-STRUCTURE",
+        "MT11-COLLECTION-RDFS-TYPING",
+        "MT11-COLLECTION-PERMUTATION-NONENTAILMENT",
+        "MT11-COLLECTION-BRANCHING-PERMITTED",
+        "MT11-COLLECTION-MISSING-REST-PERMITTED",
+        "MT11-COLLECTION-NIL-SELF-EDGES-PERMITTED",
+        "MT11-RDFS-DOMAIN",
+        "MT11-RDFS-RANGE"
+      ]
     }
   ],
   "files": [
@@ -514,14 +528,14 @@
     },
     {
       "path": "Audit/Snapshot.lean",
-      "sha256": "897e356618abfc7a9b4277f2de060d2aea976d9b5f3c8b66b5090ce22ea1c88f",
+      "sha256": "688cb6899301a5c0ef97f0dabe23f7ca439adb268d9b0bbed2c58eed45325b6c",
       "role": "formal_source",
       "lifecycle": "active",
       "review": "pending_expert_review"
     },
     {
       "path": "RDF11.lean",
-      "sha256": "f20b153012781ce31a2a518257e36cb16bc6fca1d08acb24d14047ba50289c5d",
+      "sha256": "8570b54897d9b5b2145ca098e4bbbd697f31cb9c8fb1375b6df36387fab466a8",
       "role": "formal_source",
       "lifecycle": "active",
       "review": "pending_expert_review"
@@ -801,7 +815,7 @@
     },
     {
       "path": "RDF11/RDFSFreeProperties.lean",
-      "sha256": "53fc48849644d7b1a9d7883a08d1e9137253d2e02375f6b23ba9e1994c116f54",
+      "sha256": "59e751a4a2a73df72a1dc3f54a2e9a6b13f67587a43a437a712cab26009ae76b",
       "role": "formal_source",
       "lifecycle": "active",
       "review": "pending_expert_review"
@@ -837,6 +851,27 @@
     {
       "path": "RDF11/ContainerInfinitude.lean",
       "sha256": "481ed6e6be5051067e2d884122e666bf210940a0e7b1494996f35eb3d188f181",
+      "role": "formal_source",
+      "lifecycle": "active",
+      "review": "pending_expert_review"
+    },
+    {
+      "path": "RDF11/Collections.lean",
+      "sha256": "05b2bc82c808de4281362ad31b48662a0b9221c9f6184722d92d0aa3e0607c87",
+      "role": "formal_source",
+      "lifecycle": "active",
+      "review": "pending_expert_review"
+    },
+    {
+      "path": "RDF11/CollectionEntailment.lean",
+      "sha256": "b59c5429c1412508b40683cf9626dcc7d49450691f4b3b1da9ada8df460258ac",
+      "role": "formal_source",
+      "lifecycle": "active",
+      "review": "pending_expert_review"
+    },
+    {
+      "path": "RDF11/CollectionExamples.lean",
+      "sha256": "81cfd00dd7f1d0695f94ffb1db556e7e5de6f17d608365855603d1606696053f",
       "role": "formal_source",
       "lifecycle": "active",
       "review": "pending_expert_review"
@@ -18748,7 +18783,8 @@
       "type": "∀ {Iri Literal Value : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (v : RDF11.RDFSVocabulary Iri),\n  RDF11.RDFSModelConstruction.Parameters T D v →\n    ∀\n      (Q :\n        RDF11.RDFModelConstruction.Carrier Iri Value →\n          RDF11.RDFModelConstruction.Carrier Iri Value → RDF11.RDFModelConstruction.Carrier Iri Value → Prop)\n      (p : RDF11.RDFSSymbol),\n      RDF11.RDFSModelConstruction.SchemaSymbol p →\n        RDF11.RDFSModelConstruction.FreeProperty p →\n          ∀ (x y : RDF11.RDFModelConstruction.Carrier Iri Value),\n            (RDF11.RDFSModelConstruction.interpretation T D v Q).Relates\n                ((RDF11.RDFSModelConstruction.interpretation T D v Q).IS (v.iri p)).val x y ↔\n              Q (RDF11.RDFSModelConstruction.schemaName v p) x y",
       "role": "proof_support",
       "grounds": [
-        "SUPPORT-REIFICATION-CONTAINERS"
+        "SUPPORT-REIFICATION-CONTAINERS",
+        "MT11-COLLECTION-NO-EXTRA-SEMANTICS"
       ],
       "parent_declaration_if_applicable": null,
       "review": "pending_expert_review"
@@ -19290,6 +19326,336 @@
         "MT11-INTERPRETATION-INFINITE-NAME-STRUCTURE"
       ],
       "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.CollectionExamples.branching_consistent",
+      "module": "RDF11.CollectionExamples",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (v : RDF11.RDFSVocabulary Iri),\n  RDF11.RDFSModelConstruction.Parameters T D v →\n    ∀ (a b c : Iri),\n      ¬D a →\n        ¬D b →\n          ¬D c →\n            a ≠ b →\n              c ≠ v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfNil) →\n                ∃ U I,\n                  I.RDFSModel T D v ∧\n                    I.Satisfies (RDF11.Collections.branchingCell v a b c).generalize ∧\n                      (I.IS a).val ≠ (I.IS b).val ∧\n                        (I.IS c).val ≠ (I.IS (v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfNil))).val",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-COLLECTIONS",
+        "MT11-COLLECTION-NO-EXTRA-SEMANTICS",
+        "MT11-COLLECTION-BRANCHING-PERMITTED"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.CollectionExamples.nil_self_edges_consistent",
+      "module": "RDF11.CollectionExamples",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (v : RDF11.RDFSVocabulary Iri),\n  RDF11.RDFSModelConstruction.Parameters T D v →\n    ∃ U I,\n      I.RDFSModel T D v ∧\n        I.Satisfies\n          (RDF11.Collections.cell v (RDF11.Subject.iri (v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfNil)))\n              (RDF11.Term.iri (v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfNil)))\n              (RDF11.Term.iri (v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfNil)))).generalize",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-COLLECTIONS",
+        "MT11-COLLECTION-NO-EXTRA-SEMANTICS",
+        "MT11-COLLECTION-NIL-SELF-EDGES-PERMITTED"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.CollectionExamples.permutation_not_entailed",
+      "module": "RDF11.CollectionExamples",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (v : RDF11.RDFSVocabulary Iri),\n  RDF11.RDFSModelConstruction.Parameters T D v →\n    ∀ (a b : Iri),\n      ¬D a →\n        ¬D b →\n          b ≠ a →\n            ¬RDF11.RDFSEntails T D v (RDF11.Collections.twoItemChain v a b).generalize\n                (RDF11.Collections.twoItemChain v b a).generalize",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-COLLECTIONS",
+        "MT11-COLLECTION-PERMUTATION-NONENTAILMENT"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.CollectionExamples.rest_existence_not_entailed",
+      "module": "RDF11.CollectionExamples",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (v : RDF11.RDFSVocabulary Iri),\n  RDF11.RDFSModelConstruction.Parameters T D v →\n    ∀ (a : Iri),\n      ¬RDF11.RDFSEntails T D v (RDF11.Collections.headOnly v a).generalize\n          (RDF11.Set.singleton\n            { subject := RDF11.Term.blank false,\n              predicate := RDF11.Term.iri (v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfRest)),\n              object := RDF11.Term.blank true })",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-COLLECTIONS",
+        "MT11-COLLECTION-NO-EXTRA-SEMANTICS",
+        "MT11-COLLECTION-MISSING-REST-PERMITTED"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Collections.branchingCell",
+      "module": "RDF11.Collections",
+      "kind": "definition",
+      "type": "{Iri Literal : Type} → RDF11.RDFSVocabulary Iri → Iri → Iri → Iri → RDF11.Graph Iri Literal Unit",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-COLLECTIONS",
+        "MT11-COLLECTION-BRANCHING-PERMITTED"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Collections.branchingCell.eq_1",
+      "module": "RDF11.CollectionExamples",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} (v : RDF11.RDFSVocabulary Iri) (a b c : Iri),\n  RDF11.Collections.branchingCell v a b c =\n    RDF11.Set.union (RDF11.Collections.cell v (RDF11.Subject.blank ()) (RDF11.Term.iri a) (RDF11.Term.iri c))\n      (RDF11.Collections.cell v (RDF11.Subject.blank ()) (RDF11.Term.iri b)\n        (RDF11.Term.iri (v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfNil))))",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-COLLECTIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Collections.branchingCell",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Collections.cell",
+      "module": "RDF11.Collections",
+      "kind": "definition",
+      "type": "{Iri B Literal : Type} →\n  RDF11.RDFSVocabulary Iri →\n    RDF11.Subject Iri B → RDF11.Term Iri Literal B → RDF11.Term Iri Literal B → RDF11.Graph Iri Literal B",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-COLLECTIONS",
+        "MT11-COLLECTION-LINKED-STRUCTURE",
+        "MT11-COLLECTION-NIL-SELF-EDGES-PERMITTED"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Collections.cell.eq_1",
+      "module": "RDF11.CollectionExamples",
+      "kind": "theorem",
+      "type": "∀ {Iri B Literal : Type} (v : RDF11.RDFSVocabulary Iri) (root : RDF11.Subject Iri B)\n  (item tail : RDF11.Term Iri Literal B),\n  RDF11.Collections.cell v root item tail =\n    RDF11.Set.ofList\n      [{ subject := root, predicate := v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfFirst), object := item },\n        { subject := root, predicate := v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfRest), object := tail }]",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-COLLECTIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Collections.cell",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Collections.headOnly",
+      "module": "RDF11.Collections",
+      "kind": "definition",
+      "type": "{Iri Literal : Type} → RDF11.RDFSVocabulary Iri → Iri → RDF11.Graph Iri Literal Unit",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-COLLECTIONS",
+        "MT11-COLLECTION-MISSING-REST-PERMITTED"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Collections.twoItemChain",
+      "module": "RDF11.Collections",
+      "kind": "definition",
+      "type": "{Iri Literal : Type} → RDF11.RDFSVocabulary Iri → Iri → Iri → RDF11.Graph Iri Literal Bool",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-COLLECTIONS",
+        "MT11-COLLECTION-LINKED-STRUCTURE",
+        "MT11-COLLECTION-PERMUTATION-NONENTAILMENT"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Collections.twoItemChain.eq_1",
+      "module": "RDF11.CollectionExamples",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} (v : RDF11.RDFSVocabulary Iri) (a b : Iri),\n  RDF11.Collections.twoItemChain v a b =\n    RDF11.Set.union (RDF11.Collections.cell v (RDF11.Subject.blank false) (RDF11.Term.iri a) (RDF11.Term.blank true))\n      (RDF11.Collections.cell v (RDF11.Subject.blank true) (RDF11.Term.iri b)\n        (RDF11.Term.iri (v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfNil))))",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-COLLECTIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Collections.twoItemChain",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFSModelConstruction.free_term_triple_iff",
+      "module": "RDF11.RDFSFreeProperties",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (v : RDF11.RDFSVocabulary Iri),\n  RDF11.RDFSModelConstruction.Parameters T D v →\n    ∀\n      (Q :\n        RDF11.RDFModelConstruction.Carrier Iri Value →\n          RDF11.RDFModelConstruction.Carrier Iri Value → RDF11.RDFModelConstruction.Carrier Iri Value → Prop)\n      (A : (RDF11.RDFSModelConstruction.interpretation T D v Q).Assignment B) (s o : RDF11.Term Iri Literal B)\n      (p : RDF11.RDFSSymbol),\n      RDF11.RDFSModelConstruction.SchemaSymbol p →\n        RDF11.RDFSModelConstruction.FreeProperty p →\n          ((RDF11.RDFSModelConstruction.interpretation T D v Q).TripleTrue A\n              { subject := s, predicate := RDF11.Term.iri (v.iri p), object := o } ↔\n            ∃ x y,\n              (RDF11.RDFSModelConstruction.interpretation T D v Q).denote A s = some x ∧\n                (RDF11.RDFSModelConstruction.interpretation T D v Q).denote A o = some y ∧\n                  Q (RDF11.RDFSModelConstruction.schemaName v p) x y)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-COLLECTIONS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFSModelConstruction.free_unrecognized_object_triple_iff",
+      "module": "RDF11.RDFSFreeProperties",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (v : RDF11.RDFSVocabulary Iri),\n  RDF11.RDFSModelConstruction.Parameters T D v →\n    ∀\n      (Q :\n        RDF11.RDFModelConstruction.Carrier Iri Value →\n          RDF11.RDFModelConstruction.Carrier Iri Value → RDF11.RDFModelConstruction.Carrier Iri Value → Prop)\n      (A : (RDF11.RDFSModelConstruction.interpretation T D v Q).Assignment B) (s : RDF11.Term Iri Literal B)\n      (p : RDF11.RDFSSymbol),\n      RDF11.RDFSModelConstruction.SchemaSymbol p →\n        RDF11.RDFSModelConstruction.FreeProperty p →\n          ∀ (a : Iri),\n            ¬D a →\n              ((RDF11.RDFSModelConstruction.interpretation T D v Q).TripleTrue A\n                  { subject := s, predicate := RDF11.Term.iri (v.iri p), object := RDF11.Term.iri a } ↔\n                ∃ x,\n                  (RDF11.RDFSModelConstruction.interpretation T D v Q).denote A s = some x ∧\n                    Q (RDF11.RDFSModelConstruction.schemaName v p) x (RDF11.RDFModelConstruction.name a))",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-COLLECTIONS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFSModelConstruction.schemaName.eq_1",
+      "module": "RDF11.CollectionExamples",
+      "kind": "theorem",
+      "type": "∀ {Iri Value : Type} (v : RDF11.RDFSVocabulary Iri) (s : RDF11.RDFSSymbol),\n  RDF11.RDFSModelConstruction.schemaName v s = RDF11.RDFModelConstruction.name (v.iri s)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-COLLECTIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.RDFSModelConstruction.schemaName",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFSModelConstruction.unrecognized_denotation",
+      "module": "RDF11.RDFSFreeProperties",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (v : RDF11.RDFSVocabulary Iri)\n  (Q :\n    RDF11.RDFModelConstruction.Carrier Iri Value →\n      RDF11.RDFModelConstruction.Carrier Iri Value → RDF11.RDFModelConstruction.Carrier Iri Value → Prop)\n  (a : Iri), ¬D a → ((RDF11.RDFSModelConstruction.interpretation T D v Q).IS a).val = RDF11.RDFModelConstruction.name a",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-COLLECTIONS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.collection_first_subject_derivable",
+      "module": "RDF11.CollectionEntailment",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (v : RDF11.RDFSVocabulary Iri) (G : RDF11.GeneralizedGraph Iri Literal B) (s o : RDF11.Term Iri Literal B),\n  G { subject := s, predicate := RDF11.Term.iri (v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfFirst)), object := o } →\n    RDF11.RDFSDerives T D v G\n      { subject := s, predicate := RDF11.Term.iri (v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfType)),\n        object := RDF11.Term.iri (v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfList)) }",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-COLLECTIONS",
+        "MT11-COLLECTION-RDFS-TYPING"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.collection_first_subject_entailment",
+      "module": "RDF11.CollectionEntailment",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (v : RDF11.RDFSVocabulary Iri) (G : RDF11.GeneralizedGraph Iri Literal B) (s o : RDF11.Term Iri Literal B),\n  G { subject := s, predicate := RDF11.Term.iri (v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfFirst)), object := o } →\n    RDF11.RDFSEntails T D v G\n      (RDF11.Set.singleton\n        { subject := s, predicate := RDF11.Term.iri (v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfType)),\n          object := RDF11.Term.iri (v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfList)) })",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-COLLECTIONS",
+        "MT11-COLLECTION-RDFS-TYPING"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.collection_nil_typing_derivable",
+      "module": "RDF11.CollectionEntailment",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (v : RDF11.RDFSVocabulary Iri) (G : RDF11.GeneralizedGraph Iri Literal B),\n  RDF11.RDFSDerives T D v G\n    { subject := RDF11.Term.iri (v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfNil)),\n      predicate := RDF11.Term.iri (v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfType)),\n      object := RDF11.Term.iri (v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfList)) }",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-COLLECTIONS",
+        "MT11-COLLECTION-RDFS-TYPING"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.collection_rest_typing_derivable",
+      "module": "RDF11.CollectionEntailment",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (v : RDF11.RDFSVocabulary Iri) (G : RDF11.GeneralizedGraph Iri Literal B) (s o : RDF11.Term Iri Literal B),\n  G { subject := s, predicate := RDF11.Term.iri (v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfRest)), object := o } →\n    RDF11.RDFSDerives T D v G\n        { subject := s, predicate := RDF11.Term.iri (v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfType)),\n          object := RDF11.Term.iri (v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfList)) } ∧\n      RDF11.RDFSDerives T D v G\n        { subject := o, predicate := RDF11.Term.iri (v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfType)),\n          object := RDF11.Term.iri (v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfList)) }",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-COLLECTIONS",
+        "MT11-COLLECTION-RDFS-TYPING"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.collection_rest_typing_entailment",
+      "module": "RDF11.CollectionEntailment",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (v : RDF11.RDFSVocabulary Iri) (G : RDF11.GeneralizedGraph Iri Literal B) (s o : RDF11.Term Iri Literal B),\n  G { subject := s, predicate := RDF11.Term.iri (v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfRest)), object := o } →\n    RDF11.RDFSEntails T D v G\n      (RDF11.Set.ofList\n        [{ subject := s, predicate := RDF11.Term.iri (v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfType)),\n            object := RDF11.Term.iri (v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfList)) },\n          { subject := o, predicate := RDF11.Term.iri (v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfType)),\n            object := RDF11.Term.iri (v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfList)) }])",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-COLLECTIONS",
+        "MT11-COLLECTION-RDFS-TYPING"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.vocabulary_domain_derivable",
+      "module": "RDF11.CollectionEntailment",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (v : RDF11.RDFSVocabulary Iri) (G : RDF11.GeneralizedGraph Iri Literal B) (p c : RDF11.RDFSSymbol),\n  (p, c) ∈ RDF11.rdfsDomainAxioms →\n    ∀ (s o : RDF11.Term Iri Literal B),\n      G { subject := s, predicate := RDF11.Term.iri (v.iri p), object := o } →\n        RDF11.RDFSDerives T D v G\n          { subject := s, predicate := RDF11.Term.iri (v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfType)),\n            object := RDF11.Term.iri (v.iri c) }",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-COLLECTIONS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.vocabulary_range_derivable",
+      "module": "RDF11.CollectionEntailment",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (v : RDF11.RDFSVocabulary Iri) (G : RDF11.GeneralizedGraph Iri Literal B) (p c : RDF11.RDFSSymbol),\n  (p, c) ∈ RDF11.rdfsRangeAxioms →\n    ∀ (s o : RDF11.Term Iri Literal B),\n      G { subject := s, predicate := RDF11.Term.iri (v.iri p), object := o } →\n        RDF11.RDFSDerives T D v G\n          { subject := o, predicate := RDF11.Term.iri (v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfType)),\n            object := RDF11.Term.iri (v.iri c) }",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-COLLECTIONS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.RDFSFreeProperties.0.RDF11.SimpleInterpretation.denote.match_1.eq_1",
+      "module": "RDF11.RDFSFreeProperties",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Blank : Type} (motive : RDF11.Term Iri Literal Blank → Sort u_1) (i : Iri)\n  (h_1 : (i : Iri) → motive (RDF11.Term.iri i)) (h_2 : (l : Literal) → motive (RDF11.Term.literal l))\n  (h_3 : (b : Blank) → motive (RDF11.Term.blank b)),\n  (match RDF11.Term.iri i with\n    | RDF11.Term.iri i => h_1 i\n    | RDF11.Term.literal l => h_2 l\n    | RDF11.Term.blank b => h_3 b) =\n    h_1 i",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-COLLECTIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation.denote",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.RDFSFreeProperties.0.RDF11.SimpleInterpretation.denote.match_1.eq_2",
+      "module": "RDF11.RDFSFreeProperties",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Blank : Type} (motive : RDF11.Term Iri Literal Blank → Sort u_1) (l : Literal)\n  (h_1 : (i : Iri) → motive (RDF11.Term.iri i)) (h_2 : (l : Literal) → motive (RDF11.Term.literal l))\n  (h_3 : (b : Blank) → motive (RDF11.Term.blank b)),\n  (match RDF11.Term.literal l with\n    | RDF11.Term.iri i => h_1 i\n    | RDF11.Term.literal l => h_2 l\n    | RDF11.Term.blank b => h_3 b) =\n    h_2 l",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-COLLECTIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation.denote",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.RDFSFreeProperties.0.RDF11.SimpleInterpretation.denote.match_1.eq_3",
+      "module": "RDF11.RDFSFreeProperties",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Blank : Type} (motive : RDF11.Term Iri Literal Blank → Sort u_1) (b : Blank)\n  (h_1 : (i : Iri) → motive (RDF11.Term.iri i)) (h_2 : (l : Literal) → motive (RDF11.Term.literal l))\n  (h_3 : (b : Blank) → motive (RDF11.Term.blank b)),\n  (match RDF11.Term.blank b with\n    | RDF11.Term.iri i => h_1 i\n    | RDF11.Term.literal l => h_2 l\n    | RDF11.Term.blank b => h_3 b) =\n    h_3 b",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-COLLECTIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation.denote",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.RDFSFreeProperties.0.RDF11.SimpleInterpretation.denote.match_1.splitter",
+      "module": "RDF11.RDFSFreeProperties",
+      "kind": "definition",
+      "type": "{Iri Literal Blank : Type} →\n  (motive : RDF11.Term Iri Literal Blank → Sort u_1) →\n    (x : RDF11.Term Iri Literal Blank) →\n      ((i : Iri) → motive (RDF11.Term.iri i)) →\n        ((l : Literal) → motive (RDF11.Term.literal l)) → ((b : Blank) → motive (RDF11.Term.blank b)) → motive x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-COLLECTIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation.denote",
       "review": "pending_expert_review"
     }
   ],

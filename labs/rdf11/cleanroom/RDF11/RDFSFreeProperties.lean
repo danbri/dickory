@@ -61,4 +61,33 @@ theorem free_blank_triple_iff (T : DatatypeTheory Iri Literal Value) (D : Set Ir
   simp [SimpleInterpretation.denote, relates_free T D v h Q p hp hf,
     schema_denotation T D v h Q o ho]
 
+/-- Arbitrary unrecognized IRIs use the constructor's name branch. -/
+theorem unrecognized_denotation (T : DatatypeTheory Iri Literal Value) (D : Set Iri)
+    (v : RDFSVocabulary Iri)
+    (Q : Carrier.{u} Iri Value → Carrier.{u} Iri Value → Carrier.{u} Iri Value → Prop)
+    (a : Iri) (ha : ¬ D a) : ((interpretation T D v Q).IS a).val = name a :=
+  iriValue_unrecognized T D a ha
+
+/-- Expose a free relation while retaining the shared assignment of both terms. -/
+theorem free_term_triple_iff (T : DatatypeTheory Iri Literal Value) (D : Set Iri)
+    (v : RDFSVocabulary Iri) (h : Parameters T D v)
+    (Q : Carrier.{u} Iri Value → Carrier.{u} Iri Value → Carrier.{u} Iri Value → Prop)
+    (A : (interpretation T D v Q).Assignment B) (s o : Term Iri Literal B)
+    (p : RDFSSymbol) (hp : SchemaSymbol p) (hf : FreeProperty p) :
+    (interpretation T D v Q).TripleTrue A ⟨s, .iri (v.iri p), o⟩ ↔
+      ∃ x y, (interpretation T D v Q).denote A s = some x ∧
+        (interpretation T D v Q).denote A o = some y ∧ Q (schemaName v p) x y := by
+  rw [(interpretation T D v Q).named_predicate_true]
+  simp only [relates_free T D v h Q p hp hf]
+
+theorem free_unrecognized_object_triple_iff (T : DatatypeTheory Iri Literal Value) (D : Set Iri)
+    (v : RDFSVocabulary Iri) (h : Parameters T D v)
+    (Q : Carrier.{u} Iri Value → Carrier.{u} Iri Value → Carrier.{u} Iri Value → Prop)
+    (A : (interpretation T D v Q).Assignment B) (s : Term Iri Literal B)
+    (p : RDFSSymbol) (hp : SchemaSymbol p) (hf : FreeProperty p) (a : Iri) (ha : ¬ D a) :
+    (interpretation T D v Q).TripleTrue A ⟨s, .iri (v.iri p), .iri a⟩ ↔
+      ∃ x, (interpretation T D v Q).denote A s = some x ∧ Q (schemaName v p) x (name a) := by
+  rw [free_term_triple_iff T D v h Q A s (.iri a) p hp hf]
+  simp [SimpleInterpretation.denote, unrecognized_denotation T D v Q a ha]
+
 end RDF11.RDFSModelConstruction

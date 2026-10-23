@@ -591,7 +591,12 @@
         "MT11-COLLECTION-NO-EXTRA-SEMANTICS",
         "MT11-COLLECTION-NO-EXISTENCE-CLOSURE",
         "MT11-COLLECTION-EXTENSIONS",
-        "MT11-COLLECTION-RDFS-TYPING"
+        "MT11-COLLECTION-RDFS-TYPING",
+        "MT11-COLLECTION-PERMUTATION-NONENTAILMENT",
+        "MT11-COLLECTION-BRANCHING-PERMITTED",
+        "MT11-COLLECTION-MISSING-REST-PERMITTED",
+        "MT11-COLLECTION-NIL-EMPTY-CONVENTION",
+        "MT11-COLLECTION-NIL-SELF-EDGES-PERMITTED"
       ]
     }
   ],
@@ -4915,7 +4920,7 @@
       "category": "general_requirement",
       "source_status": "informative",
       "assertion_basis": "explicit",
-      "paraphrase": "Beyond existing RDF/RDFS conditions, collection vocabulary has no special well-formedness constraints; branching tails, multiple heads and missing rest information are possible RDF descriptions.",
+      "paraphrase": "The collection vocabulary has no additional special semantic conditions beyond the existing RDF/RDFS requirements; the intended list well-formedness convention is not a baseline graph-admission condition.",
       "official_rule_code": null,
       "dependencies": [
         "MT11-COLLECTION-LINKED-STRUCTURE"
@@ -4925,7 +4930,8 @@
         "implementation_mapping": "unassessed",
         "formal_proof": "unassessed",
         "test_mapping": "unassessed"
-      }
+      },
+      "formalization_note": "Separate records cover branching, missing rest, and the derived nil self-edge witness. Non-list tails means failure of the intended structure, not absence from the semantic class rdf:List under RDFS."
     },
     {
       "id": "MT11-COLLECTION-NO-EXISTENCE-CLOSURE",
@@ -4935,7 +4941,7 @@
       "category": "mathematical_consequence",
       "source_status": "informative",
       "assertion_basis": "explicit",
-      "paraphrase": "A described collection does not force the existence of every permutation or other derived collection; naming one sequence does not entail a newly ordered sequence.",
+      "paraphrase": "The source says that collection structures other than those explicitly described, and the empty collection, are not required to exist.",
       "official_rule_code": null,
       "dependencies": [
         "MT11-COLLECTION-LINKED-STRUCTURE"
@@ -4945,7 +4951,8 @@
         "implementation_mapping": "unassessed",
         "formal_proof": "unassessed",
         "test_mapping": "unassessed"
-      }
+      },
+      "formalization_note": "This broad explanatory claim remains unmapped. The printed permutation non-entailment now has a separate record and proof. Do not interpret this prose as an exact cardinality or closure requirement on the extension of rdf:List."
     },
     {
       "id": "MT11-COLLECTION-EXTENSIONS",
@@ -5334,7 +5341,116 @@
         "test_mapping": "unassessed"
       },
       "formalization_note": "A conditional RDFS witness contains a Bag with an injective family of members and a generic member extension having no finite enumeration. This choice of distinct denotations is not required in every model of the same graph."
+    },
+    {
+      "id": "MT11-COLLECTION-PERMUTATION-NONENTAILMENT",
+      "section": "D.3",
+      "anchor": "collections",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#collections",
+      "category": "mathematical_consequence",
+      "source_status": "informative",
+      "assertion_basis": "explicit",
+      "paraphrase": "The printed two-cell collection description does not entail the four-triple description with its two items reversed.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-COLLECTION-LINKED-STRUCTURE",
+        "MT11-COLLECTION-NO-EXISTENCE-CLOSURE"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "Each graph has its own existential blank assignment and no added type triples. The proof covers arbitrary distinct unrecognized item IRIs under explicit RDFS constructor hypotheses; no global unique-name rule is added."
+    },
+    {
+      "id": "MT11-COLLECTION-BRANCHING-PERMITTED",
+      "section": "D.3",
+      "anchor": "collections",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#collections",
+      "category": "general_requirement",
+      "source_status": "informative",
+      "assertion_basis": "explicit",
+      "paraphrase": "RDF permits a collection description with two rdf:first values and two rdf:rest values on the same root.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-COLLECTION-NO-EXTRA-SEMANTICS"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "The witness preserves the printed four-edge shape and proves its heads and tails have distinct semantic values. Under RDFS every tail is still of type rdf:List; this does not establish intended chain well-formedness."
+    },
+    {
+      "id": "MT11-COLLECTION-MISSING-REST-PERMITTED",
+      "section": "D.3",
+      "anchor": "collections",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#collections",
+      "category": "general_requirement",
+      "source_status": "informative",
+      "assertion_basis": "explicit",
+      "paraphrase": "A collection description can omit a rdf:rest value; first-edge information does not require a rest-edge witness.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-COLLECTION-NO-EXTRA-SEMANTICS"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "The countermodel makes rdf:rest globally empty and refutes even a wholly existential rest-edge conclusion. Additional premises may change this result."
+    },
+    {
+      "id": "MT11-COLLECTION-NIL-EMPTY-CONVENTION",
+      "section": "D.3",
+      "anchor": "collections",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#collections",
+      "category": "general_requirement",
+      "source_status": "informative",
+      "assertion_basis": "explicit",
+      "paraphrase": "In the familiar collection convention, rdf:nil marks termination and can be thought of as the empty collection.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-COLLECTION-LINKED-STRUCTURE",
+        "MT11-RDF-AXIOM-NIL"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "Unmapped application convention. Its normative rdf:List type is separately represented. No no-outgoing-edge, zero-cardinality or particular set-theoretic-object condition is imposed by this prose."
+    },
+    {
+      "id": "MT11-COLLECTION-NIL-SELF-EDGES-PERMITTED",
+      "section": "D.3",
+      "anchor": "collections",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#collections",
+      "category": "mathematical_consequence",
+      "source_status": "informative",
+      "assertion_basis": "derived",
+      "paraphrase": "Baseline RDFS permits a model in which rdf:nil has both an rdf:first edge and an rdf:rest edge to itself.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-COLLECTION-NO-EXTRA-SEMANTICS",
+        "MT11-COLLECTION-NIL-EMPTY-CONVENTION",
+        "MT11-RDF-AXIOM-NIL"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "Derived conditional witness, not an explicitly printed D.3 assertion. This separates the empty-collection convention from outgoing-edge prohibition and acyclicity. The model retains all RDF/RDFS axioms."
     }
   ],
-  "record_count": 210
+  "record_count": 215
 }

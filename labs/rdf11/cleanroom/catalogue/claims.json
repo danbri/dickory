@@ -3,8 +3,8 @@
   "status": "draft_not_complete_coverage",
   "method": "Human-readable AI close reading; selectors locate already selected passages and do not extract assertions.",
   "source_inventory": "../ledger/semantics-inventory.json",
-  "inventory_sha256": "78e3f8f7374451552dc5a1373f44f381501de1f69a0b6ad11ab5d9b7c90dcefb",
-  "mapping_input_sha256": "1e5d717aab49ecd09ae4d6a0d236a28af9a5521c98100844636bdea3ed689971",
+  "inventory_sha256": "65dd357c89fe475e26458c235e37852f8cff583e42a0b23eacb625672db16f0d",
+  "mapping_input_sha256": "eb0c0dc0e5fac1ff0f070b2108ab2f61126ec5a739374632de1ba71b2ef1d144",
   "documents": [
     {
       "id": "mt",
@@ -2328,6 +2328,175 @@
         },
         {
           "start": 124735,
+          "end": 125221,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 125221,
+          "end": 125531,
+          "refs": [
+            "MT11-COLLECTION-LINKED-STRUCTURE"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 125531,
+          "end": 125534,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 125534,
+          "end": 125967,
+          "refs": [
+            "MT11-COLLECTION-LINKED-STRUCTURE",
+            "MT11-COLLECTION-NIL-SELF-EDGES-PERMITTED",
+            "MT11-COLLECTION-NO-EXTRA-SEMANTICS",
+            "MT11-COLLECTION-RDFS-TYPING"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 125967,
+          "end": 125970,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 125970,
+          "end": 126861,
+          "refs": [
+            "MT11-COLLECTION-LINKED-STRUCTURE",
+            "MT11-COLLECTION-NIL-EMPTY-CONVENTION",
+            "MT11-COLLECTION-NIL-SELF-EDGES-PERMITTED",
+            "MT11-COLLECTION-NO-EXISTENCE-CLOSURE",
+            "MT11-COLLECTION-PERMUTATION-NONENTAILMENT"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 126861,
+          "end": 126864,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 126864,
+          "end": 126886,
+          "refs": [
+            "MT11-COLLECTION-PERMUTATION-NONENTAILMENT"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 126886,
+          "end": 126888,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 126888,
+          "end": 127045,
+          "refs": [
+            "MT11-COLLECTION-PERMUTATION-NONENTAILMENT"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 127045,
+          "end": 127051,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 127051,
+          "end": 127311,
+          "refs": [
+            "MT11-COLLECTION-BRANCHING-PERMITTED",
+            "MT11-COLLECTION-NIL-SELF-EDGES-PERMITTED",
+            "MT11-COLLECTION-NO-EXTRA-SEMANTICS"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 127311,
+          "end": 127313,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 127313,
+          "end": 127462,
+          "refs": [
+            "MT11-COLLECTION-BRANCHING-PERMITTED"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 127462,
+          "end": 127465,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 127465,
+          "end": 127616,
+          "refs": [
+            "MT11-COLLECTION-MISSING-REST-PERMITTED"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 127616,
+          "end": 127619,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 127619,
+          "end": 128357,
+          "refs": [
+            "MT11-COLLECTION-EXTENSIONS"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 128357,
+          "end": 128358,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 128358,
+          "end": 128567,
+          "refs": [
+            "MT11-COLLECTION-RDFS-TYPING"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 128567,
           "end": 139975,
           "refs": [
             "UNRESOLVED-mt"
@@ -4676,6 +4845,155 @@
         "MT11-INFINITE-GRAPHS-PERMITTED"
       ],
       "slice_sha256": "2f33020bb644b9d3b562335cc625d552e9a298be9075ef0d50a4c108aa8c7c43",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "collection-head-tail",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 125221,
+      "end": 125531,
+      "claims": [
+        "MT11-COLLECTION-LINKED-STRUCTURE"
+      ],
+      "slice_sha256": "1f25287482888e4e8165add251c916e34a53979c06914af4c8922bfb78d5cca2",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "collection-idiom",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 125534,
+      "end": 125967,
+      "claims": [
+        "MT11-COLLECTION-LINKED-STRUCTURE",
+        "MT11-COLLECTION-NO-EXTRA-SEMANTICS",
+        "MT11-COLLECTION-RDFS-TYPING",
+        "MT11-COLLECTION-NIL-SELF-EDGES-PERMITTED"
+      ],
+      "slice_sha256": "df81d128901e63cc2614262d0d204f910415a2c5361f46a8426d9d639bcc6dbe",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "collection-permutation-premise",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 125970,
+      "end": 126861,
+      "claims": [
+        "MT11-COLLECTION-LINKED-STRUCTURE",
+        "MT11-COLLECTION-NO-EXISTENCE-CLOSURE",
+        "MT11-COLLECTION-PERMUTATION-NONENTAILMENT",
+        "MT11-COLLECTION-NIL-EMPTY-CONVENTION",
+        "MT11-COLLECTION-NIL-SELF-EDGES-PERMITTED"
+      ],
+      "slice_sha256": "eae3c64aaa2ba6dcd1e7cfc96a29b571be548b791750d47a789fdb60f05f6e57",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "collection-permutation-connective",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 126864,
+      "end": 126886,
+      "claims": [
+        "MT11-COLLECTION-PERMUTATION-NONENTAILMENT"
+      ],
+      "slice_sha256": "7ebc4bca99ae22f38bc88acd1287bdb8b9dbd6d3ed86135789a6e0229aaa31df",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "collection-permutation-conclusion",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 126888,
+      "end": 127045,
+      "claims": [
+        "MT11-COLLECTION-PERMUTATION-NONENTAILMENT"
+      ],
+      "slice_sha256": "1a3e0179a585363ec77c94fb751a4efa8fb1d965fd74f9726d0d23a1d64c2ead",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "collection-no-wellformedness",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 127051,
+      "end": 127311,
+      "claims": [
+        "MT11-COLLECTION-NO-EXTRA-SEMANTICS",
+        "MT11-COLLECTION-BRANCHING-PERMITTED",
+        "MT11-COLLECTION-NIL-SELF-EDGES-PERMITTED"
+      ],
+      "slice_sha256": "a85d48061fefb95b458b69a5a5f4ba15bf724baf2a13eb9c9127aa83ae6578c6",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "collection-branching",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 127313,
+      "end": 127462,
+      "claims": [
+        "MT11-COLLECTION-BRANCHING-PERMITTED"
+      ],
+      "slice_sha256": "c5ffa666704818b26befaa52115981260597b861fabc639f0d3c92257222b0bc",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "collection-missing-rest",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 127465,
+      "end": 127616,
+      "claims": [
+        "MT11-COLLECTION-MISSING-REST-PERMITTED"
+      ],
+      "slice_sha256": "460a6c9b1b21f6dd10f84609b3069533a5a1b5f4107f0b56b5b83a1fa22896d8",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "collection-extensions",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 127619,
+      "end": 128357,
+      "claims": [
+        "MT11-COLLECTION-EXTENSIONS"
+      ],
+      "slice_sha256": "3de17baa4146c2e80c0c85dca0464e5e0e0e4a8c3fac05f64f691b16f7be5bb2",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "collection-rdfs-typing",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 128358,
+      "end": 128567,
+      "claims": [
+        "MT11-COLLECTION-RDFS-TYPING"
+      ],
+      "slice_sha256": "a5fd93f6dda0759199834e27521c1805f6759354fd6706b8c80ade47b6bdbe28",
       "locator_tag": "p",
       "review": "pending",
       "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
@@ -13372,10 +13690,32 @@
         "formal_proof": "unassessed",
         "test_mapping": "unassessed"
       },
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-COLLECTION-LINKED-STRUCTURE",
+        "relation": "partial_definition",
+        "symbol_linked_english": "Collections.cell expresses the two-triple first/rest idiom. twoItemChain joins two cells with existential blanks and rdf:nil at the end.",
+        "bindings": [
+          {
+            "symbol": "Collections.cell",
+            "lean": "RDF11.Collections.cell"
+          },
+          {
+            "symbol": "Collections.twoItemChain",
+            "lean": "RDF11.Collections.twoItemChain"
+          }
+        ],
+        "limitations": "These ordinary graph constructors describe selected source shapes without imposing a universal list grammar. General chain traversal, an application-level ordered-sequence interpretation and the empty-collection convention remain separate obligations.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "collection-head-tail",
+        "collection-idiom",
+        "collection-permutation-premise"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-COLLECTION-NO-EXTRA-SEMANTICS",
@@ -13385,7 +13725,7 @@
       "category": "general_requirement",
       "source_status": "informative",
       "assertion_basis": "explicit",
-      "paraphrase": "Beyond existing RDF/RDFS conditions, collection vocabulary has no special well-formedness constraints; branching tails, multiple heads and missing rest information are possible RDF descriptions.",
+      "paraphrase": "The collection vocabulary has no additional special semantic conditions beyond the existing RDF/RDFS requirements; the intended list well-formedness convention is not a baseline graph-admission condition.",
       "official_rule_code": null,
       "dependencies": [
         "MT11-COLLECTION-LINKED-STRUCTURE"
@@ -13396,10 +13736,40 @@
         "formal_proof": "unassessed",
         "test_mapping": "unassessed"
       },
-      "cleanroom_mapping": null,
-      "passages": [],
+      "formalization_note": "Separate records cover branching, missing rest, and the derived nil self-edge witness. Non-list tails means failure of the intended structure, not absence from the semantic class rdf:List under RDFS.",
+      "cleanroom_mapping": {
+        "claim_id": "MT11-COLLECTION-NO-EXTRA-SEMANTICS",
+        "relation": "partial_theorem",
+        "symbol_linked_english": "relates_free permits first/rest relation choices in the verified RDFS constructor. branching_consistent, rest_existence_not_entailed and nil_self_edges_consistent expose specific absences of functionality, totality and acyclicity constraints.",
+        "bindings": [
+          {
+            "symbol": "RDFSModelConstruction.relates_free",
+            "lean": "RDF11.RDFSModelConstruction.relates_free"
+          },
+          {
+            "symbol": "CollectionExamples.branching_consistent",
+            "lean": "RDF11.CollectionExamples.branching_consistent"
+          },
+          {
+            "symbol": "CollectionExamples.rest_existence_not_entailed",
+            "lean": "RDF11.CollectionExamples.rest_existence_not_entailed"
+          },
+          {
+            "symbol": "CollectionExamples.nil_self_edges_consistent",
+            "lean": "RDF11.CollectionExamples.nil_self_edges_consistent"
+          }
+        ],
+        "limitations": "The witness uses RDFSModelConstruction.Parameters, sufficient hypotheses for the existing model family rather than requirements on every interpretation. Concrete datatype/name correspondence remains external. No package refinement or accepted expert review is supplied. These are specific witnesses, not a complete characterization of all collection graphs. Non-list tails cannot mean outside rdf:List under RDFS; the range axiom still applies.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "collection-idiom",
+        "collection-no-wellformedness"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-COLLECTION-NO-EXISTENCE-CLOSURE",
@@ -13409,7 +13779,7 @@
       "category": "mathematical_consequence",
       "source_status": "informative",
       "assertion_basis": "explicit",
-      "paraphrase": "A described collection does not force the existence of every permutation or other derived collection; naming one sequence does not entail a newly ordered sequence.",
+      "paraphrase": "The source says that collection structures other than those explicitly described, and the empty collection, are not required to exist.",
       "official_rule_code": null,
       "dependencies": [
         "MT11-COLLECTION-LINKED-STRUCTURE"
@@ -13420,8 +13790,11 @@
         "formal_proof": "unassessed",
         "test_mapping": "unassessed"
       },
+      "formalization_note": "This broad explanatory claim remains unmapped. The printed permutation non-entailment now has a separate record and proof. Do not interpret this prose as an exact cardinality or closure requirement on the extension of rdf:List.",
       "cleanroom_mapping": null,
-      "passages": [],
+      "passages": [
+        "collection-permutation-premise"
+      ],
       "extraction_review": "pending",
       "formalization_review": "not_started"
     },
@@ -13446,7 +13819,9 @@
         "test_mapping": "unassessed"
       },
       "cleanroom_mapping": null,
-      "passages": [],
+      "passages": [
+        "collection-extensions"
+      ],
       "extraction_review": "pending",
       "formalization_review": "not_started"
     },
@@ -13472,10 +13847,43 @@
         "formal_proof": "unassessed",
         "test_mapping": "unassessed"
       },
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-COLLECTION-RDFS-TYPING",
+        "relation": "theorem",
+        "symbol_linked_english": "The existing rdfs2/rdfs3 rules and vocabulary axioms derive rdf:List typing for every first subject and both endpoints of every rest edge. The semantic entailment corollaries preserve the shared blank assignment. collection_nil_typing_derivable uses the unconditional RDF axiom.",
+        "bindings": [
+          {
+            "symbol": "collection_first_subject_derivable",
+            "lean": "RDF11.collection_first_subject_derivable"
+          },
+          {
+            "symbol": "collection_rest_typing_derivable",
+            "lean": "RDF11.collection_rest_typing_derivable"
+          },
+          {
+            "symbol": "collection_first_subject_entailment",
+            "lean": "RDF11.collection_first_subject_entailment"
+          },
+          {
+            "symbol": "collection_rest_typing_entailment",
+            "lean": "RDF11.collection_rest_typing_entailment"
+          },
+          {
+            "symbol": "collection_nil_typing_derivable",
+            "lean": "RDF11.collection_nil_typing_derivable"
+          }
+        ],
+        "limitations": "These results hold for all models of the existing abstract RDF/RDFS interfaces and need no model-constructor Parameters. rdf:List typing does not imply functionality, termination or intended structural well-formedness. Concrete vocabulary binding remains a separate project obligation.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "collection-idiom",
+        "collection-rdfs-typing"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-DATASET-ISOMORPHISM",
@@ -14368,6 +14776,222 @@
       ],
       "extraction_review": "pending",
       "formalization_review": "pending"
+    },
+    {
+      "id": "MT11-COLLECTION-PERMUTATION-NONENTAILMENT",
+      "section": "D.3",
+      "anchor": "collections",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#collections",
+      "category": "mathematical_consequence",
+      "source_status": "informative",
+      "assertion_basis": "explicit",
+      "paraphrase": "The printed two-cell collection description does not entail the four-triple description with its two items reversed.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-COLLECTION-LINKED-STRUCTURE",
+        "MT11-COLLECTION-NO-EXISTENCE-CLOSURE"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "Each graph has its own existential blank assignment and no added type triples. The proof covers arbitrary distinct unrecognized item IRIs under explicit RDFS constructor hypotheses; no global unique-name rule is added.",
+      "cleanroom_mapping": {
+        "claim_id": "MT11-COLLECTION-PERMUTATION-NONENTAILMENT",
+        "relation": "partial_theorem",
+        "symbol_linked_english": "permutation_not_entailed makes twoItemChain v a b true and twoItemChain v b a false under every conclusion assignment. The shared-assignment denotation uniqueness theorem prevents the reverse graph from choosing incompatible witnesses for one blank.",
+        "bindings": [
+          {
+            "symbol": "Collections.twoItemChain",
+            "lean": "RDF11.Collections.twoItemChain"
+          },
+          {
+            "symbol": "CollectionExamples.permutation_not_entailed",
+            "lean": "RDF11.CollectionExamples.permutation_not_entailed"
+          }
+        ],
+        "limitations": "The witness uses RDFSModelConstruction.Parameters, sufficient hypotheses for the existing model family rather than requirements on every interpretation. Concrete datatype/name correspondence remains external. No package refinement or accepted expert review is supplied. Items are arbitrary distinct IRIs outside the recognized datatype set. Both graphs retain exactly four edges and two existential blanks; no type triple or cross-graph assignment is added. This refutes the general inference pattern, not every instance with extra premises or forced item equality.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "collection-permutation-premise",
+        "collection-permutation-connective",
+        "collection-permutation-conclusion"
+      ],
+      "extraction_review": "pending",
+      "formalization_review": "pending"
+    },
+    {
+      "id": "MT11-COLLECTION-BRANCHING-PERMITTED",
+      "section": "D.3",
+      "anchor": "collections",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#collections",
+      "category": "general_requirement",
+      "source_status": "informative",
+      "assertion_basis": "explicit",
+      "paraphrase": "RDF permits a collection description with two rdf:first values and two rdf:rest values on the same root.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-COLLECTION-NO-EXTRA-SEMANTICS"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "The witness preserves the printed four-edge shape and proves its heads and tails have distinct semantic values. Under RDFS every tail is still of type rdf:List; this does not establish intended chain well-formedness.",
+      "cleanroom_mapping": {
+        "claim_id": "MT11-COLLECTION-BRANCHING-PERMITTED",
+        "relation": "partial_theorem",
+        "symbol_linked_english": "branching_consistent satisfies branchingCell and proves that its two head values differ and its two tail values differ.",
+        "bindings": [
+          {
+            "symbol": "Collections.branchingCell",
+            "lean": "RDF11.Collections.branchingCell"
+          },
+          {
+            "symbol": "CollectionExamples.branching_consistent",
+            "lean": "RDF11.CollectionExamples.branching_consistent"
+          }
+        ],
+        "limitations": "The witness uses RDFSModelConstruction.Parameters, sufficient hypotheses for the existing model family rather than requirements on every interpretation. Concrete datatype/name correspondence remains external. No package refinement or accepted expert review is supplied. Head and non-nil tail IRIs are arbitrary unrecognized names, with explicit distinctness assumptions. Distinct denotations are chosen in the witness, not required by different blank or IRI spellings in every model. Both tails remain members of rdf:List.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "collection-no-wellformedness",
+        "collection-branching"
+      ],
+      "extraction_review": "pending",
+      "formalization_review": "pending"
+    },
+    {
+      "id": "MT11-COLLECTION-MISSING-REST-PERMITTED",
+      "section": "D.3",
+      "anchor": "collections",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#collections",
+      "category": "general_requirement",
+      "source_status": "informative",
+      "assertion_basis": "explicit",
+      "paraphrase": "A collection description can omit a rdf:rest value; first-edge information does not require a rest-edge witness.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-COLLECTION-NO-EXTRA-SEMANTICS"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "The countermodel makes rdf:rest globally empty and refutes even a wholly existential rest-edge conclusion. Additional premises may change this result.",
+      "cleanroom_mapping": {
+        "claim_id": "MT11-COLLECTION-MISSING-REST-PERMITTED",
+        "relation": "partial_theorem",
+        "symbol_linked_english": "headOnly asserts one rdf:first edge. rest_existence_not_entailed constructs a model of this premise in which no assignment can satisfy an existential rdf:rest edge.",
+        "bindings": [
+          {
+            "symbol": "Collections.headOnly",
+            "lean": "RDF11.Collections.headOnly"
+          },
+          {
+            "symbol": "CollectionExamples.rest_existence_not_entailed",
+            "lean": "RDF11.CollectionExamples.rest_existence_not_entailed"
+          }
+        ],
+        "limitations": "The witness uses RDFSModelConstruction.Parameters, sufficient hypotheses for the existing model family rather than requirements on every interpretation. Concrete datatype/name correspondence remains external. No package refinement or accepted expert review is supplied. The item may be any IRI, including a recognized datatype IRI. This is a particular premise shape, not a rule permitting deletion of rest triples from arbitrary input while preserving entailments.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "collection-missing-rest"
+      ],
+      "extraction_review": "pending",
+      "formalization_review": "pending"
+    },
+    {
+      "id": "MT11-COLLECTION-NIL-EMPTY-CONVENTION",
+      "section": "D.3",
+      "anchor": "collections",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#collections",
+      "category": "general_requirement",
+      "source_status": "informative",
+      "assertion_basis": "explicit",
+      "paraphrase": "In the familiar collection convention, rdf:nil marks termination and can be thought of as the empty collection.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-COLLECTION-LINKED-STRUCTURE",
+        "MT11-RDF-AXIOM-NIL"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "Unmapped application convention. Its normative rdf:List type is separately represented. No no-outgoing-edge, zero-cardinality or particular set-theoretic-object condition is imposed by this prose.",
+      "cleanroom_mapping": null,
+      "passages": [
+        "collection-permutation-premise"
+      ],
+      "extraction_review": "pending",
+      "formalization_review": "not_started"
+    },
+    {
+      "id": "MT11-COLLECTION-NIL-SELF-EDGES-PERMITTED",
+      "section": "D.3",
+      "anchor": "collections",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#collections",
+      "category": "mathematical_consequence",
+      "source_status": "informative",
+      "assertion_basis": "derived",
+      "paraphrase": "Baseline RDFS permits a model in which rdf:nil has both an rdf:first edge and an rdf:rest edge to itself.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-COLLECTION-NO-EXTRA-SEMANTICS",
+        "MT11-COLLECTION-NIL-EMPTY-CONVENTION",
+        "MT11-RDF-AXIOM-NIL"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "Derived conditional witness, not an explicitly printed D.3 assertion. This separates the empty-collection convention from outgoing-edge prohibition and acyclicity. The model retains all RDF/RDFS axioms.",
+      "cleanroom_mapping": {
+        "claim_id": "MT11-COLLECTION-NIL-SELF-EDGES-PERMITTED",
+        "relation": "partial_theorem",
+        "symbol_linked_english": "nil_self_edges_consistent satisfies a cell whose root, item and tail are all rdf:nil, in an actual RDFS model.",
+        "bindings": [
+          {
+            "symbol": "Collections.cell",
+            "lean": "RDF11.Collections.cell"
+          },
+          {
+            "symbol": "CollectionExamples.nil_self_edges_consistent",
+            "lean": "RDF11.CollectionExamples.nil_self_edges_consistent"
+          }
+        ],
+        "limitations": "The witness uses RDFSModelConstruction.Parameters, sufficient hypotheses for the existing model family rather than requirements on every interpretation. Concrete datatype/name correspondence remains external. No package refinement or accepted expert review is supplied. This is a derived consistency witness with a rest self-loop. It does not assign an ordered-sequence interpretation or negate rdf:nil's required rdf:List type.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "collection-idiom",
+        "collection-permutation-premise",
+        "collection-no-wellformedness"
+      ],
+      "extraction_review": "pending",
+      "formalization_review": "pending"
     }
   ],
   "context_resolutions": [
@@ -14495,6 +15119,24 @@
       "antecedent_passage": "reification-base-triple",
       "resolved_meaning": "The described assertion, with its subject, predicate and object components; it is distinct from the four describing triples.",
       "inference": "Record failure of the general inference patterns, not universal non-entailment of every possible instance.",
+      "review": "pending"
+    },
+    {
+      "claim_id": "MT11-COLLECTION-LINKED-STRUCTURE",
+      "passage": "collection-permutation-premise",
+      "source_phrase": "where the final item",
+      "antecedent_passage": "collection-idiom",
+      "resolved_meaning": "The final cell in the intended linked description made from the preceding two-triple first/rest idiom.",
+      "inference": "This convention is not a universal termination condition on every RDF graph.",
+      "review": "pending"
+    },
+    {
+      "claim_id": "MT11-COLLECTION-BRANCHING-PERMITTED",
+      "passage": "collection-no-wellformedness",
+      "source_phrase": "non-list tails",
+      "antecedent_passage": "collection-idiom",
+      "resolved_meaning": "Tails failing the intended collection structure, not tails outside the semantic class rdf:List under RDFS.",
+      "inference": "Read with collection-rdfs-typing and the normative domain/range axioms; do not construct an RDFS countermodel violating required typing.",
       "review": "pending"
     }
   ],
