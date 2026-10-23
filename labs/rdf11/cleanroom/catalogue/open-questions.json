@@ -181,6 +181,50 @@
       "review_question": "Is the intended conclusion about two fixed distinct reification resources, rather than the printed standalone existential graph? How should the archived connective be dispositioned?",
       "implementation_policy": "Preserve the printed text, keep the checked positive entailment separate, and witness the intended distinct-resource claim with IRI names. Do not change blank-node satisfaction or claim to prove the printed non-entailment.",
       "review_status": "pending_expert_review"
+    },
+    {
+      "id": "Q-SKOLEM-LIFTING-BLANK-SCOPE",
+      "status": "capture_free_theorem_checked_source_convention_needs_review",
+      "not_a_declared_erratum": true,
+      "claim_ids": [
+        "MT11-SKOLEM-CONSEQUENCE-LIFTING",
+        "MT11-SKOLEMIZATION"
+      ],
+      "passage_ids": [
+        "skolem-context",
+        "skolem-exact-lifting",
+        "skolem-lifting-proof"
+      ],
+      "summary": "The source defines sk on blanks in G and writes a strict lifting equation. The checked theorem makes source/conclusion blank copies explicit; ambient-total naming cannot recover a conclusion containing blanks.",
+      "lean": [
+        "RDF11.Skolemization.ordinary_exact_lifting",
+        "RDF11.Skolemization.applyLiftedTerm",
+        "RDF11.Skolemization.total_substitution_cannot_recover_blank_conclusion"
+      ],
+      "review_question": "Does the source equation presume standardization apart, or the convention of treating isomorphic graphs alike? Is the explicit separate-copy extension the intended account of sk on H-prime?",
+      "implementation_policy": "Keep original conclusion blanks separate and preserve them during reapplication. Do not substitute the ambient-total map for this extension or mark source fidelity accepted automatically.",
+      "review_status": "pending_expert_review"
+    },
+    {
+      "id": "Q-SKOLEM-PROOF-COMMUTATION",
+      "status": "independent_semantic_proof_checked_printed_step_needs_review",
+      "not_a_declared_erratum": true,
+      "claim_ids": [
+        "MT11-SKOLEM-CONSEQUENCE-LIFTING"
+      ],
+      "passage_ids": [
+        "skolem-lifting-proof-statement",
+        "skolem-lifting-proof"
+      ],
+      "summary": "Appendix C attributes ks(A(H)) = A(ks(H)) to disjoint substitution domains. Outputs of A may themselves be Skolem IRIs, so disjoint domains alone do not justify unrestricted commutation.",
+      "lean": [
+        "RDF11.Skolemization.namedInterpretation",
+        "RDF11.Skolemization.named_satisfies_skolem",
+        "RDF11.Skolemization.entails_lift"
+      ],
+      "review_question": "Is A on the right intended to be transported or composed with inverse naming? How should the printed proof explanation be qualified?",
+      "implementation_policy": "The new proof works directly through interpretations, retaining IR/IP/IEXT/IL and modifying only selected IS denotations. Do not import the printed commutation as an axiom or silently change the archived text.",
+      "review_status": "pending_expert_review"
     }
   ]
 }

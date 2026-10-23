@@ -3,8 +3,8 @@
   "status": "draft_not_complete_coverage",
   "method": "Human-readable AI close reading; selectors locate already selected passages and do not extract assertions.",
   "source_inventory": "../ledger/semantics-inventory.json",
-  "inventory_sha256": "65dd357c89fe475e26458c235e37852f8cff583e42a0b23eacb625672db16f0d",
-  "mapping_input_sha256": "eb0c0dc0e5fac1ff0f070b2108ab2f61126ec5a739374632de1ba71b2ef1d144",
+  "inventory_sha256": "098773127af24e2f57a00556161daed9943725171ce27f0dcb0b70687fbec046",
+  "mapping_input_sha256": "212c2c69e4ba956de94a70e40398b849aa4265bd81ac38054532fe4ba5574925",
   "documents": [
     {
       "id": "mt",
@@ -685,6 +685,7 @@
           "end": 54442,
           "refs": [
             "MT11-ORIGINAL-NOT-SKOLEM",
+            "MT11-SKOLEM-CONSEQUENCE-LIFTING",
             "MT11-SKOLEM-ENTAILS-ORIGINAL",
             "MT11-SKOLEM-FRESH-VOCABULARY-CONSERVATIVITY"
           ],
@@ -724,6 +725,22 @@
         },
         {
           "start": 54617,
+          "end": 54618,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 54618,
+          "end": 54746,
+          "refs": [
+            "MT11-SKOLEM-CONSEQUENCE-LIFTING"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 54746,
           "end": 54747,
           "refs": [
             "UNRESOLVED-mt"
@@ -2050,6 +2067,38 @@
         },
         {
           "start": 111381,
+          "end": 113130,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 113130,
+          "end": 113255,
+          "refs": [
+            "MT11-SKOLEM-CONSEQUENCE-LIFTING"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 113255,
+          "end": 113256,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 113256,
+          "end": 113792,
+          "refs": [
+            "MT11-SKOLEM-CONSEQUENCE-LIFTING"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 113792,
           "end": 115957,
           "refs": [
             "UNRESOLVED-mt"
@@ -3246,7 +3295,8 @@
       "claims": [
         "MT11-SKOLEM-ENTAILS-ORIGINAL",
         "MT11-ORIGINAL-NOT-SKOLEM",
-        "MT11-SKOLEM-FRESH-VOCABULARY-CONSERVATIVITY"
+        "MT11-SKOLEM-FRESH-VOCABULARY-CONSERVATIVITY",
+        "MT11-SKOLEM-CONSEQUENCE-LIFTING"
       ],
       "slice_sha256": "8bfaeb435a93c4f53fe17ec73c35ec2965e990cc9e60ffd19f7b8442a6578ee5",
       "locator_tag": "p",
@@ -4994,6 +5044,48 @@
         "MT11-COLLECTION-RDFS-TYPING"
       ],
       "slice_sha256": "a5fd93f6dda0759199834e27521c1805f6759354fd6706b8c80ade47b6bdbe28",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "skolem-exact-lifting",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 54618,
+      "end": 54746,
+      "claims": [
+        "MT11-SKOLEM-CONSEQUENCE-LIFTING"
+      ],
+      "slice_sha256": "44b7cf0856f0902a7ce784dab1549460aeacf2bda4e46bcd4c08346ac44aa1db",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "skolem-lifting-proof-statement",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 113130,
+      "end": 113255,
+      "claims": [
+        "MT11-SKOLEM-CONSEQUENCE-LIFTING"
+      ],
+      "slice_sha256": "6dba09bd5157f8ad2046fef592197ceb8997a6a4cdb4fecba7667b9a2c53b64f",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "skolem-lifting-proof",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 113256,
+      "end": 113792,
+      "claims": [
+        "MT11-SKOLEM-CONSEQUENCE-LIFTING"
+      ],
+      "slice_sha256": "064942fce37fe400cb6d5a0fb4d9a8fc7156e4439c192fc5bee75a0fe0877617",
       "locator_tag": "p",
       "review": "pending",
       "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
@@ -7845,7 +7937,7 @@
             "lean": "RDF11.Skolemization.lean"
           }
         ],
-        "limitations": "Freshness against G is formalized; global freshness at creation is an external naming obligation. The map is supplied, not proved to exist for arbitrary abstract IRI domains. This is full replacement as in Semantics §6, not the optional partial replacement of Concepts §3.5.",
+        "limitations": "Freshness against G is formalized; global freshness at creation is an external naming obligation. The map is supplied, not proved to exist for arbitrary abstract IRI domains. This is full replacement as in Semantics §6, not the optional partial replacement of Concepts §3.5. The existing substitution names every ambient blank value, which is adequate on G. Exact lifting instead uses applyLiftedTriple over separate source/conclusion blank copies.",
         "extraction_review": "pending_expert_review",
         "formalization_review": "pending_expert_review",
         "implementation_refinement": "not_connected_to_published_package"
@@ -7918,7 +8010,7 @@
         "formal_proof": "unassessed",
         "test_mapping": "unassessed"
       },
-      "formalization_note": "The printed statement lacks this nontrivial-skolemization premise; for a ground graph the transformation is identity.",
+      "formalization_note": "The nonempty-blank premise is explicitly supplied by the preceding §6 paragraph beginning Suppose G is a graph containing blank nodes. For a ground graph the transformation is identity; the displayed non-entailment must retain its surrounding scope.",
       "cleanroom_mapping": {
         "claim_id": "MT11-ORIGINAL-NOT-SKOLEM",
         "relation": "theorem",
@@ -7968,10 +8060,54 @@
       "supporting_source_urls": [
         "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#proofs"
       ],
-      "cleanroom_mapping": null,
-      "passages": [],
+      "formalization_note": "Exact ordinary lifting is proved using separate copies of source and conclusion blanks. Reapplication extends the original naming map on the source copy and preserves conclusion blanks; it is not the existing ambient-total substitution. The source's implicit blank-scope convention and Appendix C commutation explanation remain expert-review questions. Generalized semantic lifting is also proved directly through interpretations.",
+      "cleanroom_mapping": {
+        "claim_id": "MT11-SKOLEM-CONSEQUENCE-LIFTING",
+        "relation": "partial_theorem",
+        "symbol_linked_english": "ordinary_exact_lifting constructs an ordinary H-prime with separate source/conclusion blanks, proves G SimplyEntails H-prime, proves every source-copy blank occurs in G, and proves that applying applyLiftedTriple to H-prime gives H exactly. entails_lift supplies the semantic implication even for generalized graphs with different blank domains.",
+        "bindings": [
+          {
+            "symbol": "Statements.skolemization_lifting_lemma",
+            "lean": "RDF11.Statements.skolemization_lifting_lemma"
+          },
+          {
+            "symbol": "Skolemization.ordinary_exact_lifting",
+            "lean": "RDF11.Skolemization.ordinary_exact_lifting"
+          },
+          {
+            "symbol": "Skolemization.liftOrdinaryGraph",
+            "lean": "RDF11.Skolemization.liftOrdinaryGraph"
+          },
+          {
+            "symbol": "Skolemization.applyLiftedTriple",
+            "lean": "RDF11.Skolemization.applyLiftedTriple"
+          },
+          {
+            "symbol": "Skolemization.entails_lift",
+            "lean": "RDF11.Skolemization.entails_lift"
+          },
+          {
+            "symbol": "Skolemization.namedInterpretation",
+            "lean": "RDF11.Skolemization.namedInterpretation"
+          },
+          {
+            "symbol": "Skolemization.total_substitution_cannot_recover_blank_conclusion",
+            "lean": "RDF11.Skolemization.total_substitution_cannot_recover_blank_conclusion"
+          }
+        ],
+        "limitations": "No finiteness, disjoint-input-blank or Avoids-H premise is needed. The supplied Skolemization still requires injectivity on occurring source blanks and freshness against G. Reapplication names the source copy and preserves the conclusion copy; it is an explicit extension of the original map, not the ambient-total substitution. The mathematical theorem is checked, while the specification's implicit blank-renaming/strict-equality convention and Appendix C commutation explanation await expert review. This is simple entailment, not datatype/RDF/RDFS extension invariance.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "skolem-context",
+        "skolem-exact-lifting",
+        "skolem-lifting-proof-statement",
+        "skolem-lifting-proof"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-SKOLEM-FRESH-VOCABULARY-CONSERVATIVITY",
@@ -8022,7 +8158,7 @@
             "lean": "RDF11.Skolemization.conservative"
           }
         ],
-        "limitations": "Ordinary graphs; no finiteness or disjoint-blank-domain premise. Avoidance includes datatype IRIs. The separate exact lifting equation H = sk(H′) remains open; no unrestricted commutation with substitutions is assumed.",
+        "limitations": "Ordinary graphs; no finiteness or disjoint-blank-domain premise. Avoidance includes datatype IRIs. The separate exact lifting theorem now uses explicit source/conclusion blank copies; its source-scope interpretation remains under review. No unrestricted commutation with substitutions is assumed.",
         "extraction_review": "pending_expert_review",
         "formalization_review": "pending_expert_review",
         "implementation_refinement": "not_connected_to_published_package"
@@ -15137,6 +15273,24 @@
       "antecedent_passage": "collection-idiom",
       "resolved_meaning": "Tails failing the intended collection structure, not tails outside the semantic class rdf:List under RDFS.",
       "inference": "Read with collection-rdfs-typing and the normative domain/range axioms; do not construct an RDFS countermodel violating required typing.",
+      "review": "pending"
+    },
+    {
+      "claim_id": "MT11-ORIGINAL-NOT-SKOLEM",
+      "passage": "original-not-skolem",
+      "source_phrase": "G",
+      "antecedent_passage": "skolem-context",
+      "resolved_meaning": "The graph G containing blank nodes introduced by the preceding paragraph.",
+      "inference": "The source supplies the nontriviality premise; it is not an extra repair of the displayed sentence.",
+      "review": "pending"
+    },
+    {
+      "claim_id": "MT11-SKOLEM-CONSEQUENCE-LIFTING",
+      "passage": "skolem-exact-lifting",
+      "source_phrase": "sk(H')",
+      "antecedent_passage": "skolem-context",
+      "resolved_meaning": "Application of the naming map for blanks occurring in the original G, extended to preserve unrelated conclusion blanks.",
+      "inference": "Use separate copies of source and conclusion blanks explicitly; whether the printed equation presumes this standardization apart is an expert-review question.",
       "review": "pending"
     }
   ],

@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "status": "frozen_twelfth_increment_collections_not_expert_approved",
+  "status": "frozen_thirteenth_increment_skolem_lifting_not_expert_approved",
   "lean_version": "4.33.1",
   "allowed_axioms": [
     "propext",
@@ -502,6 +502,17 @@
         "MT11-RDFS-DOMAIN",
         "MT11-RDFS-RANGE"
       ]
+    },
+    {
+      "id": "SUPPORT-SKOLEM-LIFTING",
+      "purpose": "Exact Skolem consequence lifting using separate source/conclusion blank copies, a naming-map extension, simple-interpretation transfer and fixed predicate occurrence. Includes the distinction from ambient-total naming and compiler-generated reduction helpers.",
+      "requires": [
+        "MT11-SKOLEM-CONSEQUENCE-LIFTING",
+        "SUPPORT-SKOLEMIZATION",
+        "SUPPORT-INTERPOLATION",
+        "MT11-TRIPLE-TRUTH",
+        "MT11-GRAPH-TRUTH"
+      ]
     }
   ],
   "files": [
@@ -528,14 +539,14 @@
     },
     {
       "path": "Audit/Snapshot.lean",
-      "sha256": "688cb6899301a5c0ef97f0dabe23f7ca439adb268d9b0bbed2c58eed45325b6c",
+      "sha256": "05d68584c521d17ab4d9d5f9c6a90acd616b131d4c7b16fbe9e8aae4b013b92f",
       "role": "formal_source",
       "lifecycle": "active",
       "review": "pending_expert_review"
     },
     {
       "path": "RDF11.lean",
-      "sha256": "8570b54897d9b5b2145ca098e4bbbd697f31cb9c8fb1375b6df36387fab466a8",
+      "sha256": "b286272253c39d1d1a208b3a840b3623d0d685de00aefcf042ef3285b730d245",
       "role": "formal_source",
       "lifecycle": "active",
       "review": "pending_expert_review"
@@ -699,7 +710,7 @@
       "role": "formal_source",
       "lifecycle": "active",
       "review": "pending_expert_review",
-      "sha256": "4c8afc134d39128861441d047567e0409538ba6a777975a7350747a28333eafd"
+      "sha256": "3f4398ec1728f48e77ff235d05adf55bd951d314af7c1676fab98893614e861d"
     },
     {
       "path": "RDF11/EntailmentClosure.lean",
@@ -872,6 +883,13 @@
     {
       "path": "RDF11/CollectionExamples.lean",
       "sha256": "81cfd00dd7f1d0695f94ffb1db556e7e5de6f17d608365855603d1606696053f",
+      "role": "formal_source",
+      "lifecycle": "active",
+      "review": "pending_expert_review"
+    },
+    {
+      "path": "RDF11/SkolemLifting.lean",
+      "sha256": "a3d423ba15dcc59562fb84a64db56d09e37fe411ae5e68fb9a06a62678ab3db3",
       "role": "formal_source",
       "lifecycle": "active",
       "review": "pending_expert_review"
@@ -15565,7 +15583,7 @@
     },
     {
       "name": "RDF11.Subject.toTerm.eq_1",
-      "module": "RDF11.Datasets",
+      "module": "RDF11.SkolemLifting",
       "kind": "theorem",
       "type": "∀ {Iri Blank Literal : Type} (i : Iri), (RDF11.Subject.iri i).toTerm = RDF11.Term.iri i",
       "role": "proof_support",
@@ -15577,7 +15595,7 @@
     },
     {
       "name": "RDF11.Subject.toTerm.eq_2",
-      "module": "RDF11.Datasets",
+      "module": "RDF11.SkolemLifting",
       "kind": "theorem",
       "type": "∀ {Iri Blank Literal : Type} (b : Blank), (RDF11.Subject.blank b).toTerm = RDF11.Term.blank b",
       "role": "proof_support",
@@ -15613,7 +15631,7 @@
     },
     {
       "name": "RDF11.Triple.generalize.eq_1",
-      "module": "RDF11.Datasets",
+      "module": "RDF11.SkolemLifting",
       "kind": "theorem",
       "type": "∀ {Iri Literal Blank : Type} (t : RDF11.Triple Iri Literal Blank),\n  t.generalize = { subject := t.subject.toTerm, predicate := RDF11.Term.iri t.predicate, object := t.object }",
       "role": "proof_support",
@@ -19656,6 +19674,877 @@
         "SUPPORT-COLLECTIONS"
       ],
       "parent_declaration_if_applicable": "RDF11.SimpleInterpretation.denote",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Herbrand.interpretation.eq_1",
+      "module": "RDF11.SkolemLifting",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (G : RDF11.GeneralizedGraph Iri Literal B),\n  RDF11.Herbrand.interpretation G =\n    { IR := fun x => True, IR_nonempty := ⋯, IP := fun x => True,\n      IEXT := fun p pair =>\n        ∃ t,\n          G t ∧\n            p.val = RDF11.Herbrand.encode t.predicate ∧\n              pair.fst.val = RDF11.Herbrand.encode t.subject ∧ pair.snd.val = RDF11.Herbrand.encode t.object,\n      IS := fun i => ⟨RDF11.Herbrand.encode (RDF11.Term.iri i), ⋯⟩,\n      IL := fun l => some ⟨RDF11.Herbrand.encode (RDF11.Term.literal l), True.intro⟩ }",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEM-LIFTING"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Herbrand.interpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Skolemization.applyLiftedTerm",
+      "module": "RDF11.SkolemLifting",
+      "kind": "definition",
+      "type": "{Iri Literal B C : Type} →\n  {datatype : Literal → Iri} →\n    {G : RDF11.GeneralizedGraph Iri Literal B} →\n      RDF11.Skolemization datatype G → RDF11.Term Iri Literal (B ⊕ C) → RDF11.Term Iri Literal C",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEM-LIFTING"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Skolemization",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Skolemization.applyLiftedTerm.eq_1",
+      "module": "RDF11.SkolemLifting",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B C : Type} {datatype : Literal → Iri} {G : RDF11.GeneralizedGraph Iri Literal B}\n  (sk : RDF11.Skolemization datatype G) (i : Iri), sk.applyLiftedTerm (RDF11.Term.iri i) = RDF11.Term.iri i",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEM-LIFTING"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Skolemization.applyLiftedTerm",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Skolemization.applyLiftedTerm.eq_2",
+      "module": "RDF11.SkolemLifting",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B C : Type} {datatype : Literal → Iri} {G : RDF11.GeneralizedGraph Iri Literal B}\n  (sk : RDF11.Skolemization datatype G) (l : Literal), sk.applyLiftedTerm (RDF11.Term.literal l) = RDF11.Term.literal l",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEM-LIFTING"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Skolemization.applyLiftedTerm",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Skolemization.applyLiftedTerm.eq_3",
+      "module": "RDF11.SkolemLifting",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B C : Type} {datatype : Literal → Iri} {G : RDF11.GeneralizedGraph Iri Literal B}\n  (sk : RDF11.Skolemization datatype G) (b : B),\n  sk.applyLiftedTerm (RDF11.Term.blank (Sum.inl b)) = RDF11.Term.iri (sk.name b)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEM-LIFTING"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Skolemization.applyLiftedTerm",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Skolemization.applyLiftedTerm.eq_4",
+      "module": "RDF11.SkolemLifting",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B C : Type} {datatype : Literal → Iri} {G : RDF11.GeneralizedGraph Iri Literal B}\n  (sk : RDF11.Skolemization datatype G) (c : C), sk.applyLiftedTerm (RDF11.Term.blank (Sum.inr c)) = RDF11.Term.blank c",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEM-LIFTING"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Skolemization.applyLiftedTerm",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Skolemization.applyLiftedTerm.match_1",
+      "module": "RDF11.SkolemLifting",
+      "kind": "definition",
+      "type": "{Iri Literal B C : Type} →\n  (motive : RDF11.Term Iri Literal (B ⊕ C) → Sort u_1) →\n    (x : RDF11.Term Iri Literal (B ⊕ C)) →\n      ((i : Iri) → motive (RDF11.Term.iri i)) →\n        ((l : Literal) → motive (RDF11.Term.literal l)) →\n          ((b : B) → motive (RDF11.Term.blank (Sum.inl b))) →\n            ((c : C) → motive (RDF11.Term.blank (Sum.inr c))) → motive x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEM-LIFTING"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Skolemization.applyLiftedTerm",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Skolemization.applyLiftedTriple",
+      "module": "RDF11.SkolemLifting",
+      "kind": "definition",
+      "type": "{Iri Literal B C : Type} →\n  {datatype : Literal → Iri} →\n    {G : RDF11.GeneralizedGraph Iri Literal B} →\n      RDF11.Skolemization datatype G →\n        RDF11.GeneralizedTriple Iri Literal (B ⊕ C) → RDF11.GeneralizedTriple Iri Literal C",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEM-LIFTING",
+        "MT11-SKOLEM-CONSEQUENCE-LIFTING"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Skolemization",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Skolemization.applyLiftedTriple.eq_1",
+      "module": "RDF11.SkolemLifting",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B C : Type} {datatype : Literal → Iri} {G : RDF11.GeneralizedGraph Iri Literal B}\n  (sk : RDF11.Skolemization datatype G) (t : RDF11.GeneralizedTriple Iri Literal (B ⊕ C)),\n  sk.applyLiftedTriple t =\n    { subject := sk.applyLiftedTerm t.subject, predicate := sk.applyLiftedTerm t.predicate,\n      object := sk.applyLiftedTerm t.object }",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEM-LIFTING"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Skolemization.applyLiftedTriple",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Skolemization.apply_liftGraph",
+      "module": "RDF11.SkolemLifting",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B C : Type} {datatype : Literal → Iri} {G : RDF11.GeneralizedGraph Iri Literal B}\n  (sk : RDF11.Skolemization datatype G) (H : RDF11.GeneralizedGraph Iri Literal C),\n  RDF11.Set.image sk.applyLiftedTriple (RDF11.Set.image sk.liftTriple H) = H",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEM-LIFTING"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Skolemization",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Skolemization.apply_liftTerm",
+      "module": "RDF11.SkolemLifting",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B C : Type} {datatype : Literal → Iri} {G : RDF11.GeneralizedGraph Iri Literal B}\n  (sk : RDF11.Skolemization datatype G) (q : RDF11.Term Iri Literal C), sk.applyLiftedTerm (sk.liftTerm q) = q",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEM-LIFTING"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Skolemization",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Skolemization.apply_liftTriple",
+      "module": "RDF11.SkolemLifting",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B C : Type} {datatype : Literal → Iri} {G : RDF11.GeneralizedGraph Iri Literal B}\n  (sk : RDF11.Skolemization datatype G) (t : RDF11.GeneralizedTriple Iri Literal C),\n  sk.applyLiftedTriple (sk.liftTriple t) = t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEM-LIFTING"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Skolemization",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Skolemization.denote_liftTerm",
+      "module": "RDF11.SkolemLifting",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B C : Type} {datatype : Literal → Iri} {G : RDF11.GeneralizedGraph Iri Literal B} {U : Type u_1}\n  (sk : RDF11.Skolemization datatype G) (I : RDF11.SimpleInterpretation Iri Literal U) (A : I.Assignment B)\n  (E : I.Assignment C) (q : RDF11.Term Iri Literal C),\n  I.denote (RDF11.Skolemization.liftAssignment I A E) (sk.liftTerm q) = (sk.namedInterpretation I A).denote E q",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEM-LIFTING"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Skolemization",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Skolemization.entails_lift",
+      "module": "RDF11.SkolemLifting",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B C : Type} {datatype : Literal → Iri} {G : RDF11.GeneralizedGraph Iri Literal B}\n  (sk : RDF11.Skolemization datatype G) (H : RDF11.GeneralizedGraph Iri Literal C),\n  RDF11.SimplyEntails sk.graph H → RDF11.SimplyEntails G (RDF11.Set.image sk.liftTriple H)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEM-LIFTING",
+        "MT11-SKOLEM-CONSEQUENCE-LIFTING"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Skolemization",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Skolemization.generalize_liftOrdinaryTriple",
+      "module": "RDF11.SkolemLifting",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B C : Type} {datatype : Literal → Iri} {G : RDF11.GeneralizedGraph Iri Literal B}\n  (sk : RDF11.Skolemization datatype G) (t : RDF11.Triple Iri Literal C),\n  sk.unname t.predicate = none → (sk.liftOrdinaryTriple t).generalize = sk.liftTriple t.generalize",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEM-LIFTING"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Skolemization",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Skolemization.liftAssignment",
+      "module": "RDF11.SkolemLifting",
+      "kind": "definition",
+      "type": "{Iri Literal B C : Type} →\n  {U : Type u_1} →\n    (I : RDF11.SimpleInterpretation Iri Literal U) → I.Assignment B → I.Assignment C → I.Assignment (B ⊕ C)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEM-LIFTING"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Skolemization",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Skolemization.liftAssignment.eq_1",
+      "module": "RDF11.SkolemLifting",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B C : Type} {U : Type u_1} (I : RDF11.SimpleInterpretation Iri Literal U) (A : I.Assignment B)\n  (E : I.Assignment C),\n  RDF11.Skolemization.liftAssignment I A E = Sum.elim (fun b => some (RDF11.Skolemization.totalAssignment I A b)) E",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEM-LIFTING"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Skolemization.liftAssignment",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Skolemization.liftGraph_left_blank",
+      "module": "RDF11.SkolemLifting",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B C : Type} {datatype : Literal → Iri} {G : RDF11.GeneralizedGraph Iri Literal B}\n  (sk : RDF11.Skolemization datatype G) (H : RDF11.GeneralizedGraph Iri Literal C) (b : B),\n  RDF11.GeneralizedGraph.hasBlank (RDF11.Set.image sk.liftTriple H) (Sum.inl b) → G.hasBlank b",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEM-LIFTING"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Skolemization",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Skolemization.liftOrdinaryGraph",
+      "module": "RDF11.SkolemLifting",
+      "kind": "definition",
+      "type": "{Iri Literal B C : Type} →\n  {datatype : Literal → Iri} →\n    {G : RDF11.GeneralizedGraph Iri Literal B} →\n      RDF11.Skolemization datatype G → RDF11.Graph Iri Literal C → RDF11.Graph Iri Literal (B ⊕ C)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEM-LIFTING",
+        "MT11-SKOLEM-CONSEQUENCE-LIFTING"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Skolemization",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Skolemization.liftOrdinaryTriple",
+      "module": "RDF11.SkolemLifting",
+      "kind": "definition",
+      "type": "{Iri Literal B C : Type} →\n  {datatype : Literal → Iri} →\n    {G : RDF11.GeneralizedGraph Iri Literal B} →\n      RDF11.Skolemization datatype G → RDF11.Triple Iri Literal C → RDF11.Triple Iri Literal (B ⊕ C)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEM-LIFTING"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Skolemization",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Skolemization.liftOrdinaryTriple.eq_1",
+      "module": "RDF11.SkolemLifting",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B C : Type} {datatype : Literal → Iri} {G : RDF11.GeneralizedGraph Iri Literal B}\n  (sk : RDF11.Skolemization datatype G) (t : RDF11.Triple Iri Literal C),\n  sk.liftOrdinaryTriple t =\n    { subject := sk.liftSubject t.subject, predicate := t.predicate, object := sk.liftTerm t.object }",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEM-LIFTING"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Skolemization.liftOrdinaryTriple",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Skolemization.liftSubject",
+      "module": "RDF11.SkolemLifting",
+      "kind": "definition",
+      "type": "{Iri Literal B C : Type} →\n  {datatype : Literal → Iri} →\n    {G : RDF11.GeneralizedGraph Iri Literal B} →\n      RDF11.Skolemization datatype G → RDF11.Subject Iri C → RDF11.Subject Iri (B ⊕ C)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEM-LIFTING"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Skolemization",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Skolemization.liftSubject.eq_1",
+      "module": "RDF11.SkolemLifting",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B C : Type} {datatype : Literal → Iri} {G : RDF11.GeneralizedGraph Iri Literal B}\n  (sk : RDF11.Skolemization datatype G) (i : Iri),\n  sk.liftSubject (RDF11.Subject.iri i) =\n    match sk.unname i with\n    | some b => RDF11.Subject.blank (Sum.inl b)\n    | none => RDF11.Subject.iri i",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEM-LIFTING"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Skolemization.liftSubject",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Skolemization.liftSubject.eq_2",
+      "module": "RDF11.SkolemLifting",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B C : Type} {datatype : Literal → Iri} {G : RDF11.GeneralizedGraph Iri Literal B}\n  (sk : RDF11.Skolemization datatype G) (c : C),\n  sk.liftSubject (RDF11.Subject.blank c) = RDF11.Subject.blank (Sum.inr c)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEM-LIFTING"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Skolemization.liftSubject",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Skolemization.liftSubject.match_1",
+      "module": "RDF11.SkolemLifting",
+      "kind": "definition",
+      "type": "{Iri C : Type} →\n  (motive : RDF11.Subject Iri C → Sort u_1) →\n    (x : RDF11.Subject Iri C) →\n      ((i : Iri) → motive (RDF11.Subject.iri i)) → ((c : C) → motive (RDF11.Subject.blank c)) → motive x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEM-LIFTING"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Skolemization.liftSubject",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Skolemization.liftSubject_toTerm",
+      "module": "RDF11.SkolemLifting",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B C : Type} {datatype : Literal → Iri} {G : RDF11.GeneralizedGraph Iri Literal B}\n  (sk : RDF11.Skolemization datatype G) (s : RDF11.Subject Iri C), (sk.liftSubject s).toTerm = sk.liftTerm s.toTerm",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEM-LIFTING"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Skolemization",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Skolemization.liftTerm",
+      "module": "RDF11.SkolemLifting",
+      "kind": "definition",
+      "type": "{Iri Literal B C : Type} →\n  {datatype : Literal → Iri} →\n    {G : RDF11.GeneralizedGraph Iri Literal B} →\n      RDF11.Skolemization datatype G → RDF11.Term Iri Literal C → RDF11.Term Iri Literal (B ⊕ C)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEM-LIFTING"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Skolemization",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Skolemization.liftTerm.eq_1",
+      "module": "RDF11.SkolemLifting",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B C : Type} {datatype : Literal → Iri} {G : RDF11.GeneralizedGraph Iri Literal B}\n  (sk : RDF11.Skolemization datatype G) (i : Iri),\n  sk.liftTerm (RDF11.Term.iri i) =\n    match sk.unname i with\n    | some b => RDF11.Term.blank (Sum.inl b)\n    | none => RDF11.Term.iri i",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEM-LIFTING"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Skolemization.liftTerm",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Skolemization.liftTerm.eq_2",
+      "module": "RDF11.SkolemLifting",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B C : Type} {datatype : Literal → Iri} {G : RDF11.GeneralizedGraph Iri Literal B}\n  (sk : RDF11.Skolemization datatype G) (l : Literal), sk.liftTerm (RDF11.Term.literal l) = RDF11.Term.literal l",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEM-LIFTING"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Skolemization.liftTerm",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Skolemization.liftTerm.eq_3",
+      "module": "RDF11.SkolemLifting",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B C : Type} {datatype : Literal → Iri} {G : RDF11.GeneralizedGraph Iri Literal B}\n  (sk : RDF11.Skolemization datatype G) (c : C), sk.liftTerm (RDF11.Term.blank c) = RDF11.Term.blank (Sum.inr c)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEM-LIFTING"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Skolemization.liftTerm",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Skolemization.liftTerm.match_1",
+      "module": "RDF11.SkolemLifting",
+      "kind": "definition",
+      "type": "{B : Type} →\n  (motive : Option B → Sort u_1) → (x : Option B) → ((b : B) → motive (some b)) → (Unit → motive none) → motive x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEM-LIFTING"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Skolemization.liftTerm",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Skolemization.liftTerm.match_3",
+      "module": "RDF11.SkolemLifting",
+      "kind": "definition",
+      "type": "{Iri Literal C : Type} →\n  (motive : RDF11.Term Iri Literal C → Sort u_1) →\n    (x : RDF11.Term Iri Literal C) →\n      ((i : Iri) → motive (RDF11.Term.iri i)) →\n        ((l : Literal) → motive (RDF11.Term.literal l)) → ((c : C) → motive (RDF11.Term.blank c)) → motive x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEM-LIFTING"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Skolemization.liftTerm",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Skolemization.liftTerm_left_blank",
+      "module": "RDF11.SkolemLifting",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B C : Type} {datatype : Literal → Iri} {G : RDF11.GeneralizedGraph Iri Literal B}\n  (sk : RDF11.Skolemization datatype G) (q : RDF11.Term Iri Literal C) (b : B),\n  RDF11.Term.hasBlank (Sum.inl b) (sk.liftTerm q) → G.hasBlank b",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEM-LIFTING"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Skolemization",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Skolemization.liftTriple",
+      "module": "RDF11.SkolemLifting",
+      "kind": "definition",
+      "type": "{Iri Literal B C : Type} →\n  {datatype : Literal → Iri} →\n    {G : RDF11.GeneralizedGraph Iri Literal B} →\n      RDF11.Skolemization datatype G →\n        RDF11.GeneralizedTriple Iri Literal C → RDF11.GeneralizedTriple Iri Literal (B ⊕ C)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEM-LIFTING"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Skolemization",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Skolemization.liftTriple.eq_1",
+      "module": "RDF11.SkolemLifting",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B C : Type} {datatype : Literal → Iri} {G : RDF11.GeneralizedGraph Iri Literal B}\n  (sk : RDF11.Skolemization datatype G) (t : RDF11.GeneralizedTriple Iri Literal C),\n  sk.liftTriple t =\n    { subject := sk.liftTerm t.subject, predicate := sk.liftTerm t.predicate, object := sk.liftTerm t.object }",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEM-LIFTING"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Skolemization.liftTriple",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Skolemization.namedInterpretation",
+      "module": "RDF11.SkolemLifting",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  {datatype : Literal → Iri} →\n    {G : RDF11.GeneralizedGraph Iri Literal B} →\n      {U : Type u_1} →\n        RDF11.Skolemization datatype G →\n          (I : RDF11.SimpleInterpretation Iri Literal U) → I.Assignment B → RDF11.SimpleInterpretation Iri Literal U",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEM-LIFTING",
+        "MT11-SKOLEM-CONSEQUENCE-LIFTING"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Skolemization",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Skolemization.namedInterpretation._proof_1",
+      "module": "RDF11.SkolemLifting",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {U : Type u_1} (I : RDF11.SimpleInterpretation Iri Literal U) (A : I.Assignment B) (b : B),\n  I.IR (RDF11.Skolemization.totalAssignment I A b).val ∨ I.IP (RDF11.Skolemization.totalAssignment I A b).val",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEM-LIFTING"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Skolemization.namedInterpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Skolemization.namedInterpretation.eq_1",
+      "module": "RDF11.SkolemLifting",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {datatype : Literal → Iri} {G : RDF11.GeneralizedGraph Iri Literal B} {U : Type u_1}\n  (sk : RDF11.Skolemization datatype G) (I : RDF11.SimpleInterpretation Iri Literal U) (A : I.Assignment B),\n  sk.namedInterpretation I A =\n    { IR := I.IR, IR_nonempty := ⋯, IP := I.IP, IEXT := I.IEXT,\n      IS := fun i =>\n        match sk.unname i with\n        | none => I.IS i\n        | some b => ⟨(RDF11.Skolemization.totalAssignment I A b).val, ⋯⟩,\n      IL := I.IL }",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEM-LIFTING"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Skolemization.namedInterpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Skolemization.namedInterpretation.match_1",
+      "module": "RDF11.SkolemLifting",
+      "kind": "definition",
+      "type": "{B : Type} →\n  (motive : Option B → Sort u_1) → (x : Option B) → (Unit → motive none) → ((b : B) → motive (some b)) → motive x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEM-LIFTING"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Skolemization.namedInterpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Skolemization.named_denote_substituted",
+      "module": "RDF11.SkolemLifting",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {datatype : Literal → Iri} {G : RDF11.GeneralizedGraph Iri Literal B} {U : Type u_1}\n  (sk : RDF11.Skolemization datatype G) (I : RDF11.SimpleInterpretation Iri Literal U) (A : I.Assignment B)\n  (q : RDF11.Term Iri Literal B) (x : U),\n  I.denote A q = some x →\n    (∀ (b : B), G.hasBlank b → ¬RDF11.Term.names datatype q (Sum.inl (sk.name b))) →\n      (∀ (b : B), RDF11.Term.hasBlank b q → G.hasBlank b) →\n        (sk.namedInterpretation I A).denote (fun x => none) (RDF11.Term.substitute sk.substitution q) = some x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEM-LIFTING"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Skolemization",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Skolemization.named_satisfies_skolem",
+      "module": "RDF11.SkolemLifting",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {datatype : Literal → Iri} {G : RDF11.GeneralizedGraph Iri Literal B} {U : Type u_1}\n  (sk : RDF11.Skolemization datatype G) (I : RDF11.SimpleInterpretation Iri Literal U) (A : I.Assignment B),\n  I.GraphTrue A G → (sk.namedInterpretation I A).Satisfies sk.graph",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEM-LIFTING"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Skolemization",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Skolemization.ordinary_exact_lifting",
+      "module": "RDF11.SkolemLifting",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B C : Type} {datatype : Literal → Iri} (G : RDF11.Graph Iri Literal B)\n  (sk : RDF11.Skolemization datatype G.generalize) (H : RDF11.Graph Iri Literal C),\n  RDF11.SimplyEntails sk.graph H.generalize →\n    ∃ H',\n      RDF11.SimplyEntails G.generalize H'.generalize ∧\n        (∀ (b : B), H'.generalize.hasBlank (Sum.inl b) → G.generalize.hasBlank b) ∧\n          RDF11.Set.image sk.applyLiftedTriple H'.generalize = H.generalize",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEM-LIFTING",
+        "MT11-SKOLEM-CONSEQUENCE-LIFTING"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Skolemization",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Skolemization.ordinary_lift_generalize",
+      "module": "RDF11.SkolemLifting",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B C : Type} {datatype : Literal → Iri} (G : RDF11.Graph Iri Literal B)\n  (sk : RDF11.Skolemization datatype G.generalize) (H : RDF11.Graph Iri Literal C),\n  RDF11.SimplyEntails sk.graph H.generalize →\n    (sk.liftOrdinaryGraph H).generalize = RDF11.Set.image sk.liftTriple H.generalize",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEM-LIFTING"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Skolemization",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Skolemization.totalAssignment",
+      "module": "RDF11.SkolemLifting",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  {U : Type u_1} → (I : RDF11.SimpleInterpretation Iri Literal U) → I.Assignment B → B → I.Resource",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEM-LIFTING"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Skolemization",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Skolemization.totalAssignment._proof_1",
+      "module": "RDF11.SkolemLifting",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u_1} (I : RDF11.SimpleInterpretation Iri Literal U), I.IR (Classical.choose ⋯)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEM-LIFTING"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Skolemization.totalAssignment",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Skolemization.totalAssignment.eq_1",
+      "module": "RDF11.SkolemLifting",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {U : Type u_1} (I : RDF11.SimpleInterpretation Iri Literal U) (A : I.Assignment B) (b : B),\n  RDF11.Skolemization.totalAssignment I A b = (A b).getD ⟨Classical.choose ⋯, ⋯⟩",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEM-LIFTING"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Skolemization.totalAssignment",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Skolemization.total_substitution_cannot_recover_blank_conclusion",
+      "module": "RDF11.SkolemLifting",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {datatype : Literal → Iri} {G : RDF11.GeneralizedGraph Iri Literal B}\n  (sk : RDF11.Skolemization datatype G) (H : RDF11.GeneralizedGraph Iri Literal B) (b : B),\n  H.hasBlank b → ∀ (K : RDF11.GeneralizedGraph Iri Literal B), H ≠ RDF11.GeneralizedGraph.substitute sk.substitution K",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEM-LIFTING",
+        "MT11-SKOLEM-CONSEQUENCE-LIFTING"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Skolemization",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Skolemization.total_substitution_ground",
+      "module": "RDF11.SkolemLifting",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {datatype : Literal → Iri} {G : RDF11.GeneralizedGraph Iri Literal B}\n  (sk : RDF11.Skolemization datatype G) (K : RDF11.GeneralizedGraph Iri Literal B),\n  (RDF11.GeneralizedGraph.substitute sk.substitution K).ground",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEM-LIFTING"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Skolemization",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Skolemization.tripleTrue_lift",
+      "module": "RDF11.SkolemLifting",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B C : Type} {datatype : Literal → Iri} {G : RDF11.GeneralizedGraph Iri Literal B} {U : Type u_1}\n  (sk : RDF11.Skolemization datatype G) (I : RDF11.SimpleInterpretation Iri Literal U) (A : I.Assignment B)\n  (E : I.Assignment C) (t : RDF11.GeneralizedTriple Iri Literal C),\n  I.TripleTrue (RDF11.Skolemization.liftAssignment I A E) (sk.liftTriple t) ↔\n    (sk.namedInterpretation I A).TripleTrue E t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEM-LIFTING"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Skolemization",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Skolemization.unname_of_fresh",
+      "module": "RDF11.SkolemLifting",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {datatype : Literal → Iri} {G : RDF11.GeneralizedGraph Iri Literal B}\n  (sk : RDF11.Skolemization datatype G) (i : Iri), (∀ (b : B), G.hasBlank b → sk.name b ≠ i) → sk.unname i = none",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEM-LIFTING"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Skolemization",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Skolemization.unname_predicate_of_entails",
+      "module": "RDF11.SkolemLifting",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B C : Type} {datatype : Literal → Iri} (G : RDF11.Graph Iri Literal B)\n  (sk : RDF11.Skolemization datatype G.generalize) (H : RDF11.Graph Iri Literal C),\n  RDF11.SimplyEntails sk.graph H.generalize → ∀ (t : RDF11.Triple Iri Literal C), H t → sk.unname t.predicate = none",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEM-LIFTING"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Skolemization",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Skolemization.unname_sound",
+      "module": "RDF11.SkolemLifting",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {datatype : Literal → Iri} {G : RDF11.GeneralizedGraph Iri Literal B}\n  (sk : RDF11.Skolemization datatype G) (i : Iri) (b : B), sk.unname i = some b → G.hasBlank b ∧ sk.name b = i",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEM-LIFTING"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Skolemization",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Statements.skolemization_lifting_lemma",
+      "module": "RDF11.Statements",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B₁ B₂ : Type} {datatype : Literal → Iri} (G : RDF11.Graph Iri Literal B₁)\n  (H : RDF11.Graph Iri Literal B₂) (sk : RDF11.Skolemization datatype G.generalize),\n  RDF11.SimplyEntails sk.graph H.generalize →\n    ∃ H',\n      RDF11.SimplyEntails G.generalize H'.generalize ∧\n        (∀ (b : B₁), H'.generalize.hasBlank (Sum.inl b) → G.generalize.hasBlank b) ∧\n          RDF11.Set.image sk.applyLiftedTriple H'.generalize = H.generalize",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEM-LIFTING",
+        "MT11-SKOLEM-CONSEQUENCE-LIFTING"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.entailed_iri_predicate_occurs",
+      "module": "RDF11.SkolemLifting",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B C : Type} {G : RDF11.GeneralizedGraph Iri Literal B} {H : RDF11.GeneralizedGraph Iri Literal C},\n  RDF11.SimplyEntails G H →\n    ∀ (t : RDF11.GeneralizedTriple Iri Literal C),\n      H t → ∀ (i : Iri), t.predicate = RDF11.Term.iri i → ∃ s, G s ∧ s.predicate = RDF11.Term.iri i",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEM-LIFTING"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.SkolemLifting.0.RDF11.Skolemization.applyLiftedTerm.match_1.eq_1",
+      "module": "RDF11.SkolemLifting",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B C : Type} (motive : RDF11.Term Iri Literal (B ⊕ C) → Sort u_1) (i : Iri)\n  (h_1 : (i : Iri) → motive (RDF11.Term.iri i)) (h_2 : (l : Literal) → motive (RDF11.Term.literal l))\n  (h_3 : (b : B) → motive (RDF11.Term.blank (Sum.inl b))) (h_4 : (c : C) → motive (RDF11.Term.blank (Sum.inr c))),\n  (match RDF11.Term.iri i with\n    | RDF11.Term.iri i => h_1 i\n    | RDF11.Term.literal l => h_2 l\n    | RDF11.Term.blank (Sum.inl b) => h_3 b\n    | RDF11.Term.blank (Sum.inr c) => h_4 c) =\n    h_1 i",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEM-LIFTING"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Skolemization.applyLiftedTerm.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.SkolemLifting.0.RDF11.Skolemization.applyLiftedTerm.match_1.eq_2",
+      "module": "RDF11.SkolemLifting",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B C : Type} (motive : RDF11.Term Iri Literal (B ⊕ C) → Sort u_1) (l : Literal)\n  (h_1 : (i : Iri) → motive (RDF11.Term.iri i)) (h_2 : (l : Literal) → motive (RDF11.Term.literal l))\n  (h_3 : (b : B) → motive (RDF11.Term.blank (Sum.inl b))) (h_4 : (c : C) → motive (RDF11.Term.blank (Sum.inr c))),\n  (match RDF11.Term.literal l with\n    | RDF11.Term.iri i => h_1 i\n    | RDF11.Term.literal l => h_2 l\n    | RDF11.Term.blank (Sum.inl b) => h_3 b\n    | RDF11.Term.blank (Sum.inr c) => h_4 c) =\n    h_2 l",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEM-LIFTING"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Skolemization.applyLiftedTerm.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.SkolemLifting.0.RDF11.Skolemization.applyLiftedTerm.match_1.eq_3",
+      "module": "RDF11.SkolemLifting",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B C : Type} (motive : RDF11.Term Iri Literal (B ⊕ C) → Sort u_1) (b : B)\n  (h_1 : (i : Iri) → motive (RDF11.Term.iri i)) (h_2 : (l : Literal) → motive (RDF11.Term.literal l))\n  (h_3 : (b : B) → motive (RDF11.Term.blank (Sum.inl b))) (h_4 : (c : C) → motive (RDF11.Term.blank (Sum.inr c))),\n  (match RDF11.Term.blank (Sum.inl b) with\n    | RDF11.Term.iri i => h_1 i\n    | RDF11.Term.literal l => h_2 l\n    | RDF11.Term.blank (Sum.inl b) => h_3 b\n    | RDF11.Term.blank (Sum.inr c) => h_4 c) =\n    h_3 b",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEM-LIFTING"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Skolemization.applyLiftedTerm.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.SkolemLifting.0.RDF11.Skolemization.applyLiftedTerm.match_1.eq_4",
+      "module": "RDF11.SkolemLifting",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B C : Type} (motive : RDF11.Term Iri Literal (B ⊕ C) → Sort u_1) (c : C)\n  (h_1 : (i : Iri) → motive (RDF11.Term.iri i)) (h_2 : (l : Literal) → motive (RDF11.Term.literal l))\n  (h_3 : (b : B) → motive (RDF11.Term.blank (Sum.inl b))) (h_4 : (c : C) → motive (RDF11.Term.blank (Sum.inr c))),\n  (match RDF11.Term.blank (Sum.inr c) with\n    | RDF11.Term.iri i => h_1 i\n    | RDF11.Term.literal l => h_2 l\n    | RDF11.Term.blank (Sum.inl b) => h_3 b\n    | RDF11.Term.blank (Sum.inr c) => h_4 c) =\n    h_4 c",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEM-LIFTING"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Skolemization.applyLiftedTerm.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.SkolemLifting.0.RDF11.Skolemization.applyLiftedTerm.match_1.splitter",
+      "module": "RDF11.SkolemLifting",
+      "kind": "definition",
+      "type": "{Iri Literal B C : Type} →\n  (motive : RDF11.Term Iri Literal (B ⊕ C) → Sort u_1) →\n    (x : RDF11.Term Iri Literal (B ⊕ C)) →\n      ((i : Iri) → motive (RDF11.Term.iri i)) →\n        ((l : Literal) → motive (RDF11.Term.literal l)) →\n          ((b : B) → motive (RDF11.Term.blank (Sum.inl b))) →\n            ((c : C) → motive (RDF11.Term.blank (Sum.inr c))) → motive x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEM-LIFTING"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Skolemization.applyLiftedTerm.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.SkolemLifting.0.RDF11.Skolemization.liftSubject.match_1.eq_1",
+      "module": "RDF11.SkolemLifting",
+      "kind": "theorem",
+      "type": "∀ {Iri C : Type} (motive : RDF11.Subject Iri C → Sort u_1) (i : Iri) (h_1 : (i : Iri) → motive (RDF11.Subject.iri i))\n  (h_2 : (c : C) → motive (RDF11.Subject.blank c)),\n  (match RDF11.Subject.iri i with\n    | RDF11.Subject.iri i => h_1 i\n    | RDF11.Subject.blank c => h_2 c) =\n    h_1 i",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEM-LIFTING"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Skolemization.liftSubject.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.SkolemLifting.0.RDF11.Skolemization.liftSubject.match_1.eq_2",
+      "module": "RDF11.SkolemLifting",
+      "kind": "theorem",
+      "type": "∀ {Iri C : Type} (motive : RDF11.Subject Iri C → Sort u_1) (c : C) (h_1 : (i : Iri) → motive (RDF11.Subject.iri i))\n  (h_2 : (c : C) → motive (RDF11.Subject.blank c)),\n  (match RDF11.Subject.blank c with\n    | RDF11.Subject.iri i => h_1 i\n    | RDF11.Subject.blank c => h_2 c) =\n    h_2 c",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEM-LIFTING"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Skolemization.liftSubject.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.SkolemLifting.0.RDF11.Skolemization.liftSubject.match_1.splitter",
+      "module": "RDF11.SkolemLifting",
+      "kind": "definition",
+      "type": "{Iri C : Type} →\n  (motive : RDF11.Subject Iri C → Sort u_1) →\n    (x : RDF11.Subject Iri C) →\n      ((i : Iri) → motive (RDF11.Subject.iri i)) → ((c : C) → motive (RDF11.Subject.blank c)) → motive x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEM-LIFTING"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Skolemization.liftSubject.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.SkolemLifting.0.RDF11.Skolemization.liftTerm.match_1.eq_1",
+      "module": "RDF11.SkolemLifting",
+      "kind": "theorem",
+      "type": "∀ {B : Type} (motive : Option B → Sort u_1) (b : B) (h_1 : (b : B) → motive (some b)) (h_2 : Unit → motive none),\n  (match some b with\n    | some b => h_1 b\n    | none => h_2 ()) =\n    h_1 b",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEM-LIFTING"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Skolemization.liftTerm.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.SkolemLifting.0.RDF11.Skolemization.liftTerm.match_1.eq_2",
+      "module": "RDF11.SkolemLifting",
+      "kind": "theorem",
+      "type": "∀ {B : Type} (motive : Option B → Sort u_1) (h_1 : (b : B) → motive (some b)) (h_2 : Unit → motive none),\n  (match none with\n    | some b => h_1 b\n    | none => h_2 ()) =\n    h_2 ()",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEM-LIFTING"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Skolemization.liftTerm.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.SkolemLifting.0.RDF11.Skolemization.liftTerm.match_1.splitter",
+      "module": "RDF11.SkolemLifting",
+      "kind": "definition",
+      "type": "{B : Type} →\n  (motive : Option B → Sort u_1) → (x : Option B) → ((b : B) → motive (some b)) → (Unit → motive none) → motive x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEM-LIFTING"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Skolemization.liftTerm.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.SkolemLifting.0.RDF11.Skolemization.liftTerm.match_3.eq_1",
+      "module": "RDF11.SkolemLifting",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal C : Type} (motive : RDF11.Term Iri Literal C → Sort u_1) (i : Iri)\n  (h_1 : (i : Iri) → motive (RDF11.Term.iri i)) (h_2 : (l : Literal) → motive (RDF11.Term.literal l))\n  (h_3 : (c : C) → motive (RDF11.Term.blank c)),\n  (match RDF11.Term.iri i with\n    | RDF11.Term.iri i => h_1 i\n    | RDF11.Term.literal l => h_2 l\n    | RDF11.Term.blank c => h_3 c) =\n    h_1 i",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEM-LIFTING"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Skolemization.liftTerm.match_3",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.SkolemLifting.0.RDF11.Skolemization.liftTerm.match_3.eq_2",
+      "module": "RDF11.SkolemLifting",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal C : Type} (motive : RDF11.Term Iri Literal C → Sort u_1) (l : Literal)\n  (h_1 : (i : Iri) → motive (RDF11.Term.iri i)) (h_2 : (l : Literal) → motive (RDF11.Term.literal l))\n  (h_3 : (c : C) → motive (RDF11.Term.blank c)),\n  (match RDF11.Term.literal l with\n    | RDF11.Term.iri i => h_1 i\n    | RDF11.Term.literal l => h_2 l\n    | RDF11.Term.blank c => h_3 c) =\n    h_2 l",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEM-LIFTING"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Skolemization.liftTerm.match_3",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.SkolemLifting.0.RDF11.Skolemization.liftTerm.match_3.eq_3",
+      "module": "RDF11.SkolemLifting",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal C : Type} (motive : RDF11.Term Iri Literal C → Sort u_1) (c : C)\n  (h_1 : (i : Iri) → motive (RDF11.Term.iri i)) (h_2 : (l : Literal) → motive (RDF11.Term.literal l))\n  (h_3 : (c : C) → motive (RDF11.Term.blank c)),\n  (match RDF11.Term.blank c with\n    | RDF11.Term.iri i => h_1 i\n    | RDF11.Term.literal l => h_2 l\n    | RDF11.Term.blank c => h_3 c) =\n    h_3 c",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEM-LIFTING"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Skolemization.liftTerm.match_3",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.SkolemLifting.0.RDF11.Skolemization.liftTerm.match_3.splitter",
+      "module": "RDF11.SkolemLifting",
+      "kind": "definition",
+      "type": "{Iri Literal C : Type} →\n  (motive : RDF11.Term Iri Literal C → Sort u_1) →\n    (x : RDF11.Term Iri Literal C) →\n      ((i : Iri) → motive (RDF11.Term.iri i)) →\n        ((l : Literal) → motive (RDF11.Term.literal l)) → ((c : C) → motive (RDF11.Term.blank c)) → motive x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEM-LIFTING"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Skolemization.liftTerm.match_3",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.SkolemLifting.0.RDF11.Subject.toTerm.match_1.eq_1",
+      "module": "RDF11.SkolemLifting",
+      "kind": "theorem",
+      "type": "∀ {Iri Blank : Type} (motive : RDF11.Subject Iri Blank → Sort u_1) (i : Iri)\n  (h_1 : (i : Iri) → motive (RDF11.Subject.iri i)) (h_2 : (b : Blank) → motive (RDF11.Subject.blank b)),\n  (match RDF11.Subject.iri i with\n    | RDF11.Subject.iri i => h_1 i\n    | RDF11.Subject.blank b => h_2 b) =\n    h_1 i",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEM-LIFTING"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Subject.toTerm.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.SkolemLifting.0.RDF11.Subject.toTerm.match_1.eq_2",
+      "module": "RDF11.SkolemLifting",
+      "kind": "theorem",
+      "type": "∀ {Iri Blank : Type} (motive : RDF11.Subject Iri Blank → Sort u_1) (b : Blank)\n  (h_1 : (i : Iri) → motive (RDF11.Subject.iri i)) (h_2 : (b : Blank) → motive (RDF11.Subject.blank b)),\n  (match RDF11.Subject.blank b with\n    | RDF11.Subject.iri i => h_1 i\n    | RDF11.Subject.blank b => h_2 b) =\n    h_2 b",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEM-LIFTING"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Subject.toTerm.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.SkolemLifting.0.RDF11.Subject.toTerm.match_1.splitter",
+      "module": "RDF11.SkolemLifting",
+      "kind": "definition",
+      "type": "{Iri Blank : Type} →\n  (motive : RDF11.Subject Iri Blank → Sort u_1) →\n    (x : RDF11.Subject Iri Blank) →\n      ((i : Iri) → motive (RDF11.Subject.iri i)) → ((b : Blank) → motive (RDF11.Subject.blank b)) → motive x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEM-LIFTING"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Subject.toTerm.match_1",
       "review": "pending_expert_review"
     }
   ],

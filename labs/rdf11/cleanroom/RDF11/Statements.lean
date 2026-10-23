@@ -1,5 +1,5 @@
 import RDF11.FiniteEntailment
-import RDF11.Skolemization
+import RDF11.SkolemLifting
 
 /-!
 # Headline statements for RDF 1.1 Semantics review
@@ -62,7 +62,13 @@ theorem isomorphism_invariance {G H : GeneralizedGraph Iri Literal B} (e : Graph
 /-- Skolemization lemma, fresh-vocabulary conservativity: sk(G) entails H
 exactly when G entails H, for ordinary G and H avoiding the fresh Skolem IRIs.
 §6 https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#skolemization
-Freshness includes datatype IRIs. The separate exact-lifting formulation is open. -/
+Freshness includes datatype IRIs; exact lifting is stated separately below. -/
 theorem skolemization_lemma (G H : Graph Iri Literal B) (sk : Skolemization datatype G.generalize) (hf : sk.Avoids H.generalize) : SimplyEntails.{u} sk.graph H.generalize ↔ SimplyEntails.{u} G.generalize H.generalize := RDF11.Skolemization.conservative G H sk hf
+
+/-- Skolemization lemma, exact lifting with separate copies of input blanks.
+§6 https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#skolemization
+Reapply original names on the left; preserve conclusion blanks on the right.
+No finiteness or fresh-vocabulary condition on H is required. -/
+theorem skolemization_lifting_lemma (G : Graph Iri Literal B₁) (H : Graph Iri Literal B₂) (sk : Skolemization datatype G.generalize) (h : SimplyEntails.{u} sk.graph H.generalize) : ∃ H' : Graph Iri Literal (Sum B₁ B₂), SimplyEntails.{u} G.generalize H'.generalize ∧ (∀ b, H'.generalize.hasBlank (.inl b) → G.generalize.hasBlank b) ∧ Set.image sk.applyLiftedTriple H'.generalize = H.generalize := RDF11.Skolemization.ordinary_exact_lifting G sk H h
 
 end RDF11.Statements

@@ -2084,7 +2084,7 @@
         "formal_proof": "unassessed",
         "test_mapping": "unassessed"
       },
-      "formalization_note": "The printed statement lacks this nontrivial-skolemization premise; for a ground graph the transformation is identity."
+      "formalization_note": "The nonempty-blank premise is explicitly supplied by the preceding §6 paragraph beginning Suppose G is a graph containing blank nodes. For a ground graph the transformation is identity; the displayed non-entailment must retain its surrounding scope."
     },
     {
       "id": "MT11-SKOLEM-CONSEQUENCE-LIFTING",
@@ -2108,7 +2108,8 @@
       },
       "supporting_source_urls": [
         "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#proofs"
-      ]
+      ],
+      "formalization_note": "Exact ordinary lifting is proved using separate copies of source and conclusion blanks. Reapplication extends the original naming map on the source copy and preserves conclusion blanks; it is not the existing ambient-total substitution. The source's implicit blank-scope convention and Appendix C commutation explanation remain expert-review questions. Generalized semantic lifting is also proved directly through interpretations."
     },
     {
       "id": "MT11-SKOLEM-FRESH-VOCABULARY-CONSERVATIVITY",

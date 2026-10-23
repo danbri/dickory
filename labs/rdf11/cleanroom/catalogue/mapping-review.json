@@ -1027,7 +1027,7 @@
           "lean": "RDF11.Skolemization.lean"
         }
       ],
-      "limitations": "Freshness against G is formalized; global freshness at creation is an external naming obligation. The map is supplied, not proved to exist for arbitrary abstract IRI domains. This is full replacement as in Semantics §6, not the optional partial replacement of Concepts §3.5.",
+      "limitations": "Freshness against G is formalized; global freshness at creation is an external naming obligation. The map is supplied, not proved to exist for arbitrary abstract IRI domains. This is full replacement as in Semantics §6, not the optional partial replacement of Concepts §3.5. The existing substitution names every ambient blank value, which is adequate on G. Exact lifting instead uses applyLiftedTriple over separate source/conclusion blank copies.",
       "extraction_review": "pending_expert_review",
       "formalization_review": "pending_expert_review",
       "implementation_refinement": "not_connected_to_published_package"
@@ -1092,7 +1092,7 @@
           "lean": "RDF11.Skolemization.conservative"
         }
       ],
-      "limitations": "Ordinary graphs; no finiteness or disjoint-blank-domain premise. Avoidance includes datatype IRIs. The separate exact lifting equation H = sk(H′) remains open; no unrestricted commutation with substitutions is assumed.",
+      "limitations": "Ordinary graphs; no finiteness or disjoint-blank-domain premise. Avoidance includes datatype IRIs. The separate exact lifting theorem now uses explicit source/conclusion blank copies; its source-scope interpretation remains under review. No unrestricted commutation with substitutions is assumed.",
       "extraction_review": "pending_expert_review",
       "formalization_review": "pending_expert_review",
       "implementation_refinement": "not_connected_to_published_package"
@@ -4022,6 +4022,45 @@
       "extraction_review": "pending_expert_review",
       "formalization_review": "pending_expert_review",
       "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-SKOLEM-CONSEQUENCE-LIFTING",
+      "relation": "partial_theorem",
+      "symbol_linked_english": "ordinary_exact_lifting constructs an ordinary H-prime with separate source/conclusion blanks, proves G SimplyEntails H-prime, proves every source-copy blank occurs in G, and proves that applying applyLiftedTriple to H-prime gives H exactly. entails_lift supplies the semantic implication even for generalized graphs with different blank domains.",
+      "bindings": [
+        {
+          "symbol": "Statements.skolemization_lifting_lemma",
+          "lean": "RDF11.Statements.skolemization_lifting_lemma"
+        },
+        {
+          "symbol": "Skolemization.ordinary_exact_lifting",
+          "lean": "RDF11.Skolemization.ordinary_exact_lifting"
+        },
+        {
+          "symbol": "Skolemization.liftOrdinaryGraph",
+          "lean": "RDF11.Skolemization.liftOrdinaryGraph"
+        },
+        {
+          "symbol": "Skolemization.applyLiftedTriple",
+          "lean": "RDF11.Skolemization.applyLiftedTriple"
+        },
+        {
+          "symbol": "Skolemization.entails_lift",
+          "lean": "RDF11.Skolemization.entails_lift"
+        },
+        {
+          "symbol": "Skolemization.namedInterpretation",
+          "lean": "RDF11.Skolemization.namedInterpretation"
+        },
+        {
+          "symbol": "Skolemization.total_substitution_cannot_recover_blank_conclusion",
+          "lean": "RDF11.Skolemization.total_substitution_cannot_recover_blank_conclusion"
+        }
+      ],
+      "limitations": "No finiteness, disjoint-input-blank or Avoids-H premise is needed. The supplied Skolemization still requires injectivity on occurring source blanks and freshness against G. Reapplication names the source copy and preserves the conclusion copy; it is an explicit extension of the original map, not the ambient-total substitution. The mathematical theorem is checked, while the specification's implicit blank-renaming/strict-equality convention and Appendix C commutation explanation await expert review. This is simple entailment, not datatype/RDF/RDFS extension invariance.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
     }
   ],
   "passage_selectors": [
@@ -4393,7 +4432,8 @@
       "claims": [
         "MT11-SKOLEM-ENTAILS-ORIGINAL",
         "MT11-ORIGINAL-NOT-SKOLEM",
-        "MT11-SKOLEM-FRESH-VOCABULARY-CONSERVATIVITY"
+        "MT11-SKOLEM-FRESH-VOCABULARY-CONSERVATIVITY",
+        "MT11-SKOLEM-CONSEQUENCE-LIFTING"
       ],
       "within_section": "skolemization-informative"
     },
@@ -5669,6 +5709,36 @@
         "MT11-COLLECTION-RDFS-TYPING"
       ],
       "within_section": "rdf-collections"
+    },
+    {
+      "id": "skolem-exact-lifting",
+      "source": "mt",
+      "tag": "p",
+      "text": "For any graph H, if sk(G) simply entails H then there is a graph H'",
+      "claims": [
+        "MT11-SKOLEM-CONSEQUENCE-LIFTING"
+      ],
+      "within_section": "skolemization-informative"
+    },
+    {
+      "id": "skolem-lifting-proof-statement",
+      "source": "mt",
+      "tag": "p",
+      "text": "For any graph H, if sk(G) simply entails H there there is a graph",
+      "claims": [
+        "MT11-SKOLEM-CONSEQUENCE-LIFTING"
+      ],
+      "within_section": "proofs-of-some-results-informative"
+    },
+    {
+      "id": "skolem-lifting-proof",
+      "source": "mt",
+      "tag": "p",
+      "text": "The skolemization mapping sk substitutes a unique new IRI",
+      "claims": [
+        "MT11-SKOLEM-CONSEQUENCE-LIFTING"
+      ],
+      "within_section": "proofs-of-some-results-informative"
     }
   ],
   "context_resolutions": [
@@ -5814,6 +5884,24 @@
       "antecedent_passage": "collection-idiom",
       "resolved_meaning": "Tails failing the intended collection structure, not tails outside the semantic class rdf:List under RDFS.",
       "inference": "Read with collection-rdfs-typing and the normative domain/range axioms; do not construct an RDFS countermodel violating required typing.",
+      "review": "pending"
+    },
+    {
+      "claim_id": "MT11-ORIGINAL-NOT-SKOLEM",
+      "passage": "original-not-skolem",
+      "source_phrase": "G",
+      "antecedent_passage": "skolem-context",
+      "resolved_meaning": "The graph G containing blank nodes introduced by the preceding paragraph.",
+      "inference": "The source supplies the nontriviality premise; it is not an extra repair of the displayed sentence.",
+      "review": "pending"
+    },
+    {
+      "claim_id": "MT11-SKOLEM-CONSEQUENCE-LIFTING",
+      "passage": "skolem-exact-lifting",
+      "source_phrase": "sk(H')",
+      "antecedent_passage": "skolem-context",
+      "resolved_meaning": "Application of the naming map for blanks occurring in the original G, extended to preserve unrelated conclusion blanks.",
+      "inference": "Use separate copies of source and conclusion blanks explicitly; whether the printed equation presumes this standardization apart is an expert-review question.",
       "review": "pending"
     }
   ]
