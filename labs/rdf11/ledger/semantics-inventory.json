@@ -5059,7 +5059,7 @@
       "anchor": "simple-interpretations",
       "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#simple-interpretations",
       "category": "mathematical_consequence",
-      "source_status": "normative",
+      "source_status": "informative",
       "assertion_basis": "explicit",
       "paraphrase": "Because simple interpretations cover all names, their name-mapping structure is infinite.",
       "official_rule_code": null,
@@ -5073,7 +5073,7 @@
         "formal_proof": "unassessed",
         "test_mapping": "unassessed"
       },
-      "formalization_note": "This concerns the full name mappings, not a requirement that IR be infinite. No cardinality proof or concrete infinite IRI-domain binding is supplied yet; the finite pre-interpretation construction is discussed separately in informative Appendix B."
+      "formalization_note": "This concerns the full name mappings, not a requirement that IR be infinite. No cardinality proof or concrete infinite IRI-domain binding is supplied yet; the finite pre-interpretation construction is discussed separately in informative Appendix B. The source paragraph has class technote and is non-normative under §2; the global IS/IL input-domain obligations are separately grounded in the normative interpretation table."
     },
     {
       "id": "MT11-RDF-MODEL-EXISTENCE-CONSTRUCTION",

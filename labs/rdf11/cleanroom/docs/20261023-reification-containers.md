@@ -45,3 +45,7 @@ These proofs do not certify concrete literal/IRI domains, prescribed datatype li
 Local checks passed: full Lean build and registry/closure audit, source regeneration and hashes, seven negative gates, all 15 Python tests, source/gloss viewer generation, site links, JavaScript syntax, methodology-skill validation and whitespace checks. The browser suite now contains 39 checks. Chromium execution and Pages deployment for this increment are separate CI obligations; no local browser pass is claimed.
 
 The preceding RDFS-model increment, 3491149, passed all 34 browser checks in run 40021731043 and deployed successfully. Its public build revision and viewer SHA-256 were checked against the downloaded artifact before this increment was committed.
+
+## Follow-up source-status correction
+
+The next close reading found that the §5 paragraph asserting an infinite name-mapping structure has HTML class `technote`. Under §2, notes are non-normative. MT11-INTERPRETATION-INFINITE-NAME-STRUCTURE is therefore corrected to informative. MT11-GLOBAL-NAME-DOMAIN retains normative status and now explicitly includes the interpretation table as its source basis: condition 4 maps the IRI domain through IS, and condition 5 permits a partial IL on the literal domain. Supporting change/technical notes remain explanatory context. This correction changes no interpretation definition or theorem.

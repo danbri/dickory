@@ -3,8 +3,8 @@
   "status": "draft_not_complete_coverage",
   "method": "Human-readable AI close reading; selectors locate already selected passages and do not extract assertions.",
   "source_inventory": "../ledger/semantics-inventory.json",
-  "inventory_sha256": "ba477e7b57af3ca32a37c378d15518b6e2e819a1437e4cb7845baaffa7071991",
-  "mapping_input_sha256": "49a4f2a74cfeee157e69175655cb412ba31edacfdfb058c47b025c613da6636b",
+  "inventory_sha256": "506ebaea8c05c1b930ece08640e07bc293a100daba0a192f30600cf057947757",
+  "mapping_input_sha256": "c5cf54de05d2c3ed9b280d8e0c7524f77cb3f76c96dda2ea1295d84524dcc4b6",
   "documents": [
     {
       "id": "mt",
@@ -291,6 +291,7 @@
           "start": 37034,
           "end": 37611,
           "refs": [
+            "MT11-GLOBAL-NAME-DOMAIN",
             "MT11-SIMPLE-IEXT",
             "MT11-SIMPLE-IL",
             "MT11-SIMPLE-IP",
@@ -2646,7 +2647,8 @@
         "MT11-SIMPLE-IP",
         "MT11-SIMPLE-IEXT",
         "MT11-SIMPLE-IS",
-        "MT11-SIMPLE-IL"
+        "MT11-SIMPLE-IL",
+        "MT11-GLOBAL-NAME-DOMAIN"
       ],
       "slice_sha256": "0744dae590dcf89975c2b39a9f214be941af0e410134f6ed4a2388123eda9a83",
       "locator_tag": "table",
@@ -13639,12 +13641,13 @@
             "lean": "RDF11.indiscriminate"
           }
         ],
-        "limitations": "These definitions and model families can instantiate the full RDF syntactic domains and do not restrict interpretation to occurring names. Concrete full IRI/literal domain bindings remain external. Infinitude of the name-mapping structure is a separate unproved claim; finite resource carriers remain allowed. A reduced finite vocabulary is a pre-interpretation and needs an extension argument before it can stand for a full RDF 1.1 interpretation.",
+        "limitations": "These definitions and model families can instantiate the full RDF syntactic domains and do not restrict interpretation to occurring names. Concrete full IRI/literal domain bindings remain external. Infinitude of the name-mapping structure is a separate unproved claim; finite resource carriers remain allowed. A reduced finite vocabulary is a pre-interpretation and needs an extension argument before it can stand for a full RDF 1.1 interpretation. Normative support is the interpretation table, especially IS and partial IL; the historical change note and infinitude technical note are non-normative explanatory context.",
         "extraction_review": "pending_expert_review",
         "formalization_review": "pending_expert_review",
         "implementation_refinement": "not_connected_to_published_package"
       },
       "passages": [
+        "interpretation",
         "global-interpretation-name-scope",
         "vocabulary-relative-historical-contrast"
       ],
@@ -13657,7 +13660,7 @@
       "anchor": "simple-interpretations",
       "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#simple-interpretations",
       "category": "mathematical_consequence",
-      "source_status": "normative",
+      "source_status": "informative",
       "assertion_basis": "explicit",
       "paraphrase": "Because simple interpretations cover all names, their name-mapping structure is infinite.",
       "official_rule_code": null,
@@ -13671,7 +13674,7 @@
         "formal_proof": "unassessed",
         "test_mapping": "unassessed"
       },
-      "formalization_note": "This concerns the full name mappings, not a requirement that IR be infinite. No cardinality proof or concrete infinite IRI-domain binding is supplied yet; the finite pre-interpretation construction is discussed separately in informative Appendix B.",
+      "formalization_note": "This concerns the full name mappings, not a requirement that IR be infinite. No cardinality proof or concrete infinite IRI-domain binding is supplied yet; the finite pre-interpretation construction is discussed separately in informative Appendix B. The source paragraph has class technote and is non-normative under §2; the global IS/IL input-domain obligations are separately grounded in the normative interpretation table.",
       "cleanroom_mapping": null,
       "passages": [
         "global-interpretation-name-scope"

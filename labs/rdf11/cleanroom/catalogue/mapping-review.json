@@ -3376,7 +3376,7 @@
           "lean": "RDF11.indiscriminate"
         }
       ],
-      "limitations": "These definitions and model families can instantiate the full RDF syntactic domains and do not restrict interpretation to occurring names. Concrete full IRI/literal domain bindings remain external. Infinitude of the name-mapping structure is a separate unproved claim; finite resource carriers remain allowed. A reduced finite vocabulary is a pre-interpretation and needs an extension argument before it can stand for a full RDF 1.1 interpretation.",
+      "limitations": "These definitions and model families can instantiate the full RDF syntactic domains and do not restrict interpretation to occurring names. Concrete full IRI/literal domain bindings remain external. Infinitude of the name-mapping structure is a separate unproved claim; finite resource carriers remain allowed. A reduced finite vocabulary is a pre-interpretation and needs an extension argument before it can stand for a full RDF 1.1 interpretation. Normative support is the interpretation table, especially IS and partial IL; the historical change note and infinitude technical note are non-normative explanatory context.",
       "extraction_review": "pending_expert_review",
       "formalization_review": "pending_expert_review",
       "implementation_refinement": "not_connected_to_published_package"
@@ -3877,7 +3877,8 @@
         "MT11-SIMPLE-IP",
         "MT11-SIMPLE-IEXT",
         "MT11-SIMPLE-IS",
-        "MT11-SIMPLE-IL"
+        "MT11-SIMPLE-IL",
+        "MT11-GLOBAL-NAME-DOMAIN"
       ]
     },
     {

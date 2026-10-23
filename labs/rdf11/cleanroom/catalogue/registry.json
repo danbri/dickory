@@ -501,7 +501,7 @@
     },
     {
       "path": "Audit/Snapshot.lean",
-      "sha256": "03339f3d86e7cfcf9001f4285fcba59eda61d8bfb81810ce8f83c7946f1dd569",
+      "sha256": "f7622965fdf7d8b3d4412656ac37a14300d50f06a74ec429a77ede5d36f146c4",
       "role": "formal_source",
       "lifecycle": "active",
       "review": "pending_expert_review"
