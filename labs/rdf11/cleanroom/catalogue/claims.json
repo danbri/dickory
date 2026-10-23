@@ -3,8 +3,8 @@
   "status": "draft_not_complete_coverage",
   "method": "Human-readable AI close reading; selectors locate already selected passages and do not extract assertions.",
   "source_inventory": "../ledger/semantics-inventory.json",
-  "inventory_sha256": "1088422a4c5bf7125697c6e9b1db0e6529c57b5c2d3747d02dd379c3dd2f76fc",
-  "mapping_input_sha256": "1f025fe2ae9eaeac117b3b189f49dce7a7b563c5f14885ab0ec3598c09574941",
+  "inventory_sha256": "ba477e7b57af3ca32a37c378d15518b6e2e819a1437e4cb7845baaffa7071991",
+  "mapping_input_sha256": "49a4f2a74cfeee157e69175655cb412ba31edacfdfb058c47b025c613da6636b",
   "documents": [
     {
       "id": "mt",
@@ -2025,6 +2025,138 @@
         },
         {
           "start": 111381,
+          "end": 115957,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 115957,
+          "end": 115993,
+          "refs": [
+            "MT11-REIFICATION-DESCRIPTION"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 115993,
+          "end": 116515,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 116515,
+          "end": 116690,
+          "refs": [
+            "MT11-REIFICATION-DESCRIPTION"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 116690,
+          "end": 116696,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 116696,
+          "end": 116813,
+          "refs": [
+            "MT11-REIFICATION-DESCRIPTION"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 116813,
+          "end": 118179,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 118179,
+          "end": 118949,
+          "refs": [
+            "MT11-REIFICATION-NONENTAILMENT"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 118949,
+          "end": 118955,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 118955,
+          "end": 119377,
+          "refs": [
+            "MT11-REIFICATION-BLANK-CONCLUSION-ENTAILMENT",
+            "MT11-REIFICATION-NONUNIQUE-TOKENS"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 119377,
+          "end": 119383,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 119383,
+          "end": 119769,
+          "refs": [
+            "MT11-REIFICATION-BLANK-CONCLUSION-ENTAILMENT",
+            "MT11-REIFICATION-NONUNIQUE-TOKENS"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 119769,
+          "end": 119775,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 119775,
+          "end": 119797,
+          "refs": [
+            "MT11-REIFICATION-BLANK-CONCLUSION-ENTAILMENT",
+            "MT11-REIFICATION-NONUNIQUE-TOKENS"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 119797,
+          "end": 119803,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 119803,
+          "end": 119849,
+          "refs": [
+            "MT11-REIFICATION-BLANK-CONCLUSION-ENTAILMENT",
+            "MT11-REIFICATION-NONUNIQUE-TOKENS"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 119849,
           "end": 120900,
           "refs": [
             "UNRESOLVED-mt"
@@ -2041,6 +2173,134 @@
         },
         {
           "start": 121137,
+          "end": 122984,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 122984,
+          "end": 123163,
+          "refs": [
+            "MT11-CONTAINER-NO-PERMUTATION-ENTAILMENT"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 123163,
+          "end": 123169,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 123169,
+          "end": 123275,
+          "refs": [
+            "MT11-CONTAINER-NO-PERMUTATION-ENTAILMENT"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 123275,
+          "end": 123309,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 123309,
+          "end": 123379,
+          "refs": [
+            "MT11-CONTAINER-NO-PERMUTATION-ENTAILMENT"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 123379,
+          "end": 123758,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 123758,
+          "end": 123887,
+          "refs": [
+            "MT11-CONTAINER-NO-PROPERTY-TRANSFER"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 123887,
+          "end": 123892,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 123892,
+          "end": 124190,
+          "refs": [
+            "MT11-CONTAINER-OPEN-STRUCTURE"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 124190,
+          "end": 124195,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 124195,
+          "end": 124300,
+          "refs": [
+            "MT11-CONTAINER-OPEN-STRUCTURE"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 124300,
+          "end": 124334,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 124334,
+          "end": 124374,
+          "refs": [
+            "MT11-CONTAINER-OPEN-STRUCTURE"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 124374,
+          "end": 124380,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 124380,
+          "end": 124735,
+          "refs": [
+            "MT11-CONTAINER-OPEN-STRUCTURE"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 124735,
           "end": 139975,
           "refs": [
             "UNRESOLVED-mt"
@@ -4143,6 +4403,234 @@
         "MT11-LITERAL-VALUES-NOT-SYNTAX"
       ],
       "slice_sha256": "779131c23e4203e414d8f465f626c1c1dfc8d54f5033eae2db29a61aaefc2083",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "reification-base-triple",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 115957,
+      "end": 115993,
+      "claims": [
+        "MT11-REIFICATION-DESCRIPTION"
+      ],
+      "slice_sha256": "8412f5571cbcf8b697a555f6105ff2fff1595c153c34188fcdccab34d640f85b",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "reification-four-triples",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 116515,
+      "end": 116690,
+      "claims": [
+        "MT11-REIFICATION-DESCRIPTION"
+      ],
+      "slice_sha256": "7d5293a1eff1b2e3f2bbe2410803c175ad85227e36754e5e65d1bb5acda9635f",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "reification-definition",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 116696,
+      "end": 116813,
+      "claims": [
+        "MT11-REIFICATION-DESCRIPTION"
+      ],
+      "slice_sha256": "e3bdcbfd8d26644da8e37d1181868a0a934602979711d94bb3b473a0afb3ee03",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "reification-nonentailment",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 118179,
+      "end": 118949,
+      "claims": [
+        "MT11-REIFICATION-NONENTAILMENT"
+      ],
+      "slice_sha256": "39fdbcb8c0267b09d1f999b77ecc893a2333ed7bf28baabbd77996db1e9a58d9",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "reification-nonunique-prose",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 118955,
+      "end": 119377,
+      "claims": [
+        "MT11-REIFICATION-NONUNIQUE-TOKENS",
+        "MT11-REIFICATION-BLANK-CONCLUSION-ENTAILMENT"
+      ],
+      "slice_sha256": "adaca8c9472866a35d8ebf5721e9c1e41a849caa3ff9ab68973597dce7f07c65",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "reification-blank-premise",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 119383,
+      "end": 119769,
+      "claims": [
+        "MT11-REIFICATION-NONUNIQUE-TOKENS",
+        "MT11-REIFICATION-BLANK-CONCLUSION-ENTAILMENT"
+      ],
+      "slice_sha256": "83396937b00054e47c4e2b4aaad4352bc021d872a182a247b3bb91c401dd218b",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "reification-blank-connective",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 119775,
+      "end": 119797,
+      "claims": [
+        "MT11-REIFICATION-NONUNIQUE-TOKENS",
+        "MT11-REIFICATION-BLANK-CONCLUSION-ENTAILMENT"
+      ],
+      "slice_sha256": "7ebc4bca99ae22f38bc88acd1287bdb8b9dbd6d3ed86135789a6e0229aaa31df",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "reification-blank-conclusion",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 119803,
+      "end": 119849,
+      "claims": [
+        "MT11-REIFICATION-NONUNIQUE-TOKENS",
+        "MT11-REIFICATION-BLANK-CONCLUSION-ENTAILMENT"
+      ],
+      "slice_sha256": "81094a11e3285a02eae828917200645d61fa1ee1be7fe2a409bdfadae5cd4008",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "container-no-permutation",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 122984,
+      "end": 123163,
+      "claims": [
+        "MT11-CONTAINER-NO-PERMUTATION-ENTAILMENT"
+      ],
+      "slice_sha256": "e35ead1e89cec8f63522fa1c3e39dcb914e071e8ea74f04ae94fe54b2780354b",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "container-bag-premise",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 123169,
+      "end": 123275,
+      "claims": [
+        "MT11-CONTAINER-NO-PERMUTATION-ENTAILMENT"
+      ],
+      "slice_sha256": "70150af9cce96dff9b860da61bc3830c5b55261184afcc3a0e9fd28159d3b2e3",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "container-bag-conclusion",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 123309,
+      "end": 123379,
+      "claims": [
+        "MT11-CONTAINER-NO-PERMUTATION-ENTAILMENT"
+      ],
+      "slice_sha256": "03686b03591ddf1d1dd60eaec0dad5eaa01cf852f059c54d9476cb9760c1d5bd",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "container-no-property-transfer",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 123758,
+      "end": 123887,
+      "claims": [
+        "MT11-CONTAINER-NO-PROPERTY-TRANSFER"
+      ],
+      "slice_sha256": "39161fd2061665bfffdb850c4c1c192e2bd2c991e1fa71a063b973668e3deaf8",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "container-types-and-gaps",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 123892,
+      "end": 124190,
+      "claims": [
+        "MT11-CONTAINER-OPEN-STRUCTURE"
+      ],
+      "slice_sha256": "2c6eed3623112175c8468711b1d3d1a4fdb7331381d43b06ac2bf530a823de92",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "container-gap-premise",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 124195,
+      "end": 124300,
+      "claims": [
+        "MT11-CONTAINER-OPEN-STRUCTURE"
+      ],
+      "slice_sha256": "66b1813ec43636cfc226784e7108042e0f505444d261edae5e845062f2606499",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "container-gap-conclusion",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 124334,
+      "end": 124374,
+      "claims": [
+        "MT11-CONTAINER-OPEN-STRUCTURE"
+      ],
+      "slice_sha256": "068d109d18600300d963a7e7fe6b923724e12edaa68156a2d4f3c9a38e5657bf",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "container-open-membership",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 124380,
+      "end": 124735,
+      "claims": [
+        "MT11-CONTAINER-OPEN-STRUCTURE"
+      ],
+      "slice_sha256": "760f7919c8b17a6004d2c0030a1ea71c179f773564b992d503b5d9b468c319de",
       "locator_tag": "p",
       "review": "pending",
       "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
@@ -12462,10 +12950,32 @@
         "formal_proof": "unassessed",
         "test_mapping": "unassessed"
       },
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-REIFICATION-DESCRIPTION",
+        "relation": "partial_definition",
+        "symbol_linked_english": "Triple.reification produces the four ordinary triples assigning rdf:Statement type and subject, predicate and object components to a resource. reification_true interprets the IRI-component examples through the shared RDFS model.",
+        "bindings": [
+          {
+            "symbol": "Triple.reification",
+            "lean": "RDF11.Triple.reification"
+          },
+          {
+            "symbol": "ReificationExamples.reification_true",
+            "lean": "RDF11.ReificationExamples.reification_true"
+          }
+        ],
+        "limitations": "This represents component-description syntax and an IRI-component witness. It does not identify a semantic resource with a concrete triple token or implement quotation, document resolution or dataset naming.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "reification-base-triple",
+        "reification-four-triples",
+        "reification-definition"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-REIFICATION-NOT-QUOTATION",
@@ -12512,10 +13022,34 @@
         "formal_proof": "unassessed",
         "test_mapping": "unassessed"
       },
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-REIFICATION-NONENTAILMENT",
+        "relation": "partial_theorem",
+        "symbol_linked_english": "reification_not_assertion refutes inferring the described rdf:value assertion from its reification. assertion_not_existential_reification refutes inferring even an existential reification from the assertion.",
+        "bindings": [
+          {
+            "symbol": "ReificationExamples.valueTriple",
+            "lean": "RDF11.ReificationExamples.valueTriple"
+          },
+          {
+            "symbol": "ReificationExamples.reification_not_assertion",
+            "lean": "RDF11.ReificationExamples.reification_not_assertion"
+          },
+          {
+            "symbol": "ReificationExamples.assertion_not_existential_reification",
+            "lean": "RDF11.ReificationExamples.assertion_not_existential_reification"
+          }
+        ],
+        "limitations": "The countermodels satisfy every existing RDFS condition under RDFSModelConstruction.Parameters. Endpoints are selected unrecognized vocabulary symbols, not arbitrary concrete ex: IRIs; these are witness families with the source graph shapes. Concrete datatype and vocabulary correspondence remain external. Failure of RDFS entailment also rules out the weaker RDF and simple entailments by the existing regime-inclusion theorems. These refute general inference patterns; they do not say that every triple fails both entailments. Axiomatic or overlapping triples and additional premises can entail a particular conclusion. rdf:value is an example free predicate, not a value evaluator.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "reification-nonentailment"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-REIFICATION-NONUNIQUE-TOKENS",
@@ -12536,10 +13070,29 @@
         "formal_proof": "unassessed",
         "test_mapping": "unassessed"
       },
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-REIFICATION-NONUNIQUE-TOKENS",
+        "relation": "partial_theorem",
+        "symbol_linked_english": "same_components_not_metadata gives two distinct IRI-named reification resources with identical components; metadata on the first does not entail metadata on the second.",
+        "bindings": [
+          {
+            "symbol": "ReificationExamples.same_components_not_metadata",
+            "lean": "RDF11.ReificationExamples.same_components_not_metadata"
+          }
+        ],
+        "limitations": "The countermodels satisfy every existing RDFS condition under RDFSModelConstruction.Parameters. Endpoints are selected unrecognized vocabulary symbols, not arbitrary concrete ex: IRIs; these are witness families with the source graph shapes. Concrete datatype and vocabulary correspondence remain external. Failure of RDFS entailment also rules out the weaker RDF and simple entailments by the existing regime-inclusion theorems. This witnesses the intended distinct-resource prose. It does not prove the printed blank-node non-entailment: that standalone conclusion instead follows under existential graph scope, as recorded in the open source question and a separate derived claim.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "reification-nonunique-prose",
+        "reification-blank-premise",
+        "reification-blank-connective",
+        "reification-blank-conclusion"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-CONTAINERS-DESCRIPTION",
@@ -12631,10 +13184,36 @@
         "formal_proof": "unassessed",
         "test_mapping": "unassessed"
       },
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-CONTAINER-NO-PERMUTATION-ENTAILMENT",
+        "relation": "partial_theorem",
+        "symbol_linked_english": "bag_permutation_not_entailed gives a Bag with rdf:_1 a and rdf:_2 b that does not entail an existential root with rdf:_1 b and rdf:_2 a. The conclusion twoPositions contains only the printed membership edges.",
+        "bindings": [
+          {
+            "symbol": "ContainerExamples.twoMemberBag",
+            "lean": "RDF11.ContainerExamples.twoMemberBag"
+          },
+          {
+            "symbol": "ContainerExamples.twoPositions",
+            "lean": "RDF11.ContainerExamples.twoPositions"
+          },
+          {
+            "symbol": "ContainerExamples.bag_permutation_not_entailed",
+            "lean": "RDF11.ContainerExamples.bag_permutation_not_entailed"
+          }
+        ],
+        "limitations": "The countermodels satisfy every existing RDFS condition under RDFSModelConstruction.Parameters. Endpoints are selected unrecognized vocabulary symbols, not arbitrary concrete ex: IRIs; these are witness families with the source graph shapes. Concrete datatype and vocabulary correspondence remain external. Failure of RDFS entailment also rules out the weaker RDF and simple entailments by the existing regime-inclusion theorems. The selected endpoints have distinct denotations in the witness. This refutes automatic position permutation; it does not prohibit a graph from explicitly asserting both orders.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "container-no-permutation",
+        "container-bag-premise",
+        "container-bag-conclusion"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-CONTAINER-NO-PROPERTY-TRANSFER",
@@ -12655,10 +13234,26 @@
         "formal_proof": "unassessed",
         "test_mapping": "unassessed"
       },
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-CONTAINER-NO-PROPERTY-TRANSFER",
+        "relation": "partial_theorem",
+        "symbol_linked_english": "no_container_member_property_transfer gives countermodels in both directions between an rdf:Bag and one of its rdf:_1 members, with an rdf:value assertion attached to only one of them.",
+        "bindings": [
+          {
+            "symbol": "ContainerExamples.no_container_member_property_transfer",
+            "lean": "RDF11.ContainerExamples.no_container_member_property_transfer"
+          }
+        ],
+        "limitations": "The countermodels satisfy every existing RDFS condition under RDFSModelConstruction.Parameters. Endpoints are selected unrecognized vocabulary symbols, not arbitrary concrete ex: IRIs; these are witness families with the source graph shapes. Concrete datatype and vocabulary correspondence remain external. Failure of RDFS entailment also rules out the weaker RDF and simple entailments by the existing regime-inclusion theorems. The result concerns one identified member and the displayed premises, not a property shared by every member or a prohibition under additional axioms.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "container-no-property-transfer"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-CONTAINER-OPEN-STRUCTURE",
@@ -12680,10 +13275,37 @@
         "test_mapping": "unassessed"
       },
       "formalization_note": "These are absences of special constraints, not requirements that every application accept every intended container shape.",
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-CONTAINER-OPEN-STRUCTURE",
+        "relation": "partial_theorem",
+        "symbol_linked_english": "second_position_not_entailed gives a typed sequence with rdf:_1 and rdf:_3 but no possible rdf:_2 edge under any blank assignment. bag_and_sequence_consistent exhibits a model typing the same resource as both Bag and Seq.",
+        "bindings": [
+          {
+            "symbol": "ContainerExamples.gappedSequence",
+            "lean": "RDF11.ContainerExamples.gappedSequence"
+          },
+          {
+            "symbol": "ContainerExamples.second_position_not_entailed",
+            "lean": "RDF11.ContainerExamples.second_position_not_entailed"
+          },
+          {
+            "symbol": "ContainerExamples.bag_and_sequence_consistent",
+            "lean": "RDF11.ContainerExamples.bag_and_sequence_consistent"
+          }
+        ],
+        "limitations": "The countermodels satisfy every existing RDFS condition under RDFSModelConstruction.Parameters. Endpoints are selected unrecognized vocabulary symbols, not arbitrary concrete ex: IRIs; these are witness families with the source graph shapes. Concrete datatype and vocabulary correspondence remain external. Failure of RDFS entailment also rules out the weaker RDF and simple entailments by the existing regime-inclusion theorems. Only the gap and overlapping-type parts are mapped. Infinite membership, lack of a fixed upper bound, and the paragraph about always consistently adding membership remain unproved; datatype restrictions and already inconsistent premises require care.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "container-types-and-gaps",
+        "container-gap-premise",
+        "container-gap-conclusion",
+        "container-open-membership"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-COLLECTION-LINKED-STRUCTURE",
@@ -13451,6 +14073,60 @@
       ],
       "extraction_review": "pending",
       "formalization_review": "pending"
+    },
+    {
+      "id": "MT11-REIFICATION-BLANK-CONCLUSION-ENTAILMENT",
+      "section": "D.1",
+      "anchor": "reification",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#reification",
+      "category": "mathematical_consequence",
+      "source_status": "informative",
+      "assertion_basis": "derived",
+      "paraphrase": "Under independently existential graph satisfaction, Appendix D.1 paragraph 12 simply entails its printed singleton blank-node conclusion in paragraph 14. This checked consequence is evidence for a source-scope question, separate from the intended distinct-resource claim.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-EXISTENTIAL-GRAPH-TRUTH",
+        "MT11-SIMPLE-ENTAILMENT",
+        "MT11-REIFICATION-DESCRIPTION"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "The source prints the opposite non-entailment connective. Keep the archived text intact and the question pending expert review; this derived record does not accept the printed non-entailment or declare an erratum.",
+      "cleanroom_mapping": {
+        "claim_id": "MT11-REIFICATION-BLANK-CONCLUSION-ENTAILMENT",
+        "relation": "theorem",
+        "symbol_linked_english": "printedPremise transcribes the nine ordinary premise triples using Bool blanks for xxx and yyy. printed_conclusion_follows uses blank_property_consequence to reuse xxx's property witness for the independently existential yyy in the singleton conclusion.",
+        "bindings": [
+          {
+            "symbol": "ReificationScopeReview.printedPremise",
+            "lean": "RDF11.ReificationScopeReview.printedPremise"
+          },
+          {
+            "symbol": "ReificationScopeReview.blank_property_consequence",
+            "lean": "RDF11.ReificationScopeReview.blank_property_consequence"
+          },
+          {
+            "symbol": "ReificationScopeReview.printed_conclusion_follows",
+            "lean": "RDF11.ReificationScopeReview.printed_conclusion_follows"
+          }
+        ],
+        "limitations": "This theorem needs no datatype or RDFS constructor assumptions and preserves the printed graph shape. It establishes the result in the current simple semantics; disposition of the source connective and intended scope requires expert review. Not a declared specification erratum.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "reification-nonunique-prose",
+        "reification-blank-premise",
+        "reification-blank-connective",
+        "reification-blank-conclusion"
+      ],
+      "extraction_review": "pending",
+      "formalization_review": "pending"
     }
   ],
   "context_resolutions": [
@@ -13560,6 +14236,24 @@
       "antecedent_passage": "vocabulary-relative-historical-contrast",
       "resolved_meaning": "The global RDF IRI/literal domains, rather than a vocabulary selected for a graph as in the contrasted RDF 1.0 presentation. IL may still be undefined on a literal because it is partial.",
       "inference": "Use arbitrary-domain model constructions with total IS and a permitted partial IL. Full-domain coverage does not imply infinitely many distinct resource denotations. The source infinitude assertion is retained separately and is not claimed proved.",
+      "review": "pending"
+    },
+    {
+      "claim_id": "MT11-REIFICATION-DESCRIPTION",
+      "passage": "reification-definition",
+      "source_phrase": "The second graph",
+      "antecedent_passage": "reification-four-triples",
+      "resolved_meaning": "The four component-description triples about ex:graph1, distinguished from the earlier singleton ex:a ex:b ex:c.",
+      "inference": "Triple.reification builds that describing graph without asserting the described triple.",
+      "review": "pending"
+    },
+    {
+      "claim_id": "MT11-REIFICATION-NONENTAILMENT",
+      "passage": "reification-nonentailment",
+      "source_phrase": "the triple, and is not entailed by it",
+      "antecedent_passage": "reification-base-triple",
+      "resolved_meaning": "The described assertion, with its subject, predicate and object components; it is distinct from the four describing triples.",
+      "inference": "Record failure of the general inference patterns, not universal non-entailment of every possible instance.",
       "review": "pending"
     }
   ],

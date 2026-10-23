@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "status": "draft_ninth_formalization_increment",
+  "status": "draft_tenth_formalization_increment",
   "selection_method": "Human-readable AI close reading; selectors locate already selected passages and do not extract assertions.",
   "mappings": [
     {
@@ -3639,6 +3639,147 @@
       "extraction_review": "pending_expert_review",
       "formalization_review": "pending_expert_review",
       "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-REIFICATION-DESCRIPTION",
+      "relation": "partial_definition",
+      "symbol_linked_english": "Triple.reification produces the four ordinary triples assigning rdf:Statement type and subject, predicate and object components to a resource. reification_true interprets the IRI-component examples through the shared RDFS model.",
+      "bindings": [
+        {
+          "symbol": "Triple.reification",
+          "lean": "RDF11.Triple.reification"
+        },
+        {
+          "symbol": "ReificationExamples.reification_true",
+          "lean": "RDF11.ReificationExamples.reification_true"
+        }
+      ],
+      "limitations": "This represents component-description syntax and an IRI-component witness. It does not identify a semantic resource with a concrete triple token or implement quotation, document resolution or dataset naming.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-REIFICATION-NONENTAILMENT",
+      "relation": "partial_theorem",
+      "symbol_linked_english": "reification_not_assertion refutes inferring the described rdf:value assertion from its reification. assertion_not_existential_reification refutes inferring even an existential reification from the assertion.",
+      "bindings": [
+        {
+          "symbol": "ReificationExamples.valueTriple",
+          "lean": "RDF11.ReificationExamples.valueTriple"
+        },
+        {
+          "symbol": "ReificationExamples.reification_not_assertion",
+          "lean": "RDF11.ReificationExamples.reification_not_assertion"
+        },
+        {
+          "symbol": "ReificationExamples.assertion_not_existential_reification",
+          "lean": "RDF11.ReificationExamples.assertion_not_existential_reification"
+        }
+      ],
+      "limitations": "The countermodels satisfy every existing RDFS condition under RDFSModelConstruction.Parameters. Endpoints are selected unrecognized vocabulary symbols, not arbitrary concrete ex: IRIs; these are witness families with the source graph shapes. Concrete datatype and vocabulary correspondence remain external. Failure of RDFS entailment also rules out the weaker RDF and simple entailments by the existing regime-inclusion theorems. These refute general inference patterns; they do not say that every triple fails both entailments. Axiomatic or overlapping triples and additional premises can entail a particular conclusion. rdf:value is an example free predicate, not a value evaluator.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-REIFICATION-NONUNIQUE-TOKENS",
+      "relation": "partial_theorem",
+      "symbol_linked_english": "same_components_not_metadata gives two distinct IRI-named reification resources with identical components; metadata on the first does not entail metadata on the second.",
+      "bindings": [
+        {
+          "symbol": "ReificationExamples.same_components_not_metadata",
+          "lean": "RDF11.ReificationExamples.same_components_not_metadata"
+        }
+      ],
+      "limitations": "The countermodels satisfy every existing RDFS condition under RDFSModelConstruction.Parameters. Endpoints are selected unrecognized vocabulary symbols, not arbitrary concrete ex: IRIs; these are witness families with the source graph shapes. Concrete datatype and vocabulary correspondence remain external. Failure of RDFS entailment also rules out the weaker RDF and simple entailments by the existing regime-inclusion theorems. This witnesses the intended distinct-resource prose. It does not prove the printed blank-node non-entailment: that standalone conclusion instead follows under existential graph scope, as recorded in the open source question and a separate derived claim.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-REIFICATION-BLANK-CONCLUSION-ENTAILMENT",
+      "relation": "theorem",
+      "symbol_linked_english": "printedPremise transcribes the nine ordinary premise triples using Bool blanks for xxx and yyy. printed_conclusion_follows uses blank_property_consequence to reuse xxx's property witness for the independently existential yyy in the singleton conclusion.",
+      "bindings": [
+        {
+          "symbol": "ReificationScopeReview.printedPremise",
+          "lean": "RDF11.ReificationScopeReview.printedPremise"
+        },
+        {
+          "symbol": "ReificationScopeReview.blank_property_consequence",
+          "lean": "RDF11.ReificationScopeReview.blank_property_consequence"
+        },
+        {
+          "symbol": "ReificationScopeReview.printed_conclusion_follows",
+          "lean": "RDF11.ReificationScopeReview.printed_conclusion_follows"
+        }
+      ],
+      "limitations": "This theorem needs no datatype or RDFS constructor assumptions and preserves the printed graph shape. It establishes the result in the current simple semantics; disposition of the source connective and intended scope requires expert review. Not a declared specification erratum.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-CONTAINER-NO-PERMUTATION-ENTAILMENT",
+      "relation": "partial_theorem",
+      "symbol_linked_english": "bag_permutation_not_entailed gives a Bag with rdf:_1 a and rdf:_2 b that does not entail an existential root with rdf:_1 b and rdf:_2 a. The conclusion twoPositions contains only the printed membership edges.",
+      "bindings": [
+        {
+          "symbol": "ContainerExamples.twoMemberBag",
+          "lean": "RDF11.ContainerExamples.twoMemberBag"
+        },
+        {
+          "symbol": "ContainerExamples.twoPositions",
+          "lean": "RDF11.ContainerExamples.twoPositions"
+        },
+        {
+          "symbol": "ContainerExamples.bag_permutation_not_entailed",
+          "lean": "RDF11.ContainerExamples.bag_permutation_not_entailed"
+        }
+      ],
+      "limitations": "The countermodels satisfy every existing RDFS condition under RDFSModelConstruction.Parameters. Endpoints are selected unrecognized vocabulary symbols, not arbitrary concrete ex: IRIs; these are witness families with the source graph shapes. Concrete datatype and vocabulary correspondence remain external. Failure of RDFS entailment also rules out the weaker RDF and simple entailments by the existing regime-inclusion theorems. The selected endpoints have distinct denotations in the witness. This refutes automatic position permutation; it does not prohibit a graph from explicitly asserting both orders.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-CONTAINER-NO-PROPERTY-TRANSFER",
+      "relation": "partial_theorem",
+      "symbol_linked_english": "no_container_member_property_transfer gives countermodels in both directions between an rdf:Bag and one of its rdf:_1 members, with an rdf:value assertion attached to only one of them.",
+      "bindings": [
+        {
+          "symbol": "ContainerExamples.no_container_member_property_transfer",
+          "lean": "RDF11.ContainerExamples.no_container_member_property_transfer"
+        }
+      ],
+      "limitations": "The countermodels satisfy every existing RDFS condition under RDFSModelConstruction.Parameters. Endpoints are selected unrecognized vocabulary symbols, not arbitrary concrete ex: IRIs; these are witness families with the source graph shapes. Concrete datatype and vocabulary correspondence remain external. Failure of RDFS entailment also rules out the weaker RDF and simple entailments by the existing regime-inclusion theorems. The result concerns one identified member and the displayed premises, not a property shared by every member or a prohibition under additional axioms.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-CONTAINER-OPEN-STRUCTURE",
+      "relation": "partial_theorem",
+      "symbol_linked_english": "second_position_not_entailed gives a typed sequence with rdf:_1 and rdf:_3 but no possible rdf:_2 edge under any blank assignment. bag_and_sequence_consistent exhibits a model typing the same resource as both Bag and Seq.",
+      "bindings": [
+        {
+          "symbol": "ContainerExamples.gappedSequence",
+          "lean": "RDF11.ContainerExamples.gappedSequence"
+        },
+        {
+          "symbol": "ContainerExamples.second_position_not_entailed",
+          "lean": "RDF11.ContainerExamples.second_position_not_entailed"
+        },
+        {
+          "symbol": "ContainerExamples.bag_and_sequence_consistent",
+          "lean": "RDF11.ContainerExamples.bag_and_sequence_consistent"
+        }
+      ],
+      "limitations": "The countermodels satisfy every existing RDFS condition under RDFSModelConstruction.Parameters. Endpoints are selected unrecognized vocabulary symbols, not arbitrary concrete ex: IRIs; these are witness families with the source graph shapes. Concrete datatype and vocabulary correspondence remain external. Failure of RDFS entailment also rules out the weaker RDF and simple entailments by the existing regime-inclusion theorems. Only the gap and overlapping-type parts are mapped. Infinite membership, lack of a fixed upper bound, and the paragraph about always consistently adding membership remain unproved; datatype restrictions and already inconsistent premises require care.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
     }
   ],
   "passage_selectors": [
@@ -4994,6 +5135,174 @@
         "MT11-LITERAL-VALUES-NOT-SYNTAX"
       ],
       "within_section": "a-note-on-rdfs-literal-informative"
+    },
+    {
+      "id": "reification-base-triple",
+      "source": "mt",
+      "tag": "p",
+      "text": "ex:a ex:b ex:c .",
+      "claims": [
+        "MT11-REIFICATION-DESCRIPTION"
+      ],
+      "within_section": "reification",
+      "exact_text": true
+    },
+    {
+      "id": "reification-four-triples",
+      "source": "mt",
+      "tag": "p",
+      "text": "ex:graph1 rdf:type rdf:Statement",
+      "claims": [
+        "MT11-REIFICATION-DESCRIPTION"
+      ],
+      "within_section": "reification"
+    },
+    {
+      "id": "reification-definition",
+      "source": "mt",
+      "tag": "p",
+      "text": "The second graph is called a reification",
+      "claims": [
+        "MT11-REIFICATION-DESCRIPTION"
+      ],
+      "within_section": "reification"
+    },
+    {
+      "id": "reification-nonentailment",
+      "source": "mt",
+      "tag": "p",
+      "text": "A reification of a triple does not entail the triple",
+      "claims": [
+        "MT11-REIFICATION-NONENTAILMENT"
+      ],
+      "within_section": "reification"
+    },
+    {
+      "id": "reification-nonunique-prose",
+      "source": "mt",
+      "tag": "p",
+      "text": "Since the relation between triples and reifications",
+      "claims": [
+        "MT11-REIFICATION-NONUNIQUE-TOKENS",
+        "MT11-REIFICATION-BLANK-CONCLUSION-ENTAILMENT"
+      ],
+      "within_section": "reification"
+    },
+    {
+      "id": "reification-blank-premise",
+      "source": "mt",
+      "tag": "p",
+      "text": "_:xxx rdf:type rdf:Statement",
+      "claims": [
+        "MT11-REIFICATION-NONUNIQUE-TOKENS",
+        "MT11-REIFICATION-BLANK-CONCLUSION-ENTAILMENT"
+      ],
+      "within_section": "reification"
+    },
+    {
+      "id": "reification-blank-connective",
+      "source": "mt",
+      "tag": "p",
+      "text": "does not entail",
+      "claims": [
+        "MT11-REIFICATION-NONUNIQUE-TOKENS",
+        "MT11-REIFICATION-BLANK-CONCLUSION-ENTAILMENT"
+      ],
+      "within_section": "reification",
+      "exact_text": true
+    },
+    {
+      "id": "reification-blank-conclusion",
+      "source": "mt",
+      "tag": "p",
+      "text": "_:yyy ex:property ex:foo .",
+      "claims": [
+        "MT11-REIFICATION-NONUNIQUE-TOKENS",
+        "MT11-REIFICATION-BLANK-CONCLUSION-ENTAILMENT"
+      ],
+      "within_section": "reification",
+      "exact_text": true
+    },
+    {
+      "id": "container-no-permutation",
+      "source": "mt",
+      "tag": "p",
+      "text": "The RDF semantics does not support any entailments",
+      "claims": [
+        "MT11-CONTAINER-NO-PERMUTATION-ENTAILMENT"
+      ],
+      "within_section": "rdf-containers"
+    },
+    {
+      "id": "container-bag-premise",
+      "source": "mt",
+      "tag": "p",
+      "text": "_:xxx rdf:type rdf:Bag",
+      "claims": [
+        "MT11-CONTAINER-NO-PERMUTATION-ENTAILMENT"
+      ],
+      "within_section": "rdf-containers"
+    },
+    {
+      "id": "container-bag-conclusion",
+      "source": "mt",
+      "tag": "p",
+      "text": "_:xxx rdf:_1 ex:b",
+      "claims": [
+        "MT11-CONTAINER-NO-PERMUTATION-ENTAILMENT"
+      ],
+      "within_section": "rdf-containers"
+    },
+    {
+      "id": "container-no-property-transfer",
+      "source": "mt",
+      "tag": "p",
+      "text": "There is no assumption that a property of a container",
+      "claims": [
+        "MT11-CONTAINER-NO-PROPERTY-TRANSFER"
+      ],
+      "within_section": "rdf-containers"
+    },
+    {
+      "id": "container-types-and-gaps",
+      "source": "mt",
+      "tag": "p",
+      "text": "There is no formal requirement that the three container classes",
+      "claims": [
+        "MT11-CONTAINER-OPEN-STRUCTURE"
+      ],
+      "within_section": "rdf-containers"
+    },
+    {
+      "id": "container-gap-premise",
+      "source": "mt",
+      "tag": "p",
+      "text": "_:xxx rdf:type rdf:Seq.",
+      "claims": [
+        "MT11-CONTAINER-OPEN-STRUCTURE"
+      ],
+      "within_section": "rdf-containers"
+    },
+    {
+      "id": "container-gap-conclusion",
+      "source": "mt",
+      "tag": "p",
+      "text": "_:xxx rdf:_2 _:yyy .",
+      "claims": [
+        "MT11-CONTAINER-OPEN-STRUCTURE"
+      ],
+      "within_section": "rdf-containers",
+      "exact_text": true
+    },
+    {
+      "id": "container-open-membership",
+      "source": "mt",
+      "tag": "p",
+      "text": "There is no way in RDF to assert that a container",
+      "claims": [
+        "MT11-CONTAINER-OPEN-STRUCTURE"
+      ],
+      "within_section": "rdf-containers"
     }
   ],
   "context_resolutions": [
@@ -5103,6 +5412,24 @@
       "antecedent_passage": "vocabulary-relative-historical-contrast",
       "resolved_meaning": "The global RDF IRI/literal domains, rather than a vocabulary selected for a graph as in the contrasted RDF 1.0 presentation. IL may still be undefined on a literal because it is partial.",
       "inference": "Use arbitrary-domain model constructions with total IS and a permitted partial IL. Full-domain coverage does not imply infinitely many distinct resource denotations. The source infinitude assertion is retained separately and is not claimed proved.",
+      "review": "pending"
+    },
+    {
+      "claim_id": "MT11-REIFICATION-DESCRIPTION",
+      "passage": "reification-definition",
+      "source_phrase": "The second graph",
+      "antecedent_passage": "reification-four-triples",
+      "resolved_meaning": "The four component-description triples about ex:graph1, distinguished from the earlier singleton ex:a ex:b ex:c.",
+      "inference": "Triple.reification builds that describing graph without asserting the described triple.",
+      "review": "pending"
+    },
+    {
+      "claim_id": "MT11-REIFICATION-NONENTAILMENT",
+      "passage": "reification-nonentailment",
+      "source_phrase": "the triple, and is not entailed by it",
+      "antecedent_passage": "reification-base-triple",
+      "resolved_meaning": "The described assertion, with its subject, predicate and object components; it is distinct from the four describing triples.",
+      "inference": "Record failure of the general inference patterns, not universal non-entailment of every possible instance.",
       "review": "pending"
     }
   ]

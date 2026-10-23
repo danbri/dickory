@@ -36,3 +36,7 @@ import RDF11.RDFSModelConstraints
 import RDF11.RDFSModelRelations
 import RDF11.RDFSModels
 import RDF11.RDFSModelExamples
+import RDF11.RDFSFreeProperties
+import RDF11.Reification
+import RDF11.ReificationExamples
+import RDF11.ContainerExamples

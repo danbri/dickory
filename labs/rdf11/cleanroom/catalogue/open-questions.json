@@ -156,6 +156,31 @@
       "review_question": "Does the printed E-only selection omit necessary premise-container axioms? The absence of this consequence from the specified closure and a suitable full-model consistency witness still need Lean proofs.",
       "implementation_policy": "Preserve the printed selection. Publish soundness, keep completeness open, and do not call the candidate a confirmed erratum.",
       "review_status": "pending_expert_review"
+    },
+    {
+      "id": "Q-REIFICATION-BLANK-CONCLUSION",
+      "status": "positive_entailment_checked_source_scope_needs_expert_review",
+      "not_a_declared_erratum": true,
+      "claim_ids": [
+        "MT11-REIFICATION-NONUNIQUE-TOKENS",
+        "MT11-REIFICATION-BLANK-CONCLUSION-ENTAILMENT"
+      ],
+      "passage_ids": [
+        "reification-nonunique-prose",
+        "reification-blank-premise",
+        "reification-blank-connective",
+        "reification-blank-conclusion"
+      ],
+      "summary": "Appendix D.1 prints non-entailment of a singleton blank-subject property triple. Its premise already supplies a witness for that property triple, so the separately existential conclusion follows in the current simple semantics.",
+      "lean": [
+        "RDF11.ReificationScopeReview.printedPremise",
+        "RDF11.ReificationScopeReview.blank_property_consequence",
+        "RDF11.ReificationScopeReview.printed_conclusion_follows",
+        "RDF11.ReificationExamples.same_components_not_metadata"
+      ],
+      "review_question": "Is the intended conclusion about two fixed distinct reification resources, rather than the printed standalone existential graph? How should the archived connective be dispositioned?",
+      "implementation_policy": "Preserve the printed text, keep the checked positive entailment separate, and witness the intended distinct-resource claim with IRI names. Do not change blank-node satisfaction or claim to prove the printed non-entailment.",
+      "review_status": "pending_expert_review"
     }
   ]
 }

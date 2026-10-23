@@ -79,6 +79,13 @@
       "question": "Appendix A calls closures finite after speaking of RDF graphs generally, while section 5.3 permits infinite graphs. Determine and document the finite/effective-input restriction required by the finiteness and complexity assertions.",
       "mathematical_comparison": "The closure contains its premise S, so it cannot be finite when S is infinite.",
       "status": "review_required_not_confirmed_erratum"
+    },
+    {
+      "id": "RQ-REIFICATION-BLANK-CONCLUSION",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#reification",
+      "question": "The printed conclusion has only an existential blank subject and can reuse the premise metadata witness. Is the intended claim instead about two fixed distinct reification resources or another explicit scope?",
+      "status": "review_required_not_confirmed_erratum",
+      "mathematical_comparison": "ReificationScopeReview.printed_conclusion_follows proves the positive simple entailment of the exact graph shape."
     }
   ],
   "section_coverage": [
@@ -549,7 +556,8 @@
         "MT11-REIFICATION-DESCRIPTION",
         "MT11-REIFICATION-NOT-QUOTATION",
         "MT11-REIFICATION-NONENTAILMENT",
-        "MT11-REIFICATION-NONUNIQUE-TOKENS"
+        "MT11-REIFICATION-NONUNIQUE-TOKENS",
+        "MT11-REIFICATION-BLANK-CONCLUSION-ENTAILMENT"
       ]
     },
     {
@@ -5214,7 +5222,30 @@
         "test_mapping": "unassessed"
       },
       "formalization_note": "Derived construction, not an assertion printed as a theorem in the source. The exclusions of schema symbols from datatype recognition are sufficient constructor choices. The existence equivalence concerns the current parameterized model class, not arbitrary graph satisfiability or certified concrete built-in datatype meanings."
+    },
+    {
+      "id": "MT11-REIFICATION-BLANK-CONCLUSION-ENTAILMENT",
+      "section": "D.1",
+      "anchor": "reification",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#reification",
+      "category": "mathematical_consequence",
+      "source_status": "informative",
+      "assertion_basis": "derived",
+      "paraphrase": "Under independently existential graph satisfaction, Appendix D.1 paragraph 12 simply entails its printed singleton blank-node conclusion in paragraph 14. This checked consequence is evidence for a source-scope question, separate from the intended distinct-resource claim.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-EXISTENTIAL-GRAPH-TRUTH",
+        "MT11-SIMPLE-ENTAILMENT",
+        "MT11-REIFICATION-DESCRIPTION"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "The source prints the opposite non-entailment connective. Keep the archived text intact and the question pending expert review; this derived record does not accept the printed non-entailment or declare an erratum."
     }
   ],
-  "record_count": 205
+  "record_count": 206
 }

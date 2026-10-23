@@ -64,7 +64,9 @@ class Locator(HTMLParser):
             node["text"] += data
     def select(self, selector):
         candidates = [n for n in self.nodes if n["tag"] == selector["tag"]
-                      and normalized(selector["text"]) in normalized(n["text"])
+                      and (normalized(selector["text"]) == normalized(n["text"])
+                           if selector.get("exact_text", False)
+                           else normalized(selector["text"]) in normalized(n["text"]))
                       and ("within_section" not in selector
                            or selector["within_section"] in n["ancestors"])
                       and ("element_id" not in selector

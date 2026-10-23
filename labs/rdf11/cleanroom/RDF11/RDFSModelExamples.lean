@@ -3,7 +3,7 @@ Source-facing consequences of the explicit RDFS model family: §9 permits
 semantic roles to overlap and does not transfer class properties to members
 or member properties to classes. §9.1 distinguishes literal values from syntax.
 -/
-import RDF11.RDFSModels
+import RDF11.RDFSFreeProperties
 
 namespace RDF11
 namespace RDFSModelConstruction
@@ -89,10 +89,8 @@ theorem value_triple_iff (T : DatatypeTheory Iri Literal Value) (D : Set Iri)
     (interpretation T D v Q).TripleTrue A
       ⟨.iri (v.iri s), .iri (v.iri (.rdf .rdfValue)), .iri (v.iri o)⟩ ↔
       Q (schemaName v (.rdf .rdfValue)) (schemaName v s) (schemaName v o) := by
-  rw [(interpretation T D v Q).iri_triple_true,
-    schema_denotation T D v h Q _ (by simp [SchemaSymbol]),
-    schema_denotation T D v h Q s hs, schema_denotation T D v h Q o ho, relates_iff]
-  simp [relation]
+  exact free_iri_triple_iff T D v h Q A s (.rdf .rdfValue) o hs
+    (by simp [SchemaSymbol]) ho (by simp [FreeProperty])
 
 /-- A class/member typing assertion entails no transfer of an rdf:value assertion
 between two distinct, unrecognized schema-name resources in either direction.
