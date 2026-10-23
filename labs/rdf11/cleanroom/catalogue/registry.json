@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "status": "frozen_second_increment_inventory_not_expert_approved",
+  "status": "frozen_third_increment_inventory_not_expert_approved",
   "lean_version": "4.33.1",
   "allowed_axioms": [
     "propext",
@@ -145,6 +145,72 @@
         "MT11-INSTANCE-ENTAILMENT",
         "SUPPORT-INTERPRETATIONS"
       ]
+    },
+    {
+      "id": "SUPPORT-INTERPOLATION",
+      "purpose": "Canonical interpretation, assignment decoding and ordinary interpolation, including generated helpers.",
+      "requires": [
+        "MT11-INTERPOLATION",
+        "MT11-SIMPLE-DECIDABILITY",
+        "SUPPORT-INSTANCES"
+      ]
+    },
+    {
+      "id": "SUPPORT-COMPACTNESS",
+      "purpose": "Finite image enumeration and compactness through interpolation.",
+      "requires": [
+        "MT11-COMPACTNESS",
+        "REFINEMENT-ENUMERATION",
+        "SUPPORT-INTERPOLATION"
+      ]
+    },
+    {
+      "id": "SUPPORT-VOCABULARY",
+      "purpose": "Syntactic name occurrence including the explicit literal datatype projection.",
+      "requires": [
+        "MT11-NAMES-VOCABULARIES",
+        "SUPPORT-SYNTAX"
+      ]
+    },
+    {
+      "id": "SUPPORT-VOCABULARY-ENTAILMENT",
+      "purpose": "Name preservation by substitution and nonexpansion under simple entailment.",
+      "requires": [
+        "MT11-FRESH-IRI-NONENTAILMENT",
+        "SUPPORT-VOCABULARY",
+        "SUPPORT-INTERPOLATION"
+      ]
+    },
+    {
+      "id": "SUPPORT-SKOLEMIZATION",
+      "purpose": "Scoped freshness, inverse-name retraction and conservativity over the existing substitution and entailment definitions.",
+      "requires": [
+        "MT11-SKOLEMIZATION",
+        "MT11-SKOLEM-ENTAILS-ORIGINAL",
+        "MT11-ORIGINAL-NOT-SKOLEM",
+        "MT11-SKOLEM-FRESH-VOCABULARY-CONSERVATIVITY",
+        "SUPPORT-VOCABULARY-ENTAILMENT"
+      ]
+    },
+    {
+      "id": "SUPPORT-TRANSFORMATIONS",
+      "purpose": "Model existence, process truth preservation and composition under semantic extensions.",
+      "requires": [
+        "MT11-SATISFACTION",
+        "MT11-VALID-TRANSFORMATION",
+        "MT11-EXTENSION-MONOTONICITY",
+        "SUPPORT-ENTAILMENT"
+      ]
+    },
+    {
+      "id": "SUPPORT-RDF-PROPERTY",
+      "purpose": "A single RDF property condition, its rule consequence and conditional generalized substitution theorem; not a complete RDF interpretation.",
+      "requires": [
+        "MT11-RDF-PROPERTY-TYPING",
+        "MT11-RULE-rdfD2",
+        "MT11-INSTANCE-ENTAILMENT",
+        "SUPPORT-INTERPRETATIONS"
+      ]
     }
   ],
   "files": [
@@ -171,14 +237,14 @@
     },
     {
       "path": "Audit/Snapshot.lean",
-      "sha256": "286e98686ee9d2db1f370ca99809a47b2185af14cc827b03176b7f6d176cbaa1",
+      "sha256": "715f8b574a508b05f5534c450af1d5a5f0dd3f159fffeddcb67565c344c25334",
       "role": "formal_source",
       "lifecycle": "active",
       "review": "pending_expert_review"
     },
     {
       "path": "RDF11.lean",
-      "sha256": "f94feb97e0971437ffbaf5bcff961a9a22761c6f0711d442738137f88d0fc5e7",
+      "sha256": "d9ee98a57c297b8d43ec706b1720895c290db7831ca7912627cb5dc6b23f9d34",
       "role": "formal_source",
       "lifecycle": "active",
       "review": "pending_expert_review"
@@ -198,6 +264,13 @@
       "review": "pending_expert_review"
     },
     {
+      "path": "RDF11/FiniteEntailment.lean",
+      "role": "formal_source",
+      "lifecycle": "active",
+      "review": "pending_expert_review",
+      "sha256": "a9b0b512f8de6915ba89cc34c97b684492b29e5ec46b6e8106348b03c85aaf5f"
+    },
+    {
       "path": "RDF11/GeneralizedScope.lean",
       "sha256": "29f897fc70e5f12c4eb76c50536a426ef7c53959fe9146693c9b2b3e5df1e183",
       "role": "formal_source",
@@ -212,11 +285,25 @@
       "sha256": "6ae4b1ea50a5620fe851a57587025d5400dd756fa8c1b842549d999ad6d379ef"
     },
     {
+      "path": "RDF11/Interpolation.lean",
+      "role": "formal_source",
+      "lifecycle": "active",
+      "review": "pending_expert_review",
+      "sha256": "869d041ad4566cc4de9189788d585c02fa5c5c22e0b381b48e53cd9a1b865307"
+    },
+    {
       "path": "RDF11/Merge.lean",
       "sha256": "15040c407c9dddcd0c9637327740a63e4b069e49a192b46a4c65518a304a61b7",
       "role": "formal_source",
       "lifecycle": "active",
       "review": "pending_expert_review"
+    },
+    {
+      "path": "RDF11/RDFProperty.lean",
+      "role": "formal_source",
+      "lifecycle": "active",
+      "review": "pending_expert_review",
+      "sha256": "4e5f89e87ce624ecb9f4ed9efb110efed660e03237ed46c1ce0de7f8781694a2"
     },
     {
       "path": "RDF11/ScopeExample.lean",
@@ -240,11 +327,39 @@
       "review": "pending_expert_review"
     },
     {
+      "path": "RDF11/Skolemization.lean",
+      "role": "formal_source",
+      "lifecycle": "active",
+      "review": "pending_expert_review",
+      "sha256": "5d75fa375adac7ac33db9763465902b5403b432d25025dcb5af71901aac6a0e5"
+    },
+    {
       "path": "RDF11/Syntax.lean",
       "sha256": "d71f5782f356a932e6a035a196d42bb25775f8eabbebcf2871c61e31a6f06429",
       "role": "formal_source",
       "lifecycle": "active",
       "review": "pending_expert_review"
+    },
+    {
+      "path": "RDF11/Transformations.lean",
+      "role": "formal_source",
+      "lifecycle": "active",
+      "review": "pending_expert_review",
+      "sha256": "e7c809027c7d69c0992dfb580fe692b335193aec621eb38eb1784679ab1e2ed2"
+    },
+    {
+      "path": "RDF11/Vocabulary.lean",
+      "role": "formal_source",
+      "lifecycle": "active",
+      "review": "pending_expert_review",
+      "sha256": "7d3e5f3cbdfff09a094a228e0af1ede91da00aa65da2d29995c1e12c8ed1b322"
+    },
+    {
+      "path": "RDF11/VocabularyEntailment.lean",
+      "role": "formal_source",
+      "lifecycle": "active",
+      "review": "pending_expert_review",
+      "sha256": "1852d4345303c34e167259dd7f16d301f8b6df0f342f5eb825c60ad0cf1545d4"
     }
   ],
   "declarations": [
@@ -342,6 +457,55 @@
         "REFINEMENT-ENUMERATION"
       ],
       "parent_declaration_if_applicable": "RDF11.Enumeration",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Enumeration.image",
+      "module": "RDF11.FiniteEntailment",
+      "kind": "definition",
+      "type": "{α : Type u_1} →\n  {β : Type u_2} → {G : RDF11.Set α} → (f : α → β) → RDF11.Enumeration G → RDF11.Enumeration (RDF11.Set.image f G)",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-COMPACTNESS",
+        "SUPPORT-COMPACTNESS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Enumeration.image._proof_1",
+      "module": "RDF11.FiniteEntailment",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_2} {β : Type u_1} {G : RDF11.Set α} (f : α → β) (e : RDF11.Enumeration G),\n  (RDF11.Enumeration.fromList (List.map f e.triples)).triples.Nodup",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-COMPACTNESS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Enumeration.image._proof_2",
+      "module": "RDF11.FiniteEntailment",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_2} {β : Type u_1} {G : RDF11.Set α} (f : α → β) (e : RDF11.Enumeration G) (y : β),\n  y ∈ (RDF11.Enumeration.fromList (List.map f e.triples)).triples ↔ RDF11.Set.image f G y",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-COMPACTNESS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Enumeration.image._simp_1",
+      "module": "RDF11.FiniteEntailment",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_1} {β : Type u_2} {b : β} {f : α → β} {l : List α}, (b ∈ List.map f l) = ∃ a, a ∈ l ∧ f a = b",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-COMPACTNESS"
+      ],
+      "parent_declaration_if_applicable": null,
       "review": "pending_expert_review"
     },
     {
@@ -669,6 +833,19 @@
       "review": "pending_expert_review"
     },
     {
+      "name": "RDF11.FiniteGraph",
+      "module": "RDF11.FiniteEntailment",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} → RDF11.GeneralizedGraph Iri Literal B → Prop",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-COMPACTNESS",
+        "SUPPORT-COMPACTNESS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
       "name": "RDF11.GeneralizedGraph",
       "module": "RDF11.Syntax",
       "kind": "definition",
@@ -809,6 +986,19 @@
       "role": "proof_support",
       "grounds": [
         "SUPPORT-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GeneralizedGraph.vocabulary",
+      "module": "RDF11.Vocabulary",
+      "kind": "definition",
+      "type": "{Literal Iri B : Type} → (Literal → Iri) → RDF11.GeneralizedGraph Iri Literal B → RDF11.Set (RDF11.Name Iri Literal)",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-NAMES-VOCABULARIES",
+        "SUPPORT-VOCABULARY"
       ],
       "parent_declaration_if_applicable": null,
       "review": "pending_expert_review"
@@ -1183,6 +1373,19 @@
         "SUPPORT-SYNTAX"
       ],
       "parent_declaration_if_applicable": "RDF11.GeneralizedTriple.mk",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GeneralizedTriple.names",
+      "module": "RDF11.Vocabulary",
+      "kind": "definition",
+      "type": "{Literal Iri B : Type} → (Literal → Iri) → RDF11.GeneralizedTriple Iri Literal B → RDF11.Set (RDF11.Name Iri Literal)",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-NAMES-VOCABULARIES",
+        "SUPPORT-VOCABULARY"
+      ],
+      "parent_declaration_if_applicable": null,
       "review": "pending_expert_review"
     },
     {
@@ -1612,6 +1815,152 @@
       "review": "pending_expert_review"
     },
     {
+      "name": "RDF11.Herbrand.Carrier",
+      "module": "RDF11.Interpolation",
+      "kind": "definition",
+      "type": "Type → Type → Type → Type u",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INTERPOLATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Herbrand.assignment",
+      "module": "RDF11.Interpolation",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} → (G : RDF11.GeneralizedGraph Iri Literal B) → (RDF11.Herbrand.interpretation G).Assignment B",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INTERPOLATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Herbrand.decode_denotation",
+      "module": "RDF11.Interpolation",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (G : RDF11.GeneralizedGraph Iri Literal B) (A : (RDF11.Herbrand.interpretation G).Assignment B)\n  (q v : RDF11.Term Iri Literal B),\n  (RDF11.Herbrand.interpretation G).denote A q = some (RDF11.Herbrand.encode v) →\n    RDF11.Term.substitute (RDF11.Herbrand.substitution G A) q = v",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INTERPOLATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Herbrand.denote_assignment",
+      "module": "RDF11.Interpolation",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (G : RDF11.GeneralizedGraph Iri Literal B) (q : RDF11.Term Iri Literal B),\n  (RDF11.Herbrand.interpretation G).denote (RDF11.Herbrand.assignment G) q = some (RDF11.Herbrand.encode q)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INTERPOLATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Herbrand.encode",
+      "module": "RDF11.Interpolation",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} → RDF11.Term Iri Literal B → RDF11.Herbrand.Carrier Iri Literal B",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INTERPOLATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Herbrand.encode.eq_1",
+      "module": "RDF11.Interpolation",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (q : RDF11.Term Iri Literal B), RDF11.Herbrand.encode q = { down := some q }",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INTERPOLATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Herbrand.interpretation",
+      "module": "RDF11.Interpolation",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  RDF11.GeneralizedGraph Iri Literal B → RDF11.SimpleInterpretation Iri Literal (RDF11.Herbrand.Carrier Iri Literal B)",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-INTERPOLATION",
+        "SUPPORT-INTERPOLATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Herbrand.interpretation._proof_1",
+      "module": "RDF11.Interpolation",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type}, ∃ x, True",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INTERPOLATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Herbrand.satisfies",
+      "module": "RDF11.Interpolation",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (G : RDF11.GeneralizedGraph Iri Literal B), (RDF11.Herbrand.interpretation G).Satisfies G",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-INTERPOLATION",
+        "SUPPORT-INTERPOLATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Herbrand.substitution",
+      "module": "RDF11.Interpolation",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  (G : RDF11.GeneralizedGraph Iri Literal B) →\n    (RDF11.Herbrand.interpretation G).Assignment B → RDF11.Substitution Iri Literal B",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INTERPOLATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Herbrand.substitution.eq_1",
+      "module": "RDF11.Interpolation",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (G : RDF11.GeneralizedGraph Iri Literal B) (A : (RDF11.Herbrand.interpretation G).Assignment B)\n  (b : B), RDF11.Herbrand.substitution G A b = (A b).bind fun r => r.val.down",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INTERPOLATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Herbrand.true_triple_decodes",
+      "module": "RDF11.Interpolation",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (G : RDF11.GeneralizedGraph Iri Literal B) (A : (RDF11.Herbrand.interpretation G).Assignment B)\n  (t : RDF11.GeneralizedTriple Iri Literal B),\n  (RDF11.Herbrand.interpretation G).TripleTrue A t →\n    G (RDF11.GeneralizedTriple.substitute (RDF11.Herbrand.substitution G A) t)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INTERPOLATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
       "name": "RDF11.InstanceWithVocabulary",
       "module": "RDF11.Instances",
       "kind": "definition",
@@ -1658,6 +2007,19 @@
       "role": "source_mapping",
       "grounds": [
         "MT11-LOGICAL-EQUIVALENCE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Name",
+      "module": "RDF11.Vocabulary",
+      "kind": "definition",
+      "type": "Type → Type → Type",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-NAMES-VOCABULARIES",
+        "SUPPORT-VOCABULARY"
       ],
       "parent_declaration_if_applicable": null,
       "review": "pending_expert_review"
@@ -2148,6 +2510,32 @@
       "review": "pending_expert_review"
     },
     {
+      "name": "RDF11.SimpleInterpretation.RDFPropertyCondition",
+      "module": "RDF11.RDFProperty",
+      "kind": "definition",
+      "type": "{Iri Literal : Type} → {U : Type u_1} → RDF11.SimpleInterpretation Iri Literal U → Iri → Iri → Prop",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-RDF-PROPERTY-TYPING",
+        "SUPPORT-RDF-PROPERTY"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.Relates",
+      "module": "RDF11.RDFProperty",
+      "kind": "definition",
+      "type": "{Iri Literal : Type} → {U : Type u_1} → RDF11.SimpleInterpretation Iri Literal U → U → U → U → Prop",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-RDF-PROPERTY-TYPING",
+        "SUPPORT-RDF-PROPERTY"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
       "name": "RDF11.SimpleInterpretation.Resource",
       "module": "RDF11.Simple",
       "kind": "definition",
@@ -2344,6 +2732,18 @@
       "review": "pending_expert_review"
     },
     {
+      "name": "RDF11.SimpleInterpretation.generalized_triple_pullback",
+      "module": "RDF11.RDFProperty",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u_1} {B : Type} (I : RDF11.SimpleInterpretation Iri Literal U),\n  I.IP.subset I.IR →\n    ∀ (A : I.Assignment B) (μ : RDF11.Substitution Iri Literal B) (t : RDF11.GeneralizedTriple Iri Literal B),\n      I.TripleTrue A (RDF11.GeneralizedTriple.substitute μ t) → I.TripleTrue (I.pullback A μ) t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDF-PROPERTY"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
       "name": "RDF11.SimpleInterpretation.graphTrue_mapBlank",
       "module": "RDF11.Merge",
       "kind": "theorem",
@@ -2531,6 +2931,32 @@
       "role": "proof_support",
       "grounds": [
         "SUPPORT-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.rdfD2_triple",
+      "module": "RDF11.RDFProperty",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u_1} {rdfType rdfProperty : Iri} {B : Type}\n  (I : RDF11.SimpleInterpretation Iri Literal U),\n  I.RDFPropertyCondition rdfType rdfProperty →\n    ∀ (A : I.Assignment B) (t : RDF11.GeneralizedTriple Iri Literal B),\n      I.TripleTrue A t →\n        I.TripleTrue A\n          { subject := t.predicate, predicate := RDF11.Term.iri rdfType, object := RDF11.Term.iri rdfProperty }",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-RULE-rdfD2",
+        "SUPPORT-RDF-PROPERTY"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.rdf_properties_are_resources",
+      "module": "RDF11.RDFProperty",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u_1} {rdfType rdfProperty : Iri} (I : RDF11.SimpleInterpretation Iri Literal U),\n  I.RDFPropertyCondition rdfType rdfProperty → I.IP.subset I.IR",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-RDF-PROPERTY-TYPING",
+        "SUPPORT-RDF-PROPERTY"
       ],
       "parent_declaration_if_applicable": null,
       "review": "pending_expert_review"
@@ -2735,6 +3161,599 @@
       "role": "source_mapping",
       "grounds": [
         "MT11-SIMPLE-ENTAILMENT"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimplyInvalid",
+      "module": "RDF11.Transformations",
+      "kind": "definition",
+      "type": "{Iri Literal B₁ B₂ : Type} →\n  (RDF11.GeneralizedGraph Iri Literal B₁ → RDF11.GeneralizedGraph Iri Literal B₂ → Prop) → Prop",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-VALID-TRANSFORMATION",
+        "SUPPORT-TRANSFORMATIONS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimplySatisfiable",
+      "module": "RDF11.Transformations",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} → RDF11.GeneralizedGraph Iri Literal B → Prop",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-SATISFACTION",
+        "SUPPORT-TRANSFORMATIONS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimplyUnsatisfiable",
+      "module": "RDF11.Transformations",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} → RDF11.GeneralizedGraph Iri Literal B → Prop",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-SATISFACTION",
+        "SUPPORT-TRANSFORMATIONS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimplyValid",
+      "module": "RDF11.Transformations",
+      "kind": "definition",
+      "type": "{Iri Literal B₁ B₂ : Type} →\n  (RDF11.GeneralizedGraph Iri Literal B₁ → RDF11.GeneralizedGraph Iri Literal B₂ → Prop) → Prop",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-VALID-TRANSFORMATION",
+        "SUPPORT-TRANSFORMATIONS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Skolemization",
+      "module": "RDF11.Skolemization",
+      "kind": "inductive",
+      "type": "{Literal Iri B : Type} → (Literal → Iri) → RDF11.GeneralizedGraph Iri Literal B → Type",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-SKOLEMIZATION",
+        "SUPPORT-SKOLEMIZATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Skolemization.Avoids",
+      "module": "RDF11.Skolemization",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  {datatype : Literal → Iri} →\n    {G : RDF11.GeneralizedGraph Iri Literal B} →\n      RDF11.Skolemization datatype G → RDF11.GeneralizedGraph Iri Literal B → Prop",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-SKOLEM-FRESH-VOCABULARY-CONSERVATIVITY",
+        "SUPPORT-SKOLEMIZATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Skolemization._sizeOf_1",
+      "module": "RDF11.Skolemization",
+      "kind": "definition",
+      "type": "{Literal Iri B : Type} →\n  {datatype : Literal → Iri} →\n    {G : RDF11.GeneralizedGraph Iri Literal B} →\n      [SizeOf Literal] →\n        [SizeOf Iri] →\n          [SizeOf B] →\n            [(a : RDF11.GeneralizedTriple Iri Literal B) → SizeOf (G a)] → RDF11.Skolemization datatype G → Nat",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEMIZATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Skolemization._sizeOf_inst",
+      "module": "RDF11.Skolemization",
+      "kind": "definition",
+      "type": "{Literal Iri B : Type} →\n  (datatype : Literal → Iri) →\n    (G : RDF11.GeneralizedGraph Iri Literal B) →\n      [SizeOf Literal] →\n        [SizeOf Iri] →\n          [SizeOf B] →\n            [(a : RDF11.GeneralizedTriple Iri Literal B) → SizeOf (G a)] → SizeOf (RDF11.Skolemization datatype G)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEMIZATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Skolemization.casesOn",
+      "module": "RDF11.Skolemization",
+      "kind": "definition",
+      "type": "{Literal Iri B : Type} →\n  {datatype : Literal → Iri} →\n    {G : RDF11.GeneralizedGraph Iri Literal B} →\n      {motive : RDF11.Skolemization datatype G → Sort u} →\n        (t : RDF11.Skolemization datatype G) →\n          ((name : B → Iri) →\n              (injective : ∀ (b c : B), G.hasBlank b → G.hasBlank c → name b = name c → b = c) →\n                (fresh : ∀ (b : B), G.hasBlank b → ¬RDF11.GeneralizedGraph.vocabulary datatype G (Sum.inl (name b))) →\n                  motive { name := name, injective := injective, fresh := fresh }) →\n            motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEMIZATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Skolemization.conservative",
+      "module": "RDF11.Skolemization",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {datatype : Literal → Iri} (G H : RDF11.Graph Iri Literal B)\n  (sk : RDF11.Skolemization datatype G.generalize),\n  sk.Avoids H.generalize → (RDF11.SimplyEntails sk.graph H.generalize ↔ RDF11.SimplyEntails G.generalize H.generalize)",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-SKOLEM-FRESH-VOCABULARY-CONSERVATIVITY",
+        "SUPPORT-SKOLEMIZATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Skolemization.contains_skolem_name",
+      "module": "RDF11.Skolemization",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {datatype : Literal → Iri} {G : RDF11.GeneralizedGraph Iri Literal B}\n  (sk : RDF11.Skolemization datatype G) {b : B},\n  G.hasBlank b → RDF11.GeneralizedGraph.vocabulary datatype sk.graph (Sum.inl (sk.name b))",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-ORIGINAL-NOT-SKOLEM",
+        "SUPPORT-SKOLEMIZATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Skolemization.ctorIdx",
+      "module": "RDF11.Skolemization",
+      "kind": "definition",
+      "type": "{Literal Iri B : Type} →\n  {datatype : Literal → Iri} → {G : RDF11.GeneralizedGraph Iri Literal B} → RDF11.Skolemization datatype G → Nat",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEMIZATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Skolemization.entails_original",
+      "module": "RDF11.Skolemization",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {datatype : Literal → Iri} (G : RDF11.Graph Iri Literal B)\n  (sk : RDF11.Skolemization datatype G.generalize), RDF11.SimplyEntails sk.graph G.generalize",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-SKOLEM-ENTAILS-ORIGINAL",
+        "SUPPORT-SKOLEMIZATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Skolemization.fresh",
+      "module": "RDF11.Skolemization",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri B : Type} {datatype : Literal → Iri} {G : RDF11.GeneralizedGraph Iri Literal B}\n  (self : RDF11.Skolemization datatype G) (b : B),\n  G.hasBlank b → ¬RDF11.GeneralizedGraph.vocabulary datatype G (Sum.inl (self.name b))",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEMIZATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Skolemization.graph",
+      "module": "RDF11.Skolemization",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  {datatype : Literal → Iri} →\n    {G : RDF11.GeneralizedGraph Iri Literal B} → RDF11.Skolemization datatype G → RDF11.GeneralizedGraph Iri Literal B",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-SKOLEMIZATION",
+        "SUPPORT-SKOLEMIZATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Skolemization.ground",
+      "module": "RDF11.Skolemization",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {datatype : Literal → Iri} {G : RDF11.GeneralizedGraph Iri Literal B}\n  (sk : RDF11.Skolemization datatype G), sk.graph.ground",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-SKOLEMIZATION",
+        "SUPPORT-SKOLEMIZATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Skolemization.injective",
+      "module": "RDF11.Skolemization",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri B : Type} {datatype : Literal → Iri} {G : RDF11.GeneralizedGraph Iri Literal B}\n  (self : RDF11.Skolemization datatype G) (b c : B), G.hasBlank b → G.hasBlank c → self.name b = self.name c → b = c",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEMIZATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Skolemization.inverseSubstitution",
+      "module": "RDF11.Skolemization",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  {datatype : Literal → Iri} →\n    {G : RDF11.GeneralizedGraph Iri Literal B} →\n      RDF11.Skolemization datatype G → RDF11.Substitution Iri Literal B → RDF11.Substitution Iri Literal B",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEMIZATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Skolemization.inverseTerm",
+      "module": "RDF11.Skolemization",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  {datatype : Literal → Iri} →\n    {G : RDF11.GeneralizedGraph Iri Literal B} →\n      RDF11.Skolemization datatype G → RDF11.Term Iri Literal B → RDF11.Term Iri Literal B",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEMIZATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Skolemization.inverseTerm.eq_1",
+      "module": "RDF11.Skolemization",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {datatype : Literal → Iri} {G : RDF11.GeneralizedGraph Iri Literal B}\n  (sk : RDF11.Skolemization datatype G) (i : Iri),\n  sk.inverseTerm (RDF11.Term.iri i) = (Option.map RDF11.Term.blank (sk.unname i)).getD (RDF11.Term.iri i)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEMIZATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Skolemization.inverseTerm.eq_2",
+      "module": "RDF11.Skolemization",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {datatype : Literal → Iri} {G : RDF11.GeneralizedGraph Iri Literal B}\n  (sk : RDF11.Skolemization datatype G) (l : Literal), sk.inverseTerm (RDF11.Term.literal l) = RDF11.Term.literal l",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEMIZATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Skolemization.inverseTerm.eq_3",
+      "module": "RDF11.Skolemization",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {datatype : Literal → Iri} {G : RDF11.GeneralizedGraph Iri Literal B}\n  (sk : RDF11.Skolemization datatype G) (b : B), sk.inverseTerm (RDF11.Term.blank b) = RDF11.Term.blank b",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEMIZATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Skolemization.inverseTerm.match_1",
+      "module": "RDF11.Skolemization",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  (motive : RDF11.Term Iri Literal B → Sort u_1) →\n    (x : RDF11.Term Iri Literal B) →\n      ((i : Iri) → motive (RDF11.Term.iri i)) →\n        ((l : Literal) → motive (RDF11.Term.literal l)) → ((b : B) → motive (RDF11.Term.blank b)) → motive x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEMIZATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Skolemization.inverseTerm_fixed",
+      "module": "RDF11.Skolemization",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {datatype : Literal → Iri} {G : RDF11.GeneralizedGraph Iri Literal B}\n  (sk : RDF11.Skolemization datatype G) (q : RDF11.Term Iri Literal B),\n  (∀ (b : B), G.hasBlank b → ¬RDF11.Term.names datatype q (Sum.inl (sk.name b))) → sk.inverseTerm q = q",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEMIZATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Skolemization.inverseTerm_substituted",
+      "module": "RDF11.Skolemization",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {datatype : Literal → Iri} {G : RDF11.GeneralizedGraph Iri Literal B}\n  (sk : RDF11.Skolemization datatype G) (q : RDF11.Term Iri Literal B),\n  (∀ (b : B), G.hasBlank b → ¬RDF11.Term.names datatype q (Sum.inl (sk.name b))) →\n    (∀ (b : B), RDF11.Term.hasBlank b q → G.hasBlank b) → sk.inverseTerm (RDF11.Term.substitute sk.substitution q) = q",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEMIZATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Skolemization.inverseTriple",
+      "module": "RDF11.Skolemization",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  {datatype : Literal → Iri} →\n    {G : RDF11.GeneralizedGraph Iri Literal B} →\n      RDF11.Skolemization datatype G → RDF11.GeneralizedTriple Iri Literal B → RDF11.GeneralizedTriple Iri Literal B",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEMIZATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Skolemization.inverseTriple.eq_1",
+      "module": "RDF11.Skolemization",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {datatype : Literal → Iri} {G : RDF11.GeneralizedGraph Iri Literal B}\n  (sk : RDF11.Skolemization datatype G) (t : RDF11.GeneralizedTriple Iri Literal B),\n  sk.inverseTriple t =\n    { subject := sk.inverseTerm t.subject, predicate := sk.inverseTerm t.predicate, object := sk.inverseTerm t.object }",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEMIZATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Skolemization.inverse_substituted_triple",
+      "module": "RDF11.Skolemization",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {datatype : Literal → Iri} {G : RDF11.GeneralizedGraph Iri Literal B}\n  (sk : RDF11.Skolemization datatype G) (t : RDF11.GeneralizedTriple Iri Literal B),\n  G t → sk.inverseTriple (RDF11.GeneralizedTriple.substitute sk.substitution t) = t",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-SKOLEM-FRESH-VOCABULARY-CONSERVATIVITY",
+        "SUPPORT-SKOLEMIZATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Skolemization.inverse_substitution_commutes",
+      "module": "RDF11.Skolemization",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {datatype : Literal → Iri} {G : RDF11.GeneralizedGraph Iri Literal B}\n  (sk : RDF11.Skolemization datatype G) (μ : RDF11.Substitution Iri Literal B)\n  (t : RDF11.GeneralizedTriple Iri Literal B),\n  (∀ (b : B), G.hasBlank b → ¬RDF11.GeneralizedTriple.names datatype t (Sum.inl (sk.name b))) →\n    sk.inverseTriple (RDF11.GeneralizedTriple.substitute μ t) =\n      RDF11.GeneralizedTriple.substitute (sk.inverseSubstitution μ) t",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-SKOLEM-FRESH-VOCABULARY-CONSERVATIVITY",
+        "SUPPORT-SKOLEMIZATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Skolemization.is_instance",
+      "module": "RDF11.Skolemization",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {datatype : Literal → Iri} {G : RDF11.GeneralizedGraph Iri Literal B}\n  (sk : RDF11.Skolemization datatype G), RDF11.IsInstance sk.graph G",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-SKOLEMIZATION",
+        "SUPPORT-SKOLEMIZATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Skolemization.lean",
+      "module": "RDF11.Skolemization",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {datatype : Literal → Iri} {G : RDF11.GeneralizedGraph Iri Literal B}\n  (sk : RDF11.Skolemization datatype G), RDF11.LeanGraph sk.graph",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-SKOLEMIZATION",
+        "SUPPORT-SKOLEMIZATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Skolemization.mk",
+      "module": "RDF11.Skolemization",
+      "kind": "constructor",
+      "type": "{Literal Iri B : Type} →\n  {datatype : Literal → Iri} →\n    {G : RDF11.GeneralizedGraph Iri Literal B} →\n      (name : B → Iri) →\n        (∀ (b c : B), G.hasBlank b → G.hasBlank c → name b = name c → b = c) →\n          (∀ (b : B), G.hasBlank b → ¬RDF11.GeneralizedGraph.vocabulary datatype G (Sum.inl (name b))) →\n            RDF11.Skolemization datatype G",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEMIZATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Skolemization.mk._flat_ctor",
+      "module": "RDF11.Skolemization",
+      "kind": "definition",
+      "type": "{Literal Iri B : Type} →\n  {datatype : Literal → Iri} →\n    {G : RDF11.GeneralizedGraph Iri Literal B} →\n      (name : B → Iri) →\n        (∀ (b c : B), G.hasBlank b → G.hasBlank c → name b = name c → b = c) →\n          (∀ (b : B), G.hasBlank b → ¬RDF11.GeneralizedGraph.vocabulary datatype G (Sum.inl (name b))) →\n            RDF11.Skolemization datatype G",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEMIZATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Skolemization.mk.inj",
+      "module": "RDF11.Skolemization",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri B : Type} {datatype : Literal → Iri} {G : RDF11.GeneralizedGraph Iri Literal B} {name : B → Iri}\n  {injective : ∀ (b c : B), G.hasBlank b → G.hasBlank c → name b = name c → b = c}\n  {fresh : ∀ (b : B), G.hasBlank b → ¬RDF11.GeneralizedGraph.vocabulary datatype G (Sum.inl (name b))}\n  {name_1 : B → Iri} {injective_1 : ∀ (b c : B), G.hasBlank b → G.hasBlank c → name_1 b = name_1 c → b = c}\n  {fresh_1 : ∀ (b : B), G.hasBlank b → ¬RDF11.GeneralizedGraph.vocabulary datatype G (Sum.inl (name_1 b))},\n  { name := name, injective := injective, fresh := fresh } =\n      { name := name_1, injective := injective_1, fresh := fresh_1 } →\n    name = name_1",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEMIZATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Skolemization.mk.injEq",
+      "module": "RDF11.Skolemization",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri B : Type} {datatype : Literal → Iri} {G : RDF11.GeneralizedGraph Iri Literal B} (name : B → Iri)\n  (injective : ∀ (b c : B), G.hasBlank b → G.hasBlank c → name b = name c → b = c)\n  (fresh : ∀ (b : B), G.hasBlank b → ¬RDF11.GeneralizedGraph.vocabulary datatype G (Sum.inl (name b)))\n  (name_1 : B → Iri) (injective_1 : ∀ (b c : B), G.hasBlank b → G.hasBlank c → name_1 b = name_1 c → b = c)\n  (fresh_1 : ∀ (b : B), G.hasBlank b → ¬RDF11.GeneralizedGraph.vocabulary datatype G (Sum.inl (name_1 b))),\n  ({ name := name, injective := injective, fresh := fresh } =\n      { name := name_1, injective := injective_1, fresh := fresh_1 }) =\n    (name = name_1)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEMIZATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Skolemization.mk.noConfusion",
+      "module": "RDF11.Skolemization",
+      "kind": "definition",
+      "type": "{Literal Iri B : Type} →\n  {datatype : Literal → Iri} →\n    {G : RDF11.GeneralizedGraph Iri Literal B} →\n      {P : Sort u} →\n        {name : B → Iri} →\n          {injective : ∀ (b c : B), G.hasBlank b → G.hasBlank c → name b = name c → b = c} →\n            {fresh : ∀ (b : B), G.hasBlank b → ¬RDF11.GeneralizedGraph.vocabulary datatype G (Sum.inl (name b))} →\n              {name' : B → Iri} →\n                {injective' : ∀ (b c : B), G.hasBlank b → G.hasBlank c → name' b = name' c → b = c} →\n                  {fresh' :\n                      ∀ (b : B), G.hasBlank b → ¬RDF11.GeneralizedGraph.vocabulary datatype G (Sum.inl (name' b))} →\n                    { name := name, injective := injective, fresh := fresh } =\n                        { name := name', injective := injective', fresh := fresh' } →\n                      (name ≍ name' → P) → P",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEMIZATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Skolemization.mk.sizeOf_spec",
+      "module": "RDF11.Skolemization",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri B : Type} {datatype : Literal → Iri} {G : RDF11.GeneralizedGraph Iri Literal B} [inst : SizeOf Literal]\n  [inst_1 : SizeOf Iri] [inst_2 : SizeOf B] [inst_3 : (a : RDF11.GeneralizedTriple Iri Literal B) → SizeOf (G a)]\n  (name : B → Iri) (injective : ∀ (b c : B), G.hasBlank b → G.hasBlank c → name b = name c → b = c)\n  (fresh : ∀ (b : B), G.hasBlank b → ¬RDF11.GeneralizedGraph.vocabulary datatype G (Sum.inl (name b))),\n  sizeOf { name := name, injective := injective, fresh := fresh } = 1",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEMIZATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Skolemization.name",
+      "module": "RDF11.Skolemization",
+      "kind": "definition",
+      "type": "{Literal Iri B : Type} →\n  {datatype : Literal → Iri} → {G : RDF11.GeneralizedGraph Iri Literal B} → RDF11.Skolemization datatype G → B → Iri",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEMIZATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Skolemization.noConfusion",
+      "module": "RDF11.Skolemization",
+      "kind": "definition",
+      "type": "{P : Sort u} →\n  {Literal Iri B : Type} →\n    {datatype : Literal → Iri} →\n      {G : RDF11.GeneralizedGraph Iri Literal B} →\n        {t : RDF11.Skolemization datatype G} →\n          {Literal' Iri' B' : Type} →\n            {datatype' : Literal' → Iri'} →\n              {G' : RDF11.GeneralizedGraph Iri' Literal' B'} →\n                {t' : RDF11.Skolemization datatype' G'} →\n                  Literal = Literal' →\n                    Iri = Iri' →\n                      B = B' → datatype ≍ datatype' → G ≍ G' → t ≍ t' → RDF11.Skolemization.noConfusionType P t t'",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEMIZATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Skolemization.noConfusionType",
+      "module": "RDF11.Skolemization",
+      "kind": "definition",
+      "type": "Sort u →\n  {Literal Iri B : Type} →\n    {datatype : Literal → Iri} →\n      {G : RDF11.GeneralizedGraph Iri Literal B} →\n        RDF11.Skolemization datatype G →\n          {Literal' Iri' B' : Type} →\n            {datatype' : Literal' → Iri'} →\n              {G' : RDF11.GeneralizedGraph Iri' Literal' B'} → RDF11.Skolemization datatype' G' → Sort u",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEMIZATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Skolemization.original_not_entails",
+      "module": "RDF11.Skolemization",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {datatype : Literal → Iri} {G : RDF11.GeneralizedGraph Iri Literal B}\n  (sk : RDF11.Skolemization datatype G), (∃ b, G.hasBlank b) → ¬RDF11.SimplyEntails G sk.graph",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-ORIGINAL-NOT-SKOLEM",
+        "SUPPORT-SKOLEMIZATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Skolemization.rec",
+      "module": "RDF11.Skolemization",
+      "kind": "recursor",
+      "type": "{Literal Iri B : Type} →\n  {datatype : Literal → Iri} →\n    {G : RDF11.GeneralizedGraph Iri Literal B} →\n      {motive : RDF11.Skolemization datatype G → Sort u} →\n        ((name : B → Iri) →\n            (injective : ∀ (b c : B), G.hasBlank b → G.hasBlank c → name b = name c → b = c) →\n              (fresh : ∀ (b : B), G.hasBlank b → ¬RDF11.GeneralizedGraph.vocabulary datatype G (Sum.inl (name b))) →\n                motive { name := name, injective := injective, fresh := fresh }) →\n          (t : RDF11.Skolemization datatype G) → motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEMIZATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Skolemization.recOn",
+      "module": "RDF11.Skolemization",
+      "kind": "definition",
+      "type": "{Literal Iri B : Type} →\n  {datatype : Literal → Iri} →\n    {G : RDF11.GeneralizedGraph Iri Literal B} →\n      {motive : RDF11.Skolemization datatype G → Sort u} →\n        (t : RDF11.Skolemization datatype G) →\n          ((name : B → Iri) →\n              (injective : ∀ (b c : B), G.hasBlank b → G.hasBlank c → name b = name c → b = c) →\n                (fresh : ∀ (b : B), G.hasBlank b → ¬RDF11.GeneralizedGraph.vocabulary datatype G (Sum.inl (name b))) →\n                  motive { name := name, injective := injective, fresh := fresh }) →\n            motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEMIZATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Skolemization.substitution",
+      "module": "RDF11.Skolemization",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  {datatype : Literal → Iri} →\n    {G : RDF11.GeneralizedGraph Iri Literal B} → RDF11.Skolemization datatype G → RDF11.Substitution Iri Literal B",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-SKOLEMIZATION",
+        "SUPPORT-SKOLEMIZATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Skolemization.substitution.eq_1",
+      "module": "RDF11.Skolemization",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {datatype : Literal → Iri} {G : RDF11.GeneralizedGraph Iri Literal B}\n  (sk : RDF11.Skolemization datatype G) (b : B), sk.substitution b = some (RDF11.Term.iri (sk.name b))",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEMIZATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Skolemization.unname",
+      "module": "RDF11.Skolemization",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  {datatype : Literal → Iri} →\n    {G : RDF11.GeneralizedGraph Iri Literal B} → RDF11.Skolemization datatype G → Iri → Option B",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEMIZATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Skolemization.unname.eq_1",
+      "module": "RDF11.Skolemization",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {datatype : Literal → Iri} {G : RDF11.GeneralizedGraph Iri Literal B}\n  (sk : RDF11.Skolemization datatype G) (i : Iri),\n  sk.unname i = if h : ∃ b, G.hasBlank b ∧ sk.name b = i then some (Classical.choose h) else none",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEMIZATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Skolemization.unname_name",
+      "module": "RDF11.Skolemization",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {datatype : Literal → Iri} {G : RDF11.GeneralizedGraph Iri Literal B}\n  (sk : RDF11.Skolemization datatype G) (b : B), G.hasBlank b → sk.unname (sk.name b) = some b",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEMIZATION"
       ],
       "parent_declaration_if_applicable": null,
       "review": "pending_expert_review"
@@ -3066,6 +4085,18 @@
       "review": "pending_expert_review"
     },
     {
+      "name": "RDF11.Substitution.resolve.eq_1",
+      "module": "RDF11.Interpolation",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (μ : RDF11.Substitution Iri Literal B) (b : B), μ.resolve b = (μ b).getD (RDF11.Term.blank b)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INTERPOLATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
       "name": "RDF11.Substitution.then",
       "module": "RDF11.Instances",
       "kind": "definition",
@@ -3244,6 +4275,42 @@
         "MT11-GROUND-GRAPH"
       ],
       "parent_declaration_if_applicable": "RDF11.Term",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Term.hasBlank.eq_1",
+      "module": "RDF11.Skolemization",
+      "kind": "theorem",
+      "type": "∀ {Blank Iri Literal : Type} (b c : Blank), RDF11.Term.hasBlank b (RDF11.Term.blank c) = (c = b)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEMIZATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Term.hasBlank.eq_2",
+      "module": "RDF11.Skolemization",
+      "kind": "theorem",
+      "type": "∀ {Blank Iri Literal : Type} (b : Blank) (a : Iri), RDF11.Term.hasBlank b (RDF11.Term.iri a) = False",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEMIZATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Term.hasBlank.eq_3",
+      "module": "RDF11.Skolemization",
+      "kind": "theorem",
+      "type": "∀ {Blank Iri Literal : Type} (b : Blank) (a : Literal), RDF11.Term.hasBlank b (RDF11.Term.literal a) = False",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEMIZATION"
+      ],
+      "parent_declaration_if_applicable": null,
       "review": "pending_expert_review"
     },
     {
@@ -3511,6 +4578,43 @@
       "review": "pending_expert_review"
     },
     {
+      "name": "RDF11.Term.names",
+      "module": "RDF11.Vocabulary",
+      "kind": "definition",
+      "type": "{Literal Iri B : Type} → (Literal → Iri) → RDF11.Term Iri Literal B → RDF11.Set (RDF11.Name Iri Literal)",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-NAMES-VOCABULARIES",
+        "SUPPORT-VOCABULARY"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Term.names.match_1",
+      "module": "RDF11.Vocabulary",
+      "kind": "definition",
+      "type": "{Literal Iri B : Type} →\n  (motive : RDF11.Term Iri Literal B → Sort u_1) →\n    (x : RDF11.Term Iri Literal B) →\n      ((i : Iri) → motive (RDF11.Term.iri i)) →\n        ((l : Literal) → motive (RDF11.Term.literal l)) → ((a : B) → motive (RDF11.Term.blank a)) → motive x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-VOCABULARY"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Term.names_substitute",
+      "module": "RDF11.VocabularyEntailment",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri B : Type} (datatype : Literal → Iri) (μ : RDF11.Substitution Iri Literal B)\n  (q : RDF11.Term Iri Literal B) (n : RDF11.Name Iri Literal),\n  RDF11.Term.names datatype q n → RDF11.Term.names datatype (RDF11.Term.substitute μ q) n",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-VOCABULARY-ENTAILMENT"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
       "name": "RDF11.Term.noConfusion",
       "module": "RDF11.Syntax",
       "kind": "definition",
@@ -3567,6 +4671,42 @@
       "grounds": [
         "MT11-GRAPH-INSTANCE",
         "SUPPORT-INSTANCES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Term.substitute.eq_1",
+      "module": "RDF11.Interpolation",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (μ : RDF11.Substitution Iri Literal B) (i : Iri),\n  RDF11.Term.substitute μ (RDF11.Term.iri i) = RDF11.Term.iri i",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INTERPOLATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Term.substitute.eq_2",
+      "module": "RDF11.Interpolation",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (μ : RDF11.Substitution Iri Literal B) (l : Literal),\n  RDF11.Term.substitute μ (RDF11.Term.literal l) = RDF11.Term.literal l",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INTERPOLATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Term.substitute.eq_3",
+      "module": "RDF11.Interpolation",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (μ : RDF11.Substitution Iri Literal B) (b : B),\n  RDF11.Term.substitute μ (RDF11.Term.blank b) = μ.resolve b",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INTERPOLATION"
       ],
       "parent_declaration_if_applicable": null,
       "review": "pending_expert_review"
@@ -3861,6 +5001,32 @@
       "review": "pending_expert_review"
     },
     {
+      "name": "RDF11.entailment_has_instance_subgraph",
+      "module": "RDF11.Interpolation",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {G E : RDF11.GeneralizedGraph Iri Literal B},\n  RDF11.SimplyEntails G E → ∃ μ, RDF11.Set.subset (RDF11.GeneralizedGraph.substitute μ E) G",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-INTERPOLATION",
+        "SUPPORT-INTERPOLATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.entailment_vocabulary",
+      "module": "RDF11.VocabularyEntailment",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri B : Type} (datatype : Literal → Iri) {G E : RDF11.GeneralizedGraph Iri Literal B},\n  RDF11.SimplyEntails G E →\n    (RDF11.GeneralizedGraph.vocabulary datatype E).subset (RDF11.GeneralizedGraph.vocabulary datatype G)",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-FRESH-IRI-NONENTAILMENT",
+        "SUPPORT-VOCABULARY-ENTAILMENT"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
       "name": "RDF11.entails_empty",
       "module": "RDF11.Entailment",
       "kind": "theorem",
@@ -3879,7 +5045,47 @@
       "type": "∀ {Iri Literal B₁ B₂ : Type} (C : (U : Type u) → RDF11.SimpleInterpretation Iri Literal U → Prop)\n  {G : RDF11.GeneralizedGraph Iri Literal B₁} {E : RDF11.GeneralizedGraph Iri Literal B₂},\n  RDF11.SimplyEntails G E → RDF11.EntailsUnder C G E",
       "role": "source_mapping",
       "grounds": [
+        "MT11-EXTENSION-MONOTONICITY",
         "MT11-SIMPLE-EXTENSION-BASE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.finite_substitution",
+      "module": "RDF11.FiniteEntailment",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (G : RDF11.GeneralizedGraph Iri Literal B),\n  RDF11.FiniteGraph G →\n    ∀ (μ : RDF11.Substitution Iri Literal B), RDF11.FiniteGraph (RDF11.GeneralizedGraph.substitute μ G)",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-COMPACTNESS",
+        "SUPPORT-COMPACTNESS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.fresh_iri_nonentailment",
+      "module": "RDF11.VocabularyEntailment",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri B : Type} (datatype : Literal → Iri) (G E : RDF11.GeneralizedGraph Iri Literal B) (i : Iri),\n  ¬RDF11.GeneralizedGraph.vocabulary datatype G (Sum.inl i) →\n    RDF11.GeneralizedGraph.vocabulary datatype E (Sum.inl i) → ¬RDF11.SimplyEntails G E",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-FRESH-IRI-NONENTAILMENT",
+        "SUPPORT-VOCABULARY-ENTAILMENT"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ground_entailment_iff_subset",
+      "module": "RDF11.Interpolation",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (G E : RDF11.GeneralizedGraph Iri Literal B),\n  E.ground → (RDF11.SimplyEntails G E ↔ RDF11.Set.subset E G)",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-SIMPLE-DECIDABILITY",
+        "SUPPORT-INTERPOLATION"
       ],
       "parent_declaration_if_applicable": null,
       "review": "pending_expert_review"
@@ -4443,6 +5649,19 @@
       "review": "pending_expert_review"
     },
     {
+      "name": "RDF11.literal_contributes_two_names",
+      "module": "RDF11.Vocabulary",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri B : Type} (datatype : Literal → Iri) (l : Literal),\n  RDF11.Term.names datatype (RDF11.Term.literal l) (Sum.inr l) ∧\n    RDF11.Term.names datatype (RDF11.Term.literal l) (Sum.inl (datatype l))",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-NAMES-VOCABULARIES",
+        "SUPPORT-VOCABULARY"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
       "name": "RDF11.mapBlank_is_instance",
       "module": "RDF11.Instances",
       "kind": "theorem",
@@ -4462,6 +5681,19 @@
       "role": "source_mapping",
       "grounds": [
         "MT11-MERGE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.never_simply_unsatisfiable",
+      "module": "RDF11.Transformations",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (G : RDF11.GeneralizedGraph Iri Literal B), ¬RDF11.SimplyUnsatisfiable G",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-SATISFACTION",
+        "SUPPORT-TRANSFORMATIONS"
       ],
       "parent_declaration_if_applicable": null,
       "review": "pending_expert_review"
@@ -4505,6 +5737,32 @@
       "review": "pending_expert_review"
     },
     {
+      "name": "RDF11.ordinary_interpolation",
+      "module": "RDF11.Interpolation",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (G : RDF11.GeneralizedGraph Iri Literal B) (E : RDF11.Graph Iri Literal B),\n  RDF11.SimplyEntails G E.generalize ↔ ∃ μ, RDF11.Set.subset (RDF11.GeneralizedGraph.substitute μ E.generalize) G",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-INTERPOLATION",
+        "SUPPORT-INTERPOLATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ordinary_interpolation_instances",
+      "module": "RDF11.Interpolation",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (G : RDF11.GeneralizedGraph Iri Literal B) (E : RDF11.Graph Iri Literal B),\n  RDF11.SimplyEntails G E.generalize ↔ ∃ H, RDF11.IsInstance H E.generalize ∧ RDF11.Set.subset H G",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-INTERPOLATION",
+        "SUPPORT-INTERPOLATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
       "name": "RDF11.ordinary_substitution_entails",
       "module": "RDF11.Instances",
       "kind": "theorem",
@@ -4525,6 +5783,45 @@
       "role": "source_mapping",
       "grounds": [
         "MT11-PREMISE-MONOTONICITY"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.propertyTypingImage",
+      "module": "RDF11.RDFProperty",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} → Iri → Iri → RDF11.GeneralizedGraph Iri Literal B → RDF11.GeneralizedGraph Iri Literal B",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-RULE-rdfD2",
+        "SUPPORT-RDF-PROPERTY"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.rdfD2_entailment",
+      "module": "RDF11.RDFProperty",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (rdfType rdfProperty : Iri) (G : RDF11.GeneralizedGraph Iri Literal B),\n  RDF11.EntailsUnder (fun x I => I.RDFPropertyCondition rdfType rdfProperty) G\n    (RDF11.propertyTypingImage rdfType rdfProperty G)",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-RULE-rdfD2",
+        "SUPPORT-RDF-PROPERTY"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.rdf_condition_substitution_entails",
+      "module": "RDF11.RDFProperty",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (rdfType rdfProperty : Iri) (G : RDF11.GeneralizedGraph Iri Literal B)\n  (μ : RDF11.Substitution Iri Literal B),\n  RDF11.EntailsUnder (fun x I => I.RDFPropertyCondition rdfType rdfProperty) (RDF11.GeneralizedGraph.substitute μ G) G",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-INSTANCE-ENTAILMENT",
+        "SUPPORT-RDF-PROPERTY"
       ],
       "parent_declaration_if_applicable": null,
       "review": "pending_expert_review"
@@ -4554,6 +5851,19 @@
       "review": "pending_expert_review"
     },
     {
+      "name": "RDF11.simple_compactness",
+      "module": "RDF11.FiniteEntailment",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (G : RDF11.GeneralizedGraph Iri Literal B) (E : RDF11.Graph Iri Literal B),\n  RDF11.FiniteGraph E.generalize →\n    RDF11.SimplyEntails G E.generalize → ∃ H, H.subset G ∧ RDF11.FiniteGraph H ∧ RDF11.SimplyEntails H E.generalize",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-COMPACTNESS",
+        "SUPPORT-COMPACTNESS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
       "name": "RDF11.simplyEntails_refl",
       "module": "RDF11.Entailment",
       "kind": "theorem",
@@ -4578,12 +5888,26 @@
       "review": "pending_expert_review"
     },
     {
+      "name": "RDF11.simply_satisfiable",
+      "module": "RDF11.Transformations",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (G : RDF11.GeneralizedGraph Iri Literal B), RDF11.SimplySatisfiable G",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-SATISFACTION",
+        "SUPPORT-TRANSFORMATIONS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
       "name": "RDF11.stronger_conditions_preserve_entailment",
       "module": "RDF11.Entailment",
       "kind": "theorem",
       "type": "∀ {Iri Literal B₁ B₂ : Type} {C D : (U : Type u) → RDF11.SimpleInterpretation Iri Literal U → Prop},\n  (∀ (U : Type u) (I : RDF11.SimpleInterpretation Iri Literal U), D U I → C U I) →\n    ∀ {G : RDF11.GeneralizedGraph Iri Literal B₁} {E : RDF11.GeneralizedGraph Iri Literal B₂},\n      RDF11.EntailsUnder C G E → RDF11.EntailsUnder D G E",
       "role": "source_mapping",
       "grounds": [
+        "MT11-EXTENSION-MONOTONICITY",
         "MT11-SIMPLE-EXTENSION-BASE"
       ],
       "parent_declaration_if_applicable": null,
@@ -4602,6 +5926,19 @@
       "review": "pending_expert_review"
     },
     {
+      "name": "RDF11.subgraph_process_valid",
+      "module": "RDF11.Transformations",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type}, RDF11.SimplyValid fun G E => RDF11.Set.subset E G",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-VALID-TRANSFORMATION",
+        "SUPPORT-TRANSFORMATIONS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
       "name": "RDF11.union_entails_merge",
       "module": "RDF11.Merge",
       "kind": "theorem",
@@ -4609,6 +5946,58 @@
       "role": "source_mapping",
       "grounds": [
         "MT11-UNION-MERGE-RELATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.valid_composition",
+      "module": "RDF11.Transformations",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B₁ B₂ B₃ : Type}\n  (first : RDF11.GeneralizedGraph Iri Literal B₁ → RDF11.GeneralizedGraph Iri Literal B₂ → Prop)\n  (second : RDF11.GeneralizedGraph Iri Literal B₂ → RDF11.GeneralizedGraph Iri Literal B₃ → Prop),\n  RDF11.SimplyValid first → RDF11.SimplyValid second → RDF11.SimplyValid fun G E => ∃ H, first G H ∧ second H E",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-VALID-TRANSFORMATION",
+        "SUPPORT-TRANSFORMATIONS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.valid_under_extension",
+      "module": "RDF11.Transformations",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B₁ B₂ : Type} (C : (U : Type u) → RDF11.SimpleInterpretation Iri Literal U → Prop)\n  (process : RDF11.GeneralizedGraph Iri Literal B₁ → RDF11.GeneralizedGraph Iri Literal B₂ → Prop),\n  RDF11.SimplyValid process →\n    ∀ (G : RDF11.GeneralizedGraph Iri Literal B₁) (E : RDF11.GeneralizedGraph Iri Literal B₂),\n      process G E → RDF11.EntailsUnder C G E",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-EXTENSION-MONOTONICITY",
+        "MT11-VALID-TRANSFORMATION",
+        "SUPPORT-TRANSFORMATIONS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.vocabulary_subset",
+      "module": "RDF11.VocabularyEntailment",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri B : Type} (datatype : Literal → Iri) {G H : RDF11.GeneralizedGraph Iri Literal B},\n  RDF11.Set.subset H G →\n    (RDF11.GeneralizedGraph.vocabulary datatype H).subset (RDF11.GeneralizedGraph.vocabulary datatype G)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-VOCABULARY-ENTAILMENT"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.vocabulary_substitution",
+      "module": "RDF11.VocabularyEntailment",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri B : Type} (datatype : Literal → Iri) (G : RDF11.GeneralizedGraph Iri Literal B)\n  (μ : RDF11.Substitution Iri Literal B),\n  (RDF11.GeneralizedGraph.vocabulary datatype G).subset\n    (RDF11.GeneralizedGraph.vocabulary datatype (RDF11.GeneralizedGraph.substitute μ G))",
+      "role": "source_mapping",
+      "grounds": [
+        "MT11-FRESH-IRI-NONENTAILMENT",
+        "SUPPORT-VOCABULARY-ENTAILMENT"
       ],
       "parent_declaration_if_applicable": null,
       "review": "pending_expert_review"
@@ -5490,6 +6879,54 @@
       "review": "pending_expert_review"
     },
     {
+      "name": "_private.RDF11.Interpolation.0.RDF11.Term.substitute.match_1.eq_1",
+      "module": "RDF11.Interpolation",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (motive : RDF11.Term Iri Literal B → Sort u_1) (i : Iri)\n  (h_1 : (i : Iri) → motive (RDF11.Term.iri i)) (h_2 : (l : Literal) → motive (RDF11.Term.literal l))\n  (h_3 : (b : B) → motive (RDF11.Term.blank b)),\n  (match RDF11.Term.iri i with\n    | RDF11.Term.iri i => h_1 i\n    | RDF11.Term.literal l => h_2 l\n    | RDF11.Term.blank b => h_3 b) =\n    h_1 i",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INTERPOLATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.Interpolation.0.RDF11.Term.substitute.match_1.eq_2",
+      "module": "RDF11.Interpolation",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (motive : RDF11.Term Iri Literal B → Sort u_1) (l : Literal)\n  (h_1 : (i : Iri) → motive (RDF11.Term.iri i)) (h_2 : (l : Literal) → motive (RDF11.Term.literal l))\n  (h_3 : (b : B) → motive (RDF11.Term.blank b)),\n  (match RDF11.Term.literal l with\n    | RDF11.Term.iri i => h_1 i\n    | RDF11.Term.literal l => h_2 l\n    | RDF11.Term.blank b => h_3 b) =\n    h_2 l",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INTERPOLATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.Interpolation.0.RDF11.Term.substitute.match_1.eq_3",
+      "module": "RDF11.Interpolation",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (motive : RDF11.Term Iri Literal B → Sort u_1) (b : B)\n  (h_1 : (i : Iri) → motive (RDF11.Term.iri i)) (h_2 : (l : Literal) → motive (RDF11.Term.literal l))\n  (h_3 : (b : B) → motive (RDF11.Term.blank b)),\n  (match RDF11.Term.blank b with\n    | RDF11.Term.iri i => h_1 i\n    | RDF11.Term.literal l => h_2 l\n    | RDF11.Term.blank b => h_3 b) =\n    h_3 b",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INTERPOLATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.Interpolation.0.RDF11.Term.substitute.match_1.splitter",
+      "module": "RDF11.Interpolation",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  (motive : RDF11.Term Iri Literal B → Sort u_1) →\n    (x : RDF11.Term Iri Literal B) →\n      ((i : Iri) → motive (RDF11.Term.iri i)) →\n        ((l : Literal) → motive (RDF11.Term.literal l)) → ((b : B) → motive (RDF11.Term.blank b)) → motive x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INTERPOLATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
       "name": "_private.RDF11.Simple.0.RDF11.SimpleInterpretation.denote.match_1.eq_1",
       "module": "RDF11.Simple",
       "kind": "theorem",
@@ -5533,6 +6970,102 @@
       "role": "proof_support",
       "grounds": [
         "SUPPORT-INTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.Skolemization.0.RDF11.Skolemization.inverseTerm.match_1.eq_1",
+      "module": "RDF11.Skolemization",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (motive : RDF11.Term Iri Literal B → Sort u_1) (i : Iri)\n  (h_1 : (i : Iri) → motive (RDF11.Term.iri i)) (h_2 : (l : Literal) → motive (RDF11.Term.literal l))\n  (h_3 : (b : B) → motive (RDF11.Term.blank b)),\n  (match RDF11.Term.iri i with\n    | RDF11.Term.iri i => h_1 i\n    | RDF11.Term.literal l => h_2 l\n    | RDF11.Term.blank b => h_3 b) =\n    h_1 i",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEMIZATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.Skolemization.0.RDF11.Skolemization.inverseTerm.match_1.eq_2",
+      "module": "RDF11.Skolemization",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (motive : RDF11.Term Iri Literal B → Sort u_1) (l : Literal)\n  (h_1 : (i : Iri) → motive (RDF11.Term.iri i)) (h_2 : (l : Literal) → motive (RDF11.Term.literal l))\n  (h_3 : (b : B) → motive (RDF11.Term.blank b)),\n  (match RDF11.Term.literal l with\n    | RDF11.Term.iri i => h_1 i\n    | RDF11.Term.literal l => h_2 l\n    | RDF11.Term.blank b => h_3 b) =\n    h_2 l",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEMIZATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.Skolemization.0.RDF11.Skolemization.inverseTerm.match_1.eq_3",
+      "module": "RDF11.Skolemization",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (motive : RDF11.Term Iri Literal B → Sort u_1) (b : B)\n  (h_1 : (i : Iri) → motive (RDF11.Term.iri i)) (h_2 : (l : Literal) → motive (RDF11.Term.literal l))\n  (h_3 : (b : B) → motive (RDF11.Term.blank b)),\n  (match RDF11.Term.blank b with\n    | RDF11.Term.iri i => h_1 i\n    | RDF11.Term.literal l => h_2 l\n    | RDF11.Term.blank b => h_3 b) =\n    h_3 b",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEMIZATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.Skolemization.0.RDF11.Skolemization.inverseTerm.match_1.splitter",
+      "module": "RDF11.Skolemization",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  (motive : RDF11.Term Iri Literal B → Sort u_1) →\n    (x : RDF11.Term Iri Literal B) →\n      ((i : Iri) → motive (RDF11.Term.iri i)) →\n        ((l : Literal) → motive (RDF11.Term.literal l)) → ((b : B) → motive (RDF11.Term.blank b)) → motive x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEMIZATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.Skolemization.0.RDF11.Term.hasBlank.match_1.eq_1",
+      "module": "RDF11.Skolemization",
+      "kind": "theorem",
+      "type": "∀ {Blank Iri Literal : Type} (motive : RDF11.Term Iri Literal Blank → Sort u_1) (c : Blank)\n  (h_1 : (c : Blank) → motive (RDF11.Term.blank c)) (h_2 : (a : Iri) → motive (RDF11.Term.iri a))\n  (h_3 : (a : Literal) → motive (RDF11.Term.literal a)),\n  (match RDF11.Term.blank c with\n    | RDF11.Term.blank c => h_1 c\n    | RDF11.Term.iri a => h_2 a\n    | RDF11.Term.literal a => h_3 a) =\n    h_1 c",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEMIZATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.Skolemization.0.RDF11.Term.hasBlank.match_1.eq_2",
+      "module": "RDF11.Skolemization",
+      "kind": "theorem",
+      "type": "∀ {Blank Iri Literal : Type} (motive : RDF11.Term Iri Literal Blank → Sort u_1) (a : Iri)\n  (h_1 : (c : Blank) → motive (RDF11.Term.blank c)) (h_2 : (a : Iri) → motive (RDF11.Term.iri a))\n  (h_3 : (a : Literal) → motive (RDF11.Term.literal a)),\n  (match RDF11.Term.iri a with\n    | RDF11.Term.blank c => h_1 c\n    | RDF11.Term.iri a => h_2 a\n    | RDF11.Term.literal a => h_3 a) =\n    h_2 a",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEMIZATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.Skolemization.0.RDF11.Term.hasBlank.match_1.eq_3",
+      "module": "RDF11.Skolemization",
+      "kind": "theorem",
+      "type": "∀ {Blank Iri Literal : Type} (motive : RDF11.Term Iri Literal Blank → Sort u_1) (a : Literal)\n  (h_1 : (c : Blank) → motive (RDF11.Term.blank c)) (h_2 : (a : Iri) → motive (RDF11.Term.iri a))\n  (h_3 : (a : Literal) → motive (RDF11.Term.literal a)),\n  (match RDF11.Term.literal a with\n    | RDF11.Term.blank c => h_1 c\n    | RDF11.Term.iri a => h_2 a\n    | RDF11.Term.literal a => h_3 a) =\n    h_3 a",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEMIZATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.Skolemization.0.RDF11.Term.hasBlank.match_1.splitter",
+      "module": "RDF11.Skolemization",
+      "kind": "definition",
+      "type": "{Blank Iri Literal : Type} →\n  (motive : RDF11.Term Iri Literal Blank → Sort u_1) →\n    (x : RDF11.Term Iri Literal Blank) →\n      ((c : Blank) → motive (RDF11.Term.blank c)) →\n        ((a : Iri) → motive (RDF11.Term.iri a)) → ((a : Literal) → motive (RDF11.Term.literal a)) → motive x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SKOLEMIZATION"
       ],
       "parent_declaration_if_applicable": null,
       "review": "pending_expert_review"

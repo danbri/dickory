@@ -25,3 +25,5 @@ The source’s wording, intended scope, incorporated Concepts definitions and an
 
 [catalogue/open-questions.json](../catalogue/open-questions.json) links the claims, character-range passage records and Lean declarations.
 
+
+The third increment proves both interpolation directions for ordinary conclusions. It also derives IP ⊆ IR from the first RDF property-typing condition and proves generalized substitution entailment **under that condition**, using `EntailsUnder`. See [RDFProperty.lean](../RDF11/RDFProperty.lean). This is a precise additional semantic assumption, not a repair to the base simple interpretation or a claim that the full RDF regime is complete.

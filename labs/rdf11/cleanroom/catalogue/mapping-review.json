@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "status": "draft_second_formalization_increment",
+  "status": "draft_third_formalization_increment",
   "selection_method": "Human-readable AI close reading; selectors locate already selected passages and do not extract assertions.",
   "mappings": [
     {
@@ -465,15 +465,31 @@
     },
     {
       "claim_id": "MT11-SATISFACTION",
-      "relation": "partial_definition",
-      "symbol_linked_english": "I satisfies G exactly when G is true under I.",
+      "relation": "definition_and_theorem",
+      "symbol_linked_english": "I.Satisfies G is graph truth with an existential shared assignment. SimplySatisfiable G means some simple interpretation satisfies G; SimplyUnsatisfiable G is its negation. Every graph is simply satisfiable.",
       "bindings": [
         {
           "symbol": "Satisfies",
           "lean": "RDF11.SimpleInterpretation.Satisfies"
+        },
+        {
+          "symbol": "SimplySatisfiable",
+          "lean": "RDF11.SimplySatisfiable"
+        },
+        {
+          "symbol": "SimplyUnsatisfiable",
+          "lean": "RDF11.SimplyUnsatisfiable"
+        },
+        {
+          "symbol": "simply_satisfiable",
+          "lean": "RDF11.simply_satisfiable"
+        },
+        {
+          "symbol": "never_simply_unsatisfiable",
+          "lean": "RDF11.never_simply_unsatisfiable"
         }
       ],
-      "limitations": "Separate named predicates for satisfiable and unsatisfiable are not yet introduced.",
+      "limitations": "Universe-polymorphic in a fixed arbitrary carrier universe. Does not assert satisfiability in datatype-aware or RDF/RDFS regimes.",
       "extraction_review": "pending_expert_review",
       "formalization_review": "pending_expert_review",
       "implementation_refinement": "not_connected_to_published_package"
@@ -623,9 +639,13 @@
         {
           "symbol": "renamed_entails_original",
           "lean": "RDF11.renamed_entails_original"
+        },
+        {
+          "symbol": "rdf_condition_substitution_entails",
+          "lean": "RDF11.rdf_condition_substitution_entails"
         }
       ],
-      "limitations": "Complete instance-entails-original theorem for ordinary RDF endpoints, proved directly from truth conditions. The unrestricted generalized-source reading remains an open source question; IP ⊆ IR is not assumed.",
+      "limitations": "Complete instance-entails-original theorem for ordinary RDF endpoints, proved directly from truth conditions. The unrestricted generalized-source reading remains an open source question; IP ⊆ IR is not assumed. Generalized substitution entailment is now separately proved under RDFPropertyCondition, which forces IP ⊆ IR; this does not change the simple-entailment scope question.",
       "extraction_review": "pending_expert_review",
       "formalization_review": "pending_expert_review",
       "implementation_refinement": "not_connected_to_published_package"
@@ -821,14 +841,322 @@
     {
       "claim_id": "MT11-INTERPOLATION",
       "relation": "partial_theorem",
-      "symbol_linked_english": "If an instance of the ordinary conclusion E is a subgraph of G, then G SimplyEntails E.",
+      "symbol_linked_english": "For an ordinary conclusion E and any generalized premise G, G SimplyEntails E.generalize exactly when an instance of E.generalize is a subgraph of G. A Herbrand interpretation proves necessity; existing ordinary instance entailment proves sufficiency.",
       "bindings": [
         {
-          "symbol": "instance_subgraph_entails",
-          "lean": "RDF11.instance_subgraph_entails"
+          "symbol": "interpretation",
+          "lean": "RDF11.Herbrand.interpretation"
+        },
+        {
+          "symbol": "satisfies",
+          "lean": "RDF11.Herbrand.satisfies"
+        },
+        {
+          "symbol": "entailment_has_instance_subgraph",
+          "lean": "RDF11.entailment_has_instance_subgraph"
+        },
+        {
+          "symbol": "ordinary_interpolation",
+          "lean": "RDF11.ordinary_interpolation"
+        },
+        {
+          "symbol": "ordinary_interpolation_instances",
+          "lean": "RDF11.ordinary_interpolation_instances"
         }
       ],
-      "limitations": "Only the sufficient direction, with an ordinary conclusion. The converse/interpolation completeness theorem remains open, as does the generalized source-scope question.",
+      "limitations": "Both directions are proved for ordinary conclusions, without finiteness. Necessity also holds for generalized conclusions; the unrestricted generalized converse remains a source-scope question. One common ambient blank identity type is used.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-SIMPLE-DECIDABILITY",
+      "relation": "partial_theorem",
+      "symbol_linked_english": "For a ground conclusion E, G SimplyEntails E exactly when E is a subset of G.",
+      "bindings": [
+        {
+          "symbol": "ground_entailment_iff_subset",
+          "lean": "RDF11.ground_entailment_iff_subset"
+        }
+      ],
+      "limitations": "Captures the ground-conclusion characterization, not an executable finite entailment decision procedure or the source complexity claim. No finiteness restriction on this theorem.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-COMPACTNESS",
+      "relation": "partial_theorem",
+      "symbol_linked_english": "If G SimplyEntails an ordinary E with a certified finite Enumeration, interpolation produces a finite instance H of E inside G, and H SimplyEntails E.",
+      "bindings": [
+        {
+          "symbol": "FiniteGraph",
+          "lean": "RDF11.FiniteGraph"
+        },
+        {
+          "symbol": "image",
+          "lean": "RDF11.Enumeration.image"
+        },
+        {
+          "symbol": "finite_substitution",
+          "lean": "RDF11.finite_substitution"
+        },
+        {
+          "symbol": "simple_compactness",
+          "lean": "RDF11.simple_compactness"
+        }
+      ],
+      "limitations": "The conclusion is ordinary RDF; the premise may be generalized and infinite. Enumeration is the existing membership-faithful, duplicate-free finite representation; no graph finiteness axiom is introduced.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-NAMES-VOCABULARIES",
+      "relation": "definition_and_theorem",
+      "symbol_linked_english": "Name is Iri or Literal. Term.names includes a literal itself and its syntactic datatype IRI; a graph vocabulary is the union of the names contributed by its terms.",
+      "bindings": [
+        {
+          "symbol": "Name",
+          "lean": "RDF11.Name"
+        },
+        {
+          "symbol": "names",
+          "lean": "RDF11.Term.names"
+        },
+        {
+          "symbol": "names",
+          "lean": "RDF11.GeneralizedTriple.names"
+        },
+        {
+          "symbol": "vocabulary",
+          "lean": "RDF11.GeneralizedGraph.vocabulary"
+        },
+        {
+          "symbol": "literal_contributes_two_names",
+          "lean": "RDF11.literal_contributes_two_names"
+        }
+      ],
+      "limitations": "The total datatype : Literal → Iri projection is an explicit interface parameter. Concrete literal syntax, identity, lexical constraints and correctness of the supplied projection remain external obligations.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-FRESH-IRI-NONENTAILMENT",
+      "relation": "theorem",
+      "symbol_linked_english": "If E contains IRI i in its vocabulary and G does not, G cannot SimplyEntail E. More strongly, entailment implies E.vocabulary is a subset of G.vocabulary.",
+      "bindings": [
+        {
+          "symbol": "vocabulary_substitution",
+          "lean": "RDF11.vocabulary_substitution"
+        },
+        {
+          "symbol": "entailment_vocabulary",
+          "lean": "RDF11.entailment_vocabulary"
+        },
+        {
+          "symbol": "fresh_iri_nonentailment",
+          "lean": "RDF11.fresh_iri_nonentailment"
+        }
+      ],
+      "limitations": "Includes datatype IRI names via the supplied syntactic datatype projection. Applies to simple interpretations, not arbitrary stronger regimes.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-SKOLEMIZATION",
+      "relation": "partial_definition_and_theorem",
+      "symbol_linked_english": "A Skolemization supplies distinct IRIs for occurring blanks, fresh against G.vocabulary; its graph is the simultaneous substitution of all those blanks. The result is a ground, lean instance of G.",
+      "bindings": [
+        {
+          "symbol": "Skolemization",
+          "lean": "RDF11.Skolemization"
+        },
+        {
+          "symbol": "substitution",
+          "lean": "RDF11.Skolemization.substitution"
+        },
+        {
+          "symbol": "graph",
+          "lean": "RDF11.Skolemization.graph"
+        },
+        {
+          "symbol": "is_instance",
+          "lean": "RDF11.Skolemization.is_instance"
+        },
+        {
+          "symbol": "ground",
+          "lean": "RDF11.Skolemization.ground"
+        },
+        {
+          "symbol": "lean",
+          "lean": "RDF11.Skolemization.lean"
+        }
+      ],
+      "limitations": "Freshness against G is formalized; global freshness at creation is an external naming obligation. The map is supplied, not proved to exist for arbitrary abstract IRI domains. This is full replacement as in Semantics §6, not the optional partial replacement of Concepts §3.5.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-SKOLEM-ENTAILS-ORIGINAL",
+      "relation": "partial_theorem",
+      "symbol_linked_english": "For an ordinary graph G, sk.graph SimplyEntails G.generalize by the existing substitution-entailment theorem.",
+      "bindings": [
+        {
+          "symbol": "entails_original",
+          "lean": "RDF11.Skolemization.entails_original"
+        }
+      ],
+      "limitations": "Ordinary source; generalized-source claim remains scoped separately. This direction needs neither a nonempty blank set nor freshness/injectivity, although Skolemization supplies them where relevant.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-ORIGINAL-NOT-SKOLEM",
+      "relation": "theorem",
+      "symbol_linked_english": "If G contains a blank node, G does not SimplyEntail sk.graph: the image contains a fresh IRI absent from G.",
+      "bindings": [
+        {
+          "symbol": "contains_skolem_name",
+          "lean": "RDF11.Skolemization.contains_skolem_name"
+        },
+        {
+          "symbol": "original_not_entails",
+          "lean": "RDF11.Skolemization.original_not_entails"
+        }
+      ],
+      "limitations": "The nonempty-blank premise comes from the preceding source paragraph. This result also holds for generalized G; it concerns simple entailment only.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-SKOLEM-FRESH-VOCABULARY-CONSERVATIVITY",
+      "relation": "partial_theorem",
+      "symbol_linked_english": "For ordinary G and H, if H avoids the fresh IRIs introduced by sk, sk.graph SimplyEntails H exactly when G SimplyEntails H. The inverse-name map turns an interpolation witness over sk.graph into one over G.",
+      "bindings": [
+        {
+          "symbol": "Avoids",
+          "lean": "RDF11.Skolemization.Avoids"
+        },
+        {
+          "symbol": "inverse_substituted_triple",
+          "lean": "RDF11.Skolemization.inverse_substituted_triple"
+        },
+        {
+          "symbol": "inverse_substitution_commutes",
+          "lean": "RDF11.Skolemization.inverse_substitution_commutes"
+        },
+        {
+          "symbol": "conservative",
+          "lean": "RDF11.Skolemization.conservative"
+        }
+      ],
+      "limitations": "Ordinary graphs; no finiteness or disjoint-blank-domain premise. Avoidance includes datatype IRIs. The separate exact lifting equation H = sk(H′) remains open; no unrestricted commutation with substitutions is assumed.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-VALID-TRANSFORMATION",
+      "relation": "definition_and_theorem",
+      "symbol_linked_english": "A process relation is SimplyValid when every permitted input/output pair G,E satisfies SimplyEntails G E; SimplyInvalid is its negation. Valid processes compose and remain valid under additional interpretation conditions.",
+      "bindings": [
+        {
+          "symbol": "SimplyValid",
+          "lean": "RDF11.SimplyValid"
+        },
+        {
+          "symbol": "SimplyInvalid",
+          "lean": "RDF11.SimplyInvalid"
+        },
+        {
+          "symbol": "valid_composition",
+          "lean": "RDF11.valid_composition"
+        },
+        {
+          "symbol": "subgraph_process_valid",
+          "lean": "RDF11.subgraph_process_valid"
+        },
+        {
+          "symbol": "valid_under_extension",
+          "lean": "RDF11.valid_under_extension"
+        }
+      ],
+      "limitations": "A relation models possible process outputs; this imposes no execution mandate. Separate syntax restrictions of an extension must still be respected.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-EXTENSION-MONOTONICITY",
+      "relation": "partial_theorem",
+      "symbol_linked_english": "Restricting simple interpretations by conditions C preserves every simple entailment and every SimplyValid process.",
+      "bindings": [
+        {
+          "symbol": "extension_preserves_simple_entailment",
+          "lean": "RDF11.extension_preserves_simple_entailment"
+        },
+        {
+          "symbol": "stronger_conditions_preserve_entailment",
+          "lean": "RDF11.stronger_conditions_preserve_entailment"
+        },
+        {
+          "symbol": "valid_under_extension",
+          "lean": "RDF11.valid_under_extension"
+        }
+      ],
+      "limitations": "C retains the same Satisfies relation and graph syntax. The source also permits separate syntactic admissibility conditions, not represented by C; their satisfaction remains a separate obligation.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-RDF-PROPERTY-TYPING",
+      "relation": "definition_and_theorem",
+      "symbol_linked_english": "RDFPropertyCondition states that x belongs to IP exactly when x is related by IEXT(I(rdf:type)) to I(rdf:Property). Its typed relation entails IP is a subset of IR.",
+      "bindings": [
+        {
+          "symbol": "Relates",
+          "lean": "RDF11.SimpleInterpretation.Relates"
+        },
+        {
+          "symbol": "RDFPropertyCondition",
+          "lean": "RDF11.SimpleInterpretation.RDFPropertyCondition"
+        },
+        {
+          "symbol": "rdf_properties_are_resources",
+          "lean": "RDF11.SimpleInterpretation.rdf_properties_are_resources"
+        }
+      ],
+      "limitations": "Only rdfsemcond1 is formalized, parameterized by the two vocabulary IRIs. Full RDF interpretation still requires D-interpretation, mandatory datatypes, datatype typing and axiomatic triples. The base SimpleInterpretation is unchanged.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-RULE-rdfD2",
+      "relation": "partial_theorem",
+      "symbol_linked_english": "Under RDFPropertyCondition, truth of s p o implies truth of p rdf:type rdf:Property; propertyTypingImage applies that rule to a graph using the same assignment.",
+      "bindings": [
+        {
+          "symbol": "rdfD2_triple",
+          "lean": "RDF11.SimpleInterpretation.rdfD2_triple"
+        },
+        {
+          "symbol": "propertyTypingImage",
+          "lean": "RDF11.propertyTypingImage"
+        },
+        {
+          "symbol": "rdfD2_entailment",
+          "lean": "RDF11.rdfD2_entailment"
+        }
+      ],
+      "limitations": "Proved under the single required RDF condition through EntailsUnder, not a completed definition of RDF entailment. It works with generalized syntax as well as embedded ordinary triples.",
       "extraction_review": "pending_expert_review",
       "formalization_review": "pending_expert_review",
       "implementation_refinement": "not_connected_to_published_package"
@@ -1124,6 +1452,137 @@
         "MT11-INTERPOLATION"
       ],
       "within_section": "properties-of-simple-entailment-informative"
+    },
+    {
+      "id": "names",
+      "source": "mt",
+      "tag": "p",
+      "text": "A name is any IRI or literal.",
+      "claims": [
+        "MT11-NAMES-VOCABULARIES"
+      ]
+    },
+    {
+      "id": "ground-subset",
+      "source": "mt",
+      "tag": "p",
+      "text": "This is clearly decidable",
+      "claims": [
+        "MT11-SIMPLE-DECIDABILITY"
+      ],
+      "within_section": "properties-of-simple-entailment-informative"
+    },
+    {
+      "id": "compactness",
+      "source": "mt",
+      "tag": "p",
+      "text": "If S entails a finite graph E",
+      "claims": [
+        "MT11-COMPACTNESS"
+      ],
+      "within_section": "properties-of-simple-entailment-informative"
+    },
+    {
+      "id": "absent-iri",
+      "source": "mt",
+      "tag": "p",
+      "text": "If E contains an IRI which does not occur anywhere in S",
+      "claims": [
+        "MT11-FRESH-IRI-NONENTAILMENT"
+      ],
+      "within_section": "properties-of-simple-entailment-informative"
+    },
+    {
+      "id": "valid-process",
+      "source": "mt",
+      "tag": "p",
+      "text": "Any process which constructs a graph E",
+      "claims": [
+        "MT11-VALID-TRANSFORMATION"
+      ],
+      "within_section": "simpleentailment"
+    },
+    {
+      "id": "extension-monotonicity",
+      "source": "mt",
+      "tag": "p",
+      "text": "All entailment regimes MUST be monotonic extensions",
+      "claims": [
+        "MT11-EXTENSION-MONOTONICITY"
+      ],
+      "within_section": "semantic-extensions-and-entailment-regimes"
+    },
+    {
+      "id": "skolem-definition",
+      "source": "mt",
+      "tag": "p",
+      "text": "Skolemization is a transformation on RDF graphs",
+      "claims": [
+        "MT11-SKOLEMIZATION"
+      ],
+      "within_section": "skolemization-informative"
+    },
+    {
+      "id": "skolem-context",
+      "source": "mt",
+      "tag": "p",
+      "text": "Suppose G is a graph containing blank nodes",
+      "claims": [
+        "MT11-SKOLEM-ENTAILS-ORIGINAL",
+        "MT11-ORIGINAL-NOT-SKOLEM",
+        "MT11-SKOLEM-FRESH-VOCABULARY-CONSERVATIVITY"
+      ],
+      "within_section": "skolemization-informative"
+    },
+    {
+      "id": "skolem-entails",
+      "source": "mt",
+      "tag": "p",
+      "text": "sk(G) simply entails G (since",
+      "claims": [
+        "MT11-SKOLEM-ENTAILS-ORIGINAL"
+      ],
+      "within_section": "skolemization-informative"
+    },
+    {
+      "id": "original-not-skolem",
+      "source": "mt",
+      "tag": "p",
+      "text": "G does not simply entail sk(G)",
+      "claims": [
+        "MT11-ORIGINAL-NOT-SKOLEM"
+      ],
+      "within_section": "skolemization-informative"
+    },
+    {
+      "id": "skolem-conservativity",
+      "source": "mt",
+      "tag": "p",
+      "text": "For any graph H which does not contain any of the",
+      "claims": [
+        "MT11-SKOLEM-FRESH-VOCABULARY-CONSERVATIVITY"
+      ],
+      "within_section": "skolemization-informative"
+    },
+    {
+      "id": "rdf-property-condition",
+      "source": "mt",
+      "tag": "td",
+      "text": "x is in IP if and only if",
+      "claims": [
+        "MT11-RDF-PROPERTY-TYPING",
+        "MT11-INSTANCE-ENTAILMENT"
+      ],
+      "element_id": "rdfsemcond1"
+    },
+    {
+      "id": "rdfd2-rule",
+      "source": "mt",
+      "tag": "tr",
+      "text": "rdfD2",
+      "claims": [
+        "MT11-RULE-rdfD2"
+      ]
     }
   ],
   "context_resolutions": [
@@ -1143,6 +1602,15 @@
       "antecedent_passage": "consequences",
       "resolved_meaning": "The simple-entailment interpolation lemma in section 5.3; each listed consequence is separately reviewable.",
       "inference": "The current partial theorem is proved directly from truth conditions; the full interpolation lemma remains open.",
+      "review": "pending"
+    },
+    {
+      "claim_id": "MT11-ORIGINAL-NOT-SKOLEM",
+      "passage": "original-not-skolem",
+      "source_phrase": "G",
+      "antecedent_passage": "skolem-context",
+      "resolved_meaning": "The original graph G containing at least one blank node, and the skolemization map described in the preceding paragraph.",
+      "inference": "Choose an occurring blank to exhibit a fresh IRI in the image; the original has no such IRI.",
       "review": "pending"
     }
   ]

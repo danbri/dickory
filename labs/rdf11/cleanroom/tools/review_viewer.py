@@ -6,6 +6,7 @@ from source_catalogue import ROOT
 from lean_sources import extract_sources
 from rendered_source import reading_copy
 from viewer_glosses import attach_glosses
+from claim_connections import claim_connections
 
 catalogue = json.loads((ROOT / "catalogue/claims.json").read_text())
 evidence = json.loads((ROOT / "artifacts/declarations.json").read_text())
@@ -17,7 +18,7 @@ lean = extract_sources(ROOT, evidence, needed)
 attach_glosses(lean, catalogue, ROOT)
 payload = {"documents": catalogue["documents"], "claims": catalogue["claims"],
            "passages": catalogue["passages"], "questions": questions,
-           "lean": lean,
+           "lean": lean, "connections": claim_connections(catalogue["claims"], lean["declarations"]),
            "sources": {d["id"]: (ROOT / d["path"]).read_bytes().decode("utf-8")
                        for d in catalogue["documents"]}}
 payload["rendered"] = {d["id"]: reading_copy(payload["sources"][d["id"]], [p for p in catalogue["passages"] if p["source"] == d["id"]]) for d in catalogue["documents"]}

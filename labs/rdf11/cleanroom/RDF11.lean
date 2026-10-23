@@ -6,3 +6,10 @@ import RDF11.Enumeration
 import RDF11.ScopeExample
 import RDF11.GeneralizedScope
 import RDF11.Instances
+import RDF11.Vocabulary
+import RDF11.Interpolation
+import RDF11.FiniteEntailment
+import RDF11.Skolemization
+import RDF11.Transformations
+import RDF11.VocabularyEntailment
+import RDF11.RDFProperty

@@ -4,7 +4,7 @@
   "method": "Human-readable AI close reading; selectors locate already selected passages and do not extract assertions.",
   "source_inventory": "../ledger/semantics-inventory.json",
   "inventory_sha256": "acf9b60576a2c688a73e2c39f8e6346d199742a50a61baa2d4faafdadf20c390",
-  "mapping_input_sha256": "52650bf31ea0d25a9099d8784996028a94faab55ad4af69b87439f025dee438a",
+  "mapping_input_sha256": "e001537531ac97e70fa29aa86e143e5d7d8ab39b8ab93fb27a96a6d15919ca89",
   "documents": [
     {
       "id": "mt",
@@ -23,6 +23,22 @@
       "atoms": [
         {
           "start": 0,
+          "end": 22553,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 22553,
+          "end": 23187,
+          "refs": [
+            "MT11-EXTENSION-MONOTONICITY"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 23187,
           "end": 23440,
           "refs": [
             "UNRESOLVED-mt"
@@ -39,6 +55,22 @@
         },
         {
           "start": 25392,
+          "end": 28474,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 28474,
+          "end": 28761,
+          "refs": [
+            "MT11-NAMES-VOCABULARIES"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 28761,
           "end": 28763,
           "refs": [
             "UNRESOLVED-mt"
@@ -417,6 +449,22 @@
         },
         {
           "start": 46851,
+          "end": 47552,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 47552,
+          "end": 47759,
+          "refs": [
+            "MT11-VALID-TRANSFORMATION"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 47759,
           "end": 49931,
           "refs": [
             "UNRESOLVED-mt"
@@ -471,6 +519,75 @@
         },
         {
           "start": 50942,
+          "end": 51171,
+          "refs": [
+            "MT11-EMPTY-ENTAILMENTS",
+            "MT11-INSTANCE-ENTAILMENT",
+            "MT11-PREMISE-MONOTONICITY",
+            "MT11-SUBGRAPH-ENTAILMENT"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 51171,
+          "end": 51785,
+          "refs": [
+            "MT11-EMPTY-ENTAILMENTS",
+            "MT11-INSTANCE-ENTAILMENT",
+            "MT11-PREMISE-MONOTONICITY",
+            "MT11-SIMPLE-DECIDABILITY",
+            "MT11-SUBGRAPH-ENTAILMENT"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 51785,
+          "end": 52852,
+          "refs": [
+            "MT11-EMPTY-ENTAILMENTS",
+            "MT11-INSTANCE-ENTAILMENT",
+            "MT11-PREMISE-MONOTONICITY",
+            "MT11-SUBGRAPH-ENTAILMENT"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 52852,
+          "end": 53016,
+          "refs": [
+            "MT11-COMPACTNESS",
+            "MT11-EMPTY-ENTAILMENTS",
+            "MT11-INSTANCE-ENTAILMENT",
+            "MT11-PREMISE-MONOTONICITY",
+            "MT11-SUBGRAPH-ENTAILMENT"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 53016,
+          "end": 53158,
+          "refs": [
+            "MT11-EMPTY-ENTAILMENTS",
+            "MT11-INSTANCE-ENTAILMENT",
+            "MT11-PREMISE-MONOTONICITY",
+            "MT11-SUBGRAPH-ENTAILMENT"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 53158,
+          "end": 53268,
+          "refs": [
+            "MT11-EMPTY-ENTAILMENTS",
+            "MT11-FRESH-IRI-NONENTAILMENT",
+            "MT11-INSTANCE-ENTAILMENT",
+            "MT11-PREMISE-MONOTONICITY",
+            "MT11-SUBGRAPH-ENTAILMENT"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 53268,
           "end": 53281,
           "refs": [
             "MT11-EMPTY-ENTAILMENTS",
@@ -482,6 +599,121 @@
         },
         {
           "start": 53281,
+          "end": 53589,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 53589,
+          "end": 54164,
+          "refs": [
+            "MT11-SKOLEMIZATION"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 54164,
+          "end": 54165,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 54165,
+          "end": 54442,
+          "refs": [
+            "MT11-ORIGINAL-NOT-SKOLEM",
+            "MT11-SKOLEM-ENTAILS-ORIGINAL",
+            "MT11-SKOLEM-FRESH-VOCABULARY-CONSERVATIVITY"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 54442,
+          "end": 54444,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 54444,
+          "end": 54524,
+          "refs": [
+            "MT11-SKOLEM-ENTAILS-ORIGINAL"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 54524,
+          "end": 54525,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 54525,
+          "end": 54617,
+          "refs": [
+            "MT11-ORIGINAL-NOT-SKOLEM"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 54617,
+          "end": 54747,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 54747,
+          "end": 54921,
+          "refs": [
+            "MT11-SKOLEM-FRESH-VOCABULARY-CONSERVATIVITY"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 54921,
+          "end": 71946,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 71946,
+          "end": 72104,
+          "refs": [
+            "MT11-INSTANCE-ENTAILMENT",
+            "MT11-RDF-PROPERTY-TYPING"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 72104,
+          "end": 76985,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 76985,
+          "end": 77205,
+          "refs": [
+            "MT11-RULE-rdfD2"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 77205,
           "end": 111179,
           "refs": [
             "UNRESOLVED-mt"
@@ -1003,6 +1235,191 @@
       "locator_tag": "p",
       "review": "pending",
       "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "names",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 28474,
+      "end": 28761,
+      "claims": [
+        "MT11-NAMES-VOCABULARIES"
+      ],
+      "slice_sha256": "88614345419b2ff75d372cd6ffdc83cc600477734c5c51e0e4a93d974581f126",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "ground-subset",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 51171,
+      "end": 51785,
+      "claims": [
+        "MT11-SIMPLE-DECIDABILITY"
+      ],
+      "slice_sha256": "c4b8b34e23580ca6460dd0d1003763e78b11348dc1187b70caceebb67bfa6d19",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "compactness",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 52852,
+      "end": 53016,
+      "claims": [
+        "MT11-COMPACTNESS"
+      ],
+      "slice_sha256": "3d0d7f5c7078dec7f0800711006dc790ffd4d3fcdcc660dcb26967fd1c96ff97",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "absent-iri",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 53158,
+      "end": 53268,
+      "claims": [
+        "MT11-FRESH-IRI-NONENTAILMENT"
+      ],
+      "slice_sha256": "daa97e67d1d2e59e4dcd3bcb0af7acfae918cfc54ff3440fa7021d91438740ab",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "valid-process",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 47552,
+      "end": 47759,
+      "claims": [
+        "MT11-VALID-TRANSFORMATION"
+      ],
+      "slice_sha256": "26b3fa32be6ed1aa75a9770b02545d5882558fbc213beb28443dcc65de405ada",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "extension-monotonicity",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 22553,
+      "end": 23187,
+      "claims": [
+        "MT11-EXTENSION-MONOTONICITY"
+      ],
+      "slice_sha256": "b4fd6aa4c643d657bae36dcef8063915bbae8fd42b21789a807c2b87c6edca8d",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "skolem-definition",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 53589,
+      "end": 54164,
+      "claims": [
+        "MT11-SKOLEMIZATION"
+      ],
+      "slice_sha256": "2294b160d9132a933f7c9f5a680b648969ca8c7ed2780a44b0dfda1286d946e0",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "skolem-context",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 54165,
+      "end": 54442,
+      "claims": [
+        "MT11-SKOLEM-ENTAILS-ORIGINAL",
+        "MT11-ORIGINAL-NOT-SKOLEM",
+        "MT11-SKOLEM-FRESH-VOCABULARY-CONSERVATIVITY"
+      ],
+      "slice_sha256": "8bfaeb435a93c4f53fe17ec73c35ec2965e990cc9e60ffd19f7b8442a6578ee5",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "skolem-entails",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 54444,
+      "end": 54524,
+      "claims": [
+        "MT11-SKOLEM-ENTAILS-ORIGINAL"
+      ],
+      "slice_sha256": "5fe98f655f0f71007246def7cee1780b771fd3e07dc9a98af59faaef4df9e5fe",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "original-not-skolem",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 54525,
+      "end": 54617,
+      "claims": [
+        "MT11-ORIGINAL-NOT-SKOLEM"
+      ],
+      "slice_sha256": "cf840f4202d33b055d4d9004ab7aa6b6a441b2ed4d4a2a71083cfa344441c579",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "skolem-conservativity",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 54747,
+      "end": 54921,
+      "claims": [
+        "MT11-SKOLEM-FRESH-VOCABULARY-CONSERVATIVITY"
+      ],
+      "slice_sha256": "c080012d7e6a24372bde8fe1031d49d31ad94a9dbcfbd367a9366fdc15eb9f11",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "rdf-property-condition",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 71946,
+      "end": 72104,
+      "claims": [
+        "MT11-RDF-PROPERTY-TYPING",
+        "MT11-INSTANCE-ENTAILMENT"
+      ],
+      "slice_sha256": "8b4f67adb7488088dae6c2b6bbbca9819b428189ee2ba6d2b17a223a16b1ce2a",
+      "locator_tag": "td",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "rdfd2-rule",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 76985,
+      "end": 77205,
+      "claims": [
+        "MT11-RULE-rdfD2"
+      ],
+      "slice_sha256": "687b10bae268e2ccd33b3c079c3cc74e7081fe19ba5ba22bb4b9ab556081dc44",
+      "locator_tag": "tr",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
     }
   ],
   "claims": [
@@ -1159,10 +1576,34 @@
         "formal_proof": "unassessed",
         "test_mapping": "unassessed"
       },
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-EXTENSION-MONOTONICITY",
+        "relation": "partial_theorem",
+        "symbol_linked_english": "Restricting simple interpretations by conditions C preserves every simple entailment and every SimplyValid process.",
+        "bindings": [
+          {
+            "symbol": "extension_preserves_simple_entailment",
+            "lean": "RDF11.extension_preserves_simple_entailment"
+          },
+          {
+            "symbol": "stronger_conditions_preserve_entailment",
+            "lean": "RDF11.stronger_conditions_preserve_entailment"
+          },
+          {
+            "symbol": "valid_under_extension",
+            "lean": "RDF11.valid_under_extension"
+          }
+        ],
+        "limitations": "C retains the same Satisfies relation and graph syntax. The source also permits separate syntactic admissibility conditions, not represented by C; their satisfaction remains a separate obligation.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "extension-monotonicity"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-SYNTAX-IMPORT",
@@ -1461,10 +1902,42 @@
         "formal_proof": "unassessed",
         "test_mapping": "unassessed"
       },
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-NAMES-VOCABULARIES",
+        "relation": "definition_and_theorem",
+        "symbol_linked_english": "Name is Iri or Literal. Term.names includes a literal itself and its syntactic datatype IRI; a graph vocabulary is the union of the names contributed by its terms.",
+        "bindings": [
+          {
+            "symbol": "Name",
+            "lean": "RDF11.Name"
+          },
+          {
+            "symbol": "names",
+            "lean": "RDF11.Term.names"
+          },
+          {
+            "symbol": "names",
+            "lean": "RDF11.GeneralizedTriple.names"
+          },
+          {
+            "symbol": "vocabulary",
+            "lean": "RDF11.GeneralizedGraph.vocabulary"
+          },
+          {
+            "symbol": "literal_contributes_two_names",
+            "lean": "RDF11.literal_contributes_two_names"
+          }
+        ],
+        "limitations": "The total datatype : Literal → Iri projection is an explicit interface parameter. Concrete literal syntax, identity, lexical constraints and correctness of the supplied projection remain external obligations.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "names"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-EMPTY-GRAPH",
@@ -2985,15 +3458,31 @@
       },
       "cleanroom_mapping": {
         "claim_id": "MT11-SATISFACTION",
-        "relation": "partial_definition",
-        "symbol_linked_english": "I satisfies G exactly when G is true under I.",
+        "relation": "definition_and_theorem",
+        "symbol_linked_english": "I.Satisfies G is graph truth with an existential shared assignment. SimplySatisfiable G means some simple interpretation satisfies G; SimplyUnsatisfiable G is its negation. Every graph is simply satisfiable.",
         "bindings": [
           {
             "symbol": "Satisfies",
             "lean": "RDF11.SimpleInterpretation.Satisfies"
+          },
+          {
+            "symbol": "SimplySatisfiable",
+            "lean": "RDF11.SimplySatisfiable"
+          },
+          {
+            "symbol": "SimplyUnsatisfiable",
+            "lean": "RDF11.SimplyUnsatisfiable"
+          },
+          {
+            "symbol": "simply_satisfiable",
+            "lean": "RDF11.simply_satisfiable"
+          },
+          {
+            "symbol": "never_simply_unsatisfiable",
+            "lean": "RDF11.never_simply_unsatisfiable"
           }
         ],
-        "limitations": "Separate named predicates for satisfiable and unsatisfiable are not yet introduced.",
+        "limitations": "Universe-polymorphic in a fixed arbitrary carrier universe. Does not assert satisfiability in datatype-aware or RDF/RDFS regimes.",
         "extraction_review": "pending_expert_review",
         "formalization_review": "pending_expert_review",
         "implementation_refinement": "not_connected_to_published_package"
@@ -3130,10 +3619,42 @@
         "formal_proof": "unassessed",
         "test_mapping": "unassessed"
       },
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-VALID-TRANSFORMATION",
+        "relation": "definition_and_theorem",
+        "symbol_linked_english": "A process relation is SimplyValid when every permitted input/output pair G,E satisfies SimplyEntails G E; SimplyInvalid is its negation. Valid processes compose and remain valid under additional interpretation conditions.",
+        "bindings": [
+          {
+            "symbol": "SimplyValid",
+            "lean": "RDF11.SimplyValid"
+          },
+          {
+            "symbol": "SimplyInvalid",
+            "lean": "RDF11.SimplyInvalid"
+          },
+          {
+            "symbol": "valid_composition",
+            "lean": "RDF11.valid_composition"
+          },
+          {
+            "symbol": "subgraph_process_valid",
+            "lean": "RDF11.subgraph_process_valid"
+          },
+          {
+            "symbol": "valid_under_extension",
+            "lean": "RDF11.valid_under_extension"
+          }
+        ],
+        "limitations": "A relation models possible process outputs; this imposes no execution mandate. Separate syntax restrictions of an extension must still be respected.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "valid-process"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-NO-INFERENCE-EXECUTION-MANDATE",
@@ -3257,14 +3778,30 @@
       "cleanroom_mapping": {
         "claim_id": "MT11-INTERPOLATION",
         "relation": "partial_theorem",
-        "symbol_linked_english": "If an instance of the ordinary conclusion E is a subgraph of G, then G SimplyEntails E.",
+        "symbol_linked_english": "For an ordinary conclusion E and any generalized premise G, G SimplyEntails E.generalize exactly when an instance of E.generalize is a subgraph of G. A Herbrand interpretation proves necessity; existing ordinary instance entailment proves sufficiency.",
         "bindings": [
           {
-            "symbol": "instance_subgraph_entails",
-            "lean": "RDF11.instance_subgraph_entails"
+            "symbol": "interpretation",
+            "lean": "RDF11.Herbrand.interpretation"
+          },
+          {
+            "symbol": "satisfies",
+            "lean": "RDF11.Herbrand.satisfies"
+          },
+          {
+            "symbol": "entailment_has_instance_subgraph",
+            "lean": "RDF11.entailment_has_instance_subgraph"
+          },
+          {
+            "symbol": "ordinary_interpolation",
+            "lean": "RDF11.ordinary_interpolation"
+          },
+          {
+            "symbol": "ordinary_interpolation_instances",
+            "lean": "RDF11.ordinary_interpolation_instances"
           }
         ],
-        "limitations": "Only the sufficient direction, with an ordinary conclusion. The converse/interpolation completeness theorem remains open, as does the generalized source-scope question.",
+        "limitations": "Both directions are proved for ordinary conclusions, without finiteness. Necessity also holds for generalized conclusions; the unrestricted generalized converse remains a source-scope question. One common ambient blank identity type is used.",
         "extraction_review": "pending_expert_review",
         "formalization_review": "pending_expert_review",
         "implementation_refinement": "not_connected_to_published_package"
@@ -3295,10 +3832,26 @@
         "test_mapping": "unassessed"
       },
       "formalization_note": "The text permits infinite graphs elsewhere; an algorithmic decidability claim requires finite effective input. Appendix A states NP-completeness explicitly.",
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-SIMPLE-DECIDABILITY",
+        "relation": "partial_theorem",
+        "symbol_linked_english": "For a ground conclusion E, G SimplyEntails E exactly when E is a subset of G.",
+        "bindings": [
+          {
+            "symbol": "ground_entailment_iff_subset",
+            "lean": "RDF11.ground_entailment_iff_subset"
+          }
+        ],
+        "limitations": "Captures the ground-conclusion characterization, not an executable finite entailment decision procedure or the source complexity claim. No finiteness restriction on this theorem.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "ground-subset"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-EMPTY-ENTAILMENTS",
@@ -3439,16 +3992,21 @@
           {
             "symbol": "renamed_entails_original",
             "lean": "RDF11.renamed_entails_original"
+          },
+          {
+            "symbol": "rdf_condition_substitution_entails",
+            "lean": "RDF11.rdf_condition_substitution_entails"
           }
         ],
-        "limitations": "Complete instance-entails-original theorem for ordinary RDF endpoints, proved directly from truth conditions. The unrestricted generalized-source reading remains an open source question; IP ⊆ IR is not assumed.",
+        "limitations": "Complete instance-entails-original theorem for ordinary RDF endpoints, proved directly from truth conditions. The unrestricted generalized-source reading remains an open source question; IP ⊆ IR is not assumed. Generalized substitution entailment is now separately proved under RDFPropertyCondition, which forces IP ⊆ IR; this does not change the simple-entailment scope question.",
         "extraction_review": "pending_expert_review",
         "formalization_review": "pending_expert_review",
         "implementation_refinement": "not_connected_to_published_package"
       },
       "passages": [
         "consequences",
-        "instance-proof"
+        "instance-proof",
+        "rdf-property-condition"
       ],
       "extraction_review": "pending",
       "formalization_review": "pending"
@@ -3543,10 +4101,38 @@
         "test_mapping": "unassessed"
       },
       "formalization_note": "Do not replace RDF graph sethood by finiteness without recording the restriction.",
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-COMPACTNESS",
+        "relation": "partial_theorem",
+        "symbol_linked_english": "If G SimplyEntails an ordinary E with a certified finite Enumeration, interpolation produces a finite instance H of E inside G, and H SimplyEntails E.",
+        "bindings": [
+          {
+            "symbol": "FiniteGraph",
+            "lean": "RDF11.FiniteGraph"
+          },
+          {
+            "symbol": "image",
+            "lean": "RDF11.Enumeration.image"
+          },
+          {
+            "symbol": "finite_substitution",
+            "lean": "RDF11.finite_substitution"
+          },
+          {
+            "symbol": "simple_compactness",
+            "lean": "RDF11.simple_compactness"
+          }
+        ],
+        "limitations": "The conclusion is ordinary RDF; the premise may be generalized and infinite. Enumeration is the existing membership-faithful, duplicate-free finite representation; no graph finiteness axiom is introduced.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "compactness"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-FRESH-IRI-NONENTAILMENT",
@@ -3570,10 +4156,34 @@
       "supporting_source_urls": [
         "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#proofs"
       ],
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-FRESH-IRI-NONENTAILMENT",
+        "relation": "theorem",
+        "symbol_linked_english": "If E contains IRI i in its vocabulary and G does not, G cannot SimplyEntail E. More strongly, entailment implies E.vocabulary is a subset of G.vocabulary.",
+        "bindings": [
+          {
+            "symbol": "vocabulary_substitution",
+            "lean": "RDF11.vocabulary_substitution"
+          },
+          {
+            "symbol": "entailment_vocabulary",
+            "lean": "RDF11.entailment_vocabulary"
+          },
+          {
+            "symbol": "fresh_iri_nonentailment",
+            "lean": "RDF11.fresh_iri_nonentailment"
+          }
+        ],
+        "limitations": "Includes datatype IRI names via the supplied syntactic datatype projection. Applies to simple interpretations, not arbitrary stronger regimes.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "absent-iri"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-SKOLEMIZATION",
@@ -3595,10 +4205,46 @@
         "test_mapping": "unassessed"
       },
       "formalization_note": "Freshness is relative to other graphs at creation; the injectivity requirement is explicit in the Appendix C proof.",
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-SKOLEMIZATION",
+        "relation": "partial_definition_and_theorem",
+        "symbol_linked_english": "A Skolemization supplies distinct IRIs for occurring blanks, fresh against G.vocabulary; its graph is the simultaneous substitution of all those blanks. The result is a ground, lean instance of G.",
+        "bindings": [
+          {
+            "symbol": "Skolemization",
+            "lean": "RDF11.Skolemization"
+          },
+          {
+            "symbol": "substitution",
+            "lean": "RDF11.Skolemization.substitution"
+          },
+          {
+            "symbol": "graph",
+            "lean": "RDF11.Skolemization.graph"
+          },
+          {
+            "symbol": "is_instance",
+            "lean": "RDF11.Skolemization.is_instance"
+          },
+          {
+            "symbol": "ground",
+            "lean": "RDF11.Skolemization.ground"
+          },
+          {
+            "symbol": "lean",
+            "lean": "RDF11.Skolemization.lean"
+          }
+        ],
+        "limitations": "Freshness against G is formalized; global freshness at creation is an external naming obligation. The map is supplied, not proved to exist for arbitrary abstract IRI domains. This is full replacement as in Semantics §6, not the optional partial replacement of Concepts §3.5.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "skolem-definition"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-SKOLEM-ENTAILS-ORIGINAL",
@@ -3620,10 +4266,27 @@
         "formal_proof": "unassessed",
         "test_mapping": "unassessed"
       },
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-SKOLEM-ENTAILS-ORIGINAL",
+        "relation": "partial_theorem",
+        "symbol_linked_english": "For an ordinary graph G, sk.graph SimplyEntails G.generalize by the existing substitution-entailment theorem.",
+        "bindings": [
+          {
+            "symbol": "entails_original",
+            "lean": "RDF11.Skolemization.entails_original"
+          }
+        ],
+        "limitations": "Ordinary source; generalized-source claim remains scoped separately. This direction needs neither a nonempty blank set nor freshness/injectivity, although Skolemization supplies them where relevant.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "skolem-context",
+        "skolem-entails"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-ORIGINAL-NOT-SKOLEM",
@@ -3646,10 +4309,31 @@
         "test_mapping": "unassessed"
       },
       "formalization_note": "The printed statement lacks this nontrivial-skolemization premise; for a ground graph the transformation is identity.",
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-ORIGINAL-NOT-SKOLEM",
+        "relation": "theorem",
+        "symbol_linked_english": "If G contains a blank node, G does not SimplyEntail sk.graph: the image contains a fresh IRI absent from G.",
+        "bindings": [
+          {
+            "symbol": "contains_skolem_name",
+            "lean": "RDF11.Skolemization.contains_skolem_name"
+          },
+          {
+            "symbol": "original_not_entails",
+            "lean": "RDF11.Skolemization.original_not_entails"
+          }
+        ],
+        "limitations": "The nonempty-blank premise comes from the preceding source paragraph. This result also holds for generalized G; it concerns simple entailment only.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "skolem-context",
+        "original-not-skolem"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-SKOLEM-CONSEQUENCE-LIFTING",
@@ -3702,10 +4386,39 @@
       "supporting_source_urls": [
         "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#proofs"
       ],
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-SKOLEM-FRESH-VOCABULARY-CONSERVATIVITY",
+        "relation": "partial_theorem",
+        "symbol_linked_english": "For ordinary G and H, if H avoids the fresh IRIs introduced by sk, sk.graph SimplyEntails H exactly when G SimplyEntails H. The inverse-name map turns an interpolation witness over sk.graph into one over G.",
+        "bindings": [
+          {
+            "symbol": "Avoids",
+            "lean": "RDF11.Skolemization.Avoids"
+          },
+          {
+            "symbol": "inverse_substituted_triple",
+            "lean": "RDF11.Skolemization.inverse_substituted_triple"
+          },
+          {
+            "symbol": "inverse_substitution_commutes",
+            "lean": "RDF11.Skolemization.inverse_substitution_commutes"
+          },
+          {
+            "symbol": "conservative",
+            "lean": "RDF11.Skolemization.conservative"
+          }
+        ],
+        "limitations": "Ordinary graphs; no finiteness or disjoint-blank-domain premise. Avoidance includes datatype IRIs. The separate exact lifting equation H = sk(H′) remains open; no unrestricted commutation with substitutions is assumed.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "skolem-context",
+        "skolem-conservativity"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-DATATYPE-RECOGNITION-PARAMETER",
@@ -4439,10 +5152,34 @@
         "test_mapping": "unassessed"
       },
       "source_locator": "RDF semantic condition with HTML identifier rdfsemcond1",
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-RDF-PROPERTY-TYPING",
+        "relation": "definition_and_theorem",
+        "symbol_linked_english": "RDFPropertyCondition states that x belongs to IP exactly when x is related by IEXT(I(rdf:type)) to I(rdf:Property). Its typed relation entails IP is a subset of IR.",
+        "bindings": [
+          {
+            "symbol": "Relates",
+            "lean": "RDF11.SimpleInterpretation.Relates"
+          },
+          {
+            "symbol": "RDFPropertyCondition",
+            "lean": "RDF11.SimpleInterpretation.RDFPropertyCondition"
+          },
+          {
+            "symbol": "rdf_properties_are_resources",
+            "lean": "RDF11.SimpleInterpretation.rdf_properties_are_resources"
+          }
+        ],
+        "limitations": "Only rdfsemcond1 is formalized, parameterized by the two vocabulary IRIs. Full RDF interpretation still requires D-interpretation, mandatory datatypes, datatype typing and axiomatic triples. The base SimpleInterpretation is unchanged.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "rdf-property-condition"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-RDF-DATATYPE-EXTENSION",
@@ -4679,10 +5416,34 @@
         "formal_proof": "unassessed",
         "test_mapping": "unassessed"
       },
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-RULE-rdfD2",
+        "relation": "partial_theorem",
+        "symbol_linked_english": "Under RDFPropertyCondition, truth of s p o implies truth of p rdf:type rdf:Property; propertyTypingImage applies that rule to a graph using the same assignment.",
+        "bindings": [
+          {
+            "symbol": "rdfD2_triple",
+            "lean": "RDF11.SimpleInterpretation.rdfD2_triple"
+          },
+          {
+            "symbol": "propertyTypingImage",
+            "lean": "RDF11.propertyTypingImage"
+          },
+          {
+            "symbol": "rdfD2_entailment",
+            "lean": "RDF11.rdfD2_entailment"
+          }
+        ],
+        "limitations": "Proved under the single required RDF condition through EntailsUnder, not a completed definition of RDF entailment. It works with generalized syntax as well as embedded ordinary triples.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "rdfd2-rule"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-RDF-DATATYPE-SPECIFIC-CONSEQUENCES",
@@ -7075,6 +7836,15 @@
       "antecedent_passage": "consequences",
       "resolved_meaning": "The simple-entailment interpolation lemma in section 5.3; each listed consequence is separately reviewable.",
       "inference": "The current partial theorem is proved directly from truth conditions; the full interpolation lemma remains open.",
+      "review": "pending"
+    },
+    {
+      "claim_id": "MT11-ORIGINAL-NOT-SKOLEM",
+      "passage": "original-not-skolem",
+      "source_phrase": "G",
+      "antecedent_passage": "skolem-context",
+      "resolved_meaning": "The original graph G containing at least one blank node, and the skolemization map described in the preceding paragraph.",
+      "inference": "Choose an occurring blank to exhibit a fresh IRI in the image; the original has no such IRI.",
       "review": "pending"
     }
   ],

@@ -67,6 +67,11 @@ try {
   assert.equal(await page.locator('#details .lean-declaration > .gloss').count(),await page.locator('#details .lean-declaration').count());
   await page.locator('#mapping-filter').selectOption('all');
   await page.locator('#search').fill('');
+  await page.locator('#claim').selectOption('MT11-SKOLEM-FRESH-VOCABULARY-CONSERVATIVITY');
+  await page.locator('#details > article > .claim-connections > summary').click();
+  await page.locator('#details > article > .claim-connections a[href="#claim=MT11-INTERPOLATION"]').click();
+  assert.equal(await page.locator('#claim').inputValue(),'MT11-INTERPOLATION');
+  assert.match(await page.locator('#details').innerText(),/ordinary_interpolation/);
   await page.locator('#claim').selectOption('MT11-GRAPH-SET');
   const proof=page.locator('#details > article > .lean-declaration[data-lean="RDF11.Set.ext"] > .lean-code');
   assert(await proof.isVisible());assert.match(await proof.textContent(),/theorem ext[\s\S]*:= by/);
@@ -82,7 +87,7 @@ try {
   assert.equal(await page.locator('#claim').inputValue(),'');
   assert(!page.url().includes('#claim='));
   assert.deepEqual(errors,[]);
-  const report={status:'pass',checks:['Visible Triple fields and Subject/Term constructors','Commit-pinned source links','Lazy dependency source expansion','Claim deep link survives reload','Visible theorem proof body','Mobile layout has no horizontal overflow','Unmapped claims remain explicit','Changing source clears stale selection','Rendered and raw tabs preserve selection and exact raw characters','Annotated rendered passages open their claims','Search and mapping filters','Plain-English glosses on every displayed declaration','Reading copy has no active embeds or external resources','No JavaScript errors'],dependencies};
+  const report={status:'pass',checks:['Visible Triple fields and Subject/Term constructors','Commit-pinned source links','Lazy dependency source expansion','Claim deep link survives reload','Visible theorem proof body','Mobile layout has no horizontal overflow','Unmapped claims remain explicit','Changing source clears stale selection','Rendered and raw tabs preserve selection and exact raw characters','Annotated rendered passages open their claims','Search and mapping filters','Plain-English glosses on every displayed declaration','Reading copy has no active embeds or external resources','Connected claims navigate actual declaration dependency paths','No JavaScript errors'],dependencies};
   await fs.writeFile(new URL('result.json', evidenceDir),JSON.stringify(report,null,2)+'\n');
   console.log(JSON.stringify(report,null,2));
 } finally { await browser.close(); }

@@ -67,6 +67,22 @@ function appendQuestions(a,id){
   a.append(box);
  }
 }
+function appendConnections(article,id){
+ const links=data.connections[id];if(!links)return;
+ const box=element("details");box.className="claim-connections";
+ box.append(element("summary","Connected claims: "+links.uses.length+" used, "+links.used_by.length+" using this mapping"));
+ box.append(element("p","These links follow checked declaration dependencies or shared bindings. They do not certify the English mappings or imply equivalence of claims."));
+ for(const [kind,title] of [["uses","Uses declarations mapped in"],["used_by","Declarations used by"],["shared","Shares declaration bindings with"]]){
+  if(!links[kind].length)continue;
+  box.append(element("h3",title));const list=element("ul");
+  for(const edge of links[kind]){
+   const li=element("li"),link=element("a",edge.claim);link.href="#claim="+encodeURIComponent(edge.claim);
+   link.onclick=e=>{e.preventDefault();selectClaim(edge.claim)};
+   li.append(link,element("p",(edge.path||edge.declarations).join(" → ")));list.append(li);
+  }box.append(list);
+ }
+ article.append(box);
+}
 function showClaim(id){
  const c=claims.get(id);
  if(!c){detail.append(element("p","Unresolved source range: no claim extraction has been assigned."));return}
@@ -76,6 +92,7 @@ function showClaim(id){
  const m=c.cleanroom_mapping;
  if(!m){a.append(element("p","Lean mapping not started."));appendQuestions(a,id);detail.append(a);return}
  a.append(element("h3","Explicit English / symbol bindings"),element("p",m.symbol_linked_english));
+ appendConnections(a,id);
  a.append(element("h3","Actual Lean 4"));
  const note=element("p","These are excerpts from the checked source, including definition bodies and proofs. Open a file or its full context for imports and namespaces.");
  note.className="context-note";a.append(note);
