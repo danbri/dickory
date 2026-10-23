@@ -113,7 +113,7 @@ def validate(registry, evidence, catalogue, files=None, questions=None):
                 errors.append("Mapped claim lacks source passage: " + claim["id"])
     return sorted(set(errors))
 
-def complete_coverage_errors(catalogue):
+def complete_coverage_errors(catalogue, questions=None):
     errors = []
     if any(not d["accepted_accountability_certificate"] for d in catalogue["documents"]):
         errors.append("No accepted source-accountability certificate")
@@ -125,7 +125,11 @@ def complete_coverage_errors(catalogue):
            for c in catalogue["claims"]):
         errors.append("Claim-to-Lean mappings or expert reviews incomplete")
     errors.append("Published-artifact refinement has not been established")
-    errors.append("Generalized-instance source-scope question awaits expert adjudication")
+    if questions is None:
+        questions = json.loads((ROOT / "catalogue/open-questions.json").read_text())["questions"]
+    pending = sorted(q["id"] for q in questions if q.get("review_status") != "accepted")
+    if pending:
+        errors.append("Source questions await expert adjudication: " + ", ".join(pending))
     return errors
 
 def run_logged(args, logfile, env):

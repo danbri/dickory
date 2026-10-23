@@ -64,11 +64,12 @@
         "This does not refute the ordinary-RDF instance consequence: an ordinary RDF predicate cannot be a blank node."
       ],
       "review_question": "Does the generalized-syntax sentence carry this consequence unchanged, or does the intended instance/interpretation scope impose an additional qualification?",
-      "implementation_policy": "Keep the definitions as transcribed. Do not silently assume IP is a subset of IR, expand assignment codomains, or mark the general instance/interpolation claims discharged."
+      "implementation_policy": "Keep the definitions as transcribed. Do not silently assume IP is a subset of IR, expand assignment codomains, or mark the general instance/interpolation claims discharged.",
+      "review_status": "pending_expert_review"
     },
     {
       "id": "Q-D-ENTAILMENT-DIRECTION",
-      "status": "model_class_direction_proved_source_wording_needs_expert_review",
+      "status": "conditional_counterexample_checked_source_wording_needs_expert_review",
       "claim_ids": [
         "MT11-D-DIRECTION-SOURCE-CLAIM",
         "MT11-D-MODEL-CLASS-MONOTONICITY",
@@ -77,15 +78,17 @@
       "passage_ids": [
         "d-direction"
       ],
-      "summary": "The printed entailment implications run opposite to the model-class consequence of recognizing more datatypes.",
+      "summary": "The printed arrows oppose model-class inclusion. Given any recognized ill-typed literal, a checked ordinary-graph construction D-entails a ground conclusion which it does not simply entail. The counterexample theorem keeps the ill-typedness premise explicit.",
       "lean": [
         "RDF11.d_entailment_monotone",
         "RDF11.simple_implies_d_entailment",
-        "RDF11.d_empty_iff_simple"
+        "RDF11.d_empty_iff_simple",
+        "RDF11.d_entailment_not_simple_of_illTyped"
       ],
       "review_question": "How should the source wording be dispositioned while retaining the exact archived text?",
       "implementation_policy": "Keep the printed assertion unmapped; present the proved model-class direction separately.",
-      "not_a_declared_erratum": true
+      "not_a_declared_erratum": true,
+      "review_status": "pending_expert_review"
     },
     {
       "id": "Q-RDFS-ENTAILMENT-DIRECTION",
@@ -104,7 +107,8 @@
       ],
       "review_question": "How should the printed direction be recorded and reviewed?",
       "implementation_policy": "Do not assert the printed reverse implication; preserve RDF-to-RDFS entailment as the checked result.",
-      "not_a_declared_erratum": true
+      "not_a_declared_erratum": true,
+      "review_status": "pending_expert_review"
     },
     {
       "id": "Q-OPTIONAL-DATATYPE-CLASSES",
@@ -125,7 +129,33 @@
       ],
       "review_question": "Are these additional validity claims intended to assume recognition of XMLLiteral and HTML?",
       "implementation_policy": "Do not promote the additional-validity table to axioms. Keep the recognition premise on datatype consequences.",
-      "not_a_declared_erratum": true
+      "not_a_declared_erratum": true,
+      "review_status": "pending_expert_review"
+    },
+    {
+      "id": "Q-CLOSURE-CONTAINER-SELECTION",
+      "status": "positive_entailment_proved_closure_absence_and_consistency_not_yet_proved",
+      "not_a_declared_erratum": true,
+      "claim_ids": [
+        "MT11-GENERALIZED-CLOSURE",
+        "MT11-GENERALIZED-CLOSURE-COMPLETENESS",
+        "MT11-CONTAINERS-DESCRIPTION"
+      ],
+      "passage_ids": [
+        "closure-procedure",
+        "closure-completeness",
+        "rdfs-axioms"
+      ],
+      "summary": "The procedure selects container axioms using E only. Candidate: S is s rdf:_17 o, and E is s rdfs:member o. Full RDFS semantics entails E by the container axiom, rdfs12 and rdfs7; the printed seed appears to include only rdf:_1 container axioms.",
+      "lean": [
+        "RDF11.AxiomSeed",
+        "RDF11.RDFSClosure",
+        "RDF11.container_membership_derivable",
+        "RDF11.container_membership_entailment"
+      ],
+      "review_question": "Does the printed E-only selection omit necessary premise-container axioms? The absence of this consequence from the specified closure and a suitable full-model consistency witness still need Lean proofs.",
+      "implementation_policy": "Preserve the printed selection. Publish soundness, keep completeness open, and do not call the candidate a confirmed erratum.",
+      "review_status": "pending_expert_review"
     }
   ]
 }

@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "status": "frozen_fourth_increment_inventory_not_expert_approved",
+  "status": "frozen_fifth_increment_inventory_not_expert_approved",
   "lean_version": "4.33.1",
   "allowed_axioms": [
     "propext",
@@ -312,6 +312,43 @@
         "MT11-RULE-rdfs9",
         "MT11-RDFS-ENTAILMENT"
       ]
+    },
+    {
+      "id": "SUPPORT-DATATYPE-MODELS",
+      "purpose": "Construct explicit D-models, characterize satisfiability, and exhibit a conditional entailment-direction counterexample.",
+      "requires": [
+        "FOUNDATION-LEAN",
+        "MT11-SIMPLE-D-INCONSISTENCY-CHARACTERIZATION",
+        "MT11-D-MODEL-CLASS-MONOTONICITY"
+      ]
+    },
+    {
+      "id": "SUPPORT-LITERAL-SUBSTITUTION",
+      "purpose": "Recognized literal values and simultaneous value-preserving graph substitution.",
+      "requires": [
+        "FOUNDATION-LEAN",
+        "MT11-DATATYPE-VALUE-SUBSTITUTION",
+        "MT11-LANGSTRING-VALUE"
+      ]
+    },
+    {
+      "id": "SUPPORT-ENTAILMENT-CLOSURE",
+      "purpose": "Source-exact generalized axiom seeds, inductive closure and positive-check soundness; completeness remains open.",
+      "requires": [
+        "FOUNDATION-LEAN",
+        "MT11-GENERALIZED-CLOSURE",
+        "MT11-GENERALIZED-CLOSURE-COMPLETENESS",
+        "MT11-RULE-GrdfD1"
+      ]
+    },
+    {
+      "id": "SUPPORT-CONTAINER-ENTAILMENT",
+      "purpose": "Derive generic membership from indexed membership through full RDFS axioms and named rules.",
+      "requires": [
+        "FOUNDATION-LEAN",
+        "MT11-CONTAINERS-DESCRIPTION",
+        "MT11-RDFS-AXIOM-CONTAINER-FAMILY"
+      ]
     }
   ],
   "files": [
@@ -338,14 +375,14 @@
     },
     {
       "path": "Audit/Snapshot.lean",
-      "sha256": "73196df6df205c7f1ec2f7b7e77644687c9c8c46405f5118e562d2189b18ac3e",
+      "sha256": "89d251e26166265d7a83804b031c1699fe7c626542ff22ec255bfa626e36b4ca",
       "role": "formal_source",
       "lifecycle": "active",
       "review": "pending_expert_review"
     },
     {
       "path": "RDF11.lean",
-      "sha256": "1469962fe4ba45a8586342832b300a5db6cc6f2ef3ecbdbf0deeaf359f348706",
+      "sha256": "d4d4ed6312a76e1ed80f480f3d23af3158591f7ab748d832503acc19e78b3bf6",
       "role": "formal_source",
       "lifecycle": "active",
       "review": "pending_expert_review"
@@ -425,7 +462,7 @@
       "role": "formal_source",
       "lifecycle": "active",
       "review": "pending_expert_review",
-      "sha256": "1b6922acb616f153fa46e4eca88cac0f3ce3ec101ec1f87d2d06be31255ba6a9"
+      "sha256": "6d37f9b25f799a56ed9443ae70479d791ce08ccb3a4798eb8674c327f75affaa"
     },
     {
       "path": "RDF11/RDFS.lean",
@@ -439,7 +476,7 @@
       "role": "formal_source",
       "lifecycle": "active",
       "review": "pending_expert_review",
-      "sha256": "18a931edb28bc3d3865f98d24d24f3277bf4812df1b6b57f38823770075f6687"
+      "sha256": "74c39da205221c64551460423b314272d5335b7597942b51ee285acd61f037b1"
     },
     {
       "path": "RDF11/Relations.lean",
@@ -510,6 +547,34 @@
       "lifecycle": "active",
       "review": "pending_expert_review",
       "sha256": "4c8afc134d39128861441d047567e0409538ba6a777975a7350747a28333eafd"
+    },
+    {
+      "path": "RDF11/EntailmentClosure.lean",
+      "role": "formal_source",
+      "lifecycle": "active",
+      "review": "pending_expert_review",
+      "sha256": "264936c3973865b730b07dbf2714c6aa2bdea50530d5229e21c1d7ccdedf3a7f"
+    },
+    {
+      "path": "RDF11/DatatypeModels.lean",
+      "role": "formal_source",
+      "lifecycle": "active",
+      "review": "pending_expert_review",
+      "sha256": "56cd54832d38959e66063ee8a58e72845d8e89f55d4402be393a065007e084f3"
+    },
+    {
+      "path": "RDF11/ContainerEntailment.lean",
+      "role": "formal_source",
+      "lifecycle": "active",
+      "review": "pending_expert_review",
+      "sha256": "411752e50d3c5f7b1e7be4f842c9e7e653e1cfd5e5b62d02072abba0624d1f15"
+    },
+    {
+      "path": "RDF11/LiteralSubstitution.lean",
+      "role": "formal_source",
+      "lifecycle": "active",
+      "review": "pending_expert_review",
+      "sha256": "169f539e9d4ed7d86854148310123d009bb5d2fc6e50e0e907f308586b4283b2"
     }
   ],
   "declarations": [
@@ -7941,7 +8006,7 @@
       "name": "RDF11.RDFSDerives.below.casesOn",
       "module": "RDF11.RDFSRules",
       "kind": "definition",
-      "type": "∀ {Iri Literal Value B : Type} {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri}\n  {v : RDF11.RDFSVocabulary Iri} {G : RDF11.GeneralizedGraph Iri Literal B}\n  {motive : (a : RDF11.GeneralizedTriple Iri Literal B) → RDF11.RDFSDerives T D v G a → Prop}\n  {motive_1 :\n    {a : RDF11.GeneralizedTriple Iri Literal B} → (t : RDF11.RDFSDerives T D v G a) → RDF11.RDFSDerives.below t → Prop}\n  {a : RDF11.GeneralizedTriple Iri Literal B} {t : RDF11.RDFSDerives T D v G a} (t_1 : RDF11.RDFSDerives.below t),\n  (∀ {t : RDF11.GeneralizedTriple Iri Literal B} (a : G t), motive_1 ⋯ ⋯) →\n    (∀ {t : RDF11.GeneralizedTriple Iri Literal B} (a : v.toRDF.axioms t), motive_1 ⋯ ⋯) →\n      (∀ {t : RDF11.GeneralizedTriple Iri Literal B} (a : v.axioms t), motive_1 ⋯ ⋯) →\n        (∀ {t : RDF11.GeneralizedTriple Iri Literal B} (H : RDF11.GeneralizedGraph Iri Literal B)\n            (a : ∀ (t : RDF11.GeneralizedTriple Iri Literal B), H t → RDF11.RDFSDerives T D v G t)\n            (a_1 : RDF11.RDFSStep T D v H t)\n            (ih : ∀ (t : RDF11.GeneralizedTriple Iri Literal B) (a_2 : H t), RDF11.RDFSDerives.below ⋯)\n            (a_ih : ∀ (t : RDF11.GeneralizedTriple Iri Literal B) (a_2 : H t), motive t ⋯), motive_1 ⋯ ⋯) →\n          motive_1 t t_1",
+      "type": "∀ {Iri Literal Value B : Type} {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri}\n  {v : RDF11.RDFSVocabulary Iri} {G : RDF11.GeneralizedGraph Iri Literal B}\n  {motive : (a : RDF11.GeneralizedTriple Iri Literal B) → RDF11.RDFSDerives T D v G a → Prop}\n  {motive_1 :\n    {a : RDF11.GeneralizedTriple Iri Literal B} → (t : RDF11.RDFSDerives T D v G a) → RDF11.RDFSDerives.below t → Prop}\n  {a : RDF11.GeneralizedTriple Iri Literal B} {t : RDF11.RDFSDerives T D v G a} (t_1 : RDF11.RDFSDerives.below t),\n  (∀ {t : RDF11.GeneralizedTriple Iri Literal B} (a : G t), motive_1 ⋯ ⋯) →\n    (∀ {t : RDF11.GeneralizedTriple Iri Literal B} (a : v.toRDF.axioms t), motive_1 ⋯ ⋯) →\n      (∀ {t : RDF11.GeneralizedTriple Iri Literal B} (a : v.axioms t), motive_1 ⋯ ⋯) →\n        (∀ {t : RDF11.GeneralizedTriple Iri Literal B} (a : RDF11.RDFSDerives T D v G t)\n            (ih : RDF11.RDFSDerives.below a) (a_ih : motive t a), motive_1 ⋯ ⋯) →\n          (∀ (s p : RDF11.Term Iri Literal B) (l : Literal)\n              (a : RDF11.RDFSDerives T D v G { subject := s, predicate := p, object := RDF11.Term.literal l })\n              (a_1 : D (T.literalSyntax.datatype l)) (ih : RDF11.RDFSDerives.below a)\n              (a_ih : motive { subject := s, predicate := p, object := RDF11.Term.literal l } a), motive_1 ⋯ ⋯) →\n            (∀ {t : RDF11.GeneralizedTriple Iri Literal B} (H : RDF11.GeneralizedGraph Iri Literal B)\n                (a : ∀ (t : RDF11.GeneralizedTriple Iri Literal B), H t → RDF11.RDFSDerives T D v G t)\n                (a_1 : RDF11.RDFSStep T D v H t)\n                (ih : ∀ (t : RDF11.GeneralizedTriple Iri Literal B) (a_2 : H t), RDF11.RDFSDerives.below ⋯)\n                (a_ih : ∀ (t : RDF11.GeneralizedTriple Iri Literal B) (a_2 : H t), motive t ⋯), motive_1 ⋯ ⋯) →\n              motive_1 t t_1",
       "role": "proof_support",
       "grounds": [
         "SUPPORT-RDFS-RULES"
@@ -7989,7 +8054,7 @@
       "name": "RDF11.RDFSDerives.below.rec",
       "module": "RDF11.RDFSRules",
       "kind": "recursor",
-      "type": "∀ {Iri Literal Value B : Type} {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri}\n  {v : RDF11.RDFSVocabulary Iri} {G : RDF11.GeneralizedGraph Iri Literal B}\n  {motive : (a : RDF11.GeneralizedTriple Iri Literal B) → RDF11.RDFSDerives T D v G a → Prop}\n  {motive_1 :\n    {a : RDF11.GeneralizedTriple Iri Literal B} → (t : RDF11.RDFSDerives T D v G a) → RDF11.RDFSDerives.below t → Prop},\n  (∀ {t : RDF11.GeneralizedTriple Iri Literal B} (a : G t), motive_1 ⋯ ⋯) →\n    (∀ {t : RDF11.GeneralizedTriple Iri Literal B} (a : v.toRDF.axioms t), motive_1 ⋯ ⋯) →\n      (∀ {t : RDF11.GeneralizedTriple Iri Literal B} (a : v.axioms t), motive_1 ⋯ ⋯) →\n        (∀ {t : RDF11.GeneralizedTriple Iri Literal B} (H : RDF11.GeneralizedGraph Iri Literal B)\n            (a : ∀ (t : RDF11.GeneralizedTriple Iri Literal B), H t → RDF11.RDFSDerives T D v G t)\n            (a_1 : RDF11.RDFSStep T D v H t)\n            (ih : ∀ (t : RDF11.GeneralizedTriple Iri Literal B) (a_2 : H t), RDF11.RDFSDerives.below ⋯)\n            (a_ih : ∀ (t : RDF11.GeneralizedTriple Iri Literal B) (a_2 : H t), motive t ⋯),\n            (∀ (t : RDF11.GeneralizedTriple Iri Literal B) (a_2 : H t), motive_1 ⋯ ⋯) → motive_1 ⋯ ⋯) →\n          ∀ {a : RDF11.GeneralizedTriple Iri Literal B} {t : RDF11.RDFSDerives T D v G a}\n            (t_1 : RDF11.RDFSDerives.below t), motive_1 t t_1",
+      "type": "∀ {Iri Literal Value B : Type} {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri}\n  {v : RDF11.RDFSVocabulary Iri} {G : RDF11.GeneralizedGraph Iri Literal B}\n  {motive : (a : RDF11.GeneralizedTriple Iri Literal B) → RDF11.RDFSDerives T D v G a → Prop}\n  {motive_1 :\n    {a : RDF11.GeneralizedTriple Iri Literal B} → (t : RDF11.RDFSDerives T D v G a) → RDF11.RDFSDerives.below t → Prop},\n  (∀ {t : RDF11.GeneralizedTriple Iri Literal B} (a : G t), motive_1 ⋯ ⋯) →\n    (∀ {t : RDF11.GeneralizedTriple Iri Literal B} (a : v.toRDF.axioms t), motive_1 ⋯ ⋯) →\n      (∀ {t : RDF11.GeneralizedTriple Iri Literal B} (a : v.axioms t), motive_1 ⋯ ⋯) →\n        (∀ {t : RDF11.GeneralizedTriple Iri Literal B} (a : RDF11.RDFSDerives T D v G t)\n            (ih : RDF11.RDFSDerives.below a) (a_ih : motive t a), motive_1 a ih → motive_1 ⋯ ⋯) →\n          (∀ (s p : RDF11.Term Iri Literal B) (l : Literal)\n              (a : RDF11.RDFSDerives T D v G { subject := s, predicate := p, object := RDF11.Term.literal l })\n              (a_1 : D (T.literalSyntax.datatype l)) (ih : RDF11.RDFSDerives.below a)\n              (a_ih : motive { subject := s, predicate := p, object := RDF11.Term.literal l } a),\n              motive_1 a ih → motive_1 ⋯ ⋯) →\n            (∀ {t : RDF11.GeneralizedTriple Iri Literal B} (H : RDF11.GeneralizedGraph Iri Literal B)\n                (a : ∀ (t : RDF11.GeneralizedTriple Iri Literal B), H t → RDF11.RDFSDerives T D v G t)\n                (a_1 : RDF11.RDFSStep T D v H t)\n                (ih : ∀ (t : RDF11.GeneralizedTriple Iri Literal B) (a_2 : H t), RDF11.RDFSDerives.below ⋯)\n                (a_ih : ∀ (t : RDF11.GeneralizedTriple Iri Literal B) (a_2 : H t), motive t ⋯),\n                (∀ (t : RDF11.GeneralizedTriple Iri Literal B) (a_2 : H t), motive_1 ⋯ ⋯) → motive_1 ⋯ ⋯) →\n              ∀ {a : RDF11.GeneralizedTriple Iri Literal B} {t : RDF11.RDFSDerives T D v G a}\n                (t_1 : RDF11.RDFSDerives.below t), motive_1 t t_1",
       "role": "proof_support",
       "grounds": [
         "SUPPORT-RDFS-RULES"
@@ -8025,7 +8090,7 @@
       "name": "RDF11.RDFSDerives.casesOn",
       "module": "RDF11.RDFSRules",
       "kind": "definition",
-      "type": "∀ {Iri Literal Value B : Type} {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri}\n  {v : RDF11.RDFSVocabulary Iri} {G : RDF11.GeneralizedGraph Iri Literal B}\n  {motive : (a : RDF11.GeneralizedTriple Iri Literal B) → RDF11.RDFSDerives T D v G a → Prop}\n  {a : RDF11.GeneralizedTriple Iri Literal B} (t : RDF11.RDFSDerives T D v G a),\n  (∀ {t : RDF11.GeneralizedTriple Iri Literal B} (a : G t), motive t ⋯) →\n    (∀ {t : RDF11.GeneralizedTriple Iri Literal B} (a : v.toRDF.axioms t), motive t ⋯) →\n      (∀ {t : RDF11.GeneralizedTriple Iri Literal B} (a : v.axioms t), motive t ⋯) →\n        (∀ {t : RDF11.GeneralizedTriple Iri Literal B} (H : RDF11.GeneralizedGraph Iri Literal B)\n            (a : ∀ (t : RDF11.GeneralizedTriple Iri Literal B), H t → RDF11.RDFSDerives T D v G t)\n            (a_1 : RDF11.RDFSStep T D v H t), motive t ⋯) →\n          motive a t",
+      "type": "∀ {Iri Literal Value B : Type} {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri}\n  {v : RDF11.RDFSVocabulary Iri} {G : RDF11.GeneralizedGraph Iri Literal B}\n  {motive : (a : RDF11.GeneralizedTriple Iri Literal B) → RDF11.RDFSDerives T D v G a → Prop}\n  {a : RDF11.GeneralizedTriple Iri Literal B} (t : RDF11.RDFSDerives T D v G a),\n  (∀ {t : RDF11.GeneralizedTriple Iri Literal B} (a : G t), motive t ⋯) →\n    (∀ {t : RDF11.GeneralizedTriple Iri Literal B} (a : v.toRDF.axioms t), motive t ⋯) →\n      (∀ {t : RDF11.GeneralizedTriple Iri Literal B} (a : v.axioms t), motive t ⋯) →\n        (∀ {t : RDF11.GeneralizedTriple Iri Literal B} (a : RDF11.RDFSDerives T D v G t),\n            motive\n              { subject := t.predicate,\n                predicate := RDF11.Term.iri (v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfType)),\n                object := RDF11.Term.iri (v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfProperty)) }\n              ⋯) →\n          (∀ (s p : RDF11.Term Iri Literal B) (l : Literal)\n              (a : RDF11.RDFSDerives T D v G { subject := s, predicate := p, object := RDF11.Term.literal l })\n              (a_1 : D (T.literalSyntax.datatype l)),\n              motive\n                { subject := RDF11.Term.literal l,\n                  predicate := RDF11.Term.iri (v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfType)),\n                  object := RDF11.Term.iri (T.literalSyntax.datatype l) }\n                ⋯) →\n            (∀ {t : RDF11.GeneralizedTriple Iri Literal B} (H : RDF11.GeneralizedGraph Iri Literal B)\n                (a : ∀ (t : RDF11.GeneralizedTriple Iri Literal B), H t → RDF11.RDFSDerives T D v G t)\n                (a_1 : RDF11.RDFSStep T D v H t), motive t ⋯) →\n              motive a t",
       "role": "proof_support",
       "grounds": [
         "SUPPORT-RDFS-RULES"
@@ -8073,7 +8138,7 @@
       "name": "RDF11.RDFSDerives.rec",
       "module": "RDF11.RDFSRules",
       "kind": "recursor",
-      "type": "∀ {Iri Literal Value B : Type} {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri}\n  {v : RDF11.RDFSVocabulary Iri} {G : RDF11.GeneralizedGraph Iri Literal B}\n  {motive : (a : RDF11.GeneralizedTriple Iri Literal B) → RDF11.RDFSDerives T D v G a → Prop},\n  (∀ {t : RDF11.GeneralizedTriple Iri Literal B} (a : G t), motive t ⋯) →\n    (∀ {t : RDF11.GeneralizedTriple Iri Literal B} (a : v.toRDF.axioms t), motive t ⋯) →\n      (∀ {t : RDF11.GeneralizedTriple Iri Literal B} (a : v.axioms t), motive t ⋯) →\n        (∀ {t : RDF11.GeneralizedTriple Iri Literal B} (H : RDF11.GeneralizedGraph Iri Literal B)\n            (a : ∀ (t : RDF11.GeneralizedTriple Iri Literal B), H t → RDF11.RDFSDerives T D v G t)\n            (a_1 : RDF11.RDFSStep T D v H t),\n            (∀ (t : RDF11.GeneralizedTriple Iri Literal B) (a_2 : H t), motive t ⋯) → motive t ⋯) →\n          ∀ {a : RDF11.GeneralizedTriple Iri Literal B} (t : RDF11.RDFSDerives T D v G a), motive a t",
+      "type": "∀ {Iri Literal Value B : Type} {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri}\n  {v : RDF11.RDFSVocabulary Iri} {G : RDF11.GeneralizedGraph Iri Literal B}\n  {motive : (a : RDF11.GeneralizedTriple Iri Literal B) → RDF11.RDFSDerives T D v G a → Prop},\n  (∀ {t : RDF11.GeneralizedTriple Iri Literal B} (a : G t), motive t ⋯) →\n    (∀ {t : RDF11.GeneralizedTriple Iri Literal B} (a : v.toRDF.axioms t), motive t ⋯) →\n      (∀ {t : RDF11.GeneralizedTriple Iri Literal B} (a : v.axioms t), motive t ⋯) →\n        (∀ {t : RDF11.GeneralizedTriple Iri Literal B} (a : RDF11.RDFSDerives T D v G t),\n            motive t a →\n              motive\n                { subject := t.predicate,\n                  predicate := RDF11.Term.iri (v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfType)),\n                  object := RDF11.Term.iri (v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfProperty)) }\n                ⋯) →\n          (∀ (s p : RDF11.Term Iri Literal B) (l : Literal)\n              (a : RDF11.RDFSDerives T D v G { subject := s, predicate := p, object := RDF11.Term.literal l })\n              (a_1 : D (T.literalSyntax.datatype l)),\n              motive { subject := s, predicate := p, object := RDF11.Term.literal l } a →\n                motive\n                  { subject := RDF11.Term.literal l,\n                    predicate := RDF11.Term.iri (v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfType)),\n                    object := RDF11.Term.iri (T.literalSyntax.datatype l) }\n                  ⋯) →\n            (∀ {t : RDF11.GeneralizedTriple Iri Literal B} (H : RDF11.GeneralizedGraph Iri Literal B)\n                (a : ∀ (t : RDF11.GeneralizedTriple Iri Literal B), H t → RDF11.RDFSDerives T D v G t)\n                (a_1 : RDF11.RDFSStep T D v H t),\n                (∀ (t : RDF11.GeneralizedTriple Iri Literal B) (a_2 : H t), motive t ⋯) → motive t ⋯) →\n              ∀ {a : RDF11.GeneralizedTriple Iri Literal B} (t : RDF11.RDFSDerives T D v G a), motive a t",
       "role": "proof_support",
       "grounds": [
         "SUPPORT-RDFS-RULES"
@@ -8085,7 +8150,7 @@
       "name": "RDF11.RDFSDerives.recOn",
       "module": "RDF11.RDFSRules",
       "kind": "definition",
-      "type": "∀ {Iri Literal Value B : Type} {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri}\n  {v : RDF11.RDFSVocabulary Iri} {G : RDF11.GeneralizedGraph Iri Literal B}\n  {motive : (a : RDF11.GeneralizedTriple Iri Literal B) → RDF11.RDFSDerives T D v G a → Prop}\n  {a : RDF11.GeneralizedTriple Iri Literal B} (t : RDF11.RDFSDerives T D v G a),\n  (∀ {t : RDF11.GeneralizedTriple Iri Literal B} (a : G t), motive t ⋯) →\n    (∀ {t : RDF11.GeneralizedTriple Iri Literal B} (a : v.toRDF.axioms t), motive t ⋯) →\n      (∀ {t : RDF11.GeneralizedTriple Iri Literal B} (a : v.axioms t), motive t ⋯) →\n        (∀ {t : RDF11.GeneralizedTriple Iri Literal B} (H : RDF11.GeneralizedGraph Iri Literal B)\n            (a : ∀ (t : RDF11.GeneralizedTriple Iri Literal B), H t → RDF11.RDFSDerives T D v G t)\n            (a_1 : RDF11.RDFSStep T D v H t),\n            (∀ (t : RDF11.GeneralizedTriple Iri Literal B) (a_2 : H t), motive t ⋯) → motive t ⋯) →\n          motive a t",
+      "type": "∀ {Iri Literal Value B : Type} {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri}\n  {v : RDF11.RDFSVocabulary Iri} {G : RDF11.GeneralizedGraph Iri Literal B}\n  {motive : (a : RDF11.GeneralizedTriple Iri Literal B) → RDF11.RDFSDerives T D v G a → Prop}\n  {a : RDF11.GeneralizedTriple Iri Literal B} (t : RDF11.RDFSDerives T D v G a),\n  (∀ {t : RDF11.GeneralizedTriple Iri Literal B} (a : G t), motive t ⋯) →\n    (∀ {t : RDF11.GeneralizedTriple Iri Literal B} (a : v.toRDF.axioms t), motive t ⋯) →\n      (∀ {t : RDF11.GeneralizedTriple Iri Literal B} (a : v.axioms t), motive t ⋯) →\n        (∀ {t : RDF11.GeneralizedTriple Iri Literal B} (a : RDF11.RDFSDerives T D v G t),\n            motive t a →\n              motive\n                { subject := t.predicate,\n                  predicate := RDF11.Term.iri (v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfType)),\n                  object := RDF11.Term.iri (v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfProperty)) }\n                ⋯) →\n          (∀ (s p : RDF11.Term Iri Literal B) (l : Literal)\n              (a : RDF11.RDFSDerives T D v G { subject := s, predicate := p, object := RDF11.Term.literal l })\n              (a_1 : D (T.literalSyntax.datatype l)),\n              motive { subject := s, predicate := p, object := RDF11.Term.literal l } a →\n                motive\n                  { subject := RDF11.Term.literal l,\n                    predicate := RDF11.Term.iri (v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfType)),\n                    object := RDF11.Term.iri (T.literalSyntax.datatype l) }\n                  ⋯) →\n            (∀ {t : RDF11.GeneralizedTriple Iri Literal B} (H : RDF11.GeneralizedGraph Iri Literal B)\n                (a : ∀ (t : RDF11.GeneralizedTriple Iri Literal B), H t → RDF11.RDFSDerives T D v G t)\n                (a_1 : RDF11.RDFSStep T D v H t),\n                (∀ (t : RDF11.GeneralizedTriple Iri Literal B) (a_2 : H t), motive t ⋯) → motive t ⋯) →\n              motive a t",
       "role": "proof_support",
       "grounds": [
         "SUPPORT-RDFS-RULES"
@@ -12446,6 +12511,1219 @@
       "role": "source_mapping",
       "grounds": [
         "MT11-SUBGRAPH-ENTAILMENT"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.AxiomSeed",
+      "module": "RDF11.EntailmentClosure",
+      "kind": "definition",
+      "type": "{Literal Iri B₁ B₂ : Type} →\n  (Literal → Iri) →\n    (Nat → Iri) →\n      RDF11.GeneralizedGraph Iri Literal B₁ →\n        RDF11.GeneralizedGraph Iri Literal B₁ →\n          RDF11.GeneralizedGraph Iri Literal B₂ → RDF11.GeneralizedGraph Iri Literal B₁",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-ENTAILMENT-CLOSURE",
+        "MT11-GENERALIZED-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ConclusionAxioms",
+      "module": "RDF11.EntailmentClosure",
+      "kind": "definition",
+      "type": "{Literal Iri B₁ B₂ : Type} →\n  (Literal → Iri) →\n    (Nat → Iri) →\n      RDF11.GeneralizedGraph Iri Literal B₁ →\n        RDF11.GeneralizedGraph Iri Literal B₂ → RDF11.GeneralizedGraph Iri Literal B₁",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-ENTAILMENT-CLOSURE",
+        "MT11-GENERALIZED-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ContainerAxioms",
+      "module": "RDF11.EntailmentClosure",
+      "kind": "definition",
+      "type": "{Literal Iri B : Type} →\n  (Literal → Iri) → (Nat → Iri) → RDF11.GeneralizedGraph Iri Literal B → Nat → RDF11.GeneralizedGraph Iri Literal B",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-ENTAILMENT-CLOSURE",
+        "MT11-GENERALIZED-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeModel.Carrier",
+      "module": "RDF11.DatatypeModels",
+      "kind": "definition",
+      "type": "Type → Type u",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-MODELS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeModel.assignment",
+      "module": "RDF11.DatatypeModels",
+      "kind": "definition",
+      "type": "{Iri Literal Value B : Type} →\n  (T : RDF11.DatatypeTheory Iri Literal Value) →\n    (D : RDF11.Set Iri) → (RDF11.DatatypeModel.interpretation T D).Assignment B",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-MODELS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeModel.conditions",
+      "module": "RDF11.DatatypeModels",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri),\n  (RDF11.DatatypeModel.interpretation T D).DConditions T D RDF11.DatatypeModel.realization",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-DATATYPE-MODELS",
+        "MT11-SIMPLE-D-INCONSISTENCY-CHARACTERIZATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeModel.embed",
+      "module": "RDF11.DatatypeModels",
+      "kind": "definition",
+      "type": "{Value : Type} → Value → RDF11.DatatypeModel.Carrier Value",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-MODELS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeModel.interpretation",
+      "module": "RDF11.DatatypeModels",
+      "kind": "definition",
+      "type": "{Iri Literal Value : Type} →\n  RDF11.DatatypeTheory Iri Literal Value →\n    RDF11.Set Iri → RDF11.SimpleInterpretation Iri Literal (RDF11.DatatypeModel.Carrier Value)",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-DATATYPE-MODELS",
+        "MT11-SIMPLE-D-INCONSISTENCY-CHARACTERIZATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeModel.interpretation._proof_1",
+      "module": "RDF11.DatatypeModels",
+      "kind": "theorem",
+      "type": "∀ {Value : Type}, ∃ x, True",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-MODELS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeModel.interpretation.eq_1",
+      "module": "RDF11.DatatypeModels",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri),\n  RDF11.DatatypeModel.interpretation T D =\n    { IR := fun x => True, IR_nonempty := ⋯, IP := fun x => True, IEXT := fun x x_1 => True,\n      IS := fun a =>\n        ⟨if D a ∧ a ≠ T.literalSyntax.langString then RDF11.DatatypeModel.embed (T.identified a)\n          else RDF11.DatatypeModel.unnamed,\n          ⋯⟩,\n      IL := fun l => Option.map (fun x => ⟨x, True.intro⟩) (RDF11.DatatypeModel.literal T D l) }",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-MODELS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeModel.language_none",
+      "module": "RDF11.DatatypeModels",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (l : Literal),\n  T.literalSyntax.datatype l ≠ T.literalSyntax.langString → T.literalSyntax.language l = none",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-MODELS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeModel.literal",
+      "module": "RDF11.DatatypeModels",
+      "kind": "definition",
+      "type": "{Iri Literal Value : Type} →\n  RDF11.DatatypeTheory Iri Literal Value → RDF11.Set Iri → Literal → Option (RDF11.DatatypeModel.Carrier Value)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-MODELS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeModel.literal.eq_1",
+      "module": "RDF11.DatatypeModels",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri) (l : Literal),\n  RDF11.DatatypeModel.literal T D l =\n    if D (T.literalSyntax.datatype l) then\n      match T.literalSyntax.language l with\n      | some tag =>\n        some (RDF11.DatatypeModel.embed (T.languageValue (T.literalSyntax.lexical l) (RDF11.asciiLower tag)))\n      | none =>\n        Option.map RDF11.DatatypeModel.embed\n          (T.L2V (T.identified (T.literalSyntax.datatype l)) (T.literalSyntax.lexical l))\n    else some RDF11.DatatypeModel.unnamed",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-MODELS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeModel.literal.match_1",
+      "module": "RDF11.DatatypeModels",
+      "kind": "definition",
+      "type": "(motive : Option String → Sort u_1) →\n  (x : Option String) → ((tag : String) → motive (some tag)) → (Unit → motive none) → motive x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-MODELS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeModel.literal_defined",
+      "module": "RDF11.DatatypeModels",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri) (l : Literal),\n  ¬T.IllTyped D l → ∃ r, (RDF11.DatatypeModel.interpretation T D).IL l = some r",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-MODELS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeModel.model",
+      "module": "RDF11.DatatypeModels",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri),\n  (RDF11.DatatypeModel.interpretation T D).DModel T D",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-MODELS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeModel.realization",
+      "module": "RDF11.DatatypeModels",
+      "kind": "definition",
+      "type": "{Value : Type} → RDF11.ValueRealization Value (RDF11.DatatypeModel.Carrier Value)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-MODELS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeModel.realization._proof_1",
+      "module": "RDF11.DatatypeModels",
+      "kind": "theorem",
+      "type": "∀ {Value : Type} (v w : Value) (x : RDF11.DatatypeModel.Carrier Value),\n  some (RDF11.DatatypeModel.embed v) = some x → some (RDF11.DatatypeModel.embed w) = some x → v = w",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-MODELS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeModel.realization.eq_1",
+      "module": "RDF11.DatatypeModels",
+      "kind": "theorem",
+      "type": "∀ {Value : Type},\n  RDF11.DatatypeModel.realization = { value := fun v => some (RDF11.DatatypeModel.embed v), injective := ⋯ }",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-MODELS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeModel.satisfies",
+      "module": "RDF11.DatatypeModels",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (G : RDF11.GeneralizedGraph Iri Literal B),\n  (∀ (t : RDF11.GeneralizedTriple Iri Literal B),\n      G t → ∀ (l : Literal), RDF11.GeneralizedTriple.hasLiteral l t → ¬T.IllTyped D l) →\n    (RDF11.DatatypeModel.interpretation T D).Satisfies G",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-DATATYPE-MODELS",
+        "MT11-SIMPLE-D-INCONSISTENCY-CHARACTERIZATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeModel.term_defined",
+      "module": "RDF11.DatatypeModels",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (t : RDF11.Term Iri Literal B),\n  (∀ (l : Literal), RDF11.Term.hasLiteral l t → ¬T.IllTyped D l) →\n    ∃ x, (RDF11.DatatypeModel.interpretation T D).denote (RDF11.DatatypeModel.assignment T D) t = some x.val",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-MODELS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeModel.unnamed",
+      "module": "RDF11.DatatypeModels",
+      "kind": "definition",
+      "type": "{Value : Type} → RDF11.DatatypeModel.Carrier Value",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-MODELS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeTheory.RecognizedValue",
+      "module": "RDF11.LiteralSubstitution",
+      "kind": "inductive",
+      "type": "{Iri Literal Value : Type} → RDF11.DatatypeTheory Iri Literal Value → RDF11.Set Iri → Literal → Value → Prop",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-LITERAL-SUBSTITUTION",
+        "MT11-DATATYPE-VALUE-SUBSTITUTION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeTheory.RecognizedValue.casesOn",
+      "module": "RDF11.LiteralSubstitution",
+      "kind": "definition",
+      "type": "∀ {Iri Literal Value : Type} {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri} {a : Literal}\n  {motive : (a_1 : Value) → T.RecognizedValue D a a_1 → Prop} {a_1 : Value} (t : T.RecognizedValue D a a_1),\n  (∀ (tag : String) (a_2 : D T.literalSyntax.langString) (a_3 : T.literalSyntax.language a = some tag),\n      motive (T.languageValue (T.literalSyntax.lexical a) (RDF11.asciiLower tag)) ⋯) →\n    (∀ (a_2 : Iri) (v : Value) (a_3 : D a_2) (a_4 : a_2 ≠ T.literalSyntax.langString)\n        (a_5 : T.literalSyntax.datatype a = a_2) (a_6 : T.L2V (T.identified a_2) (T.literalSyntax.lexical a) = some v),\n        motive v ⋯) →\n      motive a_1 t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-LITERAL-SUBSTITUTION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeTheory.RecognizedValue.language",
+      "module": "RDF11.LiteralSubstitution",
+      "kind": "constructor",
+      "type": "∀ {Iri Literal Value : Type} {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri} (l : Literal)\n  (tag : String),\n  D T.literalSyntax.langString →\n    T.literalSyntax.language l = some tag →\n      T.RecognizedValue D l (T.languageValue (T.literalSyntax.lexical l) (RDF11.asciiLower tag))",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-LITERAL-SUBSTITUTION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeTheory.RecognizedValue.ordinary",
+      "module": "RDF11.LiteralSubstitution",
+      "kind": "constructor",
+      "type": "∀ {Iri Literal Value : Type} {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri} (l : Literal) (a : Iri)\n  (v : Value),\n  D a →\n    a ≠ T.literalSyntax.langString →\n      T.literalSyntax.datatype l = a →\n        T.L2V (T.identified a) (T.literalSyntax.lexical l) = some v → T.RecognizedValue D l v",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-LITERAL-SUBSTITUTION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeTheory.RecognizedValue.rec",
+      "module": "RDF11.LiteralSubstitution",
+      "kind": "recursor",
+      "type": "∀ {Iri Literal Value : Type} {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri} {a : Literal}\n  {motive : (a_1 : Value) → T.RecognizedValue D a a_1 → Prop},\n  (∀ (tag : String) (a_1 : D T.literalSyntax.langString) (a_2 : T.literalSyntax.language a = some tag),\n      motive (T.languageValue (T.literalSyntax.lexical a) (RDF11.asciiLower tag)) ⋯) →\n    (∀ (a_1 : Iri) (v : Value) (a_2 : D a_1) (a_3 : a_1 ≠ T.literalSyntax.langString)\n        (a_4 : T.literalSyntax.datatype a = a_1) (a_5 : T.L2V (T.identified a_1) (T.literalSyntax.lexical a) = some v),\n        motive v ⋯) →\n      ∀ {a_1 : Value} (t : T.RecognizedValue D a a_1), motive a_1 t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-LITERAL-SUBSTITUTION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeTheory.RecognizedValue.recOn",
+      "module": "RDF11.LiteralSubstitution",
+      "kind": "definition",
+      "type": "∀ {Iri Literal Value : Type} {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri} {a : Literal}\n  {motive : (a_1 : Value) → T.RecognizedValue D a a_1 → Prop} {a_1 : Value} (t : T.RecognizedValue D a a_1),\n  (∀ (tag : String) (a_2 : D T.literalSyntax.langString) (a_3 : T.literalSyntax.language a = some tag),\n      motive (T.languageValue (T.literalSyntax.lexical a) (RDF11.asciiLower tag)) ⋯) →\n    (∀ (a_2 : Iri) (v : Value) (a_3 : D a_2) (a_4 : a_2 ≠ T.literalSyntax.langString)\n        (a_5 : T.literalSyntax.datatype a = a_2) (a_6 : T.L2V (T.identified a_2) (T.literalSyntax.lexical a) = some v),\n        motive v ⋯) →\n      motive a_1 t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-LITERAL-SUBSTITUTION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GeneralizedGraph.mapLiteral",
+      "module": "RDF11.LiteralSubstitution",
+      "kind": "definition",
+      "type": "{Literal Literal' Iri B : Type} →\n  (Literal → Literal') → RDF11.GeneralizedGraph Iri Literal B → RDF11.GeneralizedGraph Iri Literal' B",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-LITERAL-SUBSTITUTION",
+        "MT11-DATATYPE-VALUE-SUBSTITUTION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GeneralizedTriple.mapLiteral",
+      "module": "RDF11.LiteralSubstitution",
+      "kind": "definition",
+      "type": "{Literal Literal' Iri B : Type} →\n  (Literal → Literal') → RDF11.GeneralizedTriple Iri Literal B → RDF11.GeneralizedTriple Iri Literal' B",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-LITERAL-SUBSTITUTION",
+        "MT11-DATATYPE-VALUE-SUBSTITUTION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GeneralizedTriple.mapLiteral.eq_1",
+      "module": "RDF11.LiteralSubstitution",
+      "kind": "theorem",
+      "type": "∀ {Literal Literal' Iri B : Type} (f : Literal → Literal') (t : RDF11.GeneralizedTriple Iri Literal B),\n  RDF11.GeneralizedTriple.mapLiteral f t =\n    { subject := RDF11.Term.mapLiteral f t.subject, predicate := RDF11.Term.mapLiteral f t.predicate,\n      object := RDF11.Term.mapLiteral f t.object }",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-LITERAL-SUBSTITUTION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GrdfD1",
+      "module": "RDF11.RDFRules",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (v : RDF11.RDFVocabulary Iri) (G : RDF11.GeneralizedGraph Iri Literal B),\n  RDF11.RDFEntails T D v G (RDF11.literalTypingImage T D v G)",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-RDF-RULES",
+        "MT11-RULE-GrdfD1"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.NonContainerAxioms",
+      "module": "RDF11.EntailmentClosure",
+      "kind": "definition",
+      "type": "{Literal Iri B : Type} →\n  (Literal → Iri) → (Nat → Iri) → RDF11.GeneralizedGraph Iri Literal B → RDF11.GeneralizedGraph Iri Literal B",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-ENTAILMENT-CLOSURE",
+        "MT11-GENERALIZED-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFClosure",
+      "module": "RDF11.EntailmentClosure",
+      "kind": "definition",
+      "type": "{Iri Literal Value B₁ B₂ : Type} →\n  RDF11.DatatypeTheory Iri Literal Value →\n    RDF11.RDFVocabulary Iri →\n      RDF11.GeneralizedGraph Iri Literal B₁ →\n        RDF11.GeneralizedGraph Iri Literal B₂ → RDF11.GeneralizedGraph Iri Literal B₁",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-ENTAILMENT-CLOSURE",
+        "MT11-GENERALIZED-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFSClosure",
+      "module": "RDF11.EntailmentClosure",
+      "kind": "definition",
+      "type": "{Iri Literal Value B₁ B₂ : Type} →\n  RDF11.DatatypeTheory Iri Literal Value →\n    RDF11.RDFSVocabulary Iri →\n      RDF11.GeneralizedGraph Iri Literal B₁ →\n        RDF11.GeneralizedGraph Iri Literal B₂ → RDF11.GeneralizedGraph Iri Literal B₁",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-ENTAILMENT-CLOSURE",
+        "MT11-GENERALIZED-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFSDerives.GrdfD1",
+      "module": "RDF11.RDFSRules",
+      "kind": "constructor",
+      "type": "∀ {Iri Literal Value B : Type} {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri}\n  {v : RDF11.RDFSVocabulary Iri} {G : RDF11.GeneralizedGraph Iri Literal B} (s p : RDF11.Term Iri Literal B)\n  (l : Literal),\n  RDF11.RDFSDerives T D v G { subject := s, predicate := p, object := RDF11.Term.literal l } →\n    D (T.literalSyntax.datatype l) →\n      RDF11.RDFSDerives T D v G\n        { subject := RDF11.Term.literal l,\n          predicate := RDF11.Term.iri (v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfType)),\n          object := RDF11.Term.iri (T.literalSyntax.datatype l) }",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-RDFS-RULES",
+        "MT11-RULE-GrdfD1"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFSDerives.below.GrdfD1",
+      "module": "RDF11.RDFSRules",
+      "kind": "constructor",
+      "type": "∀ {Iri Literal Value B : Type} {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri}\n  {v : RDF11.RDFSVocabulary Iri} {G : RDF11.GeneralizedGraph Iri Literal B}\n  {motive : (a : RDF11.GeneralizedTriple Iri Literal B) → RDF11.RDFSDerives T D v G a → Prop}\n  (s p : RDF11.Term Iri Literal B) (l : Literal)\n  (a : RDF11.RDFSDerives T D v G { subject := s, predicate := p, object := RDF11.Term.literal l })\n  (a_1 : D (T.literalSyntax.datatype l)),\n  RDF11.RDFSDerives.below a →\n    motive { subject := s, predicate := p, object := RDF11.Term.literal l } a → RDF11.RDFSDerives.below ⋯",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDFS-RULES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFSDerives.below.rdfD2",
+      "module": "RDF11.RDFSRules",
+      "kind": "constructor",
+      "type": "∀ {Iri Literal Value B : Type} {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri}\n  {v : RDF11.RDFSVocabulary Iri} {G : RDF11.GeneralizedGraph Iri Literal B}\n  {motive : (a : RDF11.GeneralizedTriple Iri Literal B) → RDF11.RDFSDerives T D v G a → Prop}\n  {t : RDF11.GeneralizedTriple Iri Literal B} (a : RDF11.RDFSDerives T D v G t),\n  RDF11.RDFSDerives.below a → motive t a → RDF11.RDFSDerives.below ⋯",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDFS-RULES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFSDerives.rdfD2",
+      "module": "RDF11.RDFSRules",
+      "kind": "constructor",
+      "type": "∀ {Iri Literal Value B : Type} {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri}\n  {v : RDF11.RDFSVocabulary Iri} {G : RDF11.GeneralizedGraph Iri Literal B} {t : RDF11.GeneralizedTriple Iri Literal B},\n  RDF11.RDFSDerives T D v G t →\n    RDF11.RDFSDerives T D v G\n      { subject := t.predicate, predicate := RDF11.Term.iri (v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfType)),\n        object := RDF11.Term.iri (v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfProperty)) }",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDFS-RULES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFSGeneralizedStep",
+      "module": "RDF11.EntailmentClosure",
+      "kind": "definition",
+      "type": "{Iri Literal Value B : Type} →\n  RDF11.DatatypeTheory Iri Literal Value →\n    RDF11.Set Iri →\n      RDF11.RDFSVocabulary Iri → RDF11.GeneralizedGraph Iri Literal B → RDF11.GeneralizedTriple Iri Literal B → Prop",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-ENTAILMENT-CLOSURE",
+        "MT11-GENERALIZED-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFStep",
+      "module": "RDF11.EntailmentClosure",
+      "kind": "inductive",
+      "type": "{Iri Literal Value B : Type} →\n  RDF11.DatatypeTheory Iri Literal Value →\n    RDF11.Set Iri →\n      RDF11.RDFVocabulary Iri → RDF11.GeneralizedGraph Iri Literal B → RDF11.GeneralizedTriple Iri Literal B → Prop",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-ENTAILMENT-CLOSURE",
+        "MT11-GENERALIZED-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFStep.GrdfD1",
+      "module": "RDF11.EntailmentClosure",
+      "kind": "constructor",
+      "type": "∀ {Iri Literal Value B : Type} {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri}\n  {v : RDF11.RDFVocabulary Iri} {G : RDF11.GeneralizedGraph Iri Literal B} (s p : RDF11.Term Iri Literal B)\n  (l : Literal),\n  G { subject := s, predicate := p, object := RDF11.Term.literal l } →\n    D (T.literalSyntax.datatype l) →\n      RDF11.RDFStep T D v G\n        { subject := RDF11.Term.literal l, predicate := RDF11.Term.iri (v.iri RDF11.RDFSymbol.rdfType),\n          object := RDF11.Term.iri (T.literalSyntax.datatype l) }",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-ENTAILMENT-CLOSURE",
+        "MT11-RULE-GrdfD1"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFStep.casesOn",
+      "module": "RDF11.EntailmentClosure",
+      "kind": "definition",
+      "type": "∀ {Iri Literal Value B : Type} {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri}\n  {v : RDF11.RDFVocabulary Iri} {G : RDF11.GeneralizedGraph Iri Literal B}\n  {motive : (a : RDF11.GeneralizedTriple Iri Literal B) → RDF11.RDFStep T D v G a → Prop}\n  {a : RDF11.GeneralizedTriple Iri Literal B} (t : RDF11.RDFStep T D v G a),\n  (∀ (t : RDF11.GeneralizedTriple Iri Literal B) (a : G t),\n      motive\n        { subject := t.predicate, predicate := RDF11.Term.iri (v.iri RDF11.RDFSymbol.rdfType),\n          object := RDF11.Term.iri (v.iri RDF11.RDFSymbol.rdfProperty) }\n        ⋯) →\n    (∀ (s p : RDF11.Term Iri Literal B) (l : Literal)\n        (a : G { subject := s, predicate := p, object := RDF11.Term.literal l }) (a_1 : D (T.literalSyntax.datatype l)),\n        motive\n          { subject := RDF11.Term.literal l, predicate := RDF11.Term.iri (v.iri RDF11.RDFSymbol.rdfType),\n            object := RDF11.Term.iri (T.literalSyntax.datatype l) }\n          ⋯) →\n      motive a t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ENTAILMENT-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFStep.rdfD2",
+      "module": "RDF11.EntailmentClosure",
+      "kind": "constructor",
+      "type": "∀ {Iri Literal Value B : Type} {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri}\n  {v : RDF11.RDFVocabulary Iri} {G : RDF11.GeneralizedGraph Iri Literal B} (t : RDF11.GeneralizedTriple Iri Literal B),\n  G t →\n    RDF11.RDFStep T D v G\n      { subject := t.predicate, predicate := RDF11.Term.iri (v.iri RDF11.RDFSymbol.rdfType),\n        object := RDF11.Term.iri (v.iri RDF11.RDFSymbol.rdfProperty) }",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ENTAILMENT-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFStep.rec",
+      "module": "RDF11.EntailmentClosure",
+      "kind": "recursor",
+      "type": "∀ {Iri Literal Value B : Type} {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri}\n  {v : RDF11.RDFVocabulary Iri} {G : RDF11.GeneralizedGraph Iri Literal B}\n  {motive : (a : RDF11.GeneralizedTriple Iri Literal B) → RDF11.RDFStep T D v G a → Prop},\n  (∀ (t : RDF11.GeneralizedTriple Iri Literal B) (a : G t),\n      motive\n        { subject := t.predicate, predicate := RDF11.Term.iri (v.iri RDF11.RDFSymbol.rdfType),\n          object := RDF11.Term.iri (v.iri RDF11.RDFSymbol.rdfProperty) }\n        ⋯) →\n    (∀ (s p : RDF11.Term Iri Literal B) (l : Literal)\n        (a : G { subject := s, predicate := p, object := RDF11.Term.literal l }) (a_1 : D (T.literalSyntax.datatype l)),\n        motive\n          { subject := RDF11.Term.literal l, predicate := RDF11.Term.iri (v.iri RDF11.RDFSymbol.rdfType),\n            object := RDF11.Term.iri (T.literalSyntax.datatype l) }\n          ⋯) →\n      ∀ {a : RDF11.GeneralizedTriple Iri Literal B} (t : RDF11.RDFStep T D v G a), motive a t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ENTAILMENT-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFStep.recOn",
+      "module": "RDF11.EntailmentClosure",
+      "kind": "definition",
+      "type": "∀ {Iri Literal Value B : Type} {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri}\n  {v : RDF11.RDFVocabulary Iri} {G : RDF11.GeneralizedGraph Iri Literal B}\n  {motive : (a : RDF11.GeneralizedTriple Iri Literal B) → RDF11.RDFStep T D v G a → Prop}\n  {a : RDF11.GeneralizedTriple Iri Literal B} (t : RDF11.RDFStep T D v G a),\n  (∀ (t : RDF11.GeneralizedTriple Iri Literal B) (a : G t),\n      motive\n        { subject := t.predicate, predicate := RDF11.Term.iri (v.iri RDF11.RDFSymbol.rdfType),\n          object := RDF11.Term.iri (v.iri RDF11.RDFSymbol.rdfProperty) }\n        ⋯) →\n    (∀ (s p : RDF11.Term Iri Literal B) (l : Literal)\n        (a : G { subject := s, predicate := p, object := RDF11.Term.literal l }) (a_1 : D (T.literalSyntax.datatype l)),\n        motive\n          { subject := RDF11.Term.literal l, predicate := RDF11.Term.iri (v.iri RDF11.RDFSymbol.rdfType),\n            object := RDF11.Term.iri (T.literalSyntax.datatype l) }\n          ⋯) →\n      motive a t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ENTAILMENT-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RuleDerives",
+      "module": "RDF11.EntailmentClosure",
+      "kind": "inductive",
+      "type": "{Iri Literal B : Type} →\n  (RDF11.GeneralizedGraph Iri Literal B → RDF11.GeneralizedTriple Iri Literal B → Prop) →\n    RDF11.GeneralizedGraph Iri Literal B → RDF11.GeneralizedTriple Iri Literal B → Prop",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-ENTAILMENT-CLOSURE",
+        "MT11-GENERALIZED-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RuleDerives.below",
+      "module": "RDF11.EntailmentClosure",
+      "kind": "inductive",
+      "type": "{Iri Literal B : Type} →\n  {step : RDF11.GeneralizedGraph Iri Literal B → RDF11.GeneralizedTriple Iri Literal B → Prop} →\n    {seed : RDF11.GeneralizedGraph Iri Literal B} →\n      {motive : (a : RDF11.GeneralizedTriple Iri Literal B) → RDF11.RuleDerives step seed a → Prop} →\n        {a : RDF11.GeneralizedTriple Iri Literal B} → RDF11.RuleDerives step seed a → Prop",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ENTAILMENT-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RuleDerives.below.casesOn",
+      "module": "RDF11.EntailmentClosure",
+      "kind": "definition",
+      "type": "∀ {Iri Literal B : Type} {step : RDF11.GeneralizedGraph Iri Literal B → RDF11.GeneralizedTriple Iri Literal B → Prop}\n  {seed : RDF11.GeneralizedGraph Iri Literal B}\n  {motive : (a : RDF11.GeneralizedTriple Iri Literal B) → RDF11.RuleDerives step seed a → Prop}\n  {motive_1 :\n    {a : RDF11.GeneralizedTriple Iri Literal B} →\n      (t : RDF11.RuleDerives step seed a) → RDF11.RuleDerives.below t → Prop}\n  {a : RDF11.GeneralizedTriple Iri Literal B} {t : RDF11.RuleDerives step seed a} (t_1 : RDF11.RuleDerives.below t),\n  (∀ {t : RDF11.GeneralizedTriple Iri Literal B} (a : seed t), motive_1 ⋯ ⋯) →\n    (∀ {t : RDF11.GeneralizedTriple Iri Literal B} (H : RDF11.GeneralizedGraph Iri Literal B)\n        (a : ∀ (t : RDF11.GeneralizedTriple Iri Literal B), H t → RDF11.RuleDerives step seed t) (a_1 : step H t)\n        (ih : ∀ (t : RDF11.GeneralizedTriple Iri Literal B) (a_2 : H t), RDF11.RuleDerives.below ⋯)\n        (a_ih : ∀ (t : RDF11.GeneralizedTriple Iri Literal B) (a_2 : H t), motive t ⋯), motive_1 ⋯ ⋯) →\n      motive_1 t t_1",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ENTAILMENT-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RuleDerives.below.premise",
+      "module": "RDF11.EntailmentClosure",
+      "kind": "constructor",
+      "type": "∀ {Iri Literal B : Type} {step : RDF11.GeneralizedGraph Iri Literal B → RDF11.GeneralizedTriple Iri Literal B → Prop}\n  {seed : RDF11.GeneralizedGraph Iri Literal B}\n  {motive : (a : RDF11.GeneralizedTriple Iri Literal B) → RDF11.RuleDerives step seed a → Prop}\n  {t : RDF11.GeneralizedTriple Iri Literal B} (a : seed t), RDF11.RuleDerives.below ⋯",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ENTAILMENT-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RuleDerives.below.rec",
+      "module": "RDF11.EntailmentClosure",
+      "kind": "recursor",
+      "type": "∀ {Iri Literal B : Type} {step : RDF11.GeneralizedGraph Iri Literal B → RDF11.GeneralizedTriple Iri Literal B → Prop}\n  {seed : RDF11.GeneralizedGraph Iri Literal B}\n  {motive : (a : RDF11.GeneralizedTriple Iri Literal B) → RDF11.RuleDerives step seed a → Prop}\n  {motive_1 :\n    {a : RDF11.GeneralizedTriple Iri Literal B} →\n      (t : RDF11.RuleDerives step seed a) → RDF11.RuleDerives.below t → Prop},\n  (∀ {t : RDF11.GeneralizedTriple Iri Literal B} (a : seed t), motive_1 ⋯ ⋯) →\n    (∀ {t : RDF11.GeneralizedTriple Iri Literal B} (H : RDF11.GeneralizedGraph Iri Literal B)\n        (a : ∀ (t : RDF11.GeneralizedTriple Iri Literal B), H t → RDF11.RuleDerives step seed t) (a_1 : step H t)\n        (ih : ∀ (t : RDF11.GeneralizedTriple Iri Literal B) (a_2 : H t), RDF11.RuleDerives.below ⋯)\n        (a_ih : ∀ (t : RDF11.GeneralizedTriple Iri Literal B) (a_2 : H t), motive t ⋯),\n        (∀ (t : RDF11.GeneralizedTriple Iri Literal B) (a_2 : H t), motive_1 ⋯ ⋯) → motive_1 ⋯ ⋯) →\n      ∀ {a : RDF11.GeneralizedTriple Iri Literal B} {t : RDF11.RuleDerives step seed a}\n        (t_1 : RDF11.RuleDerives.below t), motive_1 t t_1",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ENTAILMENT-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RuleDerives.below.rule",
+      "module": "RDF11.EntailmentClosure",
+      "kind": "constructor",
+      "type": "∀ {Iri Literal B : Type} {step : RDF11.GeneralizedGraph Iri Literal B → RDF11.GeneralizedTriple Iri Literal B → Prop}\n  {seed : RDF11.GeneralizedGraph Iri Literal B}\n  {motive : (a : RDF11.GeneralizedTriple Iri Literal B) → RDF11.RuleDerives step seed a → Prop}\n  {t : RDF11.GeneralizedTriple Iri Literal B} (H : RDF11.GeneralizedGraph Iri Literal B)\n  (a : ∀ (t : RDF11.GeneralizedTriple Iri Literal B), H t → RDF11.RuleDerives step seed t) (a_1 : step H t),\n  (∀ (t : RDF11.GeneralizedTriple Iri Literal B) (a_2 : H t), RDF11.RuleDerives.below ⋯) →\n    (∀ (t : RDF11.GeneralizedTriple Iri Literal B) (a_2 : H t), motive t ⋯) → RDF11.RuleDerives.below ⋯",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ENTAILMENT-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RuleDerives.brecOn",
+      "module": "RDF11.EntailmentClosure",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {step : RDF11.GeneralizedGraph Iri Literal B → RDF11.GeneralizedTriple Iri Literal B → Prop}\n  {seed : RDF11.GeneralizedGraph Iri Literal B}\n  {motive : (a : RDF11.GeneralizedTriple Iri Literal B) → RDF11.RuleDerives step seed a → Prop}\n  {a : RDF11.GeneralizedTriple Iri Literal B} (t : RDF11.RuleDerives step seed a),\n  (∀ (a : RDF11.GeneralizedTriple Iri Literal B) (t : RDF11.RuleDerives step seed a),\n      RDF11.RuleDerives.below t → motive a t) →\n    motive a t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ENTAILMENT-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RuleDerives.casesOn",
+      "module": "RDF11.EntailmentClosure",
+      "kind": "definition",
+      "type": "∀ {Iri Literal B : Type} {step : RDF11.GeneralizedGraph Iri Literal B → RDF11.GeneralizedTriple Iri Literal B → Prop}\n  {seed : RDF11.GeneralizedGraph Iri Literal B}\n  {motive : (a : RDF11.GeneralizedTriple Iri Literal B) → RDF11.RuleDerives step seed a → Prop}\n  {a : RDF11.GeneralizedTriple Iri Literal B} (t : RDF11.RuleDerives step seed a),\n  (∀ {t : RDF11.GeneralizedTriple Iri Literal B} (a : seed t), motive t ⋯) →\n    (∀ {t : RDF11.GeneralizedTriple Iri Literal B} (H : RDF11.GeneralizedGraph Iri Literal B)\n        (a : ∀ (t : RDF11.GeneralizedTriple Iri Literal B), H t → RDF11.RuleDerives step seed t) (a_1 : step H t),\n        motive t ⋯) →\n      motive a t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ENTAILMENT-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RuleDerives.premise",
+      "module": "RDF11.EntailmentClosure",
+      "kind": "constructor",
+      "type": "∀ {Iri Literal B : Type} {step : RDF11.GeneralizedGraph Iri Literal B → RDF11.GeneralizedTriple Iri Literal B → Prop}\n  {seed : RDF11.GeneralizedGraph Iri Literal B} {t : RDF11.GeneralizedTriple Iri Literal B},\n  seed t → RDF11.RuleDerives step seed t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ENTAILMENT-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RuleDerives.rec",
+      "module": "RDF11.EntailmentClosure",
+      "kind": "recursor",
+      "type": "∀ {Iri Literal B : Type} {step : RDF11.GeneralizedGraph Iri Literal B → RDF11.GeneralizedTriple Iri Literal B → Prop}\n  {seed : RDF11.GeneralizedGraph Iri Literal B}\n  {motive : (a : RDF11.GeneralizedTriple Iri Literal B) → RDF11.RuleDerives step seed a → Prop},\n  (∀ {t : RDF11.GeneralizedTriple Iri Literal B} (a : seed t), motive t ⋯) →\n    (∀ {t : RDF11.GeneralizedTriple Iri Literal B} (H : RDF11.GeneralizedGraph Iri Literal B)\n        (a : ∀ (t : RDF11.GeneralizedTriple Iri Literal B), H t → RDF11.RuleDerives step seed t) (a_1 : step H t),\n        (∀ (t : RDF11.GeneralizedTriple Iri Literal B) (a_2 : H t), motive t ⋯) → motive t ⋯) →\n      ∀ {a : RDF11.GeneralizedTriple Iri Literal B} (t : RDF11.RuleDerives step seed a), motive a t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ENTAILMENT-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RuleDerives.recOn",
+      "module": "RDF11.EntailmentClosure",
+      "kind": "definition",
+      "type": "∀ {Iri Literal B : Type} {step : RDF11.GeneralizedGraph Iri Literal B → RDF11.GeneralizedTriple Iri Literal B → Prop}\n  {seed : RDF11.GeneralizedGraph Iri Literal B}\n  {motive : (a : RDF11.GeneralizedTriple Iri Literal B) → RDF11.RuleDerives step seed a → Prop}\n  {a : RDF11.GeneralizedTriple Iri Literal B} (t : RDF11.RuleDerives step seed a),\n  (∀ {t : RDF11.GeneralizedTriple Iri Literal B} (a : seed t), motive t ⋯) →\n    (∀ {t : RDF11.GeneralizedTriple Iri Literal B} (H : RDF11.GeneralizedGraph Iri Literal B)\n        (a : ∀ (t : RDF11.GeneralizedTriple Iri Literal B), H t → RDF11.RuleDerives step seed t) (a_1 : step H t),\n        (∀ (t : RDF11.GeneralizedTriple Iri Literal B) (a_2 : H t), motive t ⋯) → motive t ⋯) →\n      motive a t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ENTAILMENT-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RuleDerives.rule",
+      "module": "RDF11.EntailmentClosure",
+      "kind": "constructor",
+      "type": "∀ {Iri Literal B : Type} {step : RDF11.GeneralizedGraph Iri Literal B → RDF11.GeneralizedTriple Iri Literal B → Prop}\n  {seed : RDF11.GeneralizedGraph Iri Literal B} {t : RDF11.GeneralizedTriple Iri Literal B}\n  (H : RDF11.GeneralizedGraph Iri Literal B),\n  (∀ (t : RDF11.GeneralizedTriple Iri Literal B), H t → RDF11.RuleDerives step seed t) →\n    step H t → RDF11.RuleDerives step seed t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ENTAILMENT-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.GrdfD1_triple",
+      "module": "RDF11.RDFRules",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u_1} {Value : Type} {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri}\n  {v : RDF11.RDFVocabulary Iri} {ρ : RDF11.ValueRealization Value U} {B : Type} {l : Literal}\n  (I : RDF11.SimpleInterpretation Iri Literal U),\n  I.RDFConditions T D v ρ →\n    ∀ (A : I.Assignment B) (t : RDF11.GeneralizedTriple Iri Literal B),\n      I.TripleTrue A t →\n        RDF11.GeneralizedTriple.hasLiteral l t →\n          D (T.literalSyntax.datatype l) →\n            I.TripleTrue A\n              { subject := RDF11.Term.literal l, predicate := RDF11.Term.iri (v.iri RDF11.RDFSymbol.rdfType),\n                object := RDF11.Term.iri (T.literalSyntax.datatype l) }",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-RDF-RULES",
+        "MT11-RULE-GrdfD1"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.axiomSeed_true",
+      "module": "RDF11.EntailmentClosure",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u_1} {B₁ B₂ : Type} (I : RDF11.SimpleInterpretation Iri Literal U)\n  (A : I.Assignment B₁) (datatype : Literal → Iri) (container : Nat → Iri)\n  (axioms G : RDF11.GeneralizedGraph Iri Literal B₁) (E : RDF11.GeneralizedGraph Iri Literal B₂),\n  I.GraphTrue A axioms → I.GraphTrue A G → I.GraphTrue A (RDF11.AxiomSeed datatype container axioms G E)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ENTAILMENT-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.denote_mapLiteral",
+      "module": "RDF11.LiteralSubstitution",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u_1} {B : Type} (I : RDF11.SimpleInterpretation Iri Literal U) (A : I.Assignment B)\n  (f : Literal → Literal) (t : RDF11.Term Iri Literal B),\n  (∀ (l : Literal), RDF11.Term.hasLiteral l t → I.IL (f l) = I.IL l) →\n    I.denote A (RDF11.Term.mapLiteral f t) = I.denote A t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-LITERAL-SUBSTITUTION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.equal_recognized_values",
+      "module": "RDF11.LiteralSubstitution",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u_1} {Value : Type} {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri}\n  {ρ : RDF11.ValueRealization Value U} {l : Literal} {v : Value} {k : Literal}\n  (I : RDF11.SimpleInterpretation Iri Literal U),\n  I.DConditions T D ρ → T.RecognizedValue D l v → T.RecognizedValue D k v → I.IL l = I.IL k",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-LITERAL-SUBSTITUTION",
+        "MT11-DATATYPE-VALUE-SUBSTITUTION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.rdf_closure_satisfaction",
+      "module": "RDF11.EntailmentClosure",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u_1} {Value : Type} {T : RDF11.DatatypeTheory Iri Literal Value}\n  {v : RDF11.RDFVocabulary Iri} {B₁ B₂ : Type} (I : RDF11.SimpleInterpretation Iri Literal U),\n  I.RDFModel T v.baseDatatypes v →\n    ∀ (G : RDF11.GeneralizedGraph Iri Literal B₁) (E : RDF11.GeneralizedGraph Iri Literal B₂),\n      I.Satisfies (RDF11.RDFClosure T v G E) ↔ I.Satisfies G",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-ENTAILMENT-CLOSURE",
+        "MT11-GENERALIZED-CLOSURE-COMPLETENESS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.rdf_step_sound",
+      "module": "RDF11.EntailmentClosure",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u_1} {Value : Type} {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri}\n  {v : RDF11.RDFVocabulary Iri} {ρ : RDF11.ValueRealization Value U} {B : Type}\n  {G : RDF11.GeneralizedGraph Iri Literal B} {t : RDF11.GeneralizedTriple Iri Literal B}\n  (I : RDF11.SimpleInterpretation Iri Literal U),\n  I.RDFConditions T D v ρ → ∀ (A : I.Assignment B), I.GraphTrue A G → RDF11.RDFStep T D v G t → I.TripleTrue A t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ENTAILMENT-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.rdfs_closure_satisfaction",
+      "module": "RDF11.EntailmentClosure",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u_1} {Value : Type} {T : RDF11.DatatypeTheory Iri Literal Value}\n  {v : RDF11.RDFSVocabulary Iri} {B₁ B₂ : Type} (I : RDF11.SimpleInterpretation Iri Literal U),\n  I.RDFSModel T v.toRDF.baseDatatypes v →\n    ∀ (G : RDF11.GeneralizedGraph Iri Literal B₁) (E : RDF11.GeneralizedGraph Iri Literal B₂),\n      I.Satisfies (RDF11.RDFSClosure T v G E) ↔ I.Satisfies G",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-ENTAILMENT-CLOSURE",
+        "MT11-GENERALIZED-CLOSURE-COMPLETENESS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.rdfs_generalized_step_sound",
+      "module": "RDF11.EntailmentClosure",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u_1} {Value : Type} {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri}\n  {v : RDF11.RDFSVocabulary Iri} {ρ : RDF11.ValueRealization Value U} {B : Type}\n  {G : RDF11.GeneralizedGraph Iri Literal B} {t : RDF11.GeneralizedTriple Iri Literal B}\n  (I : RDF11.SimpleInterpretation Iri Literal U),\n  I.RDFSConditions T D v ρ →\n    ∀ (A : I.Assignment B), I.GraphTrue A G → RDF11.RDFSGeneralizedStep T D v G t → I.TripleTrue A t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ENTAILMENT-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.recognizedValue_denotes",
+      "module": "RDF11.LiteralSubstitution",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u_1} {Value : Type} {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri}\n  {ρ : RDF11.ValueRealization Value U} {l : Literal} {v : Value} (I : RDF11.SimpleInterpretation Iri Literal U),\n  I.DConditions T D ρ → T.RecognizedValue D l v → I.LiteralValue ρ l v",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-LITERAL-SUBSTITUTION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.ruleDerives_true",
+      "module": "RDF11.EntailmentClosure",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u_1} {B : Type} (I : RDF11.SimpleInterpretation Iri Literal U) (A : I.Assignment B)\n  (step : RDF11.GeneralizedGraph Iri Literal B → RDF11.GeneralizedTriple Iri Literal B → Prop)\n  (seed : RDF11.GeneralizedGraph Iri Literal B),\n  I.GraphTrue A seed →\n    (∀ (H : RDF11.GeneralizedGraph Iri Literal B) (t : RDF11.GeneralizedTriple Iri Literal B),\n        I.GraphTrue A H → step H t → I.TripleTrue A t) →\n      I.GraphTrue A (RDF11.RuleDerives step seed)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ENTAILMENT-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.satisfies_mapLiteral_iff",
+      "module": "RDF11.LiteralSubstitution",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u_1} {B : Type} (I : RDF11.SimpleInterpretation Iri Literal U) (f : Literal → Literal)\n  (G : RDF11.GeneralizedGraph Iri Literal B),\n  (∀ (t : RDF11.GeneralizedTriple Iri Literal B),\n      G t → ∀ (l : Literal), RDF11.GeneralizedTriple.hasLiteral l t → I.IL (f l) = I.IL l) →\n    (I.Satisfies (RDF11.GeneralizedGraph.mapLiteral f G) ↔ I.Satisfies G)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-LITERAL-SUBSTITUTION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.tripleTrue_mapLiteral",
+      "module": "RDF11.LiteralSubstitution",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u_1} {B : Type} (I : RDF11.SimpleInterpretation Iri Literal U) (A : I.Assignment B)\n  (f : Literal → Literal) (t : RDF11.GeneralizedTriple Iri Literal B),\n  (∀ (l : Literal), RDF11.GeneralizedTriple.hasLiteral l t → I.IL (f l) = I.IL l) →\n    (I.TripleTrue A (RDF11.GeneralizedTriple.mapLiteral f t) ↔ I.TripleTrue A t)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-LITERAL-SUBSTITUTION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Term.mapLiteral",
+      "module": "RDF11.LiteralSubstitution",
+      "kind": "definition",
+      "type": "{Literal Literal' Iri B : Type} → (Literal → Literal') → RDF11.Term Iri Literal B → RDF11.Term Iri Literal' B",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-LITERAL-SUBSTITUTION",
+        "MT11-DATATYPE-VALUE-SUBSTITUTION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Term.mapLiteral.eq_1",
+      "module": "RDF11.LiteralSubstitution",
+      "kind": "theorem",
+      "type": "∀ {Literal Literal' Iri B : Type} (f : Literal → Literal') (a : Iri),\n  RDF11.Term.mapLiteral f (RDF11.Term.iri a) = RDF11.Term.iri a",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-LITERAL-SUBSTITUTION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Term.mapLiteral.eq_2",
+      "module": "RDF11.LiteralSubstitution",
+      "kind": "theorem",
+      "type": "∀ {Literal Literal' Iri B : Type} (f : Literal → Literal') (l : Literal),\n  RDF11.Term.mapLiteral f (RDF11.Term.literal l) = RDF11.Term.literal (f l)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-LITERAL-SUBSTITUTION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Term.mapLiteral.eq_3",
+      "module": "RDF11.LiteralSubstitution",
+      "kind": "theorem",
+      "type": "∀ {Literal Literal' Iri B : Type} (f : Literal → Literal') (b : B),\n  RDF11.Term.mapLiteral f (RDF11.Term.blank b) = RDF11.Term.blank b",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-LITERAL-SUBSTITUTION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Term.mapLiteral.match_1",
+      "module": "RDF11.LiteralSubstitution",
+      "kind": "definition",
+      "type": "{Literal Iri B : Type} →\n  (motive : RDF11.Term Iri Literal B → Sort u_1) →\n    (x : RDF11.Term Iri Literal B) →\n      ((a : Iri) → motive (RDF11.Term.iri a)) →\n        ((l : Literal) → motive (RDF11.Term.literal l)) → ((b : B) → motive (RDF11.Term.blank b)) → motive x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-LITERAL-SUBSTITUTION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ValuePreservingLiteralMap",
+      "module": "RDF11.LiteralSubstitution",
+      "kind": "definition",
+      "type": "{Iri Literal Value B : Type} →\n  RDF11.DatatypeTheory Iri Literal Value →\n    RDF11.Set Iri → RDF11.GeneralizedGraph Iri Literal B → (Literal → Literal) → Prop",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-LITERAL-SUBSTITUTION",
+        "MT11-DATATYPE-VALUE-SUBSTITUTION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ValueRealization.mk.congr_simp",
+      "module": "RDF11.DatatypeModels",
+      "kind": "theorem",
+      "type": "∀ {Value : Type} {U : Type u} (value value_1 : Value → Option U) (e_value : value = value_1)\n  (injective : ∀ (v w : Value) (x : U), value v = some x → value w = some x → v = w),\n  { value := value, injective := injective } = { value := value_1, injective := ⋯ }",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-MODELS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.axiomSeed_contains",
+      "module": "RDF11.EntailmentClosure",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri B₁ B₂ : Type} (datatype : Literal → Iri) (container : Nat → Iri)\n  (axioms G : RDF11.GeneralizedGraph Iri Literal B₁) (E : RDF11.GeneralizedGraph Iri Literal B₂),\n  RDF11.Set.subset G (RDF11.AxiomSeed datatype container axioms G E)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ENTAILMENT-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.axiomSeed_subset",
+      "module": "RDF11.EntailmentClosure",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri B₁ B₂ : Type} (datatype : Literal → Iri) (container : Nat → Iri)\n  (axioms G : RDF11.GeneralizedGraph Iri Literal B₁) (E : RDF11.GeneralizedGraph Iri Literal B₂),\n  RDF11.Set.subset (RDF11.AxiomSeed datatype container axioms G E) (RDF11.Set.union G axioms)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ENTAILMENT-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.container_membership_derivable",
+      "module": "RDF11.ContainerEntailment",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (v : RDF11.RDFSVocabulary Iri) (G : RDF11.GeneralizedGraph Iri Literal B) (s o : RDF11.Term Iri Literal B) (n : Nat),\n  G\n      { subject := s, predicate := RDF11.Term.iri (v.iri (RDF11.RDFSSymbol.rdf (RDF11.RDFSymbol.container n))),\n        object := o } →\n    RDF11.RDFSDerives T D v G { subject := s, predicate := RDF11.Term.iri (v.iri RDF11.RDFSSymbol.member), object := o }",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-CONTAINER-ENTAILMENT",
+        "MT11-CONTAINERS-DESCRIPTION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.container_membership_entailment",
+      "module": "RDF11.ContainerEntailment",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (v : RDF11.RDFSVocabulary Iri) (G : RDF11.GeneralizedGraph Iri Literal B) (s o : RDF11.Term Iri Literal B) (n : Nat),\n  G\n      { subject := s, predicate := RDF11.Term.iri (v.iri (RDF11.RDFSSymbol.rdf (RDF11.RDFSymbol.container n))),\n        object := o } →\n    RDF11.RDFSEntails T D v G\n      (RDF11.Set.singleton { subject := s, predicate := RDF11.Term.iri (v.iri RDF11.RDFSSymbol.member), object := o })",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-CONTAINER-ENTAILMENT",
+        "MT11-CONTAINERS-DESCRIPTION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.d_entailment_not_simple_of_illTyped",
+      "module": "RDF11.DatatypeModels",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri) (l : Literal),\n  T.IllTyped D l → ∃ G E, RDF11.DEntails T D G.generalize E.generalize ∧ ¬RDF11.SimplyEntails G.generalize E.generalize",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-MODELS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.d_entailment_not_simple_of_illTyped.match_1_1",
+      "module": "RDF11.DatatypeModels",
+      "kind": "definition",
+      "type": "∀ (motive : Empty → Prop) (b : Empty), motive b",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-MODELS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.d_literal_map_equivalent",
+      "module": "RDF11.LiteralSubstitution",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (G : RDF11.GeneralizedGraph Iri Literal B) (f : Literal → Literal),\n  RDF11.ValuePreservingLiteralMap T D G f →\n    RDF11.DEntails T D G (RDF11.GeneralizedGraph.mapLiteral f G) ∧\n      RDF11.DEntails T D (RDF11.GeneralizedGraph.mapLiteral f G) G",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-LITERAL-SUBSTITUTION",
+        "MT11-DATATYPE-VALUE-SUBSTITUTION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.d_satisfiable_iff_no_illTyped",
+      "module": "RDF11.DatatypeModels",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (G : RDF11.GeneralizedGraph Iri Literal B),\n  RDF11.DSatisfiable T D G ↔\n    ∀ (t : RDF11.GeneralizedTriple Iri Literal B),\n      G t → ∀ (l : Literal), RDF11.GeneralizedTriple.hasLiteral l t → ¬T.IllTyped D l",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-DATATYPE-MODELS",
+        "MT11-SIMPLE-D-INCONSISTENCY-CHARACTERIZATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.d_unsatisfiable_iff_illTyped",
+      "module": "RDF11.DatatypeModels",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (G : RDF11.GeneralizedGraph Iri Literal B),\n  RDF11.DUnsatisfiable T D G ↔ ∃ t, G t ∧ ∃ l, RDF11.GeneralizedTriple.hasLiteral l t ∧ T.IllTyped D l",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-DATATYPE-MODELS",
+        "MT11-SIMPLE-D-INCONSISTENCY-CHARACTERIZATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.empty_d_satisfiable",
+      "module": "RDF11.DatatypeModels",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri),\n  RDF11.DSatisfiable T D RDF11.Set.empty",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-DATATYPE-MODELS",
+        "MT11-SIMPLE-D-INCONSISTENCY-CHARACTERIZATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.literalTypingImage",
+      "module": "RDF11.RDFRules",
+      "kind": "definition",
+      "type": "{Iri Literal Value B : Type} →\n  RDF11.DatatypeTheory Iri Literal Value →\n    RDF11.Set Iri →\n      RDF11.RDFVocabulary Iri → RDF11.GeneralizedGraph Iri Literal B → RDF11.GeneralizedGraph Iri Literal B",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-RDF-RULES",
+        "MT11-RULE-GrdfD1"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.rdf_closure_instance_check_sound",
+      "module": "RDF11.EntailmentClosure",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (v : RDF11.RDFVocabulary Iri)\n  (G E : RDF11.GeneralizedGraph Iri Literal B) (μ : RDF11.Substitution Iri Literal B),\n  RDF11.Set.subset (RDF11.GeneralizedGraph.substitute μ E) (RDF11.RDFClosure T v G E) →\n    RDF11.RDFEntails T v.baseDatatypes v G E",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-ENTAILMENT-CLOSURE",
+        "MT11-GENERALIZED-CLOSURE-COMPLETENESS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.rdf_closure_simple_check_sound",
+      "module": "RDF11.EntailmentClosure",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B₁ B₂ : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (v : RDF11.RDFVocabulary Iri)\n  (G : RDF11.GeneralizedGraph Iri Literal B₁) (E : RDF11.GeneralizedGraph Iri Literal B₂),\n  RDF11.SimplyEntails (RDF11.RDFClosure T v G E) E → RDF11.RDFEntails T v.baseDatatypes v G E",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-ENTAILMENT-CLOSURE",
+        "MT11-GENERALIZED-CLOSURE-COMPLETENESS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.rdfs_closure_instance_check_sound",
+      "module": "RDF11.EntailmentClosure",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (v : RDF11.RDFSVocabulary Iri)\n  (G E : RDF11.GeneralizedGraph Iri Literal B) (μ : RDF11.Substitution Iri Literal B),\n  RDF11.Set.subset (RDF11.GeneralizedGraph.substitute μ E) (RDF11.RDFSClosure T v G E) →\n    RDF11.RDFSEntails T v.toRDF.baseDatatypes v G E",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-ENTAILMENT-CLOSURE",
+        "MT11-GENERALIZED-CLOSURE-COMPLETENESS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.rdfs_closure_simple_check_sound",
+      "module": "RDF11.EntailmentClosure",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B₁ B₂ : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (v : RDF11.RDFSVocabulary Iri)\n  (G : RDF11.GeneralizedGraph Iri Literal B₁) (E : RDF11.GeneralizedGraph Iri Literal B₂),\n  RDF11.SimplyEntails (RDF11.RDFSClosure T v G E) E → RDF11.RDFSEntails T v.toRDF.baseDatatypes v G E",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-ENTAILMENT-CLOSURE",
+        "MT11-GENERALIZED-CLOSURE-COMPLETENESS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ruleDerives_least",
+      "module": "RDF11.EntailmentClosure",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (step : RDF11.GeneralizedGraph Iri Literal B → RDF11.GeneralizedTriple Iri Literal B → Prop)\n  (seed closed : RDF11.GeneralizedGraph Iri Literal B),\n  RDF11.Set.subset seed closed →\n    (∀ (H : RDF11.Set (RDF11.GeneralizedTriple Iri Literal B)) (t : RDF11.GeneralizedTriple Iri Literal B),\n        H.subset closed → step H t → closed t) →\n      RDF11.Set.subset (RDF11.RuleDerives step seed) closed",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-ENTAILMENT-CLOSURE",
+        "MT11-GENERALIZED-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.value_preserving_literal_map_satisfaction",
+      "module": "RDF11.LiteralSubstitution",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B : Type} {U : Type u_1} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (G : RDF11.GeneralizedGraph Iri Literal B) (f : Literal → Literal),\n  RDF11.ValuePreservingLiteralMap T D G f →\n    ∀ (I : RDF11.SimpleInterpretation Iri Literal U),\n      I.DModel T D → (I.Satisfies (RDF11.GeneralizedGraph.mapLiteral f G) ↔ I.Satisfies G)",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-LITERAL-SUBSTITUTION",
+        "MT11-DATATYPE-VALUE-SUBSTITUTION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.LiteralSubstitution.0.RDF11.Term.mapLiteral.match_1.eq_1",
+      "module": "RDF11.LiteralSubstitution",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri B : Type} (motive : RDF11.Term Iri Literal B → Sort u_1) (a : Iri)\n  (h_1 : (a : Iri) → motive (RDF11.Term.iri a)) (h_2 : (l : Literal) → motive (RDF11.Term.literal l))\n  (h_3 : (b : B) → motive (RDF11.Term.blank b)),\n  (match RDF11.Term.iri a with\n    | RDF11.Term.iri a => h_1 a\n    | RDF11.Term.literal l => h_2 l\n    | RDF11.Term.blank b => h_3 b) =\n    h_1 a",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-LITERAL-SUBSTITUTION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.LiteralSubstitution.0.RDF11.Term.mapLiteral.match_1.eq_2",
+      "module": "RDF11.LiteralSubstitution",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri B : Type} (motive : RDF11.Term Iri Literal B → Sort u_1) (l : Literal)\n  (h_1 : (a : Iri) → motive (RDF11.Term.iri a)) (h_2 : (l : Literal) → motive (RDF11.Term.literal l))\n  (h_3 : (b : B) → motive (RDF11.Term.blank b)),\n  (match RDF11.Term.literal l with\n    | RDF11.Term.iri a => h_1 a\n    | RDF11.Term.literal l => h_2 l\n    | RDF11.Term.blank b => h_3 b) =\n    h_2 l",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-LITERAL-SUBSTITUTION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.LiteralSubstitution.0.RDF11.Term.mapLiteral.match_1.eq_3",
+      "module": "RDF11.LiteralSubstitution",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri B : Type} (motive : RDF11.Term Iri Literal B → Sort u_1) (b : B)\n  (h_1 : (a : Iri) → motive (RDF11.Term.iri a)) (h_2 : (l : Literal) → motive (RDF11.Term.literal l))\n  (h_3 : (b : B) → motive (RDF11.Term.blank b)),\n  (match RDF11.Term.blank b with\n    | RDF11.Term.iri a => h_1 a\n    | RDF11.Term.literal l => h_2 l\n    | RDF11.Term.blank b => h_3 b) =\n    h_3 b",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-LITERAL-SUBSTITUTION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.LiteralSubstitution.0.RDF11.Term.mapLiteral.match_1.splitter",
+      "module": "RDF11.LiteralSubstitution",
+      "kind": "definition",
+      "type": "{Literal Iri B : Type} →\n  (motive : RDF11.Term Iri Literal B → Sort u_1) →\n    (x : RDF11.Term Iri Literal B) →\n      ((a : Iri) → motive (RDF11.Term.iri a)) →\n        ((l : Literal) → motive (RDF11.Term.literal l)) → ((b : B) → motive (RDF11.Term.blank b)) → motive x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-LITERAL-SUBSTITUTION"
       ],
       "parent_declaration_if_applicable": null,
       "review": "pending_expert_review"

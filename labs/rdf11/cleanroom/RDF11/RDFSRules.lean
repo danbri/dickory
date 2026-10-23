@@ -116,6 +116,10 @@ inductive RDFSDerives (T : DatatypeTheory Iri Literal Value) (D : Set Iri)
   | premise : G t → RDFSDerives T D v G t
   | rdfAxiom : v.toRDF.axioms t → RDFSDerives T D v G t
   | rdfsAxiom : v.axioms t → RDFSDerives T D v G t
+  | rdfD2 : RDFSDerives T D v G t → RDFSDerives T D v G
+      ⟨t.predicate, .iri (v.iri (.rdf .rdfType)), .iri (v.iri (.rdf .rdfProperty))⟩
+  | GrdfD1 (s p l) : RDFSDerives T D v G ⟨s, p, .literal l⟩ → D (T.literalSyntax.datatype l) →
+      RDFSDerives T D v G ⟨.literal l, .iri (v.iri (.rdf .rdfType)), .iri (T.literalSyntax.datatype l)⟩
   | rule (H : GeneralizedGraph Iri Literal B) :
       (∀ t, H t → RDFSDerives T D v G t) → RDFSStep T D v H t → RDFSDerives T D v G t
 
@@ -126,6 +130,8 @@ theorem SimpleInterpretation.rdfs_derivation_sound (I : SimpleInterpretation Iri
   | premise ht => exact hG _ ht
   | rdfAxiom ht => exact I.rdf_axiom_true h.rdf A _ ht
   | rdfsAxiom ht => exact I.rdfs_axiom_true h A _ ht
+  | rdfD2 _ ih => exact I.rdfD2_triple h.rdf.property A _ ih
+  | GrdfD1 s p l _ hd ih => exact I.GrdfD1_triple h.rdf A _ ih (Or.inr (Or.inr rfl)) hd
   | rule H _ step ih => exact I.rdfs_step_sound h A ih step
 
 theorem rdfs_derives_entailment (T : DatatypeTheory Iri Literal Value) (D : Set Iri)

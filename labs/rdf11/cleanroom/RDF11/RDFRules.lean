@@ -6,6 +6,33 @@ import RDF11.RDF
 
 namespace RDF11
 
+/-- Appendix A's generalized rule retains the literal as the subject. -/
+theorem SimpleInterpretation.GrdfD1_triple (I : SimpleInterpretation Iri Literal U)
+    (h : I.RDFConditions T D v ρ) (A : I.Assignment B)
+    (t : GeneralizedTriple Iri Literal B) (ht : I.TripleTrue A t)
+    (hl : t.hasLiteral l) (hd : D (T.literalSyntax.datatype l)) :
+    I.TripleTrue A ⟨.literal l, .iri (v.iri .rdfType), .iri (T.literalSyntax.datatype l)⟩ := by
+  cases hv : I.IL l with
+  | none => exact False.elim (I.undefined_literal_any_position A l hv t hl ht)
+  | some r =>
+    apply I.tripleTrue_of_relates A _ (s := r.val) rfl (by simp [SimpleInterpretation.denote, hv]) rfl
+    exact I.rdf_literal_typing h hd r hv
+
+def literalTypingImage (T : DatatypeTheory Iri Literal Value) (D : Set Iri)
+    (v : RDFVocabulary Iri) (G : GeneralizedGraph Iri Literal B) : GeneralizedGraph Iri Literal B :=
+  fun t => ∃ s p l, G ⟨s, p, .literal l⟩ ∧ D (T.literalSyntax.datatype l) ∧
+    t = ⟨.literal l, .iri (v.iri .rdfType), .iri (T.literalSyntax.datatype l)⟩
+
+theorem GrdfD1 (T : DatatypeTheory Iri Literal Value) (D : Set Iri)
+    (v : RDFVocabulary Iri) (G : GeneralizedGraph Iri Literal B) :
+    RDFEntails.{u} T D v G (literalTypingImage T D v G) := by
+  rintro U I ⟨ρ, hρ⟩ hG
+  obtain ⟨A, hA⟩ := (I.satisfies_iff_exists_graphTrue G).mp hG
+  apply (I.satisfies_iff_exists_graphTrue _).mpr
+  refine ⟨A, ?_⟩
+  rintro _ ⟨s, p, l, ht, hd, rfl⟩
+  exact I.GrdfD1_triple hρ A _ (hA _ ht) (Or.inr (Or.inr rfl)) hd
+
 def rdfD1Conclusion (v : RDFVocabulary Iri) (datatype : Iri)
     (s p : Term Iri Literal B) : GeneralizedGraph Iri Literal (Sum B Unit) :=
   Set.union

@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "status": "draft_fourth_formalization_increment",
+  "status": "draft_fifth_formalization_increment",
   "selection_method": "Human-readable AI close reading; selectors locate already selected passages and do not extract assertions.",
   "mappings": [
     {
@@ -1530,29 +1530,6 @@
       "implementation_refinement": "not_connected_to_published_package"
     },
     {
-      "claim_id": "MT11-DATATYPE-VALUE-SUBSTITUTION",
-      "relation": "partial_theorem",
-      "symbol_linked_english": "Literals recognized to have the same value can be substituted in corresponding triples to obtain datatype entailments, including across different recognized datatypes with overlapping value spaces.",
-      "bindings": [
-        {
-          "symbol": "same_value_literals",
-          "lean": "RDF11.SimpleInterpretation.same_value_literals"
-        },
-        {
-          "symbol": "literal_object_congruence",
-          "lean": "RDF11.SimpleInterpretation.literal_object_congruence"
-        },
-        {
-          "symbol": "d_literal_object_substitution",
-          "lean": "RDF11.d_literal_object_substitution"
-        }
-      ],
-      "limitations": "Proved for object-literal replacement, including distinct recognized ordinary datatypes sharing a value. Arbitrary-position simultaneous replacement and concrete XSD equalities remain open.",
-      "extraction_review": "pending_expert_review",
-      "formalization_review": "pending_expert_review",
-      "implementation_refinement": "not_connected_to_published_package"
-    },
-    {
       "claim_id": "MT11-RDF-INTERPRETATION",
       "relation": "partial_definition",
       "symbol_linked_english": "An RDF interpretation recognizing D is a D-interpretation in which D includes rdf:langString and xsd:string and the RDF conditions and axiomatic triples hold.",
@@ -2729,6 +2706,220 @@
       "extraction_review": "pending_expert_review",
       "formalization_review": "pending_expert_review",
       "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-SIMPLE-D-INCONSISTENCY-CHARACTERIZATION",
+      "relation": "theorem",
+      "symbol_linked_english": "Ill-typed literals are the only source of unsatisfiability for simple D-entailment; adding RDF/RDFS vocabulary conditions can introduce other sources.",
+      "bindings": [
+        {
+          "symbol": "interpretation",
+          "lean": "RDF11.DatatypeModel.interpretation"
+        },
+        {
+          "symbol": "conditions",
+          "lean": "RDF11.DatatypeModel.conditions"
+        },
+        {
+          "symbol": "satisfies",
+          "lean": "RDF11.DatatypeModel.satisfies"
+        },
+        {
+          "symbol": "d_satisfiable_iff_no_illTyped",
+          "lean": "RDF11.d_satisfiable_iff_no_illTyped"
+        },
+        {
+          "symbol": "d_unsatisfiable_iff_illTyped",
+          "lean": "RDF11.d_unsatisfiable_iff_illTyped"
+        },
+        {
+          "symbol": "empty_d_satisfiable",
+          "lean": "RDF11.empty_d_satisfiable"
+        }
+      ],
+      "limitations": "Constructs a D-model for every fixed external datatype theory and every graph without ill-typed literals, with no finiteness restriction. The carrier embeds all external values injectively and has one additional resource. This is an existence witness, not a new universal interpretation condition. Concrete RDF/RDFS model existence is a separate obligation.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-DATATYPE-VALUE-SUBSTITUTION",
+      "relation": "theorem",
+      "symbol_linked_english": "Literals recognized to have the same value can be substituted in corresponding triples to obtain datatype entailments, including across different recognized datatypes with overlapping value spaces.",
+      "bindings": [
+        {
+          "symbol": "RecognizedValue",
+          "lean": "RDF11.DatatypeTheory.RecognizedValue"
+        },
+        {
+          "symbol": "equal_recognized_values",
+          "lean": "RDF11.SimpleInterpretation.equal_recognized_values"
+        },
+        {
+          "symbol": "mapLiteral",
+          "lean": "RDF11.Term.mapLiteral"
+        },
+        {
+          "symbol": "mapLiteral",
+          "lean": "RDF11.GeneralizedTriple.mapLiteral"
+        },
+        {
+          "symbol": "mapLiteral",
+          "lean": "RDF11.GeneralizedGraph.mapLiteral"
+        },
+        {
+          "symbol": "ValuePreservingLiteralMap",
+          "lean": "RDF11.ValuePreservingLiteralMap"
+        },
+        {
+          "symbol": "value_preserving_literal_map_satisfaction",
+          "lean": "RDF11.value_preserving_literal_map_satisfaction"
+        },
+        {
+          "symbol": "d_literal_map_equivalent",
+          "lean": "RDF11.d_literal_map_equivalent"
+        }
+      ],
+      "limitations": "Simultaneous replacement is proved for every literal position, including across ordinary datatype spaces and normalized language-tagged values. Unchanged literals need no recognition proof. Different input triples may collapse to one set member. Concrete datatype value equalities remain external obligations.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-RULE-GrdfD1",
+      "relation": "theorem",
+      "symbol_linked_english": "For a premise triple containing a literal typed by d in D, infer the generalized triple literal rdf:type d.",
+      "bindings": [
+        {
+          "symbol": "GrdfD1_triple",
+          "lean": "RDF11.SimpleInterpretation.GrdfD1_triple"
+        },
+        {
+          "symbol": "literalTypingImage",
+          "lean": "RDF11.literalTypingImage"
+        },
+        {
+          "symbol": "GrdfD1",
+          "lean": "RDF11.GrdfD1"
+        },
+        {
+          "symbol": "GrdfD1",
+          "lean": "RDF11.RDFStep.GrdfD1"
+        },
+        {
+          "symbol": "GrdfD1",
+          "lean": "RDF11.RDFSDerives.GrdfD1"
+        }
+      ],
+      "limitations": "The rule and graph image use the source object-literal premise. The shared helper proves the stronger any-position semantic consequence. Recognized typing is required; well-typedness is not an extra premise. Both RDF and RDFS derivations preserve one assignment.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-GENERALIZED-CLOSURE",
+      "relation": "partial_definition",
+      "symbol_linked_english": "The generalized RDF/RDFS closure of S towards E adds the prescribed finite-vocabulary axioms and saturates generalized triples with GrdfD1, rdfD2 and, for RDFS, rdfs1–rdfs13 at the base recognized datatype set.",
+      "bindings": [
+        {
+          "symbol": "NonContainerAxioms",
+          "lean": "RDF11.NonContainerAxioms"
+        },
+        {
+          "symbol": "ContainerAxioms",
+          "lean": "RDF11.ContainerAxioms"
+        },
+        {
+          "symbol": "ConclusionAxioms",
+          "lean": "RDF11.ConclusionAxioms"
+        },
+        {
+          "symbol": "AxiomSeed",
+          "lean": "RDF11.AxiomSeed"
+        },
+        {
+          "symbol": "RDFStep",
+          "lean": "RDF11.RDFStep"
+        },
+        {
+          "symbol": "RDFSGeneralizedStep",
+          "lean": "RDF11.RDFSGeneralizedStep"
+        },
+        {
+          "symbol": "RuleDerives",
+          "lean": "RDF11.RuleDerives"
+        },
+        {
+          "symbol": "ruleDerives_least",
+          "lean": "RDF11.ruleDerives_least"
+        },
+        {
+          "symbol": "RDFClosure",
+          "lean": "RDF11.RDFClosure"
+        },
+        {
+          "symbol": "RDFSClosure",
+          "lean": "RDF11.RDFSClosure"
+        }
+      ],
+      "limitations": "Transcribes the conclusion-based axiom selection and base recognized set. The rdf:_1 fallback tests literal set growth after step 2, not merely absence of container IRIs in E. Saturation is an inductive least-closure specification; a finite executable generator and its equivalence are not yet proved. Completeness of the printed E-only selection is under review.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-GENERALIZED-CLOSURE-COMPLETENESS",
+      "relation": "partial_theorem",
+      "symbol_linked_english": "If S is RDF-consistent, respectively RDFS-consistent, then S entails E in that regime exactly when the corresponding generalized closure towards E simply entails E.",
+      "bindings": [
+        {
+          "symbol": "rdf_closure_satisfaction",
+          "lean": "RDF11.SimpleInterpretation.rdf_closure_satisfaction"
+        },
+        {
+          "symbol": "rdfs_closure_satisfaction",
+          "lean": "RDF11.SimpleInterpretation.rdfs_closure_satisfaction"
+        },
+        {
+          "symbol": "rdf_closure_simple_check_sound",
+          "lean": "RDF11.rdf_closure_simple_check_sound"
+        },
+        {
+          "symbol": "rdfs_closure_simple_check_sound",
+          "lean": "RDF11.rdfs_closure_simple_check_sound"
+        },
+        {
+          "symbol": "rdf_closure_instance_check_sound",
+          "lean": "RDF11.rdf_closure_instance_check_sound"
+        },
+        {
+          "symbol": "rdfs_closure_instance_check_sound",
+          "lean": "RDF11.rdfs_closure_instance_check_sound"
+        }
+      ],
+      "limitations": "Only the positive/sound direction is proved, including a concrete instance-subgraph criterion. The proof works for generalized endpoints, does not require consistency or finiteness, and retains one common assignment. No converse or complete algorithm is claimed. The printed container-axiom selection has an open source-scope question.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-CONTAINERS-DESCRIPTION",
+      "relation": "partial_theorem",
+      "symbol_linked_english": "Container vocabulary describes entities with a type and partial membership information; indexed membership properties distinguish positions, while rdfs:member is generic membership.",
+      "bindings": [
+        {
+          "symbol": "container_membership_derivable",
+          "lean": "RDF11.container_membership_derivable"
+        },
+        {
+          "symbol": "container_membership_entailment",
+          "lean": "RDF11.container_membership_entailment"
+        }
+      ],
+      "limitations": "Proves that every indexed membership assertion entails generic rdfs:member membership through its full-family axiom, rdfs12 and rdfs7. Other container-description assertions remain unformalized; concrete IRI spelling is still an external vocabulary binding.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
     }
   ],
   "passage_selectors": [
@@ -3788,6 +3979,67 @@
         "MT11-RDFS-DATATYPE-INCONSISTENCY"
       ],
       "within_section": "patterns-of-rdfs-entailment-informative"
+    },
+    {
+      "id": "d-only-inconsistency",
+      "source": "mt",
+      "tag": "p",
+      "text": "Ill-typed literals are the only way in which a graph can be simply D-unsatisfiable",
+      "claims": [
+        "MT11-SIMPLE-D-INCONSISTENCY-CHARACTERIZATION"
+      ],
+      "within_section": "patterns-of-datatype-entailment-informative"
+    },
+    {
+      "id": "grdfd1-rule",
+      "source": "mt",
+      "tag": "tr",
+      "text": "GrdfD1",
+      "claims": [
+        "MT11-RULE-GrdfD1"
+      ],
+      "within_section": "entailment-rules-informative"
+    },
+    {
+      "id": "closure-definition",
+      "source": "mt",
+      "tag": "p",
+      "text": "Define the generalized RDF (RDFS) closure of S towards E",
+      "claims": [
+        "MT11-GENERALIZED-CLOSURE"
+      ],
+      "within_section": "entailment-rules-informative"
+    },
+    {
+      "id": "closure-procedure",
+      "source": "mt",
+      "tag": "p",
+      "text": "If no triples were added in step 2.",
+      "claims": [
+        "MT11-GENERALIZED-CLOSURE",
+        "MT11-GENERALIZED-CLOSURE-COMPLETENESS"
+      ],
+      "within_section": "entailment-rules-informative"
+    },
+    {
+      "id": "closure-completeness",
+      "source": "mt",
+      "tag": "p",
+      "text": "If S is RDF (RDFS) consistent",
+      "claims": [
+        "MT11-GENERALIZED-CLOSURE-COMPLETENESS"
+      ],
+      "within_section": "entailment-rules-informative"
+    },
+    {
+      "id": "container-membership-description",
+      "source": "mt",
+      "tag": "p",
+      "text": "The RDFS vocabulary adds a generic membership property",
+      "claims": [
+        "MT11-CONTAINERS-DESCRIPTION"
+      ],
+      "within_section": "rdf-containers"
     }
   ],
   "context_resolutions": [
@@ -3834,6 +4086,15 @@
       "antecedent_passage": "rdfs-language",
       "resolved_meaning": "Recognized datatype IRIs other than rdf:langString, whose class extension was specified in the preceding clause.",
       "inference": "Specialize the inherited RDF extension theorem to the ordinary branch of recognizedSpace.",
+      "review": "pending"
+    },
+    {
+      "claim_id": "MT11-GENERALIZED-CLOSURE",
+      "passage": "closure-procedure",
+      "source_phrase": "no triples were added in step 2.",
+      "antecedent_passage": "closure-procedure",
+      "resolved_meaning": "The axioms selected by container IRIs occurring in E are already a subset of S union the non-container axioms added in step 1.",
+      "inference": "Literal set-growth reading of the printed procedure. A possible intended shorthand for no container IRIs in E is not silently substituted.",
       "review": "pending"
     }
   ]

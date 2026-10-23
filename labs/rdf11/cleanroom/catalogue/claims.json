@@ -4,7 +4,7 @@
   "method": "Human-readable AI close reading; selectors locate already selected passages and do not extract assertions.",
   "source_inventory": "../ledger/semantics-inventory.json",
   "inventory_sha256": "acf9b60576a2c688a73e2c39f8e6346d199742a50a61baa2d4faafdadf20c390",
-  "mapping_input_sha256": "f1c39edf94cf69fa577fb790be58e55ad19341032cc824d027c42da4cceeb980",
+  "mapping_input_sha256": "dddf9fc52b6de6523115dd2f3165b15f89bdc39ec906b5a9d7a1e3b1574f7210",
   "documents": [
     {
       "id": "mt",
@@ -910,6 +910,22 @@
         },
         {
           "start": 70014,
+          "end": 70414,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 70414,
+          "end": 70734,
+          "refs": [
+            "MT11-SIMPLE-D-INCONSISTENCY-CHARACTERIZATION"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 70734,
           "end": 71594,
           "refs": [
             "UNRESOLVED-mt"
@@ -1697,6 +1713,71 @@
         },
         {
           "start": 95697,
+          "end": 102737,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 102737,
+          "end": 103077,
+          "refs": [
+            "MT11-RULE-GrdfD1"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 103077,
+          "end": 104030,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 104030,
+          "end": 104237,
+          "refs": [
+            "MT11-GENERALIZED-CLOSURE"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 104237,
+          "end": 104238,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 104238,
+          "end": 104990,
+          "refs": [
+            "MT11-GENERALIZED-CLOSURE",
+            "MT11-GENERALIZED-CLOSURE-COMPLETENESS"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 104990,
+          "end": 105037,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 105037,
+          "end": 105270,
+          "refs": [
+            "MT11-GENERALIZED-CLOSURE-COMPLETENESS"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 105270,
           "end": 111179,
           "refs": [
             "UNRESOLVED-mt"
@@ -1713,6 +1794,22 @@
         },
         {
           "start": 111381,
+          "end": 120900,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 120900,
+          "end": 121137,
+          "refs": [
+            "MT11-CONTAINERS-DESCRIPTION"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 121137,
           "end": 139975,
           "refs": [
             "UNRESOLVED-mt"
@@ -3301,6 +3398,91 @@
         "MT11-RDFS-DATATYPE-INCONSISTENCY"
       ],
       "slice_sha256": "96d5f382adf1509b2266d503cb0663420385b2e74629060b778fbaf4b9eb72fe",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "d-only-inconsistency",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 70414,
+      "end": 70734,
+      "claims": [
+        "MT11-SIMPLE-D-INCONSISTENCY-CHARACTERIZATION"
+      ],
+      "slice_sha256": "3e08e5f04dafabfef2326ad5f77cc74e113475b6b188866aa4678265e7f08ebc",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "grdfd1-rule",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 102737,
+      "end": 103077,
+      "claims": [
+        "MT11-RULE-GrdfD1"
+      ],
+      "slice_sha256": "7d19bacf86a75b57e9c7a8d87c8a4ebbf195470dc053d552ee1bae4c1f85fb8f",
+      "locator_tag": "tr",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "closure-definition",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 104030,
+      "end": 104237,
+      "claims": [
+        "MT11-GENERALIZED-CLOSURE"
+      ],
+      "slice_sha256": "663afb7dbb0b8c62df661116703fe239b28d5f8a0c2dff762c227a52a6cb1e33",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "closure-procedure",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 104238,
+      "end": 104990,
+      "claims": [
+        "MT11-GENERALIZED-CLOSURE",
+        "MT11-GENERALIZED-CLOSURE-COMPLETENESS"
+      ],
+      "slice_sha256": "d552ec46768063e0e25a007141209bbdb502b0d5a1d448ccbd30bd208d2aa7fc",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "closure-completeness",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 105037,
+      "end": 105270,
+      "claims": [
+        "MT11-GENERALIZED-CLOSURE-COMPLETENESS"
+      ],
+      "slice_sha256": "9504d967a8206162206e94d82dbb8b895c3c6c9a8fc79049d4eacb19cc006e1a",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "container-membership-description",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 120900,
+      "end": 121137,
+      "claims": [
+        "MT11-CONTAINERS-DESCRIPTION"
+      ],
+      "slice_sha256": "dbced0f08f020d752724b4084b5144fef93cb4ad933b1bc39edebb781d666d93",
       "locator_tag": "p",
       "review": "pending",
       "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
@@ -7350,23 +7532,43 @@
       },
       "cleanroom_mapping": {
         "claim_id": "MT11-DATATYPE-VALUE-SUBSTITUTION",
-        "relation": "partial_theorem",
+        "relation": "theorem",
         "symbol_linked_english": "Literals recognized to have the same value can be substituted in corresponding triples to obtain datatype entailments, including across different recognized datatypes with overlapping value spaces.",
         "bindings": [
           {
-            "symbol": "same_value_literals",
-            "lean": "RDF11.SimpleInterpretation.same_value_literals"
+            "symbol": "RecognizedValue",
+            "lean": "RDF11.DatatypeTheory.RecognizedValue"
           },
           {
-            "symbol": "literal_object_congruence",
-            "lean": "RDF11.SimpleInterpretation.literal_object_congruence"
+            "symbol": "equal_recognized_values",
+            "lean": "RDF11.SimpleInterpretation.equal_recognized_values"
           },
           {
-            "symbol": "d_literal_object_substitution",
-            "lean": "RDF11.d_literal_object_substitution"
+            "symbol": "mapLiteral",
+            "lean": "RDF11.Term.mapLiteral"
+          },
+          {
+            "symbol": "mapLiteral",
+            "lean": "RDF11.GeneralizedTriple.mapLiteral"
+          },
+          {
+            "symbol": "mapLiteral",
+            "lean": "RDF11.GeneralizedGraph.mapLiteral"
+          },
+          {
+            "symbol": "ValuePreservingLiteralMap",
+            "lean": "RDF11.ValuePreservingLiteralMap"
+          },
+          {
+            "symbol": "value_preserving_literal_map_satisfaction",
+            "lean": "RDF11.value_preserving_literal_map_satisfaction"
+          },
+          {
+            "symbol": "d_literal_map_equivalent",
+            "lean": "RDF11.d_literal_map_equivalent"
           }
         ],
-        "limitations": "Proved for object-literal replacement, including distinct recognized ordinary datatypes sharing a value. Arbitrary-position simultaneous replacement and concrete XSD equalities remain open.",
+        "limitations": "Simultaneous replacement is proved for every literal position, including across ordinary datatype spaces and normalized language-tagged values. Unchanged literals need no recognition proof. Different input triples may collapse to one set member. Concrete datatype value equalities remain external obligations.",
         "extraction_review": "pending_expert_review",
         "formalization_review": "pending_expert_review",
         "implementation_refinement": "not_connected_to_published_package"
@@ -7421,10 +7623,46 @@
         "formal_proof": "unassessed",
         "test_mapping": "unassessed"
       },
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-SIMPLE-D-INCONSISTENCY-CHARACTERIZATION",
+        "relation": "theorem",
+        "symbol_linked_english": "Ill-typed literals are the only source of unsatisfiability for simple D-entailment; adding RDF/RDFS vocabulary conditions can introduce other sources.",
+        "bindings": [
+          {
+            "symbol": "interpretation",
+            "lean": "RDF11.DatatypeModel.interpretation"
+          },
+          {
+            "symbol": "conditions",
+            "lean": "RDF11.DatatypeModel.conditions"
+          },
+          {
+            "symbol": "satisfies",
+            "lean": "RDF11.DatatypeModel.satisfies"
+          },
+          {
+            "symbol": "d_satisfiable_iff_no_illTyped",
+            "lean": "RDF11.d_satisfiable_iff_no_illTyped"
+          },
+          {
+            "symbol": "d_unsatisfiable_iff_illTyped",
+            "lean": "RDF11.d_unsatisfiable_iff_illTyped"
+          },
+          {
+            "symbol": "empty_d_satisfiable",
+            "lean": "RDF11.empty_d_satisfiable"
+          }
+        ],
+        "limitations": "Constructs a D-model for every fixed external datatype theory and every graph without ill-typed literals, with no finiteness restriction. The carrier embeds all external values injectively and has one additional resource. This is an existence witness, not a new universal interpretation condition. Concrete RDF/RDFS model existence is a separate obligation.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "d-only-inconsistency"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-RDF-INTERPRETATION",
@@ -10688,10 +10926,42 @@
         "formal_proof": "unassessed",
         "test_mapping": "unassessed"
       },
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-RULE-GrdfD1",
+        "relation": "theorem",
+        "symbol_linked_english": "For a premise triple containing a literal typed by d in D, infer the generalized triple literal rdf:type d.",
+        "bindings": [
+          {
+            "symbol": "GrdfD1_triple",
+            "lean": "RDF11.SimpleInterpretation.GrdfD1_triple"
+          },
+          {
+            "symbol": "literalTypingImage",
+            "lean": "RDF11.literalTypingImage"
+          },
+          {
+            "symbol": "GrdfD1",
+            "lean": "RDF11.GrdfD1"
+          },
+          {
+            "symbol": "GrdfD1",
+            "lean": "RDF11.RDFStep.GrdfD1"
+          },
+          {
+            "symbol": "GrdfD1",
+            "lean": "RDF11.RDFSDerives.GrdfD1"
+          }
+        ],
+        "limitations": "The rule and graph image use the source object-literal premise. The shared helper proves the stronger any-position semantic consequence. Recognized typing is required; well-typedness is not an extra premise. Both RDF and RDFS derivations preserve one assignment.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "grdfd1-rule"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-GENERALIZED-CLOSURE",
@@ -10733,10 +11003,63 @@
           "operation": "Saturate under GrdfD1 and rdfD2, plus rdfs1–rdfs13 for RDFS, with D = {rdf:langString, xsd:string}."
         }
       ],
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-GENERALIZED-CLOSURE",
+        "relation": "partial_definition",
+        "symbol_linked_english": "The generalized RDF/RDFS closure of S towards E adds the prescribed finite-vocabulary axioms and saturates generalized triples with GrdfD1, rdfD2 and, for RDFS, rdfs1–rdfs13 at the base recognized datatype set.",
+        "bindings": [
+          {
+            "symbol": "NonContainerAxioms",
+            "lean": "RDF11.NonContainerAxioms"
+          },
+          {
+            "symbol": "ContainerAxioms",
+            "lean": "RDF11.ContainerAxioms"
+          },
+          {
+            "symbol": "ConclusionAxioms",
+            "lean": "RDF11.ConclusionAxioms"
+          },
+          {
+            "symbol": "AxiomSeed",
+            "lean": "RDF11.AxiomSeed"
+          },
+          {
+            "symbol": "RDFStep",
+            "lean": "RDF11.RDFStep"
+          },
+          {
+            "symbol": "RDFSGeneralizedStep",
+            "lean": "RDF11.RDFSGeneralizedStep"
+          },
+          {
+            "symbol": "RuleDerives",
+            "lean": "RDF11.RuleDerives"
+          },
+          {
+            "symbol": "ruleDerives_least",
+            "lean": "RDF11.ruleDerives_least"
+          },
+          {
+            "symbol": "RDFClosure",
+            "lean": "RDF11.RDFClosure"
+          },
+          {
+            "symbol": "RDFSClosure",
+            "lean": "RDF11.RDFSClosure"
+          }
+        ],
+        "limitations": "Transcribes the conclusion-based axiom selection and base recognized set. The rdf:_1 fallback tests literal set growth after step 2, not merely absence of container IRIs in E. Saturation is an inductive least-closure specification; a finite executable generator and its equivalence are not yet proved. Completeness of the printed E-only selection is under review.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "closure-definition",
+        "closure-procedure"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-GENERALIZED-CLOSURE-COMPLETENESS",
@@ -10761,10 +11084,47 @@
         "test_mapping": "unassessed"
       },
       "formalization_note": "Retain the consistency premise, regime-specific closure and base datatype set. This theorem does not automatically cover arbitrary additional datatypes or inconsistent inputs.",
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-GENERALIZED-CLOSURE-COMPLETENESS",
+        "relation": "partial_theorem",
+        "symbol_linked_english": "If S is RDF-consistent, respectively RDFS-consistent, then S entails E in that regime exactly when the corresponding generalized closure towards E simply entails E.",
+        "bindings": [
+          {
+            "symbol": "rdf_closure_satisfaction",
+            "lean": "RDF11.SimpleInterpretation.rdf_closure_satisfaction"
+          },
+          {
+            "symbol": "rdfs_closure_satisfaction",
+            "lean": "RDF11.SimpleInterpretation.rdfs_closure_satisfaction"
+          },
+          {
+            "symbol": "rdf_closure_simple_check_sound",
+            "lean": "RDF11.rdf_closure_simple_check_sound"
+          },
+          {
+            "symbol": "rdfs_closure_simple_check_sound",
+            "lean": "RDF11.rdfs_closure_simple_check_sound"
+          },
+          {
+            "symbol": "rdf_closure_instance_check_sound",
+            "lean": "RDF11.rdf_closure_instance_check_sound"
+          },
+          {
+            "symbol": "rdfs_closure_instance_check_sound",
+            "lean": "RDF11.rdfs_closure_instance_check_sound"
+          }
+        ],
+        "limitations": "Only the positive/sound direction is proved, including a concrete instance-subgraph criterion. The proof works for generalized endpoints, does not require consistency or finiteness, and retains one common assignment. No converse or complete algorithm is claimed. The printed container-axiom selection has an open source-scope question.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "closure-procedure",
+        "closure-completeness"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-FINITE-CLOSURE-COMPLEXITY",
@@ -11124,10 +11484,30 @@
         "formal_proof": "unassessed",
         "test_mapping": "unassessed"
       },
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-CONTAINERS-DESCRIPTION",
+        "relation": "partial_theorem",
+        "symbol_linked_english": "Container vocabulary describes entities with a type and partial membership information; indexed membership properties distinguish positions, while rdfs:member is generic membership.",
+        "bindings": [
+          {
+            "symbol": "container_membership_derivable",
+            "lean": "RDF11.container_membership_derivable"
+          },
+          {
+            "symbol": "container_membership_entailment",
+            "lean": "RDF11.container_membership_entailment"
+          }
+        ],
+        "limitations": "Proves that every indexed membership assertion entails generic rdfs:member membership through its full-family axiom, rdfs12 and rdfs7. Other container-description assertions remain unformalized; concrete IRI spelling is still an external vocabulary binding.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "container-membership-description"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-CONTAINERS-INTENDED-TYPES",
@@ -11398,6 +11778,15 @@
       "antecedent_passage": "rdfs-language",
       "resolved_meaning": "Recognized datatype IRIs other than rdf:langString, whose class extension was specified in the preceding clause.",
       "inference": "Specialize the inherited RDF extension theorem to the ordinary branch of recognizedSpace.",
+      "review": "pending"
+    },
+    {
+      "claim_id": "MT11-GENERALIZED-CLOSURE",
+      "passage": "closure-procedure",
+      "source_phrase": "no triples were added in step 2.",
+      "antecedent_passage": "closure-procedure",
+      "resolved_meaning": "The axioms selected by container IRIs occurring in E are already a subset of S union the non-container axioms added in step 1.",
+      "inference": "Literal set-growth reading of the printed procedure. A possible intended shorthand for no container IRIs in E is not silently substituted.",
       "review": "pending"
     }
   ],

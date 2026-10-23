@@ -20,3 +20,7 @@ import RDF11.RDFRules
 import RDF11.RDFS
 import RDF11.RDFSRules
 import RDF11.Statements
+import RDF11.DatatypeModels
+import RDF11.LiteralSubstitution
+import RDF11.EntailmentClosure
+import RDF11.ContainerEntailment
