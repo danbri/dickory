@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "status": "draft_fifth_formalization_increment",
+  "status": "draft_ninth_formalization_increment",
   "selection_method": "Human-readable AI close reading; selectors locate already selected passages and do not extract assertions.",
   "mappings": [
     {
@@ -1787,9 +1787,13 @@
         {
           "symbol": "classes_are_resources",
           "lean": "RDF11.SimpleInterpretation.classes_are_resources"
+        },
+        {
+          "symbol": "RDFSModelConstruction.distinct_coextensive_classes",
+          "lean": "RDF11.RDFSModelConstruction.distinct_coextensive_classes"
         }
       ],
-      "limitations": "Class extensions are relation slices on the same universe. No extensional equality of class identities is assumed. Concrete witnesses for empty or coextensive classes are not supplied.",
+      "limitations": "Class extensions are relation slices on the same universe. No extensional equality of class identities is assumed. The constructor gives distinct rdfs:Class and rdfs:Resource denotations with equal extensions under Parameters. An empty-class witness is not yet supplied.",
       "extraction_review": "pending_expert_review",
       "formalization_review": "pending_expert_review",
       "implementation_refinement": "not_connected_to_published_package"
@@ -1810,9 +1814,21 @@
         {
           "symbol": "RDFSModel",
           "lean": "RDF11.SimpleInterpretation.RDFSModel"
+        },
+        {
+          "symbol": "RDFSModelConstruction.interpretation",
+          "lean": "RDF11.RDFSModelConstruction.interpretation"
+        },
+        {
+          "symbol": "RDFSModelConstruction.conditions",
+          "lean": "RDF11.RDFSModelConstruction.conditions"
+        },
+        {
+          "symbol": "RDFSModelConstruction.model",
+          "lean": "RDF11.RDFSModelConstruction.model"
         }
       ],
-      "limitations": "Parameterized by abstract IRI/literal domains and a fixed external datatype theory; concrete XSD, XML Char and BCP47 implementations are not supplied. Expert mapping review remains pending. Includes both full axiom families. Language literal-image equality remains explicit; model existence for an arbitrary abstract literal interface is not assumed.",
+      "limitations": "IRI/literal domains and concrete built-in datatype meanings remain abstract. The new RDFSModelConstruction witnesses satisfy all existing conditions under explicit Parameters; those sufficient constructor choices are not additional requirements on every interpretation. Language literal-image equality remains explicit.",
       "extraction_review": "pending_expert_review",
       "formalization_review": "pending_expert_review",
       "implementation_refinement": "not_connected_to_published_package"
@@ -3399,7 +3415,7 @@
           "lean": "RDF11.RDFModelConstruction.base_empty_satisfiable"
         }
       ],
-      "limitations": "This is a sufficient family, not a characterization of all compatible datatype theories. The three recognition exclusions belong to the constructor, not the specification. It uses all supplied IRI/literal domains; concrete syntax and prescribed xsd:string/langString meanings remain external. Every recognized IRI, including langString, denotes its embedded fixed datatype. Aliases share the identity-indexed value space. No RDFS model-existence theorem, arbitrary-graph consistency criterion, or implementation refinement is established.",
+      "limitations": "This is a sufficient family, not a characterization of all compatible datatype theories. The three recognition exclusions belong to the constructor, not the specification. It uses all supplied IRI/literal domains; concrete syntax and prescribed xsd:string/langString meanings remain external. Every recognized IRI, including langString, denotes its embedded fixed datatype. Aliases share the identity-indexed value space. This RDF construction does not itself characterize arbitrary-graph consistency or implementation refinement. Its RDFS extension is mapped separately in MT11-RDFS-MODEL-EXISTENCE-CONSTRUCTION.",
       "extraction_review": "pending_expert_review",
       "formalization_review": "pending_expert_review",
       "implementation_refinement": "not_connected_to_published_package"
@@ -3430,7 +3446,7 @@
     {
       "claim_id": "MT11-RDFS-LANGUAGE-LITERAL-COVERAGE",
       "relation": "theorem",
-      "symbol_linked_english": "RDFSConditions imply that each w in T.languageSpace equals the languageValue of some actual tagged literal l with its ASCII-lowercased tag. A missing representative makes every graph RDFSUnsatisfiable for those parameters.",
+      "symbol_linked_english": "RDFSConditions imply that each w in T.languageSpace equals the languageValue of some actual tagged literal l with its ASCII-lowercased tag. A missing representative makes every graph RDFSUnsatisfiable for those parameters. With aligned langString names and the base recognition set, base_model_exists_iff_language_coverage proves the converse by constructing a model.",
       "bindings": [
         {
           "symbol": "SimpleInterpretation.rdfs_language_literal_coverage",
@@ -3443,9 +3459,17 @@
         {
           "symbol": "rdfs_unsatisfiable_of_missing_language_literal",
           "lean": "RDF11.rdfs_unsatisfiable_of_missing_language_literal"
+        },
+        {
+          "symbol": "RDFSModelConstruction.LanguageCoverage",
+          "lean": "RDF11.RDFSModelConstruction.LanguageCoverage"
+        },
+        {
+          "symbol": "RDFSModelConstruction.base_model_exists_iff_language_coverage",
+          "lean": "RDF11.RDFSModelConstruction.base_model_exists_iff_language_coverage"
         }
       ],
-      "limitations": "This derives a necessary condition on the abstract literal/type parameters. It neither proves that current abstract LiteralSyntax has complete coverage nor constructs a concrete RDF literal domain. Full RDFS model existence remains open.",
+      "limitations": "The iff characterizes inhabitation of the current parameterized model class with base D and aligned names. It neither proves that abstract LiteralSyntax supplies coverage nor constructs concrete RDF literals or prescribed built-in datatypes. It does not characterize satisfiability of arbitrary graphs.",
       "extraction_review": "pending_expert_review",
       "formalization_review": "pending_expert_review",
       "implementation_refinement": "not_connected_to_published_package"
@@ -3515,6 +3539,103 @@
         }
       ],
       "limitations": "The alias-literal clause is an explicit derived reading of the ordinary-IRI table row and absent language L2V, not a stated W3C example. It does not apply to canonical language-tagged literals. The nowhere-defined L2V placeholder does not turn the language datatype into an empty-valued datatype.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-RDFS-MODEL-EXISTENCE-CONSTRUCTION",
+      "relation": "partial_theorem",
+      "symbol_linked_english": "Under Parameters T D v, interpretation T D v Q satisfies every RDFSConditions field and all axioms. base_parameters discharges recognition exclusions for the base D when names agree and LanguageCoverage T holds. base_model_exists_iff_language_coverage proves that coverage is necessary and sufficient for this base model class to be inhabited.",
+      "bindings": [
+        {
+          "symbol": "RDFSModelConstruction.Parameters",
+          "lean": "RDF11.RDFSModelConstruction.Parameters"
+        },
+        {
+          "symbol": "RDFSModelConstruction.interpretation",
+          "lean": "RDF11.RDFSModelConstruction.interpretation"
+        },
+        {
+          "symbol": "RDFSModelConstruction.conditions",
+          "lean": "RDF11.RDFSModelConstruction.conditions"
+        },
+        {
+          "symbol": "RDFSModelConstruction.axioms",
+          "lean": "RDF11.RDFSModelConstruction.axioms"
+        },
+        {
+          "symbol": "RDFSModelConstruction.model",
+          "lean": "RDF11.RDFSModelConstruction.model"
+        },
+        {
+          "symbol": "RDFSModelConstruction.base_parameters",
+          "lean": "RDF11.RDFSModelConstruction.base_parameters"
+        },
+        {
+          "symbol": "RDFSModelConstruction.empty_satisfiable",
+          "lean": "RDF11.RDFSModelConstruction.empty_satisfiable"
+        },
+        {
+          "symbol": "RDFSModelConstruction.base_empty_satisfiable",
+          "lean": "RDF11.RDFSModelConstruction.base_empty_satisfiable"
+        },
+        {
+          "symbol": "RDFSModelConstruction.base_model_exists_iff_language_coverage",
+          "lean": "RDF11.RDFSModelConstruction.base_model_exists_iff_language_coverage"
+        }
+      ],
+      "limitations": "A sufficient witness family, not a characterization of all models or arbitrary-graph consistency. SchemaSymbol recognition exclusions are constructor choices, not specification requirements. IR, IP, IC and LV are universal in this family; recognized datatype class extensions still equal their prescribed spaces. Value supplies external values and datatype descriptors, not an exhaustive set of all literal values. Concrete syntax, language-literal coverage and built-in datatype correspondence remain external obligations.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-RDFS-NONSEPARATION",
+      "relation": "partial_theorem",
+      "symbol_linked_english": "overlapping_roles_model gives an RDFS model in which every resource is a property, class and literal value. class_self_membership and property_self_application give permitted self-relations. no_class_member_property_transfer supplies countermodels in both directions for an rdf:value assertion on a class versus an individual typed member.",
+      "bindings": [
+        {
+          "symbol": "RDFSModelConstruction.overlapping_roles_model",
+          "lean": "RDF11.RDFSModelConstruction.overlapping_roles_model"
+        },
+        {
+          "symbol": "RDFSModelConstruction.class_self_membership",
+          "lean": "RDF11.RDFSModelConstruction.class_self_membership"
+        },
+        {
+          "symbol": "RDFSModelConstruction.property_self_application",
+          "lean": "RDF11.RDFSModelConstruction.property_self_application"
+        },
+        {
+          "symbol": "RDFSModelConstruction.no_class_member_property_transfer",
+          "lean": "RDF11.RDFSModelConstruction.no_class_member_property_transfer"
+        },
+        {
+          "symbol": "RDFSModelConstruction.value_triple_iff",
+          "lean": "RDF11.RDFSModelConstruction.value_triple_iff"
+        }
+      ],
+      "limitations": "These are permitted configurations under Parameters, not configurations required in every RDFS interpretation. The non-inheritance theorem refutes two specific entailments using rdf:value; additional premises can support transfer. rdf:value is only an example property: its RDF property typing and RDFS Resource domain/range axioms remain satisfied. No special value-extraction operation is introduced.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-LITERAL-VALUES-NOT-SYNTAX",
+      "relation": "partial_theorem",
+      "symbol_linked_english": "iri_literal_satisfiable constructs an RDFS model satisfying the singleton triple a rdf:type rdfs:Literal, where a is an IRI, under Parameters T D v.",
+      "bindings": [
+        {
+          "symbol": "RDFSModelConstruction.iri_literal_true",
+          "lean": "RDF11.RDFSModelConstruction.iri_literal_true"
+        },
+        {
+          "symbol": "RDFSModelConstruction.iri_literal_satisfiable",
+          "lean": "RDF11.RDFSModelConstruction.iri_literal_satisfiable"
+        }
+      ],
+      "limitations": "This maps the consistency consequence in §9.1 paragraphs 3–5. It does not formalize every part of the syntax/value distinction, prove exclusion of syntax objects from LV, or identify LV with the image of IL or of external value realization. Concrete literal syntax and prescribed datatype meanings remain obligations.",
       "extraction_review": "pending_expert_review",
       "formalization_review": "pending_expert_review",
       "implementation_refinement": "not_connected_to_published_package"
@@ -4201,7 +4322,8 @@
       "tag": "p",
       "text": "A class may have an empty class extension.",
       "claims": [
-        "MT11-RDFS-CLASS-STRUCTURE"
+        "MT11-RDFS-CLASS-STRUCTURE",
+        "MT11-RDFS-NONSEPARATION"
       ],
       "within_section": "rdfs-interpretations"
     },
@@ -4211,7 +4333,8 @@
       "tag": "p",
       "text": "An RDFS interpretation (recognizing D) is an RDF interpretation",
       "claims": [
-        "MT11-RDFS-INTERPRETATION"
+        "MT11-RDFS-INTERPRETATION",
+        "MT11-RDFS-MODEL-EXISTENCE-CONSTRUCTION"
       ],
       "within_section": "rdfs-interpretations"
     },
@@ -4221,7 +4344,8 @@
       "tag": "p",
       "text": "ICEXT(y) is defined to be",
       "claims": [
-        "MT11-RDFS-ICEXT"
+        "MT11-RDFS-ICEXT",
+        "MT11-RDFS-MODEL-EXISTENCE-CONSTRUCTION"
       ],
       "within_section": "rdfs-interpretations"
     },
@@ -4231,7 +4355,8 @@
       "tag": "p",
       "text": "IC is defined to be",
       "claims": [
-        "MT11-RDFS-IC"
+        "MT11-RDFS-IC",
+        "MT11-RDFS-MODEL-EXISTENCE-CONSTRUCTION"
       ],
       "within_section": "rdfs-interpretations"
     },
@@ -4241,7 +4366,8 @@
       "tag": "p",
       "text": "LV is defined to be",
       "claims": [
-        "MT11-RDFS-LV"
+        "MT11-RDFS-LV",
+        "MT11-RDFS-MODEL-EXISTENCE-CONSTRUCTION"
       ],
       "within_section": "rdfs-interpretations"
     },
@@ -4251,7 +4377,8 @@
       "tag": "p",
       "text": "ICEXT(I(rdfs:Resource)) = IR",
       "claims": [
-        "MT11-RDFS-RESOURCE-EXTENSION"
+        "MT11-RDFS-RESOURCE-EXTENSION",
+        "MT11-RDFS-MODEL-EXISTENCE-CONSTRUCTION"
       ],
       "within_section": "rdfs-interpretations"
     },
@@ -4262,7 +4389,8 @@
       "text": "ICEXT(I(rdf:langString)) is the set",
       "claims": [
         "MT11-RDFS-LANGSTRING-EXTENSION",
-        "MT11-RDFS-LANGUAGE-LITERAL-COVERAGE"
+        "MT11-RDFS-LANGUAGE-LITERAL-COVERAGE",
+        "MT11-RDFS-MODEL-EXISTENCE-CONSTRUCTION"
       ],
       "within_section": "rdfs-interpretations"
     },
@@ -4272,7 +4400,8 @@
       "tag": "p",
       "text": "for every other IRI aaa in D, ICEXT",
       "claims": [
-        "MT11-RDFS-DATATYPE-EXTENSION"
+        "MT11-RDFS-DATATYPE-EXTENSION",
+        "MT11-RDFS-MODEL-EXISTENCE-CONSTRUCTION"
       ],
       "within_section": "rdfs-interpretations"
     },
@@ -4282,7 +4411,8 @@
       "tag": "p",
       "text": "for every IRI aaa in D, I(aaa) is in ICEXT",
       "claims": [
-        "MT11-RDFS-DATATYPE-TYPING"
+        "MT11-RDFS-DATATYPE-TYPING",
+        "MT11-RDFS-MODEL-EXISTENCE-CONSTRUCTION"
       ],
       "within_section": "rdfs-interpretations"
     },
@@ -4292,7 +4422,8 @@
       "tag": "td",
       "text": "rdfs:domain",
       "claims": [
-        "MT11-RDFS-DOMAIN"
+        "MT11-RDFS-DOMAIN",
+        "MT11-RDFS-MODEL-EXISTENCE-CONSTRUCTION"
       ],
       "element_id": "rdfssemcond2"
     },
@@ -4302,7 +4433,8 @@
       "tag": "td",
       "text": "rdfs:range",
       "claims": [
-        "MT11-RDFS-RANGE"
+        "MT11-RDFS-RANGE",
+        "MT11-RDFS-MODEL-EXISTENCE-CONSTRUCTION"
       ],
       "element_id": "rdfssemcond3"
     },
@@ -4313,7 +4445,8 @@
       "text": "transitive and reflexive",
       "claims": [
         "MT11-RDFS-SUBPROPERTY-TRANSITIVE",
-        "MT11-RDFS-SUBPROPERTY-REFLEXIVE"
+        "MT11-RDFS-SUBPROPERTY-REFLEXIVE",
+        "MT11-RDFS-MODEL-EXISTENCE-CONSTRUCTION"
       ],
       "element_id": "rdfssemcond4"
     },
@@ -4324,7 +4457,8 @@
       "text": "then x and y are in IP",
       "claims": [
         "MT11-RDFS-SUBPROPERTY-ENDPOINTS",
-        "MT11-RDFS-SUBPROPERTY-INCLUSION"
+        "MT11-RDFS-SUBPROPERTY-INCLUSION",
+        "MT11-RDFS-MODEL-EXISTENCE-CONSTRUCTION"
       ],
       "element_id": "rdfssemcond5"
     },
@@ -4334,7 +4468,8 @@
       "tag": "td",
       "text": "If x is in IC",
       "claims": [
-        "MT11-RDFS-CLASS-RESOURCE"
+        "MT11-RDFS-CLASS-RESOURCE",
+        "MT11-RDFS-MODEL-EXISTENCE-CONSTRUCTION"
       ],
       "element_id": "rdfssemcond6"
     },
@@ -4345,7 +4480,8 @@
       "text": "transitive and reflexive",
       "claims": [
         "MT11-RDFS-SUBCLASS-TRANSITIVE",
-        "MT11-RDFS-SUBCLASS-REFLEXIVE"
+        "MT11-RDFS-SUBCLASS-REFLEXIVE",
+        "MT11-RDFS-MODEL-EXISTENCE-CONSTRUCTION"
       ],
       "element_id": "rdfssemcond8"
     },
@@ -4356,7 +4492,8 @@
       "text": "then x and y are in IC",
       "claims": [
         "MT11-RDFS-SUBCLASS-ENDPOINTS",
-        "MT11-RDFS-SUBCLASS-INCLUSION"
+        "MT11-RDFS-SUBCLASS-INCLUSION",
+        "MT11-RDFS-MODEL-EXISTENCE-CONSTRUCTION"
       ],
       "element_id": "rdfssemcond7"
     },
@@ -4366,7 +4503,8 @@
       "tag": "td",
       "text": "rdfs:ContainerMembershipProperty",
       "claims": [
-        "MT11-RDFS-CONTAINER-SUBPROPERTY"
+        "MT11-RDFS-CONTAINER-SUBPROPERTY",
+        "MT11-RDFS-MODEL-EXISTENCE-CONSTRUCTION"
       ],
       "element_id": "rdfssemcond9"
     },
@@ -4376,7 +4514,8 @@
       "tag": "td",
       "text": "rdfs:Datatype",
       "claims": [
-        "MT11-RDFS-DATATYPE-SUBCLASS"
+        "MT11-RDFS-DATATYPE-SUBCLASS",
+        "MT11-RDFS-MODEL-EXISTENCE-CONSTRUCTION"
       ],
       "element_id": "rdfssemcond10"
     },
@@ -4389,7 +4528,8 @@
         "MT11-RDFS-AXIOM-DOMAINS",
         "MT11-RDFS-AXIOM-RANGES",
         "MT11-RDFS-AXIOM-HIERARCHIES",
-        "MT11-RDFS-AXIOM-CONTAINER-FAMILY"
+        "MT11-RDFS-AXIOM-CONTAINER-FAMILY",
+        "MT11-RDFS-MODEL-EXISTENCE-CONSTRUCTION"
       ],
       "element_id": "RDFS_axiomatic_triples"
     },
@@ -4814,6 +4954,46 @@
         "MT11-DATATYPE-ALIAS-COHERENCE"
       ],
       "within_section": "section-Datatypes"
+    },
+    {
+      "id": "rdfs-nonseparation",
+      "source": "mt",
+      "tag": "p",
+      "text": "RDFS does not partition the universe into disjoint categories",
+      "claims": [
+        "MT11-RDFS-NONSEPARATION"
+      ],
+      "within_section": "rdfs-interpretations"
+    },
+    {
+      "id": "rdfs-literal-values",
+      "source": "mt",
+      "tag": "p",
+      "text": "The class rdfs:Literal is not the class of literals",
+      "claims": [
+        "MT11-LITERAL-VALUES-NOT-SYNTAX"
+      ],
+      "within_section": "a-note-on-rdfs-literal-informative"
+    },
+    {
+      "id": "rdfs-literal-example",
+      "source": "mt",
+      "tag": "p",
+      "text": "ex:a rdf:type rdfs:Literal",
+      "claims": [
+        "MT11-LITERAL-VALUES-NOT-SYNTAX"
+      ],
+      "within_section": "a-note-on-rdfs-literal-informative"
+    },
+    {
+      "id": "rdfs-literal-consistency",
+      "source": "mt",
+      "tag": "p",
+      "text": "is consistent even though its subject is an IRI rather than a literal.",
+      "claims": [
+        "MT11-LITERAL-VALUES-NOT-SYNTAX"
+      ],
+      "within_section": "a-note-on-rdfs-literal-informative"
     }
   ],
   "context_resolutions": [

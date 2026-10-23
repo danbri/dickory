@@ -33,3 +33,6 @@ import RDF11.DatasetNameDenotation
 import RDF11.DatasetNamedComparison
 import RDF11.RDFModels
 import RDF11.RDFSModelConstraints
+import RDF11.RDFSModelRelations
+import RDF11.RDFSModels
+import RDF11.RDFSModelExamples

@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "status": "frozen_eighth_increment_rdf_models_and_datatype_fidelity_not_expert_approved",
+  "status": "frozen_ninth_increment_rdfs_models_not_expert_approved",
   "lean_version": "4.33.1",
   "allowed_axioms": [
     "propext",
@@ -447,6 +447,19 @@
         "MT11-RDF-DATATYPE-EXTENSION",
         "MT11-RDFS-MODEL-CLASS-INCLUSION"
       ]
+    },
+    {
+      "id": "SUPPORT-RDFS-MODELS",
+      "purpose": "Explicit RDFS witness family over the existing RDF model, full condition and axiom proofs, language-literal coverage equivalence for base D, and source-facing countermodels. Constructor choices do not redefine RDFS interpretations.",
+      "requires": [
+        "SUPPORT-RDF-MODELS",
+        "SUPPORT-RDFS-MODEL-CONSTRAINTS",
+        "MT11-RDFS-MODEL-EXISTENCE-CONSTRUCTION",
+        "MT11-RDFS-INTERPRETATION",
+        "MT11-RDFS-NONSEPARATION",
+        "MT11-RDFS-CLASS-STRUCTURE",
+        "MT11-LITERAL-VALUES-NOT-SYNTAX"
+      ]
     }
   ],
   "files": [
@@ -473,14 +486,14 @@
     },
     {
       "path": "Audit/Snapshot.lean",
-      "sha256": "a27c7e288694fda18912720d75687cdcb77b07c2275dcb6fcbb39abedaebe340",
+      "sha256": "2fc6af36001dccbeaadc4e89d05a6ae335b03ec2f45f94c530811e8f8784deb9",
       "role": "formal_source",
       "lifecycle": "active",
       "review": "pending_expert_review"
     },
     {
       "path": "RDF11.lean",
-      "sha256": "60e6cf923e5dbf5573e2f33dd41f15814700dbb088278ac1fa0dcca7cbed6376",
+      "sha256": "4803da1bdadf79e6c4e982406a653b9aa8b01eb7b177a97b2fd635979bec24c7",
       "role": "formal_source",
       "lifecycle": "active",
       "review": "pending_expert_review"
@@ -733,6 +746,27 @@
     {
       "path": "RDF11/RDFSModelConstraints.lean",
       "sha256": "ac48a27ed0608032c3023c532b114c362f6b507bd92d5f6e9cc13f81b4569afe",
+      "role": "formal_source",
+      "lifecycle": "active",
+      "review": "pending_expert_review"
+    },
+    {
+      "path": "RDF11/RDFSModelRelations.lean",
+      "sha256": "6b6290d7d7e4e189e162e753ea6d631b372cb85e4717fe1a5667234967604438",
+      "role": "formal_source",
+      "lifecycle": "active",
+      "review": "pending_expert_review"
+    },
+    {
+      "path": "RDF11/RDFSModels.lean",
+      "sha256": "9dc6727d5909433560bbc92a39c028f7fde163d6fc1899e7567aae89fd5c8add",
+      "role": "formal_source",
+      "lifecycle": "active",
+      "review": "pending_expert_review"
+    },
+    {
+      "path": "RDF11/RDFSModelExamples.lean",
+      "sha256": "3476c9c6748bf71b444ef6be11989770d364ad44cd668c6d0738f12f53459bd5",
       "role": "formal_source",
       "lifecycle": "active",
       "review": "pending_expert_review"
@@ -17694,6 +17728,772 @@
         "MT11-LANGSTRING-DENOTATION"
       ],
       "parent_declaration_if_applicable": "RDF11.SimpleInterpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFSModelConstruction.LanguageCoverage",
+      "module": "RDF11.RDFSModelRelations",
+      "kind": "definition",
+      "type": "{Iri Literal Value : Type} → RDF11.DatatypeTheory Iri Literal Value → Prop",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDFS-MODELS",
+        "MT11-RDFS-LANGUAGE-LITERAL-COVERAGE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFSModelConstruction.NameObject",
+      "module": "RDF11.RDFSModelRelations",
+      "kind": "definition",
+      "type": "{Iri Value : Type} → RDF11.RDFModelConstruction.Carrier Iri Value → Prop",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDFS-MODELS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFSModelConstruction.Parameters",
+      "module": "RDF11.RDFSModelRelations",
+      "kind": "inductive",
+      "type": "{Iri Literal Value : Type} → RDF11.DatatypeTheory Iri Literal Value → RDF11.Set Iri → RDF11.RDFSVocabulary Iri → Prop",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDFS-MODELS",
+        "MT11-RDFS-MODEL-EXISTENCE-CONSTRUCTION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFSModelConstruction.Parameters.casesOn",
+      "module": "RDF11.RDFSModelRelations",
+      "kind": "definition",
+      "type": "{Iri Literal Value : Type} →\n  {T : RDF11.DatatypeTheory Iri Literal Value} →\n    {D : RDF11.Set Iri} →\n      {v : RDF11.RDFSVocabulary Iri} →\n        {motive : RDF11.RDFSModelConstruction.Parameters T D v → Sort u} →\n          (t : RDF11.RDFSModelConstruction.Parameters T D v) →\n            ((language_iri : T.literalSyntax.langString = v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfLangString)) →\n                (recognize_language : D (v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfLangString))) →\n                  (recognize_string : D (v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.xsdString))) →\n                    (schema_unrecognized :\n                        ∀ (s : RDF11.RDFSSymbol), RDF11.RDFSModelConstruction.SchemaSymbol s → ¬D (v.iri s)) →\n                      (language_coverage : RDF11.RDFSModelConstruction.LanguageCoverage T) → motive ⋯) →\n              motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDFS-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.RDFSModelConstruction.Parameters",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFSModelConstruction.Parameters.language_coverage",
+      "module": "RDF11.RDFSModelRelations",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri}\n  {v : RDF11.RDFSVocabulary Iri},\n  RDF11.RDFSModelConstruction.Parameters T D v → RDF11.RDFSModelConstruction.LanguageCoverage T",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDFS-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.RDFSModelConstruction.Parameters",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFSModelConstruction.Parameters.language_iri",
+      "module": "RDF11.RDFSModelRelations",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri}\n  {v : RDF11.RDFSVocabulary Iri},\n  RDF11.RDFSModelConstruction.Parameters T D v →\n    T.literalSyntax.langString = v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfLangString)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDFS-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.RDFSModelConstruction.Parameters",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFSModelConstruction.Parameters.mk",
+      "module": "RDF11.RDFSModelRelations",
+      "kind": "constructor",
+      "type": "∀ {Iri Literal Value : Type} {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri}\n  {v : RDF11.RDFSVocabulary Iri},\n  T.literalSyntax.langString = v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfLangString) →\n    D (v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfLangString)) →\n      D (v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.xsdString)) →\n        (∀ (s : RDF11.RDFSSymbol), RDF11.RDFSModelConstruction.SchemaSymbol s → ¬D (v.iri s)) →\n          RDF11.RDFSModelConstruction.LanguageCoverage T → RDF11.RDFSModelConstruction.Parameters T D v",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDFS-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.RDFSModelConstruction.Parameters",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFSModelConstruction.Parameters.mk._flat_ctor",
+      "module": "RDF11.RDFSModelRelations",
+      "kind": "definition",
+      "type": "∀ {Iri Literal Value : Type} {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri}\n  {v : RDF11.RDFSVocabulary Iri},\n  T.literalSyntax.langString = v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfLangString) →\n    D (v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfLangString)) →\n      D (v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.xsdString)) →\n        (∀ (s : RDF11.RDFSSymbol), RDF11.RDFSModelConstruction.SchemaSymbol s → ¬D (v.iri s)) →\n          RDF11.RDFSModelConstruction.LanguageCoverage T → RDF11.RDFSModelConstruction.Parameters T D v",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDFS-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.RDFSModelConstruction.Parameters.mk",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFSModelConstruction.Parameters.rec",
+      "module": "RDF11.RDFSModelRelations",
+      "kind": "recursor",
+      "type": "{Iri Literal Value : Type} →\n  {T : RDF11.DatatypeTheory Iri Literal Value} →\n    {D : RDF11.Set Iri} →\n      {v : RDF11.RDFSVocabulary Iri} →\n        {motive : RDF11.RDFSModelConstruction.Parameters T D v → Sort u} →\n          ((language_iri : T.literalSyntax.langString = v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfLangString)) →\n              (recognize_language : D (v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfLangString))) →\n                (recognize_string : D (v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.xsdString))) →\n                  (schema_unrecognized :\n                      ∀ (s : RDF11.RDFSSymbol), RDF11.RDFSModelConstruction.SchemaSymbol s → ¬D (v.iri s)) →\n                    (language_coverage : RDF11.RDFSModelConstruction.LanguageCoverage T) → motive ⋯) →\n            (t : RDF11.RDFSModelConstruction.Parameters T D v) → motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDFS-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.RDFSModelConstruction.Parameters",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFSModelConstruction.Parameters.recOn",
+      "module": "RDF11.RDFSModelRelations",
+      "kind": "definition",
+      "type": "{Iri Literal Value : Type} →\n  {T : RDF11.DatatypeTheory Iri Literal Value} →\n    {D : RDF11.Set Iri} →\n      {v : RDF11.RDFSVocabulary Iri} →\n        {motive : RDF11.RDFSModelConstruction.Parameters T D v → Sort u} →\n          (t : RDF11.RDFSModelConstruction.Parameters T D v) →\n            ((language_iri : T.literalSyntax.langString = v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfLangString)) →\n                (recognize_language : D (v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfLangString))) →\n                  (recognize_string : D (v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.xsdString))) →\n                    (schema_unrecognized :\n                        ∀ (s : RDF11.RDFSSymbol), RDF11.RDFSModelConstruction.SchemaSymbol s → ¬D (v.iri s)) →\n                      (language_coverage : RDF11.RDFSModelConstruction.LanguageCoverage T) → motive ⋯) →\n              motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDFS-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.RDFSModelConstruction.Parameters",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFSModelConstruction.Parameters.recognize_language",
+      "module": "RDF11.RDFSModelRelations",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri}\n  {v : RDF11.RDFSVocabulary Iri},\n  RDF11.RDFSModelConstruction.Parameters T D v → D (v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfLangString))",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDFS-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.RDFSModelConstruction.Parameters",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFSModelConstruction.Parameters.recognize_string",
+      "module": "RDF11.RDFSModelRelations",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri}\n  {v : RDF11.RDFSVocabulary Iri},\n  RDF11.RDFSModelConstruction.Parameters T D v → D (v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.xsdString))",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDFS-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.RDFSModelConstruction.Parameters",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFSModelConstruction.Parameters.schema_unrecognized",
+      "module": "RDF11.RDFSModelRelations",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri}\n  {v : RDF11.RDFSVocabulary Iri},\n  RDF11.RDFSModelConstruction.Parameters T D v →\n    ∀ (s : RDF11.RDFSSymbol), RDF11.RDFSModelConstruction.SchemaSymbol s → ¬D (v.iri s)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDFS-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.RDFSModelConstruction.Parameters",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFSModelConstruction.Parameters.toRDF",
+      "module": "RDF11.RDFSModelRelations",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri}\n  {v : RDF11.RDFSVocabulary Iri},\n  RDF11.RDFSModelConstruction.Parameters T D v → RDF11.RDFModelConstruction.Parameters T D v.toRDF",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDFS-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.RDFSModelConstruction.Parameters",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFSModelConstruction.SchemaSymbol",
+      "module": "RDF11.RDFSModelRelations",
+      "kind": "definition",
+      "type": "RDF11.RDFSSymbol → Prop",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDFS-MODELS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFSModelConstruction.SchemaSymbol.eq_1",
+      "module": "RDF11.RDFSModelRelations",
+      "kind": "theorem",
+      "type": "∀ (s : RDF11.RDFSSymbol),\n  RDF11.RDFSModelConstruction.SchemaSymbol s =\n    (s ≠ RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfLangString ∧ s ≠ RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.xsdString)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDFS-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.RDFSModelConstruction.SchemaSymbol",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFSModelConstruction.all_classes",
+      "module": "RDF11.RDFSModelRelations",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (v : RDF11.RDFSVocabulary Iri),\n  RDF11.RDFSModelConstruction.Parameters T D v →\n    ∀\n      (Q :\n        RDF11.RDFModelConstruction.Carrier Iri Value →\n          RDF11.RDFModelConstruction.Carrier Iri Value → RDF11.RDFModelConstruction.Carrier Iri Value → Prop)\n      (x : RDF11.RDFModelConstruction.Carrier Iri Value), (RDF11.RDFSModelConstruction.interpretation T D v Q).IC v x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDFS-MODELS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFSModelConstruction.all_literal_values",
+      "module": "RDF11.RDFSModelRelations",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (v : RDF11.RDFSVocabulary Iri),\n  RDF11.RDFSModelConstruction.Parameters T D v →\n    ∀\n      (Q :\n        RDF11.RDFModelConstruction.Carrier Iri Value →\n          RDF11.RDFModelConstruction.Carrier Iri Value → RDF11.RDFModelConstruction.Carrier Iri Value → Prop)\n      (x : RDF11.RDFModelConstruction.Carrier Iri Value), (RDF11.RDFSModelConstruction.interpretation T D v Q).LV v x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDFS-MODELS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFSModelConstruction.axioms",
+      "module": "RDF11.RDFSModels",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (v : RDF11.RDFSVocabulary Iri),\n  RDF11.RDFSModelConstruction.Parameters T D v →\n    ∀\n      (Q :\n        RDF11.RDFModelConstruction.Carrier Iri Value →\n          RDF11.RDFModelConstruction.Carrier Iri Value → RDF11.RDFModelConstruction.Carrier Iri Value → Prop),\n      (RDF11.RDFSModelConstruction.interpretation T D v Q).GraphTrue (fun x => none) v.axioms",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDFS-MODELS",
+        "MT11-RDFS-MODEL-EXISTENCE-CONSTRUCTION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFSModelConstruction.base_empty_satisfiable",
+      "module": "RDF11.RDFSModels",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (v : RDF11.RDFSVocabulary Iri),\n  T.literalSyntax.langString = v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfLangString) →\n    RDF11.RDFSModelConstruction.LanguageCoverage T →\n      ∃ U I, I.RDFSModel T v.toRDF.baseDatatypes v ∧ I.Satisfies RDF11.Set.empty",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDFS-MODELS",
+        "MT11-RDFS-MODEL-EXISTENCE-CONSTRUCTION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFSModelConstruction.base_model_exists_iff_language_coverage",
+      "module": "RDF11.RDFSModels",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (v : RDF11.RDFSVocabulary Iri),\n  T.literalSyntax.langString = v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfLangString) →\n    ((∃ U I, I.RDFSModel T v.toRDF.baseDatatypes v) ↔ RDF11.RDFSModelConstruction.LanguageCoverage T)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDFS-MODELS",
+        "MT11-RDFS-LANGUAGE-LITERAL-COVERAGE",
+        "MT11-RDFS-MODEL-EXISTENCE-CONSTRUCTION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFSModelConstruction.base_parameters",
+      "module": "RDF11.RDFSModels",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (v : RDF11.RDFSVocabulary Iri),\n  T.literalSyntax.langString = v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfLangString) →\n    RDF11.RDFSModelConstruction.LanguageCoverage T → RDF11.RDFSModelConstruction.Parameters T v.toRDF.baseDatatypes v",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDFS-MODELS",
+        "MT11-RDFS-MODEL-EXISTENCE-CONSTRUCTION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFSModelConstruction.class_self_membership",
+      "module": "RDF11.RDFSModelExamples",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (v : RDF11.RDFSVocabulary Iri),\n  RDF11.RDFSModelConstruction.Parameters T D v →\n    ∀\n      (Q :\n        RDF11.RDFModelConstruction.Carrier Iri Value →\n          RDF11.RDFModelConstruction.Carrier Iri Value → RDF11.RDFModelConstruction.Carrier Iri Value → Prop)\n      (A : (RDF11.RDFSModelConstruction.interpretation T D v Q).Assignment B),\n      (RDF11.RDFSModelConstruction.interpretation T D v Q).TripleTrue A\n        { subject := RDF11.Term.iri (v.iri RDF11.RDFSSymbol.class_),\n          predicate := RDF11.Term.iri (v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfType)),\n          object := RDF11.Term.iri (v.iri RDF11.RDFSSymbol.class_) }",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDFS-MODELS",
+        "MT11-RDFS-NONSEPARATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFSModelConstruction.conditions",
+      "module": "RDF11.RDFSModels",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (v : RDF11.RDFSVocabulary Iri),\n  RDF11.RDFSModelConstruction.Parameters T D v →\n    ∀\n      (Q :\n        RDF11.RDFModelConstruction.Carrier Iri Value →\n          RDF11.RDFModelConstruction.Carrier Iri Value → RDF11.RDFModelConstruction.Carrier Iri Value → Prop),\n      (RDF11.RDFSModelConstruction.interpretation T D v Q).RDFSConditions T D v RDF11.RDFModelConstruction.realization",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDFS-MODELS",
+        "MT11-RDFS-INTERPRETATION",
+        "MT11-RDFS-MODEL-EXISTENCE-CONSTRUCTION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFSModelConstruction.distinct_coextensive_classes",
+      "module": "RDF11.RDFSModelExamples",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (v : RDF11.RDFSVocabulary Iri),\n  RDF11.RDFSModelConstruction.Parameters T D v →\n    ∀\n      (Q :\n        RDF11.RDFModelConstruction.Carrier Iri Value →\n          RDF11.RDFModelConstruction.Carrier Iri Value → RDF11.RDFModelConstruction.Carrier Iri Value → Prop),\n      have I := RDF11.RDFSModelConstruction.interpretation T D v Q;\n      (I.IS (v.iri RDF11.RDFSSymbol.class_)).val ≠ (I.IS (v.iri RDF11.RDFSSymbol.resource)).val ∧\n        I.ICEXT (v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfType)) (I.IS (v.iri RDF11.RDFSSymbol.class_)).val =\n          I.ICEXT (v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfType)) (I.IS (v.iri RDF11.RDFSSymbol.resource)).val",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDFS-MODELS",
+        "MT11-RDFS-CLASS-STRUCTURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFSModelConstruction.domain_targets",
+      "module": "RDF11.RDFSModels",
+      "kind": "theorem",
+      "type": "∀ (pair : RDF11.RDFSSymbol × RDF11.RDFSSymbol),\n  pair ∈ RDF11.rdfsDomainAxioms → RDF11.RDFSModelConstruction.SchemaSymbol pair.snd",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDFS-MODELS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFSModelConstruction.empty_satisfiable",
+      "module": "RDF11.RDFSModels",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (v : RDF11.RDFSVocabulary Iri),\n  RDF11.RDFSModelConstruction.Parameters T D v → ∃ U I, I.RDFSModel T D v ∧ I.Satisfies RDF11.Set.empty",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDFS-MODELS",
+        "MT11-RDFS-MODEL-EXISTENCE-CONSTRUCTION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFSModelConstruction.hierarchy_cases",
+      "module": "RDF11.RDFSModels",
+      "kind": "theorem",
+      "type": "∀ (t : RDF11.RDFSSymbol × RDF11.RDFSSymbol × RDF11.RDFSSymbol),\n  t ∈ RDF11.rdfsHierarchyAxioms →\n    t.snd.fst = RDF11.RDFSSymbol.subClassOf ∧ RDF11.RDFSModelConstruction.SchemaSymbol t.snd.snd ∨\n      t.fst = RDF11.RDFSSymbol.isDefinedBy ∧\n        t.snd.fst = RDF11.RDFSSymbol.subPropertyOf ∧ t.snd.snd = RDF11.RDFSSymbol.seeAlso",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDFS-MODELS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFSModelConstruction.icext_iff",
+      "module": "RDF11.RDFSModelRelations",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (v : RDF11.RDFSVocabulary Iri),\n  RDF11.RDFSModelConstruction.Parameters T D v →\n    ∀\n      (Q :\n        RDF11.RDFModelConstruction.Carrier Iri Value →\n          RDF11.RDFModelConstruction.Carrier Iri Value → RDF11.RDFModelConstruction.Carrier Iri Value → Prop)\n      (x y : RDF11.RDFModelConstruction.Carrier Iri Value),\n      (RDF11.RDFSModelConstruction.interpretation T D v Q).ICEXT (v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfType))\n          y x ↔\n        RDF11.RDFModelConstruction.typeExtension T x y",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDFS-MODELS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFSModelConstruction.interpretation",
+      "module": "RDF11.RDFSModelRelations",
+      "kind": "definition",
+      "type": "{Iri Literal Value : Type} →\n  RDF11.DatatypeTheory Iri Literal Value →\n    RDF11.Set Iri →\n      RDF11.RDFSVocabulary Iri →\n        (RDF11.RDFModelConstruction.Carrier Iri Value →\n            RDF11.RDFModelConstruction.Carrier Iri Value → RDF11.RDFModelConstruction.Carrier Iri Value → Prop) →\n          RDF11.SimpleInterpretation Iri Literal (RDF11.RDFModelConstruction.Carrier Iri Value)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDFS-MODELS",
+        "MT11-RDFS-INTERPRETATION",
+        "MT11-RDFS-MODEL-EXISTENCE-CONSTRUCTION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFSModelConstruction.interpretation.eq_1",
+      "module": "RDF11.RDFSModelRelations",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (v : RDF11.RDFSVocabulary Iri)\n  (Q :\n    RDF11.RDFModelConstruction.Carrier Iri Value →\n      RDF11.RDFModelConstruction.Carrier Iri Value → RDF11.RDFModelConstruction.Carrier Iri Value → Prop),\n  RDF11.RDFSModelConstruction.interpretation T D v Q =\n    RDF11.RDFModelConstruction.interpretation T D v.toRDF (RDF11.RDFSModelConstruction.relation T v Q)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDFS-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.RDFSModelConstruction.interpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFSModelConstruction.iri_literal_satisfiable",
+      "module": "RDF11.RDFSModelExamples",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (v : RDF11.RDFSVocabulary Iri),\n  RDF11.RDFSModelConstruction.Parameters T D v →\n    ∀ (a : Iri),\n      ∃ U I,\n        I.RDFSModel T D v ∧\n          I.Satisfies\n            (RDF11.Set.singleton\n              { subject := RDF11.Term.iri a,\n                predicate := RDF11.Term.iri (v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfType)),\n                object := RDF11.Term.iri (v.iri RDF11.RDFSSymbol.literal) })",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDFS-MODELS",
+        "MT11-LITERAL-VALUES-NOT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFSModelConstruction.iri_literal_true",
+      "module": "RDF11.RDFSModelExamples",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (v : RDF11.RDFSVocabulary Iri),\n  RDF11.RDFSModelConstruction.Parameters T D v →\n    ∀\n      (Q :\n        RDF11.RDFModelConstruction.Carrier Iri Value →\n          RDF11.RDFModelConstruction.Carrier Iri Value → RDF11.RDFModelConstruction.Carrier Iri Value → Prop)\n      (A : (RDF11.RDFSModelConstruction.interpretation T D v Q).Assignment B) (a : Iri),\n      (RDF11.RDFSModelConstruction.interpretation T D v Q).TripleTrue A\n        { subject := RDF11.Term.iri a,\n          predicate := RDF11.Term.iri (v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfType)),\n          object := RDF11.Term.iri (v.iri RDF11.RDFSSymbol.literal) }",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDFS-MODELS",
+        "MT11-LITERAL-VALUES-NOT-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFSModelConstruction.language_extension",
+      "module": "RDF11.RDFSModels",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (v : RDF11.RDFSVocabulary Iri),\n  RDF11.RDFSModelConstruction.Parameters T D v →\n    ∀\n      (Q :\n        RDF11.RDFModelConstruction.Carrier Iri Value →\n          RDF11.RDFModelConstruction.Carrier Iri Value → RDF11.RDFModelConstruction.Carrier Iri Value → Prop)\n      (x : RDF11.RDFModelConstruction.Carrier Iri Value),\n      (RDF11.RDFSModelConstruction.interpretation T D v Q).ICEXT (v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfType))\n          ((RDF11.RDFSModelConstruction.interpretation T D v Q).IS\n              (v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfLangString))).val\n          x ↔\n        ∃ l tag,\n          T.literalSyntax.language l = some tag ∧\n            ∃ r, (RDF11.RDFSModelConstruction.interpretation T D v Q).IL l = some r ∧ r.val = x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDFS-MODELS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFSModelConstruction.model",
+      "module": "RDF11.RDFSModels",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (v : RDF11.RDFSVocabulary Iri),\n  RDF11.RDFSModelConstruction.Parameters T D v →\n    ∀\n      (Q :\n        RDF11.RDFModelConstruction.Carrier Iri Value →\n          RDF11.RDFModelConstruction.Carrier Iri Value → RDF11.RDFModelConstruction.Carrier Iri Value → Prop),\n      (RDF11.RDFSModelConstruction.interpretation T D v Q).RDFSModel T D v",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDFS-MODELS",
+        "MT11-RDFS-INTERPRETATION",
+        "MT11-RDFS-MODEL-EXISTENCE-CONSTRUCTION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFSModelConstruction.named_column",
+      "module": "RDF11.RDFSModelRelations",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (v : RDF11.RDFSVocabulary Iri),\n  RDF11.RDFSModelConstruction.Parameters T D v →\n    ∀\n      (Q :\n        RDF11.RDFModelConstruction.Carrier Iri Value →\n          RDF11.RDFModelConstruction.Carrier Iri Value → RDF11.RDFModelConstruction.Carrier Iri Value → Prop)\n      (s : RDF11.RDFSSymbol),\n      RDF11.RDFSModelConstruction.SchemaSymbol s →\n        ∀ (x : RDF11.RDFModelConstruction.Carrier Iri Value),\n          (RDF11.RDFSModelConstruction.interpretation T D v Q).ICEXT\n            (v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfType))\n            ((RDF11.RDFSModelConstruction.interpretation T D v Q).IS (v.iri s)).val x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDFS-MODELS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFSModelConstruction.no_class_member_property_transfer",
+      "module": "RDF11.RDFSModelExamples",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (v : RDF11.RDFSVocabulary Iri),\n  RDF11.RDFSModelConstruction.Parameters T D v →\n    ∀ (s c : RDF11.RDFSSymbol),\n      RDF11.RDFSModelConstruction.SchemaSymbol s →\n        RDF11.RDFSModelConstruction.SchemaSymbol c →\n          s ≠ c →\n            have member :=\n              { subject := RDF11.Term.iri (v.iri s),\n                predicate := RDF11.Term.iri (v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfType)),\n                object := RDF11.Term.iri (v.iri c) };\n            have claim := fun x =>\n              { subject := RDF11.Term.iri (v.iri x),\n                predicate := RDF11.Term.iri (v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfValue)),\n                object := RDF11.Term.iri (v.iri RDF11.RDFSSymbol.resource) };\n            ¬RDF11.RDFSEntails T D v (RDF11.Set.ofList [member, claim c]) (RDF11.Set.singleton (claim s)) ∧\n              ¬RDF11.RDFSEntails T D v (RDF11.Set.ofList [member, claim s]) (RDF11.Set.singleton (claim c))",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDFS-MODELS",
+        "MT11-RDFS-NONSEPARATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFSModelConstruction.overlapping_roles_model",
+      "module": "RDF11.RDFSModelExamples",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (v : RDF11.RDFSVocabulary Iri),\n  RDF11.RDFSModelConstruction.Parameters T D v →\n    ∃ U I, I.RDFSModel T D v ∧ ∀ (x : U), I.IR x ∧ I.IP x ∧ I.IC v x ∧ I.LV v x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDFS-MODELS",
+        "MT11-RDFS-NONSEPARATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFSModelConstruction.property_self_application",
+      "module": "RDF11.RDFSModelExamples",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (v : RDF11.RDFSVocabulary Iri),\n  RDF11.RDFSModelConstruction.Parameters T D v →\n    ∀\n      (Q :\n        RDF11.RDFModelConstruction.Carrier Iri Value →\n          RDF11.RDFModelConstruction.Carrier Iri Value → RDF11.RDFModelConstruction.Carrier Iri Value → Prop)\n      (A : (RDF11.RDFSModelConstruction.interpretation T D v Q).Assignment B),\n      (RDF11.RDFSModelConstruction.interpretation T D v Q).TripleTrue A\n        { subject := RDF11.Term.iri (v.iri RDF11.RDFSSymbol.member),\n          predicate := RDF11.Term.iri (v.iri RDF11.RDFSSymbol.member),\n          object := RDF11.Term.iri (v.iri RDF11.RDFSSymbol.member) }",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDFS-MODELS",
+        "MT11-RDFS-NONSEPARATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFSModelConstruction.range_targets",
+      "module": "RDF11.RDFSModels",
+      "kind": "theorem",
+      "type": "∀ (pair : RDF11.RDFSSymbol × RDF11.RDFSSymbol),\n  pair ∈ RDF11.rdfsRangeAxioms → RDF11.RDFSModelConstruction.SchemaSymbol pair.snd",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDFS-MODELS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFSModelConstruction.relates_domain",
+      "module": "RDF11.RDFSModelRelations",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (v : RDF11.RDFSVocabulary Iri),\n  RDF11.RDFSModelConstruction.Parameters T D v →\n    ∀\n      (Q :\n        RDF11.RDFModelConstruction.Carrier Iri Value →\n          RDF11.RDFModelConstruction.Carrier Iri Value → RDF11.RDFModelConstruction.Carrier Iri Value → Prop)\n      (x y : RDF11.RDFModelConstruction.Carrier Iri Value),\n      (RDF11.RDFSModelConstruction.interpretation T D v Q).Relates\n          ((RDF11.RDFSModelConstruction.interpretation T D v Q).IS (v.iri RDF11.RDFSSymbol.domain)).val x y ↔\n        RDF11.RDFSModelConstruction.NameObject y",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDFS-MODELS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFSModelConstruction.relates_iff",
+      "module": "RDF11.RDFSModelRelations",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (v : RDF11.RDFSVocabulary Iri)\n  (Q :\n    RDF11.RDFModelConstruction.Carrier Iri Value →\n      RDF11.RDFModelConstruction.Carrier Iri Value → RDF11.RDFModelConstruction.Carrier Iri Value → Prop)\n  (p x y : RDF11.RDFModelConstruction.Carrier Iri Value),\n  (RDF11.RDFSModelConstruction.interpretation T D v Q).Relates p x y ↔ RDF11.RDFSModelConstruction.relation T v Q p x y",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDFS-MODELS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFSModelConstruction.relates_range",
+      "module": "RDF11.RDFSModelRelations",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (v : RDF11.RDFSVocabulary Iri),\n  RDF11.RDFSModelConstruction.Parameters T D v →\n    ∀\n      (Q :\n        RDF11.RDFModelConstruction.Carrier Iri Value →\n          RDF11.RDFModelConstruction.Carrier Iri Value → RDF11.RDFModelConstruction.Carrier Iri Value → Prop)\n      (x y : RDF11.RDFModelConstruction.Carrier Iri Value),\n      (RDF11.RDFSModelConstruction.interpretation T D v Q).Relates\n          ((RDF11.RDFSModelConstruction.interpretation T D v Q).IS (v.iri RDF11.RDFSSymbol.range)).val x y ↔\n        RDF11.RDFSModelConstruction.NameObject y",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDFS-MODELS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFSModelConstruction.relates_subclass",
+      "module": "RDF11.RDFSModelRelations",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (v : RDF11.RDFSVocabulary Iri),\n  RDF11.RDFSModelConstruction.Parameters T D v →\n    ∀\n      (Q :\n        RDF11.RDFModelConstruction.Carrier Iri Value →\n          RDF11.RDFModelConstruction.Carrier Iri Value → RDF11.RDFModelConstruction.Carrier Iri Value → Prop)\n      (x y : RDF11.RDFModelConstruction.Carrier Iri Value),\n      (RDF11.RDFSModelConstruction.interpretation T D v Q).Relates\n          ((RDF11.RDFSModelConstruction.interpretation T D v Q).IS (v.iri RDF11.RDFSSymbol.subClassOf)).val x y ↔\n        RDF11.RDFSModelConstruction.subclass T x y",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDFS-MODELS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFSModelConstruction.relates_subproperty",
+      "module": "RDF11.RDFSModelRelations",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (v : RDF11.RDFSVocabulary Iri),\n  RDF11.RDFSModelConstruction.Parameters T D v →\n    ∀\n      (Q :\n        RDF11.RDFModelConstruction.Carrier Iri Value →\n          RDF11.RDFModelConstruction.Carrier Iri Value → RDF11.RDFModelConstruction.Carrier Iri Value → Prop)\n      (x y : RDF11.RDFModelConstruction.Carrier Iri Value),\n      (RDF11.RDFSModelConstruction.interpretation T D v Q).Relates\n          ((RDF11.RDFSModelConstruction.interpretation T D v Q).IS (v.iri RDF11.RDFSSymbol.subPropertyOf)).val x y ↔\n        RDF11.RDFSModelConstruction.subproperty v x y",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDFS-MODELS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFSModelConstruction.relation",
+      "module": "RDF11.RDFSModelRelations",
+      "kind": "definition",
+      "type": "{Iri Literal Value : Type} →\n  RDF11.DatatypeTheory Iri Literal Value →\n    RDF11.RDFSVocabulary Iri →\n      (RDF11.RDFModelConstruction.Carrier Iri Value →\n          RDF11.RDFModelConstruction.Carrier Iri Value → RDF11.RDFModelConstruction.Carrier Iri Value → Prop) →\n        RDF11.RDFModelConstruction.Carrier Iri Value →\n          RDF11.RDFModelConstruction.Carrier Iri Value → RDF11.RDFModelConstruction.Carrier Iri Value → Prop",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDFS-MODELS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFSModelConstruction.relation.eq_1",
+      "module": "RDF11.RDFSModelRelations",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (v : RDF11.RDFSVocabulary Iri)\n  (Q :\n    RDF11.RDFModelConstruction.Carrier Iri Value →\n      RDF11.RDFModelConstruction.Carrier Iri Value → RDF11.RDFModelConstruction.Carrier Iri Value → Prop)\n  (p x y : RDF11.RDFModelConstruction.Carrier Iri Value),\n  RDF11.RDFSModelConstruction.relation T v Q p x y =\n    if p = RDF11.RDFSModelConstruction.schemaName v (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfType) then\n      RDF11.RDFModelConstruction.typeExtension T x y\n    else\n      if p = RDF11.RDFSModelConstruction.schemaName v RDF11.RDFSSymbol.subClassOf then\n        RDF11.RDFSModelConstruction.subclass T x y\n      else\n        if p = RDF11.RDFSModelConstruction.schemaName v RDF11.RDFSSymbol.subPropertyOf then\n          RDF11.RDFSModelConstruction.subproperty v x y\n        else\n          if\n              p = RDF11.RDFSModelConstruction.schemaName v RDF11.RDFSSymbol.domain ∨\n                p = RDF11.RDFSModelConstruction.schemaName v RDF11.RDFSSymbol.range then\n            RDF11.RDFSModelConstruction.NameObject y\n          else\n            if\n                p = RDF11.RDFSModelConstruction.schemaName v RDF11.RDFSSymbol.member ∨\n                  p = RDF11.RDFSModelConstruction.schemaName v RDF11.RDFSSymbol.seeAlso then\n              True\n            else Q p x y",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDFS-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.RDFSModelConstruction.relation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFSModelConstruction.schemaName",
+      "module": "RDF11.RDFSModelRelations",
+      "kind": "definition",
+      "type": "{Iri Value : Type} → RDF11.RDFSVocabulary Iri → RDF11.RDFSSymbol → RDF11.RDFModelConstruction.Carrier Iri Value",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDFS-MODELS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFSModelConstruction.schemaName_eq",
+      "module": "RDF11.RDFSModelRelations",
+      "kind": "theorem",
+      "type": "∀ {Iri Value : Type} (v : RDF11.RDFSVocabulary Iri) (s t : RDF11.RDFSSymbol),\n  RDF11.RDFSModelConstruction.schemaName v s = RDF11.RDFSModelConstruction.schemaName v t ↔ s = t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDFS-MODELS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFSModelConstruction.schemaName_eq._simp_1",
+      "module": "RDF11.RDFSModelRelations",
+      "kind": "theorem",
+      "type": "∀ {Iri Value : Type} (v : RDF11.RDFSVocabulary Iri) (s t : RDF11.RDFSSymbol),\n  (RDF11.RDFSModelConstruction.schemaName v s = RDF11.RDFSModelConstruction.schemaName v t) = (s = t)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDFS-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.RDFSModelConstruction.schemaName_eq",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFSModelConstruction.schema_denotation",
+      "module": "RDF11.RDFSModelRelations",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (v : RDF11.RDFSVocabulary Iri),\n  RDF11.RDFSModelConstruction.Parameters T D v →\n    ∀\n      (Q :\n        RDF11.RDFModelConstruction.Carrier Iri Value →\n          RDF11.RDFModelConstruction.Carrier Iri Value → RDF11.RDFModelConstruction.Carrier Iri Value → Prop)\n      (s : RDF11.RDFSSymbol),\n      RDF11.RDFSModelConstruction.SchemaSymbol s →\n        ((RDF11.RDFSModelConstruction.interpretation T D v Q).IS (v.iri s)).val =\n          RDF11.RDFSModelConstruction.schemaName v s",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDFS-MODELS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFSModelConstruction.subclass",
+      "module": "RDF11.RDFSModelRelations",
+      "kind": "definition",
+      "type": "{Iri Literal Value : Type} →\n  RDF11.DatatypeTheory Iri Literal Value →\n    RDF11.RDFModelConstruction.Carrier Iri Value → RDF11.RDFModelConstruction.Carrier Iri Value → Prop",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDFS-MODELS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFSModelConstruction.subproperty",
+      "module": "RDF11.RDFSModelRelations",
+      "kind": "definition",
+      "type": "{Iri Value : Type} →\n  RDF11.RDFSVocabulary Iri →\n    RDF11.RDFModelConstruction.Carrier Iri Value → RDF11.RDFModelConstruction.Carrier Iri Value → Prop",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDFS-MODELS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFSModelConstruction.subproperty_inclusion",
+      "module": "RDF11.RDFSModelRelations",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (v : RDF11.RDFSVocabulary Iri)\n  (Q :\n    RDF11.RDFModelConstruction.Carrier Iri Value →\n      RDF11.RDFModelConstruction.Carrier Iri Value → RDF11.RDFModelConstruction.Carrier Iri Value → Prop)\n  (x y : RDF11.RDFModelConstruction.Carrier Iri Value),\n  RDF11.RDFSModelConstruction.subproperty v x y →\n    ∀ (a b : RDF11.RDFModelConstruction.Carrier Iri Value),\n      (RDF11.RDFSModelConstruction.interpretation T D v Q).Relates x a b →\n        (RDF11.RDFSModelConstruction.interpretation T D v Q).Relates y a b",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDFS-MODELS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFSModelConstruction.subproperty_transitive",
+      "module": "RDF11.RDFSModelRelations",
+      "kind": "theorem",
+      "type": "∀ {Iri Value : Type} (v : RDF11.RDFSVocabulary Iri) (x y z : RDF11.RDFModelConstruction.Carrier Iri Value),\n  RDF11.RDFSModelConstruction.subproperty v x y →\n    RDF11.RDFSModelConstruction.subproperty v y z → RDF11.RDFSModelConstruction.subproperty v x z",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDFS-MODELS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFSModelConstruction.value_triple_iff",
+      "module": "RDF11.RDFSModelExamples",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (v : RDF11.RDFSVocabulary Iri),\n  RDF11.RDFSModelConstruction.Parameters T D v →\n    ∀\n      (Q :\n        RDF11.RDFModelConstruction.Carrier Iri Value →\n          RDF11.RDFModelConstruction.Carrier Iri Value → RDF11.RDFModelConstruction.Carrier Iri Value → Prop)\n      (A : (RDF11.RDFSModelConstruction.interpretation T D v Q).Assignment B) (s o : RDF11.RDFSSymbol),\n      RDF11.RDFSModelConstruction.SchemaSymbol s →\n        RDF11.RDFSModelConstruction.SchemaSymbol o →\n          ((RDF11.RDFSModelConstruction.interpretation T D v Q).TripleTrue A\n              { subject := RDF11.Term.iri (v.iri s),\n                predicate := RDF11.Term.iri (v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfValue)),\n                object := RDF11.Term.iri (v.iri o) } ↔\n            Q (RDF11.RDFSModelConstruction.schemaName v (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfValue))\n              (RDF11.RDFSModelConstruction.schemaName v s) (RDF11.RDFSModelConstruction.schemaName v o))",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDFS-MODELS",
+        "MT11-RDFS-NONSEPARATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFSVocabulary.toRDF.eq_1",
+      "module": "RDF11.RDFSModels",
+      "kind": "theorem",
+      "type": "∀ {Iri : Type} (v : RDF11.RDFSVocabulary Iri),\n  v.toRDF = { iri := fun s => v.iri (RDF11.RDFSSymbol.rdf s), distinct := ⋯ }",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDFS-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.RDFSVocabulary.toRDF",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFVocabulary.mk.congr_simp",
+      "module": "RDF11.RDFSModels",
+      "kind": "theorem",
+      "type": "∀ {Iri : Type} (iri iri_1 : RDF11.RDFSymbol → Iri) (e_iri : iri = iri_1)\n  (distinct : ∀ (a b : RDF11.RDFSymbol), iri a = iri b → a = b),\n  { iri := iri, distinct := distinct } = { iri := iri_1, distinct := ⋯ }",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDFS-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.RDFVocabulary.mk",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.ICEXT.eq_1",
+      "module": "RDF11.RDFSModels",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u_1} (I : RDF11.SimpleInterpretation Iri Literal U) (typeIRI : Iri) (y x : U),\n  I.ICEXT typeIRI y x = I.Relates (I.IS typeIRI).val x y",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDFS-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation.ICEXT",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.rdfsDomainAxioms.eq_1",
+      "module": "RDF11.RDFSModels",
+      "kind": "theorem",
+      "type": "RDF11.rdfsDomainAxioms =\n  [(RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfType, RDF11.RDFSSymbol.resource),\n    (RDF11.RDFSSymbol.domain, RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfProperty),\n    (RDF11.RDFSSymbol.range, RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfProperty),\n    (RDF11.RDFSSymbol.subPropertyOf, RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfProperty),\n    (RDF11.RDFSSymbol.subClassOf, RDF11.RDFSSymbol.class_),\n    (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfSubject, RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfStatement),\n    (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfPredicate, RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfStatement),\n    (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfObject, RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfStatement),\n    (RDF11.RDFSSymbol.member, RDF11.RDFSSymbol.resource),\n    (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfFirst, RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfList),\n    (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfRest, RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfList),\n    (RDF11.RDFSSymbol.seeAlso, RDF11.RDFSSymbol.resource), (RDF11.RDFSSymbol.isDefinedBy, RDF11.RDFSSymbol.resource),\n    (RDF11.RDFSSymbol.comment, RDF11.RDFSSymbol.resource), (RDF11.RDFSSymbol.label, RDF11.RDFSSymbol.resource),\n    (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfValue, RDF11.RDFSSymbol.resource)]",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDFS-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.rdfsDomainAxioms",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.rdfsHierarchyAxioms.eq_1",
+      "module": "RDF11.RDFSModels",
+      "kind": "theorem",
+      "type": "RDF11.rdfsHierarchyAxioms =\n  [(RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfAlt, RDF11.RDFSSymbol.subClassOf, RDF11.RDFSSymbol.container),\n    (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfBag, RDF11.RDFSSymbol.subClassOf, RDF11.RDFSSymbol.container),\n    (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfSeq, RDF11.RDFSSymbol.subClassOf, RDF11.RDFSSymbol.container),\n    (RDF11.RDFSSymbol.containerMembershipProperty, RDF11.RDFSSymbol.subClassOf,\n      RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfProperty),\n    (RDF11.RDFSSymbol.isDefinedBy, RDF11.RDFSSymbol.subPropertyOf, RDF11.RDFSSymbol.seeAlso),\n    (RDF11.RDFSSymbol.datatype, RDF11.RDFSSymbol.subClassOf, RDF11.RDFSSymbol.class_)]",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDFS-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.rdfsHierarchyAxioms",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.rdfsRangeAxioms.eq_1",
+      "module": "RDF11.RDFSModels",
+      "kind": "theorem",
+      "type": "RDF11.rdfsRangeAxioms =\n  [(RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfType, RDF11.RDFSSymbol.class_),\n    (RDF11.RDFSSymbol.domain, RDF11.RDFSSymbol.class_), (RDF11.RDFSSymbol.range, RDF11.RDFSSymbol.class_),\n    (RDF11.RDFSSymbol.subPropertyOf, RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfProperty),\n    (RDF11.RDFSSymbol.subClassOf, RDF11.RDFSSymbol.class_),\n    (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfSubject, RDF11.RDFSSymbol.resource),\n    (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfPredicate, RDF11.RDFSSymbol.resource),\n    (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfObject, RDF11.RDFSSymbol.resource),\n    (RDF11.RDFSSymbol.member, RDF11.RDFSSymbol.resource),\n    (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfFirst, RDF11.RDFSSymbol.resource),\n    (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfRest, RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfList),\n    (RDF11.RDFSSymbol.seeAlso, RDF11.RDFSSymbol.resource), (RDF11.RDFSSymbol.isDefinedBy, RDF11.RDFSSymbol.resource),\n    (RDF11.RDFSSymbol.comment, RDF11.RDFSSymbol.literal), (RDF11.RDFSSymbol.label, RDF11.RDFSSymbol.literal),\n    (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfValue, RDF11.RDFSSymbol.resource)]",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-RDFS-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.rdfsRangeAxioms",
       "review": "pending_expert_review"
     }
   ],

@@ -414,7 +414,8 @@
         "MT11-RDFS-ADDITIONAL-VALID-TYPES",
         "MT11-RDFS-ADDITIONAL-VALID-PROPERTIES",
         "MT11-RDFS-NONSEPARATION",
-        "MT11-RDFS-VOCABULARY-BOUNDARY"
+        "MT11-RDFS-VOCABULARY-BOUNDARY",
+        "MT11-RDFS-MODEL-EXISTENCE-CONSTRUCTION"
       ]
     },
     {
@@ -5186,7 +5187,34 @@
         "test_mapping": "unassessed"
       },
       "formalization_note": "Datatype aliases are permitted; identification is not required to be injective. The ordinary noncanonical langString-alias behavior is a derived edge case, not an explicit source example, and remains subject to expert mapping review. No-L2V is encoded by an everywhere-undefined partial evaluator, while the actual language value space remains the normalized pair space."
+    },
+    {
+      "id": "MT11-RDFS-MODEL-EXISTENCE-CONSTRUCTION",
+      "section": "9",
+      "anchor": "rdfs-interpretations",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#rdfs-interpretations",
+      "category": "mathematical_consequence",
+      "source_status": "normative",
+      "assertion_basis": "derived",
+      "paraphrase": "The RDFS conditions admit a full-domain model under explicit sufficient compatibility and tagged-literal coverage hypotheses. For the base recognition set with aligned langString names, model existence in the current abstract interfaces is equivalent to that coverage.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-RDFS-INTERPRETATION",
+        "MT11-RDF-MODEL-EXISTENCE-CONSTRUCTION",
+        "MT11-RDFS-LANGUAGE-LITERAL-COVERAGE",
+        "MT11-RDFS-AXIOM-DOMAINS",
+        "MT11-RDFS-AXIOM-RANGES",
+        "MT11-RDFS-AXIOM-HIERARCHIES",
+        "MT11-RDFS-AXIOM-CONTAINER-FAMILY"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "Derived construction, not an assertion printed as a theorem in the source. The exclusions of schema symbols from datatype recognition are sufficient constructor choices. The existence equivalence concerns the current parameterized model class, not arbitrary graph satisfiability or certified concrete built-in datatype meanings."
     }
   ],
-  "record_count": 204
+  "record_count": 205
 }

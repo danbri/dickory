@@ -3,8 +3,8 @@
   "status": "draft_not_complete_coverage",
   "method": "Human-readable AI close reading; selectors locate already selected passages and do not extract assertions.",
   "source_inventory": "../ledger/semantics-inventory.json",
-  "inventory_sha256": "c33972c99175ddcdaf5579d2290833dfc8ee7db44b754d27efd4e88df6c49977",
-  "mapping_input_sha256": "d05529512a58423088bd36905e1d7c375f03315a056401efe6637f6739e7211b",
+  "inventory_sha256": "1088422a4c5bf7125697c6e9b1db0e6529c57b5c2d3747d02dd379c3dd2f76fc",
+  "mapping_input_sha256": "1f025fe2ae9eaeac117b3b189f49dce7a7b563c5f14885ab0ec3598c09574941",
   "documents": [
     {
       "id": "mt",
@@ -1172,7 +1172,8 @@
           "start": 80075,
           "end": 80278,
           "refs": [
-            "MT11-RDFS-CLASS-STRUCTURE"
+            "MT11-RDFS-CLASS-STRUCTURE",
+            "MT11-RDFS-NONSEPARATION"
           ],
           "disposition": "claim_passage_pending_review"
         },
@@ -1188,7 +1189,8 @@
           "start": 80281,
           "end": 80624,
           "refs": [
-            "MT11-RDFS-INTERPRETATION"
+            "MT11-RDFS-INTERPRETATION",
+            "MT11-RDFS-MODEL-EXISTENCE-CONSTRUCTION"
           ],
           "disposition": "claim_passage_pending_review"
         },
@@ -1204,7 +1206,8 @@
           "start": 80749,
           "end": 80840,
           "refs": [
-            "MT11-RDFS-ICEXT"
+            "MT11-RDFS-ICEXT",
+            "MT11-RDFS-MODEL-EXISTENCE-CONSTRUCTION"
           ],
           "disposition": "claim_passage_pending_review"
         },
@@ -1220,7 +1223,8 @@
           "start": 80849,
           "end": 80909,
           "refs": [
-            "MT11-RDFS-IC"
+            "MT11-RDFS-IC",
+            "MT11-RDFS-MODEL-EXISTENCE-CONSTRUCTION"
           ],
           "disposition": "claim_passage_pending_review"
         },
@@ -1236,7 +1240,8 @@
           "start": 80918,
           "end": 80980,
           "refs": [
-            "MT11-RDFS-LV"
+            "MT11-RDFS-LV",
+            "MT11-RDFS-MODEL-EXISTENCE-CONSTRUCTION"
           ],
           "disposition": "claim_passage_pending_review"
         },
@@ -1252,6 +1257,7 @@
           "start": 80989,
           "end": 81037,
           "refs": [
+            "MT11-RDFS-MODEL-EXISTENCE-CONSTRUCTION",
             "MT11-RDFS-RESOURCE-EXTENSION"
           ],
           "disposition": "claim_passage_pending_review"
@@ -1269,7 +1275,8 @@
           "end": 81130,
           "refs": [
             "MT11-RDFS-LANGSTRING-EXTENSION",
-            "MT11-RDFS-LANGUAGE-LITERAL-COVERAGE"
+            "MT11-RDFS-LANGUAGE-LITERAL-COVERAGE",
+            "MT11-RDFS-MODEL-EXISTENCE-CONSTRUCTION"
           ],
           "disposition": "claim_passage_pending_review"
         },
@@ -1285,7 +1292,8 @@
           "start": 81131,
           "end": 81210,
           "refs": [
-            "MT11-RDFS-DATATYPE-EXTENSION"
+            "MT11-RDFS-DATATYPE-EXTENSION",
+            "MT11-RDFS-MODEL-EXISTENCE-CONSTRUCTION"
           ],
           "disposition": "claim_passage_pending_review"
         },
@@ -1301,7 +1309,8 @@
           "start": 81211,
           "end": 81292,
           "refs": [
-            "MT11-RDFS-DATATYPE-TYPING"
+            "MT11-RDFS-DATATYPE-TYPING",
+            "MT11-RDFS-MODEL-EXISTENCE-CONSTRUCTION"
           ],
           "disposition": "claim_passage_pending_review"
         },
@@ -1317,7 +1326,8 @@
           "start": 81323,
           "end": 81506,
           "refs": [
-            "MT11-RDFS-DOMAIN"
+            "MT11-RDFS-DOMAIN",
+            "MT11-RDFS-MODEL-EXISTENCE-CONSTRUCTION"
           ],
           "disposition": "claim_passage_pending_review"
         },
@@ -1333,6 +1343,7 @@
           "start": 81531,
           "end": 81713,
           "refs": [
+            "MT11-RDFS-MODEL-EXISTENCE-CONSTRUCTION",
             "MT11-RDFS-RANGE"
           ],
           "disposition": "claim_passage_pending_review"
@@ -1349,6 +1360,7 @@
           "start": 81738,
           "end": 81874,
           "refs": [
+            "MT11-RDFS-MODEL-EXISTENCE-CONSTRUCTION",
             "MT11-RDFS-SUBPROPERTY-REFLEXIVE",
             "MT11-RDFS-SUBPROPERTY-TRANSITIVE"
           ],
@@ -1366,6 +1378,7 @@
           "start": 81899,
           "end": 82091,
           "refs": [
+            "MT11-RDFS-MODEL-EXISTENCE-CONSTRUCTION",
             "MT11-RDFS-SUBPROPERTY-ENDPOINTS",
             "MT11-RDFS-SUBPROPERTY-INCLUSION"
           ],
@@ -1383,7 +1396,8 @@
           "start": 82116,
           "end": 82285,
           "refs": [
-            "MT11-RDFS-CLASS-RESOURCE"
+            "MT11-RDFS-CLASS-RESOURCE",
+            "MT11-RDFS-MODEL-EXISTENCE-CONSTRUCTION"
           ],
           "disposition": "claim_passage_pending_review"
         },
@@ -1399,6 +1413,7 @@
           "start": 82313,
           "end": 82446,
           "refs": [
+            "MT11-RDFS-MODEL-EXISTENCE-CONSTRUCTION",
             "MT11-RDFS-SUBCLASS-REFLEXIVE",
             "MT11-RDFS-SUBCLASS-TRANSITIVE"
           ],
@@ -1416,6 +1431,7 @@
           "start": 82475,
           "end": 82668,
           "refs": [
+            "MT11-RDFS-MODEL-EXISTENCE-CONSTRUCTION",
             "MT11-RDFS-SUBCLASS-ENDPOINTS",
             "MT11-RDFS-SUBCLASS-INCLUSION"
           ],
@@ -1433,7 +1449,8 @@
           "start": 82695,
           "end": 82946,
           "refs": [
-            "MT11-RDFS-CONTAINER-SUBPROPERTY"
+            "MT11-RDFS-CONTAINER-SUBPROPERTY",
+            "MT11-RDFS-MODEL-EXISTENCE-CONSTRUCTION"
           ],
           "disposition": "claim_passage_pending_review"
         },
@@ -1449,7 +1466,8 @@
           "start": 82971,
           "end": 83195,
           "refs": [
-            "MT11-RDFS-DATATYPE-SUBCLASS"
+            "MT11-RDFS-DATATYPE-SUBCLASS",
+            "MT11-RDFS-MODEL-EXISTENCE-CONSTRUCTION"
           ],
           "disposition": "claim_passage_pending_review"
         },
@@ -1468,7 +1486,8 @@
             "MT11-RDFS-AXIOM-CONTAINER-FAMILY",
             "MT11-RDFS-AXIOM-DOMAINS",
             "MT11-RDFS-AXIOM-HIERARCHIES",
-            "MT11-RDFS-AXIOM-RANGES"
+            "MT11-RDFS-AXIOM-RANGES",
+            "MT11-RDFS-MODEL-EXISTENCE-CONSTRUCTION"
           ],
           "disposition": "claim_passage_pending_review"
         },
@@ -1506,6 +1525,70 @@
         },
         {
           "start": 88487,
+          "end": 88489,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 88489,
+          "end": 89087,
+          "refs": [
+            "MT11-RDFS-NONSEPARATION"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 89087,
+          "end": 89391,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 89391,
+          "end": 89677,
+          "refs": [
+            "MT11-LITERAL-VALUES-NOT-SYNTAX"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 89677,
+          "end": 89714,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 89714,
+          "end": 89762,
+          "refs": [
+            "MT11-LITERAL-VALUES-NOT-SYNTAX"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 89762,
+          "end": 89768,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 89768,
+          "end": 90059,
+          "refs": [
+            "MT11-LITERAL-VALUES-NOT-SYNTAX"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 90059,
           "end": 90267,
           "refs": [
             "UNRESOLVED-mt"
@@ -3136,7 +3219,8 @@
       "start": 80075,
       "end": 80278,
       "claims": [
-        "MT11-RDFS-CLASS-STRUCTURE"
+        "MT11-RDFS-CLASS-STRUCTURE",
+        "MT11-RDFS-NONSEPARATION"
       ],
       "slice_sha256": "1c0701cf1381b451400ef76d9e09f100d01864e6df4d9da5aac4808d42276c3c",
       "locator_tag": "p",
@@ -3150,7 +3234,8 @@
       "start": 80281,
       "end": 80624,
       "claims": [
-        "MT11-RDFS-INTERPRETATION"
+        "MT11-RDFS-INTERPRETATION",
+        "MT11-RDFS-MODEL-EXISTENCE-CONSTRUCTION"
       ],
       "slice_sha256": "27ae9bac04e537d722e07356cbdd126164f0ee0695d6a794e7c03de504d0074f",
       "locator_tag": "p",
@@ -3164,7 +3249,8 @@
       "start": 80749,
       "end": 80840,
       "claims": [
-        "MT11-RDFS-ICEXT"
+        "MT11-RDFS-ICEXT",
+        "MT11-RDFS-MODEL-EXISTENCE-CONSTRUCTION"
       ],
       "slice_sha256": "bbf28cdab1dd0b444131d3f14b8cec244d17484db5b39dbee0cfccc1f005e556",
       "locator_tag": "p",
@@ -3178,7 +3264,8 @@
       "start": 80849,
       "end": 80909,
       "claims": [
-        "MT11-RDFS-IC"
+        "MT11-RDFS-IC",
+        "MT11-RDFS-MODEL-EXISTENCE-CONSTRUCTION"
       ],
       "slice_sha256": "90599ccd3787af3f13dcf11d16dc475962048306a37e54f68dc819d9a2788d62",
       "locator_tag": "p",
@@ -3192,7 +3279,8 @@
       "start": 80918,
       "end": 80980,
       "claims": [
-        "MT11-RDFS-LV"
+        "MT11-RDFS-LV",
+        "MT11-RDFS-MODEL-EXISTENCE-CONSTRUCTION"
       ],
       "slice_sha256": "9666727d5e27fd8c715b253bd404b82371654a6ecadf24bf8e172bed80fdd050",
       "locator_tag": "p",
@@ -3206,7 +3294,8 @@
       "start": 80989,
       "end": 81037,
       "claims": [
-        "MT11-RDFS-RESOURCE-EXTENSION"
+        "MT11-RDFS-RESOURCE-EXTENSION",
+        "MT11-RDFS-MODEL-EXISTENCE-CONSTRUCTION"
       ],
       "slice_sha256": "0acc3efa47b69cf396e560b302e8daa2ff8a99dce05e38c920bfc3e8efeed27d",
       "locator_tag": "p",
@@ -3221,7 +3310,8 @@
       "end": 81130,
       "claims": [
         "MT11-RDFS-LANGSTRING-EXTENSION",
-        "MT11-RDFS-LANGUAGE-LITERAL-COVERAGE"
+        "MT11-RDFS-LANGUAGE-LITERAL-COVERAGE",
+        "MT11-RDFS-MODEL-EXISTENCE-CONSTRUCTION"
       ],
       "slice_sha256": "e7e70a3e521a62fa200921d31e38cbf3488906e079947b58cbba564d01db1e2a",
       "locator_tag": "p",
@@ -3235,7 +3325,8 @@
       "start": 81131,
       "end": 81210,
       "claims": [
-        "MT11-RDFS-DATATYPE-EXTENSION"
+        "MT11-RDFS-DATATYPE-EXTENSION",
+        "MT11-RDFS-MODEL-EXISTENCE-CONSTRUCTION"
       ],
       "slice_sha256": "db73b22041c8afda61b3f50f66017dd211ad403528a2ba1836ff74029b26c47f",
       "locator_tag": "p",
@@ -3249,7 +3340,8 @@
       "start": 81211,
       "end": 81292,
       "claims": [
-        "MT11-RDFS-DATATYPE-TYPING"
+        "MT11-RDFS-DATATYPE-TYPING",
+        "MT11-RDFS-MODEL-EXISTENCE-CONSTRUCTION"
       ],
       "slice_sha256": "db60e49485c0ef8154f19cebf78532d4c0c6d8426f6749107b45f7c2f493e7a5",
       "locator_tag": "p",
@@ -3263,7 +3355,8 @@
       "start": 81323,
       "end": 81506,
       "claims": [
-        "MT11-RDFS-DOMAIN"
+        "MT11-RDFS-DOMAIN",
+        "MT11-RDFS-MODEL-EXISTENCE-CONSTRUCTION"
       ],
       "slice_sha256": "e88464d454728c49e293e6a69ebea8627936e127d7036acc61f91d4c3d094193",
       "locator_tag": "td",
@@ -3277,7 +3370,8 @@
       "start": 81531,
       "end": 81713,
       "claims": [
-        "MT11-RDFS-RANGE"
+        "MT11-RDFS-RANGE",
+        "MT11-RDFS-MODEL-EXISTENCE-CONSTRUCTION"
       ],
       "slice_sha256": "17f736a8baca2a8b4564db544d9d9e41ac78c457059d9052a106b227f749643c",
       "locator_tag": "td",
@@ -3292,7 +3386,8 @@
       "end": 81874,
       "claims": [
         "MT11-RDFS-SUBPROPERTY-TRANSITIVE",
-        "MT11-RDFS-SUBPROPERTY-REFLEXIVE"
+        "MT11-RDFS-SUBPROPERTY-REFLEXIVE",
+        "MT11-RDFS-MODEL-EXISTENCE-CONSTRUCTION"
       ],
       "slice_sha256": "eed22b41de6106e6fb33b5bf22fd98a49087d892c65a070cc8b6cf1c692f7e4c",
       "locator_tag": "td",
@@ -3307,7 +3402,8 @@
       "end": 82091,
       "claims": [
         "MT11-RDFS-SUBPROPERTY-ENDPOINTS",
-        "MT11-RDFS-SUBPROPERTY-INCLUSION"
+        "MT11-RDFS-SUBPROPERTY-INCLUSION",
+        "MT11-RDFS-MODEL-EXISTENCE-CONSTRUCTION"
       ],
       "slice_sha256": "ed36cac21cf6a9b3e47687285d2a937d4dcb7f092df7c2c64a530f360f8cc72b",
       "locator_tag": "td",
@@ -3321,7 +3417,8 @@
       "start": 82116,
       "end": 82285,
       "claims": [
-        "MT11-RDFS-CLASS-RESOURCE"
+        "MT11-RDFS-CLASS-RESOURCE",
+        "MT11-RDFS-MODEL-EXISTENCE-CONSTRUCTION"
       ],
       "slice_sha256": "47ec382aa3dc1586bfd0f885b01e2e653dd0a0c98fbcbd5a0e381590e060baf2",
       "locator_tag": "td",
@@ -3336,7 +3433,8 @@
       "end": 82446,
       "claims": [
         "MT11-RDFS-SUBCLASS-TRANSITIVE",
-        "MT11-RDFS-SUBCLASS-REFLEXIVE"
+        "MT11-RDFS-SUBCLASS-REFLEXIVE",
+        "MT11-RDFS-MODEL-EXISTENCE-CONSTRUCTION"
       ],
       "slice_sha256": "c21e5db5c5e28ca7ab7de8345b2fb887e615078ac7e2c893e0132ff7ab305b46",
       "locator_tag": "td",
@@ -3351,7 +3449,8 @@
       "end": 82668,
       "claims": [
         "MT11-RDFS-SUBCLASS-ENDPOINTS",
-        "MT11-RDFS-SUBCLASS-INCLUSION"
+        "MT11-RDFS-SUBCLASS-INCLUSION",
+        "MT11-RDFS-MODEL-EXISTENCE-CONSTRUCTION"
       ],
       "slice_sha256": "4d29c651e8fe6870d39073c0f16eadde6cfb5f75496eaa043f204f1173ab56f9",
       "locator_tag": "td",
@@ -3365,7 +3464,8 @@
       "start": 82695,
       "end": 82946,
       "claims": [
-        "MT11-RDFS-CONTAINER-SUBPROPERTY"
+        "MT11-RDFS-CONTAINER-SUBPROPERTY",
+        "MT11-RDFS-MODEL-EXISTENCE-CONSTRUCTION"
       ],
       "slice_sha256": "f548807cc8a2deee275458b186095c577a3a3219b5c0659a279ba0af7388eedd",
       "locator_tag": "td",
@@ -3379,7 +3479,8 @@
       "start": 82971,
       "end": 83195,
       "claims": [
-        "MT11-RDFS-DATATYPE-SUBCLASS"
+        "MT11-RDFS-DATATYPE-SUBCLASS",
+        "MT11-RDFS-MODEL-EXISTENCE-CONSTRUCTION"
       ],
       "slice_sha256": "85f29e71d24ae0a42c8f8b03d627e2b45c96f6c7bb3c2ca6abf13e0ca97c51a9",
       "locator_tag": "td",
@@ -3396,7 +3497,8 @@
         "MT11-RDFS-AXIOM-DOMAINS",
         "MT11-RDFS-AXIOM-RANGES",
         "MT11-RDFS-AXIOM-HIERARCHIES",
-        "MT11-RDFS-AXIOM-CONTAINER-FAMILY"
+        "MT11-RDFS-AXIOM-CONTAINER-FAMILY",
+        "MT11-RDFS-MODEL-EXISTENCE-CONSTRUCTION"
       ],
       "slice_sha256": "1a621973b5f1d48d1988beb27aebb0c97e33600ffaafc562ae0cc59010d71e02",
       "locator_tag": "table",
@@ -3985,6 +4087,62 @@
         "MT11-DATATYPE-ALIAS-COHERENCE"
       ],
       "slice_sha256": "a06e1409e1c9441fdcc1ba9fcd54e4a85366cd116316b46933da5818f4d9cae7",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "rdfs-nonseparation",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 88489,
+      "end": 89087,
+      "claims": [
+        "MT11-RDFS-NONSEPARATION"
+      ],
+      "slice_sha256": "081c79cf20831fb208bcd41853d45643e7a26c319bd56909e3f49e2ab9e9102e",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "rdfs-literal-values",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 89391,
+      "end": 89677,
+      "claims": [
+        "MT11-LITERAL-VALUES-NOT-SYNTAX"
+      ],
+      "slice_sha256": "7d5721774aeb52c56d6cd9a7594e84584fb193645d767430616d2d790612c814",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "rdfs-literal-example",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 89714,
+      "end": 89762,
+      "claims": [
+        "MT11-LITERAL-VALUES-NOT-SYNTAX"
+      ],
+      "slice_sha256": "b2cd669980839116865c3ae343a35868e568b0c4b758902aa12828049439c7a3",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "rdfs-literal-consistency",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 89768,
+      "end": 90059,
+      "claims": [
+        "MT11-LITERAL-VALUES-NOT-SYNTAX"
+      ],
+      "slice_sha256": "779131c23e4203e414d8f465f626c1c1dfc8d54f5033eae2db29a61aaefc2083",
       "locator_tag": "p",
       "review": "pending",
       "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
@@ -8819,9 +8977,13 @@
           {
             "symbol": "classes_are_resources",
             "lean": "RDF11.SimpleInterpretation.classes_are_resources"
+          },
+          {
+            "symbol": "RDFSModelConstruction.distinct_coextensive_classes",
+            "lean": "RDF11.RDFSModelConstruction.distinct_coextensive_classes"
           }
         ],
-        "limitations": "Class extensions are relation slices on the same universe. No extensional equality of class identities is assumed. Concrete witnesses for empty or coextensive classes are not supplied.",
+        "limitations": "Class extensions are relation slices on the same universe. No extensional equality of class identities is assumed. The constructor gives distinct rdfs:Class and rdfs:Resource denotations with equal extensions under Parameters. An empty-class witness is not yet supplied.",
         "extraction_review": "pending_expert_review",
         "formalization_review": "pending_expert_review",
         "implementation_refinement": "not_connected_to_published_package"
@@ -8869,9 +9031,21 @@
           {
             "symbol": "RDFSModel",
             "lean": "RDF11.SimpleInterpretation.RDFSModel"
+          },
+          {
+            "symbol": "RDFSModelConstruction.interpretation",
+            "lean": "RDF11.RDFSModelConstruction.interpretation"
+          },
+          {
+            "symbol": "RDFSModelConstruction.conditions",
+            "lean": "RDF11.RDFSModelConstruction.conditions"
+          },
+          {
+            "symbol": "RDFSModelConstruction.model",
+            "lean": "RDF11.RDFSModelConstruction.model"
           }
         ],
-        "limitations": "Parameterized by abstract IRI/literal domains and a fixed external datatype theory; concrete XSD, XML Char and BCP47 implementations are not supplied. Expert mapping review remains pending. Includes both full axiom families. Language literal-image equality remains explicit; model existence for an arbitrary abstract literal interface is not assumed.",
+        "limitations": "IRI/literal domains and concrete built-in datatype meanings remain abstract. The new RDFSModelConstruction witnesses satisfy all existing conditions under explicit Parameters; those sufficient constructor choices are not additional requirements on every interpretation. Language literal-image equality remains explicit.",
         "extraction_review": "pending_expert_review",
         "formalization_review": "pending_expert_review",
         "implementation_refinement": "not_connected_to_published_package"
@@ -10243,10 +10417,43 @@
         "formal_proof": "unassessed",
         "test_mapping": "unassessed"
       },
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-RDFS-NONSEPARATION",
+        "relation": "partial_theorem",
+        "symbol_linked_english": "overlapping_roles_model gives an RDFS model in which every resource is a property, class and literal value. class_self_membership and property_self_application give permitted self-relations. no_class_member_property_transfer supplies countermodels in both directions for an rdf:value assertion on a class versus an individual typed member.",
+        "bindings": [
+          {
+            "symbol": "RDFSModelConstruction.overlapping_roles_model",
+            "lean": "RDF11.RDFSModelConstruction.overlapping_roles_model"
+          },
+          {
+            "symbol": "RDFSModelConstruction.class_self_membership",
+            "lean": "RDF11.RDFSModelConstruction.class_self_membership"
+          },
+          {
+            "symbol": "RDFSModelConstruction.property_self_application",
+            "lean": "RDF11.RDFSModelConstruction.property_self_application"
+          },
+          {
+            "symbol": "RDFSModelConstruction.no_class_member_property_transfer",
+            "lean": "RDF11.RDFSModelConstruction.no_class_member_property_transfer"
+          },
+          {
+            "symbol": "RDFSModelConstruction.value_triple_iff",
+            "lean": "RDF11.RDFSModelConstruction.value_triple_iff"
+          }
+        ],
+        "limitations": "These are permitted configurations under Parameters, not configurations required in every RDFS interpretation. The non-inheritance theorem refutes two specific entailments using rdf:value; additional premises can support transfer. rdf:value is only an example property: its RDF property typing and RDFS Resource domain/range axioms remain satisfied. No special value-extraction operation is introduced.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "rdfs-coextensive",
+        "rdfs-nonseparation"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-RDFS-VOCABULARY-BOUNDARY",
@@ -10295,10 +10502,32 @@
         "formal_proof": "unassessed",
         "test_mapping": "unassessed"
       },
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-LITERAL-VALUES-NOT-SYNTAX",
+        "relation": "partial_theorem",
+        "symbol_linked_english": "iri_literal_satisfiable constructs an RDFS model satisfying the singleton triple a rdf:type rdfs:Literal, where a is an IRI, under Parameters T D v.",
+        "bindings": [
+          {
+            "symbol": "RDFSModelConstruction.iri_literal_true",
+            "lean": "RDF11.RDFSModelConstruction.iri_literal_true"
+          },
+          {
+            "symbol": "RDFSModelConstruction.iri_literal_satisfiable",
+            "lean": "RDF11.RDFSModelConstruction.iri_literal_satisfiable"
+          }
+        ],
+        "limitations": "This maps the consistency consequence in §9.1 paragraphs 3–5. It does not formalize every part of the syntax/value distinction, prove exclusion of syntax objects from LV, or identify LV with the image of IL or of external value realization. Concrete literal syntax and prescribed datatype meanings remain obligations.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "rdfs-literal-values",
+        "rdfs-literal-example",
+        "rdfs-literal-consistency"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-RDFS-ENTAILMENT",
@@ -12887,7 +13116,7 @@
             "lean": "RDF11.RDFModelConstruction.base_empty_satisfiable"
           }
         ],
-        "limitations": "This is a sufficient family, not a characterization of all compatible datatype theories. The three recognition exclusions belong to the constructor, not the specification. It uses all supplied IRI/literal domains; concrete syntax and prescribed xsd:string/langString meanings remain external. Every recognized IRI, including langString, denotes its embedded fixed datatype. Aliases share the identity-indexed value space. No RDFS model-existence theorem, arbitrary-graph consistency criterion, or implementation refinement is established.",
+        "limitations": "This is a sufficient family, not a characterization of all compatible datatype theories. The three recognition exclusions belong to the constructor, not the specification. It uses all supplied IRI/literal domains; concrete syntax and prescribed xsd:string/langString meanings remain external. Every recognized IRI, including langString, denotes its embedded fixed datatype. Aliases share the identity-indexed value space. This RDF construction does not itself characterize arbitrary-graph consistency or implementation refinement. Its RDFS extension is mapped separately in MT11-RDFS-MODEL-EXISTENCE-CONSTRUCTION.",
         "extraction_review": "pending_expert_review",
         "formalization_review": "pending_expert_review",
         "implementation_refinement": "not_connected_to_published_package"
@@ -12980,7 +13209,7 @@
       "cleanroom_mapping": {
         "claim_id": "MT11-RDFS-LANGUAGE-LITERAL-COVERAGE",
         "relation": "theorem",
-        "symbol_linked_english": "RDFSConditions imply that each w in T.languageSpace equals the languageValue of some actual tagged literal l with its ASCII-lowercased tag. A missing representative makes every graph RDFSUnsatisfiable for those parameters.",
+        "symbol_linked_english": "RDFSConditions imply that each w in T.languageSpace equals the languageValue of some actual tagged literal l with its ASCII-lowercased tag. A missing representative makes every graph RDFSUnsatisfiable for those parameters. With aligned langString names and the base recognition set, base_model_exists_iff_language_coverage proves the converse by constructing a model.",
         "bindings": [
           {
             "symbol": "SimpleInterpretation.rdfs_language_literal_coverage",
@@ -12993,9 +13222,17 @@
           {
             "symbol": "rdfs_unsatisfiable_of_missing_language_literal",
             "lean": "RDF11.rdfs_unsatisfiable_of_missing_language_literal"
+          },
+          {
+            "symbol": "RDFSModelConstruction.LanguageCoverage",
+            "lean": "RDF11.RDFSModelConstruction.LanguageCoverage"
+          },
+          {
+            "symbol": "RDFSModelConstruction.base_model_exists_iff_language_coverage",
+            "lean": "RDF11.RDFSModelConstruction.base_model_exists_iff_language_coverage"
           }
         ],
-        "limitations": "This derives a necessary condition on the abstract literal/type parameters. It neither proves that current abstract LiteralSyntax has complete coverage nor constructs a concrete RDF literal domain. Full RDFS model existence remains open.",
+        "limitations": "The iff characterizes inhabitation of the current parameterized model class with base D and aligned names. It neither proves that abstract LiteralSyntax supplies coverage nor constructs concrete RDF literals or prescribed built-in datatypes. It does not characterize satisfiability of arbitrary graphs.",
         "extraction_review": "pending_expert_review",
         "formalization_review": "pending_expert_review",
         "implementation_refinement": "not_connected_to_published_package"
@@ -13115,6 +13352,102 @@
         "d-language-exception",
         "concepts-fixed-datatype-referents",
         "concepts-datatype-aliases"
+      ],
+      "extraction_review": "pending",
+      "formalization_review": "pending"
+    },
+    {
+      "id": "MT11-RDFS-MODEL-EXISTENCE-CONSTRUCTION",
+      "section": "9",
+      "anchor": "rdfs-interpretations",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#rdfs-interpretations",
+      "category": "mathematical_consequence",
+      "source_status": "normative",
+      "assertion_basis": "derived",
+      "paraphrase": "The RDFS conditions admit a full-domain model under explicit sufficient compatibility and tagged-literal coverage hypotheses. For the base recognition set with aligned langString names, model existence in the current abstract interfaces is equivalent to that coverage.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-RDFS-INTERPRETATION",
+        "MT11-RDF-MODEL-EXISTENCE-CONSTRUCTION",
+        "MT11-RDFS-LANGUAGE-LITERAL-COVERAGE",
+        "MT11-RDFS-AXIOM-DOMAINS",
+        "MT11-RDFS-AXIOM-RANGES",
+        "MT11-RDFS-AXIOM-HIERARCHIES",
+        "MT11-RDFS-AXIOM-CONTAINER-FAMILY"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "Derived construction, not an assertion printed as a theorem in the source. The exclusions of schema symbols from datatype recognition are sufficient constructor choices. The existence equivalence concerns the current parameterized model class, not arbitrary graph satisfiability or certified concrete built-in datatype meanings.",
+      "cleanroom_mapping": {
+        "claim_id": "MT11-RDFS-MODEL-EXISTENCE-CONSTRUCTION",
+        "relation": "partial_theorem",
+        "symbol_linked_english": "Under Parameters T D v, interpretation T D v Q satisfies every RDFSConditions field and all axioms. base_parameters discharges recognition exclusions for the base D when names agree and LanguageCoverage T holds. base_model_exists_iff_language_coverage proves that coverage is necessary and sufficient for this base model class to be inhabited.",
+        "bindings": [
+          {
+            "symbol": "RDFSModelConstruction.Parameters",
+            "lean": "RDF11.RDFSModelConstruction.Parameters"
+          },
+          {
+            "symbol": "RDFSModelConstruction.interpretation",
+            "lean": "RDF11.RDFSModelConstruction.interpretation"
+          },
+          {
+            "symbol": "RDFSModelConstruction.conditions",
+            "lean": "RDF11.RDFSModelConstruction.conditions"
+          },
+          {
+            "symbol": "RDFSModelConstruction.axioms",
+            "lean": "RDF11.RDFSModelConstruction.axioms"
+          },
+          {
+            "symbol": "RDFSModelConstruction.model",
+            "lean": "RDF11.RDFSModelConstruction.model"
+          },
+          {
+            "symbol": "RDFSModelConstruction.base_parameters",
+            "lean": "RDF11.RDFSModelConstruction.base_parameters"
+          },
+          {
+            "symbol": "RDFSModelConstruction.empty_satisfiable",
+            "lean": "RDF11.RDFSModelConstruction.empty_satisfiable"
+          },
+          {
+            "symbol": "RDFSModelConstruction.base_empty_satisfiable",
+            "lean": "RDF11.RDFSModelConstruction.base_empty_satisfiable"
+          },
+          {
+            "symbol": "RDFSModelConstruction.base_model_exists_iff_language_coverage",
+            "lean": "RDF11.RDFSModelConstruction.base_model_exists_iff_language_coverage"
+          }
+        ],
+        "limitations": "A sufficient witness family, not a characterization of all models or arbitrary-graph consistency. SchemaSymbol recognition exclusions are constructor choices, not specification requirements. IR, IP, IC and LV are universal in this family; recognized datatype class extensions still equal their prescribed spaces. Value supplies external values and datatype descriptors, not an exhaustive set of all literal values. Concrete syntax, language-literal coverage and built-in datatype correspondence remain external obligations.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "rdfs-interpretation",
+        "rdfs-icext",
+        "rdfs-ic",
+        "rdfs-lv",
+        "rdfs-resource",
+        "rdfs-language",
+        "rdfs-datatype-space",
+        "rdfs-datatype-typing",
+        "rdfs-condition-2",
+        "rdfs-condition-3",
+        "rdfs-condition-4",
+        "rdfs-condition-5",
+        "rdfs-condition-6",
+        "rdfs-condition-8",
+        "rdfs-condition-7",
+        "rdfs-condition-9",
+        "rdfs-condition-10",
+        "rdfs-axioms"
       ],
       "extraction_review": "pending",
       "formalization_review": "pending"
