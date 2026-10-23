@@ -4,7 +4,7 @@
   "method": "Human-readable AI close reading; selectors locate already selected passages and do not extract assertions.",
   "source_inventory": "../ledger/semantics-inventory.json",
   "inventory_sha256": "acf9b60576a2c688a73e2c39f8e6346d199742a50a61baa2d4faafdadf20c390",
-  "mapping_input_sha256": "e001537531ac97e70fa29aa86e143e5d7d8ab39b8ab93fb27a96a6d15919ca89",
+  "mapping_input_sha256": "f1c39edf94cf69fa577fb790be58e55ad19341032cc824d027c42da4cceeb980",
   "documents": [
     {
       "id": "mt",
@@ -681,6 +681,251 @@
         },
         {
           "start": 54921,
+          "end": 56705,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 56705,
+          "end": 57068,
+          "refs": [
+            "MT11-DATATYPE-RECOGNITION-PARAMETER"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 57068,
+          "end": 57972,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 57972,
+          "end": 58558,
+          "refs": [
+            "MT11-DATATYPE-IDENTIFICATION-FIXED"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 58558,
+          "end": 58560,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 58560,
+          "end": 60326,
+          "refs": [
+            "MT11-ILL-TYPED-DEFINITION",
+            "MT11-LEXICAL-TO-VALUE",
+            "MT11-LITERAL-DATATYPE-IMPORT"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 60326,
+          "end": 60328,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 60328,
+          "end": 62020,
+          "refs": [
+            "MT11-REQUIRED-AND-OPTIONAL-DATATYPES"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 62020,
+          "end": 62022,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 62022,
+          "end": 62555,
+          "refs": [
+            "MT11-LANGSTRING-EXCEPTION"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 62555,
+          "end": 63902,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 63902,
+          "end": 64216,
+          "refs": [
+            "MT11-D-INTERPRETATION"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 64216,
+          "end": 64305,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 64305,
+          "end": 64551,
+          "refs": [
+            "MT11-LANGSTRING-VALUE"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 64551,
+          "end": 64562,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 64562,
+          "end": 64752,
+          "refs": [
+            "MT11-RECOGNIZED-DATATYPE-DENOTATION",
+            "MT11-RECOGNIZED-LITERAL-VALUE"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 64752,
+          "end": 64777,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 64777,
+          "end": 65531,
+          "refs": [
+            "MT11-ILL-TYPED-UNSATISFIABILITY"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 65531,
+          "end": 65533,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 65533,
+          "end": 66278,
+          "refs": [
+            "MT11-LANGSTRING-STRING-TOTALITY"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 66278,
+          "end": 66777,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 66777,
+          "end": 67185,
+          "refs": [
+            "MT11-D-SATISFACTION-ENTAILMENT"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 67185,
+          "end": 67578,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 67578,
+          "end": 67685,
+          "refs": [
+            "MT11-D-EXPLOSION"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 67685,
+          "end": 68013,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 68013,
+          "end": 68503,
+          "refs": [
+            "MT11-D-DIRECTION-SOURCE-CLAIM",
+            "MT11-D-MODEL-CLASS-MONOTONICITY",
+            "MT11-EMPTY-D-SIMPLE"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 68503,
+          "end": 69382,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 69382,
+          "end": 70014,
+          "refs": [
+            "MT11-DATATYPE-VALUE-SUBSTITUTION"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 70014,
+          "end": 71594,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 71594,
+          "end": 71867,
+          "refs": [
+            "MT11-RDF-INTERPRETATION"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 71867,
           "end": 71946,
           "refs": [
             "UNRESOLVED-mt"
@@ -698,6 +943,104 @@
         },
         {
           "start": 72104,
+          "end": 72119,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 72119,
+          "end": 72296,
+          "refs": [
+            "MT11-RDF-DATATYPE-EXTENSION"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 72296,
+          "end": 72454,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 72454,
+          "end": 73015,
+          "refs": [
+            "MT11-RDF-AXIOM-CONTAINER-PROPERTIES",
+            "MT11-RDF-AXIOM-NIL",
+            "MT11-RDF-AXIOM-PROPERTIES"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 73015,
+          "end": 73580,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 73580,
+          "end": 74039,
+          "refs": [
+            "MT11-RDF-VOCABULARY-LIMITS"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 74039,
+          "end": 74232,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 74232,
+          "end": 74804,
+          "refs": [
+            "MT11-RDF-ENTAILMENT"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 74804,
+          "end": 74806,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 74806,
+          "end": 75276,
+          "refs": [
+            "MT11-RDF-AXIOM-ENTAILMENT"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 75276,
+          "end": 75985,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 75985,
+          "end": 76317,
+          "refs": [
+            "MT11-RULE-rdfD1"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 76317,
           "end": 76985,
           "refs": [
             "UNRESOLVED-mt"
@@ -714,6 +1057,646 @@
         },
         {
           "start": 77205,
+          "end": 77758,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 77758,
+          "end": 78053,
+          "refs": [
+            "MT11-RDF-DATATYPE-SPECIFIC-CONSEQUENCES"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 78053,
+          "end": 79469,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 79469,
+          "end": 80075,
+          "refs": [
+            "MT11-RDFS-CLASS-STRUCTURE"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 80075,
+          "end": 80278,
+          "refs": [
+            "MT11-RDFS-CLASS-STRUCTURE"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 80278,
+          "end": 80281,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 80281,
+          "end": 80624,
+          "refs": [
+            "MT11-RDFS-INTERPRETATION"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 80624,
+          "end": 80749,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 80749,
+          "end": 80840,
+          "refs": [
+            "MT11-RDFS-ICEXT"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 80840,
+          "end": 80849,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 80849,
+          "end": 80909,
+          "refs": [
+            "MT11-RDFS-IC"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 80909,
+          "end": 80918,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 80918,
+          "end": 80980,
+          "refs": [
+            "MT11-RDFS-LV"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 80980,
+          "end": 80989,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 80989,
+          "end": 81037,
+          "refs": [
+            "MT11-RDFS-RESOURCE-EXTENSION"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 81037,
+          "end": 81038,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 81038,
+          "end": 81130,
+          "refs": [
+            "MT11-RDFS-LANGSTRING-EXTENSION"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 81130,
+          "end": 81131,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 81131,
+          "end": 81210,
+          "refs": [
+            "MT11-RDFS-DATATYPE-EXTENSION"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 81210,
+          "end": 81211,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 81211,
+          "end": 81292,
+          "refs": [
+            "MT11-RDFS-DATATYPE-TYPING"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 81292,
+          "end": 81323,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 81323,
+          "end": 81506,
+          "refs": [
+            "MT11-RDFS-DOMAIN"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 81506,
+          "end": 81531,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 81531,
+          "end": 81713,
+          "refs": [
+            "MT11-RDFS-RANGE"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 81713,
+          "end": 81738,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 81738,
+          "end": 81874,
+          "refs": [
+            "MT11-RDFS-SUBPROPERTY-REFLEXIVE",
+            "MT11-RDFS-SUBPROPERTY-TRANSITIVE"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 81874,
+          "end": 81899,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 81899,
+          "end": 82091,
+          "refs": [
+            "MT11-RDFS-SUBPROPERTY-ENDPOINTS",
+            "MT11-RDFS-SUBPROPERTY-INCLUSION"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 82091,
+          "end": 82116,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 82116,
+          "end": 82285,
+          "refs": [
+            "MT11-RDFS-CLASS-RESOURCE"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 82285,
+          "end": 82313,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 82313,
+          "end": 82446,
+          "refs": [
+            "MT11-RDFS-SUBCLASS-REFLEXIVE",
+            "MT11-RDFS-SUBCLASS-TRANSITIVE"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 82446,
+          "end": 82475,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 82475,
+          "end": 82668,
+          "refs": [
+            "MT11-RDFS-SUBCLASS-ENDPOINTS",
+            "MT11-RDFS-SUBCLASS-INCLUSION"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 82668,
+          "end": 82695,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 82695,
+          "end": 82946,
+          "refs": [
+            "MT11-RDFS-CONTAINER-SUBPROPERTY"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 82946,
+          "end": 82971,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 82971,
+          "end": 83195,
+          "refs": [
+            "MT11-RDFS-DATATYPE-SUBCLASS"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 83195,
+          "end": 83253,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 83253,
+          "end": 85827,
+          "refs": [
+            "MT11-RDFS-AXIOM-CONTAINER-FAMILY",
+            "MT11-RDFS-AXIOM-DOMAINS",
+            "MT11-RDFS-AXIOM-HIERARCHIES",
+            "MT11-RDFS-AXIOM-RANGES"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 85827,
+          "end": 85998,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 85998,
+          "end": 86173,
+          "refs": [
+            "MT11-RDFS-PROPERTY-CLASS-EQUALITY"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 86173,
+          "end": 87222,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 87222,
+          "end": 88487,
+          "refs": [
+            "MT11-RDFS-ADDITIONAL-VALID-TYPES"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 88487,
+          "end": 90267,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 90267,
+          "end": 90496,
+          "refs": [
+            "MT11-RDFS-ENTAILMENT"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 90496,
+          "end": 90497,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 90497,
+          "end": 91015,
+          "refs": [
+            "MT11-RDFS-DIRECTION-SOURCE-CLAIM",
+            "MT11-RDFS-MODEL-CLASS-INCLUSION"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 91015,
+          "end": 91747,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 91747,
+          "end": 91952,
+          "refs": [
+            "MT11-RULE-rdfs1"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 91952,
+          "end": 91957,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 91957,
+          "end": 92242,
+          "refs": [
+            "MT11-RULE-rdfs2"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 92242,
+          "end": 92247,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 92247,
+          "end": 92530,
+          "refs": [
+            "MT11-RULE-rdfs3"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 92530,
+          "end": 92535,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 92535,
+          "end": 92754,
+          "refs": [
+            "MT11-RULE-rdfs4a"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 92754,
+          "end": 92759,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 92759,
+          "end": 92977,
+          "refs": [
+            "MT11-RULE-rdfs4b"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 92977,
+          "end": 92982,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 92982,
+          "end": 93312,
+          "refs": [
+            "MT11-RULE-rdfs5"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 93312,
+          "end": 93317,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 93317,
+          "end": 93561,
+          "refs": [
+            "MT11-RULE-rdfs6"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 93561,
+          "end": 93566,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 93566,
+          "end": 93840,
+          "refs": [
+            "MT11-RULE-rdfs7"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 93840,
+          "end": 93845,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 93845,
+          "end": 94081,
+          "refs": [
+            "MT11-RULE-rdfs8"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 94081,
+          "end": 94086,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 94086,
+          "end": 94392,
+          "refs": [
+            "MT11-RULE-rdfs9"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 94392,
+          "end": 94397,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 94397,
+          "end": 94638,
+          "refs": [
+            "MT11-RULE-rdfs10"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 94638,
+          "end": 94643,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 94643,
+          "end": 94966,
+          "refs": [
+            "MT11-RULE-rdfs11"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 94966,
+          "end": 94971,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 94971,
+          "end": 95232,
+          "refs": [
+            "MT11-RULE-rdfs12"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 95232,
+          "end": 95237,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 95237,
+          "end": 95477,
+          "refs": [
+            "MT11-RULE-rdfs13"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 95477,
+          "end": 95500,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 95500,
+          "end": 95697,
+          "refs": [
+            "MT11-RDFS-DATATYPE-INCONSISTENCY"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 95697,
           "end": 111179,
           "refs": [
             "UNRESOLVED-mt"
@@ -790,6 +1773,23 @@
         },
         {
           "start": 47945,
+          "end": 54769,
+          "refs": [
+            "UNRESOLVED-concepts"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 54769,
+          "end": 55078,
+          "refs": [
+            "MT11-LANGSTRING-EXCEPTION",
+            "MT11-LANGSTRING-VALUE"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 55078,
           "end": 120796,
           "refs": [
             "UNRESOLVED-concepts"
@@ -1418,6 +2418,890 @@
       ],
       "slice_sha256": "687b10bae268e2ccd33b3c079c3cc74e7081fe19ba5ba22bb4b9ab556081dc44",
       "locator_tag": "tr",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "d-recognition",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 56705,
+      "end": 57068,
+      "claims": [
+        "MT11-DATATYPE-RECOGNITION-PARAMETER"
+      ],
+      "slice_sha256": "5f669e07e0d9296a4801116c1e539eb83cfbfe9710c027b785b1011da8a2348f",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "d-fixed",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 57972,
+      "end": 58558,
+      "claims": [
+        "MT11-DATATYPE-IDENTIFICATION-FIXED"
+      ],
+      "slice_sha256": "91e0cd12703c1b3eff0a0f7100385db1f7f6db33301d53dd0441f1d23943222f",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "d-lexical",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 58560,
+      "end": 60326,
+      "claims": [
+        "MT11-LITERAL-DATATYPE-IMPORT",
+        "MT11-LEXICAL-TO-VALUE",
+        "MT11-ILL-TYPED-DEFINITION"
+      ],
+      "slice_sha256": "1474448d9952411e839d9b89517acd1959035b44fc05894652d03af55cb37089",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "d-required",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 60328,
+      "end": 62020,
+      "claims": [
+        "MT11-REQUIRED-AND-OPTIONAL-DATATYPES"
+      ],
+      "slice_sha256": "3be122d66844d9fd5b4446a9f172649b55d3fe9f220f1a61aade5e6e8899fd54",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "d-language-exception",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 62022,
+      "end": 62555,
+      "claims": [
+        "MT11-LANGSTRING-EXCEPTION"
+      ],
+      "slice_sha256": "631414efb86b47468379b36012fa53e40d6b45269dba217cdda164eae80b1bff",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "concepts-language-values",
+      "source": "concepts",
+      "source_sha256": "3838c992097f72ee8784b6c96194d9879f86f2e08f53ced5a05aa4031750c5ac",
+      "start": 54769,
+      "end": 55078,
+      "claims": [
+        "MT11-LANGSTRING-EXCEPTION",
+        "MT11-LANGSTRING-VALUE"
+      ],
+      "slice_sha256": "7951a8a068cd2636cdc1bb1882aa841becf7fba9584fd465e23e32684b9f5c80",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "d-interpretation",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 63902,
+      "end": 64216,
+      "claims": [
+        "MT11-D-INTERPRETATION"
+      ],
+      "slice_sha256": "006ec580af75f6a151eea9699af0fc8ed0c3acba3d0e16758ee3ae8e6f009a61",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "d-language",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 64305,
+      "end": 64551,
+      "claims": [
+        "MT11-LANGSTRING-VALUE"
+      ],
+      "slice_sha256": "6667247535ed048e544b58cfb36f822c2f11d58835a6b8320b5642bd81a31515",
+      "locator_tag": "td",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "d-ordinary",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 64562,
+      "end": 64752,
+      "claims": [
+        "MT11-RECOGNIZED-DATATYPE-DENOTATION",
+        "MT11-RECOGNIZED-LITERAL-VALUE"
+      ],
+      "slice_sha256": "4758513c6a7501f3a41e2b15613eadad16f5c5a5965b142282129b6231fa29ba",
+      "locator_tag": "td",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "d-illtyped",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 64777,
+      "end": 65531,
+      "claims": [
+        "MT11-ILL-TYPED-UNSATISFIABILITY"
+      ],
+      "slice_sha256": "96286cff5a58ae54228a5f8b965312abe364cab8a4a54e6ea6d967c82a9a25a3",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "d-language-total",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 65533,
+      "end": 66278,
+      "claims": [
+        "MT11-LANGSTRING-STRING-TOTALITY"
+      ],
+      "slice_sha256": "f4a067f6dd5c8d7751ccc251a3f4a36a3697f1af60f4e3f26950b6e110ba8e38",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "d-entailment",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 66777,
+      "end": 67185,
+      "claims": [
+        "MT11-D-SATISFACTION-ENTAILMENT"
+      ],
+      "slice_sha256": "24fecaa0ce235dfb03a46f650f14c1bcc11397b8687fafd7bc8a88bd4a2aa0a3",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "d-explosion",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 67578,
+      "end": 67685,
+      "claims": [
+        "MT11-D-EXPLOSION"
+      ],
+      "slice_sha256": "abd9a48d900a8dc47cbd231e534a22b583f015025a413160dd2beae8d9147f94",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "d-direction",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 68013,
+      "end": 68503,
+      "claims": [
+        "MT11-EMPTY-D-SIMPLE",
+        "MT11-D-MODEL-CLASS-MONOTONICITY",
+        "MT11-D-DIRECTION-SOURCE-CLAIM"
+      ],
+      "slice_sha256": "f78fd5e612171ff78e3a1cc6e7cdbcf1b6d4b8b3b83d40268267b7583b66d17f",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "d-value-substitution",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 69382,
+      "end": 70014,
+      "claims": [
+        "MT11-DATATYPE-VALUE-SUBSTITUTION"
+      ],
+      "slice_sha256": "5836d4ea55a99b7004f1fd7ffb1f794654415646e141801d892e21adb7655aba",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "rdf-interpretation",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 71594,
+      "end": 71867,
+      "claims": [
+        "MT11-RDF-INTERPRETATION"
+      ],
+      "slice_sha256": "5f99ba0992fc57f64315e21a3d17f51823d0950ef25d7a27525f033a3523fb90",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "rdf-datatype-extension",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 72119,
+      "end": 72296,
+      "claims": [
+        "MT11-RDF-DATATYPE-EXTENSION"
+      ],
+      "slice_sha256": "70400448e0633a9f1f675a752098462304e626066ebd6c4cc1db8a9d1df09fb8",
+      "locator_tag": "td",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "rdf-axioms",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 72454,
+      "end": 73015,
+      "claims": [
+        "MT11-RDF-AXIOM-PROPERTIES",
+        "MT11-RDF-AXIOM-NIL",
+        "MT11-RDF-AXIOM-CONTAINER-PROPERTIES"
+      ],
+      "slice_sha256": "b5399e64a2d0f69bb6bb8f2f254b20b104ac500834b0de437d84e40bf6ba97a4",
+      "locator_tag": "td",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "rdf-entailment",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 74232,
+      "end": 74804,
+      "claims": [
+        "MT11-RDF-ENTAILMENT"
+      ],
+      "slice_sha256": "9b82510728ffcee7e38438dabb2c12b3c5c8c0baafa9faefd5b1867f905ac151",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "rdf-axiom-entailment",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 74806,
+      "end": 75276,
+      "claims": [
+        "MT11-RDF-AXIOM-ENTAILMENT"
+      ],
+      "slice_sha256": "30625d244169bb86aefe0fa1357ab33c56652068c58ca7e29c70f83b8e2bd9e7",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "rdfd1-rule",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 75985,
+      "end": 76317,
+      "claims": [
+        "MT11-RULE-rdfD1"
+      ],
+      "slice_sha256": "673b77e375a16f960ea081450941efc6c5e36342ba7ee616713900596b277e6d",
+      "locator_tag": "tr",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "rdf-disjoint",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 77758,
+      "end": 78053,
+      "claims": [
+        "MT11-RDF-DATATYPE-SPECIFIC-CONSEQUENCES"
+      ],
+      "slice_sha256": "d0cd12690f27f79a002d78b2a92f4518758123171341895cf36b44b9cfca0cf0",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "rdfs-class-structure",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 79469,
+      "end": 80075,
+      "claims": [
+        "MT11-RDFS-CLASS-STRUCTURE"
+      ],
+      "slice_sha256": "cc7966b92011493a5d9e54b6e71237cd8c86909c09fb22eaa736a6252e463dce",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "rdfs-coextensive",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 80075,
+      "end": 80278,
+      "claims": [
+        "MT11-RDFS-CLASS-STRUCTURE"
+      ],
+      "slice_sha256": "1c0701cf1381b451400ef76d9e09f100d01864e6df4d9da5aac4808d42276c3c",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "rdfs-interpretation",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 80281,
+      "end": 80624,
+      "claims": [
+        "MT11-RDFS-INTERPRETATION"
+      ],
+      "slice_sha256": "27ae9bac04e537d722e07356cbdd126164f0ee0695d6a794e7c03de504d0074f",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "rdfs-icext",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 80749,
+      "end": 80840,
+      "claims": [
+        "MT11-RDFS-ICEXT"
+      ],
+      "slice_sha256": "bbf28cdab1dd0b444131d3f14b8cec244d17484db5b39dbee0cfccc1f005e556",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "rdfs-ic",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 80849,
+      "end": 80909,
+      "claims": [
+        "MT11-RDFS-IC"
+      ],
+      "slice_sha256": "90599ccd3787af3f13dcf11d16dc475962048306a37e54f68dc819d9a2788d62",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "rdfs-lv",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 80918,
+      "end": 80980,
+      "claims": [
+        "MT11-RDFS-LV"
+      ],
+      "slice_sha256": "9666727d5e27fd8c715b253bd404b82371654a6ecadf24bf8e172bed80fdd050",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "rdfs-resource",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 80989,
+      "end": 81037,
+      "claims": [
+        "MT11-RDFS-RESOURCE-EXTENSION"
+      ],
+      "slice_sha256": "0acc3efa47b69cf396e560b302e8daa2ff8a99dce05e38c920bfc3e8efeed27d",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "rdfs-language",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 81038,
+      "end": 81130,
+      "claims": [
+        "MT11-RDFS-LANGSTRING-EXTENSION"
+      ],
+      "slice_sha256": "e7e70a3e521a62fa200921d31e38cbf3488906e079947b58cbba564d01db1e2a",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "rdfs-datatype-space",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 81131,
+      "end": 81210,
+      "claims": [
+        "MT11-RDFS-DATATYPE-EXTENSION"
+      ],
+      "slice_sha256": "db73b22041c8afda61b3f50f66017dd211ad403528a2ba1836ff74029b26c47f",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "rdfs-datatype-typing",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 81211,
+      "end": 81292,
+      "claims": [
+        "MT11-RDFS-DATATYPE-TYPING"
+      ],
+      "slice_sha256": "db60e49485c0ef8154f19cebf78532d4c0c6d8426f6749107b45f7c2f493e7a5",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "rdfs-condition-2",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 81323,
+      "end": 81506,
+      "claims": [
+        "MT11-RDFS-DOMAIN"
+      ],
+      "slice_sha256": "e88464d454728c49e293e6a69ebea8627936e127d7036acc61f91d4c3d094193",
+      "locator_tag": "td",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "rdfs-condition-3",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 81531,
+      "end": 81713,
+      "claims": [
+        "MT11-RDFS-RANGE"
+      ],
+      "slice_sha256": "17f736a8baca2a8b4564db544d9d9e41ac78c457059d9052a106b227f749643c",
+      "locator_tag": "td",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "rdfs-condition-4",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 81738,
+      "end": 81874,
+      "claims": [
+        "MT11-RDFS-SUBPROPERTY-TRANSITIVE",
+        "MT11-RDFS-SUBPROPERTY-REFLEXIVE"
+      ],
+      "slice_sha256": "eed22b41de6106e6fb33b5bf22fd98a49087d892c65a070cc8b6cf1c692f7e4c",
+      "locator_tag": "td",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "rdfs-condition-5",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 81899,
+      "end": 82091,
+      "claims": [
+        "MT11-RDFS-SUBPROPERTY-ENDPOINTS",
+        "MT11-RDFS-SUBPROPERTY-INCLUSION"
+      ],
+      "slice_sha256": "ed36cac21cf6a9b3e47687285d2a937d4dcb7f092df7c2c64a530f360f8cc72b",
+      "locator_tag": "td",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "rdfs-condition-6",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 82116,
+      "end": 82285,
+      "claims": [
+        "MT11-RDFS-CLASS-RESOURCE"
+      ],
+      "slice_sha256": "47ec382aa3dc1586bfd0f885b01e2e653dd0a0c98fbcbd5a0e381590e060baf2",
+      "locator_tag": "td",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "rdfs-condition-8",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 82313,
+      "end": 82446,
+      "claims": [
+        "MT11-RDFS-SUBCLASS-TRANSITIVE",
+        "MT11-RDFS-SUBCLASS-REFLEXIVE"
+      ],
+      "slice_sha256": "c21e5db5c5e28ca7ab7de8345b2fb887e615078ac7e2c893e0132ff7ab305b46",
+      "locator_tag": "td",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "rdfs-condition-7",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 82475,
+      "end": 82668,
+      "claims": [
+        "MT11-RDFS-SUBCLASS-ENDPOINTS",
+        "MT11-RDFS-SUBCLASS-INCLUSION"
+      ],
+      "slice_sha256": "4d29c651e8fe6870d39073c0f16eadde6cfb5f75496eaa043f204f1173ab56f9",
+      "locator_tag": "td",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "rdfs-condition-9",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 82695,
+      "end": 82946,
+      "claims": [
+        "MT11-RDFS-CONTAINER-SUBPROPERTY"
+      ],
+      "slice_sha256": "f548807cc8a2deee275458b186095c577a3a3219b5c0659a279ba0af7388eedd",
+      "locator_tag": "td",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "rdfs-condition-10",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 82971,
+      "end": 83195,
+      "claims": [
+        "MT11-RDFS-DATATYPE-SUBCLASS"
+      ],
+      "slice_sha256": "85f29e71d24ae0a42c8f8b03d627e2b45c96f6c7bb3c2ca6abf13e0ca97c51a9",
+      "locator_tag": "td",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "rdfs-axioms",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 83253,
+      "end": 85827,
+      "claims": [
+        "MT11-RDFS-AXIOM-DOMAINS",
+        "MT11-RDFS-AXIOM-RANGES",
+        "MT11-RDFS-AXIOM-HIERARCHIES",
+        "MT11-RDFS-AXIOM-CONTAINER-FAMILY"
+      ],
+      "slice_sha256": "1a621973b5f1d48d1988beb27aebb0c97e33600ffaafc562ae0cc59010d71e02",
+      "locator_tag": "table",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "rdfs-property-extension",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 85998,
+      "end": 86173,
+      "claims": [
+        "MT11-RDFS-PROPERTY-CLASS-EQUALITY"
+      ],
+      "slice_sha256": "d64de21f3f690935372a206b1e1d3ffa838d0663ab54790557e15d799f084dc9",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "rdfs-entailment",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 90267,
+      "end": 90496,
+      "claims": [
+        "MT11-RDFS-ENTAILMENT"
+      ],
+      "slice_sha256": "e12a1c18f079fdafcca35bf6f2c87ba934bb921206fd6b827c489aa36f1a98bf",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "rdfs-direction",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 90497,
+      "end": 91015,
+      "claims": [
+        "MT11-RDFS-DIRECTION-SOURCE-CLAIM",
+        "MT11-RDFS-MODEL-CLASS-INCLUSION"
+      ],
+      "slice_sha256": "4ae3b6a0105eaf1aa71ee07267c185cb807b4fc93c837ff6aa203d03e347b0a4",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "rdfs-additional-types",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 87222,
+      "end": 88487,
+      "claims": [
+        "MT11-RDFS-ADDITIONAL-VALID-TYPES"
+      ],
+      "slice_sha256": "5757917e9ebc999848d46f8166e1b023d6580c0abe098b985e268ee78c2d0632",
+      "locator_tag": "table",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "rdf-optional-types",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 73580,
+      "end": 74039,
+      "claims": [
+        "MT11-RDF-VOCABULARY-LIMITS"
+      ],
+      "slice_sha256": "2bee8e6b2fb27a2800d5ae6225eed9124f43ecf2122db7047f79e091105b44b6",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "rule-rdfs1",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 91747,
+      "end": 91952,
+      "claims": [
+        "MT11-RULE-rdfs1"
+      ],
+      "slice_sha256": "f6bffd045a816503c1457207da36ac1e31f6d47168b86558751d664b3b659a29",
+      "locator_tag": "tr",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "rule-rdfs2",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 91957,
+      "end": 92242,
+      "claims": [
+        "MT11-RULE-rdfs2"
+      ],
+      "slice_sha256": "da04ca755f0391331bcae4357c83ec5da5b878d495606a32b88296bed0e5d302",
+      "locator_tag": "tr",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "rule-rdfs3",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 92247,
+      "end": 92530,
+      "claims": [
+        "MT11-RULE-rdfs3"
+      ],
+      "slice_sha256": "3555cdec7ad2fed2fb5cc84ed802667d400f36433b21501a8394972b0747e93a",
+      "locator_tag": "tr",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "rule-rdfs4a",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 92535,
+      "end": 92754,
+      "claims": [
+        "MT11-RULE-rdfs4a"
+      ],
+      "slice_sha256": "a77ff1252e795e8dfa9ce7440a5aa8ca6b454a33a08f8f1bd1007bb11bf9907e",
+      "locator_tag": "tr",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "rule-rdfs4b",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 92759,
+      "end": 92977,
+      "claims": [
+        "MT11-RULE-rdfs4b"
+      ],
+      "slice_sha256": "a683654814ab056bd65bfd64984338b8368eb9a65d874a8a177eab8267f892f1",
+      "locator_tag": "tr",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "rule-rdfs5",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 92982,
+      "end": 93312,
+      "claims": [
+        "MT11-RULE-rdfs5"
+      ],
+      "slice_sha256": "a6fbd34f555593341a37e2f0cc499cedb3b5b1d0fded4aff55c6c17438053940",
+      "locator_tag": "tr",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "rule-rdfs6",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 93317,
+      "end": 93561,
+      "claims": [
+        "MT11-RULE-rdfs6"
+      ],
+      "slice_sha256": "e4a5df428ede678aac7c54d4284f19a6c6d3fe410f26fd2eb1e0370b0b9a1397",
+      "locator_tag": "tr",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "rule-rdfs7",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 93566,
+      "end": 93840,
+      "claims": [
+        "MT11-RULE-rdfs7"
+      ],
+      "slice_sha256": "83ae93d473a38a5c56b40060df67c7b3636d2e71882698c65d5b0f1424921813",
+      "locator_tag": "tr",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "rule-rdfs8",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 93845,
+      "end": 94081,
+      "claims": [
+        "MT11-RULE-rdfs8"
+      ],
+      "slice_sha256": "48fcf75293d8d10fb68c3da70bd04a11e14de62ca149c73ee1fd91832fed9132",
+      "locator_tag": "tr",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "rule-rdfs9",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 94086,
+      "end": 94392,
+      "claims": [
+        "MT11-RULE-rdfs9"
+      ],
+      "slice_sha256": "345d62d2278c94605efc334645c726c4e7495bb60fd00cb0e944b37771211b6d",
+      "locator_tag": "tr",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "rule-rdfs10",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 94397,
+      "end": 94638,
+      "claims": [
+        "MT11-RULE-rdfs10"
+      ],
+      "slice_sha256": "62a29e860358decd44586f73c8385eab35183ceefe57a35a3b2c840e32311a41",
+      "locator_tag": "tr",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "rule-rdfs11",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 94643,
+      "end": 94966,
+      "claims": [
+        "MT11-RULE-rdfs11"
+      ],
+      "slice_sha256": "a24bd1adbc7313b593baa88b4a778c6fd790d29cfcccff8263e832aa032ff917",
+      "locator_tag": "tr",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "rule-rdfs12",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 94971,
+      "end": 95232,
+      "claims": [
+        "MT11-RULE-rdfs12"
+      ],
+      "slice_sha256": "2002b89c1d1207922eb04c483c58c300ec0b56e9f002f9cbd168b171b954d7b8",
+      "locator_tag": "tr",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "rule-rdfs13",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 95237,
+      "end": 95477,
+      "claims": [
+        "MT11-RULE-rdfs13"
+      ],
+      "slice_sha256": "385413f0d1d0bcde6cd23c5a50854ac6ebb6699f5c0d0f3c3b308960a454ac17",
+      "locator_tag": "tr",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "rdfs-inconsistency",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 95500,
+      "end": 95697,
+      "claims": [
+        "MT11-RDFS-DATATYPE-INCONSISTENCY"
+      ],
+      "slice_sha256": "96d5f382adf1509b2266d503cb0663420385b2e74629060b778fbaf4b9eb72fe",
+      "locator_tag": "p",
       "review": "pending",
       "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
     }
@@ -2293,6 +4177,10 @@
         "symbol_linked_english": "GraphIsomorphism G H supplies inverse blank renamings on the occurring blank nodes and a graph-image equality. The graphs are mutual instances and satisfy exactly the same simple interpretations.",
         "bindings": [
           {
+            "symbol": "isomorphism_invariance",
+            "lean": "RDF11.Statements.isomorphism_invariance"
+          },
+          {
             "symbol": "GraphIsomorphism",
             "lean": "RDF11.GraphIsomorphism"
           },
@@ -2574,6 +4462,10 @@
         "relation": "partial_definition_and_theorem",
         "symbol_linked_english": "The binary merge of G and H takes their union after placing their blank nodes in disjoint copies. I satisfies that merge exactly when I satisfies G and I satisfies H.",
         "bindings": [
+          {
+            "symbol": "merging_lemma",
+            "lean": "RDF11.Statements.merging_lemma"
+          },
           {
             "symbol": "merge",
             "lean": "RDF11.merge"
@@ -3781,6 +5673,10 @@
         "symbol_linked_english": "For an ordinary conclusion E and any generalized premise G, G SimplyEntails E.generalize exactly when an instance of E.generalize is a subgraph of G. A Herbrand interpretation proves necessity; existing ordinary instance entailment proves sufficiency.",
         "bindings": [
           {
+            "symbol": "interpolation_lemma",
+            "lean": "RDF11.Statements.interpolation_lemma"
+          },
+          {
             "symbol": "interpretation",
             "lean": "RDF11.Herbrand.interpretation"
           },
@@ -3882,6 +5778,14 @@
         "symbol_linked_english": "Every graph simply entails the empty graph; if the empty graph simply entails E then E is empty.",
         "bindings": [
           {
+            "symbol": "empty_graph_is_entailed",
+            "lean": "RDF11.Statements.empty_graph_is_entailed"
+          },
+          {
+            "symbol": "empty_graph_lemma",
+            "lean": "RDF11.Statements.empty_graph_lemma"
+          },
+          {
             "symbol": "entails_empty",
             "lean": "RDF11.entails_empty"
           },
@@ -3934,6 +5838,10 @@
         "symbol_linked_english": "Every graph simply entails every subgraph of that graph.",
         "bindings": [
           {
+            "symbol": "subgraph_lemma",
+            "lean": "RDF11.Statements.subgraph_lemma"
+          },
+          {
             "symbol": "subgraph_entailment",
             "lean": "RDF11.subgraph_entailment"
           },
@@ -3981,6 +5889,10 @@
         "relation": "partial_theorem",
         "symbol_linked_english": "For ordinary graphs G and H, IsInstance H.generalize G.generalize implies H SimplyEntails G. More generally, every term substitution of an ordinary source G entails G; blank-to-blank renaming also works for generalized sources.",
         "bindings": [
+          {
+            "symbol": "instance_lemma",
+            "lean": "RDF11.Statements.instance_lemma"
+          },
           {
             "symbol": "ordinary_instance_entails",
             "lean": "RDF11.ordinary_instance_entails"
@@ -4106,6 +6018,10 @@
         "relation": "partial_theorem",
         "symbol_linked_english": "If G SimplyEntails an ordinary E with a certified finite Enumeration, interpolation produces a finite instance H of E inside G, and H SimplyEntails E.",
         "bindings": [
+          {
+            "symbol": "compactness",
+            "lean": "RDF11.Statements.compactness"
+          },
           {
             "symbol": "FiniteGraph",
             "lean": "RDF11.FiniteGraph"
@@ -4392,6 +6308,10 @@
         "symbol_linked_english": "For ordinary G and H, if H avoids the fresh IRIs introduced by sk, sk.graph SimplyEntails H exactly when G SimplyEntails H. The inverse-name map turns an interpolation witness over sk.graph into one over G.",
         "bindings": [
           {
+            "symbol": "skolemization_lemma",
+            "lean": "RDF11.Statements.skolemization_lemma"
+          },
+          {
             "symbol": "Avoids",
             "lean": "RDF11.Skolemization.Avoids"
           },
@@ -4437,10 +6357,30 @@
         "formal_proof": "unassessed",
         "test_mapping": "unassessed"
       },
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-DATATYPE-RECOGNITION-PARAMETER",
+        "relation": "partial_definition",
+        "symbol_linked_english": "D is the set of datatype IRIs recognized by an interpretation; recognizing an IRI presupposes determining the unique datatype it identifies.",
+        "bindings": [
+          {
+            "symbol": "DatatypeTheory",
+            "lean": "RDF11.DatatypeTheory"
+          },
+          {
+            "symbol": "DConditions",
+            "lean": "RDF11.SimpleInterpretation.DConditions"
+          }
+        ],
+        "limitations": "Parameterized by abstract IRI/literal domains and a fixed external datatype theory; concrete XSD, XML Char and BCP47 implementations are not supplied. Expert mapping review remains pending.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "d-recognition"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-DATATYPE-IDENTIFICATION-FIXED",
@@ -4461,10 +6401,30 @@
         "formal_proof": "unassessed",
         "test_mapping": "unassessed"
       },
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-DATATYPE-IDENTIFICATION-FIXED",
+        "relation": "partial_definition",
+        "symbol_linked_english": "A recognized datatype IRI identifies the same externally specified datatype at every occurrence; the mechanism establishing that identification is outside this semantics.",
+        "bindings": [
+          {
+            "symbol": "identified",
+            "lean": "RDF11.DatatypeTheory.identified"
+          },
+          {
+            "symbol": "DEntails",
+            "lean": "RDF11.DEntails"
+          }
+        ],
+        "limitations": "Parameterized by abstract IRI/literal domains and a fixed external datatype theory; concrete XSD, XML Char and BCP47 implementations are not supplied. Expert mapping review remains pending. One theory T is fixed before quantifying over interpretations.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "d-fixed"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-DATATYPE-MAP-VIEW",
@@ -4511,10 +6471,26 @@
         "formal_proof": "unassessed",
         "test_mapping": "unassessed"
       },
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-LITERAL-DATATYPE-IMPORT",
+        "relation": "partial_definition",
+        "symbol_linked_english": "Literal structure and datatype definitions come from Concepts: ordinary datatype literals pair a lexical string with a datatype IRI; language-tagged strings additionally use a language tag and rdf:langString.",
+        "bindings": [
+          {
+            "symbol": "LiteralSyntax",
+            "lean": "RDF11.LiteralSyntax"
+          }
+        ],
+        "limitations": "Lexical forms, datatype IRIs and optional tags are an interface. Concrete literal equality, full lexical syntax and a constructor covering all legal forms remain open.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "d-lexical"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-LEXICAL-TO-VALUE",
@@ -4535,10 +6511,34 @@
         "formal_proof": "unassessed",
         "test_mapping": "unassessed"
       },
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-LEXICAL-TO-VALUE",
+        "relation": "definition",
+        "symbol_linked_english": "A datatype supplies a lexical space and a partial lexical-to-value mapping; L2V selects that mapping and its range is the value space.",
+        "bindings": [
+          {
+            "symbol": "L2V",
+            "lean": "RDF11.DatatypeTheory.L2V"
+          },
+          {
+            "symbol": "lexicalSpace",
+            "lean": "RDF11.DatatypeTheory.lexicalSpace"
+          },
+          {
+            "symbol": "valueSpace",
+            "lean": "RDF11.DatatypeTheory.valueSpace"
+          }
+        ],
+        "limitations": "Parameterized by abstract IRI/literal domains and a fixed external datatype theory; concrete XSD, XML Char and BCP47 implementations are not supplied. Expert mapping review remains pending.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "d-lexical"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-ILL-TYPED-DEFINITION",
@@ -4560,10 +6560,34 @@
         "formal_proof": "unassessed",
         "test_mapping": "unassessed"
       },
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-ILL-TYPED-DEFINITION",
+        "relation": "definition",
+        "symbol_linked_english": "A literal is ill-typed relative to D when its datatype IRI is recognized but its lexical form has no value under the corresponding mapping.",
+        "bindings": [
+          {
+            "symbol": "IllTyped",
+            "lean": "RDF11.DatatypeTheory.IllTyped"
+          },
+          {
+            "symbol": "unrecognized_not_illTyped",
+            "lean": "RDF11.DatatypeTheory.unrecognized_not_illTyped"
+          },
+          {
+            "symbol": "language_not_illTyped",
+            "lean": "RDF11.DatatypeTheory.language_not_illTyped"
+          }
+        ],
+        "limitations": "Parameterized by abstract IRI/literal domains and a fixed external datatype theory; concrete XSD, XML Char and BCP47 implementations are not supplied. Expert mapping review remains pending.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "d-lexical"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-REQUIRED-AND-OPTIONAL-DATATYPES",
@@ -4585,10 +6609,34 @@
         "test_mapping": "unassessed"
       },
       "formalization_note": "The minimum is imposed on RDF interpretations in section 8, not on arbitrary simple D-interpretations, where D can be empty.",
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-REQUIRED-AND-OPTIONAL-DATATYPES",
+        "relation": "partial_definition",
+        "symbol_linked_english": "RDF processors need not recognize datatype IRIs beyond rdf:langString and xsd:string; recognizing additional IRIs is permitted.",
+        "bindings": [
+          {
+            "symbol": "recognize_language",
+            "lean": "RDF11.SimpleInterpretation.RDFConditions.recognize_language"
+          },
+          {
+            "symbol": "recognize_string",
+            "lean": "RDF11.SimpleInterpretation.RDFConditions.recognize_string"
+          },
+          {
+            "symbol": "baseDatatypes",
+            "lean": "RDF11.RDFVocabulary.baseDatatypes"
+          }
+        ],
+        "limitations": "Required recognition is enforced for RDF models. Processor behavior and concrete datatype meaning are not verified.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "d-required"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-STANDARD-DATATYPE-MEANINGS",
@@ -4658,10 +6706,35 @@
         "formal_proof": "unassessed",
         "test_mapping": "unassessed"
       },
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-LANGSTRING-EXCEPTION",
+        "relation": "partial_definition",
+        "symbol_linked_english": "rdf:langString identifies a datatype whose values are string/language-tag pairs, with specially defined literal interpretation instead of an L2V mapping.",
+        "bindings": [
+          {
+            "symbol": "languageSpace",
+            "lean": "RDF11.DatatypeTheory.languageSpace"
+          },
+          {
+            "symbol": "recognizedSpace",
+            "lean": "RDF11.DatatypeTheory.recognizedSpace"
+          },
+          {
+            "symbol": "language",
+            "lean": "RDF11.SimpleInterpretation.DConditions.language"
+          }
+        ],
+        "limitations": "Tag values use US-ASCII normalization as clarified by Concepts. No ordinary L2V is used for langString. The D table does not explicitly identify its IRI denotation with a canonical datatype entity; that equality is not invented here.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "d-language-exception",
+        "concepts-language-values"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-UNKNOWN-DATATYPE-HANDLING",
@@ -4712,10 +6785,34 @@
         "formal_proof": "unassessed",
         "test_mapping": "unassessed"
       },
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-D-INTERPRETATION",
+        "relation": "partial_definition",
+        "symbol_linked_english": "A D-interpretation is a simple interpretation satisfying the additional datatype conditions for its recognized set D.",
+        "bindings": [
+          {
+            "symbol": "DConditions",
+            "lean": "RDF11.SimpleInterpretation.DConditions"
+          },
+          {
+            "symbol": "DModel",
+            "lean": "RDF11.SimpleInterpretation.DModel"
+          },
+          {
+            "symbol": "ValueRealization",
+            "lean": "RDF11.ValueRealization"
+          }
+        ],
+        "limitations": "Parameterized by abstract IRI/literal domains and a fixed external datatype theory; concrete XSD, XML Char and BCP47 implementations are not supplied. Expert mapping review remains pending. ValueRealization is a partial injective representation of fixed values in a model carrier, not a new interpretation of the datatype IRI.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "d-interpretation"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-LANGSTRING-VALUE",
@@ -4738,10 +6835,31 @@
         "test_mapping": "unassessed"
       },
       "source_locator": "Semantic conditions for datatyped literals, first row",
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-LANGSTRING-VALUE",
+        "relation": "definition",
+        "symbol_linked_english": "If rdf:langString belongs to D, each language-tagged literal denotes its lexical string paired with its language tag converted to lowercase by US-ASCII rules.",
+        "bindings": [
+          {
+            "symbol": "asciiLower",
+            "lean": "RDF11.asciiLower"
+          },
+          {
+            "symbol": "language",
+            "lean": "RDF11.SimpleInterpretation.DConditions.language"
+          }
+        ],
+        "limitations": "Lexical strings are unchanged. Lean 4.33.1 Char.toLower changes ASCII A–Z only. Tag validity remains an external interface.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "concepts-language-values",
+        "d-language"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-RECOGNIZED-DATATYPE-DENOTATION",
@@ -4764,10 +6882,30 @@
         "test_mapping": "unassessed"
       },
       "source_locator": "Semantic conditions for datatyped literals, second row, datatype-denotation conjunct",
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-RECOGNIZED-DATATYPE-DENOTATION",
+        "relation": "definition",
+        "symbol_linked_english": "For each other IRI in D, its interpretation is the datatype it identifies.",
+        "bindings": [
+          {
+            "symbol": "ordinary",
+            "lean": "RDF11.SimpleInterpretation.DConditions.ordinary"
+          },
+          {
+            "symbol": "identified",
+            "lean": "RDF11.DatatypeTheory.identified"
+          }
+        ],
+        "limitations": "The other recognized IRIs are precisely those distinct from rdf:langString. Their fixed referents are related to the model by ValueRealization.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "d-ordinary"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-RECOGNIZED-LITERAL-VALUE",
@@ -4791,10 +6929,30 @@
         "test_mapping": "unassessed"
       },
       "source_locator": "Semantic conditions for datatyped literals, second row, literal-value conjunct",
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-RECOGNIZED-LITERAL-VALUE",
+        "relation": "definition",
+        "symbol_linked_english": "For a literal typed with a recognized IRI other than rdf:langString, IL is the corresponding lexical-to-value result, including being undefined when that mapping is undefined.",
+        "bindings": [
+          {
+            "symbol": "ordinary",
+            "lean": "RDF11.SimpleInterpretation.DConditions.ordinary"
+          },
+          {
+            "symbol": "recognized_literal_value",
+            "lean": "RDF11.SimpleInterpretation.recognized_literal_value"
+          }
+        ],
+        "limitations": "Parameterized by abstract IRI/literal domains and a fixed external datatype theory; concrete XSD, XML Char and BCP47 implementations are not supplied. Expert mapping review remains pending.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "d-ordinary"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-ILL-TYPED-UNSATISFIABILITY",
@@ -4817,10 +6975,38 @@
         "formal_proof": "unassessed",
         "test_mapping": "unassessed"
       },
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-ILL-TYPED-UNSATISFIABILITY",
+        "relation": "theorem",
+        "symbol_linked_english": "Every graph containing an ill-typed literal is false in every D-interpretation; unrecognized datatype IRIs do not create this source of D-unsatisfiability.",
+        "bindings": [
+          {
+            "symbol": "illTyped_undefined",
+            "lean": "RDF11.SimpleInterpretation.illTyped_undefined"
+          },
+          {
+            "symbol": "illTyped_graph_unsatisfiable",
+            "lean": "RDF11.illTyped_graph_unsatisfiable"
+          },
+          {
+            "symbol": "rdf_illTyped_unsatisfiable",
+            "lean": "RDF11.rdf_illTyped_unsatisfiable"
+          },
+          {
+            "symbol": "unrecognized_not_illTyped",
+            "lean": "RDF11.DatatypeTheory.unrecognized_not_illTyped"
+          }
+        ],
+        "limitations": "Parameterized by abstract IRI/literal domains and a fixed external datatype theory; concrete XSD, XML Char and BCP47 implementations are not supplied. Expert mapping review remains pending.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "d-illtyped"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-LANGSTRING-STRING-TOTALITY",
@@ -4845,10 +7031,30 @@
         "test_mapping": "unassessed"
       },
       "formalization_note": "The xsd:string character-domain constraint needs explicit modeling; do not infer that every host-language string is a valid xsd:string value.",
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-LANGSTRING-STRING-TOTALITY",
+        "relation": "partial_theorem",
+        "symbol_linked_english": "Syntactically legal rdf:langString literals always denote when recognized. For xsd:string, the source limits ill-typed forms to strings containing code points outside the XML Char production.",
+        "bindings": [
+          {
+            "symbol": "language",
+            "lean": "RDF11.SimpleInterpretation.DConditions.language"
+          },
+          {
+            "symbol": "language_not_illTyped",
+            "lean": "RDF11.DatatypeTheory.language_not_illTyped"
+          }
+        ],
+        "limitations": "Recognized legal language literals have denotations. The xsd:string/XML Char characterization remains unformalized.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "d-language-total"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-D-SATISFACTION-ENTAILMENT",
@@ -4870,10 +7076,34 @@
         "formal_proof": "unassessed",
         "test_mapping": "unassessed"
       },
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-D-SATISFACTION-ENTAILMENT",
+        "relation": "definition",
+        "symbol_linked_english": "D-satisfiability means having at least one satisfying D-interpretation; S D-entails G when every D-interpretation satisfying S also satisfies G.",
+        "bindings": [
+          {
+            "symbol": "DSatisfiable",
+            "lean": "RDF11.DSatisfiable"
+          },
+          {
+            "symbol": "DUnsatisfiable",
+            "lean": "RDF11.DUnsatisfiable"
+          },
+          {
+            "symbol": "DEntails",
+            "lean": "RDF11.DEntails"
+          }
+        ],
+        "limitations": "Parameterized by abstract IRI/literal domains and a fixed external datatype theory; concrete XSD, XML Char and BCP47 implementations are not supplied. Expert mapping review remains pending.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "d-entailment"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-D-UNSATISFIABILITY-HANDLING",
@@ -4919,10 +7149,26 @@
         "test_mapping": "unassessed"
       },
       "formalization_note": "This is a vacuous implication over no satisfying models, not an inconsistent interpretation admitted into the model class.",
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-D-EXPLOSION",
+        "relation": "theorem",
+        "symbol_linked_english": "A D-unsatisfiable graph D-entails every graph by the universal-model definition.",
+        "bindings": [
+          {
+            "symbol": "d_ex_falso",
+            "lean": "RDF11.d_ex_falso"
+          }
+        ],
+        "limitations": "This is a model-theoretic consequence, not an instruction to execute arbitrary conclusions.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "d-explosion"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-EXPLOSION-NOT-EXECUTION",
@@ -4970,10 +7216,30 @@
         "formal_proof": "unassessed",
         "test_mapping": "unassessed"
       },
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-EMPTY-D-SIMPLE",
+        "relation": "theorem",
+        "symbol_linked_english": "With D empty, D-entailment is exactly simple entailment.",
+        "bindings": [
+          {
+            "symbol": "dModel_empty",
+            "lean": "RDF11.SimpleInterpretation.dModel_empty"
+          },
+          {
+            "symbol": "d_empty_iff_simple",
+            "lean": "RDF11.d_empty_iff_simple"
+          }
+        ],
+        "limitations": "The empty partial value realization leaves every simple interpretation admissible; no global injection of all datatype values into its carrier is assumed.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "d-direction"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-D-DIRECTION-SOURCE-CLAIM",
@@ -4999,7 +7265,9 @@
         "RQ-D-ENTAILMENT-DIRECTION"
       ],
       "cleanroom_mapping": null,
-      "passages": [],
+      "passages": [
+        "d-direction"
+      ],
       "extraction_review": "pending",
       "formalization_review": "not_started"
     },
@@ -5027,10 +7295,38 @@
       "review_questions": [
         "RQ-D-ENTAILMENT-DIRECTION"
       ],
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-D-MODEL-CLASS-MONOTONICITY",
+        "relation": "theorem",
+        "symbol_linked_english": "With compatible fixed datatype meanings and D contained in E, every E-interpretation is a D-interpretation; therefore D-entailment implies E-entailment, and simple entailment implies D-entailment.",
+        "bindings": [
+          {
+            "symbol": "dConditions_restrict",
+            "lean": "RDF11.SimpleInterpretation.dConditions_restrict"
+          },
+          {
+            "symbol": "dModel_restrict",
+            "lean": "RDF11.SimpleInterpretation.dModel_restrict"
+          },
+          {
+            "symbol": "d_entailment_monotone",
+            "lean": "RDF11.d_entailment_monotone"
+          },
+          {
+            "symbol": "simple_implies_d_entailment",
+            "lean": "RDF11.simple_implies_d_entailment"
+          }
+        ],
+        "limitations": "This is the model-class consequence. The opposite arrows printed in the source paragraph are recorded separately as an unresolved source-review question.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "d-direction"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-DATATYPE-VALUE-SUBSTITUTION",
@@ -5052,10 +7348,34 @@
         "formal_proof": "unassessed",
         "test_mapping": "unassessed"
       },
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-DATATYPE-VALUE-SUBSTITUTION",
+        "relation": "partial_theorem",
+        "symbol_linked_english": "Literals recognized to have the same value can be substituted in corresponding triples to obtain datatype entailments, including across different recognized datatypes with overlapping value spaces.",
+        "bindings": [
+          {
+            "symbol": "same_value_literals",
+            "lean": "RDF11.SimpleInterpretation.same_value_literals"
+          },
+          {
+            "symbol": "literal_object_congruence",
+            "lean": "RDF11.SimpleInterpretation.literal_object_congruence"
+          },
+          {
+            "symbol": "d_literal_object_substitution",
+            "lean": "RDF11.d_literal_object_substitution"
+          }
+        ],
+        "limitations": "Proved for object-literal replacement, including distinct recognized ordinary datatypes sharing a value. Arbitrary-position simultaneous replacement and concrete XSD equalities remain open.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "d-value-substitution"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-DATATYPE-PATTERN-LIMIT",
@@ -5126,10 +7446,34 @@
         "formal_proof": "unassessed",
         "test_mapping": "unassessed"
       },
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-RDF-INTERPRETATION",
+        "relation": "partial_definition",
+        "symbol_linked_english": "An RDF interpretation recognizing D is a D-interpretation in which D includes rdf:langString and xsd:string and the RDF conditions and axiomatic triples hold.",
+        "bindings": [
+          {
+            "symbol": "RDFVocabulary",
+            "lean": "RDF11.RDFVocabulary"
+          },
+          {
+            "symbol": "RDFConditions",
+            "lean": "RDF11.SimpleInterpretation.RDFConditions"
+          },
+          {
+            "symbol": "RDFModel",
+            "lean": "RDF11.SimpleInterpretation.RDFModel"
+          }
+        ],
+        "limitations": "Parameterized by abstract IRI/literal domains and a fixed external datatype theory; concrete XSD, XML Char and BCP47 implementations are not supplied. Expert mapping review remains pending. Full recognized spaces are realized injectively in IR. Actual IRI spellings are an unimplemented vocabulary binding, including container n = rdf:_(n+1).",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "rdf-interpretation"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-RDF-PROPERTY-TYPING",
@@ -5203,10 +7547,34 @@
         "test_mapping": "unassessed"
       },
       "source_locator": "RDF semantic condition with HTML identifier rdfsemcond3; the source has no rdfsemcond2 row",
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-RDF-DATATYPE-EXTENSION",
+        "relation": "definition",
+        "symbol_linked_english": "For each datatype IRI a in D, rdf:type relates x to I(a) exactly when x belongs to that datatype value space.",
+        "bindings": [
+          {
+            "symbol": "datatype_extension",
+            "lean": "RDF11.SimpleInterpretation.RDFConditions.datatype_extension"
+          },
+          {
+            "symbol": "rdf_value_space_resources",
+            "lean": "RDF11.SimpleInterpretation.rdf_value_space_resources"
+          },
+          {
+            "symbol": "rdf_literal_typing",
+            "lean": "RDF11.SimpleInterpretation.rdf_literal_typing"
+          }
+        ],
+        "limitations": "Parameterized by abstract IRI/literal domains and a fixed external datatype theory; concrete XSD, XML Char and BCP47 implementations are not supplied. Expert mapping review remains pending. values_realized makes every external value in a recognized space available in the model; this is the carrier-representation obligation.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "rdf-datatype-extension"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-RDF-AXIOM-PROPERTIES",
@@ -5236,10 +7604,34 @@
         "rdf:rest",
         "rdf:value"
       ],
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-RDF-AXIOM-PROPERTIES",
+        "relation": "definition",
+        "symbol_linked_english": "Each listed RDF vocabulary IRI must satisfy its rdf:type rdf:Property axiomatic triple.",
+        "bindings": [
+          {
+            "symbol": "propertyAxiom",
+            "lean": "RDF11.RDFSymbol.propertyAxiom"
+          },
+          {
+            "symbol": "axioms",
+            "lean": "RDF11.RDFVocabulary.axioms"
+          },
+          {
+            "symbol": "rdf_axiom_true",
+            "lean": "RDF11.SimpleInterpretation.rdf_axiom_true"
+          }
+        ],
+        "limitations": "All positive container indices are included, with symbol container n representing rdf:_(n+1). Concrete IRI spelling remains an external vocabulary binding.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "rdf-axioms"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-RDF-AXIOM-NIL",
@@ -5260,10 +7652,34 @@
         "formal_proof": "unassessed",
         "test_mapping": "unassessed"
       },
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-RDF-AXIOM-NIL",
+        "relation": "definition",
+        "symbol_linked_english": "The triple rdf:nil rdf:type rdf:List is true in every RDF interpretation.",
+        "bindings": [
+          {
+            "symbol": "propertyAxiom",
+            "lean": "RDF11.RDFSymbol.propertyAxiom"
+          },
+          {
+            "symbol": "axioms",
+            "lean": "RDF11.RDFVocabulary.axioms"
+          },
+          {
+            "symbol": "rdf_axiom_true",
+            "lean": "RDF11.SimpleInterpretation.rdf_axiom_true"
+          }
+        ],
+        "limitations": "All positive container indices are included, with symbol container n representing rdf:_(n+1). Concrete IRI spelling remains an external vocabulary binding.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "rdf-axioms"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-RDF-AXIOM-CONTAINER-PROPERTIES",
@@ -5285,10 +7701,34 @@
         "test_mapping": "unassessed"
       },
       "formalization_note": "This is an infinite indexed family; a finite implementation vocabulary needs a justified restriction.",
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-RDF-AXIOM-CONTAINER-PROPERTIES",
+        "relation": "definition",
+        "symbol_linked_english": "For every positive integer n, rdf:_n rdf:type rdf:Property is an RDF axiom.",
+        "bindings": [
+          {
+            "symbol": "propertyAxiom",
+            "lean": "RDF11.RDFSymbol.propertyAxiom"
+          },
+          {
+            "symbol": "axioms",
+            "lean": "RDF11.RDFVocabulary.axioms"
+          },
+          {
+            "symbol": "rdf_axiom_true",
+            "lean": "RDF11.SimpleInterpretation.rdf_axiom_true"
+          }
+        ],
+        "limitations": "All positive container indices are included, with symbol container n representing rdf:_(n+1). Concrete IRI spelling remains an external vocabulary binding.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "rdf-axioms"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-RDF-VOCABULARY-LIMITS",
@@ -5313,7 +7753,9 @@
         "test_mapping": "unassessed"
       },
       "cleanroom_mapping": null,
-      "passages": [],
+      "passages": [
+        "rdf-optional-types"
+      ],
       "extraction_review": "pending",
       "formalization_review": "not_started"
     },
@@ -5337,10 +7779,34 @@
         "formal_proof": "unassessed",
         "test_mapping": "unassessed"
       },
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-RDF-ENTAILMENT",
+        "relation": "definition",
+        "symbol_linked_english": "S RDF-entails E recognizing D when every satisfying RDF interpretation of S recognizing D satisfies E; an RDF-unsatisfiable graph has no such model. Unqualified RDF entailment uses D = {rdf:langString, xsd:string}.",
+        "bindings": [
+          {
+            "symbol": "RDFEntails",
+            "lean": "RDF11.RDFEntails"
+          },
+          {
+            "symbol": "RDFUnsatisfiable",
+            "lean": "RDF11.RDFUnsatisfiable"
+          },
+          {
+            "symbol": "baseDatatypes",
+            "lean": "RDF11.RDFVocabulary.baseDatatypes"
+          }
+        ],
+        "limitations": "Parameterized by abstract IRI/literal domains and a fixed external datatype theory; concrete XSD, XML Char and BCP47 implementations are not supplied. Expert mapping review remains pending.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "rdf-entailment"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-RDF-AXIOM-ENTAILMENT",
@@ -5365,10 +7831,26 @@
         "formal_proof": "unassessed",
         "test_mapping": "unassessed"
       },
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-RDF-AXIOM-ENTAILMENT",
+        "relation": "theorem",
+        "symbol_linked_english": "The empty graph RDF-entails every RDF axiom, so the simple-entailment interpolation characterization does not extend unchanged to RDF entailment.",
+        "bindings": [
+          {
+            "symbol": "rdf_empty_entails_axioms",
+            "lean": "RDF11.rdf_empty_entails_axioms"
+          }
+        ],
+        "limitations": "Parameterized by abstract IRI/literal domains and a fixed external datatype theory; concrete XSD, XML Char and BCP47 implementations are not supplied. Expert mapping review remains pending.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "rdf-axiom-entailment"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-RULE-rdfD1",
@@ -5391,10 +7873,30 @@
         "test_mapping": "unassessed"
       },
       "formalization_note": "Both conclusion triples use the same witness; the pattern remains semantically valid for an ill-typed premise through unsatisfiability.",
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-RULE-rdfD1",
+        "relation": "theorem",
+        "symbol_linked_english": "From a triple s p literal typed with d in D, infer a graph containing s p b and b rdf:type d for one existential blank node b.",
+        "bindings": [
+          {
+            "symbol": "rdfD1Conclusion",
+            "lean": "RDF11.rdfD1Conclusion"
+          },
+          {
+            "symbol": "rdfD1",
+            "lean": "RDF11.rdfD1"
+          }
+        ],
+        "limitations": "The conclusion uses one structurally fresh blank in Sum B Unit, shared across both triples. Generalized syntax is used. No fallback value is supplied for an ill-typed literal; an unsatisfiable premise has no countermodel.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "rdfd1-rule"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-RULE-rdfD2",
@@ -5418,23 +7920,19 @@
       },
       "cleanroom_mapping": {
         "claim_id": "MT11-RULE-rdfD2",
-        "relation": "partial_theorem",
-        "symbol_linked_english": "Under RDFPropertyCondition, truth of s p o implies truth of p rdf:type rdf:Property; propertyTypingImage applies that rule to a graph using the same assignment.",
+        "relation": "theorem",
+        "symbol_linked_english": "From s p o, RDF-entail p rdf:type rdf:Property.",
         "bindings": [
+          {
+            "symbol": "rdfD2",
+            "lean": "RDF11.rdfD2"
+          },
           {
             "symbol": "rdfD2_triple",
             "lean": "RDF11.SimpleInterpretation.rdfD2_triple"
-          },
-          {
-            "symbol": "propertyTypingImage",
-            "lean": "RDF11.propertyTypingImage"
-          },
-          {
-            "symbol": "rdfD2_entailment",
-            "lean": "RDF11.rdfD2_entailment"
           }
         ],
-        "limitations": "Proved under the single required RDF condition through EntailsUnder, not a completed definition of RDF entailment. It works with generalized syntax as well as embedded ordinary triples.",
+        "limitations": "Now quantified over full RDF models, retaining the earlier proof from the property condition.",
         "extraction_review": "pending_expert_review",
         "formalization_review": "pending_expert_review",
         "implementation_refinement": "not_connected_to_published_package"
@@ -5465,10 +7963,26 @@
         "test_mapping": "unassessed"
       },
       "formalization_note": "The boolean example uses exhaustiveness of the two boolean values; it cannot be obtained from lexical-value equality alone.",
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-RDF-DATATYPE-SPECIFIC-CONSEQUENCES",
+        "relation": "partial_theorem",
+        "symbol_linked_english": "Datatype value spaces can force entailments beyond rdfD1/rdfD2, and incompatible memberships in disjoint recognized datatype value spaces can make a graph RDF-unsatisfiable.",
+        "bindings": [
+          {
+            "symbol": "rdf_disjoint_datatypes",
+            "lean": "RDF11.SimpleInterpretation.rdf_disjoint_datatypes"
+          }
+        ],
+        "limitations": "Proves incompatibility of two disjoint recognized value spaces using injectivity of their shared realization. Concrete datatype disjointness and the boolean enumeration example remain open.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "rdf-disjoint"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-RDFS-CLASS-STRUCTURE",
@@ -5489,10 +8003,39 @@
         "formal_proof": "unassessed",
         "test_mapping": "unassessed"
       },
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-RDFS-CLASS-STRUCTURE",
+        "relation": "partial_definition",
+        "symbol_linked_english": "Classes are resources typed rdfs:Class; IC collects them, and ICEXT maps classes to subsets of IR. A class may have an empty extension, and distinct classes can share an extension.",
+        "bindings": [
+          {
+            "symbol": "ICEXT",
+            "lean": "RDF11.SimpleInterpretation.ICEXT"
+          },
+          {
+            "symbol": "IC",
+            "lean": "RDF11.SimpleInterpretation.IC"
+          },
+          {
+            "symbol": "icext_resources",
+            "lean": "RDF11.SimpleInterpretation.icext_resources"
+          },
+          {
+            "symbol": "classes_are_resources",
+            "lean": "RDF11.SimpleInterpretation.classes_are_resources"
+          }
+        ],
+        "limitations": "Class extensions are relation slices on the same universe. No extensional equality of class identities is assumed. Concrete witnesses for empty or coextensive classes are not supplied.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "rdfs-class-structure",
+        "rdfs-coextensive"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-RDFS-INTERPRETATION",
@@ -5514,10 +8057,34 @@
         "formal_proof": "unassessed",
         "test_mapping": "unassessed"
       },
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-RDFS-INTERPRETATION",
+        "relation": "partial_definition",
+        "symbol_linked_english": "An RDFS interpretation recognizing D is an RDF interpretation recognizing the same D that satisfies the RDFS semantic conditions and axiomatic triples.",
+        "bindings": [
+          {
+            "symbol": "RDFSVocabulary",
+            "lean": "RDF11.RDFSVocabulary"
+          },
+          {
+            "symbol": "RDFSConditions",
+            "lean": "RDF11.SimpleInterpretation.RDFSConditions"
+          },
+          {
+            "symbol": "RDFSModel",
+            "lean": "RDF11.SimpleInterpretation.RDFSModel"
+          }
+        ],
+        "limitations": "Parameterized by abstract IRI/literal domains and a fixed external datatype theory; concrete XSD, XML Char and BCP47 implementations are not supplied. Expert mapping review remains pending. Includes both full axiom families. Language literal-image equality remains explicit; model existence for an arbitrary abstract literal interface is not assumed.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "rdfs-interpretation"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-RDFS-ICEXT",
@@ -5540,10 +8107,26 @@
         "test_mapping": "unassessed"
       },
       "source_locator": "rdfssemcond1, class-extension definition",
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-RDFS-ICEXT",
+        "relation": "definition",
+        "symbol_linked_english": "ICEXT(y) is the set of x such that rdf:type relates x to y.",
+        "bindings": [
+          {
+            "symbol": "ICEXT",
+            "lean": "RDF11.SimpleInterpretation.ICEXT"
+          }
+        ],
+        "limitations": "",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "rdfs-icext"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-RDFS-IC",
@@ -5565,10 +8148,26 @@
         "test_mapping": "unassessed"
       },
       "source_locator": "rdfssemcond1, IC definition",
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-RDFS-IC",
+        "relation": "definition",
+        "symbol_linked_english": "IC is ICEXT of the denotation of rdfs:Class.",
+        "bindings": [
+          {
+            "symbol": "IC",
+            "lean": "RDF11.SimpleInterpretation.IC"
+          }
+        ],
+        "limitations": "",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "rdfs-ic"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-RDFS-LV",
@@ -5590,10 +8189,26 @@
         "test_mapping": "unassessed"
       },
       "source_locator": "rdfssemcond1, LV definition",
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-RDFS-LV",
+        "relation": "definition",
+        "symbol_linked_english": "LV is ICEXT of the denotation of rdfs:Literal.",
+        "bindings": [
+          {
+            "symbol": "LV",
+            "lean": "RDF11.SimpleInterpretation.LV"
+          }
+        ],
+        "limitations": "",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "rdfs-lv"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-RDFS-RESOURCE-EXTENSION",
@@ -5616,10 +8231,26 @@
         "test_mapping": "unassessed"
       },
       "source_locator": "rdfssemcond1, resource-extension equality",
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-RDFS-RESOURCE-EXTENSION",
+        "relation": "definition",
+        "symbol_linked_english": "The extension of rdfs:Resource is exactly IR.",
+        "bindings": [
+          {
+            "symbol": "resource_extension",
+            "lean": "RDF11.SimpleInterpretation.RDFSConditions.resource_extension"
+          }
+        ],
+        "limitations": "Conditions constrain one shared universe; inclusion is an implication, not an equivalence.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "rdfs-resource"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-RDFS-LANGSTRING-EXTENSION",
@@ -5642,10 +8273,26 @@
         "test_mapping": "unassessed"
       },
       "source_locator": "rdfssemcond1, language-tagged literal extension",
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-RDFS-LANGSTRING-EXTENSION",
+        "relation": "definition",
+        "symbol_linked_english": "The extension of rdf:langString is exactly the set of denotations of language-tagged literals.",
+        "bindings": [
+          {
+            "symbol": "language_extension",
+            "lean": "RDF11.SimpleInterpretation.RDFSConditions.language_extension"
+          }
+        ],
+        "limitations": "The image of actual tagged literal denotations is explicit. The abstract literal interface does not yet prove coverage of every legal lexical form/tag pair.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "rdfs-language"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-RDFS-DATATYPE-EXTENSION",
@@ -5668,10 +8315,26 @@
         "test_mapping": "unassessed"
       },
       "source_locator": "rdfssemcond1, other recognized datatype extensions",
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-RDFS-DATATYPE-EXTENSION",
+        "relation": "theorem",
+        "symbol_linked_english": "For every other datatype IRI a in D, ICEXT(I(a)) is its value space.",
+        "bindings": [
+          {
+            "symbol": "rdfs_datatype_extension",
+            "lean": "RDF11.SimpleInterpretation.rdfs_datatype_extension"
+          }
+        ],
+        "limitations": "For the source clause, specialize to recognized a distinct from rdf:langString: recognizedSpace reduces to the ordinary L2V range. This condition is inherited from RDF rather than duplicated.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "rdfs-datatype-space"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-RDFS-DATATYPE-TYPING",
@@ -5694,10 +8357,26 @@
         "test_mapping": "unassessed"
       },
       "source_locator": "rdfssemcond1, recognized datatype typing",
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-RDFS-DATATYPE-TYPING",
+        "relation": "definition",
+        "symbol_linked_english": "Every recognized datatype denotation belongs to the extension of rdfs:Datatype.",
+        "bindings": [
+          {
+            "symbol": "datatype_typing",
+            "lean": "RDF11.SimpleInterpretation.RDFSConditions.datatype_typing"
+          }
+        ],
+        "limitations": "Conditions constrain one shared universe; inclusion is an implication, not an equivalence.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "rdfs-datatype-typing"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-RDFS-DOMAIN",
@@ -5719,10 +8398,26 @@
         "formal_proof": "unassessed",
         "test_mapping": "unassessed"
       },
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-RDFS-DOMAIN",
+        "relation": "definition",
+        "symbol_linked_english": "If rdfs:domain relates property x to class y and x relates u to v, then u belongs to ICEXT(y).",
+        "bindings": [
+          {
+            "symbol": "domain",
+            "lean": "RDF11.SimpleInterpretation.RDFSConditions.domain"
+          }
+        ],
+        "limitations": "Conditions constrain one shared universe; inclusion is an implication, not an equivalence.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "rdfs-condition-2"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-RDFS-RANGE",
@@ -5744,10 +8439,26 @@
         "formal_proof": "unassessed",
         "test_mapping": "unassessed"
       },
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-RDFS-RANGE",
+        "relation": "definition",
+        "symbol_linked_english": "If rdfs:range relates property x to class y and x relates u to v, then v belongs to ICEXT(y).",
+        "bindings": [
+          {
+            "symbol": "range",
+            "lean": "RDF11.SimpleInterpretation.RDFSConditions.range"
+          }
+        ],
+        "limitations": "Conditions constrain one shared universe; inclusion is an implication, not an equivalence.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "rdfs-condition-3"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-RDFS-SUBPROPERTY-TRANSITIVE",
@@ -5770,10 +8481,26 @@
         "test_mapping": "unassessed"
       },
       "source_locator": "rdfssemcond4, transitivity conjunct",
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-RDFS-SUBPROPERTY-TRANSITIVE",
+        "relation": "definition",
+        "symbol_linked_english": "The extension of rdfs:subPropertyOf is transitive on IP.",
+        "bindings": [
+          {
+            "symbol": "subproperty_transitive",
+            "lean": "RDF11.SimpleInterpretation.RDFSConditions.subproperty_transitive"
+          }
+        ],
+        "limitations": "Transitivity is stated on all edges. Endpoint conditions restrict those edges to IP or IC, respectively, giving the source scope.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "rdfs-condition-4"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-RDFS-SUBPROPERTY-REFLEXIVE",
@@ -5796,10 +8523,26 @@
         "test_mapping": "unassessed"
       },
       "source_locator": "rdfssemcond4, reflexivity conjunct",
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-RDFS-SUBPROPERTY-REFLEXIVE",
+        "relation": "definition",
+        "symbol_linked_english": "Every property in IP is related to itself by rdfs:subPropertyOf.",
+        "bindings": [
+          {
+            "symbol": "subproperty_reflexive",
+            "lean": "RDF11.SimpleInterpretation.RDFSConditions.subproperty_reflexive"
+          }
+        ],
+        "limitations": "Conditions constrain one shared universe; inclusion is an implication, not an equivalence.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "rdfs-condition-4"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-RDFS-SUBPROPERTY-ENDPOINTS",
@@ -5822,10 +8565,26 @@
         "test_mapping": "unassessed"
       },
       "source_locator": "rdfssemcond5, endpoint-typing conjunct",
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-RDFS-SUBPROPERTY-ENDPOINTS",
+        "relation": "definition",
+        "symbol_linked_english": "Both endpoints of any rdfs:subPropertyOf pair belong to IP.",
+        "bindings": [
+          {
+            "symbol": "subproperty_endpoints",
+            "lean": "RDF11.SimpleInterpretation.RDFSConditions.subproperty_endpoints"
+          }
+        ],
+        "limitations": "Conditions constrain one shared universe; inclusion is an implication, not an equivalence.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "rdfs-condition-5"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-RDFS-SUBPROPERTY-INCLUSION",
@@ -5849,10 +8608,26 @@
       },
       "source_locator": "rdfssemcond5, extension-inclusion conjunct",
       "formalization_note": "The converse is not required; extension inclusion alone does not force a subproperty assertion.",
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-RDFS-SUBPROPERTY-INCLUSION",
+        "relation": "definition",
+        "symbol_linked_english": "If rdfs:subPropertyOf relates x to y, IEXT(x) is a subset of IEXT(y).",
+        "bindings": [
+          {
+            "symbol": "subproperty_inclusion",
+            "lean": "RDF11.SimpleInterpretation.RDFSConditions.subproperty_inclusion"
+          }
+        ],
+        "limitations": "Conditions constrain one shared universe; inclusion is an implication, not an equivalence.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "rdfs-condition-5"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-RDFS-CLASS-RESOURCE",
@@ -5873,10 +8648,26 @@
         "formal_proof": "unassessed",
         "test_mapping": "unassessed"
       },
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-RDFS-CLASS-RESOURCE",
+        "relation": "definition",
+        "symbol_linked_english": "Every class in IC is related to rdfs:Resource by rdfs:subClassOf.",
+        "bindings": [
+          {
+            "symbol": "class_resource",
+            "lean": "RDF11.SimpleInterpretation.RDFSConditions.class_resource"
+          }
+        ],
+        "limitations": "Conditions constrain one shared universe; inclusion is an implication, not an equivalence.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "rdfs-condition-6"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-RDFS-SUBCLASS-TRANSITIVE",
@@ -5898,10 +8689,26 @@
         "test_mapping": "unassessed"
       },
       "source_locator": "rdfssemcond8, transitivity conjunct",
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-RDFS-SUBCLASS-TRANSITIVE",
+        "relation": "definition",
+        "symbol_linked_english": "The extension of rdfs:subClassOf is transitive on IC.",
+        "bindings": [
+          {
+            "symbol": "subclass_transitive",
+            "lean": "RDF11.SimpleInterpretation.RDFSConditions.subclass_transitive"
+          }
+        ],
+        "limitations": "Transitivity is stated on all edges. Endpoint conditions restrict those edges to IP or IC, respectively, giving the source scope.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "rdfs-condition-8"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-RDFS-SUBCLASS-REFLEXIVE",
@@ -5923,10 +8730,26 @@
         "test_mapping": "unassessed"
       },
       "source_locator": "rdfssemcond8, reflexivity conjunct",
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-RDFS-SUBCLASS-REFLEXIVE",
+        "relation": "definition",
+        "symbol_linked_english": "Every class in IC is related to itself by rdfs:subClassOf.",
+        "bindings": [
+          {
+            "symbol": "subclass_reflexive",
+            "lean": "RDF11.SimpleInterpretation.RDFSConditions.subclass_reflexive"
+          }
+        ],
+        "limitations": "Conditions constrain one shared universe; inclusion is an implication, not an equivalence.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "rdfs-condition-8"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-RDFS-SUBCLASS-ENDPOINTS",
@@ -5948,10 +8771,26 @@
         "test_mapping": "unassessed"
       },
       "source_locator": "rdfssemcond7, endpoint-typing conjunct; source order places condition 8 before condition 7",
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-RDFS-SUBCLASS-ENDPOINTS",
+        "relation": "definition",
+        "symbol_linked_english": "Both endpoints of any rdfs:subClassOf pair belong to IC.",
+        "bindings": [
+          {
+            "symbol": "subclass_endpoints",
+            "lean": "RDF11.SimpleInterpretation.RDFSConditions.subclass_endpoints"
+          }
+        ],
+        "limitations": "Conditions constrain one shared universe; inclusion is an implication, not an equivalence.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "rdfs-condition-7"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-RDFS-SUBCLASS-INCLUSION",
@@ -5975,10 +8814,26 @@
       },
       "source_locator": "rdfssemcond7, extension-inclusion conjunct",
       "formalization_note": "The converse is not required; equal or included class extensions do not by themselves force subclass assertions.",
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-RDFS-SUBCLASS-INCLUSION",
+        "relation": "definition",
+        "symbol_linked_english": "If rdfs:subClassOf relates x to y, ICEXT(x) is a subset of ICEXT(y).",
+        "bindings": [
+          {
+            "symbol": "subclass_inclusion",
+            "lean": "RDF11.SimpleInterpretation.RDFSConditions.subclass_inclusion"
+          }
+        ],
+        "limitations": "Conditions constrain one shared universe; inclusion is an implication, not an equivalence.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "rdfs-condition-7"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-RDFS-CONTAINER-SUBPROPERTY",
@@ -6000,10 +8855,26 @@
         "formal_proof": "unassessed",
         "test_mapping": "unassessed"
       },
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-RDFS-CONTAINER-SUBPROPERTY",
+        "relation": "definition",
+        "symbol_linked_english": "Every member of the rdfs:ContainerMembershipProperty class is a subproperty of rdfs:member.",
+        "bindings": [
+          {
+            "symbol": "container_subproperty",
+            "lean": "RDF11.SimpleInterpretation.RDFSConditions.container_subproperty"
+          }
+        ],
+        "limitations": "Conditions constrain one shared universe; inclusion is an implication, not an equivalence.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "rdfs-condition-9"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-RDFS-DATATYPE-SUBCLASS",
@@ -6025,10 +8896,26 @@
         "formal_proof": "unassessed",
         "test_mapping": "unassessed"
       },
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-RDFS-DATATYPE-SUBCLASS",
+        "relation": "definition",
+        "symbol_linked_english": "Every member of the rdfs:Datatype class is a subclass of rdfs:Literal.",
+        "bindings": [
+          {
+            "symbol": "datatype_subclass",
+            "lean": "RDF11.SimpleInterpretation.RDFSConditions.datatype_subclass"
+          }
+        ],
+        "limitations": "Conditions constrain one shared universe; inclusion is an implication, not an equivalence.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "rdfs-condition-10"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-RDFS-AXIOM-DOMAINS",
@@ -6115,10 +9002,38 @@
           "rdfs:Resource"
         ]
       ],
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-RDFS-AXIOM-DOMAINS",
+        "relation": "definition",
+        "symbol_linked_english": "Every property/class pair in this family is an axiomatic rdfs:domain triple.",
+        "bindings": [
+          {
+            "symbol": "rdfsDomainAxioms",
+            "lean": "RDF11.rdfsDomainAxioms"
+          },
+          {
+            "symbol": "axioms",
+            "lean": "RDF11.RDFSVocabulary.axioms"
+          },
+          {
+            "symbol": "rdfs_axiom_true",
+            "lean": "RDF11.SimpleInterpretation.rdfs_axiom_true"
+          },
+          {
+            "symbol": "rdfs_empty_entails_axioms",
+            "lean": "RDF11.rdfs_empty_entails_axioms"
+          }
+        ],
+        "limitations": "The two finite lists have 16 entries each; the hierarchy list has six. The three container schemas quantify over all positive indices, with no finite cutoff.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "rdfs-axioms"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-RDFS-AXIOM-RANGES",
@@ -6205,10 +9120,38 @@
           "rdfs:Resource"
         ]
       ],
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-RDFS-AXIOM-RANGES",
+        "relation": "definition",
+        "symbol_linked_english": "Every property/class pair in this family is an axiomatic rdfs:range triple.",
+        "bindings": [
+          {
+            "symbol": "rdfsRangeAxioms",
+            "lean": "RDF11.rdfsRangeAxioms"
+          },
+          {
+            "symbol": "axioms",
+            "lean": "RDF11.RDFSVocabulary.axioms"
+          },
+          {
+            "symbol": "rdfs_axiom_true",
+            "lean": "RDF11.SimpleInterpretation.rdfs_axiom_true"
+          },
+          {
+            "symbol": "rdfs_empty_entails_axioms",
+            "lean": "RDF11.rdfs_empty_entails_axioms"
+          }
+        ],
+        "limitations": "The two finite lists have 16 entries each; the hierarchy list has six. The three container schemas quantify over all positive indices, with no finite cutoff.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "rdfs-axioms"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-RDFS-AXIOM-HIERARCHIES",
@@ -6261,10 +9204,38 @@
           "rdfs:Class"
         ]
       ],
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-RDFS-AXIOM-HIERARCHIES",
+        "relation": "definition",
+        "symbol_linked_english": "The listed vocabulary hierarchy triples are true in every RDFS interpretation.",
+        "bindings": [
+          {
+            "symbol": "rdfsHierarchyAxioms",
+            "lean": "RDF11.rdfsHierarchyAxioms"
+          },
+          {
+            "symbol": "axioms",
+            "lean": "RDF11.RDFSVocabulary.axioms"
+          },
+          {
+            "symbol": "rdfs_axiom_true",
+            "lean": "RDF11.SimpleInterpretation.rdfs_axiom_true"
+          },
+          {
+            "symbol": "rdfs_empty_entails_axioms",
+            "lean": "RDF11.rdfs_empty_entails_axioms"
+          }
+        ],
+        "limitations": "The two finite lists have 16 entries each; the hierarchy list has six. The three container schemas quantify over all positive indices, with no finite cutoff.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "rdfs-axioms"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-RDFS-AXIOM-CONTAINER-FAMILY",
@@ -6286,10 +9257,38 @@
         "test_mapping": "unassessed"
       },
       "formalization_note": "One uniformly indexed family containing the three corresponding axiom schemas; no finite maximum n is imposed.",
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-RDFS-AXIOM-CONTAINER-FAMILY",
+        "relation": "definition",
+        "symbol_linked_english": "For every positive integer n, rdf:_n has type rdfs:ContainerMembershipProperty, domain rdfs:Resource, and range rdfs:Resource.",
+        "bindings": [
+          {
+            "symbol": "rdfsAxiomSymbols",
+            "lean": "RDF11.rdfsAxiomSymbols"
+          },
+          {
+            "symbol": "axioms",
+            "lean": "RDF11.RDFSVocabulary.axioms"
+          },
+          {
+            "symbol": "rdfs_axiom_true",
+            "lean": "RDF11.SimpleInterpretation.rdfs_axiom_true"
+          },
+          {
+            "symbol": "rdfs_empty_entails_axioms",
+            "lean": "RDF11.rdfs_empty_entails_axioms"
+          }
+        ],
+        "limitations": "The two finite lists have 16 entries each; the hierarchy list has six. The three container schemas quantify over all positive indices, with no finite cutoff.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "rdfs-axioms"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-RDFS-PROPERTY-CLASS-EQUALITY",
@@ -6313,10 +9312,34 @@
         "formal_proof": "unassessed",
         "test_mapping": "unassessed"
       },
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-RDFS-PROPERTY-CLASS-EQUALITY",
+        "relation": "partial_theorem",
+        "symbol_linked_english": "IP equals ICEXT(I(rdf:Property)); recognized datatypes act as classes with their value-space extensions, and recognized literals either lack denotation or denote members of those classes.",
+        "bindings": [
+          {
+            "symbol": "rdfs_property_extension",
+            "lean": "RDF11.SimpleInterpretation.rdfs_property_extension"
+          },
+          {
+            "symbol": "rdfs_datatype_extension",
+            "lean": "RDF11.SimpleInterpretation.rdfs_datatype_extension"
+          },
+          {
+            "symbol": "rdf_literal_typing",
+            "lean": "RDF11.SimpleInterpretation.rdf_literal_typing"
+          }
+        ],
+        "limitations": "Property extension equality and datatype value membership are proved. Broader recognized-datatype class consequences can be derived through the schema rules; no concrete datatype library is supplied.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "rdfs-property-extension"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-RDFS-ADDITIONAL-VALID-TYPES",
@@ -6358,7 +9381,9 @@
         "rdf:Statement"
       ],
       "cleanroom_mapping": null,
-      "passages": [],
+      "passages": [
+        "rdfs-additional-types"
+      ],
       "extraction_review": "pending",
       "formalization_review": "not_started"
     },
@@ -6495,10 +9520,30 @@
         "formal_proof": "unassessed",
         "test_mapping": "unassessed"
       },
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-RDFS-ENTAILMENT",
+        "relation": "definition",
+        "symbol_linked_english": "S RDFS-entails E recognizing D when every RDFS interpretation recognizing D that satisfies S also satisfies E.",
+        "bindings": [
+          {
+            "symbol": "RDFSEntails",
+            "lean": "RDF11.RDFSEntails"
+          },
+          {
+            "symbol": "RDFSUnsatisfiable",
+            "lean": "RDF11.RDFSUnsatisfiable"
+          }
+        ],
+        "limitations": "Parameterized by abstract IRI/literal domains and a fixed external datatype theory; concrete XSD, XML Char and BCP47 implementations are not supplied. Expert mapping review remains pending.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "rdfs-entailment"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-RDFS-DIRECTION-SOURCE-CLAIM",
@@ -6524,7 +9569,9 @@
         "RQ-RDFS-ENTAILMENT-DIRECTION"
       ],
       "cleanroom_mapping": null,
-      "passages": [],
+      "passages": [
+        "rdfs-direction"
+      ],
       "extraction_review": "pending",
       "formalization_review": "not_started"
     },
@@ -6554,10 +9601,34 @@
       "review_questions": [
         "RQ-RDFS-ENTAILMENT-DIRECTION"
       ],
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-RDFS-MODEL-CLASS-INCLUSION",
+        "relation": "theorem",
+        "symbol_linked_english": "For the same D, RDF entailment implies RDFS entailment by restricting the universal quantifier to the RDFS interpretations; the source also identifies IRI rdf:type rdfs:Resource triples as RDFS-valid.",
+        "bindings": [
+          {
+            "symbol": "rdfsModel_is_rdfModel",
+            "lean": "RDF11.SimpleInterpretation.rdfsModel_is_rdfModel"
+          },
+          {
+            "symbol": "rdf_implies_rdfs_entailment",
+            "lean": "RDF11.rdf_implies_rdfs_entailment"
+          },
+          {
+            "symbol": "rdfs_iri_resource",
+            "lean": "RDF11.SimpleInterpretation.rdfs_iri_resource"
+          }
+        ],
+        "limitations": "RDF entailment implies RDFS entailment for the same D. The reverse implication printed in the source remains separately flagged.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "rdfs-direction"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-RULE-rdfs1",
@@ -6579,10 +9650,42 @@
         "test_mapping": "unassessed"
       },
       "formalization_note": "Pattern variables denote RDF terms; repeated variables agree across all premises and conclusions. Generalized syntax is needed when instantiation places a literal in subject position or a blank node in predicate position. The letter D in class-pattern variables is not the recognized-datatype-set parameter.",
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-RULE-rdfs1",
+        "relation": "theorem",
+        "symbol_linked_english": "For every recognized datatype IRI d in D, entail d rdf:type rdfs:Datatype.",
+        "bindings": [
+          {
+            "symbol": "rdfs1",
+            "lean": "RDF11.RDFSStep.rdfs1"
+          },
+          {
+            "symbol": "rdfs_step_sound",
+            "lean": "RDF11.SimpleInterpretation.rdfs_step_sound"
+          },
+          {
+            "symbol": "RDFSDerives",
+            "lean": "RDF11.RDFSDerives"
+          },
+          {
+            "symbol": "rdfs_derivation_sound",
+            "lean": "RDF11.SimpleInterpretation.rdfs_derivation_sound"
+          },
+          {
+            "symbol": "rdfs_derives_entailment",
+            "lean": "RDF11.rdfs_derives_entailment"
+          }
+        ],
+        "limitations": "Sound for generalized triples. Premises share one blank-node assignment and rules compose by induction. No closure-completeness or executable decision-procedure claim is made.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "rule-rdfs1"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-RULE-rdfs2",
@@ -6604,10 +9707,42 @@
         "test_mapping": "unassessed"
       },
       "formalization_note": "Pattern variables denote RDF terms; repeated variables agree across all premises and conclusions. Generalized syntax is needed when instantiation places a literal in subject position or a blank node in predicate position. The letter D in class-pattern variables is not the recognized-datatype-set parameter.",
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-RULE-rdfs2",
+        "relation": "theorem",
+        "symbol_linked_english": "From p rdfs:domain C and s p o, entail s rdf:type C.",
+        "bindings": [
+          {
+            "symbol": "rdfs2",
+            "lean": "RDF11.RDFSStep.rdfs2"
+          },
+          {
+            "symbol": "rdfs_step_sound",
+            "lean": "RDF11.SimpleInterpretation.rdfs_step_sound"
+          },
+          {
+            "symbol": "RDFSDerives",
+            "lean": "RDF11.RDFSDerives"
+          },
+          {
+            "symbol": "rdfs_derivation_sound",
+            "lean": "RDF11.SimpleInterpretation.rdfs_derivation_sound"
+          },
+          {
+            "symbol": "rdfs_derives_entailment",
+            "lean": "RDF11.rdfs_derives_entailment"
+          }
+        ],
+        "limitations": "Sound for generalized triples. Premises share one blank-node assignment and rules compose by induction. No closure-completeness or executable decision-procedure claim is made.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "rule-rdfs2"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-RULE-rdfs3",
@@ -6629,10 +9764,42 @@
         "test_mapping": "unassessed"
       },
       "formalization_note": "Pattern variables denote RDF terms; repeated variables agree across all premises and conclusions. Generalized syntax is needed when instantiation places a literal in subject position or a blank node in predicate position. The letter D in class-pattern variables is not the recognized-datatype-set parameter.",
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-RULE-rdfs3",
+        "relation": "theorem",
+        "symbol_linked_english": "From p rdfs:range C and s p o, entail o rdf:type C.",
+        "bindings": [
+          {
+            "symbol": "rdfs3",
+            "lean": "RDF11.RDFSStep.rdfs3"
+          },
+          {
+            "symbol": "rdfs_step_sound",
+            "lean": "RDF11.SimpleInterpretation.rdfs_step_sound"
+          },
+          {
+            "symbol": "RDFSDerives",
+            "lean": "RDF11.RDFSDerives"
+          },
+          {
+            "symbol": "rdfs_derivation_sound",
+            "lean": "RDF11.SimpleInterpretation.rdfs_derivation_sound"
+          },
+          {
+            "symbol": "rdfs_derives_entailment",
+            "lean": "RDF11.rdfs_derives_entailment"
+          }
+        ],
+        "limitations": "Sound for generalized triples. Premises share one blank-node assignment and rules compose by induction. No closure-completeness or executable decision-procedure claim is made.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "rule-rdfs3"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-RULE-rdfs4a",
@@ -6654,10 +9821,42 @@
         "test_mapping": "unassessed"
       },
       "formalization_note": "Pattern variables denote RDF terms; repeated variables agree across all premises and conclusions. Generalized syntax is needed when instantiation places a literal in subject position or a blank node in predicate position. The letter D in class-pattern variables is not the recognized-datatype-set parameter.",
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-RULE-rdfs4a",
+        "relation": "theorem",
+        "symbol_linked_english": "From s p o, entail s rdf:type rdfs:Resource.",
+        "bindings": [
+          {
+            "symbol": "rdfs4a",
+            "lean": "RDF11.RDFSStep.rdfs4a"
+          },
+          {
+            "symbol": "rdfs_step_sound",
+            "lean": "RDF11.SimpleInterpretation.rdfs_step_sound"
+          },
+          {
+            "symbol": "RDFSDerives",
+            "lean": "RDF11.RDFSDerives"
+          },
+          {
+            "symbol": "rdfs_derivation_sound",
+            "lean": "RDF11.SimpleInterpretation.rdfs_derivation_sound"
+          },
+          {
+            "symbol": "rdfs_derives_entailment",
+            "lean": "RDF11.rdfs_derives_entailment"
+          }
+        ],
+        "limitations": "Sound for generalized triples. Premises share one blank-node assignment and rules compose by induction. No closure-completeness or executable decision-procedure claim is made.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "rule-rdfs4a"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-RULE-rdfs4b",
@@ -6679,10 +9878,42 @@
         "test_mapping": "unassessed"
       },
       "formalization_note": "Pattern variables denote RDF terms; repeated variables agree across all premises and conclusions. Generalized syntax is needed when instantiation places a literal in subject position or a blank node in predicate position. The letter D in class-pattern variables is not the recognized-datatype-set parameter.",
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-RULE-rdfs4b",
+        "relation": "theorem",
+        "symbol_linked_english": "From s p o, entail o rdf:type rdfs:Resource.",
+        "bindings": [
+          {
+            "symbol": "rdfs4b",
+            "lean": "RDF11.RDFSStep.rdfs4b"
+          },
+          {
+            "symbol": "rdfs_step_sound",
+            "lean": "RDF11.SimpleInterpretation.rdfs_step_sound"
+          },
+          {
+            "symbol": "RDFSDerives",
+            "lean": "RDF11.RDFSDerives"
+          },
+          {
+            "symbol": "rdfs_derivation_sound",
+            "lean": "RDF11.SimpleInterpretation.rdfs_derivation_sound"
+          },
+          {
+            "symbol": "rdfs_derives_entailment",
+            "lean": "RDF11.rdfs_derives_entailment"
+          }
+        ],
+        "limitations": "Sound for generalized triples. Premises share one blank-node assignment and rules compose by induction. No closure-completeness or executable decision-procedure claim is made.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "rule-rdfs4b"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-RULE-rdfs5",
@@ -6704,10 +9935,42 @@
         "test_mapping": "unassessed"
       },
       "formalization_note": "Pattern variables denote RDF terms; repeated variables agree across all premises and conclusions. Generalized syntax is needed when instantiation places a literal in subject position or a blank node in predicate position. The letter D in class-pattern variables is not the recognized-datatype-set parameter.",
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-RULE-rdfs5",
+        "relation": "theorem",
+        "symbol_linked_english": "From p rdfs:subPropertyOf q and q rdfs:subPropertyOf r, entail p rdfs:subPropertyOf r.",
+        "bindings": [
+          {
+            "symbol": "rdfs5",
+            "lean": "RDF11.RDFSStep.rdfs5"
+          },
+          {
+            "symbol": "rdfs_step_sound",
+            "lean": "RDF11.SimpleInterpretation.rdfs_step_sound"
+          },
+          {
+            "symbol": "RDFSDerives",
+            "lean": "RDF11.RDFSDerives"
+          },
+          {
+            "symbol": "rdfs_derivation_sound",
+            "lean": "RDF11.SimpleInterpretation.rdfs_derivation_sound"
+          },
+          {
+            "symbol": "rdfs_derives_entailment",
+            "lean": "RDF11.rdfs_derives_entailment"
+          }
+        ],
+        "limitations": "Sound for generalized triples. Premises share one blank-node assignment and rules compose by induction. No closure-completeness or executable decision-procedure claim is made.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "rule-rdfs5"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-RULE-rdfs6",
@@ -6729,10 +9992,42 @@
         "test_mapping": "unassessed"
       },
       "formalization_note": "Pattern variables denote RDF terms; repeated variables agree across all premises and conclusions. Generalized syntax is needed when instantiation places a literal in subject position or a blank node in predicate position. The letter D in class-pattern variables is not the recognized-datatype-set parameter.",
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-RULE-rdfs6",
+        "relation": "theorem",
+        "symbol_linked_english": "From p rdf:type rdf:Property, entail p rdfs:subPropertyOf p.",
+        "bindings": [
+          {
+            "symbol": "rdfs6",
+            "lean": "RDF11.RDFSStep.rdfs6"
+          },
+          {
+            "symbol": "rdfs_step_sound",
+            "lean": "RDF11.SimpleInterpretation.rdfs_step_sound"
+          },
+          {
+            "symbol": "RDFSDerives",
+            "lean": "RDF11.RDFSDerives"
+          },
+          {
+            "symbol": "rdfs_derivation_sound",
+            "lean": "RDF11.SimpleInterpretation.rdfs_derivation_sound"
+          },
+          {
+            "symbol": "rdfs_derives_entailment",
+            "lean": "RDF11.rdfs_derives_entailment"
+          }
+        ],
+        "limitations": "Sound for generalized triples. Premises share one blank-node assignment and rules compose by induction. No closure-completeness or executable decision-procedure claim is made.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "rule-rdfs6"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-RULE-rdfs7",
@@ -6754,10 +10049,42 @@
         "test_mapping": "unassessed"
       },
       "formalization_note": "Pattern variables denote RDF terms; repeated variables agree across all premises and conclusions. Generalized syntax is needed when instantiation places a literal in subject position or a blank node in predicate position. The letter D in class-pattern variables is not the recognized-datatype-set parameter.",
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-RULE-rdfs7",
+        "relation": "theorem",
+        "symbol_linked_english": "From p rdfs:subPropertyOf q and s p o, entail s q o.",
+        "bindings": [
+          {
+            "symbol": "rdfs7",
+            "lean": "RDF11.RDFSStep.rdfs7"
+          },
+          {
+            "symbol": "rdfs_step_sound",
+            "lean": "RDF11.SimpleInterpretation.rdfs_step_sound"
+          },
+          {
+            "symbol": "RDFSDerives",
+            "lean": "RDF11.RDFSDerives"
+          },
+          {
+            "symbol": "rdfs_derivation_sound",
+            "lean": "RDF11.SimpleInterpretation.rdfs_derivation_sound"
+          },
+          {
+            "symbol": "rdfs_derives_entailment",
+            "lean": "RDF11.rdfs_derives_entailment"
+          }
+        ],
+        "limitations": "Sound for generalized triples. Premises share one blank-node assignment and rules compose by induction. No closure-completeness or executable decision-procedure claim is made.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "rule-rdfs7"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-RULE-rdfs8",
@@ -6779,10 +10106,42 @@
         "test_mapping": "unassessed"
       },
       "formalization_note": "Pattern variables denote RDF terms; repeated variables agree across all premises and conclusions. Generalized syntax is needed when instantiation places a literal in subject position or a blank node in predicate position. The letter D in class-pattern variables is not the recognized-datatype-set parameter.",
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-RULE-rdfs8",
+        "relation": "theorem",
+        "symbol_linked_english": "From C rdf:type rdfs:Class, entail C rdfs:subClassOf rdfs:Resource.",
+        "bindings": [
+          {
+            "symbol": "rdfs8",
+            "lean": "RDF11.RDFSStep.rdfs8"
+          },
+          {
+            "symbol": "rdfs_step_sound",
+            "lean": "RDF11.SimpleInterpretation.rdfs_step_sound"
+          },
+          {
+            "symbol": "RDFSDerives",
+            "lean": "RDF11.RDFSDerives"
+          },
+          {
+            "symbol": "rdfs_derivation_sound",
+            "lean": "RDF11.SimpleInterpretation.rdfs_derivation_sound"
+          },
+          {
+            "symbol": "rdfs_derives_entailment",
+            "lean": "RDF11.rdfs_derives_entailment"
+          }
+        ],
+        "limitations": "Sound for generalized triples. Premises share one blank-node assignment and rules compose by induction. No closure-completeness or executable decision-procedure claim is made.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "rule-rdfs8"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-RULE-rdfs9",
@@ -6804,10 +10163,42 @@
         "test_mapping": "unassessed"
       },
       "formalization_note": "Pattern variables denote RDF terms; repeated variables agree across all premises and conclusions. Generalized syntax is needed when instantiation places a literal in subject position or a blank node in predicate position. The letter D in class-pattern variables is not the recognized-datatype-set parameter.",
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-RULE-rdfs9",
+        "relation": "theorem",
+        "symbol_linked_english": "From C rdfs:subClassOf D and x rdf:type C, entail x rdf:type D.",
+        "bindings": [
+          {
+            "symbol": "rdfs9",
+            "lean": "RDF11.RDFSStep.rdfs9"
+          },
+          {
+            "symbol": "rdfs_step_sound",
+            "lean": "RDF11.SimpleInterpretation.rdfs_step_sound"
+          },
+          {
+            "symbol": "RDFSDerives",
+            "lean": "RDF11.RDFSDerives"
+          },
+          {
+            "symbol": "rdfs_derivation_sound",
+            "lean": "RDF11.SimpleInterpretation.rdfs_derivation_sound"
+          },
+          {
+            "symbol": "rdfs_derives_entailment",
+            "lean": "RDF11.rdfs_derives_entailment"
+          }
+        ],
+        "limitations": "Sound for generalized triples. Premises share one blank-node assignment and rules compose by induction. No closure-completeness or executable decision-procedure claim is made.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "rule-rdfs9"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-RULE-rdfs10",
@@ -6829,10 +10220,42 @@
         "test_mapping": "unassessed"
       },
       "formalization_note": "Pattern variables denote RDF terms; repeated variables agree across all premises and conclusions. Generalized syntax is needed when instantiation places a literal in subject position or a blank node in predicate position. The letter D in class-pattern variables is not the recognized-datatype-set parameter.",
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-RULE-rdfs10",
+        "relation": "theorem",
+        "symbol_linked_english": "From C rdf:type rdfs:Class, entail C rdfs:subClassOf C.",
+        "bindings": [
+          {
+            "symbol": "rdfs10",
+            "lean": "RDF11.RDFSStep.rdfs10"
+          },
+          {
+            "symbol": "rdfs_step_sound",
+            "lean": "RDF11.SimpleInterpretation.rdfs_step_sound"
+          },
+          {
+            "symbol": "RDFSDerives",
+            "lean": "RDF11.RDFSDerives"
+          },
+          {
+            "symbol": "rdfs_derivation_sound",
+            "lean": "RDF11.SimpleInterpretation.rdfs_derivation_sound"
+          },
+          {
+            "symbol": "rdfs_derives_entailment",
+            "lean": "RDF11.rdfs_derives_entailment"
+          }
+        ],
+        "limitations": "Sound for generalized triples. Premises share one blank-node assignment and rules compose by induction. No closure-completeness or executable decision-procedure claim is made.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "rule-rdfs10"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-RULE-rdfs11",
@@ -6854,10 +10277,42 @@
         "test_mapping": "unassessed"
       },
       "formalization_note": "Pattern variables denote RDF terms; repeated variables agree across all premises and conclusions. Generalized syntax is needed when instantiation places a literal in subject position or a blank node in predicate position. The letter D in class-pattern variables is not the recognized-datatype-set parameter.",
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-RULE-rdfs11",
+        "relation": "theorem",
+        "symbol_linked_english": "From C rdfs:subClassOf D and D rdfs:subClassOf E, entail C rdfs:subClassOf E.",
+        "bindings": [
+          {
+            "symbol": "rdfs11",
+            "lean": "RDF11.RDFSStep.rdfs11"
+          },
+          {
+            "symbol": "rdfs_step_sound",
+            "lean": "RDF11.SimpleInterpretation.rdfs_step_sound"
+          },
+          {
+            "symbol": "RDFSDerives",
+            "lean": "RDF11.RDFSDerives"
+          },
+          {
+            "symbol": "rdfs_derivation_sound",
+            "lean": "RDF11.SimpleInterpretation.rdfs_derivation_sound"
+          },
+          {
+            "symbol": "rdfs_derives_entailment",
+            "lean": "RDF11.rdfs_derives_entailment"
+          }
+        ],
+        "limitations": "Sound for generalized triples. Premises share one blank-node assignment and rules compose by induction. No closure-completeness or executable decision-procedure claim is made.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "rule-rdfs11"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-RULE-rdfs12",
@@ -6879,10 +10334,42 @@
         "test_mapping": "unassessed"
       },
       "formalization_note": "Pattern variables denote RDF terms; repeated variables agree across all premises and conclusions. Generalized syntax is needed when instantiation places a literal in subject position or a blank node in predicate position. The letter D in class-pattern variables is not the recognized-datatype-set parameter.",
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-RULE-rdfs12",
+        "relation": "theorem",
+        "symbol_linked_english": "From p rdf:type rdfs:ContainerMembershipProperty, entail p rdfs:subPropertyOf rdfs:member.",
+        "bindings": [
+          {
+            "symbol": "rdfs12",
+            "lean": "RDF11.RDFSStep.rdfs12"
+          },
+          {
+            "symbol": "rdfs_step_sound",
+            "lean": "RDF11.SimpleInterpretation.rdfs_step_sound"
+          },
+          {
+            "symbol": "RDFSDerives",
+            "lean": "RDF11.RDFSDerives"
+          },
+          {
+            "symbol": "rdfs_derivation_sound",
+            "lean": "RDF11.SimpleInterpretation.rdfs_derivation_sound"
+          },
+          {
+            "symbol": "rdfs_derives_entailment",
+            "lean": "RDF11.rdfs_derives_entailment"
+          }
+        ],
+        "limitations": "Sound for generalized triples. Premises share one blank-node assignment and rules compose by induction. No closure-completeness or executable decision-procedure claim is made.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "rule-rdfs12"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-RULE-rdfs13",
@@ -6904,10 +10391,42 @@
         "test_mapping": "unassessed"
       },
       "formalization_note": "Pattern variables denote RDF terms; repeated variables agree across all premises and conclusions. Generalized syntax is needed when instantiation places a literal in subject position or a blank node in predicate position. The letter D in class-pattern variables is not the recognized-datatype-set parameter.",
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-RULE-rdfs13",
+        "relation": "theorem",
+        "symbol_linked_english": "From C rdf:type rdfs:Datatype, entail C rdfs:subClassOf rdfs:Literal.",
+        "bindings": [
+          {
+            "symbol": "rdfs13",
+            "lean": "RDF11.RDFSStep.rdfs13"
+          },
+          {
+            "symbol": "rdfs_step_sound",
+            "lean": "RDF11.SimpleInterpretation.rdfs_step_sound"
+          },
+          {
+            "symbol": "RDFSDerives",
+            "lean": "RDF11.RDFSDerives"
+          },
+          {
+            "symbol": "rdfs_derivation_sound",
+            "lean": "RDF11.SimpleInterpretation.rdfs_derivation_sound"
+          },
+          {
+            "symbol": "rdfs_derives_entailment",
+            "lean": "RDF11.rdfs_derives_entailment"
+          }
+        ],
+        "limitations": "Sound for generalized triples. Premises share one blank-node assignment and rules compose by induction. No closure-completeness or executable decision-procedure claim is made.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "rule-rdfs13"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-RDFS-DATATYPE-INCONSISTENCY",
@@ -6930,10 +10449,26 @@
         "formal_proof": "unassessed",
         "test_mapping": "unassessed"
       },
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-RDFS-DATATYPE-INCONSISTENCY",
+        "relation": "theorem",
+        "symbol_linked_english": "RDFS domain or range consequences can force an individual into disjoint recognized datatype classes and thereby make a graph unsatisfiable.",
+        "bindings": [
+          {
+            "symbol": "rdfs_disjoint_types_unsatisfiable",
+            "lean": "RDF11.rdfs_disjoint_types_unsatisfiable"
+          }
+        ],
+        "limitations": "If any shared term can be derived to inhabit two disjoint recognized datatype spaces, the whole graph is RDFS-unsatisfiable. This composes with domain/range and hierarchy rules; concrete integer/boolean disjointness remains a datatype-library obligation.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "rdfs-inconsistency"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-DATASET-STRUCTURE",
@@ -7845,6 +11380,24 @@
       "antecedent_passage": "skolem-context",
       "resolved_meaning": "The original graph G containing at least one blank node, and the skolemization map described in the preceding paragraph.",
       "inference": "Choose an occurring blank to exhibit a fresh IRI in the image; the original has no such IRI.",
+      "review": "pending"
+    },
+    {
+      "claim_id": "MT11-RECOGNIZED-LITERAL-VALUE",
+      "passage": "d-ordinary",
+      "source_phrase": "other",
+      "antecedent_passage": "d-language",
+      "resolved_meaning": "Recognized datatype IRIs distinct from rdf:langString.",
+      "inference": "The ordinary condition explicitly excludes the language-tagged special case.",
+      "review": "pending"
+    },
+    {
+      "claim_id": "MT11-RDFS-DATATYPE-EXTENSION",
+      "passage": "rdfs-datatype-space",
+      "source_phrase": "other",
+      "antecedent_passage": "rdfs-language",
+      "resolved_meaning": "Recognized datatype IRIs other than rdf:langString, whose class extension was specified in the preceding clause.",
+      "inference": "Specialize the inherited RDF extension theorem to the ordinary branch of recognizedSpace.",
       "review": "pending"
     }
   ],

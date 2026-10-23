@@ -1,8 +1,12 @@
 # RDF 1.1 Semantics: fresh Lean 4 reconstruction
 
-**Third working increment, 23 October 2026. Not complete RDF formalization or package verification.**
+**Fourth working increment, 23 October 2026. Not complete RDF formalization or package verification.**
 
 This project reconstructs definitions and proofs from the pinned RDF 1.1 specifications. It imports no Factoidal implementation modules and copies no existing Factoidal proofs. The author has previously reviewed that implementation: “clean-room” here means a separate, source-first reconstruction, not an independently isolated team with no prior exposure.
+
+For a short mathematical review, read [Statements.lean](RDF11/Statements.lean), [Syntax.lean](RDF11/Syntax.lean) and [Simple.lean](RDF11/Simple.lean). Together they are under 400 lines. The headline file restates the empty-graph, subgraph, instance, binary merging, interpolation, compactness, isomorphism and Skolem conservativity results with source anchors and one-line proof aliases. Its explicit types retain ordinary/generalized scope, finiteness and freshness hypotheses. The empty-graph result has two clauses. Only interpolation and compactness are explicitly named in the source; the other headings are local review names. Follow dependencies for supporting definitions such as entailment, instances and Skolemization; these three files are an entry point, not a self-contained proof audit.
+
+The [repository methodology skill](../../../../.agents/skills/rdf11-spec2lean/SKILL.md) records the working method. AI close reading selects assertions; HTML parsing only locates those selected passages in the hash-pinned source. Mappings distinguish definitions from proved consequences and resolve contextual words to their antecedents. Every authored declaration has a draft English gloss, every local declaration has explicit grounding, and the registry is updated deliberately rather than automatically enrolled. Source-to-claim review and claim-to-Lean review are separate obligations. Neither compilation nor an AI source pass counts as accepted expert review.
 
 Start with the [source review prototype](https://danbri.github.io/dickory/labs/rdf11/cleanroom/artifacts/source-review.html), [notation and assurance boundary](docs/20261021-first-increment.md), and [mapping records](catalogue/mapping-review.json). The viewer offers an annotated rendered reading copy and an exact original-HTML tab. Search and colour-coded status filters distinguish mapped, partial and unmapped claims. Every displayed local Lean declaration has an expandable **ⓘ Plain-English explanation**, including generated dependency helpers. A Connected claims panel follows actual declaration dependencies and distinguishes shared bindings. Definitions and proof bodies remain visible; source links are pinned to the build commit. Try [ordinary instance entailment](https://danbri.github.io/dickory/labs/rdf11/cleanroom/artifacts/source-review.html#claim=MT11-INSTANCE-ENTAILMENT) or [isomorphism](https://danbri.github.io/dickory/labs/rdf11/cleanroom/artifacts/source-review.html#claim=MT11-ISOMORPHISM).
 
@@ -24,15 +28,18 @@ The full library builds with **Lean 4.33.1**, using only its standard distributi
 - Graph isomorphisms use inverse renamings on occurring blanks; mutual instantiation and semantic equivalence are proved. Ground graphs are lean. Both directions of interpolation are proved for ordinary conclusions, including infinite graphs.
 - Compactness reuses finite enumeration images and interpolation. Vocabulary inclusion yields absent-IRI non-entailment.
 - Skolemization connects to instances, groundness, leanness and fresh-vocabulary conservativity, with explicit freshness and ordinary-source boundaries.
-- The first RDF property condition yields rdfD2 and conditional generalized instance entailment through the existing semantic-extension model. Full RDF/D-interpretation is still incomplete.
+- Datatype interpretations use fixed external meanings, partial lexical-to-value mappings and one shared value domain. Empty-D equivalence, recognition monotonicity, ill-typed unsatisfiability and same-value object-literal substitution are proved. Concrete XSD and literal syntax remain external obligations.
+- RDF conditions and the full infinite axiom family are represented. rdfD1 uses one fresh shared witness; rdfD2 reuses the existing property proof. Generalized instance entailment remains conditional at the simple-semantics level.
+- RDFS conditions define ICEXT through rdf:type, keeping classes, properties and literal values in one universe. Both finite axiom lists, the hierarchy axioms and all positive container indices are included. All 14 named RDFS rules have a shared-assignment soundness proof; derivations compose into graph entailment and disjoint-datatype inconsistency.
 - Finite enumerations carry both membership and uniqueness proofs. Any two enumerations of the same set have the same length; each member occurs at most once.
 
-The source catalogue has **54 mappings among 195 preliminary claim records**. Several mappings are partial. These numbers are not a compliance percentage. No extraction or formalization review is marked accepted.
+The source catalogue has **125 mappings among 195 preliminary claim records**. Several mappings are partial. These numbers are not a compliance percentage. No extraction or formalization review is marked accepted.
 
 ## Where to read
 
 | File | Responsibility |
 |---|---|
+| [Statements.lean](RDF11/Statements.lean) | Short, source-anchored headline statements with one-line aliases to proved theorems |
 | [Set.lean](RDF11/Set.lean) | Predicate sets, extensionality, union and membership algebra |
 | [Syntax.lean](RDF11/Syntax.lean) | Ordinary/generalized syntax, occurrence and renaming |
 | [Simple.lean](RDF11/Simple.lean) | Interpretation components and truth conditions |
@@ -45,6 +52,10 @@ The source catalogue has **54 mappings among 195 preliminary claim records**. Se
 | [Skolemization.lean](RDF11/Skolemization.lean) | Fresh/injective naming, retraction and conservativity |
 | [Transformations.lean](RDF11/Transformations.lean) | Satisfiability, process validity and composition |
 | [RDFProperty.lean](RDF11/RDFProperty.lean) | One RDF condition, rdfD2 and conditional generalized substitution |
+| [Datatypes.lean](RDF11/Datatypes.lean) | Fixed datatype meanings, normalized language values, D-models and consequences |
+| [RDF.lean](RDF11/RDF.lean) / [RDFRules.lean](RDF11/RDFRules.lean) | RDF conditions, full axiom family, rdfD1/rdfD2 and datatype inconsistency |
+| [RDFS.lean](RDF11/RDFS.lean) / [RDFSRules.lean](RDF11/RDFSRules.lean) | Class semantics, full RDFS axioms, rule and derivation soundness |
+| [Relations.lean](RDF11/Relations.lean) | Bridges between typed IEXT, relation notation and triple truth |
 | [ScopeExample.lean](RDF11/ScopeExample.lean) | Checked shared-witness counterexample |
 | [GeneralizedScope.lean](RDF11/GeneralizedScope.lean) | Checked countermodel for an explicit source-scope review question |
 | [Enumeration.lean](RDF11/Enumeration.lean) | Finite implementation contract, separate from graph semantics |
@@ -52,7 +63,7 @@ The source catalogue has **54 mappings among 195 preliminary claim records**. Se
 | [Snapshot.lean](Audit/Snapshot.lean) | Concrete draft certificates for both archived specifications |
 | [Export.lean](Audit/Export.lean) | Trusted extractor of actual elaborated types and dependencies |
 
-[registry.json](catalogue/registry.json) inventories every local Lean file and 552 declarations, including generated helpers. [declarations.json](https://danbri.github.io/dickory/labs/rdf11/cleanroom/artifacts/declarations.json) records their closure through 2,516 declarations. The checker rejects unregistered files even when they are not imported.
+[registry.json](catalogue/registry.json) inventories every local Lean file and 972 declarations, including generated helpers. [declarations.json](https://danbri.github.io/dickory/labs/rdf11/cleanroom/artifacts/declarations.json) records their closure through 5,432 declarations. The checker rejects unregistered files even when they are not imported.
 
 ## Reproduce
 
@@ -74,7 +85,7 @@ After an intentional formal edit, update the explicit registry and review the di
 
 ## Remaining work
 
-See the [connected-proof audit and remaining obligations](docs/20261023-connected-entailment.md). The principal gaps are concrete IRI/literal definitions and equality; generalized interpolation scope, lean/proper-instance non-entailment and exact skolem lifting; finite decision procedures; datatype interpretations; the remaining RDF conditions/axioms and RDFS conditions/rules; datasets; and remaining informative/general requirements. These are formalization gaps, not merely missing viewer links.
+See the [datatype/RDF/RDFS increment and review method](docs/20261023-datatypes-rdfs-review.md) and earlier [connected-proof audit](docs/20261023-connected-entailment.md). The principal gaps are concrete IRI/literal definitions and equality; literal/vocabulary coverage and concrete datatype libraries; generalized interpolation scope, lean/proper-instance non-entailment and exact skolem lifting; model-existence and full rule-completeness proofs; finite decision procedures; datasets; and remaining informative/general requirements. These are formalization gaps, not merely missing viewer links. Defining an interpretation class does not prove it has models for every external parameter choice.
 
 The complete requirement set also needs finer context-resolution ranges, expert review records for both mapping stages, and a Lean proof of the declaration-grounding certificate itself. The current rendered view and glosses aid review but do not certify fidelity.
 

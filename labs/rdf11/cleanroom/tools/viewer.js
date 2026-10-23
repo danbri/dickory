@@ -62,7 +62,10 @@ function appendQuestions(a,id){
  for(const q of data.questions.filter(q=>q.claim_ids.includes(id))){
   const box=element("details");box.append(element("summary","Open source question: "+q.id));
   box.append(element("p",q.summary),element("p","Expert adjudication pending; not a declared erratum."));
-  box.append(element("pre",q.example.instance+"  (true)\n"+q.example.generalized_graph+"  (false)"));
+  if(q.example?.instance && q.example?.generalized_graph)
+   box.append(element("pre",q.example.instance+"  (true)\n"+q.example.generalized_graph+"  (false)"));
+  if(q.review_question)box.append(element("p",q.review_question));
+  if(q.implementation_policy)box.append(element("p",q.implementation_policy));
   for(const n of q.lean)box.append(leanDeclaration(n));
   a.append(box);
  }

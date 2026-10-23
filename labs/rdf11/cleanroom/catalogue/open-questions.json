@@ -65,6 +65,67 @@
       ],
       "review_question": "Does the generalized-syntax sentence carry this consequence unchanged, or does the intended instance/interpretation scope impose an additional qualification?",
       "implementation_policy": "Keep the definitions as transcribed. Do not silently assume IP is a subset of IR, expand assignment codomains, or mark the general instance/interpolation claims discharged."
+    },
+    {
+      "id": "Q-D-ENTAILMENT-DIRECTION",
+      "status": "model_class_direction_proved_source_wording_needs_expert_review",
+      "claim_ids": [
+        "MT11-D-DIRECTION-SOURCE-CLAIM",
+        "MT11-D-MODEL-CLASS-MONOTONICITY",
+        "MT11-EMPTY-D-SIMPLE"
+      ],
+      "passage_ids": [
+        "d-direction"
+      ],
+      "summary": "The printed entailment implications run opposite to the model-class consequence of recognizing more datatypes.",
+      "lean": [
+        "RDF11.d_entailment_monotone",
+        "RDF11.simple_implies_d_entailment",
+        "RDF11.d_empty_iff_simple"
+      ],
+      "review_question": "How should the source wording be dispositioned while retaining the exact archived text?",
+      "implementation_policy": "Keep the printed assertion unmapped; present the proved model-class direction separately.",
+      "not_a_declared_erratum": true
+    },
+    {
+      "id": "Q-RDFS-ENTAILMENT-DIRECTION",
+      "status": "model_class_direction_proved_source_wording_needs_expert_review",
+      "claim_ids": [
+        "MT11-RDFS-DIRECTION-SOURCE-CLAIM",
+        "MT11-RDFS-MODEL-CLASS-INCLUSION"
+      ],
+      "passage_ids": [
+        "rdfs-direction"
+      ],
+      "summary": "The printed RDFS-to-RDF implication conflicts with the stated inclusion of interpretation classes and the accompanying stronger-entailment explanation.",
+      "lean": [
+        "RDF11.rdf_implies_rdfs_entailment",
+        "RDF11.SimpleInterpretation.rdfsModel_is_rdfModel"
+      ],
+      "review_question": "How should the printed direction be recorded and reviewed?",
+      "implementation_policy": "Do not assert the printed reverse implication; preserve RDF-to-RDFS entailment as the checked result.",
+      "not_a_declared_erratum": true
+    },
+    {
+      "id": "Q-OPTIONAL-DATATYPE-CLASSES",
+      "status": "source_scope_question_not_yet_countermodel_checked",
+      "claim_ids": [
+        "MT11-RDFS-ADDITIONAL-VALID-TYPES",
+        "MT11-RDF-VOCABULARY-LIMITS",
+        "MT11-RDFS-DATATYPE-TYPING"
+      ],
+      "passage_ids": [
+        "rdfs-additional-types",
+        "rdf-optional-types",
+        "rdfs-datatype-typing"
+      ],
+      "summary": "The additional-valid-triples table lists XMLLiteral and HTML class typings without a recognition premise, although RDF allows them to remain unrecognized.",
+      "lean": [
+        "RDF11.SimpleInterpretation.RDFSConditions.datatype_typing"
+      ],
+      "review_question": "Are these additional validity claims intended to assume recognition of XMLLiteral and HTML?",
+      "implementation_policy": "Do not promote the additional-validity table to axioms. Keep the recognition premise on datatype consequences.",
+      "not_a_declared_erratum": true
     }
   ]
 }

@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "status": "draft_third_formalization_increment",
+  "status": "draft_fourth_formalization_increment",
   "selection_method": "Human-readable AI close reading; selectors locate already selected passages and do not extract assertions.",
   "mappings": [
     {
@@ -176,6 +176,10 @@
       "relation": "partial_definition_and_theorem",
       "symbol_linked_english": "The binary merge of G and H takes their union after placing their blank nodes in disjoint copies. I satisfies that merge exactly when I satisfies G and I satisfies H.",
       "bindings": [
+        {
+          "symbol": "merging_lemma",
+          "lean": "RDF11.Statements.merging_lemma"
+        },
         {
           "symbol": "merge",
           "lean": "RDF11.merge"
@@ -549,6 +553,14 @@
       "symbol_linked_english": "Every graph simply entails the empty graph; if the empty graph simply entails E then E is empty.",
       "bindings": [
         {
+          "symbol": "empty_graph_is_entailed",
+          "lean": "RDF11.Statements.empty_graph_is_entailed"
+        },
+        {
+          "symbol": "empty_graph_lemma",
+          "lean": "RDF11.Statements.empty_graph_lemma"
+        },
+        {
           "symbol": "entails_empty",
           "lean": "RDF11.entails_empty"
         },
@@ -571,6 +583,10 @@
       "relation": "theorem",
       "symbol_linked_english": "Every graph simply entails every subgraph of that graph.",
       "bindings": [
+        {
+          "symbol": "subgraph_lemma",
+          "lean": "RDF11.Statements.subgraph_lemma"
+        },
         {
           "symbol": "subgraph_entailment",
           "lean": "RDF11.subgraph_entailment"
@@ -628,6 +644,10 @@
       "relation": "partial_theorem",
       "symbol_linked_english": "For ordinary graphs G and H, IsInstance H.generalize G.generalize implies H SimplyEntails G. More generally, every term substitution of an ordinary source G entails G; blank-to-blank renaming also works for generalized sources.",
       "bindings": [
+        {
+          "symbol": "instance_lemma",
+          "lean": "RDF11.Statements.instance_lemma"
+        },
         {
           "symbol": "ordinary_instance_entails",
           "lean": "RDF11.ordinary_instance_entails"
@@ -775,6 +795,10 @@
       "symbol_linked_english": "GraphIsomorphism G H supplies inverse blank renamings on the occurring blank nodes and a graph-image equality. The graphs are mutual instances and satisfy exactly the same simple interpretations.",
       "bindings": [
         {
+          "symbol": "isomorphism_invariance",
+          "lean": "RDF11.Statements.isomorphism_invariance"
+        },
+        {
           "symbol": "GraphIsomorphism",
           "lean": "RDF11.GraphIsomorphism"
         },
@@ -844,6 +868,10 @@
       "symbol_linked_english": "For an ordinary conclusion E and any generalized premise G, G SimplyEntails E.generalize exactly when an instance of E.generalize is a subgraph of G. A Herbrand interpretation proves necessity; existing ordinary instance entailment proves sufficiency.",
       "bindings": [
         {
+          "symbol": "interpolation_lemma",
+          "lean": "RDF11.Statements.interpolation_lemma"
+        },
+        {
           "symbol": "interpretation",
           "lean": "RDF11.Herbrand.interpretation"
         },
@@ -889,6 +917,10 @@
       "relation": "partial_theorem",
       "symbol_linked_english": "If G SimplyEntails an ordinary E with a certified finite Enumeration, interpolation produces a finite instance H of E inside G, and H SimplyEntails E.",
       "bindings": [
+        {
+          "symbol": "compactness",
+          "lean": "RDF11.Statements.compactness"
+        },
         {
           "symbol": "FiniteGraph",
           "lean": "RDF11.FiniteGraph"
@@ -1040,6 +1072,10 @@
       "symbol_linked_english": "For ordinary G and H, if H avoids the fresh IRIs introduced by sk, sk.graph SimplyEntails H exactly when G SimplyEntails H. The inverse-name map turns an interpolation witness over sk.graph into one over G.",
       "bindings": [
         {
+          "symbol": "skolemization_lemma",
+          "lean": "RDF11.Statements.skolemization_lemma"
+        },
+        {
           "symbol": "Avoids",
           "lean": "RDF11.Skolemization.Avoids"
         },
@@ -1139,24 +1175,1557 @@
       "implementation_refinement": "not_connected_to_published_package"
     },
     {
-      "claim_id": "MT11-RULE-rdfD2",
-      "relation": "partial_theorem",
-      "symbol_linked_english": "Under RDFPropertyCondition, truth of s p o implies truth of p rdf:type rdf:Property; propertyTypingImage applies that rule to a graph using the same assignment.",
+      "claim_id": "MT11-DATATYPE-RECOGNITION-PARAMETER",
+      "relation": "partial_definition",
+      "symbol_linked_english": "D is the set of datatype IRIs recognized by an interpretation; recognizing an IRI presupposes determining the unique datatype it identifies.",
       "bindings": [
+        {
+          "symbol": "DatatypeTheory",
+          "lean": "RDF11.DatatypeTheory"
+        },
+        {
+          "symbol": "DConditions",
+          "lean": "RDF11.SimpleInterpretation.DConditions"
+        }
+      ],
+      "limitations": "Parameterized by abstract IRI/literal domains and a fixed external datatype theory; concrete XSD, XML Char and BCP47 implementations are not supplied. Expert mapping review remains pending.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-DATATYPE-IDENTIFICATION-FIXED",
+      "relation": "partial_definition",
+      "symbol_linked_english": "A recognized datatype IRI identifies the same externally specified datatype at every occurrence; the mechanism establishing that identification is outside this semantics.",
+      "bindings": [
+        {
+          "symbol": "identified",
+          "lean": "RDF11.DatatypeTheory.identified"
+        },
+        {
+          "symbol": "DEntails",
+          "lean": "RDF11.DEntails"
+        }
+      ],
+      "limitations": "Parameterized by abstract IRI/literal domains and a fixed external datatype theory; concrete XSD, XML Char and BCP47 implementations are not supplied. Expert mapping review remains pending. One theory T is fixed before quantifying over interpretations.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-LITERAL-DATATYPE-IMPORT",
+      "relation": "partial_definition",
+      "symbol_linked_english": "Literal structure and datatype definitions come from Concepts: ordinary datatype literals pair a lexical string with a datatype IRI; language-tagged strings additionally use a language tag and rdf:langString.",
+      "bindings": [
+        {
+          "symbol": "LiteralSyntax",
+          "lean": "RDF11.LiteralSyntax"
+        }
+      ],
+      "limitations": "Lexical forms, datatype IRIs and optional tags are an interface. Concrete literal equality, full lexical syntax and a constructor covering all legal forms remain open.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-LEXICAL-TO-VALUE",
+      "relation": "definition",
+      "symbol_linked_english": "A datatype supplies a lexical space and a partial lexical-to-value mapping; L2V selects that mapping and its range is the value space.",
+      "bindings": [
+        {
+          "symbol": "L2V",
+          "lean": "RDF11.DatatypeTheory.L2V"
+        },
+        {
+          "symbol": "lexicalSpace",
+          "lean": "RDF11.DatatypeTheory.lexicalSpace"
+        },
+        {
+          "symbol": "valueSpace",
+          "lean": "RDF11.DatatypeTheory.valueSpace"
+        }
+      ],
+      "limitations": "Parameterized by abstract IRI/literal domains and a fixed external datatype theory; concrete XSD, XML Char and BCP47 implementations are not supplied. Expert mapping review remains pending.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-ILL-TYPED-DEFINITION",
+      "relation": "definition",
+      "symbol_linked_english": "A literal is ill-typed relative to D when its datatype IRI is recognized but its lexical form has no value under the corresponding mapping.",
+      "bindings": [
+        {
+          "symbol": "IllTyped",
+          "lean": "RDF11.DatatypeTheory.IllTyped"
+        },
+        {
+          "symbol": "unrecognized_not_illTyped",
+          "lean": "RDF11.DatatypeTheory.unrecognized_not_illTyped"
+        },
+        {
+          "symbol": "language_not_illTyped",
+          "lean": "RDF11.DatatypeTheory.language_not_illTyped"
+        }
+      ],
+      "limitations": "Parameterized by abstract IRI/literal domains and a fixed external datatype theory; concrete XSD, XML Char and BCP47 implementations are not supplied. Expert mapping review remains pending.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-REQUIRED-AND-OPTIONAL-DATATYPES",
+      "relation": "partial_definition",
+      "symbol_linked_english": "RDF processors need not recognize datatype IRIs beyond rdf:langString and xsd:string; recognizing additional IRIs is permitted.",
+      "bindings": [
+        {
+          "symbol": "recognize_language",
+          "lean": "RDF11.SimpleInterpretation.RDFConditions.recognize_language"
+        },
+        {
+          "symbol": "recognize_string",
+          "lean": "RDF11.SimpleInterpretation.RDFConditions.recognize_string"
+        },
+        {
+          "symbol": "baseDatatypes",
+          "lean": "RDF11.RDFVocabulary.baseDatatypes"
+        }
+      ],
+      "limitations": "Required recognition is enforced for RDF models. Processor behavior and concrete datatype meaning are not verified.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-LANGSTRING-EXCEPTION",
+      "relation": "partial_definition",
+      "symbol_linked_english": "rdf:langString identifies a datatype whose values are string/language-tag pairs, with specially defined literal interpretation instead of an L2V mapping.",
+      "bindings": [
+        {
+          "symbol": "languageSpace",
+          "lean": "RDF11.DatatypeTheory.languageSpace"
+        },
+        {
+          "symbol": "recognizedSpace",
+          "lean": "RDF11.DatatypeTheory.recognizedSpace"
+        },
+        {
+          "symbol": "language",
+          "lean": "RDF11.SimpleInterpretation.DConditions.language"
+        }
+      ],
+      "limitations": "Tag values use US-ASCII normalization as clarified by Concepts. No ordinary L2V is used for langString. The D table does not explicitly identify its IRI denotation with a canonical datatype entity; that equality is not invented here.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-D-INTERPRETATION",
+      "relation": "partial_definition",
+      "symbol_linked_english": "A D-interpretation is a simple interpretation satisfying the additional datatype conditions for its recognized set D.",
+      "bindings": [
+        {
+          "symbol": "DConditions",
+          "lean": "RDF11.SimpleInterpretation.DConditions"
+        },
+        {
+          "symbol": "DModel",
+          "lean": "RDF11.SimpleInterpretation.DModel"
+        },
+        {
+          "symbol": "ValueRealization",
+          "lean": "RDF11.ValueRealization"
+        }
+      ],
+      "limitations": "Parameterized by abstract IRI/literal domains and a fixed external datatype theory; concrete XSD, XML Char and BCP47 implementations are not supplied. Expert mapping review remains pending. ValueRealization is a partial injective representation of fixed values in a model carrier, not a new interpretation of the datatype IRI.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-LANGSTRING-VALUE",
+      "relation": "definition",
+      "symbol_linked_english": "If rdf:langString belongs to D, each language-tagged literal denotes its lexical string paired with its language tag converted to lowercase by US-ASCII rules.",
+      "bindings": [
+        {
+          "symbol": "asciiLower",
+          "lean": "RDF11.asciiLower"
+        },
+        {
+          "symbol": "language",
+          "lean": "RDF11.SimpleInterpretation.DConditions.language"
+        }
+      ],
+      "limitations": "Lexical strings are unchanged. Lean 4.33.1 Char.toLower changes ASCII A–Z only. Tag validity remains an external interface.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-RECOGNIZED-DATATYPE-DENOTATION",
+      "relation": "definition",
+      "symbol_linked_english": "For each other IRI in D, its interpretation is the datatype it identifies.",
+      "bindings": [
+        {
+          "symbol": "ordinary",
+          "lean": "RDF11.SimpleInterpretation.DConditions.ordinary"
+        },
+        {
+          "symbol": "identified",
+          "lean": "RDF11.DatatypeTheory.identified"
+        }
+      ],
+      "limitations": "The other recognized IRIs are precisely those distinct from rdf:langString. Their fixed referents are related to the model by ValueRealization.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-RECOGNIZED-LITERAL-VALUE",
+      "relation": "definition",
+      "symbol_linked_english": "For a literal typed with a recognized IRI other than rdf:langString, IL is the corresponding lexical-to-value result, including being undefined when that mapping is undefined.",
+      "bindings": [
+        {
+          "symbol": "ordinary",
+          "lean": "RDF11.SimpleInterpretation.DConditions.ordinary"
+        },
+        {
+          "symbol": "recognized_literal_value",
+          "lean": "RDF11.SimpleInterpretation.recognized_literal_value"
+        }
+      ],
+      "limitations": "Parameterized by abstract IRI/literal domains and a fixed external datatype theory; concrete XSD, XML Char and BCP47 implementations are not supplied. Expert mapping review remains pending.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-ILL-TYPED-UNSATISFIABILITY",
+      "relation": "theorem",
+      "symbol_linked_english": "Every graph containing an ill-typed literal is false in every D-interpretation; unrecognized datatype IRIs do not create this source of D-unsatisfiability.",
+      "bindings": [
+        {
+          "symbol": "illTyped_undefined",
+          "lean": "RDF11.SimpleInterpretation.illTyped_undefined"
+        },
+        {
+          "symbol": "illTyped_graph_unsatisfiable",
+          "lean": "RDF11.illTyped_graph_unsatisfiable"
+        },
+        {
+          "symbol": "rdf_illTyped_unsatisfiable",
+          "lean": "RDF11.rdf_illTyped_unsatisfiable"
+        },
+        {
+          "symbol": "unrecognized_not_illTyped",
+          "lean": "RDF11.DatatypeTheory.unrecognized_not_illTyped"
+        }
+      ],
+      "limitations": "Parameterized by abstract IRI/literal domains and a fixed external datatype theory; concrete XSD, XML Char and BCP47 implementations are not supplied. Expert mapping review remains pending.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-LANGSTRING-STRING-TOTALITY",
+      "relation": "partial_theorem",
+      "symbol_linked_english": "Syntactically legal rdf:langString literals always denote when recognized. For xsd:string, the source limits ill-typed forms to strings containing code points outside the XML Char production.",
+      "bindings": [
+        {
+          "symbol": "language",
+          "lean": "RDF11.SimpleInterpretation.DConditions.language"
+        },
+        {
+          "symbol": "language_not_illTyped",
+          "lean": "RDF11.DatatypeTheory.language_not_illTyped"
+        }
+      ],
+      "limitations": "Recognized legal language literals have denotations. The xsd:string/XML Char characterization remains unformalized.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-D-SATISFACTION-ENTAILMENT",
+      "relation": "definition",
+      "symbol_linked_english": "D-satisfiability means having at least one satisfying D-interpretation; S D-entails G when every D-interpretation satisfying S also satisfies G.",
+      "bindings": [
+        {
+          "symbol": "DSatisfiable",
+          "lean": "RDF11.DSatisfiable"
+        },
+        {
+          "symbol": "DUnsatisfiable",
+          "lean": "RDF11.DUnsatisfiable"
+        },
+        {
+          "symbol": "DEntails",
+          "lean": "RDF11.DEntails"
+        }
+      ],
+      "limitations": "Parameterized by abstract IRI/literal domains and a fixed external datatype theory; concrete XSD, XML Char and BCP47 implementations are not supplied. Expert mapping review remains pending.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-D-EXPLOSION",
+      "relation": "theorem",
+      "symbol_linked_english": "A D-unsatisfiable graph D-entails every graph by the universal-model definition.",
+      "bindings": [
+        {
+          "symbol": "d_ex_falso",
+          "lean": "RDF11.d_ex_falso"
+        }
+      ],
+      "limitations": "This is a model-theoretic consequence, not an instruction to execute arbitrary conclusions.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-EMPTY-D-SIMPLE",
+      "relation": "theorem",
+      "symbol_linked_english": "With D empty, D-entailment is exactly simple entailment.",
+      "bindings": [
+        {
+          "symbol": "dModel_empty",
+          "lean": "RDF11.SimpleInterpretation.dModel_empty"
+        },
+        {
+          "symbol": "d_empty_iff_simple",
+          "lean": "RDF11.d_empty_iff_simple"
+        }
+      ],
+      "limitations": "The empty partial value realization leaves every simple interpretation admissible; no global injection of all datatype values into its carrier is assumed.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-D-MODEL-CLASS-MONOTONICITY",
+      "relation": "theorem",
+      "symbol_linked_english": "With compatible fixed datatype meanings and D contained in E, every E-interpretation is a D-interpretation; therefore D-entailment implies E-entailment, and simple entailment implies D-entailment.",
+      "bindings": [
+        {
+          "symbol": "dConditions_restrict",
+          "lean": "RDF11.SimpleInterpretation.dConditions_restrict"
+        },
+        {
+          "symbol": "dModel_restrict",
+          "lean": "RDF11.SimpleInterpretation.dModel_restrict"
+        },
+        {
+          "symbol": "d_entailment_monotone",
+          "lean": "RDF11.d_entailment_monotone"
+        },
+        {
+          "symbol": "simple_implies_d_entailment",
+          "lean": "RDF11.simple_implies_d_entailment"
+        }
+      ],
+      "limitations": "This is the model-class consequence. The opposite arrows printed in the source paragraph are recorded separately as an unresolved source-review question.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-DATATYPE-VALUE-SUBSTITUTION",
+      "relation": "partial_theorem",
+      "symbol_linked_english": "Literals recognized to have the same value can be substituted in corresponding triples to obtain datatype entailments, including across different recognized datatypes with overlapping value spaces.",
+      "bindings": [
+        {
+          "symbol": "same_value_literals",
+          "lean": "RDF11.SimpleInterpretation.same_value_literals"
+        },
+        {
+          "symbol": "literal_object_congruence",
+          "lean": "RDF11.SimpleInterpretation.literal_object_congruence"
+        },
+        {
+          "symbol": "d_literal_object_substitution",
+          "lean": "RDF11.d_literal_object_substitution"
+        }
+      ],
+      "limitations": "Proved for object-literal replacement, including distinct recognized ordinary datatypes sharing a value. Arbitrary-position simultaneous replacement and concrete XSD equalities remain open.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-RDF-INTERPRETATION",
+      "relation": "partial_definition",
+      "symbol_linked_english": "An RDF interpretation recognizing D is a D-interpretation in which D includes rdf:langString and xsd:string and the RDF conditions and axiomatic triples hold.",
+      "bindings": [
+        {
+          "symbol": "RDFVocabulary",
+          "lean": "RDF11.RDFVocabulary"
+        },
+        {
+          "symbol": "RDFConditions",
+          "lean": "RDF11.SimpleInterpretation.RDFConditions"
+        },
+        {
+          "symbol": "RDFModel",
+          "lean": "RDF11.SimpleInterpretation.RDFModel"
+        }
+      ],
+      "limitations": "Parameterized by abstract IRI/literal domains and a fixed external datatype theory; concrete XSD, XML Char and BCP47 implementations are not supplied. Expert mapping review remains pending. Full recognized spaces are realized injectively in IR. Actual IRI spellings are an unimplemented vocabulary binding, including container n = rdf:_(n+1).",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-RDF-DATATYPE-EXTENSION",
+      "relation": "definition",
+      "symbol_linked_english": "For each datatype IRI a in D, rdf:type relates x to I(a) exactly when x belongs to that datatype value space.",
+      "bindings": [
+        {
+          "symbol": "datatype_extension",
+          "lean": "RDF11.SimpleInterpretation.RDFConditions.datatype_extension"
+        },
+        {
+          "symbol": "rdf_value_space_resources",
+          "lean": "RDF11.SimpleInterpretation.rdf_value_space_resources"
+        },
+        {
+          "symbol": "rdf_literal_typing",
+          "lean": "RDF11.SimpleInterpretation.rdf_literal_typing"
+        }
+      ],
+      "limitations": "Parameterized by abstract IRI/literal domains and a fixed external datatype theory; concrete XSD, XML Char and BCP47 implementations are not supplied. Expert mapping review remains pending. values_realized makes every external value in a recognized space available in the model; this is the carrier-representation obligation.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-RDF-AXIOM-PROPERTIES",
+      "relation": "definition",
+      "symbol_linked_english": "Each listed RDF vocabulary IRI must satisfy its rdf:type rdf:Property axiomatic triple.",
+      "bindings": [
+        {
+          "symbol": "propertyAxiom",
+          "lean": "RDF11.RDFSymbol.propertyAxiom"
+        },
+        {
+          "symbol": "axioms",
+          "lean": "RDF11.RDFVocabulary.axioms"
+        },
+        {
+          "symbol": "rdf_axiom_true",
+          "lean": "RDF11.SimpleInterpretation.rdf_axiom_true"
+        }
+      ],
+      "limitations": "All positive container indices are included, with symbol container n representing rdf:_(n+1). Concrete IRI spelling remains an external vocabulary binding.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-RDF-AXIOM-NIL",
+      "relation": "definition",
+      "symbol_linked_english": "The triple rdf:nil rdf:type rdf:List is true in every RDF interpretation.",
+      "bindings": [
+        {
+          "symbol": "propertyAxiom",
+          "lean": "RDF11.RDFSymbol.propertyAxiom"
+        },
+        {
+          "symbol": "axioms",
+          "lean": "RDF11.RDFVocabulary.axioms"
+        },
+        {
+          "symbol": "rdf_axiom_true",
+          "lean": "RDF11.SimpleInterpretation.rdf_axiom_true"
+        }
+      ],
+      "limitations": "All positive container indices are included, with symbol container n representing rdf:_(n+1). Concrete IRI spelling remains an external vocabulary binding.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-RDF-AXIOM-CONTAINER-PROPERTIES",
+      "relation": "definition",
+      "symbol_linked_english": "For every positive integer n, rdf:_n rdf:type rdf:Property is an RDF axiom.",
+      "bindings": [
+        {
+          "symbol": "propertyAxiom",
+          "lean": "RDF11.RDFSymbol.propertyAxiom"
+        },
+        {
+          "symbol": "axioms",
+          "lean": "RDF11.RDFVocabulary.axioms"
+        },
+        {
+          "symbol": "rdf_axiom_true",
+          "lean": "RDF11.SimpleInterpretation.rdf_axiom_true"
+        }
+      ],
+      "limitations": "All positive container indices are included, with symbol container n representing rdf:_(n+1). Concrete IRI spelling remains an external vocabulary binding.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-RDF-ENTAILMENT",
+      "relation": "definition",
+      "symbol_linked_english": "S RDF-entails E recognizing D when every satisfying RDF interpretation of S recognizing D satisfies E; an RDF-unsatisfiable graph has no such model. Unqualified RDF entailment uses D = {rdf:langString, xsd:string}.",
+      "bindings": [
+        {
+          "symbol": "RDFEntails",
+          "lean": "RDF11.RDFEntails"
+        },
+        {
+          "symbol": "RDFUnsatisfiable",
+          "lean": "RDF11.RDFUnsatisfiable"
+        },
+        {
+          "symbol": "baseDatatypes",
+          "lean": "RDF11.RDFVocabulary.baseDatatypes"
+        }
+      ],
+      "limitations": "Parameterized by abstract IRI/literal domains and a fixed external datatype theory; concrete XSD, XML Char and BCP47 implementations are not supplied. Expert mapping review remains pending.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-RDF-AXIOM-ENTAILMENT",
+      "relation": "theorem",
+      "symbol_linked_english": "The empty graph RDF-entails every RDF axiom, so the simple-entailment interpolation characterization does not extend unchanged to RDF entailment.",
+      "bindings": [
+        {
+          "symbol": "rdf_empty_entails_axioms",
+          "lean": "RDF11.rdf_empty_entails_axioms"
+        }
+      ],
+      "limitations": "Parameterized by abstract IRI/literal domains and a fixed external datatype theory; concrete XSD, XML Char and BCP47 implementations are not supplied. Expert mapping review remains pending.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-RULE-rdfD1",
+      "relation": "theorem",
+      "symbol_linked_english": "From a triple s p literal typed with d in D, infer a graph containing s p b and b rdf:type d for one existential blank node b.",
+      "bindings": [
+        {
+          "symbol": "rdfD1Conclusion",
+          "lean": "RDF11.rdfD1Conclusion"
+        },
+        {
+          "symbol": "rdfD1",
+          "lean": "RDF11.rdfD1"
+        }
+      ],
+      "limitations": "The conclusion uses one structurally fresh blank in Sum B Unit, shared across both triples. Generalized syntax is used. No fallback value is supplied for an ill-typed literal; an unsatisfiable premise has no countermodel.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-RULE-rdfD2",
+      "relation": "theorem",
+      "symbol_linked_english": "From s p o, RDF-entail p rdf:type rdf:Property.",
+      "bindings": [
+        {
+          "symbol": "rdfD2",
+          "lean": "RDF11.rdfD2"
+        },
         {
           "symbol": "rdfD2_triple",
           "lean": "RDF11.SimpleInterpretation.rdfD2_triple"
-        },
-        {
-          "symbol": "propertyTypingImage",
-          "lean": "RDF11.propertyTypingImage"
-        },
-        {
-          "symbol": "rdfD2_entailment",
-          "lean": "RDF11.rdfD2_entailment"
         }
       ],
-      "limitations": "Proved under the single required RDF condition through EntailsUnder, not a completed definition of RDF entailment. It works with generalized syntax as well as embedded ordinary triples.",
+      "limitations": "Now quantified over full RDF models, retaining the earlier proof from the property condition.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-RDF-DATATYPE-SPECIFIC-CONSEQUENCES",
+      "relation": "partial_theorem",
+      "symbol_linked_english": "Datatype value spaces can force entailments beyond rdfD1/rdfD2, and incompatible memberships in disjoint recognized datatype value spaces can make a graph RDF-unsatisfiable.",
+      "bindings": [
+        {
+          "symbol": "rdf_disjoint_datatypes",
+          "lean": "RDF11.SimpleInterpretation.rdf_disjoint_datatypes"
+        }
+      ],
+      "limitations": "Proves incompatibility of two disjoint recognized value spaces using injectivity of their shared realization. Concrete datatype disjointness and the boolean enumeration example remain open.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-RDFS-CLASS-STRUCTURE",
+      "relation": "partial_definition",
+      "symbol_linked_english": "Classes are resources typed rdfs:Class; IC collects them, and ICEXT maps classes to subsets of IR. A class may have an empty extension, and distinct classes can share an extension.",
+      "bindings": [
+        {
+          "symbol": "ICEXT",
+          "lean": "RDF11.SimpleInterpretation.ICEXT"
+        },
+        {
+          "symbol": "IC",
+          "lean": "RDF11.SimpleInterpretation.IC"
+        },
+        {
+          "symbol": "icext_resources",
+          "lean": "RDF11.SimpleInterpretation.icext_resources"
+        },
+        {
+          "symbol": "classes_are_resources",
+          "lean": "RDF11.SimpleInterpretation.classes_are_resources"
+        }
+      ],
+      "limitations": "Class extensions are relation slices on the same universe. No extensional equality of class identities is assumed. Concrete witnesses for empty or coextensive classes are not supplied.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-RDFS-INTERPRETATION",
+      "relation": "partial_definition",
+      "symbol_linked_english": "An RDFS interpretation recognizing D is an RDF interpretation recognizing the same D that satisfies the RDFS semantic conditions and axiomatic triples.",
+      "bindings": [
+        {
+          "symbol": "RDFSVocabulary",
+          "lean": "RDF11.RDFSVocabulary"
+        },
+        {
+          "symbol": "RDFSConditions",
+          "lean": "RDF11.SimpleInterpretation.RDFSConditions"
+        },
+        {
+          "symbol": "RDFSModel",
+          "lean": "RDF11.SimpleInterpretation.RDFSModel"
+        }
+      ],
+      "limitations": "Parameterized by abstract IRI/literal domains and a fixed external datatype theory; concrete XSD, XML Char and BCP47 implementations are not supplied. Expert mapping review remains pending. Includes both full axiom families. Language literal-image equality remains explicit; model existence for an arbitrary abstract literal interface is not assumed.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-RDFS-ICEXT",
+      "relation": "definition",
+      "symbol_linked_english": "ICEXT(y) is the set of x such that rdf:type relates x to y.",
+      "bindings": [
+        {
+          "symbol": "ICEXT",
+          "lean": "RDF11.SimpleInterpretation.ICEXT"
+        }
+      ],
+      "limitations": "",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-RDFS-IC",
+      "relation": "definition",
+      "symbol_linked_english": "IC is ICEXT of the denotation of rdfs:Class.",
+      "bindings": [
+        {
+          "symbol": "IC",
+          "lean": "RDF11.SimpleInterpretation.IC"
+        }
+      ],
+      "limitations": "",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-RDFS-LV",
+      "relation": "definition",
+      "symbol_linked_english": "LV is ICEXT of the denotation of rdfs:Literal.",
+      "bindings": [
+        {
+          "symbol": "LV",
+          "lean": "RDF11.SimpleInterpretation.LV"
+        }
+      ],
+      "limitations": "",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-RDFS-RESOURCE-EXTENSION",
+      "relation": "definition",
+      "symbol_linked_english": "The extension of rdfs:Resource is exactly IR.",
+      "bindings": [
+        {
+          "symbol": "resource_extension",
+          "lean": "RDF11.SimpleInterpretation.RDFSConditions.resource_extension"
+        }
+      ],
+      "limitations": "Conditions constrain one shared universe; inclusion is an implication, not an equivalence.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-RDFS-LANGSTRING-EXTENSION",
+      "relation": "definition",
+      "symbol_linked_english": "The extension of rdf:langString is exactly the set of denotations of language-tagged literals.",
+      "bindings": [
+        {
+          "symbol": "language_extension",
+          "lean": "RDF11.SimpleInterpretation.RDFSConditions.language_extension"
+        }
+      ],
+      "limitations": "The image of actual tagged literal denotations is explicit. The abstract literal interface does not yet prove coverage of every legal lexical form/tag pair.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-RDFS-DATATYPE-TYPING",
+      "relation": "definition",
+      "symbol_linked_english": "Every recognized datatype denotation belongs to the extension of rdfs:Datatype.",
+      "bindings": [
+        {
+          "symbol": "datatype_typing",
+          "lean": "RDF11.SimpleInterpretation.RDFSConditions.datatype_typing"
+        }
+      ],
+      "limitations": "Conditions constrain one shared universe; inclusion is an implication, not an equivalence.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-RDFS-DOMAIN",
+      "relation": "definition",
+      "symbol_linked_english": "If rdfs:domain relates property x to class y and x relates u to v, then u belongs to ICEXT(y).",
+      "bindings": [
+        {
+          "symbol": "domain",
+          "lean": "RDF11.SimpleInterpretation.RDFSConditions.domain"
+        }
+      ],
+      "limitations": "Conditions constrain one shared universe; inclusion is an implication, not an equivalence.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-RDFS-RANGE",
+      "relation": "definition",
+      "symbol_linked_english": "If rdfs:range relates property x to class y and x relates u to v, then v belongs to ICEXT(y).",
+      "bindings": [
+        {
+          "symbol": "range",
+          "lean": "RDF11.SimpleInterpretation.RDFSConditions.range"
+        }
+      ],
+      "limitations": "Conditions constrain one shared universe; inclusion is an implication, not an equivalence.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-RDFS-SUBPROPERTY-TRANSITIVE",
+      "relation": "definition",
+      "symbol_linked_english": "The extension of rdfs:subPropertyOf is transitive on IP.",
+      "bindings": [
+        {
+          "symbol": "subproperty_transitive",
+          "lean": "RDF11.SimpleInterpretation.RDFSConditions.subproperty_transitive"
+        }
+      ],
+      "limitations": "Transitivity is stated on all edges. Endpoint conditions restrict those edges to IP or IC, respectively, giving the source scope.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-RDFS-SUBPROPERTY-REFLEXIVE",
+      "relation": "definition",
+      "symbol_linked_english": "Every property in IP is related to itself by rdfs:subPropertyOf.",
+      "bindings": [
+        {
+          "symbol": "subproperty_reflexive",
+          "lean": "RDF11.SimpleInterpretation.RDFSConditions.subproperty_reflexive"
+        }
+      ],
+      "limitations": "Conditions constrain one shared universe; inclusion is an implication, not an equivalence.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-RDFS-SUBPROPERTY-ENDPOINTS",
+      "relation": "definition",
+      "symbol_linked_english": "Both endpoints of any rdfs:subPropertyOf pair belong to IP.",
+      "bindings": [
+        {
+          "symbol": "subproperty_endpoints",
+          "lean": "RDF11.SimpleInterpretation.RDFSConditions.subproperty_endpoints"
+        }
+      ],
+      "limitations": "Conditions constrain one shared universe; inclusion is an implication, not an equivalence.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-RDFS-SUBPROPERTY-INCLUSION",
+      "relation": "definition",
+      "symbol_linked_english": "If rdfs:subPropertyOf relates x to y, IEXT(x) is a subset of IEXT(y).",
+      "bindings": [
+        {
+          "symbol": "subproperty_inclusion",
+          "lean": "RDF11.SimpleInterpretation.RDFSConditions.subproperty_inclusion"
+        }
+      ],
+      "limitations": "Conditions constrain one shared universe; inclusion is an implication, not an equivalence.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-RDFS-CLASS-RESOURCE",
+      "relation": "definition",
+      "symbol_linked_english": "Every class in IC is related to rdfs:Resource by rdfs:subClassOf.",
+      "bindings": [
+        {
+          "symbol": "class_resource",
+          "lean": "RDF11.SimpleInterpretation.RDFSConditions.class_resource"
+        }
+      ],
+      "limitations": "Conditions constrain one shared universe; inclusion is an implication, not an equivalence.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-RDFS-SUBCLASS-TRANSITIVE",
+      "relation": "definition",
+      "symbol_linked_english": "The extension of rdfs:subClassOf is transitive on IC.",
+      "bindings": [
+        {
+          "symbol": "subclass_transitive",
+          "lean": "RDF11.SimpleInterpretation.RDFSConditions.subclass_transitive"
+        }
+      ],
+      "limitations": "Transitivity is stated on all edges. Endpoint conditions restrict those edges to IP or IC, respectively, giving the source scope.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-RDFS-SUBCLASS-REFLEXIVE",
+      "relation": "definition",
+      "symbol_linked_english": "Every class in IC is related to itself by rdfs:subClassOf.",
+      "bindings": [
+        {
+          "symbol": "subclass_reflexive",
+          "lean": "RDF11.SimpleInterpretation.RDFSConditions.subclass_reflexive"
+        }
+      ],
+      "limitations": "Conditions constrain one shared universe; inclusion is an implication, not an equivalence.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-RDFS-SUBCLASS-ENDPOINTS",
+      "relation": "definition",
+      "symbol_linked_english": "Both endpoints of any rdfs:subClassOf pair belong to IC.",
+      "bindings": [
+        {
+          "symbol": "subclass_endpoints",
+          "lean": "RDF11.SimpleInterpretation.RDFSConditions.subclass_endpoints"
+        }
+      ],
+      "limitations": "Conditions constrain one shared universe; inclusion is an implication, not an equivalence.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-RDFS-SUBCLASS-INCLUSION",
+      "relation": "definition",
+      "symbol_linked_english": "If rdfs:subClassOf relates x to y, ICEXT(x) is a subset of ICEXT(y).",
+      "bindings": [
+        {
+          "symbol": "subclass_inclusion",
+          "lean": "RDF11.SimpleInterpretation.RDFSConditions.subclass_inclusion"
+        }
+      ],
+      "limitations": "Conditions constrain one shared universe; inclusion is an implication, not an equivalence.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-RDFS-CONTAINER-SUBPROPERTY",
+      "relation": "definition",
+      "symbol_linked_english": "Every member of the rdfs:ContainerMembershipProperty class is a subproperty of rdfs:member.",
+      "bindings": [
+        {
+          "symbol": "container_subproperty",
+          "lean": "RDF11.SimpleInterpretation.RDFSConditions.container_subproperty"
+        }
+      ],
+      "limitations": "Conditions constrain one shared universe; inclusion is an implication, not an equivalence.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-RDFS-DATATYPE-SUBCLASS",
+      "relation": "definition",
+      "symbol_linked_english": "Every member of the rdfs:Datatype class is a subclass of rdfs:Literal.",
+      "bindings": [
+        {
+          "symbol": "datatype_subclass",
+          "lean": "RDF11.SimpleInterpretation.RDFSConditions.datatype_subclass"
+        }
+      ],
+      "limitations": "Conditions constrain one shared universe; inclusion is an implication, not an equivalence.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-RDFS-DATATYPE-EXTENSION",
+      "relation": "theorem",
+      "symbol_linked_english": "For every other datatype IRI a in D, ICEXT(I(a)) is its value space.",
+      "bindings": [
+        {
+          "symbol": "rdfs_datatype_extension",
+          "lean": "RDF11.SimpleInterpretation.rdfs_datatype_extension"
+        }
+      ],
+      "limitations": "For the source clause, specialize to recognized a distinct from rdf:langString: recognizedSpace reduces to the ordinary L2V range. This condition is inherited from RDF rather than duplicated.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-RDFS-AXIOM-DOMAINS",
+      "relation": "definition",
+      "symbol_linked_english": "Every property/class pair in this family is an axiomatic rdfs:domain triple.",
+      "bindings": [
+        {
+          "symbol": "rdfsDomainAxioms",
+          "lean": "RDF11.rdfsDomainAxioms"
+        },
+        {
+          "symbol": "axioms",
+          "lean": "RDF11.RDFSVocabulary.axioms"
+        },
+        {
+          "symbol": "rdfs_axiom_true",
+          "lean": "RDF11.SimpleInterpretation.rdfs_axiom_true"
+        },
+        {
+          "symbol": "rdfs_empty_entails_axioms",
+          "lean": "RDF11.rdfs_empty_entails_axioms"
+        }
+      ],
+      "limitations": "The two finite lists have 16 entries each; the hierarchy list has six. The three container schemas quantify over all positive indices, with no finite cutoff.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-RDFS-AXIOM-RANGES",
+      "relation": "definition",
+      "symbol_linked_english": "Every property/class pair in this family is an axiomatic rdfs:range triple.",
+      "bindings": [
+        {
+          "symbol": "rdfsRangeAxioms",
+          "lean": "RDF11.rdfsRangeAxioms"
+        },
+        {
+          "symbol": "axioms",
+          "lean": "RDF11.RDFSVocabulary.axioms"
+        },
+        {
+          "symbol": "rdfs_axiom_true",
+          "lean": "RDF11.SimpleInterpretation.rdfs_axiom_true"
+        },
+        {
+          "symbol": "rdfs_empty_entails_axioms",
+          "lean": "RDF11.rdfs_empty_entails_axioms"
+        }
+      ],
+      "limitations": "The two finite lists have 16 entries each; the hierarchy list has six. The three container schemas quantify over all positive indices, with no finite cutoff.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-RDFS-AXIOM-HIERARCHIES",
+      "relation": "definition",
+      "symbol_linked_english": "The listed vocabulary hierarchy triples are true in every RDFS interpretation.",
+      "bindings": [
+        {
+          "symbol": "rdfsHierarchyAxioms",
+          "lean": "RDF11.rdfsHierarchyAxioms"
+        },
+        {
+          "symbol": "axioms",
+          "lean": "RDF11.RDFSVocabulary.axioms"
+        },
+        {
+          "symbol": "rdfs_axiom_true",
+          "lean": "RDF11.SimpleInterpretation.rdfs_axiom_true"
+        },
+        {
+          "symbol": "rdfs_empty_entails_axioms",
+          "lean": "RDF11.rdfs_empty_entails_axioms"
+        }
+      ],
+      "limitations": "The two finite lists have 16 entries each; the hierarchy list has six. The three container schemas quantify over all positive indices, with no finite cutoff.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-RDFS-AXIOM-CONTAINER-FAMILY",
+      "relation": "definition",
+      "symbol_linked_english": "For every positive integer n, rdf:_n has type rdfs:ContainerMembershipProperty, domain rdfs:Resource, and range rdfs:Resource.",
+      "bindings": [
+        {
+          "symbol": "rdfsAxiomSymbols",
+          "lean": "RDF11.rdfsAxiomSymbols"
+        },
+        {
+          "symbol": "axioms",
+          "lean": "RDF11.RDFSVocabulary.axioms"
+        },
+        {
+          "symbol": "rdfs_axiom_true",
+          "lean": "RDF11.SimpleInterpretation.rdfs_axiom_true"
+        },
+        {
+          "symbol": "rdfs_empty_entails_axioms",
+          "lean": "RDF11.rdfs_empty_entails_axioms"
+        }
+      ],
+      "limitations": "The two finite lists have 16 entries each; the hierarchy list has six. The three container schemas quantify over all positive indices, with no finite cutoff.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-RDFS-PROPERTY-CLASS-EQUALITY",
+      "relation": "partial_theorem",
+      "symbol_linked_english": "IP equals ICEXT(I(rdf:Property)); recognized datatypes act as classes with their value-space extensions, and recognized literals either lack denotation or denote members of those classes.",
+      "bindings": [
+        {
+          "symbol": "rdfs_property_extension",
+          "lean": "RDF11.SimpleInterpretation.rdfs_property_extension"
+        },
+        {
+          "symbol": "rdfs_datatype_extension",
+          "lean": "RDF11.SimpleInterpretation.rdfs_datatype_extension"
+        },
+        {
+          "symbol": "rdf_literal_typing",
+          "lean": "RDF11.SimpleInterpretation.rdf_literal_typing"
+        }
+      ],
+      "limitations": "Property extension equality and datatype value membership are proved. Broader recognized-datatype class consequences can be derived through the schema rules; no concrete datatype library is supplied.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-RDFS-ENTAILMENT",
+      "relation": "definition",
+      "symbol_linked_english": "S RDFS-entails E recognizing D when every RDFS interpretation recognizing D that satisfies S also satisfies E.",
+      "bindings": [
+        {
+          "symbol": "RDFSEntails",
+          "lean": "RDF11.RDFSEntails"
+        },
+        {
+          "symbol": "RDFSUnsatisfiable",
+          "lean": "RDF11.RDFSUnsatisfiable"
+        }
+      ],
+      "limitations": "Parameterized by abstract IRI/literal domains and a fixed external datatype theory; concrete XSD, XML Char and BCP47 implementations are not supplied. Expert mapping review remains pending.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-RDFS-MODEL-CLASS-INCLUSION",
+      "relation": "theorem",
+      "symbol_linked_english": "For the same D, RDF entailment implies RDFS entailment by restricting the universal quantifier to the RDFS interpretations; the source also identifies IRI rdf:type rdfs:Resource triples as RDFS-valid.",
+      "bindings": [
+        {
+          "symbol": "rdfsModel_is_rdfModel",
+          "lean": "RDF11.SimpleInterpretation.rdfsModel_is_rdfModel"
+        },
+        {
+          "symbol": "rdf_implies_rdfs_entailment",
+          "lean": "RDF11.rdf_implies_rdfs_entailment"
+        },
+        {
+          "symbol": "rdfs_iri_resource",
+          "lean": "RDF11.SimpleInterpretation.rdfs_iri_resource"
+        }
+      ],
+      "limitations": "RDF entailment implies RDFS entailment for the same D. The reverse implication printed in the source remains separately flagged.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-RULE-rdfs1",
+      "relation": "theorem",
+      "symbol_linked_english": "For every recognized datatype IRI d in D, entail d rdf:type rdfs:Datatype.",
+      "bindings": [
+        {
+          "symbol": "rdfs1",
+          "lean": "RDF11.RDFSStep.rdfs1"
+        },
+        {
+          "symbol": "rdfs_step_sound",
+          "lean": "RDF11.SimpleInterpretation.rdfs_step_sound"
+        },
+        {
+          "symbol": "RDFSDerives",
+          "lean": "RDF11.RDFSDerives"
+        },
+        {
+          "symbol": "rdfs_derivation_sound",
+          "lean": "RDF11.SimpleInterpretation.rdfs_derivation_sound"
+        },
+        {
+          "symbol": "rdfs_derives_entailment",
+          "lean": "RDF11.rdfs_derives_entailment"
+        }
+      ],
+      "limitations": "Sound for generalized triples. Premises share one blank-node assignment and rules compose by induction. No closure-completeness or executable decision-procedure claim is made.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-RULE-rdfs2",
+      "relation": "theorem",
+      "symbol_linked_english": "From p rdfs:domain C and s p o, entail s rdf:type C.",
+      "bindings": [
+        {
+          "symbol": "rdfs2",
+          "lean": "RDF11.RDFSStep.rdfs2"
+        },
+        {
+          "symbol": "rdfs_step_sound",
+          "lean": "RDF11.SimpleInterpretation.rdfs_step_sound"
+        },
+        {
+          "symbol": "RDFSDerives",
+          "lean": "RDF11.RDFSDerives"
+        },
+        {
+          "symbol": "rdfs_derivation_sound",
+          "lean": "RDF11.SimpleInterpretation.rdfs_derivation_sound"
+        },
+        {
+          "symbol": "rdfs_derives_entailment",
+          "lean": "RDF11.rdfs_derives_entailment"
+        }
+      ],
+      "limitations": "Sound for generalized triples. Premises share one blank-node assignment and rules compose by induction. No closure-completeness or executable decision-procedure claim is made.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-RULE-rdfs3",
+      "relation": "theorem",
+      "symbol_linked_english": "From p rdfs:range C and s p o, entail o rdf:type C.",
+      "bindings": [
+        {
+          "symbol": "rdfs3",
+          "lean": "RDF11.RDFSStep.rdfs3"
+        },
+        {
+          "symbol": "rdfs_step_sound",
+          "lean": "RDF11.SimpleInterpretation.rdfs_step_sound"
+        },
+        {
+          "symbol": "RDFSDerives",
+          "lean": "RDF11.RDFSDerives"
+        },
+        {
+          "symbol": "rdfs_derivation_sound",
+          "lean": "RDF11.SimpleInterpretation.rdfs_derivation_sound"
+        },
+        {
+          "symbol": "rdfs_derives_entailment",
+          "lean": "RDF11.rdfs_derives_entailment"
+        }
+      ],
+      "limitations": "Sound for generalized triples. Premises share one blank-node assignment and rules compose by induction. No closure-completeness or executable decision-procedure claim is made.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-RULE-rdfs4a",
+      "relation": "theorem",
+      "symbol_linked_english": "From s p o, entail s rdf:type rdfs:Resource.",
+      "bindings": [
+        {
+          "symbol": "rdfs4a",
+          "lean": "RDF11.RDFSStep.rdfs4a"
+        },
+        {
+          "symbol": "rdfs_step_sound",
+          "lean": "RDF11.SimpleInterpretation.rdfs_step_sound"
+        },
+        {
+          "symbol": "RDFSDerives",
+          "lean": "RDF11.RDFSDerives"
+        },
+        {
+          "symbol": "rdfs_derivation_sound",
+          "lean": "RDF11.SimpleInterpretation.rdfs_derivation_sound"
+        },
+        {
+          "symbol": "rdfs_derives_entailment",
+          "lean": "RDF11.rdfs_derives_entailment"
+        }
+      ],
+      "limitations": "Sound for generalized triples. Premises share one blank-node assignment and rules compose by induction. No closure-completeness or executable decision-procedure claim is made.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-RULE-rdfs4b",
+      "relation": "theorem",
+      "symbol_linked_english": "From s p o, entail o rdf:type rdfs:Resource.",
+      "bindings": [
+        {
+          "symbol": "rdfs4b",
+          "lean": "RDF11.RDFSStep.rdfs4b"
+        },
+        {
+          "symbol": "rdfs_step_sound",
+          "lean": "RDF11.SimpleInterpretation.rdfs_step_sound"
+        },
+        {
+          "symbol": "RDFSDerives",
+          "lean": "RDF11.RDFSDerives"
+        },
+        {
+          "symbol": "rdfs_derivation_sound",
+          "lean": "RDF11.SimpleInterpretation.rdfs_derivation_sound"
+        },
+        {
+          "symbol": "rdfs_derives_entailment",
+          "lean": "RDF11.rdfs_derives_entailment"
+        }
+      ],
+      "limitations": "Sound for generalized triples. Premises share one blank-node assignment and rules compose by induction. No closure-completeness or executable decision-procedure claim is made.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-RULE-rdfs5",
+      "relation": "theorem",
+      "symbol_linked_english": "From p rdfs:subPropertyOf q and q rdfs:subPropertyOf r, entail p rdfs:subPropertyOf r.",
+      "bindings": [
+        {
+          "symbol": "rdfs5",
+          "lean": "RDF11.RDFSStep.rdfs5"
+        },
+        {
+          "symbol": "rdfs_step_sound",
+          "lean": "RDF11.SimpleInterpretation.rdfs_step_sound"
+        },
+        {
+          "symbol": "RDFSDerives",
+          "lean": "RDF11.RDFSDerives"
+        },
+        {
+          "symbol": "rdfs_derivation_sound",
+          "lean": "RDF11.SimpleInterpretation.rdfs_derivation_sound"
+        },
+        {
+          "symbol": "rdfs_derives_entailment",
+          "lean": "RDF11.rdfs_derives_entailment"
+        }
+      ],
+      "limitations": "Sound for generalized triples. Premises share one blank-node assignment and rules compose by induction. No closure-completeness or executable decision-procedure claim is made.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-RULE-rdfs6",
+      "relation": "theorem",
+      "symbol_linked_english": "From p rdf:type rdf:Property, entail p rdfs:subPropertyOf p.",
+      "bindings": [
+        {
+          "symbol": "rdfs6",
+          "lean": "RDF11.RDFSStep.rdfs6"
+        },
+        {
+          "symbol": "rdfs_step_sound",
+          "lean": "RDF11.SimpleInterpretation.rdfs_step_sound"
+        },
+        {
+          "symbol": "RDFSDerives",
+          "lean": "RDF11.RDFSDerives"
+        },
+        {
+          "symbol": "rdfs_derivation_sound",
+          "lean": "RDF11.SimpleInterpretation.rdfs_derivation_sound"
+        },
+        {
+          "symbol": "rdfs_derives_entailment",
+          "lean": "RDF11.rdfs_derives_entailment"
+        }
+      ],
+      "limitations": "Sound for generalized triples. Premises share one blank-node assignment and rules compose by induction. No closure-completeness or executable decision-procedure claim is made.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-RULE-rdfs7",
+      "relation": "theorem",
+      "symbol_linked_english": "From p rdfs:subPropertyOf q and s p o, entail s q o.",
+      "bindings": [
+        {
+          "symbol": "rdfs7",
+          "lean": "RDF11.RDFSStep.rdfs7"
+        },
+        {
+          "symbol": "rdfs_step_sound",
+          "lean": "RDF11.SimpleInterpretation.rdfs_step_sound"
+        },
+        {
+          "symbol": "RDFSDerives",
+          "lean": "RDF11.RDFSDerives"
+        },
+        {
+          "symbol": "rdfs_derivation_sound",
+          "lean": "RDF11.SimpleInterpretation.rdfs_derivation_sound"
+        },
+        {
+          "symbol": "rdfs_derives_entailment",
+          "lean": "RDF11.rdfs_derives_entailment"
+        }
+      ],
+      "limitations": "Sound for generalized triples. Premises share one blank-node assignment and rules compose by induction. No closure-completeness or executable decision-procedure claim is made.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-RULE-rdfs8",
+      "relation": "theorem",
+      "symbol_linked_english": "From C rdf:type rdfs:Class, entail C rdfs:subClassOf rdfs:Resource.",
+      "bindings": [
+        {
+          "symbol": "rdfs8",
+          "lean": "RDF11.RDFSStep.rdfs8"
+        },
+        {
+          "symbol": "rdfs_step_sound",
+          "lean": "RDF11.SimpleInterpretation.rdfs_step_sound"
+        },
+        {
+          "symbol": "RDFSDerives",
+          "lean": "RDF11.RDFSDerives"
+        },
+        {
+          "symbol": "rdfs_derivation_sound",
+          "lean": "RDF11.SimpleInterpretation.rdfs_derivation_sound"
+        },
+        {
+          "symbol": "rdfs_derives_entailment",
+          "lean": "RDF11.rdfs_derives_entailment"
+        }
+      ],
+      "limitations": "Sound for generalized triples. Premises share one blank-node assignment and rules compose by induction. No closure-completeness or executable decision-procedure claim is made.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-RULE-rdfs9",
+      "relation": "theorem",
+      "symbol_linked_english": "From C rdfs:subClassOf D and x rdf:type C, entail x rdf:type D.",
+      "bindings": [
+        {
+          "symbol": "rdfs9",
+          "lean": "RDF11.RDFSStep.rdfs9"
+        },
+        {
+          "symbol": "rdfs_step_sound",
+          "lean": "RDF11.SimpleInterpretation.rdfs_step_sound"
+        },
+        {
+          "symbol": "RDFSDerives",
+          "lean": "RDF11.RDFSDerives"
+        },
+        {
+          "symbol": "rdfs_derivation_sound",
+          "lean": "RDF11.SimpleInterpretation.rdfs_derivation_sound"
+        },
+        {
+          "symbol": "rdfs_derives_entailment",
+          "lean": "RDF11.rdfs_derives_entailment"
+        }
+      ],
+      "limitations": "Sound for generalized triples. Premises share one blank-node assignment and rules compose by induction. No closure-completeness or executable decision-procedure claim is made.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-RULE-rdfs10",
+      "relation": "theorem",
+      "symbol_linked_english": "From C rdf:type rdfs:Class, entail C rdfs:subClassOf C.",
+      "bindings": [
+        {
+          "symbol": "rdfs10",
+          "lean": "RDF11.RDFSStep.rdfs10"
+        },
+        {
+          "symbol": "rdfs_step_sound",
+          "lean": "RDF11.SimpleInterpretation.rdfs_step_sound"
+        },
+        {
+          "symbol": "RDFSDerives",
+          "lean": "RDF11.RDFSDerives"
+        },
+        {
+          "symbol": "rdfs_derivation_sound",
+          "lean": "RDF11.SimpleInterpretation.rdfs_derivation_sound"
+        },
+        {
+          "symbol": "rdfs_derives_entailment",
+          "lean": "RDF11.rdfs_derives_entailment"
+        }
+      ],
+      "limitations": "Sound for generalized triples. Premises share one blank-node assignment and rules compose by induction. No closure-completeness or executable decision-procedure claim is made.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-RULE-rdfs11",
+      "relation": "theorem",
+      "symbol_linked_english": "From C rdfs:subClassOf D and D rdfs:subClassOf E, entail C rdfs:subClassOf E.",
+      "bindings": [
+        {
+          "symbol": "rdfs11",
+          "lean": "RDF11.RDFSStep.rdfs11"
+        },
+        {
+          "symbol": "rdfs_step_sound",
+          "lean": "RDF11.SimpleInterpretation.rdfs_step_sound"
+        },
+        {
+          "symbol": "RDFSDerives",
+          "lean": "RDF11.RDFSDerives"
+        },
+        {
+          "symbol": "rdfs_derivation_sound",
+          "lean": "RDF11.SimpleInterpretation.rdfs_derivation_sound"
+        },
+        {
+          "symbol": "rdfs_derives_entailment",
+          "lean": "RDF11.rdfs_derives_entailment"
+        }
+      ],
+      "limitations": "Sound for generalized triples. Premises share one blank-node assignment and rules compose by induction. No closure-completeness or executable decision-procedure claim is made.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-RULE-rdfs12",
+      "relation": "theorem",
+      "symbol_linked_english": "From p rdf:type rdfs:ContainerMembershipProperty, entail p rdfs:subPropertyOf rdfs:member.",
+      "bindings": [
+        {
+          "symbol": "rdfs12",
+          "lean": "RDF11.RDFSStep.rdfs12"
+        },
+        {
+          "symbol": "rdfs_step_sound",
+          "lean": "RDF11.SimpleInterpretation.rdfs_step_sound"
+        },
+        {
+          "symbol": "RDFSDerives",
+          "lean": "RDF11.RDFSDerives"
+        },
+        {
+          "symbol": "rdfs_derivation_sound",
+          "lean": "RDF11.SimpleInterpretation.rdfs_derivation_sound"
+        },
+        {
+          "symbol": "rdfs_derives_entailment",
+          "lean": "RDF11.rdfs_derives_entailment"
+        }
+      ],
+      "limitations": "Sound for generalized triples. Premises share one blank-node assignment and rules compose by induction. No closure-completeness or executable decision-procedure claim is made.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-RULE-rdfs13",
+      "relation": "theorem",
+      "symbol_linked_english": "From C rdf:type rdfs:Datatype, entail C rdfs:subClassOf rdfs:Literal.",
+      "bindings": [
+        {
+          "symbol": "rdfs13",
+          "lean": "RDF11.RDFSStep.rdfs13"
+        },
+        {
+          "symbol": "rdfs_step_sound",
+          "lean": "RDF11.SimpleInterpretation.rdfs_step_sound"
+        },
+        {
+          "symbol": "RDFSDerives",
+          "lean": "RDF11.RDFSDerives"
+        },
+        {
+          "symbol": "rdfs_derivation_sound",
+          "lean": "RDF11.SimpleInterpretation.rdfs_derivation_sound"
+        },
+        {
+          "symbol": "rdfs_derives_entailment",
+          "lean": "RDF11.rdfs_derives_entailment"
+        }
+      ],
+      "limitations": "Sound for generalized triples. Premises share one blank-node assignment and rules compose by induction. No closure-completeness or executable decision-procedure claim is made.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-RDFS-DATATYPE-INCONSISTENCY",
+      "relation": "theorem",
+      "symbol_linked_english": "RDFS domain or range consequences can force an individual into disjoint recognized datatype classes and thereby make a graph unsatisfiable.",
+      "bindings": [
+        {
+          "symbol": "rdfs_disjoint_types_unsatisfiable",
+          "lean": "RDF11.rdfs_disjoint_types_unsatisfiable"
+        }
+      ],
+      "limitations": "If any shared term can be derived to inhabit two disjoint recognized datatype spaces, the whole graph is RDFS-unsatisfiable. This composes with domain/range and hierarchy rules; concrete integer/boolean disjointness remains a datatype-library obligation.",
       "extraction_review": "pending_expert_review",
       "formalization_review": "pending_expert_review",
       "implementation_refinement": "not_connected_to_published_package"
@@ -1583,6 +3152,642 @@
       "claims": [
         "MT11-RULE-rdfD2"
       ]
+    },
+    {
+      "id": "d-recognition",
+      "source": "mt",
+      "tag": "p",
+      "text": "Datatypes are identified by IRIs.",
+      "claims": [
+        "MT11-DATATYPE-RECOGNITION-PARAMETER"
+      ],
+      "within_section": "literals-and-datatypes"
+    },
+    {
+      "id": "d-fixed",
+      "source": "mt",
+      "tag": "p",
+      "text": "The exact mechanism by which an IRI identifies a datatype",
+      "claims": [
+        "MT11-DATATYPE-IDENTIFICATION-FIXED"
+      ],
+      "within_section": "literals-and-datatypes"
+    },
+    {
+      "id": "d-lexical",
+      "source": "mt",
+      "tag": "p",
+      "text": "RDF literals and datatypes are fully described",
+      "claims": [
+        "MT11-LITERAL-DATATYPE-IMPORT",
+        "MT11-LEXICAL-TO-VALUE",
+        "MT11-ILL-TYPED-DEFINITION"
+      ],
+      "within_section": "literals-and-datatypes"
+    },
+    {
+      "id": "d-required",
+      "source": "mt",
+      "tag": "p",
+      "text": "RDF processors are not required to recognize",
+      "claims": [
+        "MT11-REQUIRED-AND-OPTIONAL-DATATYPES"
+      ],
+      "within_section": "literals-and-datatypes"
+    },
+    {
+      "id": "d-language-exception",
+      "source": "mt",
+      "tag": "p",
+      "text": "Literals with rdf:langString as their datatype are an exceptional case",
+      "claims": [
+        "MT11-LANGSTRING-EXCEPTION"
+      ],
+      "within_section": "literals-and-datatypes"
+    },
+    {
+      "id": "concepts-language-values",
+      "source": "concepts",
+      "tag": "p",
+      "text": "The value space of language tags is always in lower case.",
+      "claims": [
+        "MT11-LANGSTRING-EXCEPTION",
+        "MT11-LANGSTRING-VALUE"
+      ],
+      "within_section": "section-Graph-Literal"
+    },
+    {
+      "id": "d-interpretation",
+      "source": "mt",
+      "tag": "p",
+      "text": "A (simple) D-interpretation is a simple interpretation",
+      "claims": [
+        "MT11-D-INTERPRETATION"
+      ],
+      "within_section": "D_interpretations"
+    },
+    {
+      "id": "d-language",
+      "source": "mt",
+      "tag": "td",
+      "text": "If rdf:langString is in D",
+      "claims": [
+        "MT11-LANGSTRING-VALUE"
+      ],
+      "within_section": "D_interpretations"
+    },
+    {
+      "id": "d-ordinary",
+      "source": "mt",
+      "tag": "td",
+      "text": "For every other IRI aaa in D",
+      "claims": [
+        "MT11-RECOGNIZED-DATATYPE-DENOTATION",
+        "MT11-RECOGNIZED-LITERAL-VALUE"
+      ],
+      "within_section": "D_interpretations"
+    },
+    {
+      "id": "d-illtyped",
+      "source": "mt",
+      "tag": "p",
+      "text": "If the literal is ill-typed then",
+      "claims": [
+        "MT11-ILL-TYPED-UNSATISFIABILITY"
+      ],
+      "within_section": "D_interpretations"
+    },
+    {
+      "id": "d-language-total",
+      "source": "mt",
+      "tag": "p",
+      "text": "The special datatype rdf:langString has no ill-typed literals.",
+      "claims": [
+        "MT11-LANGSTRING-STRING-TOTALITY"
+      ],
+      "within_section": "D_interpretations"
+    },
+    {
+      "id": "d-entailment",
+      "source": "mt",
+      "tag": "p",
+      "text": "A graph is (simply) D-satisfiable",
+      "claims": [
+        "MT11-D-SATISFACTION-ENTAILMENT"
+      ],
+      "within_section": "datatype-entailment"
+    },
+    {
+      "id": "d-explosion",
+      "source": "mt",
+      "tag": "p",
+      "text": "A D-unsatisfiable graph D-entails any graph.",
+      "claims": [
+        "MT11-D-EXPLOSION"
+      ],
+      "within_section": "datatype-entailment"
+    },
+    {
+      "id": "d-direction",
+      "source": "mt",
+      "tag": "p",
+      "text": "In all of this language, 'D' is being used as a parameter",
+      "claims": [
+        "MT11-EMPTY-D-SIMPLE",
+        "MT11-D-MODEL-CLASS-MONOTONICITY",
+        "MT11-D-DIRECTION-SOURCE-CLAIM"
+      ],
+      "within_section": "datatype-entailment"
+    },
+    {
+      "id": "d-value-substitution",
+      "source": "mt",
+      "tag": "p",
+      "text": "In general, any triple containing a literal with a recognized datatype IRI",
+      "claims": [
+        "MT11-DATATYPE-VALUE-SUBSTITUTION"
+      ],
+      "within_section": "patterns-of-datatype-entailment-informative"
+    },
+    {
+      "id": "rdf-interpretation",
+      "source": "mt",
+      "tag": "p",
+      "text": "An RDF interpretation recognizing D is a D-interpretation",
+      "claims": [
+        "MT11-RDF-INTERPRETATION"
+      ],
+      "within_section": "rdf-interpretations"
+    },
+    {
+      "id": "rdf-datatype-extension",
+      "source": "mt",
+      "tag": "td",
+      "text": "For every IRI aaa in D",
+      "claims": [
+        "MT11-RDF-DATATYPE-EXTENSION"
+      ],
+      "element_id": "rdfsemcond3"
+    },
+    {
+      "id": "rdf-axioms",
+      "source": "mt",
+      "tag": "td",
+      "text": "rdf:nil rdf:type rdf:List",
+      "claims": [
+        "MT11-RDF-AXIOM-PROPERTIES",
+        "MT11-RDF-AXIOM-NIL",
+        "MT11-RDF-AXIOM-CONTAINER-PROPERTIES"
+      ],
+      "element_id": "RDF_axiomatic_triples"
+    },
+    {
+      "id": "rdf-entailment",
+      "source": "mt",
+      "tag": "p",
+      "text": "S RDF entails E recognizing D",
+      "claims": [
+        "MT11-RDF-ENTAILMENT"
+      ],
+      "within_section": "rdf-entailment"
+    },
+    {
+      "id": "rdf-axiom-entailment",
+      "source": "mt",
+      "tag": "p",
+      "text": "The properties of simple entailment described earlier do not all apply",
+      "claims": [
+        "MT11-RDF-AXIOM-ENTAILMENT"
+      ],
+      "within_section": "rdf-entailment"
+    },
+    {
+      "id": "rdfd1-rule",
+      "source": "mt",
+      "tag": "tr",
+      "text": "rdfD1",
+      "claims": [
+        "MT11-RULE-rdfD1"
+      ],
+      "within_section": "patterns-of-rdf-entailment-informative"
+    },
+    {
+      "id": "rdf-disjoint",
+      "source": "mt",
+      "tag": "p",
+      "text": "the semantic conditions on value spaces may produce other unsatisfiable graphs",
+      "claims": [
+        "MT11-RDF-DATATYPE-SPECIFIC-CONSEQUENCES"
+      ],
+      "within_section": "patterns-of-rdf-entailment-informative"
+    },
+    {
+      "id": "rdfs-class-structure",
+      "source": "mt",
+      "tag": "p",
+      "text": "It is convenient to state the RDFS semantics",
+      "claims": [
+        "MT11-RDFS-CLASS-STRUCTURE"
+      ],
+      "within_section": "rdfs-interpretations"
+    },
+    {
+      "id": "rdfs-coextensive",
+      "source": "mt",
+      "tag": "p",
+      "text": "A class may have an empty class extension.",
+      "claims": [
+        "MT11-RDFS-CLASS-STRUCTURE"
+      ],
+      "within_section": "rdfs-interpretations"
+    },
+    {
+      "id": "rdfs-interpretation",
+      "source": "mt",
+      "tag": "p",
+      "text": "An RDFS interpretation (recognizing D) is an RDF interpretation",
+      "claims": [
+        "MT11-RDFS-INTERPRETATION"
+      ],
+      "within_section": "rdfs-interpretations"
+    },
+    {
+      "id": "rdfs-icext",
+      "source": "mt",
+      "tag": "p",
+      "text": "ICEXT(y) is defined to be",
+      "claims": [
+        "MT11-RDFS-ICEXT"
+      ],
+      "within_section": "rdfs-interpretations"
+    },
+    {
+      "id": "rdfs-ic",
+      "source": "mt",
+      "tag": "p",
+      "text": "IC is defined to be",
+      "claims": [
+        "MT11-RDFS-IC"
+      ],
+      "within_section": "rdfs-interpretations"
+    },
+    {
+      "id": "rdfs-lv",
+      "source": "mt",
+      "tag": "p",
+      "text": "LV is defined to be",
+      "claims": [
+        "MT11-RDFS-LV"
+      ],
+      "within_section": "rdfs-interpretations"
+    },
+    {
+      "id": "rdfs-resource",
+      "source": "mt",
+      "tag": "p",
+      "text": "ICEXT(I(rdfs:Resource)) = IR",
+      "claims": [
+        "MT11-RDFS-RESOURCE-EXTENSION"
+      ],
+      "within_section": "rdfs-interpretations"
+    },
+    {
+      "id": "rdfs-language",
+      "source": "mt",
+      "tag": "p",
+      "text": "ICEXT(I(rdf:langString)) is the set",
+      "claims": [
+        "MT11-RDFS-LANGSTRING-EXTENSION"
+      ],
+      "within_section": "rdfs-interpretations"
+    },
+    {
+      "id": "rdfs-datatype-space",
+      "source": "mt",
+      "tag": "p",
+      "text": "for every other IRI aaa in D, ICEXT",
+      "claims": [
+        "MT11-RDFS-DATATYPE-EXTENSION"
+      ],
+      "within_section": "rdfs-interpretations"
+    },
+    {
+      "id": "rdfs-datatype-typing",
+      "source": "mt",
+      "tag": "p",
+      "text": "for every IRI aaa in D, I(aaa) is in ICEXT",
+      "claims": [
+        "MT11-RDFS-DATATYPE-TYPING"
+      ],
+      "within_section": "rdfs-interpretations"
+    },
+    {
+      "id": "rdfs-condition-2",
+      "source": "mt",
+      "tag": "td",
+      "text": "rdfs:domain",
+      "claims": [
+        "MT11-RDFS-DOMAIN"
+      ],
+      "element_id": "rdfssemcond2"
+    },
+    {
+      "id": "rdfs-condition-3",
+      "source": "mt",
+      "tag": "td",
+      "text": "rdfs:range",
+      "claims": [
+        "MT11-RDFS-RANGE"
+      ],
+      "element_id": "rdfssemcond3"
+    },
+    {
+      "id": "rdfs-condition-4",
+      "source": "mt",
+      "tag": "td",
+      "text": "transitive and reflexive",
+      "claims": [
+        "MT11-RDFS-SUBPROPERTY-TRANSITIVE",
+        "MT11-RDFS-SUBPROPERTY-REFLEXIVE"
+      ],
+      "element_id": "rdfssemcond4"
+    },
+    {
+      "id": "rdfs-condition-5",
+      "source": "mt",
+      "tag": "td",
+      "text": "then x and y are in IP",
+      "claims": [
+        "MT11-RDFS-SUBPROPERTY-ENDPOINTS",
+        "MT11-RDFS-SUBPROPERTY-INCLUSION"
+      ],
+      "element_id": "rdfssemcond5"
+    },
+    {
+      "id": "rdfs-condition-6",
+      "source": "mt",
+      "tag": "td",
+      "text": "If x is in IC",
+      "claims": [
+        "MT11-RDFS-CLASS-RESOURCE"
+      ],
+      "element_id": "rdfssemcond6"
+    },
+    {
+      "id": "rdfs-condition-8",
+      "source": "mt",
+      "tag": "td",
+      "text": "transitive and reflexive",
+      "claims": [
+        "MT11-RDFS-SUBCLASS-TRANSITIVE",
+        "MT11-RDFS-SUBCLASS-REFLEXIVE"
+      ],
+      "element_id": "rdfssemcond8"
+    },
+    {
+      "id": "rdfs-condition-7",
+      "source": "mt",
+      "tag": "td",
+      "text": "then x and y are in IC",
+      "claims": [
+        "MT11-RDFS-SUBCLASS-ENDPOINTS",
+        "MT11-RDFS-SUBCLASS-INCLUSION"
+      ],
+      "element_id": "rdfssemcond7"
+    },
+    {
+      "id": "rdfs-condition-9",
+      "source": "mt",
+      "tag": "td",
+      "text": "rdfs:ContainerMembershipProperty",
+      "claims": [
+        "MT11-RDFS-CONTAINER-SUBPROPERTY"
+      ],
+      "element_id": "rdfssemcond9"
+    },
+    {
+      "id": "rdfs-condition-10",
+      "source": "mt",
+      "tag": "td",
+      "text": "rdfs:Datatype",
+      "claims": [
+        "MT11-RDFS-DATATYPE-SUBCLASS"
+      ],
+      "element_id": "rdfssemcond10"
+    },
+    {
+      "id": "rdfs-axioms",
+      "source": "mt",
+      "tag": "table",
+      "text": "RDFS axiomatic triples.",
+      "claims": [
+        "MT11-RDFS-AXIOM-DOMAINS",
+        "MT11-RDFS-AXIOM-RANGES",
+        "MT11-RDFS-AXIOM-HIERARCHIES",
+        "MT11-RDFS-AXIOM-CONTAINER-FAMILY"
+      ],
+      "element_id": "RDFS_axiomatic_triples"
+    },
+    {
+      "id": "rdfs-property-extension",
+      "source": "mt",
+      "tag": "p",
+      "text": "Since I is an RDF interpretation, the first condition implies",
+      "claims": [
+        "MT11-RDFS-PROPERTY-CLASS-EQUALITY"
+      ],
+      "within_section": "rdfs-interpretations"
+    },
+    {
+      "id": "rdfs-entailment",
+      "source": "mt",
+      "tag": "p",
+      "text": "S RDFS entails E recognizing D when",
+      "claims": [
+        "MT11-RDFS-ENTAILMENT"
+      ],
+      "within_section": "rdfs-entailment"
+    },
+    {
+      "id": "rdfs-direction",
+      "source": "mt",
+      "tag": "p",
+      "text": "Since every RDFS interpretation is an RDF interpretation",
+      "claims": [
+        "MT11-RDFS-DIRECTION-SOURCE-CLAIM",
+        "MT11-RDFS-MODEL-CLASS-INCLUSION"
+      ],
+      "within_section": "rdfs-entailment"
+    },
+    {
+      "id": "rdfs-additional-types",
+      "source": "mt",
+      "tag": "table",
+      "text": "Some rdfs-valid triples.",
+      "claims": [
+        "MT11-RDFS-ADDITIONAL-VALID-TYPES"
+      ],
+      "within_section": "rdfs-interpretations"
+    },
+    {
+      "id": "rdf-optional-types",
+      "source": "mt",
+      "tag": "p",
+      "text": "RDF-D interpretations MAY fail to recognize these datatypes.",
+      "claims": [
+        "MT11-RDF-VOCABULARY-LIMITS"
+      ],
+      "within_section": "rdf-interpretations"
+    },
+    {
+      "id": "rule-rdfs1",
+      "source": "mt",
+      "tag": "tr",
+      "text": "rdfs1 any IRI",
+      "claims": [
+        "MT11-RULE-rdfs1"
+      ],
+      "within_section": "patterns-of-rdfs-entailment-informative"
+    },
+    {
+      "id": "rule-rdfs2",
+      "source": "mt",
+      "tag": "tr",
+      "text": "rdfs2 aaa",
+      "claims": [
+        "MT11-RULE-rdfs2"
+      ],
+      "within_section": "patterns-of-rdfs-entailment-informative"
+    },
+    {
+      "id": "rule-rdfs3",
+      "source": "mt",
+      "tag": "tr",
+      "text": "rdfs3 aaa",
+      "claims": [
+        "MT11-RULE-rdfs3"
+      ],
+      "within_section": "patterns-of-rdfs-entailment-informative"
+    },
+    {
+      "id": "rule-rdfs4a",
+      "source": "mt",
+      "tag": "tr",
+      "text": "rdfs4a xxx",
+      "claims": [
+        "MT11-RULE-rdfs4a"
+      ],
+      "within_section": "patterns-of-rdfs-entailment-informative"
+    },
+    {
+      "id": "rule-rdfs4b",
+      "source": "mt",
+      "tag": "tr",
+      "text": "rdfs4b xxx",
+      "claims": [
+        "MT11-RULE-rdfs4b"
+      ],
+      "within_section": "patterns-of-rdfs-entailment-informative"
+    },
+    {
+      "id": "rule-rdfs5",
+      "source": "mt",
+      "tag": "tr",
+      "text": "rdfs5 xxx",
+      "claims": [
+        "MT11-RULE-rdfs5"
+      ],
+      "within_section": "patterns-of-rdfs-entailment-informative"
+    },
+    {
+      "id": "rule-rdfs6",
+      "source": "mt",
+      "tag": "tr",
+      "text": "rdfs6 xxx",
+      "claims": [
+        "MT11-RULE-rdfs6"
+      ],
+      "within_section": "patterns-of-rdfs-entailment-informative"
+    },
+    {
+      "id": "rule-rdfs7",
+      "source": "mt",
+      "tag": "tr",
+      "text": "rdfs7 aaa",
+      "claims": [
+        "MT11-RULE-rdfs7"
+      ],
+      "within_section": "patterns-of-rdfs-entailment-informative"
+    },
+    {
+      "id": "rule-rdfs8",
+      "source": "mt",
+      "tag": "tr",
+      "text": "rdfs8 xxx",
+      "claims": [
+        "MT11-RULE-rdfs8"
+      ],
+      "within_section": "patterns-of-rdfs-entailment-informative"
+    },
+    {
+      "id": "rule-rdfs9",
+      "source": "mt",
+      "tag": "tr",
+      "text": "rdfs9 xxx",
+      "claims": [
+        "MT11-RULE-rdfs9"
+      ],
+      "within_section": "patterns-of-rdfs-entailment-informative"
+    },
+    {
+      "id": "rule-rdfs10",
+      "source": "mt",
+      "tag": "tr",
+      "text": "rdfs10 xxx",
+      "claims": [
+        "MT11-RULE-rdfs10"
+      ],
+      "within_section": "patterns-of-rdfs-entailment-informative"
+    },
+    {
+      "id": "rule-rdfs11",
+      "source": "mt",
+      "tag": "tr",
+      "text": "rdfs11 xxx",
+      "claims": [
+        "MT11-RULE-rdfs11"
+      ],
+      "within_section": "patterns-of-rdfs-entailment-informative"
+    },
+    {
+      "id": "rule-rdfs12",
+      "source": "mt",
+      "tag": "tr",
+      "text": "rdfs12 xxx",
+      "claims": [
+        "MT11-RULE-rdfs12"
+      ],
+      "within_section": "patterns-of-rdfs-entailment-informative"
+    },
+    {
+      "id": "rule-rdfs13",
+      "source": "mt",
+      "tag": "tr",
+      "text": "rdfs13 xxx",
+      "claims": [
+        "MT11-RULE-rdfs13"
+      ],
+      "within_section": "patterns-of-rdfs-entailment-informative"
+    },
+    {
+      "id": "rdfs-inconsistency",
+      "source": "mt",
+      "tag": "p",
+      "text": "RDFS provides for several new ways to be unsatisfiable",
+      "claims": [
+        "MT11-RDFS-DATATYPE-INCONSISTENCY"
+      ],
+      "within_section": "patterns-of-rdfs-entailment-informative"
     }
   ],
   "context_resolutions": [
@@ -1611,6 +3816,24 @@
       "antecedent_passage": "skolem-context",
       "resolved_meaning": "The original graph G containing at least one blank node, and the skolemization map described in the preceding paragraph.",
       "inference": "Choose an occurring blank to exhibit a fresh IRI in the image; the original has no such IRI.",
+      "review": "pending"
+    },
+    {
+      "claim_id": "MT11-RECOGNIZED-LITERAL-VALUE",
+      "passage": "d-ordinary",
+      "source_phrase": "other",
+      "antecedent_passage": "d-language",
+      "resolved_meaning": "Recognized datatype IRIs distinct from rdf:langString.",
+      "inference": "The ordinary condition explicitly excludes the language-tagged special case.",
+      "review": "pending"
+    },
+    {
+      "claim_id": "MT11-RDFS-DATATYPE-EXTENSION",
+      "passage": "rdfs-datatype-space",
+      "source_phrase": "other",
+      "antecedent_passage": "rdfs-language",
+      "resolved_meaning": "Recognized datatype IRIs other than rdf:langString, whose class extension was specified in the preceding clause.",
+      "inference": "Specialize the inherited RDF extension theorem to the ordinary branch of recognizedSpace.",
       "review": "pending"
     }
   ]

@@ -72,6 +72,18 @@ try {
   await page.locator('#details > article > .claim-connections a[href="#claim=MT11-INTERPOLATION"]').click();
   assert.equal(await page.locator('#claim').inputValue(),'MT11-INTERPOLATION');
   assert.match(await page.locator('#details').innerText(),/ordinary_interpolation/);
+  const headline=page.locator('#details > article > .lean-declaration[data-lean="RDF11.Statements.interpolation_lemma"]');
+  assert.match(await headline.locator(':scope > .lean-code').textContent(),/theorem interpolation_lemma.*:= RDF11\.ordinary_interpolation_instances/);
+  await headline.locator(':scope > .gloss > summary').click();
+  assert.match(await headline.locator(':scope > .gloss').innerText(),/Headline review alias/);
+  await page.locator('#claim').selectOption('MT11-D-MODEL-CLASS-MONOTONICITY');
+  const direction=page.locator('#details > article > details').filter({has:page.locator('summary',{hasText:'Open source question: Q-D-ENTAILMENT-DIRECTION'})});
+  await direction.locator(':scope > summary').click();
+  assert.match(await direction.innerText(),/printed entailment implications/);
+  assert.match(await direction.innerText(),/Keep the printed assertion unmapped/);
+  await page.locator('#claim').selectOption('MT11-RULE-rdfs9');
+  assert.match(await page.locator('#details').innerText(),/rdfs_step_sound/);
+  assert.match(await page.locator('#details').innerText(),/rdfs_derives_entailment/);
   await page.locator('#claim').selectOption('MT11-GRAPH-SET');
   const proof=page.locator('#details > article > .lean-declaration[data-lean="RDF11.Set.ext"] > .lean-code');
   assert(await proof.isVisible());assert.match(await proof.textContent(),/theorem ext[\s\S]*:= by/);
@@ -87,7 +99,7 @@ try {
   assert.equal(await page.locator('#claim').inputValue(),'');
   assert(!page.url().includes('#claim='));
   assert.deepEqual(errors,[]);
-  const report={status:'pass',checks:['Visible Triple fields and Subject/Term constructors','Commit-pinned source links','Lazy dependency source expansion','Claim deep link survives reload','Visible theorem proof body','Mobile layout has no horizontal overflow','Unmapped claims remain explicit','Changing source clears stale selection','Rendered and raw tabs preserve selection and exact raw characters','Annotated rendered passages open their claims','Search and mapping filters','Plain-English glosses on every displayed declaration','Reading copy has no active embeds or external resources','Connected claims navigate actual declaration dependency paths','No JavaScript errors'],dependencies};
+  const report={status:'pass',checks:['Visible Triple fields and Subject/Term constructors','Commit-pinned source links','Lazy dependency source expansion','Claim deep link survives reload','Visible theorem proof body','Mobile layout has no horizontal overflow','Unmapped claims remain explicit','Changing source clears stale selection','Rendered and raw tabs preserve selection and exact raw characters','Annotated rendered passages open their claims','Search and mapping filters','Plain-English glosses on every displayed declaration','Reading copy has no active embeds or external resources','Connected claims navigate actual declaration dependency paths','Headline alias with explicit statement and gloss','Source question without a countermodel renders safely','RDFS rule connects to derivation soundness','No JavaScript errors'],dependencies};
   await fs.writeFile(new URL('result.json', evidenceDir),JSON.stringify(report,null,2)+'\n');
   console.log(JSON.stringify(report,null,2));
 } finally { await browser.close(); }

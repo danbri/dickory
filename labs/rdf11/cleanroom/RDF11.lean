@@ -13,3 +13,10 @@ import RDF11.Skolemization
 import RDF11.Transformations
 import RDF11.VocabularyEntailment
 import RDF11.RDFProperty
+import RDF11.Relations
+import RDF11.Datatypes
+import RDF11.RDF
+import RDF11.RDFRules
+import RDF11.RDFS
+import RDF11.RDFSRules
+import RDF11.Statements
