@@ -63,6 +63,21 @@ theorem length_independent (e f : Enumeration G) : e.triples.length = f.triples.
 theorem repeated_input_same_set (t : α) : Set.ofList [t, t] = Set.ofList [t] :=
   Set.ofList_repeat t
 
+/-- A set containing an injective natural-number family has no finite enumeration. -/
+theorem no_enumeration_of_nat_injection (G : Set α) (f : Nat → α)
+    (hmem : ∀ n, G (f n)) (hinj : ∀ m n, f m = f n → m = n) :
+    ¬ Nonempty (Enumeration G) := by
+  rintro ⟨e⟩
+  have hn : ((List.range (e.triples.length + 1)).map f).Nodup :=
+    List.Pairwise.map f (fun m n hne he => hne (hinj m n he)) List.nodup_range
+  have hs : ((List.range (e.triples.length + 1)).map f) ⊆ e.triples := by
+    intro a ha
+    obtain ⟨n, _, rfl⟩ := List.mem_map.mp ha
+    exact (e.membership _).mpr (hmem n)
+  have hl := hn.length_le_of_subset hs
+  simp only [List.length_map, List.length_range] at hl
+  exact (Nat.not_succ_le_self _) hl
+
 end Enumeration
 end RDF11
 

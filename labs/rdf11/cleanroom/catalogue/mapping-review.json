@@ -3776,7 +3776,96 @@
           "lean": "RDF11.ContainerExamples.bag_and_sequence_consistent"
         }
       ],
-      "limitations": "The countermodels satisfy every existing RDFS condition under RDFSModelConstruction.Parameters. Endpoints are selected unrecognized vocabulary symbols, not arbitrary concrete ex: IRIs; these are witness families with the source graph shapes. Concrete datatype and vocabulary correspondence remain external. Failure of RDFS entailment also rules out the weaker RDF and simple entailments by the existing regime-inclusion theorems. Only the gap and overlapping-type parts are mapped. Infinite membership, lack of a fixed upper bound, and the paragraph about always consistently adding membership remain unproved; datatype restrictions and already inconsistent premises require care.",
+      "limitations": "The countermodels satisfy every existing RDFS condition under RDFSModelConstruction.Parameters. Endpoints are selected unrecognized vocabulary symbols, not arbitrary concrete ex: IRIs; these are witness families with the source graph shapes. Concrete datatype and vocabulary correspondence remain external. Failure of RDFS entailment also rules out the weaker RDF and simple entailments by the existing regime-inclusion theorems. Only the gap and overlapping-type parts are mapped here. The membership-count, extension-consistency and finiteness statements now have separate records. The first two remain unproved; the third has a conditional infinite-member witness.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-INTERPRETATION-INFINITE-NAME-STRUCTURE",
+      "relation": "partial_theorem",
+      "symbol_linked_english": "ISGraph records every IRI and its IS denotation. ISGraph_not_finite proves that distinct natural-number-indexed input names defeat every finite Enumeration of this graph. one_resource_infinite_name_mapping separates infinite naming from the size of IR.",
+      "bindings": [
+        {
+          "symbol": "SimpleInterpretation.ISGraph",
+          "lean": "RDF11.SimpleInterpretation.ISGraph"
+        },
+        {
+          "symbol": "SimpleInterpretation.ISGraph_not_finite",
+          "lean": "RDF11.SimpleInterpretation.ISGraph_not_finite"
+        },
+        {
+          "symbol": "SimpleInterpretation.vocabulary_ISGraph_not_finite",
+          "lean": "RDF11.SimpleInterpretation.vocabulary_ISGraph_not_finite"
+        },
+        {
+          "symbol": "one_resource_infinite_name_mapping",
+          "lean": "RDF11.one_resource_infinite_name_mapping"
+        }
+      ],
+      "limitations": "ISGraph is the set-theoretic graph of a function, not an RDF graph. The proof requires an infinite family of distinct abstract IRI names; RDFVocabulary supplies one through indexed container names. Concrete legal spellings and full name-domain correspondence remain external. The one-resource witness is a simple interpretation, not a claim about RDF/RDFS models or finite-vocabulary pre-interpretations.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-INFINITE-GRAPHS-PERMITTED",
+      "relation": "partial_theorem",
+      "symbol_linked_english": "allIndexed is an ordinary graph containing a Bag typing triple and every indexedTriple. allIndexed_ground proves it has no blanks. allIndexed_not_finite excludes every finite Enumeration; allIndexed_satisfiable connects this syntax to an RDFS model.",
+      "bindings": [
+        {
+          "symbol": "ContainerInfinitude.allIndexed",
+          "lean": "RDF11.ContainerInfinitude.allIndexed"
+        },
+        {
+          "symbol": "ContainerInfinitude.indexedTriple",
+          "lean": "RDF11.ContainerInfinitude.indexedTriple"
+        },
+        {
+          "symbol": "ContainerInfinitude.allIndexed_ground",
+          "lean": "RDF11.ContainerInfinitude.allIndexed_ground"
+        },
+        {
+          "symbol": "ContainerInfinitude.allIndexed_not_finite",
+          "lean": "RDF11.ContainerInfinitude.allIndexed_not_finite"
+        },
+        {
+          "symbol": "ContainerInfinitude.allIndexed_satisfiable",
+          "lean": "RDF11.ContainerInfinitude.allIndexed_satisfiable"
+        },
+        {
+          "symbol": "Enumeration.no_enumeration_of_nat_injection",
+          "lean": "RDF11.Enumeration.no_enumeration_of_nat_injection"
+        }
+      ],
+      "limitations": "The graph uses an abstract infinite RDF vocabulary; concrete syntax correspondence is external. Satisfiability additionally requires RDFSModelConstruction.Parameters, sufficient constructor hypotheses rather than requirements on every RDFS interpretation. This is one infinite satisfiable graph, not satisfiability of every infinite graph. It is outside Appendix B finite-vocabulary reduction.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-CONTAINER-INFINITE-MEMBERS-PERMITTED",
+      "relation": "partial_theorem",
+      "symbol_linked_english": "infinite_members_witness gives an RDFS model with a Bag root, distinct indexed-member denotations and the corresponding generic rdfs:member edges. nonfinite_member_extension excludes a finite Enumeration of its members. prefixes_extend_in_common_model shows that this model also satisfies every displayed finitePrefix and its next-edge extension.",
+      "bindings": [
+        {
+          "symbol": "ContainerInfinitude.infinite_members_witness",
+          "lean": "RDF11.ContainerInfinitude.infinite_members_witness"
+        },
+        {
+          "symbol": "ContainerInfinitude.nonfinite_member_extension",
+          "lean": "RDF11.ContainerInfinitude.nonfinite_member_extension"
+        },
+        {
+          "symbol": "ContainerInfinitude.finitePrefix",
+          "lean": "RDF11.ContainerInfinitude.finitePrefix"
+        },
+        {
+          "symbol": "ContainerInfinitude.prefixes_extend_in_common_model",
+          "lean": "RDF11.ContainerInfinitude.prefixes_extend_in_common_model"
+        }
+      ],
+      "limitations": "These witnesses require RDFSModelConstruction.Parameters and abstract vocabulary; concrete datatype/name correspondence remains external. Distinct member denotations are a choice of this model, not a unique-name rule or a consequence in every model of the graph. Prefix extension concerns only this displayed family, not arbitrary-graph extension consistency. No exact prefix cardinality, next-edge freshness or general expressivity theorem is claimed.",
       "extraction_review": "pending_expert_review",
       "formalization_review": "pending_expert_review",
       "implementation_refinement": "not_connected_to_published_package"
@@ -5301,9 +5390,22 @@
       "tag": "p",
       "text": "There is no way in RDF to assert that a container",
       "claims": [
-        "MT11-CONTAINER-OPEN-STRUCTURE"
+        "MT11-CONTAINER-NO-FIXED-MEMBERSHIP-COUNT",
+        "MT11-CONTAINER-MEMBERSHIP-ADDITION-CONSISTENCY",
+        "MT11-CONTAINER-INFINITE-MEMBERS-PERMITTED"
       ],
       "within_section": "rdf-containers"
+    },
+    {
+      "id": "infinite-graphs-permitted",
+      "source": "mt",
+      "tag": "p",
+      "text": "The property just above is called compactness",
+      "claims": [
+        "MT11-COMPACTNESS",
+        "MT11-INFINITE-GRAPHS-PERMITTED"
+      ],
+      "within_section": "properties-of-simple-entailment-informative"
     }
   ],
   "context_resolutions": [

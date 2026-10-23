@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "status": "frozen_tenth_increment_reification_containers_not_expert_approved",
+  "status": "frozen_eleventh_increment_infinitude_not_expert_approved",
   "lean_version": "4.33.1",
   "allowed_axioms": [
     "propext",
@@ -42,9 +42,11 @@
     "Init.Data.List.Count",
     "Init.Data.List.Erase",
     "Init.Data.List.Lemmas",
+    "Init.Data.List.Nat.Range",
     "Init.Data.List.Nat.TakeDrop",
     "Init.Data.List.Pairwise",
     "Init.Data.List.Perm",
+    "Init.Data.List.Range",
     "Init.Data.List.Sublist",
     "Init.Data.List.TakeDrop",
     "Init.Data.List.ToArray",
@@ -475,6 +477,17 @@
         "MT11-CONTAINER-OPEN-STRUCTURE",
         "MT11-EXISTENTIAL-GRAPH-TRUTH"
       ]
+    },
+    {
+      "id": "SUPPORT-INFINITUDE",
+      "purpose": "Natural-number injections exclude finite certified enumerations. Applications distinguish full name-mapping graphs, ordinary RDF triple sets and chosen RDFS member extensions. Conditional witness parameters, concrete name correspondence and general extension/expressivity gaps remain explicit.",
+      "requires": [
+        "FOUNDATION-SETS",
+        "REFINEMENT-ENUMERATION",
+        "MT11-INTERPRETATION-INFINITE-NAME-STRUCTURE",
+        "MT11-INFINITE-GRAPHS-PERMITTED",
+        "MT11-CONTAINER-INFINITE-MEMBERS-PERMITTED"
+      ]
     }
   ],
   "files": [
@@ -501,14 +514,14 @@
     },
     {
       "path": "Audit/Snapshot.lean",
-      "sha256": "f7622965fdf7d8b3d4412656ac37a14300d50f06a74ec429a77ede5d36f146c4",
+      "sha256": "897e356618abfc7a9b4277f2de060d2aea976d9b5f3c8b66b5090ce22ea1c88f",
       "role": "formal_source",
       "lifecycle": "active",
       "review": "pending_expert_review"
     },
     {
       "path": "RDF11.lean",
-      "sha256": "9fbd99225156587de4e9d4950f0ed77ad0312f355459418c681cef2c3fd11098",
+      "sha256": "f20b153012781ce31a2a518257e36cb16bc6fca1d08acb24d14047ba50289c5d",
       "role": "formal_source",
       "lifecycle": "active",
       "review": "pending_expert_review"
@@ -529,7 +542,7 @@
     },
     {
       "path": "RDF11/Enumeration.lean",
-      "sha256": "5da2b9fe82a5f65df7d2a5f4cce760b25fd357aa1c4200865135ec45cc585029",
+      "sha256": "96849ad14c6bf913ccf191c73a485f0ca65474583f7695b9821608e11a1afb7b",
       "role": "formal_source",
       "lifecycle": "active",
       "review": "pending_expert_review"
@@ -810,6 +823,20 @@
     {
       "path": "RDF11/ContainerExamples.lean",
       "sha256": "76b4d76263a0949062fa929db0bb6456fec2392cdcaab5ed5d967e20fe0b79b4",
+      "role": "formal_source",
+      "lifecycle": "active",
+      "review": "pending_expert_review"
+    },
+    {
+      "path": "RDF11/NameInfinitude.lean",
+      "sha256": "e44450156be8149cb16f238fd345646b0ce520422ff2b575a22fca4330414ed7",
+      "role": "formal_source",
+      "lifecycle": "active",
+      "review": "pending_expert_review"
+    },
+    {
+      "path": "RDF11/ContainerInfinitude.lean",
+      "sha256": "481ed6e6be5051067e2d884122e666bf210940a0e7b1494996f35eb3d188f181",
       "role": "formal_source",
       "lifecycle": "active",
       "review": "pending_expert_review"
@@ -18913,6 +18940,356 @@
         "SUPPORT-REIFICATION-CONTAINERS"
       ],
       "parent_declaration_if_applicable": "RDF11.Subject.toTerm",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ContainerInfinitude.allIndexed",
+      "module": "RDF11.ContainerInfinitude",
+      "kind": "definition",
+      "type": "{Iri Literal : Type} → RDF11.RDFSVocabulary Iri → RDF11.Graph Iri Literal Empty",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INFINITUDE",
+        "MT11-INFINITE-GRAPHS-PERMITTED"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ContainerInfinitude.allIndexed_ground",
+      "module": "RDF11.ContainerInfinitude",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} (v : RDF11.RDFSVocabulary Iri), (RDF11.ContainerInfinitude.allIndexed v).generalize.ground",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INFINITUDE",
+        "MT11-INFINITE-GRAPHS-PERMITTED"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ContainerInfinitude.allIndexed_not_finite",
+      "module": "RDF11.ContainerInfinitude",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} (v : RDF11.RDFSVocabulary Iri),\n  ¬RDF11.FiniteGraph (RDF11.ContainerInfinitude.allIndexed v).generalize",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INFINITUDE",
+        "MT11-INFINITE-GRAPHS-PERMITTED"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ContainerInfinitude.allIndexed_satisfiable",
+      "module": "RDF11.ContainerInfinitude",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (v : RDF11.RDFSVocabulary Iri),\n  RDF11.RDFSModelConstruction.Parameters T D v →\n    ∃ U I, I.RDFSModel T D v ∧ I.Satisfies (RDF11.ContainerInfinitude.allIndexed v).generalize",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INFINITUDE",
+        "MT11-INFINITE-GRAPHS-PERMITTED"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ContainerInfinitude.allIndexed_true",
+      "module": "RDF11.ContainerInfinitude",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (v : RDF11.RDFSVocabulary Iri),\n  RDF11.RDFSModelConstruction.Parameters T D v →\n    (RDF11.ContainerInfinitude.interpretation T D v).GraphTrue (fun x => none)\n      (RDF11.ContainerInfinitude.allIndexed v).generalize",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INFINITUDE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ContainerInfinitude.bagType",
+      "module": "RDF11.ContainerInfinitude",
+      "kind": "definition",
+      "type": "{Iri Literal : Type} → RDF11.RDFSVocabulary Iri → RDF11.Triple Iri Literal Empty",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INFINITUDE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ContainerInfinitude.finitePrefix",
+      "module": "RDF11.ContainerInfinitude",
+      "kind": "definition",
+      "type": "{Iri Literal : Type} → RDF11.RDFSVocabulary Iri → Nat → RDF11.Graph Iri Literal Empty",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INFINITUDE",
+        "MT11-CONTAINER-INFINITE-MEMBERS-PERMITTED"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ContainerInfinitude.finitePrefix.eq_1",
+      "module": "RDF11.ContainerInfinitude",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} (v : RDF11.RDFSVocabulary Iri) (k : Nat),\n  RDF11.ContainerInfinitude.finitePrefix v k =\n    RDF11.Set.ofList\n      (RDF11.ContainerInfinitude.bagType v :: List.map (RDF11.ContainerInfinitude.indexedTriple v) (List.range k))",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INFINITUDE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ContainerInfinitude.finitePrefix",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ContainerInfinitude.indexedTriple",
+      "module": "RDF11.ContainerInfinitude",
+      "kind": "definition",
+      "type": "{Iri Literal : Type} → RDF11.RDFSVocabulary Iri → Nat → RDF11.Triple Iri Literal Empty",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INFINITUDE",
+        "MT11-INFINITE-GRAPHS-PERMITTED"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ContainerInfinitude.indexed_generalize_injective",
+      "module": "RDF11.ContainerInfinitude",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} (v : RDF11.RDFSVocabulary Iri) (m n : Nat),\n  (RDF11.ContainerInfinitude.indexedTriple v m).generalize = (RDF11.ContainerInfinitude.indexedTriple v n).generalize →\n    m = n",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INFINITUDE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ContainerInfinitude.infinite_members_witness",
+      "module": "RDF11.ContainerInfinitude",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (v : RDF11.RDFSVocabulary Iri),\n  RDF11.RDFSModelConstruction.Parameters T D v →\n    ∃ U I,\n      I.RDFSModel T D v ∧\n        I.Satisfies (RDF11.ContainerInfinitude.allIndexed v).generalize ∧\n          ∃ root member,\n            I.ICEXT (v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfType))\n                (I.IS (v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfBag))).val root ∧\n              (∀ (n : Nat), member n = (I.IS (v.iri (RDF11.RDFSSymbol.rdf (RDF11.RDFSymbol.container n)))).val) ∧\n                (∀ (m n : Nat), member m = member n → m = n) ∧\n                  ∀ (n : Nat),\n                    I.Relates (I.IS (v.iri (RDF11.RDFSSymbol.rdf (RDF11.RDFSymbol.container n)))).val root (member n) ∧\n                      I.Relates (I.IS (v.iri RDF11.RDFSSymbol.member)).val root (member n)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INFINITUDE",
+        "MT11-CONTAINER-INFINITE-MEMBERS-PERMITTED"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ContainerInfinitude.interpretation",
+      "module": "RDF11.ContainerInfinitude",
+      "kind": "definition",
+      "type": "{Iri Literal Value : Type} →\n  RDF11.DatatypeTheory Iri Literal Value →\n    RDF11.Set Iri →\n      RDF11.RDFSVocabulary Iri → RDF11.SimpleInterpretation Iri Literal (RDF11.RDFModelConstruction.Carrier Iri Value)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INFINITUDE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ContainerInfinitude.nonfinite_member_extension",
+      "module": "RDF11.ContainerInfinitude",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (v : RDF11.RDFSVocabulary Iri),\n  RDF11.RDFSModelConstruction.Parameters T D v →\n    ∃ U I,\n      I.RDFSModel T D v ∧\n        I.Satisfies (RDF11.ContainerInfinitude.allIndexed v).generalize ∧\n          ∃ root,\n            I.ICEXT (v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfType))\n                (I.IS (v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfBag))).val root ∧\n              ¬Nonempty (RDF11.Enumeration fun y => I.Relates (I.IS (v.iri RDF11.RDFSSymbol.member)).val root y)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INFINITUDE",
+        "MT11-CONTAINER-INFINITE-MEMBERS-PERMITTED"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ContainerInfinitude.prefixEnumeration",
+      "module": "RDF11.ContainerInfinitude",
+      "kind": "definition",
+      "type": "{Iri Literal : Type} →\n  (v : RDF11.RDFSVocabulary Iri) → (k : Nat) → RDF11.Enumeration (RDF11.ContainerInfinitude.finitePrefix v k)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INFINITUDE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ContainerInfinitude.prefix_next",
+      "module": "RDF11.ContainerInfinitude",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} (v : RDF11.RDFSVocabulary Iri) (k : Nat),\n  RDF11.ContainerInfinitude.finitePrefix v (k + 1) =\n    RDF11.Set.union (RDF11.ContainerInfinitude.finitePrefix v k)\n      (RDF11.Set.singleton (RDF11.ContainerInfinitude.indexedTriple v k))",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INFINITUDE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ContainerInfinitude.prefix_next._simp_1_4",
+      "module": "RDF11.ContainerInfinitude",
+      "kind": "theorem",
+      "type": "∀ {a b c : Prop}, ((a ∨ b) ∨ c) = (a ∨ b ∨ c)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INFINITUDE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ContainerInfinitude.prefix_next",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ContainerInfinitude.prefix_subset",
+      "module": "RDF11.ContainerInfinitude",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} (v : RDF11.RDFSVocabulary Iri) (k : Nat),\n  RDF11.Set.subset (RDF11.ContainerInfinitude.finitePrefix v k) (RDF11.ContainerInfinitude.allIndexed v)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INFINITUDE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ContainerInfinitude.prefix_subset._simp_1_2",
+      "module": "RDF11.ContainerInfinitude",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_1} {β : Type u_2} {b : β} {f : α → β} {l : List α}, (b ∈ List.map f l) = ∃ a, a ∈ l ∧ f a = b",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INFINITUDE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ContainerInfinitude.prefix_subset",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ContainerInfinitude.prefixes_extend_in_common_model",
+      "module": "RDF11.ContainerInfinitude",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (v : RDF11.RDFSVocabulary Iri),\n  RDF11.RDFSModelConstruction.Parameters T D v →\n    ∃ U I,\n      I.RDFSModel T D v ∧\n        ∀ (k : Nat),\n          RDF11.FiniteGraph (RDF11.ContainerInfinitude.finitePrefix v k).generalize ∧\n            I.Satisfies (RDF11.ContainerInfinitude.finitePrefix v k).generalize ∧\n              I.Satisfies\n                (RDF11.Graph.generalize\n                  (RDF11.Set.union (RDF11.ContainerInfinitude.finitePrefix v k)\n                    (RDF11.Set.singleton (RDF11.ContainerInfinitude.indexedTriple v k))))",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INFINITUDE",
+        "MT11-CONTAINER-INFINITE-MEMBERS-PERMITTED"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Enumeration.no_enumeration_of_nat_injection",
+      "module": "RDF11.Enumeration",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_1} (G : RDF11.Set α) (f : Nat → α),\n  (∀ (n : Nat), G (f n)) → (∀ (m n : Nat), f m = f n → m = n) → ¬Nonempty (RDF11.Enumeration G)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INFINITUDE",
+        "MT11-INFINITE-GRAPHS-PERMITTED"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Enumeration",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFVocabulary.container_injective",
+      "module": "RDF11.NameInfinitude",
+      "kind": "theorem",
+      "type": "∀ {Iri : Type} (v : RDF11.RDFVocabulary Iri) (m n : Nat),\n  v.iri (RDF11.RDFSymbol.container m) = v.iri (RDF11.RDFSymbol.container n) → m = n",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INFINITUDE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.RDFVocabulary",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Set.union.eq_1",
+      "module": "RDF11.ContainerInfinitude",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_1} (s t : RDF11.Set α) (a : α), s.union t a = (s a ∨ t a)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INFINITUDE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Set.union",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.ISGraph",
+      "module": "RDF11.NameInfinitude",
+      "kind": "definition",
+      "type": "{Iri Literal : Type} → {U : Type u_1} → RDF11.SimpleInterpretation Iri Literal U → RDF11.Set (Iri × U)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INFINITUDE",
+        "MT11-INTERPRETATION-INFINITE-NAME-STRUCTURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.ISGraph_not_finite",
+      "module": "RDF11.NameInfinitude",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u_1} (I : RDF11.SimpleInterpretation Iri Literal U) (ι : Nat → Iri),\n  (∀ (m n : Nat), ι m = ι n → m = n) → ¬Nonempty (RDF11.Enumeration I.ISGraph)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INFINITUDE",
+        "MT11-INTERPRETATION-INFINITE-NAME-STRUCTURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.mk.congr_simp",
+      "module": "RDF11.NameInfinitude",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u} (IR : RDF11.Set U) (IR_nonempty : ∃ x, IR x) (IP : RDF11.Set U)\n  (IEXT IEXT_1 : { p // IP p } → RDF11.Set ({ x // IR x } × { y // IR y })),\n  IEXT = IEXT_1 →\n    ∀ (IS IS_1 : Iri → { x // IR x ∨ IP x }),\n      IS = IS_1 →\n        ∀ (IL IL_1 : Literal → Option { x // IR x }),\n          IL = IL_1 →\n            { IR := IR, IR_nonempty := IR_nonempty, IP := IP, IEXT := IEXT, IS := IS, IL := IL } =\n              { IR := IR, IR_nonempty := IR_nonempty, IP := IP, IEXT := IEXT_1, IS := IS_1, IL := IL_1 }",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INFINITUDE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation.mk",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.vocabulary_ISGraph_not_finite",
+      "module": "RDF11.NameInfinitude",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u_1} (I : RDF11.SimpleInterpretation Iri Literal U) (v : RDF11.RDFVocabulary Iri),\n  ¬Nonempty (RDF11.Enumeration I.ISGraph)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INFINITUDE",
+        "MT11-INTERPRETATION-INFINITE-NAME-STRUCTURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.indiscriminate.eq_1",
+      "module": "RDF11.NameInfinitude",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type},\n  RDF11.indiscriminate =\n    { IR := fun x => True, IR_nonempty := RDF11.indiscriminate._proof_1, IP := fun x => True, IEXT := fun x x_1 => True,\n      IS := fun x => ⟨{ down := () }, ⋯⟩, IL := fun x => some ⟨{ down := () }, True.intro⟩ }",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INFINITUDE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.indiscriminate",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.one_resource_infinite_name_mapping",
+      "module": "RDF11.NameInfinitude",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} (v : RDF11.RDFVocabulary Iri),\n  ∃ U I, Nonempty (RDF11.Enumeration I.IR) ∧ ¬Nonempty (RDF11.Enumeration I.ISGraph) ∧ ∃ r, ∀ (x : U), I.IR x → x = r",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INFINITUDE",
+        "MT11-INTERPRETATION-INFINITE-NAME-STRUCTURE"
+      ],
+      "parent_declaration_if_applicable": null,
       "review": "pending_expert_review"
     }
   ],

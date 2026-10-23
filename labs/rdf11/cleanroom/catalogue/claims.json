@@ -3,8 +3,8 @@
   "status": "draft_not_complete_coverage",
   "method": "Human-readable AI close reading; selectors locate already selected passages and do not extract assertions.",
   "source_inventory": "../ledger/semantics-inventory.json",
-  "inventory_sha256": "506ebaea8c05c1b930ece08640e07bc293a100daba0a192f30600cf057947757",
-  "mapping_input_sha256": "c5cf54de05d2c3ed9b280d8e0c7524f77cb3f76c96dda2ea1295d84524dcc4b6",
+  "inventory_sha256": "78e3f8f7374451552dc5a1373f44f381501de1f69a0b6ad11ab5d9b7c90dcefb",
+  "mapping_input_sha256": "1e5d717aab49ecd09ae4d6a0d236a28af9a5521c98100844636bdea3ed689971",
   "documents": [
     {
       "id": "mt",
@@ -600,6 +600,30 @@
         },
         {
           "start": 53016,
+          "end": 53017,
+          "refs": [
+            "MT11-EMPTY-ENTAILMENTS",
+            "MT11-INSTANCE-ENTAILMENT",
+            "MT11-PREMISE-MONOTONICITY",
+            "MT11-SUBGRAPH-ENTAILMENT"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 53017,
+          "end": 53156,
+          "refs": [
+            "MT11-COMPACTNESS",
+            "MT11-EMPTY-ENTAILMENTS",
+            "MT11-INFINITE-GRAPHS-PERMITTED",
+            "MT11-INSTANCE-ENTAILMENT",
+            "MT11-PREMISE-MONOTONICITY",
+            "MT11-SUBGRAPH-ENTAILMENT"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 53156,
           "end": 53158,
           "refs": [
             "MT11-EMPTY-ENTAILMENTS",
@@ -2296,7 +2320,9 @@
           "start": 124380,
           "end": 124735,
           "refs": [
-            "MT11-CONTAINER-OPEN-STRUCTURE"
+            "MT11-CONTAINER-INFINITE-MEMBERS-PERMITTED",
+            "MT11-CONTAINER-MEMBERSHIP-ADDITION-CONSISTENCY",
+            "MT11-CONTAINER-NO-FIXED-MEMBERSHIP-COUNT"
           ],
           "disposition": "claim_passage_pending_review"
         },
@@ -4630,9 +4656,26 @@
       "start": 124380,
       "end": 124735,
       "claims": [
-        "MT11-CONTAINER-OPEN-STRUCTURE"
+        "MT11-CONTAINER-NO-FIXED-MEMBERSHIP-COUNT",
+        "MT11-CONTAINER-MEMBERSHIP-ADDITION-CONSISTENCY",
+        "MT11-CONTAINER-INFINITE-MEMBERS-PERMITTED"
       ],
       "slice_sha256": "760f7919c8b17a6004d2c0030a1ea71c179f773564b992d503b5d9b468c319de",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "infinite-graphs-permitted",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 53017,
+      "end": 53156,
+      "claims": [
+        "MT11-COMPACTNESS",
+        "MT11-INFINITE-GRAPHS-PERMITTED"
+      ],
+      "slice_sha256": "2f33020bb644b9d3b562335cc625d552e9a298be9075ef0d50a4c108aa8c7c43",
       "locator_tag": "p",
       "review": "pending",
       "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
@@ -7377,7 +7420,8 @@
         "implementation_refinement": "not_connected_to_published_package"
       },
       "passages": [
-        "compactness"
+        "compactness",
+        "infinite-graphs-permitted"
       ],
       "extraction_review": "pending",
       "formalization_review": "pending"
@@ -13265,7 +13309,7 @@
       "category": "general_requirement",
       "source_status": "informative",
       "assertion_basis": "explicit",
-      "paraphrase": "Formal semantics does not require container classes to be disjoint or indexed positions to be gap-free; RDF supplies no fixed upper membership bound or general finiteness requirement.",
+      "paraphrase": "Formal semantics does not require container classes to be disjoint or indexed positions to be gap-free.",
       "official_rule_code": null,
       "dependencies": [
         "MT11-CONTAINERS-DESCRIPTION"
@@ -13276,7 +13320,7 @@
         "formal_proof": "unassessed",
         "test_mapping": "unassessed"
       },
-      "formalization_note": "These are absences of special constraints, not requirements that every application accept every intended container shape.",
+      "formalization_note": "Gap and overlapping-type witnesses are separate from the three membership-count, extension-consistency and finiteness obligations split from paragraph 15 into their own records.",
       "cleanroom_mapping": {
         "claim_id": "MT11-CONTAINER-OPEN-STRUCTURE",
         "relation": "partial_theorem",
@@ -13295,7 +13339,7 @@
             "lean": "RDF11.ContainerExamples.bag_and_sequence_consistent"
           }
         ],
-        "limitations": "The countermodels satisfy every existing RDFS condition under RDFSModelConstruction.Parameters. Endpoints are selected unrecognized vocabulary symbols, not arbitrary concrete ex: IRIs; these are witness families with the source graph shapes. Concrete datatype and vocabulary correspondence remain external. Failure of RDFS entailment also rules out the weaker RDF and simple entailments by the existing regime-inclusion theorems. Only the gap and overlapping-type parts are mapped. Infinite membership, lack of a fixed upper bound, and the paragraph about always consistently adding membership remain unproved; datatype restrictions and already inconsistent premises require care.",
+        "limitations": "The countermodels satisfy every existing RDFS condition under RDFSModelConstruction.Parameters. Endpoints are selected unrecognized vocabulary symbols, not arbitrary concrete ex: IRIs; these are witness families with the source graph shapes. Concrete datatype and vocabulary correspondence remain external. Failure of RDFS entailment also rules out the weaker RDF and simple entailments by the existing regime-inclusion theorems. Only the gap and overlapping-type parts are mapped here. The membership-count, extension-consistency and finiteness statements now have separate records. The first two remain unproved; the third has a conditional infinite-member witness.",
         "extraction_review": "pending_expert_review",
         "formalization_review": "pending_expert_review",
         "implementation_refinement": "not_connected_to_published_package"
@@ -13303,8 +13347,7 @@
       "passages": [
         "container-types-and-gaps",
         "container-gap-premise",
-        "container-gap-conclusion",
-        "container-open-membership"
+        "container-gap-conclusion"
       ],
       "extraction_review": "pending",
       "formalization_review": "pending"
@@ -13674,13 +13717,39 @@
         "formal_proof": "unassessed",
         "test_mapping": "unassessed"
       },
-      "formalization_note": "This concerns the full name mappings, not a requirement that IR be infinite. No cardinality proof or concrete infinite IRI-domain binding is supplied yet; the finite pre-interpretation construction is discussed separately in informative Appendix B. The source paragraph has class technote and is non-normative under §2; the global IS/IL input-domain obligations are separately grounded in the normative interpretation table.",
-      "cleanroom_mapping": null,
+      "formalization_note": "This concerns the full name mappings, not a requirement that IR be infinite. A natural-number injection into the abstract IRI domain now proves that the graph of IS has no finite enumeration, including a one-resource simple model. Concrete full IRI-domain correspondence remains external. Appendix B concerns finite-vocabulary pre-interpretations separately. This paragraph is a technote, non-normative under §2; the global IS/IL input-domain obligations are grounded separately in the normative table.",
+      "cleanroom_mapping": {
+        "claim_id": "MT11-INTERPRETATION-INFINITE-NAME-STRUCTURE",
+        "relation": "partial_theorem",
+        "symbol_linked_english": "ISGraph records every IRI and its IS denotation. ISGraph_not_finite proves that distinct natural-number-indexed input names defeat every finite Enumeration of this graph. one_resource_infinite_name_mapping separates infinite naming from the size of IR.",
+        "bindings": [
+          {
+            "symbol": "SimpleInterpretation.ISGraph",
+            "lean": "RDF11.SimpleInterpretation.ISGraph"
+          },
+          {
+            "symbol": "SimpleInterpretation.ISGraph_not_finite",
+            "lean": "RDF11.SimpleInterpretation.ISGraph_not_finite"
+          },
+          {
+            "symbol": "SimpleInterpretation.vocabulary_ISGraph_not_finite",
+            "lean": "RDF11.SimpleInterpretation.vocabulary_ISGraph_not_finite"
+          },
+          {
+            "symbol": "one_resource_infinite_name_mapping",
+            "lean": "RDF11.one_resource_infinite_name_mapping"
+          }
+        ],
+        "limitations": "ISGraph is the set-theoretic graph of a function, not an RDF graph. The proof requires an infinite family of distinct abstract IRI names; RDFVocabulary supplies one through indexed container names. Concrete legal spellings and full name-domain correspondence remain external. The one-resource witness is a simple interpretation, not a claim about RDF/RDFS models or finite-vocabulary pre-interpretations.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
       "passages": [
         "global-interpretation-name-scope"
       ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-RDF-MODEL-EXISTENCE-CONSTRUCTION",
@@ -14127,6 +14196,175 @@
         "reification-blank-premise",
         "reification-blank-connective",
         "reification-blank-conclusion"
+      ],
+      "extraction_review": "pending",
+      "formalization_review": "pending"
+    },
+    {
+      "id": "MT11-INFINITE-GRAPHS-PERMITTED",
+      "section": "5.3",
+      "anchor": "properties-of-simple-entailment-informative",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#properties-of-simple-entailment-informative",
+      "category": "general_requirement",
+      "source_status": "informative",
+      "assertion_basis": "explicit",
+      "paraphrase": "RDF graphs may be infinite.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-GRAPH-SET"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "The selected paragraph also names compactness, already a separate claim. The new witness has ordinary ground syntax, no finite enumeration, and an RDFS model under explicit constructor hypotheses; it does not prove all infinite graphs satisfiable.",
+      "cleanroom_mapping": {
+        "claim_id": "MT11-INFINITE-GRAPHS-PERMITTED",
+        "relation": "partial_theorem",
+        "symbol_linked_english": "allIndexed is an ordinary graph containing a Bag typing triple and every indexedTriple. allIndexed_ground proves it has no blanks. allIndexed_not_finite excludes every finite Enumeration; allIndexed_satisfiable connects this syntax to an RDFS model.",
+        "bindings": [
+          {
+            "symbol": "ContainerInfinitude.allIndexed",
+            "lean": "RDF11.ContainerInfinitude.allIndexed"
+          },
+          {
+            "symbol": "ContainerInfinitude.indexedTriple",
+            "lean": "RDF11.ContainerInfinitude.indexedTriple"
+          },
+          {
+            "symbol": "ContainerInfinitude.allIndexed_ground",
+            "lean": "RDF11.ContainerInfinitude.allIndexed_ground"
+          },
+          {
+            "symbol": "ContainerInfinitude.allIndexed_not_finite",
+            "lean": "RDF11.ContainerInfinitude.allIndexed_not_finite"
+          },
+          {
+            "symbol": "ContainerInfinitude.allIndexed_satisfiable",
+            "lean": "RDF11.ContainerInfinitude.allIndexed_satisfiable"
+          },
+          {
+            "symbol": "Enumeration.no_enumeration_of_nat_injection",
+            "lean": "RDF11.Enumeration.no_enumeration_of_nat_injection"
+          }
+        ],
+        "limitations": "The graph uses an abstract infinite RDF vocabulary; concrete syntax correspondence is external. Satisfiability additionally requires RDFSModelConstruction.Parameters, sufficient constructor hypotheses rather than requirements on every RDFS interpretation. This is one infinite satisfiable graph, not satisfiability of every infinite graph. It is outside Appendix B finite-vocabulary reduction.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "infinite-graphs-permitted"
+      ],
+      "extraction_review": "pending",
+      "formalization_review": "pending"
+    },
+    {
+      "id": "MT11-CONTAINER-NO-FIXED-MEMBERSHIP-COUNT",
+      "section": "D.2",
+      "anchor": "containers",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#containers",
+      "category": "general_requirement",
+      "source_status": "informative",
+      "assertion_basis": "explicit",
+      "paraphrase": "RDF provides no way to assert that a container contains only a fixed number of members.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-CONTAINERS-DESCRIPTION"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "Unproved expressivity claim. An infinite-member witness or arbitrarily long displayed finite prefixes alone does not establish what every possible RDF assertion can express.",
+      "cleanroom_mapping": null,
+      "passages": [
+        "container-open-membership"
+      ],
+      "extraction_review": "pending",
+      "formalization_review": "not_started"
+    },
+    {
+      "id": "MT11-CONTAINER-MEMBERSHIP-ADDITION-CONSISTENCY",
+      "section": "D.2",
+      "anchor": "containers",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#containers",
+      "category": "mathematical_consequence",
+      "source_status": "informative",
+      "assertion_basis": "explicit",
+      "paraphrase": "The source states that adding a triple asserting a membership property of any container is always consistent.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-CONTAINERS-DESCRIPTION"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "Unproved general claim requiring explicit premise consistency, regime, datatype and fresh/existing-term scope. The new common-model prefix family is only a particular example and cannot discharge this universal wording.",
+      "cleanroom_mapping": null,
+      "passages": [
+        "container-open-membership"
+      ],
+      "extraction_review": "pending",
+      "formalization_review": "not_started"
+    },
+    {
+      "id": "MT11-CONTAINER-INFINITE-MEMBERS-PERMITTED",
+      "section": "D.2",
+      "anchor": "containers",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#containers",
+      "category": "general_requirement",
+      "source_status": "informative",
+      "assertion_basis": "explicit",
+      "paraphrase": "There is no built-in assumption that an RDF container has only finitely many members.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-CONTAINERS-DESCRIPTION",
+        "MT11-INFINITE-GRAPHS-PERMITTED"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "A conditional RDFS witness contains a Bag with an injective family of members and a generic member extension having no finite enumeration. This choice of distinct denotations is not required in every model of the same graph.",
+      "cleanroom_mapping": {
+        "claim_id": "MT11-CONTAINER-INFINITE-MEMBERS-PERMITTED",
+        "relation": "partial_theorem",
+        "symbol_linked_english": "infinite_members_witness gives an RDFS model with a Bag root, distinct indexed-member denotations and the corresponding generic rdfs:member edges. nonfinite_member_extension excludes a finite Enumeration of its members. prefixes_extend_in_common_model shows that this model also satisfies every displayed finitePrefix and its next-edge extension.",
+        "bindings": [
+          {
+            "symbol": "ContainerInfinitude.infinite_members_witness",
+            "lean": "RDF11.ContainerInfinitude.infinite_members_witness"
+          },
+          {
+            "symbol": "ContainerInfinitude.nonfinite_member_extension",
+            "lean": "RDF11.ContainerInfinitude.nonfinite_member_extension"
+          },
+          {
+            "symbol": "ContainerInfinitude.finitePrefix",
+            "lean": "RDF11.ContainerInfinitude.finitePrefix"
+          },
+          {
+            "symbol": "ContainerInfinitude.prefixes_extend_in_common_model",
+            "lean": "RDF11.ContainerInfinitude.prefixes_extend_in_common_model"
+          }
+        ],
+        "limitations": "These witnesses require RDFSModelConstruction.Parameters and abstract vocabulary; concrete datatype/name correspondence remains external. Distinct member denotations are a choice of this model, not a unique-name rule or a consequence in every model of the graph. Prefix extension concerns only this displayed family, not arbitrary-graph extension consistency. No exact prefix cardinality, next-edge freshness or general expressivity theorem is claimed.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "container-open-membership"
       ],
       "extraction_review": "pending",
       "formalization_review": "pending"

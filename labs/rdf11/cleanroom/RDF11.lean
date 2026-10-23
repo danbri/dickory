@@ -40,3 +40,5 @@ import RDF11.RDFSFreeProperties
 import RDF11.Reification
 import RDF11.ReificationExamples
 import RDF11.ContainerExamples
+import RDF11.NameInfinitude
+import RDF11.ContainerInfinitude

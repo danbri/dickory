@@ -256,7 +256,8 @@
         "MT11-LEAN-PROPER-INSTANCE-NONENTAILMENT",
         "MT11-PREMISE-MONOTONICITY",
         "MT11-COMPACTNESS",
-        "MT11-FRESH-IRI-NONENTAILMENT"
+        "MT11-FRESH-IRI-NONENTAILMENT",
+        "MT11-INFINITE-GRAPHS-PERMITTED"
       ]
     },
     {
@@ -572,7 +573,10 @@
         "MT11-CONTAINERS-INTENDED-TYPES",
         "MT11-CONTAINER-NO-PERMUTATION-ENTAILMENT",
         "MT11-CONTAINER-NO-PROPERTY-TRANSFER",
-        "MT11-CONTAINER-OPEN-STRUCTURE"
+        "MT11-CONTAINER-OPEN-STRUCTURE",
+        "MT11-CONTAINER-NO-FIXED-MEMBERSHIP-COUNT",
+        "MT11-CONTAINER-MEMBERSHIP-ADDITION-CONSISTENCY",
+        "MT11-CONTAINER-INFINITE-MEMBERS-PERMITTED"
       ]
     },
     {
@@ -4869,7 +4873,7 @@
       "category": "general_requirement",
       "source_status": "informative",
       "assertion_basis": "explicit",
-      "paraphrase": "Formal semantics does not require container classes to be disjoint or indexed positions to be gap-free; RDF supplies no fixed upper membership bound or general finiteness requirement.",
+      "paraphrase": "Formal semantics does not require container classes to be disjoint or indexed positions to be gap-free.",
       "official_rule_code": null,
       "dependencies": [
         "MT11-CONTAINERS-DESCRIPTION"
@@ -4880,7 +4884,7 @@
         "formal_proof": "unassessed",
         "test_mapping": "unassessed"
       },
-      "formalization_note": "These are absences of special constraints, not requirements that every application accept every intended container shape."
+      "formalization_note": "Gap and overlapping-type witnesses are separate from the three membership-count, extension-consistency and finiteness obligations split from paragraph 15 into their own records."
     },
     {
       "id": "MT11-COLLECTION-LINKED-STRUCTURE",
@@ -5073,7 +5077,7 @@
         "formal_proof": "unassessed",
         "test_mapping": "unassessed"
       },
-      "formalization_note": "This concerns the full name mappings, not a requirement that IR be infinite. No cardinality proof or concrete infinite IRI-domain binding is supplied yet; the finite pre-interpretation construction is discussed separately in informative Appendix B. The source paragraph has class technote and is non-normative under §2; the global IS/IL input-domain obligations are separately grounded in the normative interpretation table."
+      "formalization_note": "This concerns the full name mappings, not a requirement that IR be infinite. A natural-number injection into the abstract IRI domain now proves that the graph of IS has no finite enumeration, including a one-resource simple model. Concrete full IRI-domain correspondence remains external. Appendix B concerns finite-vocabulary pre-interpretations separately. This paragraph is a technote, non-normative under §2; the global IS/IL input-domain obligations are grounded separately in the normative table."
     },
     {
       "id": "MT11-RDF-MODEL-EXISTENCE-CONSTRUCTION",
@@ -5245,7 +5249,92 @@
         "test_mapping": "unassessed"
       },
       "formalization_note": "The source prints the opposite non-entailment connective. Keep the archived text intact and the question pending expert review; this derived record does not accept the printed non-entailment or declare an erratum."
+    },
+    {
+      "id": "MT11-INFINITE-GRAPHS-PERMITTED",
+      "section": "5.3",
+      "anchor": "properties-of-simple-entailment-informative",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#properties-of-simple-entailment-informative",
+      "category": "general_requirement",
+      "source_status": "informative",
+      "assertion_basis": "explicit",
+      "paraphrase": "RDF graphs may be infinite.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-GRAPH-SET"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "The selected paragraph also names compactness, already a separate claim. The new witness has ordinary ground syntax, no finite enumeration, and an RDFS model under explicit constructor hypotheses; it does not prove all infinite graphs satisfiable."
+    },
+    {
+      "id": "MT11-CONTAINER-NO-FIXED-MEMBERSHIP-COUNT",
+      "section": "D.2",
+      "anchor": "containers",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#containers",
+      "category": "general_requirement",
+      "source_status": "informative",
+      "assertion_basis": "explicit",
+      "paraphrase": "RDF provides no way to assert that a container contains only a fixed number of members.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-CONTAINERS-DESCRIPTION"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "Unproved expressivity claim. An infinite-member witness or arbitrarily long displayed finite prefixes alone does not establish what every possible RDF assertion can express."
+    },
+    {
+      "id": "MT11-CONTAINER-MEMBERSHIP-ADDITION-CONSISTENCY",
+      "section": "D.2",
+      "anchor": "containers",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#containers",
+      "category": "mathematical_consequence",
+      "source_status": "informative",
+      "assertion_basis": "explicit",
+      "paraphrase": "The source states that adding a triple asserting a membership property of any container is always consistent.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-CONTAINERS-DESCRIPTION"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "Unproved general claim requiring explicit premise consistency, regime, datatype and fresh/existing-term scope. The new common-model prefix family is only a particular example and cannot discharge this universal wording."
+    },
+    {
+      "id": "MT11-CONTAINER-INFINITE-MEMBERS-PERMITTED",
+      "section": "D.2",
+      "anchor": "containers",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#containers",
+      "category": "general_requirement",
+      "source_status": "informative",
+      "assertion_basis": "explicit",
+      "paraphrase": "There is no built-in assumption that an RDF container has only finitely many members.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-CONTAINERS-DESCRIPTION",
+        "MT11-INFINITE-GRAPHS-PERMITTED"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "A conditional RDFS witness contains a Bag with an injective family of members and a generic member extension having no finite enumeration. This choice of distinct denotations is not required in every model of the same graph."
     }
   ],
-  "record_count": 206
+  "record_count": 210
 }
