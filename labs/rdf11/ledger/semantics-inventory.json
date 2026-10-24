@@ -4553,7 +4553,7 @@
         "formal_proof": "unassessed",
         "test_mapping": "unassessed"
       },
-      "formalization_note": "The source does not explicitly state a finite-input premise. The twenty-second increment proves exact finiteness for the printed procedure: finite premise and finitely many conclusion-selected container names. It derives a cubic term-universe bound and a distinct-insertion bound, but not effective generation or runtime complexity. A consistent infinite-premise witness refutes the unqualified finite-closure reading. Expert source adjudication remains pending.",
+      "formalization_note": "The source does not explicitly state a finite-input premise. Exact finiteness requires finite premise and finitely many conclusion-selected container names. The twenty-third increment supplies a separate executable generator for finite supplied G/E lists, decidable term equality and exact container decoding, with equality to the unchanged inductive closure and a sufficient K³ round budget. Neither the size bound nor the round budget proves polynomial machine time. The consistent infinite-premise counterexample and source adjudication remain open.",
       "review_questions": [
         "RQ-FINITE-CLOSURE-DOMAIN"
       ]
@@ -5638,7 +5638,31 @@
       "review_questions": [
         "Q-CLOSURE-TAUTOLOGY-VOCABULARY"
       ]
+    },
+    {
+      "id": "MT11-EXECUTABLE-CLOSURE-REFINEMENT",
+      "section": "A",
+      "anchor": "entailment_rules",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#entailment_rules",
+      "category": "mathematical_consequence",
+      "source_status": "informative",
+      "assertion_basis": "derived",
+      "paraphrase": "For finite supplied premise and conclusion lists, decidable syntactic term equality and an exact container-IRI decoder, the executable RDF/RDFS evaluator returns a duplicate-free enumeration of exactly the printed generalized closure. Membership is decidable and output cardinality depends only on the represented input graphs.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-GENERALIZED-CLOSURE",
+        "MT11-FINITE-CLOSURE-COMPLEXITY",
+        "MT11-GRAPH-SET",
+        "MT11-NAMES-VOCABULARIES"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "Derived executable-refinement obligation, not a new quoted W3C assertion. The decoder is a supplied function with a soundness/completeness proof. Equality is equality in the abstract term types; concrete IRI/literal validity and equality correspondence remain external. Correctness is exact agreement with the printed selection, fallback and rules. It does not establish polynomial machine time, full entailment completeness, concrete parsing, arbitrary-D generation, fresh-blank rdfD1 or published-package refinement."
     }
   ],
-  "record_count": 222
+  "record_count": 223
 }

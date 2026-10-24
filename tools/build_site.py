@@ -14,7 +14,8 @@ LAB = Path("labs/rdf11")
 ARTIFACTS = LAB / "cleanroom/artifacts"
 FILES = [Path("index.html"), Path("labs/index.html"), LAB / "index.html"]
 FILES += [ARTIFACTS / name for name in (
-    "source-review.html", "verification.json", "negative-checks.json", "declarations.json"
+    "source-review.html", "verification.json", "negative-checks.json", "declarations.json",
+    "closure-execution.json"
 )]
 
 
@@ -34,7 +35,9 @@ class Links(HTMLParser):
 def main():
     evidence = json.loads((ROOT / ARTIFACTS / "verification.json").read_text())
     negative = json.loads((ROOT / ARTIFACTS / "negative-checks.json").read_text())
-    if evidence["errors"] or negative["status"] != "pass":
+    execution = json.loads((ROOT / ARTIFACTS / "closure-execution.json").read_text())
+    if (evidence["errors"] or negative["status"] != "pass"
+            or execution["status"] != "pass" or not execution["checks"]):
         raise SystemExit("Refusing to publish failing verification evidence")
     for path in FILES:
         if not (ROOT / path).is_file():

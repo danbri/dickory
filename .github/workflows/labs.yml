@@ -31,6 +31,9 @@ jobs:
       - name: Exercise rejection checks
         working-directory: labs/rdf11/cleanroom
         run: python3 tools/negative_checks.py
+      - name: Exercise executable closure regressions
+        working-directory: labs/rdf11/cleanroom
+        run: python3 tools/closure_execution.py
       - name: Generate review viewer
         working-directory: labs/rdf11/cleanroom
         run: |

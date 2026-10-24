@@ -64,3 +64,8 @@ import RDF11.ClosureTermBounds
 import RDF11.ClosureVocabulary
 import RDF11.FiniteClosure
 import RDF11.ClosureFinitenessScope
+import RDF11.FiniteSaturation
+import RDF11.ClosureRuleEvaluation
+import RDF11.ClosureSeedEvaluation
+import RDF11.ClosureAxiomEvaluation
+import RDF11.ExecutableClosure

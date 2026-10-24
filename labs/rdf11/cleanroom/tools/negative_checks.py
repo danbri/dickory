@@ -83,6 +83,33 @@ log = run.stdout + run.stderr
 assert run.returncode != 0 and "False" in log and "unsolved goals" in log, log
 results.append("Lean rejects an inadmissible graph before entailment")
 
+snippet = """import RDF11
+open RDF11
+def wrongDecoder : ClosureEvaluation.ContainerDecoder (fun n : Nat => n + 1) where
+  decode := fun _ => some 0
+  correct := by intro a n; cases a <;> cases n <;> simp
+"""
+run = subprocess.run(["lake", "env", "lean", "--stdin"], cwd=ROOT, env=env,
+                     input=snippet, text=True, capture_output=True)
+log = run.stdout + run.stderr
+(ROOT / "artifacts/decoder-rejected.log").write_text(log)
+assert run.returncode != 0 and "False" in log and "unsolved goals" in log, log
+results.append("Lean rejects an incorrect indexed-name decoder")
+
+snippet = """import RDF11
+open RDF11
+def nextFact (_ : List Nat) : List Nat := [1]
+example : FiniteSaturation.stable nextFact (FiniteSaturation.run nextFact 0 []) = true := by
+  change false = true
+  simp
+"""
+run = subprocess.run(["lake", "env", "lean", "--stdin"], cwd=ROOT, env=env,
+                     input=snippet, text=True, capture_output=True)
+log = run.stdout + run.stderr
+(ROOT / "artifacts/unsaturated-result-rejected.log").write_text(log)
+assert run.returncode != 0 and "False" in log and "unsolved goals" in log, log
+results.append("Lean rejects a zero-fuel result as saturated")
+
 (ROOT / "artifacts/negative-checks.json").write_text(json.dumps(
     {"status": "pass", "checks": results}, indent=2) + "\n")
 print(json.dumps(results, indent=2))

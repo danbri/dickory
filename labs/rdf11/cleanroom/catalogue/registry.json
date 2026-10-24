@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "status": "frozen_twenty_second_increment_finite_closure_not_expert_approved",
+  "status": "frozen_twenty_third_increment_executable_closure_not_expert_approved",
   "lean_version": "4.33.1",
   "allowed_axioms": [
     "propext",
@@ -641,12 +641,30 @@
         "MT11-GRAPH-TRUTH",
         "MT11-INFINITE-GRAPHS-PERMITTED"
       ]
+    },
+    {
+      "id": "SUPPORT-EXECUTABLE-CLOSURE",
+      "purpose": "Exact executable refinement of the unchanged finite-input Appendix A RDF/RDFS closure. Certified decoder, axiom seed, rule rounds and sufficient finite saturation imply duplicate-free exact membership and graph-invariant counts. Does not establish source completeness, concrete parsing, polynomial cost or package refinement.",
+      "requires": [
+        "MT11-EXECUTABLE-CLOSURE-REFINEMENT",
+        "MT11-GENERALIZED-CLOSURE",
+        "MT11-FINITE-CLOSURE-COMPLEXITY",
+        "MT11-GRAPH-SET",
+        "MT11-NAMES-VOCABULARIES"
+      ]
+    },
+    {
+      "id": "SUPPORT-CLOSURE-EXECUTION-FIXTURES",
+      "purpose": "Project-owned symbolic runtime fixtures for the executable closure contract. Their decoder proof is kernel checked; Boolean checks are separately executed and are not W3C tests, native-evaluation proofs or npm verification.",
+      "requires": [
+        "MT11-EXECUTABLE-CLOSURE-REFINEMENT"
+      ]
     }
   ],
   "files": [
     {
       "path": "Audit.lean",
-      "sha256": "405587da16ceeebaa676d7061707f463bbc17568f13137a32fb4a6f1bdfe43db",
+      "sha256": "1efd28c9acd3d8e3ec632653c56e4feabaf9710edf1d75cc7e74d9e6c9b5be92",
       "role": "formal_source",
       "lifecycle": "active",
       "review": "pending_expert_review"
@@ -667,14 +685,14 @@
     },
     {
       "path": "Audit/Snapshot.lean",
-      "sha256": "5478565042919a8f2c7b717586200635e8defea574858a3637a8f83b0b226cc3",
+      "sha256": "5154558eb8af24d0178dc2a1365d1e0fe7481dabf827df0940db5dd4c6087224",
       "role": "formal_source",
       "lifecycle": "active",
       "review": "pending_expert_review"
     },
     {
       "path": "RDF11.lean",
-      "sha256": "50e14312b307eb121a8107b48c067a56ad8047594df9b3d3e2ba33618abe2a81",
+      "sha256": "cf705a012b3847a56a791ec6a51f25c88a6b8e924c82aa3c0564e8e7b8af0139",
       "role": "formal_source",
       "lifecycle": "active",
       "review": "pending_expert_review"
@@ -1172,6 +1190,48 @@
     {
       "path": "RDF11/ClosureFinitenessScope.lean",
       "sha256": "f1a76a58b35d350f8dd6eb7d276035299204fa2343a2f365b027cb66d1e5c9bb",
+      "role": "formal_source",
+      "lifecycle": "active",
+      "review": "pending_expert_review"
+    },
+    {
+      "path": "RDF11/FiniteSaturation.lean",
+      "sha256": "fb6ba157df1cde45d1a2826442ef95c4417e7efe92e03cb0eec473dd0050e9c6",
+      "role": "formal_source",
+      "lifecycle": "active",
+      "review": "pending_expert_review"
+    },
+    {
+      "path": "RDF11/ClosureRuleEvaluation.lean",
+      "sha256": "4ca0869c91a86897ba87886f8eb4f76cf302ff83e6e3c3f08ef463c0d2ff9ab4",
+      "role": "formal_source",
+      "lifecycle": "active",
+      "review": "pending_expert_review"
+    },
+    {
+      "path": "RDF11/ClosureSeedEvaluation.lean",
+      "sha256": "6189ec74e57434e4a8676d2ba867ce33cdcea9631df7ed010c5f8c489a9cfca7",
+      "role": "formal_source",
+      "lifecycle": "active",
+      "review": "pending_expert_review"
+    },
+    {
+      "path": "RDF11/ClosureAxiomEvaluation.lean",
+      "sha256": "1af79e7d413c10572b0cc293de92470c8413bc83eed62d94af2bf11533a5650a",
+      "role": "formal_source",
+      "lifecycle": "active",
+      "review": "pending_expert_review"
+    },
+    {
+      "path": "RDF11/ExecutableClosure.lean",
+      "sha256": "1593c621deed27be3d60c39c9cda9c61f835442a75d2e142990e0ee9a6abca4b",
+      "role": "formal_source",
+      "lifecycle": "active",
+      "review": "pending_expert_review"
+    },
+    {
+      "path": "Audit/ClosureExecution.lean",
+      "sha256": "326f40039d167381af001d0bdd9746dbbbe30ca3518d30cbc42d9d2b6bef1585",
       "role": "formal_source",
       "lifecycle": "active",
       "review": "pending_expert_review"
@@ -31325,6 +31385,3149 @@
         "SUPPORT-FINITE-CLOSURE"
       ],
       "parent_declaration_if_applicable": "RDF11.ClosureBound.expanded.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.AxiomSeed.eq_1",
+      "module": "RDF11.ClosureSeedEvaluation",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri B₁ B₂ : Type} (datatype : Literal → Iri) (container : Nat → Iri)\n  (axioms G : RDF11.GeneralizedGraph Iri Literal B₁) (E : RDF11.GeneralizedGraph Iri Literal B₂)\n  (t : RDF11.GeneralizedTriple Iri Literal B₁),\n  RDF11.AxiomSeed datatype container axioms G E t =\n    (G t ∨\n      RDF11.NonContainerAxioms datatype container axioms t ∨\n        RDF11.ConclusionAxioms datatype container axioms E t ∨\n          RDF11.Set.subset (RDF11.ConclusionAxioms datatype container axioms E)\n              (RDF11.Set.union G (RDF11.NonContainerAxioms datatype container axioms)) ∧\n            RDF11.ContainerAxioms datatype container axioms 0 t)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.AxiomSeed",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.AxiomLists",
+      "module": "RDF11.ClosureSeedEvaluation",
+      "kind": "inductive",
+      "type": "{Iri Literal B : Type} → (Literal → Iri) → (Nat → Iri) → RDF11.GeneralizedGraph Iri Literal B → Type",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE",
+        "MT11-GENERALIZED-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.AxiomLists._sizeOf_1",
+      "module": "RDF11.ClosureSeedEvaluation",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  {datatype : Literal → Iri} →\n    {container : Nat → Iri} →\n      {axioms : RDF11.GeneralizedGraph Iri Literal B} →\n        [SizeOf Iri] →\n          [SizeOf Literal] →\n            [SizeOf B] →\n              [(a : RDF11.GeneralizedTriple Iri Literal B) → SizeOf (axioms a)] →\n                RDF11.ClosureEvaluation.AxiomLists datatype container axioms → Nat",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.AxiomLists",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.AxiomLists._sizeOf_inst",
+      "module": "RDF11.ClosureSeedEvaluation",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  (datatype : Literal → Iri) →\n    (container : Nat → Iri) →\n      (axioms : RDF11.GeneralizedGraph Iri Literal B) →\n        [SizeOf Iri] →\n          [SizeOf Literal] →\n            [SizeOf B] →\n              [(a : RDF11.GeneralizedTriple Iri Literal B) → SizeOf (axioms a)] →\n                SizeOf (RDF11.ClosureEvaluation.AxiomLists datatype container axioms)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.AxiomLists",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.AxiomLists.casesOn",
+      "module": "RDF11.ClosureSeedEvaluation",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  {datatype : Literal → Iri} →\n    {container : Nat → Iri} →\n      {axioms : RDF11.GeneralizedGraph Iri Literal B} →\n        {motive : RDF11.ClosureEvaluation.AxiomLists datatype container axioms → Sort u} →\n          (t : RDF11.ClosureEvaluation.AxiomLists datatype container axioms) →\n            ((fixed : List (RDF11.GeneralizedTriple Iri Literal B)) →\n                (indexed : Nat → List (RDF11.GeneralizedTriple Iri Literal B)) →\n                  (fixed_iff :\n                      ∀ (t : RDF11.GeneralizedTriple Iri Literal B),\n                        t ∈ fixed ↔ RDF11.NonContainerAxioms datatype container axioms t) →\n                    (indexed_iff :\n                        ∀ (n : Nat) (t : RDF11.GeneralizedTriple Iri Literal B),\n                          t ∈ indexed n ↔ RDF11.ContainerAxioms datatype container axioms n t) →\n                      motive\n                        { fixed := fixed, indexed := indexed, fixed_iff := fixed_iff, indexed_iff := indexed_iff }) →\n              motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.AxiomLists",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.AxiomLists.ctorIdx",
+      "module": "RDF11.ClosureSeedEvaluation",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  {datatype : Literal → Iri} →\n    {container : Nat → Iri} →\n      {axioms : RDF11.GeneralizedGraph Iri Literal B} →\n        RDF11.ClosureEvaluation.AxiomLists datatype container axioms → Nat",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.AxiomLists",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.AxiomLists.fallback",
+      "module": "RDF11.ClosureSeedEvaluation",
+      "kind": "definition",
+      "type": "{Iri Literal B₁ B₂ : Type} →\n  {container : Nat → Iri} →\n    {datatype : Literal → Iri} →\n      {axioms : RDF11.GeneralizedGraph Iri Literal B₁} →\n        [DecidableEq Iri] →\n          [DecidableEq Literal] →\n            [DecidableEq B₁] →\n              RDF11.ClosureEvaluation.AxiomLists datatype container axioms →\n                RDF11.ClosureEvaluation.ContainerDecoder container →\n                  List (RDF11.GeneralizedTriple Iri Literal B₁) → List (RDF11.GeneralizedTriple Iri Literal B₂) → Bool",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.AxiomLists",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.AxiomLists.fallback._proof_1",
+      "module": "RDF11.ClosureSeedEvaluation",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B₁ : Type} [inst : DecidableEq Iri] [inst_1 : DecidableEq Literal] [inst_2 : DecidableEq B₁],\n  LawfulBEq (RDF11.GeneralizedTriple Iri Literal B₁)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.AxiomLists.fallback",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.AxiomLists.fallback.congr_simp",
+      "module": "RDF11.ClosureSeedEvaluation",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B₁ B₂ : Type} {container : Nat → Iri} {datatype : Literal → Iri}\n  {axioms : RDF11.GeneralizedGraph Iri Literal B₁} {inst : DecidableEq Iri} [inst_1 : DecidableEq Iri]\n  {inst_2 : DecidableEq Literal} [inst_3 : DecidableEq Literal] {inst_4 : DecidableEq B₁} [inst_5 : DecidableEq B₁]\n  (a a_1 : RDF11.ClosureEvaluation.AxiomLists datatype container axioms),\n  a = a_1 →\n    ∀ (d d_1 : RDF11.ClosureEvaluation.ContainerDecoder container),\n      d = d_1 →\n        ∀ (G G_1 : List (RDF11.GeneralizedTriple Iri Literal B₁)),\n          G = G_1 →\n            ∀ (E E_1 : List (RDF11.GeneralizedTriple Iri Literal B₂)),\n              E = E_1 → a.fallback d G E = a_1.fallback d_1 G_1 E_1",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.AxiomLists.fallback",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.AxiomLists.fallback.eq_1",
+      "module": "RDF11.ClosureSeedEvaluation",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B₁ B₂ : Type} {container : Nat → Iri} {datatype : Literal → Iri}\n  {axioms : RDF11.GeneralizedGraph Iri Literal B₁} [inst : DecidableEq Iri] [inst_1 : DecidableEq Literal]\n  [inst_2 : DecidableEq B₁] (a : RDF11.ClosureEvaluation.AxiomLists datatype container axioms)\n  (d : RDF11.ClosureEvaluation.ContainerDecoder container) (G : List (RDF11.GeneralizedTriple Iri Literal B₁))\n  (E : List (RDF11.GeneralizedTriple Iri Literal B₂)),\n  a.fallback d G E = (a.selected d E).all fun t => decide (t ∈ G ++ a.fixed)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.AxiomLists.fallback",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.AxiomLists.fallback_iff",
+      "module": "RDF11.ClosureSeedEvaluation",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B₁ B₂ : Type} {container : Nat → Iri} {datatype : Literal → Iri}\n  {axioms : RDF11.GeneralizedGraph Iri Literal B₁} [inst : DecidableEq Iri] [inst_1 : DecidableEq Literal]\n  [inst_2 : DecidableEq B₁] (a : RDF11.ClosureEvaluation.AxiomLists datatype container axioms)\n  (d : RDF11.ClosureEvaluation.ContainerDecoder container) (G : List (RDF11.GeneralizedTriple Iri Literal B₁))\n  (E : List (RDF11.GeneralizedTriple Iri Literal B₂)),\n  a.fallback d G E = true ↔\n    RDF11.Set.subset (RDF11.ConclusionAxioms datatype container axioms (RDF11.Set.ofList E))\n      ((RDF11.Set.ofList G).union (RDF11.NonContainerAxioms datatype container axioms))",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE",
+        "MT11-GENERALIZED-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.AxiomLists",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.AxiomLists.fallback_iff._simp_1_2",
+      "module": "RDF11.ClosureSeedEvaluation",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_1} {p : α → Bool} {l : List α}, (l.all p = true) = ∀ (x : α), x ∈ l → p x = true",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.AxiomLists.fallback_iff",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.AxiomLists.fallback_iff._simp_1_3",
+      "module": "RDF11.ClosureSeedEvaluation",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_1} {a : α} {s t : List α}, (a ∈ s ++ t) = (a ∈ s ∨ a ∈ t)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.AxiomLists.fallback_iff",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.AxiomLists.fixed",
+      "module": "RDF11.ClosureSeedEvaluation",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  {datatype : Literal → Iri} →\n    {container : Nat → Iri} →\n      {axioms : RDF11.GeneralizedGraph Iri Literal B} →\n        RDF11.ClosureEvaluation.AxiomLists datatype container axioms → List (RDF11.GeneralizedTriple Iri Literal B)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.AxiomLists",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.AxiomLists.fixed_iff",
+      "module": "RDF11.ClosureSeedEvaluation",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {datatype : Literal → Iri} {container : Nat → Iri}\n  {axioms : RDF11.GeneralizedGraph Iri Literal B} (self : RDF11.ClosureEvaluation.AxiomLists datatype container axioms)\n  (t : RDF11.GeneralizedTriple Iri Literal B), t ∈ self.fixed ↔ RDF11.NonContainerAxioms datatype container axioms t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.AxiomLists",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.AxiomLists.indexed",
+      "module": "RDF11.ClosureSeedEvaluation",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  {datatype : Literal → Iri} →\n    {container : Nat → Iri} →\n      {axioms : RDF11.GeneralizedGraph Iri Literal B} →\n        RDF11.ClosureEvaluation.AxiomLists datatype container axioms →\n          Nat → List (RDF11.GeneralizedTriple Iri Literal B)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.AxiomLists",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.AxiomLists.indexed_iff",
+      "module": "RDF11.ClosureSeedEvaluation",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {datatype : Literal → Iri} {container : Nat → Iri}\n  {axioms : RDF11.GeneralizedGraph Iri Literal B} (self : RDF11.ClosureEvaluation.AxiomLists datatype container axioms)\n  (n : Nat) (t : RDF11.GeneralizedTriple Iri Literal B),\n  t ∈ self.indexed n ↔ RDF11.ContainerAxioms datatype container axioms n t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.AxiomLists",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.AxiomLists.mk",
+      "module": "RDF11.ClosureSeedEvaluation",
+      "kind": "constructor",
+      "type": "{Iri Literal B : Type} →\n  {datatype : Literal → Iri} →\n    {container : Nat → Iri} →\n      {axioms : RDF11.GeneralizedGraph Iri Literal B} →\n        (fixed : List (RDF11.GeneralizedTriple Iri Literal B)) →\n          (indexed : Nat → List (RDF11.GeneralizedTriple Iri Literal B)) →\n            (∀ (t : RDF11.GeneralizedTriple Iri Literal B),\n                t ∈ fixed ↔ RDF11.NonContainerAxioms datatype container axioms t) →\n              (∀ (n : Nat) (t : RDF11.GeneralizedTriple Iri Literal B),\n                  t ∈ indexed n ↔ RDF11.ContainerAxioms datatype container axioms n t) →\n                RDF11.ClosureEvaluation.AxiomLists datatype container axioms",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.AxiomLists",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.AxiomLists.mk._flat_ctor",
+      "module": "RDF11.ClosureSeedEvaluation",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  {datatype : Literal → Iri} →\n    {container : Nat → Iri} →\n      {axioms : RDF11.GeneralizedGraph Iri Literal B} →\n        (fixed : List (RDF11.GeneralizedTriple Iri Literal B)) →\n          (indexed : Nat → List (RDF11.GeneralizedTriple Iri Literal B)) →\n            (∀ (t : RDF11.GeneralizedTriple Iri Literal B),\n                t ∈ fixed ↔ RDF11.NonContainerAxioms datatype container axioms t) →\n              (∀ (n : Nat) (t : RDF11.GeneralizedTriple Iri Literal B),\n                  t ∈ indexed n ↔ RDF11.ContainerAxioms datatype container axioms n t) →\n                RDF11.ClosureEvaluation.AxiomLists datatype container axioms",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.AxiomLists.mk",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.AxiomLists.mk.inj",
+      "module": "RDF11.ClosureSeedEvaluation",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {datatype : Literal → Iri} {container : Nat → Iri}\n  {axioms : RDF11.GeneralizedGraph Iri Literal B} {fixed : List (RDF11.GeneralizedTriple Iri Literal B)}\n  {indexed : Nat → List (RDF11.GeneralizedTriple Iri Literal B)}\n  {fixed_iff :\n    ∀ (t : RDF11.GeneralizedTriple Iri Literal B), t ∈ fixed ↔ RDF11.NonContainerAxioms datatype container axioms t}\n  {indexed_iff :\n    ∀ (n : Nat) (t : RDF11.GeneralizedTriple Iri Literal B),\n      t ∈ indexed n ↔ RDF11.ContainerAxioms datatype container axioms n t}\n  {fixed_1 : List (RDF11.GeneralizedTriple Iri Literal B)}\n  {indexed_1 : Nat → List (RDF11.GeneralizedTriple Iri Literal B)}\n  {fixed_iff_1 :\n    ∀ (t : RDF11.GeneralizedTriple Iri Literal B), t ∈ fixed_1 ↔ RDF11.NonContainerAxioms datatype container axioms t}\n  {indexed_iff_1 :\n    ∀ (n : Nat) (t : RDF11.GeneralizedTriple Iri Literal B),\n      t ∈ indexed_1 n ↔ RDF11.ContainerAxioms datatype container axioms n t},\n  { fixed := fixed, indexed := indexed, fixed_iff := fixed_iff, indexed_iff := indexed_iff } =\n      { fixed := fixed_1, indexed := indexed_1, fixed_iff := fixed_iff_1, indexed_iff := indexed_iff_1 } →\n    fixed = fixed_1 ∧ indexed = indexed_1",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.AxiomLists.mk",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.AxiomLists.mk.injEq",
+      "module": "RDF11.ClosureSeedEvaluation",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {datatype : Literal → Iri} {container : Nat → Iri}\n  {axioms : RDF11.GeneralizedGraph Iri Literal B} (fixed : List (RDF11.GeneralizedTriple Iri Literal B))\n  (indexed : Nat → List (RDF11.GeneralizedTriple Iri Literal B))\n  (fixed_iff :\n    ∀ (t : RDF11.GeneralizedTriple Iri Literal B), t ∈ fixed ↔ RDF11.NonContainerAxioms datatype container axioms t)\n  (indexed_iff :\n    ∀ (n : Nat) (t : RDF11.GeneralizedTriple Iri Literal B),\n      t ∈ indexed n ↔ RDF11.ContainerAxioms datatype container axioms n t)\n  (fixed_1 : List (RDF11.GeneralizedTriple Iri Literal B))\n  (indexed_1 : Nat → List (RDF11.GeneralizedTriple Iri Literal B))\n  (fixed_iff_1 :\n    ∀ (t : RDF11.GeneralizedTriple Iri Literal B), t ∈ fixed_1 ↔ RDF11.NonContainerAxioms datatype container axioms t)\n  (indexed_iff_1 :\n    ∀ (n : Nat) (t : RDF11.GeneralizedTriple Iri Literal B),\n      t ∈ indexed_1 n ↔ RDF11.ContainerAxioms datatype container axioms n t),\n  ({ fixed := fixed, indexed := indexed, fixed_iff := fixed_iff, indexed_iff := indexed_iff } =\n      { fixed := fixed_1, indexed := indexed_1, fixed_iff := fixed_iff_1, indexed_iff := indexed_iff_1 }) =\n    (fixed = fixed_1 ∧ indexed = indexed_1)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.AxiomLists.mk",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.AxiomLists.mk.noConfusion",
+      "module": "RDF11.ClosureSeedEvaluation",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  {datatype : Literal → Iri} →\n    {container : Nat → Iri} →\n      {axioms : RDF11.GeneralizedGraph Iri Literal B} →\n        {P : Sort u} →\n          {fixed : List (RDF11.GeneralizedTriple Iri Literal B)} →\n            {indexed : Nat → List (RDF11.GeneralizedTriple Iri Literal B)} →\n              {fixed_iff :\n                  ∀ (t : RDF11.GeneralizedTriple Iri Literal B),\n                    t ∈ fixed ↔ RDF11.NonContainerAxioms datatype container axioms t} →\n                {indexed_iff :\n                    ∀ (n : Nat) (t : RDF11.GeneralizedTriple Iri Literal B),\n                      t ∈ indexed n ↔ RDF11.ContainerAxioms datatype container axioms n t} →\n                  {fixed' : List (RDF11.GeneralizedTriple Iri Literal B)} →\n                    {indexed' : Nat → List (RDF11.GeneralizedTriple Iri Literal B)} →\n                      {fixed_iff' :\n                          ∀ (t : RDF11.GeneralizedTriple Iri Literal B),\n                            t ∈ fixed' ↔ RDF11.NonContainerAxioms datatype container axioms t} →\n                        {indexed_iff' :\n                            ∀ (n : Nat) (t : RDF11.GeneralizedTriple Iri Literal B),\n                              t ∈ indexed' n ↔ RDF11.ContainerAxioms datatype container axioms n t} →\n                          { fixed := fixed, indexed := indexed, fixed_iff := fixed_iff, indexed_iff := indexed_iff } =\n                              { fixed := fixed', indexed := indexed', fixed_iff := fixed_iff',\n                                indexed_iff := indexed_iff' } →\n                            (fixed ≍ fixed' → indexed ≍ indexed' → P) → P",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.AxiomLists.mk",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.AxiomLists.mk.sizeOf_spec",
+      "module": "RDF11.ClosureSeedEvaluation",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {datatype : Literal → Iri} {container : Nat → Iri}\n  {axioms : RDF11.GeneralizedGraph Iri Literal B} [inst : SizeOf Iri] [inst_1 : SizeOf Literal] [inst_2 : SizeOf B]\n  [inst_3 : (a : RDF11.GeneralizedTriple Iri Literal B) → SizeOf (axioms a)]\n  (fixed : List (RDF11.GeneralizedTriple Iri Literal B)) (indexed : Nat → List (RDF11.GeneralizedTriple Iri Literal B))\n  (fixed_iff :\n    ∀ (t : RDF11.GeneralizedTriple Iri Literal B), t ∈ fixed ↔ RDF11.NonContainerAxioms datatype container axioms t)\n  (indexed_iff :\n    ∀ (n : Nat) (t : RDF11.GeneralizedTriple Iri Literal B),\n      t ∈ indexed n ↔ RDF11.ContainerAxioms datatype container axioms n t),\n  sizeOf { fixed := fixed, indexed := indexed, fixed_iff := fixed_iff, indexed_iff := indexed_iff } = 1 + sizeOf fixed",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.AxiomLists.mk",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.AxiomLists.noConfusion",
+      "module": "RDF11.ClosureSeedEvaluation",
+      "kind": "definition",
+      "type": "{P : Sort u} →\n  {Iri Literal B : Type} →\n    {datatype : Literal → Iri} →\n      {container : Nat → Iri} →\n        {axioms : RDF11.GeneralizedGraph Iri Literal B} →\n          {t : RDF11.ClosureEvaluation.AxiomLists datatype container axioms} →\n            {Iri' Literal' B' : Type} →\n              {datatype' : Literal' → Iri'} →\n                {container' : Nat → Iri'} →\n                  {axioms' : RDF11.GeneralizedGraph Iri' Literal' B'} →\n                    {t' : RDF11.ClosureEvaluation.AxiomLists datatype' container' axioms'} →\n                      Iri = Iri' →\n                        Literal = Literal' →\n                          B = B' →\n                            datatype ≍ datatype' →\n                              container ≍ container' →\n                                axioms ≍ axioms' → t ≍ t' → RDF11.ClosureEvaluation.AxiomLists.noConfusionType P t t'",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.AxiomLists",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.AxiomLists.noConfusionType",
+      "module": "RDF11.ClosureSeedEvaluation",
+      "kind": "definition",
+      "type": "Sort u →\n  {Iri Literal B : Type} →\n    {datatype : Literal → Iri} →\n      {container : Nat → Iri} →\n        {axioms : RDF11.GeneralizedGraph Iri Literal B} →\n          RDF11.ClosureEvaluation.AxiomLists datatype container axioms →\n            {Iri' Literal' B' : Type} →\n              {datatype' : Literal' → Iri'} →\n                {container' : Nat → Iri'} →\n                  {axioms' : RDF11.GeneralizedGraph Iri' Literal' B'} →\n                    RDF11.ClosureEvaluation.AxiomLists datatype' container' axioms' → Sort u",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.AxiomLists",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.AxiomLists.ofPartition",
+      "module": "RDF11.ClosureSeedEvaluation",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  (datatype : Literal → Iri) →\n    (container : Nat → Iri) →\n      (axioms : RDF11.GeneralizedGraph Iri Literal B) →\n        (fixed : List (RDF11.GeneralizedTriple Iri Literal B)) →\n          (indexed : Nat → List (RDF11.GeneralizedTriple Iri Literal B)) →\n            (∀ (t : RDF11.GeneralizedTriple Iri Literal B), axioms t ↔ t ∈ fixed ∨ ∃ n, t ∈ indexed n) →\n              (∀ (t : RDF11.GeneralizedTriple Iri Literal B),\n                  t ∈ fixed → ∀ (n : Nat), ¬RDF11.GeneralizedTriple.names datatype t (Sum.inl (container n))) →\n                (∀ (n : Nat) (t : RDF11.GeneralizedTriple Iri Literal B),\n                    t ∈ indexed n →\n                      ∀ (k : Nat), RDF11.GeneralizedTriple.names datatype t (Sum.inl (container k)) ↔ k = n) →\n                  RDF11.ClosureEvaluation.AxiomLists datatype container axioms",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.AxiomLists",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.AxiomLists.ofPartition._proof_1",
+      "module": "RDF11.ClosureSeedEvaluation",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (datatype : Literal → Iri) (container : Nat → Iri)\n  (axioms : RDF11.GeneralizedGraph Iri Literal B) (fixed : List (RDF11.GeneralizedTriple Iri Literal B))\n  (indexed : Nat → List (RDF11.GeneralizedTriple Iri Literal B)),\n  (∀ (t : RDF11.GeneralizedTriple Iri Literal B), axioms t ↔ t ∈ fixed ∨ ∃ n, t ∈ indexed n) →\n    (∀ (t : RDF11.GeneralizedTriple Iri Literal B),\n        t ∈ fixed → ∀ (n : Nat), ¬RDF11.GeneralizedTriple.names datatype t (Sum.inl (container n))) →\n      (∀ (n : Nat) (t : RDF11.GeneralizedTriple Iri Literal B),\n          t ∈ indexed n → ∀ (k : Nat), RDF11.GeneralizedTriple.names datatype t (Sum.inl (container k)) ↔ k = n) →\n        ∀ (t : RDF11.GeneralizedTriple Iri Literal B), t ∈ fixed ↔ RDF11.NonContainerAxioms datatype container axioms t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.AxiomLists.ofPartition",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.AxiomLists.ofPartition._proof_2",
+      "module": "RDF11.ClosureSeedEvaluation",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (datatype : Literal → Iri) (container : Nat → Iri)\n  (axioms : RDF11.GeneralizedGraph Iri Literal B) (fixed : List (RDF11.GeneralizedTriple Iri Literal B))\n  (indexed : Nat → List (RDF11.GeneralizedTriple Iri Literal B)),\n  (∀ (t : RDF11.GeneralizedTriple Iri Literal B), axioms t ↔ t ∈ fixed ∨ ∃ n, t ∈ indexed n) →\n    (∀ (t : RDF11.GeneralizedTriple Iri Literal B),\n        t ∈ fixed → ∀ (n : Nat), ¬RDF11.GeneralizedTriple.names datatype t (Sum.inl (container n))) →\n      (∀ (n : Nat) (t : RDF11.GeneralizedTriple Iri Literal B),\n          t ∈ indexed n → ∀ (k : Nat), RDF11.GeneralizedTriple.names datatype t (Sum.inl (container k)) ↔ k = n) →\n        ∀ (n : Nat) (t : RDF11.GeneralizedTriple Iri Literal B),\n          t ∈ indexed n ↔ RDF11.ContainerAxioms datatype container axioms n t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.AxiomLists.ofPartition",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.AxiomLists.ofPartition.match_1",
+      "module": "RDF11.ClosureSeedEvaluation",
+      "kind": "definition",
+      "type": "∀ {Iri Literal B : Type} (datatype : Literal → Iri) (container : Nat → Iri) (t : RDF11.GeneralizedTriple Iri Literal B)\n  (motive : (∃ n, RDF11.GeneralizedTriple.names datatype t (Sum.inl (container n))) → Prop)\n  (x : ∃ n, RDF11.GeneralizedTriple.names datatype t (Sum.inl (container n))),\n  (∀ (n : Nat) (hn : RDF11.GeneralizedTriple.names datatype t (Sum.inl (container n))), motive ⋯) → motive x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.AxiomLists.ofPartition",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.AxiomLists.rec",
+      "module": "RDF11.ClosureSeedEvaluation",
+      "kind": "recursor",
+      "type": "{Iri Literal B : Type} →\n  {datatype : Literal → Iri} →\n    {container : Nat → Iri} →\n      {axioms : RDF11.GeneralizedGraph Iri Literal B} →\n        {motive : RDF11.ClosureEvaluation.AxiomLists datatype container axioms → Sort u} →\n          ((fixed : List (RDF11.GeneralizedTriple Iri Literal B)) →\n              (indexed : Nat → List (RDF11.GeneralizedTriple Iri Literal B)) →\n                (fixed_iff :\n                    ∀ (t : RDF11.GeneralizedTriple Iri Literal B),\n                      t ∈ fixed ↔ RDF11.NonContainerAxioms datatype container axioms t) →\n                  (indexed_iff :\n                      ∀ (n : Nat) (t : RDF11.GeneralizedTriple Iri Literal B),\n                        t ∈ indexed n ↔ RDF11.ContainerAxioms datatype container axioms n t) →\n                    motive { fixed := fixed, indexed := indexed, fixed_iff := fixed_iff, indexed_iff := indexed_iff }) →\n            (t : RDF11.ClosureEvaluation.AxiomLists datatype container axioms) → motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.AxiomLists",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.AxiomLists.recOn",
+      "module": "RDF11.ClosureSeedEvaluation",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  {datatype : Literal → Iri} →\n    {container : Nat → Iri} →\n      {axioms : RDF11.GeneralizedGraph Iri Literal B} →\n        {motive : RDF11.ClosureEvaluation.AxiomLists datatype container axioms → Sort u} →\n          (t : RDF11.ClosureEvaluation.AxiomLists datatype container axioms) →\n            ((fixed : List (RDF11.GeneralizedTriple Iri Literal B)) →\n                (indexed : Nat → List (RDF11.GeneralizedTriple Iri Literal B)) →\n                  (fixed_iff :\n                      ∀ (t : RDF11.GeneralizedTriple Iri Literal B),\n                        t ∈ fixed ↔ RDF11.NonContainerAxioms datatype container axioms t) →\n                    (indexed_iff :\n                        ∀ (n : Nat) (t : RDF11.GeneralizedTriple Iri Literal B),\n                          t ∈ indexed n ↔ RDF11.ContainerAxioms datatype container axioms n t) →\n                      motive\n                        { fixed := fixed, indexed := indexed, fixed_iff := fixed_iff, indexed_iff := indexed_iff }) →\n              motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.AxiomLists",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.AxiomLists.seed",
+      "module": "RDF11.ClosureSeedEvaluation",
+      "kind": "definition",
+      "type": "{Iri Literal B₁ B₂ : Type} →\n  {container : Nat → Iri} →\n    {datatype : Literal → Iri} →\n      {axioms : RDF11.GeneralizedGraph Iri Literal B₁} →\n        [DecidableEq Iri] →\n          [DecidableEq Literal] →\n            [DecidableEq B₁] →\n              RDF11.ClosureEvaluation.AxiomLists datatype container axioms →\n                RDF11.ClosureEvaluation.ContainerDecoder container →\n                  List (RDF11.GeneralizedTriple Iri Literal B₁) →\n                    List (RDF11.GeneralizedTriple Iri Literal B₂) → List (RDF11.GeneralizedTriple Iri Literal B₁)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.AxiomLists",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.AxiomLists.seed.eq_1",
+      "module": "RDF11.ClosureSeedEvaluation",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B₁ B₂ : Type} {container : Nat → Iri} {datatype : Literal → Iri}\n  {axioms : RDF11.GeneralizedGraph Iri Literal B₁} [inst : DecidableEq Iri] [inst_1 : DecidableEq Literal]\n  [inst_2 : DecidableEq B₁] (a : RDF11.ClosureEvaluation.AxiomLists datatype container axioms)\n  (d : RDF11.ClosureEvaluation.ContainerDecoder container) (G : List (RDF11.GeneralizedTriple Iri Literal B₁))\n  (E : List (RDF11.GeneralizedTriple Iri Literal B₂)),\n  a.seed d G E =\n    RDF11.Enumeration.unique (G ++ a.fixed ++ a.selected d E ++ if a.fallback d G E = true then a.indexed 0 else [])",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.AxiomLists.seed",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.AxiomLists.seed_iff",
+      "module": "RDF11.ClosureSeedEvaluation",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B₁ B₂ : Type} {container : Nat → Iri} {datatype : Literal → Iri}\n  {axioms : RDF11.GeneralizedGraph Iri Literal B₁} [inst : DecidableEq Iri] [inst_1 : DecidableEq Literal]\n  [inst_2 : DecidableEq B₁] (a : RDF11.ClosureEvaluation.AxiomLists datatype container axioms)\n  (d : RDF11.ClosureEvaluation.ContainerDecoder container) (G : List (RDF11.GeneralizedTriple Iri Literal B₁))\n  (E : List (RDF11.GeneralizedTriple Iri Literal B₂)) (t : RDF11.GeneralizedTriple Iri Literal B₁),\n  t ∈ a.seed d G E ↔ RDF11.AxiomSeed datatype container axioms (RDF11.Set.ofList G) (RDF11.Set.ofList E) t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE",
+        "MT11-GENERALIZED-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.AxiomLists",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.AxiomLists.seed_iff._simp_1_2",
+      "module": "RDF11.ClosureSeedEvaluation",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_1} [inst : DecidableEq α] (xs : List α) (t : α), (t ∈ RDF11.Enumeration.unique xs) = (t ∈ xs)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.AxiomLists.seed_iff",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.AxiomLists.seed_iff._simp_1_3",
+      "module": "RDF11.ClosureSeedEvaluation",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_1} {a : α} {s t : List α}, (a ∈ s ++ t) = (a ∈ s ∨ a ∈ t)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.AxiomLists.seed_iff",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.AxiomLists.seed_iff._simp_1_5",
+      "module": "RDF11.ClosureSeedEvaluation",
+      "kind": "theorem",
+      "type": "∀ {a b c : Prop}, ((a ∨ b) ∨ c) = (a ∨ b ∨ c)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.AxiomLists.seed_iff",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.AxiomLists.seed_iff._simp_1_7",
+      "module": "RDF11.ClosureSeedEvaluation",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_1} {a : α}, (a ∈ []) = False",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.AxiomLists.seed_iff",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.AxiomLists.seed_nodup",
+      "module": "RDF11.ClosureSeedEvaluation",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B₁ B₂ : Type} {container : Nat → Iri} {datatype : Literal → Iri}\n  {axioms : RDF11.GeneralizedGraph Iri Literal B₁} [inst : DecidableEq Iri] [inst_1 : DecidableEq Literal]\n  [inst_2 : DecidableEq B₁] (a : RDF11.ClosureEvaluation.AxiomLists datatype container axioms)\n  (d : RDF11.ClosureEvaluation.ContainerDecoder container) (G : List (RDF11.GeneralizedTriple Iri Literal B₁))\n  (E : List (RDF11.GeneralizedTriple Iri Literal B₂)), (a.seed d G E).Nodup",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.AxiomLists",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.AxiomLists.selected",
+      "module": "RDF11.ClosureSeedEvaluation",
+      "kind": "definition",
+      "type": "{Iri Literal B₁ B₂ : Type} →\n  {container : Nat → Iri} →\n    {datatype : Literal → Iri} →\n      {axioms : RDF11.GeneralizedGraph Iri Literal B₁} →\n        RDF11.ClosureEvaluation.AxiomLists datatype container axioms →\n          RDF11.ClosureEvaluation.ContainerDecoder container →\n            List (RDF11.GeneralizedTriple Iri Literal B₂) → List (RDF11.GeneralizedTriple Iri Literal B₁)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.AxiomLists",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.AxiomLists.selected.eq_1",
+      "module": "RDF11.ClosureSeedEvaluation",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B₁ B₂ : Type} {container : Nat → Iri} {datatype : Literal → Iri}\n  {axioms : RDF11.GeneralizedGraph Iri Literal B₁} (a : RDF11.ClosureEvaluation.AxiomLists datatype container axioms)\n  (d : RDF11.ClosureEvaluation.ContainerDecoder container) (E : List (RDF11.GeneralizedTriple Iri Literal B₂)),\n  a.selected d E = List.flatMap a.indexed (d.indices datatype E)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.AxiomLists.selected",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.AxiomLists.selected_iff",
+      "module": "RDF11.ClosureSeedEvaluation",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B₁ B₂ : Type} {container : Nat → Iri} {datatype : Literal → Iri}\n  {axioms : RDF11.GeneralizedGraph Iri Literal B₁} (a : RDF11.ClosureEvaluation.AxiomLists datatype container axioms)\n  (d : RDF11.ClosureEvaluation.ContainerDecoder container) (E : List (RDF11.GeneralizedTriple Iri Literal B₂))\n  (t : RDF11.GeneralizedTriple Iri Literal B₁),\n  t ∈ a.selected d E ↔ RDF11.ConclusionAxioms datatype container axioms (RDF11.Set.ofList E) t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.AxiomLists",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.AxiomLists.selected_iff._simp_1_2",
+      "module": "RDF11.ClosureSeedEvaluation",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_1} {β : Type u_2} {f : α → List β} {b : β} {l : List α}, (b ∈ List.flatMap f l) = ∃ a, a ∈ l ∧ b ∈ f a",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.AxiomLists.selected_iff",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.ContainerDecoder",
+      "module": "RDF11.ClosureSeedEvaluation",
+      "kind": "inductive",
+      "type": "{Iri : Type} → (Nat → Iri) → Type",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE",
+        "MT11-GENERALIZED-CLOSURE",
+        "MT11-EXECUTABLE-CLOSURE-REFINEMENT"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.ContainerDecoder._sizeOf_1",
+      "module": "RDF11.ClosureSeedEvaluation",
+      "kind": "definition",
+      "type": "{Iri : Type} → {container : Nat → Iri} → [SizeOf Iri] → RDF11.ClosureEvaluation.ContainerDecoder container → Nat",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.ContainerDecoder",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.ContainerDecoder._sizeOf_inst",
+      "module": "RDF11.ClosureSeedEvaluation",
+      "kind": "definition",
+      "type": "{Iri : Type} → (container : Nat → Iri) → [SizeOf Iri] → SizeOf (RDF11.ClosureEvaluation.ContainerDecoder container)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.ContainerDecoder",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.ContainerDecoder.casesOn",
+      "module": "RDF11.ClosureSeedEvaluation",
+      "kind": "definition",
+      "type": "{Iri : Type} →\n  {container : Nat → Iri} →\n    {motive : RDF11.ClosureEvaluation.ContainerDecoder container → Sort u} →\n      (t : RDF11.ClosureEvaluation.ContainerDecoder container) →\n        ((decode : Iri → Option Nat) →\n            (correct : ∀ (a : Iri) (n : Nat), decode a = some n ↔ a = container n) →\n              motive { decode := decode, correct := correct }) →\n          motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.ContainerDecoder",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.ContainerDecoder.correct",
+      "module": "RDF11.ClosureSeedEvaluation",
+      "kind": "theorem",
+      "type": "∀ {Iri : Type} {container : Nat → Iri} (self : RDF11.ClosureEvaluation.ContainerDecoder container) (a : Iri) (n : Nat),\n  self.decode a = some n ↔ a = container n",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE",
+        "MT11-EXECUTABLE-CLOSURE-REFINEMENT"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.ContainerDecoder",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.ContainerDecoder.ctorIdx",
+      "module": "RDF11.ClosureSeedEvaluation",
+      "kind": "definition",
+      "type": "{Iri : Type} → {container : Nat → Iri} → RDF11.ClosureEvaluation.ContainerDecoder container → Nat",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.ContainerDecoder",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.ContainerDecoder.decode",
+      "module": "RDF11.ClosureSeedEvaluation",
+      "kind": "definition",
+      "type": "{Iri : Type} → {container : Nat → Iri} → RDF11.ClosureEvaluation.ContainerDecoder container → Iri → Option Nat",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.ContainerDecoder",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.ContainerDecoder.expanded_iff",
+      "module": "RDF11.ClosureSeedEvaluation",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {container : Nat → Iri} (d : RDF11.ClosureEvaluation.ContainerDecoder container)\n  (datatype : Literal → Iri) (t : RDF11.Term Iri Literal B) (n : Nat),\n  n ∈ List.filterMap d.term (RDF11.ClosureBound.expanded datatype t) ↔\n    RDF11.Term.names datatype t (Sum.inl (container n))",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.ContainerDecoder",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.ContainerDecoder.expanded_iff._simp_1_4",
+      "module": "RDF11.ClosureSeedEvaluation",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_1} {β : Type u_2} {f : α → Option β} {l : List α} {b : β},\n  (b ∈ List.filterMap f l) = ∃ a, a ∈ l ∧ f a = some b",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.ContainerDecoder.expanded_iff",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.ContainerDecoder.indices",
+      "module": "RDF11.ClosureSeedEvaluation",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  {container : Nat → Iri} →\n    RDF11.ClosureEvaluation.ContainerDecoder container →\n      (Literal → Iri) → List (RDF11.GeneralizedTriple Iri Literal B) → List Nat",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.ContainerDecoder",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.ContainerDecoder.indices.eq_1",
+      "module": "RDF11.ClosureSeedEvaluation",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {container : Nat → Iri} (d : RDF11.ClosureEvaluation.ContainerDecoder container)\n  (datatype : Literal → Iri) (E : List (RDF11.GeneralizedTriple Iri Literal B)),\n  d.indices datatype E = List.flatMap (fun t => List.filterMap d.term (RDF11.ClosureBound.tripleTerms datatype t)) E",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.ContainerDecoder.indices",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.ContainerDecoder.indices_iff",
+      "module": "RDF11.ClosureSeedEvaluation",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {container : Nat → Iri} (d : RDF11.ClosureEvaluation.ContainerDecoder container)\n  (datatype : Literal → Iri) (E : List (RDF11.GeneralizedTriple Iri Literal B)) (n : Nat),\n  n ∈ d.indices datatype E ↔ RDF11.GeneralizedGraph.vocabulary datatype (RDF11.Set.ofList E) (Sum.inl (container n))",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.ContainerDecoder",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.ContainerDecoder.indices_iff._simp_1_2",
+      "module": "RDF11.ClosureSeedEvaluation",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_1} {β : Type u_2} {f : α → List β} {b : β} {l : List α}, (b ∈ List.flatMap f l) = ∃ a, a ∈ l ∧ b ∈ f a",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.ContainerDecoder.indices_iff",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.ContainerDecoder.indices_iff._simp_1_3",
+      "module": "RDF11.ClosureSeedEvaluation",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_1} {a : α} {s t : List α}, (a ∈ s ++ t) = (a ∈ s ∨ a ∈ t)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.ContainerDecoder.indices_iff",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.ContainerDecoder.indices_iff._simp_1_5",
+      "module": "RDF11.ClosureSeedEvaluation",
+      "kind": "theorem",
+      "type": "∀ {a b c : Prop}, ((a ∨ b) ∨ c) = (a ∨ b ∨ c)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.ContainerDecoder.indices_iff",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.ContainerDecoder.mk",
+      "module": "RDF11.ClosureSeedEvaluation",
+      "kind": "constructor",
+      "type": "{Iri : Type} →\n  {container : Nat → Iri} →\n    (decode : Iri → Option Nat) →\n      (∀ (a : Iri) (n : Nat), decode a = some n ↔ a = container n) → RDF11.ClosureEvaluation.ContainerDecoder container",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.ContainerDecoder",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.ContainerDecoder.mk._flat_ctor",
+      "module": "RDF11.ClosureSeedEvaluation",
+      "kind": "definition",
+      "type": "{Iri : Type} →\n  {container : Nat → Iri} →\n    (decode : Iri → Option Nat) →\n      (∀ (a : Iri) (n : Nat), decode a = some n ↔ a = container n) → RDF11.ClosureEvaluation.ContainerDecoder container",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.ContainerDecoder.mk",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.ContainerDecoder.mk.inj",
+      "module": "RDF11.ClosureSeedEvaluation",
+      "kind": "theorem",
+      "type": "∀ {Iri : Type} {container : Nat → Iri} {decode : Iri → Option Nat}\n  {correct : ∀ (a : Iri) (n : Nat), decode a = some n ↔ a = container n} {decode_1 : Iri → Option Nat}\n  {correct_1 : ∀ (a : Iri) (n : Nat), decode_1 a = some n ↔ a = container n},\n  { decode := decode, correct := correct } = { decode := decode_1, correct := correct_1 } → decode = decode_1",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.ContainerDecoder.mk",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.ContainerDecoder.mk.injEq",
+      "module": "RDF11.ClosureSeedEvaluation",
+      "kind": "theorem",
+      "type": "∀ {Iri : Type} {container : Nat → Iri} (decode : Iri → Option Nat)\n  (correct : ∀ (a : Iri) (n : Nat), decode a = some n ↔ a = container n) (decode_1 : Iri → Option Nat)\n  (correct_1 : ∀ (a : Iri) (n : Nat), decode_1 a = some n ↔ a = container n),\n  ({ decode := decode, correct := correct } = { decode := decode_1, correct := correct_1 }) = (decode = decode_1)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.ContainerDecoder.mk",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.ContainerDecoder.mk.noConfusion",
+      "module": "RDF11.ClosureSeedEvaluation",
+      "kind": "definition",
+      "type": "{Iri : Type} →\n  {container : Nat → Iri} →\n    {P : Sort u} →\n      {decode : Iri → Option Nat} →\n        {correct : ∀ (a : Iri) (n : Nat), decode a = some n ↔ a = container n} →\n          {decode' : Iri → Option Nat} →\n            {correct' : ∀ (a : Iri) (n : Nat), decode' a = some n ↔ a = container n} →\n              { decode := decode, correct := correct } = { decode := decode', correct := correct' } →\n                (decode ≍ decode' → P) → P",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.ContainerDecoder.mk",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.ContainerDecoder.mk.sizeOf_spec",
+      "module": "RDF11.ClosureSeedEvaluation",
+      "kind": "theorem",
+      "type": "∀ {Iri : Type} {container : Nat → Iri} [inst : SizeOf Iri] (decode : Iri → Option Nat)\n  (correct : ∀ (a : Iri) (n : Nat), decode a = some n ↔ a = container n),\n  sizeOf { decode := decode, correct := correct } = 1",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.ContainerDecoder.mk",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.ContainerDecoder.noConfusion",
+      "module": "RDF11.ClosureSeedEvaluation",
+      "kind": "definition",
+      "type": "{P : Sort u} →\n  {Iri : Type} →\n    {container : Nat → Iri} →\n      {t : RDF11.ClosureEvaluation.ContainerDecoder container} →\n        {Iri' : Type} →\n          {container' : Nat → Iri'} →\n            {t' : RDF11.ClosureEvaluation.ContainerDecoder container'} →\n              Iri = Iri' →\n                container ≍ container' → t ≍ t' → RDF11.ClosureEvaluation.ContainerDecoder.noConfusionType P t t'",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.ContainerDecoder",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.ContainerDecoder.noConfusionType",
+      "module": "RDF11.ClosureSeedEvaluation",
+      "kind": "definition",
+      "type": "Sort u →\n  {Iri : Type} →\n    {container : Nat → Iri} →\n      RDF11.ClosureEvaluation.ContainerDecoder container →\n        {Iri' : Type} → {container' : Nat → Iri'} → RDF11.ClosureEvaluation.ContainerDecoder container' → Sort u",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.ContainerDecoder",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.ContainerDecoder.rec",
+      "module": "RDF11.ClosureSeedEvaluation",
+      "kind": "recursor",
+      "type": "{Iri : Type} →\n  {container : Nat → Iri} →\n    {motive : RDF11.ClosureEvaluation.ContainerDecoder container → Sort u} →\n      ((decode : Iri → Option Nat) →\n          (correct : ∀ (a : Iri) (n : Nat), decode a = some n ↔ a = container n) →\n            motive { decode := decode, correct := correct }) →\n        (t : RDF11.ClosureEvaluation.ContainerDecoder container) → motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.ContainerDecoder",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.ContainerDecoder.recOn",
+      "module": "RDF11.ClosureSeedEvaluation",
+      "kind": "definition",
+      "type": "{Iri : Type} →\n  {container : Nat → Iri} →\n    {motive : RDF11.ClosureEvaluation.ContainerDecoder container → Sort u} →\n      (t : RDF11.ClosureEvaluation.ContainerDecoder container) →\n        ((decode : Iri → Option Nat) →\n            (correct : ∀ (a : Iri) (n : Nat), decode a = some n ↔ a = container n) →\n              motive { decode := decode, correct := correct }) →\n          motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.ContainerDecoder",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.ContainerDecoder.term",
+      "module": "RDF11.ClosureSeedEvaluation",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  {container : Nat → Iri} → RDF11.ClosureEvaluation.ContainerDecoder container → RDF11.Term Iri Literal B → Option Nat",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.ContainerDecoder",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.ContainerDecoder.term._sparseCasesOn_1",
+      "module": "RDF11.ClosureSeedEvaluation",
+      "kind": "definition",
+      "type": "{Iri Literal Blank : Type} →\n  {motive : RDF11.Term Iri Literal Blank → Sort u} →\n    (t : RDF11.Term Iri Literal Blank) →\n      ((a : Iri) → motive (RDF11.Term.iri a)) → (Nat.hasNotBit 1 t.ctorIdx → motive t) → motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.ContainerDecoder.term",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.ContainerDecoder.term._sparseCasesOn_1.else_eq",
+      "module": "RDF11.ClosureSeedEvaluation",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Blank : Type} {motive : RDF11.Term Iri Literal Blank → Sort u} (t : RDF11.Term Iri Literal Blank)\n  (iri : (a : Iri) → motive (RDF11.Term.iri a)) («else» : Nat.hasNotBit 1 t.ctorIdx → motive t)\n  (h : Nat.hasNotBit 1 t.ctorIdx),\n  RDF11.ClosureEvaluation.ContainerDecoder.term._sparseCasesOn_1 t iri «else» = «else» h",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.ContainerDecoder.term._sparseCasesOn_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.ContainerDecoder.term.eq_1",
+      "module": "RDF11.ClosureSeedEvaluation",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {container : Nat → Iri} (d : RDF11.ClosureEvaluation.ContainerDecoder container) (a : Iri),\n  d.term (RDF11.Term.iri a) = d.decode a",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.ContainerDecoder.term",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.ContainerDecoder.term.eq_2",
+      "module": "RDF11.ClosureSeedEvaluation",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {container : Nat → Iri} (d : RDF11.ClosureEvaluation.ContainerDecoder container)\n  (x : RDF11.Term Iri Literal B), (∀ (a : Iri), x = RDF11.Term.iri a → False) → d.term x = none",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.ContainerDecoder.term",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.ContainerDecoder.term.match_1",
+      "module": "RDF11.ClosureSeedEvaluation",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  (motive : RDF11.Term Iri Literal B → Sort u_1) →\n    (x : RDF11.Term Iri Literal B) →\n      ((a : Iri) → motive (RDF11.Term.iri a)) → ((x : RDF11.Term Iri Literal B) → motive x) → motive x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.ContainerDecoder.term",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.combinedNext",
+      "module": "RDF11.ClosureRuleEvaluation",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  [DecidableEq Iri] →\n    [DecidableEq Literal] →\n      [DecidableEq B] →\n        (Literal → Iri) →\n          RDF11.RDFSVocabulary Iri →\n            List (RDF11.GeneralizedTriple Iri Literal B) → List (RDF11.GeneralizedTriple Iri Literal B)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.combinedNext.eq_1",
+      "module": "RDF11.ClosureRuleEvaluation",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} [inst : DecidableEq Iri] [inst_1 : DecidableEq Literal] [inst_2 : DecidableEq B]\n  (datatype : Literal → Iri) (v : RDF11.RDFSVocabulary Iri) (xs : List (RDF11.GeneralizedTriple Iri Literal B)),\n  RDF11.ClosureEvaluation.combinedNext datatype v xs =\n    RDF11.ClosureEvaluation.rdfNext datatype v.toRDF xs ++ RDF11.ClosureEvaluation.rdfsNext v xs",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.combinedNext",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.combinedNext_iff",
+      "module": "RDF11.ClosureRuleEvaluation",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} [inst : DecidableEq Iri] [inst_1 : DecidableEq Literal] [inst_2 : DecidableEq B] {Value : Type}\n  (T : RDF11.DatatypeTheory Iri Literal Value) (v : RDF11.RDFSVocabulary Iri)\n  (xs : List (RDF11.GeneralizedTriple Iri Literal B)) (q : RDF11.GeneralizedTriple Iri Literal B),\n  q ∈ RDF11.ClosureEvaluation.combinedNext T.literalSyntax.datatype v xs ↔\n    RDF11.RDFSGeneralizedStep T v.toRDF.baseDatatypes v (RDF11.Set.ofList xs) q",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE",
+        "MT11-GENERALIZED-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.combinedStep_mono",
+      "module": "RDF11.ClosureRuleEvaluation",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B Value : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (v : RDF11.RDFSVocabulary Iri) (G H : RDF11.GeneralizedGraph Iri Literal B),\n  RDF11.Set.subset G H →\n    ∀ (t : RDF11.GeneralizedTriple Iri Literal B),\n      RDF11.RDFSGeneralizedStep T D v G t → RDF11.RDFSGeneralizedStep T D v H t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.emit",
+      "module": "RDF11.ClosureRuleEvaluation",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  (condition : Prop) →\n    [Decidable condition] → RDF11.GeneralizedTriple Iri Literal B → List (RDF11.GeneralizedTriple Iri Literal B)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.emit.congr_simp",
+      "module": "RDF11.ClosureRuleEvaluation",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (condition condition_1 : Prop),\n  condition = condition_1 →\n    ∀ {inst : Decidable condition} [inst_1 : Decidable condition_1] (t t_1 : RDF11.GeneralizedTriple Iri Literal B),\n      t = t_1 → RDF11.ClosureEvaluation.emit condition t = RDF11.ClosureEvaluation.emit condition_1 t_1",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.emit",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.emit.eq_1",
+      "module": "RDF11.ClosureRuleEvaluation",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (condition : Prop) [inst : Decidable condition] (t : RDF11.GeneralizedTriple Iri Literal B),\n  RDF11.ClosureEvaluation.emit condition t = if condition then [t] else []",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.emit",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.mem_emit",
+      "module": "RDF11.ClosureRuleEvaluation",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (condition : Prop) [inst : Decidable condition] (t q : RDF11.GeneralizedTriple Iri Literal B),\n  q ∈ RDF11.ClosureEvaluation.emit condition t ↔ condition ∧ q = t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdf",
+      "module": "RDF11.ExecutableClosure",
+      "kind": "definition",
+      "type": "{Iri Literal B₁ B₂ : Type} →\n  [DecidableEq Iri] →\n    [DecidableEq Literal] →\n      [DecidableEq B₁] →\n        (Literal → Iri) →\n          (v : RDF11.RDFVocabulary Iri) →\n            (RDF11.ClosureEvaluation.ContainerDecoder fun n => v.iri (RDF11.RDFSymbol.container n)) →\n              List (RDF11.GeneralizedTriple Iri Literal B₁) →\n                List (RDF11.GeneralizedTriple Iri Literal B₂) → List (RDF11.GeneralizedTriple Iri Literal B₁)",
+      "role": "engineering_refinement",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE",
+        "MT11-EXECUTABLE-CLOSURE-REFINEMENT"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfAxiomLists",
+      "module": "RDF11.ClosureAxiomEvaluation",
+      "kind": "definition",
+      "type": "{Literal Iri B : Type} →\n  (datatype : Literal → Iri) →\n    (v : RDF11.RDFVocabulary Iri) →\n      RDF11.ClosureEvaluation.AxiomLists datatype (fun n => v.iri (RDF11.RDFSymbol.container n)) v.axioms",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfCarrier",
+      "module": "RDF11.ExecutableClosure",
+      "kind": "definition",
+      "type": "{Iri Literal B₁ B₂ : Type} →\n  [DecidableEq Iri] →\n    [DecidableEq Literal] →\n      [DecidableEq B₁] →\n        (Literal → Iri) →\n          (v : RDF11.RDFVocabulary Iri) →\n            (RDF11.ClosureEvaluation.ContainerDecoder fun n => v.iri (RDF11.RDFSymbol.container n)) →\n              List (RDF11.GeneralizedTriple Iri Literal B₁) →\n                List (RDF11.GeneralizedTriple Iri Literal B₂) → List (RDF11.GeneralizedTriple Iri Literal B₁)",
+      "role": "engineering_refinement",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfCarrier.eq_1",
+      "module": "RDF11.ExecutableClosure",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B₁ B₂ : Type} [inst : DecidableEq Iri] [inst_1 : DecidableEq Literal] [inst_2 : DecidableEq B₁]\n  (datatype : Literal → Iri) (v : RDF11.RDFVocabulary Iri)\n  (d : RDF11.ClosureEvaluation.ContainerDecoder fun n => v.iri (RDF11.RDFSymbol.container n))\n  (G : List (RDF11.GeneralizedTriple Iri Literal B₁)) (E : List (RDF11.GeneralizedTriple Iri Literal B₂)),\n  RDF11.ClosureEvaluation.rdfCarrier datatype v d G E =\n    RDF11.ClosureBound.cube (RDF11.Enumeration.unique (RDF11.ClosureEvaluation.rdfTermList datatype v d G E))",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.rdfCarrier",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfCarrier_iff",
+      "module": "RDF11.ExecutableClosure",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B₁ B₂ : Type} [inst : DecidableEq Iri] [inst_1 : DecidableEq Literal] [inst_2 : DecidableEq B₁]\n  (datatype : Literal → Iri) (v : RDF11.RDFVocabulary Iri)\n  (d : RDF11.ClosureEvaluation.ContainerDecoder fun n => v.iri (RDF11.RDFSymbol.container n))\n  (G : List (RDF11.GeneralizedTriple Iri Literal B₁)) (E : List (RDF11.GeneralizedTriple Iri Literal B₂))\n  (t : RDF11.GeneralizedTriple Iri Literal B₁),\n  t ∈ RDF11.ClosureEvaluation.rdfCarrier datatype v d G E ↔\n    RDF11.ClosureBound.OnTerms (RDF11.Set.ofList (RDF11.ClosureEvaluation.rdfTermList datatype v d G E)) t",
+      "role": "engineering_refinement",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfCarrier_iff._simp_1_2",
+      "module": "RDF11.ExecutableClosure",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (xs : List (RDF11.Term Iri Literal B)) (t : RDF11.GeneralizedTriple Iri Literal B),\n  (t ∈ RDF11.ClosureBound.cube xs) = RDF11.ClosureBound.OnTerms (RDF11.Set.ofList xs) t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.rdfCarrier_iff",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfCarrier_iff._simp_1_3",
+      "module": "RDF11.ExecutableClosure",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_1} [inst : DecidableEq α] (xs : List α) (t : α), (t ∈ RDF11.Enumeration.unique xs) = (t ∈ xs)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.rdfCarrier_iff",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfDecision",
+      "module": "RDF11.ExecutableClosure",
+      "kind": "definition",
+      "type": "{Iri Literal B₁ B₂ Value : Type} →\n  [DecidableEq Iri] →\n    [DecidableEq Literal] →\n      [DecidableEq B₁] →\n        (T : RDF11.DatatypeTheory Iri Literal Value) →\n          (v : RDF11.RDFVocabulary Iri) →\n            (RDF11.ClosureEvaluation.ContainerDecoder fun n => v.iri (RDF11.RDFSymbol.container n)) →\n              (G : List (RDF11.GeneralizedTriple Iri Literal B₁)) →\n                (E : List (RDF11.GeneralizedTriple Iri Literal B₂)) →\n                  (t : RDF11.GeneralizedTriple Iri Literal B₁) →\n                    Decidable (RDF11.RDFClosure T v (RDF11.Set.ofList G) (RDF11.Set.ofList E) t)",
+      "role": "engineering_refinement",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE",
+        "MT11-FINITE-CLOSURE-COMPLEXITY",
+        "MT11-EXECUTABLE-CLOSURE-REFINEMENT"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfEnumeration",
+      "module": "RDF11.ExecutableClosure",
+      "kind": "definition",
+      "type": "{Iri Literal B₁ B₂ Value : Type} →\n  [DecidableEq Iri] →\n    [DecidableEq Literal] →\n      [DecidableEq B₁] →\n        (T : RDF11.DatatypeTheory Iri Literal Value) →\n          (v : RDF11.RDFVocabulary Iri) →\n            (RDF11.ClosureEvaluation.ContainerDecoder fun n => v.iri (RDF11.RDFSymbol.container n)) →\n              (G : List (RDF11.GeneralizedTriple Iri Literal B₁)) →\n                (E : List (RDF11.GeneralizedTriple Iri Literal B₂)) →\n                  RDF11.Enumeration (RDF11.RDFClosure T v (RDF11.Set.ofList G) (RDF11.Set.ofList E))",
+      "role": "engineering_refinement",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE",
+        "MT11-FINITE-CLOSURE-COMPLEXITY",
+        "MT11-EXECUTABLE-CLOSURE-REFINEMENT"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfEnumeration._proof_1",
+      "module": "RDF11.ExecutableClosure",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B₁ B₂ Value : Type} [inst : DecidableEq Iri] [inst_1 : DecidableEq Literal] [inst_2 : DecidableEq B₁]\n  (T : RDF11.DatatypeTheory Iri Literal Value) (v : RDF11.RDFVocabulary Iri)\n  (d : RDF11.ClosureEvaluation.ContainerDecoder fun n => v.iri (RDF11.RDFSymbol.container n))\n  (G : List (RDF11.GeneralizedTriple Iri Literal B₁)) (E : List (RDF11.GeneralizedTriple Iri Literal B₂)),\n  (RDF11.ClosureEvaluation.rdf T.literalSyntax.datatype v d G E).Nodup",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.rdfEnumeration",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfEnumeration._proof_2",
+      "module": "RDF11.ExecutableClosure",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B₁ B₂ Value : Type} [inst : DecidableEq Iri] [inst_1 : DecidableEq Literal] [inst_2 : DecidableEq B₁]\n  (T : RDF11.DatatypeTheory Iri Literal Value) (v : RDF11.RDFVocabulary Iri)\n  (d : RDF11.ClosureEvaluation.ContainerDecoder fun n => v.iri (RDF11.RDFSymbol.container n))\n  (G : List (RDF11.GeneralizedTriple Iri Literal B₁)) (E : List (RDF11.GeneralizedTriple Iri Literal B₂))\n  (t : RDF11.GeneralizedTriple Iri Literal B₁),\n  t ∈ RDF11.ClosureEvaluation.rdf T.literalSyntax.datatype v d G E ↔\n    RDF11.RDFClosure T v (RDF11.Set.ofList G) (RDF11.Set.ofList E) t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.rdfEnumeration",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfFixed",
+      "module": "RDF11.ClosureAxiomEvaluation",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} → RDF11.RDFVocabulary Iri → List (RDF11.GeneralizedTriple Iri Literal B)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfIndexed",
+      "module": "RDF11.ClosureAxiomEvaluation",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} → RDF11.RDFVocabulary Iri → Nat → List (RDF11.GeneralizedTriple Iri Literal B)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfIndexed.eq_1",
+      "module": "RDF11.ClosureAxiomEvaluation",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (v : RDF11.RDFVocabulary Iri) (n : Nat),\n  RDF11.ClosureEvaluation.rdfIndexed v n =\n    [{ subject := RDF11.Term.iri (v.iri (RDF11.RDFSymbol.container n)),\n        predicate := RDF11.Term.iri (v.iri RDF11.RDFSymbol.rdfType),\n        object := RDF11.Term.iri (v.iri RDF11.RDFSymbol.rdfProperty) }]",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.rdfIndexed",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfNext",
+      "module": "RDF11.ClosureRuleEvaluation",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  [DecidableEq Iri] →\n    (Literal → Iri) →\n      RDF11.RDFVocabulary Iri →\n        List (RDF11.GeneralizedTriple Iri Literal B) → List (RDF11.GeneralizedTriple Iri Literal B)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfNext_iff",
+      "module": "RDF11.ClosureRuleEvaluation",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} [inst : DecidableEq Iri] {Value : Type} (T : RDF11.DatatypeTheory Iri Literal Value)\n  (v : RDF11.RDFVocabulary Iri) (xs : List (RDF11.GeneralizedTriple Iri Literal B))\n  (q : RDF11.GeneralizedTriple Iri Literal B),\n  q ∈ RDF11.ClosureEvaluation.rdfNext T.literalSyntax.datatype v xs ↔\n    RDF11.RDFStep T v.baseDatatypes v (RDF11.Set.ofList xs) q",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE",
+        "MT11-GENERALIZED-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfProperties",
+      "module": "RDF11.ClosureAxiomEvaluation",
+      "kind": "definition",
+      "type": "List RDF11.RDFSymbol",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfProperties.eq_1",
+      "module": "RDF11.ClosureAxiomEvaluation",
+      "kind": "theorem",
+      "type": "RDF11.ClosureEvaluation.rdfProperties =\n  [RDF11.RDFSymbol.rdfType, RDF11.RDFSymbol.rdfSubject, RDF11.RDFSymbol.rdfPredicate, RDF11.RDFSymbol.rdfObject,\n    RDF11.RDFSymbol.rdfFirst, RDF11.RDFSymbol.rdfRest, RDF11.RDFSymbol.rdfValue]",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.rdfProperties",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfProperty_iff",
+      "module": "RDF11.ClosureAxiomEvaluation",
+      "kind": "theorem",
+      "type": "∀ (p : RDF11.RDFSymbol),\n  p.propertyAxiom ↔ p ∈ RDF11.ClosureEvaluation.rdfProperties ∨ ∃ n, p = RDF11.RDFSymbol.container n",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfStep_mono",
+      "module": "RDF11.ClosureRuleEvaluation",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B Value : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (v : RDF11.RDFVocabulary Iri) (G H : RDF11.GeneralizedGraph Iri Literal B),\n  RDF11.Set.subset G H →\n    ∀ (t : RDF11.GeneralizedTriple Iri Literal B), RDF11.RDFStep T D v G t → RDF11.RDFStep T D v H t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfTermList",
+      "module": "RDF11.ExecutableClosure",
+      "kind": "definition",
+      "type": "{Iri Literal B₁ B₂ : Type} →\n  [DecidableEq Iri] →\n    [DecidableEq Literal] →\n      [DecidableEq B₁] →\n        (Literal → Iri) →\n          (v : RDF11.RDFVocabulary Iri) →\n            (RDF11.ClosureEvaluation.ContainerDecoder fun n => v.iri (RDF11.RDFSymbol.container n)) →\n              List (RDF11.GeneralizedTriple Iri Literal B₁) →\n                List (RDF11.GeneralizedTriple Iri Literal B₂) → List (RDF11.Term Iri Literal B₁)",
+      "role": "engineering_refinement",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfUnary",
+      "module": "RDF11.ClosureRuleEvaluation",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  [DecidableEq Iri] →\n    (Literal → Iri) →\n      RDF11.RDFVocabulary Iri → RDF11.GeneralizedTriple Iri Literal B → List (RDF11.GeneralizedTriple Iri Literal B)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfUnary._sparseCasesOn_1",
+      "module": "RDF11.ClosureRuleEvaluation",
+      "kind": "definition",
+      "type": "{Iri Literal Blank : Type} →\n  {motive : RDF11.Term Iri Literal Blank → Sort u} →\n    (t : RDF11.Term Iri Literal Blank) →\n      ((a : Literal) → motive (RDF11.Term.literal a)) → (Nat.hasNotBit 2 t.ctorIdx → motive t) → motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.rdfUnary",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfUnary.match_1",
+      "module": "RDF11.ClosureRuleEvaluation",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  (motive : RDF11.Term Iri Literal B → Sort u_1) →\n    (x : RDF11.Term Iri Literal B) →\n      ((l : Literal) → motive (RDF11.Term.literal l)) → ((x : RDF11.Term Iri Literal B) → motive x) → motive x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.rdfUnary",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfUnary_sound",
+      "module": "RDF11.ClosureRuleEvaluation",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} [inst : DecidableEq Iri] {Value : Type} (T : RDF11.DatatypeTheory Iri Literal Value)\n  (v : RDF11.RDFVocabulary Iri) (G : RDF11.GeneralizedGraph Iri Literal B)\n  (t q : RDF11.GeneralizedTriple Iri Literal B),\n  G t → q ∈ RDF11.ClosureEvaluation.rdfUnary T.literalSyntax.datatype v t → RDF11.RDFStep T v.baseDatatypes v G q",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdf_count_respects_graphs",
+      "module": "RDF11.ExecutableClosure",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B₁ B₂ Value : Type} [inst : DecidableEq Iri] [inst_1 : DecidableEq Literal] [inst_2 : DecidableEq B₁]\n  (T : RDF11.DatatypeTheory Iri Literal Value) (v : RDF11.RDFVocabulary Iri)\n  (d : RDF11.ClosureEvaluation.ContainerDecoder fun n => v.iri (RDF11.RDFSymbol.container n))\n  (G H : List (RDF11.GeneralizedTriple Iri Literal B₁)) (E F : List (RDF11.GeneralizedTriple Iri Literal B₂)),\n  RDF11.Set.ofList G = RDF11.Set.ofList H →\n    RDF11.Set.ofList E = RDF11.Set.ofList F →\n      (RDF11.ClosureEvaluation.rdf T.literalSyntax.datatype v d G E).length =\n        (RDF11.ClosureEvaluation.rdf T.literalSyntax.datatype v d H F).length",
+      "role": "engineering_refinement",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE",
+        "MT11-EXECUTABLE-CLOSURE-REFINEMENT"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdf_covers",
+      "module": "RDF11.ClosureAxiomEvaluation",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (v : RDF11.RDFVocabulary Iri) (t : RDF11.GeneralizedTriple Iri Literal B),\n  v.axioms t ↔ t ∈ RDF11.ClosureEvaluation.rdfFixed v ∨ ∃ n, t ∈ RDF11.ClosureEvaluation.rdfIndexed v n",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdf_exact",
+      "module": "RDF11.ExecutableClosure",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B₁ B₂ Value : Type} [inst : DecidableEq Iri] [inst_1 : DecidableEq Literal] [inst_2 : DecidableEq B₁]\n  (T : RDF11.DatatypeTheory Iri Literal Value) (v : RDF11.RDFVocabulary Iri)\n  (d : RDF11.ClosureEvaluation.ContainerDecoder fun n => v.iri (RDF11.RDFSymbol.container n))\n  (G : List (RDF11.GeneralizedTriple Iri Literal B₁)) (E : List (RDF11.GeneralizedTriple Iri Literal B₂)),\n  RDF11.Set.ofList (RDF11.ClosureEvaluation.rdf T.literalSyntax.datatype v d G E) =\n    RDF11.RDFClosure T v (RDF11.Set.ofList G) (RDF11.Set.ofList E)",
+      "role": "engineering_refinement",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE",
+        "MT11-GENERALIZED-CLOSURE",
+        "MT11-EXECUTABLE-CLOSURE-REFINEMENT"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdf_exact._proof_1_1",
+      "module": "RDF11.ExecutableClosure",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B₁ B₂ Value : Type} [inst : DecidableEq Iri] [inst_1 : DecidableEq Literal] [inst_2 : DecidableEq B₁]\n  (T : RDF11.DatatypeTheory Iri Literal Value) (v : RDF11.RDFVocabulary Iri)\n  (d : RDF11.ClosureEvaluation.ContainerDecoder fun n => v.iri (RDF11.RDFSymbol.container n))\n  (G : List (RDF11.GeneralizedTriple Iri Literal B₁)) (E : List (RDF11.GeneralizedTriple Iri Literal B₂)),\n  ¬(RDF11.ClosureEvaluation.rdfCarrier T.literalSyntax.datatype v d G E).length ≤\n        ((RDF11.ClosureEvaluation.rdfAxiomLists T.literalSyntax.datatype v).seed d G E).length +\n          (RDF11.ClosureEvaluation.rdfCarrier T.literalSyntax.datatype v d G E).length →\n    False",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.rdf_exact",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdf_fixed_names",
+      "module": "RDF11.ClosureAxiomEvaluation",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri B : Type} (datatype : Literal → Iri) (v : RDF11.RDFVocabulary Iri)\n  (t : RDF11.GeneralizedTriple Iri Literal B),\n  t ∈ RDF11.ClosureEvaluation.rdfFixed v →\n    ∀ (n : Nat), ¬RDF11.GeneralizedTriple.names datatype t (Sum.inl (v.iri (RDF11.RDFSymbol.container n)))",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdf_fixed_names._simp_1_2",
+      "module": "RDF11.ClosureAxiomEvaluation",
+      "kind": "theorem",
+      "type": "∀ {Iri : Type} (v : RDF11.RDFVocabulary Iri) (a b : RDF11.RDFSymbol), (v.iri a = v.iri b) = (a = b)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.rdf_fixed_names",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdf_fuel_bound",
+      "module": "RDF11.ExecutableClosure",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B₁ B₂ : Type} [inst : DecidableEq Iri] [inst_1 : DecidableEq Literal] [inst_2 : DecidableEq B₁]\n  (datatype : Literal → Iri) (v : RDF11.RDFVocabulary Iri)\n  (d : RDF11.ClosureEvaluation.ContainerDecoder fun n => v.iri (RDF11.RDFSymbol.container n))\n  (G : List (RDF11.GeneralizedTriple Iri Literal B₁)) (E : List (RDF11.GeneralizedTriple Iri Literal B₂)),\n  (RDF11.ClosureEvaluation.rdfCarrier datatype v d G E).length =\n    (RDF11.Enumeration.unique (RDF11.ClosureEvaluation.rdfTermList datatype v d G E)).length ^ 3",
+      "role": "engineering_refinement",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE",
+        "MT11-FINITE-CLOSURE-COMPLEXITY"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdf_indexed_names",
+      "module": "RDF11.ClosureAxiomEvaluation",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri B : Type} (datatype : Literal → Iri) (v : RDF11.RDFVocabulary Iri) (n : Nat)\n  (t : RDF11.GeneralizedTriple Iri Literal B),\n  t ∈ RDF11.ClosureEvaluation.rdfIndexed v n →\n    ∀ (k : Nat), RDF11.GeneralizedTriple.names datatype t (Sum.inl (v.iri (RDF11.RDFSymbol.container k))) ↔ k = n",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdf_indexed_names._simp_1_1",
+      "module": "RDF11.ClosureAxiomEvaluation",
+      "kind": "theorem",
+      "type": "∀ {Iri : Type} (v : RDF11.RDFVocabulary Iri) (a b : RDF11.RDFSymbol), (v.iri a = v.iri b) = (a = b)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.rdf_indexed_names",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdf_next_bounded",
+      "module": "RDF11.ExecutableClosure",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B₁ B₂ Value : Type} [inst : DecidableEq Iri] [inst_1 : DecidableEq Literal] [inst_2 : DecidableEq B₁]\n  (T : RDF11.DatatypeTheory Iri Literal Value) (v : RDF11.RDFVocabulary Iri)\n  (d : RDF11.ClosureEvaluation.ContainerDecoder fun n => v.iri (RDF11.RDFSymbol.container n))\n  (G : List (RDF11.GeneralizedTriple Iri Literal B₁)) (E : List (RDF11.GeneralizedTriple Iri Literal B₂))\n  (xs : List (RDF11.GeneralizedTriple Iri Literal B₁)),\n  xs ⊆ RDF11.ClosureEvaluation.rdfCarrier T.literalSyntax.datatype v d G E →\n    RDF11.ClosureEvaluation.rdfNext T.literalSyntax.datatype v xs ⊆\n      RDF11.ClosureEvaluation.rdfCarrier T.literalSyntax.datatype v d G E",
+      "role": "engineering_refinement",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdf_nodup",
+      "module": "RDF11.ExecutableClosure",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B₁ B₂ : Type} [inst : DecidableEq Iri] [inst_1 : DecidableEq Literal] [inst_2 : DecidableEq B₁]\n  (datatype : Literal → Iri) (v : RDF11.RDFVocabulary Iri)\n  (d : RDF11.ClosureEvaluation.ContainerDecoder fun n => v.iri (RDF11.RDFSymbol.container n))\n  (G : List (RDF11.GeneralizedTriple Iri Literal B₁)) (E : List (RDF11.GeneralizedTriple Iri Literal B₂)),\n  (RDF11.ClosureEvaluation.rdf datatype v d G E).Nodup",
+      "role": "engineering_refinement",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE",
+        "MT11-EXECUTABLE-CLOSURE-REFINEMENT"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdf_result_satisfaction",
+      "module": "RDF11.ExecutableClosure",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B₁ B₂ Value : Type} [inst : DecidableEq Iri] [inst_1 : DecidableEq Literal] [inst_2 : DecidableEq B₁]\n  {U : Type u_1} (T : RDF11.DatatypeTheory Iri Literal Value) (v : RDF11.RDFVocabulary Iri)\n  (d : RDF11.ClosureEvaluation.ContainerDecoder fun n => v.iri (RDF11.RDFSymbol.container n))\n  (G : List (RDF11.GeneralizedTriple Iri Literal B₁)) (E : List (RDF11.GeneralizedTriple Iri Literal B₂))\n  (I : RDF11.SimpleInterpretation Iri Literal U),\n  I.RDFModel T v.baseDatatypes v →\n    (I.Satisfies (RDF11.Set.ofList (RDF11.ClosureEvaluation.rdf T.literalSyntax.datatype v d G E)) ↔\n      I.Satisfies (RDF11.Set.ofList G))",
+      "role": "engineering_refinement",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE",
+        "MT11-EXECUTABLE-CLOSURE-REFINEMENT"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdf_seed_bounded",
+      "module": "RDF11.ExecutableClosure",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B₁ B₂ Value : Type} [inst : DecidableEq Iri] [inst_1 : DecidableEq Literal] [inst_2 : DecidableEq B₁]\n  (T : RDF11.DatatypeTheory Iri Literal Value) (v : RDF11.RDFVocabulary Iri)\n  (d : RDF11.ClosureEvaluation.ContainerDecoder fun n => v.iri (RDF11.RDFSymbol.container n))\n  (G : List (RDF11.GeneralizedTriple Iri Literal B₁)) (E : List (RDF11.GeneralizedTriple Iri Literal B₂)),\n  (RDF11.ClosureEvaluation.rdfAxiomLists T.literalSyntax.datatype v).seed d G E ⊆\n    RDF11.ClosureEvaluation.rdfCarrier T.literalSyntax.datatype v d G E",
+      "role": "engineering_refinement",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfs",
+      "module": "RDF11.ExecutableClosure",
+      "kind": "definition",
+      "type": "{Iri Literal B₁ B₂ : Type} →\n  [DecidableEq Iri] →\n    [DecidableEq Literal] →\n      [DecidableEq B₁] →\n        (Literal → Iri) →\n          (v : RDF11.RDFSVocabulary Iri) →\n            (RDF11.ClosureEvaluation.ContainerDecoder fun n =>\n                v.iri (RDF11.RDFSSymbol.rdf (RDF11.RDFSymbol.container n))) →\n              List (RDF11.GeneralizedTriple Iri Literal B₁) →\n                List (RDF11.GeneralizedTriple Iri Literal B₂) → List (RDF11.GeneralizedTriple Iri Literal B₁)",
+      "role": "engineering_refinement",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE",
+        "MT11-EXECUTABLE-CLOSURE-REFINEMENT"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfsAxiomLists",
+      "module": "RDF11.ClosureAxiomEvaluation",
+      "kind": "definition",
+      "type": "{Literal Iri B : Type} →\n  (datatype : Literal → Iri) →\n    (v : RDF11.RDFSVocabulary Iri) →\n      RDF11.ClosureEvaluation.AxiomLists datatype (fun n => v.iri (RDF11.RDFSSymbol.rdf (RDF11.RDFSymbol.container n)))\n        (RDF11.Set.union v.toRDF.axioms v.axioms)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfsBinary",
+      "module": "RDF11.ClosureRuleEvaluation",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  [DecidableEq Iri] →\n    [DecidableEq Literal] →\n      [DecidableEq B] →\n        RDF11.RDFSVocabulary Iri →\n          RDF11.GeneralizedTriple Iri Literal B →\n            RDF11.GeneralizedTriple Iri Literal B → List (RDF11.GeneralizedTriple Iri Literal B)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfsBinary.eq_1",
+      "module": "RDF11.ClosureRuleEvaluation",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} [inst : DecidableEq Iri] [inst_1 : DecidableEq Literal] [inst_2 : DecidableEq B]\n  (v : RDF11.RDFSVocabulary Iri) (t u : RDF11.GeneralizedTriple Iri Literal B),\n  RDF11.ClosureEvaluation.rdfsBinary v t u =\n    RDF11.ClosureEvaluation.emit\n                (t.predicate = RDF11.Term.iri (v.iri RDF11.RDFSSymbol.domain) ∧ u.predicate = t.subject)\n                { subject := u.subject,\n                  predicate := RDF11.Term.iri (v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfType)),\n                  object := t.object } ++\n              RDF11.ClosureEvaluation.emit\n                (t.predicate = RDF11.Term.iri (v.iri RDF11.RDFSSymbol.range) ∧ u.predicate = t.subject)\n                { subject := u.object,\n                  predicate := RDF11.Term.iri (v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfType)),\n                  object := t.object } ++\n            RDF11.ClosureEvaluation.emit\n              (t.predicate = RDF11.Term.iri (v.iri RDF11.RDFSSymbol.subPropertyOf) ∧\n                u.predicate = RDF11.Term.iri (v.iri RDF11.RDFSSymbol.subPropertyOf) ∧ t.object = u.subject)\n              { subject := t.subject, predicate := RDF11.Term.iri (v.iri RDF11.RDFSSymbol.subPropertyOf),\n                object := u.object } ++\n          RDF11.ClosureEvaluation.emit\n            (t.predicate = RDF11.Term.iri (v.iri RDF11.RDFSSymbol.subPropertyOf) ∧ u.predicate = t.subject)\n            { subject := u.subject, predicate := t.object, object := u.object } ++\n        RDF11.ClosureEvaluation.emit\n          (t.predicate = RDF11.Term.iri (v.iri RDF11.RDFSSymbol.subClassOf) ∧\n            u.predicate = RDF11.Term.iri (v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfType)) ∧ u.object = t.subject)\n          { subject := u.subject, predicate := RDF11.Term.iri (v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfType)),\n            object := t.object } ++\n      RDF11.ClosureEvaluation.emit\n        (t.predicate = RDF11.Term.iri (v.iri RDF11.RDFSSymbol.subClassOf) ∧\n          u.predicate = RDF11.Term.iri (v.iri RDF11.RDFSSymbol.subClassOf) ∧ t.object = u.subject)\n        { subject := t.subject, predicate := RDF11.Term.iri (v.iri RDF11.RDFSSymbol.subClassOf), object := u.object }",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.rdfsBinary",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfsBinary_sound",
+      "module": "RDF11.ClosureRuleEvaluation",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} [inst : DecidableEq Iri] [inst_1 : DecidableEq Literal] [inst_2 : DecidableEq B] {Value : Type}\n  (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri) (v : RDF11.RDFSVocabulary Iri)\n  (G : RDF11.GeneralizedGraph Iri Literal B) (t u q : RDF11.GeneralizedTriple Iri Literal B),\n  G t → G u → q ∈ RDF11.ClosureEvaluation.rdfsBinary v t u → RDF11.RDFSStep T D v G q",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfsBinary_sound._simp_1_2",
+      "module": "RDF11.ClosureRuleEvaluation",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_1} {a : α} {s t : List α}, (a ∈ s ++ t) = (a ∈ s ∨ a ∈ t)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.rdfsBinary_sound",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfsBinary_sound._simp_1_3",
+      "module": "RDF11.ClosureRuleEvaluation",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (condition : Prop) [inst : Decidable condition] (t q : RDF11.GeneralizedTriple Iri Literal B),\n  (q ∈ RDF11.ClosureEvaluation.emit condition t) = (condition ∧ q = t)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.rdfsBinary_sound",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfsBinary_sound._simp_1_4",
+      "module": "RDF11.ClosureRuleEvaluation",
+      "kind": "theorem",
+      "type": "∀ {a b c : Prop}, ((a ∨ b) ∨ c) = (a ∨ b ∨ c)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.rdfsBinary_sound",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfsCarrier",
+      "module": "RDF11.ExecutableClosure",
+      "kind": "definition",
+      "type": "{Iri Literal B₁ B₂ : Type} →\n  [DecidableEq Iri] →\n    [DecidableEq Literal] →\n      [DecidableEq B₁] →\n        (Literal → Iri) →\n          (v : RDF11.RDFSVocabulary Iri) →\n            (RDF11.ClosureEvaluation.ContainerDecoder fun n =>\n                v.iri (RDF11.RDFSSymbol.rdf (RDF11.RDFSymbol.container n))) →\n              List (RDF11.GeneralizedTriple Iri Literal B₁) →\n                List (RDF11.GeneralizedTriple Iri Literal B₂) → List (RDF11.GeneralizedTriple Iri Literal B₁)",
+      "role": "engineering_refinement",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfsCarrier.eq_1",
+      "module": "RDF11.ExecutableClosure",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B₁ B₂ : Type} [inst : DecidableEq Iri] [inst_1 : DecidableEq Literal] [inst_2 : DecidableEq B₁]\n  (datatype : Literal → Iri) (v : RDF11.RDFSVocabulary Iri)\n  (d : RDF11.ClosureEvaluation.ContainerDecoder fun n => v.iri (RDF11.RDFSSymbol.rdf (RDF11.RDFSymbol.container n)))\n  (G : List (RDF11.GeneralizedTriple Iri Literal B₁)) (E : List (RDF11.GeneralizedTriple Iri Literal B₂)),\n  RDF11.ClosureEvaluation.rdfsCarrier datatype v d G E =\n    RDF11.ClosureBound.cube (RDF11.Enumeration.unique (RDF11.ClosureEvaluation.rdfsTermList datatype v d G E))",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.rdfsCarrier",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfsCarrier_iff",
+      "module": "RDF11.ExecutableClosure",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B₁ B₂ : Type} [inst : DecidableEq Iri] [inst_1 : DecidableEq Literal] [inst_2 : DecidableEq B₁]\n  (datatype : Literal → Iri) (v : RDF11.RDFSVocabulary Iri)\n  (d : RDF11.ClosureEvaluation.ContainerDecoder fun n => v.iri (RDF11.RDFSSymbol.rdf (RDF11.RDFSymbol.container n)))\n  (G : List (RDF11.GeneralizedTriple Iri Literal B₁)) (E : List (RDF11.GeneralizedTriple Iri Literal B₂))\n  (t : RDF11.GeneralizedTriple Iri Literal B₁),\n  t ∈ RDF11.ClosureEvaluation.rdfsCarrier datatype v d G E ↔\n    RDF11.ClosureBound.OnTerms (RDF11.Set.ofList (RDF11.ClosureEvaluation.rdfsTermList datatype v d G E)) t",
+      "role": "engineering_refinement",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfsCarrier_iff._simp_1_2",
+      "module": "RDF11.ExecutableClosure",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (xs : List (RDF11.Term Iri Literal B)) (t : RDF11.GeneralizedTriple Iri Literal B),\n  (t ∈ RDF11.ClosureBound.cube xs) = RDF11.ClosureBound.OnTerms (RDF11.Set.ofList xs) t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.rdfsCarrier_iff",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfsCarrier_iff._simp_1_3",
+      "module": "RDF11.ExecutableClosure",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_1} [inst : DecidableEq α] (xs : List α) (t : α), (t ∈ RDF11.Enumeration.unique xs) = (t ∈ xs)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.rdfsCarrier_iff",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfsDecision",
+      "module": "RDF11.ExecutableClosure",
+      "kind": "definition",
+      "type": "{Iri Literal B₁ B₂ Value : Type} →\n  [DecidableEq Iri] →\n    [DecidableEq Literal] →\n      [DecidableEq B₁] →\n        (T : RDF11.DatatypeTheory Iri Literal Value) →\n          (v : RDF11.RDFSVocabulary Iri) →\n            (RDF11.ClosureEvaluation.ContainerDecoder fun n =>\n                v.iri (RDF11.RDFSSymbol.rdf (RDF11.RDFSymbol.container n))) →\n              (G : List (RDF11.GeneralizedTriple Iri Literal B₁)) →\n                (E : List (RDF11.GeneralizedTriple Iri Literal B₂)) →\n                  (t : RDF11.GeneralizedTriple Iri Literal B₁) →\n                    Decidable (RDF11.RDFSClosure T v (RDF11.Set.ofList G) (RDF11.Set.ofList E) t)",
+      "role": "engineering_refinement",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE",
+        "MT11-FINITE-CLOSURE-COMPLEXITY",
+        "MT11-EXECUTABLE-CLOSURE-REFINEMENT"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfsEnumeration",
+      "module": "RDF11.ExecutableClosure",
+      "kind": "definition",
+      "type": "{Iri Literal B₁ B₂ Value : Type} →\n  [DecidableEq Iri] →\n    [DecidableEq Literal] →\n      [DecidableEq B₁] →\n        (T : RDF11.DatatypeTheory Iri Literal Value) →\n          (v : RDF11.RDFSVocabulary Iri) →\n            (RDF11.ClosureEvaluation.ContainerDecoder fun n =>\n                v.iri (RDF11.RDFSSymbol.rdf (RDF11.RDFSymbol.container n))) →\n              (G : List (RDF11.GeneralizedTriple Iri Literal B₁)) →\n                (E : List (RDF11.GeneralizedTriple Iri Literal B₂)) →\n                  RDF11.Enumeration (RDF11.RDFSClosure T v (RDF11.Set.ofList G) (RDF11.Set.ofList E))",
+      "role": "engineering_refinement",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE",
+        "MT11-FINITE-CLOSURE-COMPLEXITY",
+        "MT11-EXECUTABLE-CLOSURE-REFINEMENT"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfsEnumeration._proof_1",
+      "module": "RDF11.ExecutableClosure",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B₁ B₂ Value : Type} [inst : DecidableEq Iri] [inst_1 : DecidableEq Literal] [inst_2 : DecidableEq B₁]\n  (T : RDF11.DatatypeTheory Iri Literal Value) (v : RDF11.RDFSVocabulary Iri)\n  (d : RDF11.ClosureEvaluation.ContainerDecoder fun n => v.iri (RDF11.RDFSSymbol.rdf (RDF11.RDFSymbol.container n)))\n  (G : List (RDF11.GeneralizedTriple Iri Literal B₁)) (E : List (RDF11.GeneralizedTriple Iri Literal B₂)),\n  (RDF11.ClosureEvaluation.rdfs T.literalSyntax.datatype v d G E).Nodup",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.rdfsEnumeration",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfsEnumeration._proof_2",
+      "module": "RDF11.ExecutableClosure",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B₁ B₂ Value : Type} [inst : DecidableEq Iri] [inst_1 : DecidableEq Literal] [inst_2 : DecidableEq B₁]\n  (T : RDF11.DatatypeTheory Iri Literal Value) (v : RDF11.RDFSVocabulary Iri)\n  (d : RDF11.ClosureEvaluation.ContainerDecoder fun n => v.iri (RDF11.RDFSSymbol.rdf (RDF11.RDFSymbol.container n)))\n  (G : List (RDF11.GeneralizedTriple Iri Literal B₁)) (E : List (RDF11.GeneralizedTriple Iri Literal B₂))\n  (t : RDF11.GeneralizedTriple Iri Literal B₁),\n  t ∈ RDF11.ClosureEvaluation.rdfs T.literalSyntax.datatype v d G E ↔\n    RDF11.RDFSClosure T v (RDF11.Set.ofList G) (RDF11.Set.ofList E) t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.rdfsEnumeration",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfsFixed",
+      "module": "RDF11.ClosureAxiomEvaluation",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} → RDF11.RDFSVocabulary Iri → List (RDF11.GeneralizedTriple Iri Literal B)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfsFixed.eq_1",
+      "module": "RDF11.ClosureAxiomEvaluation",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (v : RDF11.RDFSVocabulary Iri),\n  RDF11.ClosureEvaluation.rdfsFixed v =\n    RDF11.ClosureEvaluation.rdfFixed v.toRDF ++\n          List.map\n            (fun x =>\n              match x with\n              | (s, o) =>\n                { subject := RDF11.Term.iri (v.iri s), predicate := RDF11.Term.iri (v.iri RDF11.RDFSSymbol.domain),\n                  object := RDF11.Term.iri (v.iri o) })\n            RDF11.rdfsDomainAxioms ++\n        List.map\n          (fun x =>\n            match x with\n            | (s, o) =>\n              { subject := RDF11.Term.iri (v.iri s), predicate := RDF11.Term.iri (v.iri RDF11.RDFSSymbol.range),\n                object := RDF11.Term.iri (v.iri o) })\n          RDF11.rdfsRangeAxioms ++\n      List.map\n        (fun x =>\n          match x with\n          | (s, p, o) =>\n            { subject := RDF11.Term.iri (v.iri s), predicate := RDF11.Term.iri (v.iri p),\n              object := RDF11.Term.iri (v.iri o) })\n        RDF11.rdfsHierarchyAxioms",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.rdfsFixed",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfsFixed.match_1",
+      "module": "RDF11.ClosureAxiomEvaluation",
+      "kind": "definition",
+      "type": "(motive : RDF11.RDFSSymbol × RDF11.RDFSSymbol → Sort u_1) →\n  (x : RDF11.RDFSSymbol × RDF11.RDFSSymbol) → ((s o : RDF11.RDFSSymbol) → motive (s, o)) → motive x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.rdfsFixed",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfsFixed.match_3",
+      "module": "RDF11.ClosureAxiomEvaluation",
+      "kind": "definition",
+      "type": "(motive : RDF11.RDFSSymbol × RDF11.RDFSSymbol × RDF11.RDFSSymbol → Sort u_1) →\n  (x : RDF11.RDFSSymbol × RDF11.RDFSSymbol × RDF11.RDFSSymbol) →\n    ((s p o : RDF11.RDFSSymbol) → motive (s, p, o)) → motive x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.rdfsFixed",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfsIndexed",
+      "module": "RDF11.ClosureAxiomEvaluation",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} → RDF11.RDFSVocabulary Iri → Nat → List (RDF11.GeneralizedTriple Iri Literal B)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfsNext",
+      "module": "RDF11.ClosureRuleEvaluation",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  [DecidableEq Iri] →\n    [DecidableEq Literal] →\n      [DecidableEq B] →\n        RDF11.RDFSVocabulary Iri →\n          List (RDF11.GeneralizedTriple Iri Literal B) → List (RDF11.GeneralizedTriple Iri Literal B)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfsNext.eq_1",
+      "module": "RDF11.ClosureRuleEvaluation",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} [inst : DecidableEq Iri] [inst_1 : DecidableEq Literal] [inst_2 : DecidableEq B]\n  (v : RDF11.RDFSVocabulary Iri) (xs : List (RDF11.GeneralizedTriple Iri Literal B)),\n  RDF11.ClosureEvaluation.rdfsNext v xs =\n    RDF11.ClosureEvaluation.rdfsZero v ++ List.flatMap (RDF11.ClosureEvaluation.rdfsUnary v) xs ++\n      List.flatMap (fun t => List.flatMap (RDF11.ClosureEvaluation.rdfsBinary v t) xs) xs",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.rdfsNext",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfsNext_complete",
+      "module": "RDF11.ClosureRuleEvaluation",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} [inst : DecidableEq Iri] [inst_1 : DecidableEq Literal] [inst_2 : DecidableEq B] {Value : Type}\n  (T : RDF11.DatatypeTheory Iri Literal Value) (v : RDF11.RDFSVocabulary Iri)\n  (xs : List (RDF11.GeneralizedTriple Iri Literal B)) (q : RDF11.GeneralizedTriple Iri Literal B),\n  RDF11.RDFSStep T v.toRDF.baseDatatypes v (RDF11.Set.ofList xs) q → q ∈ RDF11.ClosureEvaluation.rdfsNext v xs",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfsNext_complete._simp_1_2",
+      "module": "RDF11.ClosureRuleEvaluation",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_1} {a : α} {s t : List α}, (a ∈ s ++ t) = (a ∈ s ∨ a ∈ t)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.rdfsNext_complete",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfsNext_iff",
+      "module": "RDF11.ClosureRuleEvaluation",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} [inst : DecidableEq Iri] [inst_1 : DecidableEq Literal] [inst_2 : DecidableEq B] {Value : Type}\n  (T : RDF11.DatatypeTheory Iri Literal Value) (v : RDF11.RDFSVocabulary Iri)\n  (xs : List (RDF11.GeneralizedTriple Iri Literal B)) (q : RDF11.GeneralizedTriple Iri Literal B),\n  q ∈ RDF11.ClosureEvaluation.rdfsNext v xs ↔ RDF11.RDFSStep T v.toRDF.baseDatatypes v (RDF11.Set.ofList xs) q",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE",
+        "MT11-GENERALIZED-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfsNext_sound",
+      "module": "RDF11.ClosureRuleEvaluation",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} [inst : DecidableEq Iri] [inst_1 : DecidableEq Literal] [inst_2 : DecidableEq B] {Value : Type}\n  (T : RDF11.DatatypeTheory Iri Literal Value) (v : RDF11.RDFSVocabulary Iri)\n  (xs : List (RDF11.GeneralizedTriple Iri Literal B)) (q : RDF11.GeneralizedTriple Iri Literal B),\n  q ∈ RDF11.ClosureEvaluation.rdfsNext v xs → RDF11.RDFSStep T v.toRDF.baseDatatypes v (RDF11.Set.ofList xs) q",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfsNext_sound._simp_1_2",
+      "module": "RDF11.ClosureRuleEvaluation",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_1} {a : α} {s t : List α}, (a ∈ s ++ t) = (a ∈ s ∨ a ∈ t)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.rdfsNext_sound",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfsNext_sound._simp_1_3",
+      "module": "RDF11.ClosureRuleEvaluation",
+      "kind": "theorem",
+      "type": "∀ {a b c : Prop}, ((a ∨ b) ∨ c) = (a ∨ b ∨ c)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.rdfsNext_sound",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfsStep_mono",
+      "module": "RDF11.ClosureRuleEvaluation",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B Value : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (v : RDF11.RDFSVocabulary Iri) (G H : RDF11.GeneralizedGraph Iri Literal B),\n  RDF11.Set.subset G H →\n    ∀ (t : RDF11.GeneralizedTriple Iri Literal B), RDF11.RDFSStep T D v G t → RDF11.RDFSStep T D v H t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfsTermList",
+      "module": "RDF11.ExecutableClosure",
+      "kind": "definition",
+      "type": "{Iri Literal B₁ B₂ : Type} →\n  [DecidableEq Iri] →\n    [DecidableEq Literal] →\n      [DecidableEq B₁] →\n        (Literal → Iri) →\n          (v : RDF11.RDFSVocabulary Iri) →\n            (RDF11.ClosureEvaluation.ContainerDecoder fun n =>\n                v.iri (RDF11.RDFSSymbol.rdf (RDF11.RDFSymbol.container n))) →\n              List (RDF11.GeneralizedTriple Iri Literal B₁) →\n                List (RDF11.GeneralizedTriple Iri Literal B₂) → List (RDF11.Term Iri Literal B₁)",
+      "role": "engineering_refinement",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfsUnary",
+      "module": "RDF11.ClosureRuleEvaluation",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  [DecidableEq Iri] →\n    [DecidableEq Literal] →\n      [DecidableEq B] →\n        RDF11.RDFSVocabulary Iri → RDF11.GeneralizedTriple Iri Literal B → List (RDF11.GeneralizedTriple Iri Literal B)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfsUnary.eq_1",
+      "module": "RDF11.ClosureRuleEvaluation",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} [inst : DecidableEq Iri] [inst_1 : DecidableEq Literal] [inst_2 : DecidableEq B]\n  (v : RDF11.RDFSVocabulary Iri) (t : RDF11.GeneralizedTriple Iri Literal B),\n  RDF11.ClosureEvaluation.rdfsUnary v t =\n    [{ subject := t.subject, predicate := RDF11.Term.iri (v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfType)),\n                  object := RDF11.Term.iri (v.iri RDF11.RDFSSymbol.resource) },\n                { subject := t.object,\n                  predicate := RDF11.Term.iri (v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfType)),\n                  object := RDF11.Term.iri (v.iri RDF11.RDFSSymbol.resource) }] ++\n              RDF11.ClosureEvaluation.emit\n                (t.predicate = RDF11.Term.iri (v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfType)) ∧\n                  t.object = RDF11.Term.iri (v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfProperty)))\n                { subject := t.subject, predicate := RDF11.Term.iri (v.iri RDF11.RDFSSymbol.subPropertyOf),\n                  object := t.subject } ++\n            RDF11.ClosureEvaluation.emit\n              (t.predicate = RDF11.Term.iri (v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfType)) ∧\n                t.object = RDF11.Term.iri (v.iri RDF11.RDFSSymbol.class_))\n              { subject := t.subject, predicate := RDF11.Term.iri (v.iri RDF11.RDFSSymbol.subClassOf),\n                object := RDF11.Term.iri (v.iri RDF11.RDFSSymbol.resource) } ++\n          RDF11.ClosureEvaluation.emit\n            (t.predicate = RDF11.Term.iri (v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfType)) ∧\n              t.object = RDF11.Term.iri (v.iri RDF11.RDFSSymbol.class_))\n            { subject := t.subject, predicate := RDF11.Term.iri (v.iri RDF11.RDFSSymbol.subClassOf),\n              object := t.subject } ++\n        RDF11.ClosureEvaluation.emit\n          (t.predicate = RDF11.Term.iri (v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfType)) ∧\n            t.object = RDF11.Term.iri (v.iri RDF11.RDFSSymbol.containerMembershipProperty))\n          { subject := t.subject, predicate := RDF11.Term.iri (v.iri RDF11.RDFSSymbol.subPropertyOf),\n            object := RDF11.Term.iri (v.iri RDF11.RDFSSymbol.member) } ++\n      RDF11.ClosureEvaluation.emit\n        (t.predicate = RDF11.Term.iri (v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfType)) ∧\n          t.object = RDF11.Term.iri (v.iri RDF11.RDFSSymbol.datatype))\n        { subject := t.subject, predicate := RDF11.Term.iri (v.iri RDF11.RDFSSymbol.subClassOf),\n          object := RDF11.Term.iri (v.iri RDF11.RDFSSymbol.literal) }",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.rdfsUnary",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfsUnary_sound",
+      "module": "RDF11.ClosureRuleEvaluation",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} [inst : DecidableEq Iri] [inst_1 : DecidableEq Literal] [inst_2 : DecidableEq B] {Value : Type}\n  (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri) (v : RDF11.RDFSVocabulary Iri)\n  (G : RDF11.GeneralizedGraph Iri Literal B) (t q : RDF11.GeneralizedTriple Iri Literal B),\n  G t → q ∈ RDF11.ClosureEvaluation.rdfsUnary v t → RDF11.RDFSStep T D v G q",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfsUnary_sound._simp_1_2",
+      "module": "RDF11.ClosureRuleEvaluation",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_1} {a : α} {s t : List α}, (a ∈ s ++ t) = (a ∈ s ∨ a ∈ t)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.rdfsUnary_sound",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfsUnary_sound._simp_1_3",
+      "module": "RDF11.ClosureRuleEvaluation",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_1} {b : α} {l : List α} {a : α}, (a ∈ b :: l) = (a = b ∨ a ∈ l)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.rdfsUnary_sound",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfsUnary_sound._simp_1_4",
+      "module": "RDF11.ClosureRuleEvaluation",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_1} {a : α}, (a ∈ []) = False",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.rdfsUnary_sound",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfsUnary_sound._simp_1_5",
+      "module": "RDF11.ClosureRuleEvaluation",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (condition : Prop) [inst : Decidable condition] (t q : RDF11.GeneralizedTriple Iri Literal B),\n  (q ∈ RDF11.ClosureEvaluation.emit condition t) = (condition ∧ q = t)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.rdfsUnary_sound",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfsUnary_sound._simp_1_6",
+      "module": "RDF11.ClosureRuleEvaluation",
+      "kind": "theorem",
+      "type": "∀ {a b c : Prop}, ((a ∨ b) ∨ c) = (a ∨ b ∨ c)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.rdfsUnary_sound",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfsZero",
+      "module": "RDF11.ClosureRuleEvaluation",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} → RDF11.RDFSVocabulary Iri → List (RDF11.GeneralizedTriple Iri Literal B)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfs_count_respects_graphs",
+      "module": "RDF11.ExecutableClosure",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B₁ B₂ Value : Type} [inst : DecidableEq Iri] [inst_1 : DecidableEq Literal] [inst_2 : DecidableEq B₁]\n  (T : RDF11.DatatypeTheory Iri Literal Value) (v : RDF11.RDFSVocabulary Iri)\n  (d : RDF11.ClosureEvaluation.ContainerDecoder fun n => v.iri (RDF11.RDFSSymbol.rdf (RDF11.RDFSymbol.container n)))\n  (G H : List (RDF11.GeneralizedTriple Iri Literal B₁)) (E F : List (RDF11.GeneralizedTriple Iri Literal B₂)),\n  RDF11.Set.ofList G = RDF11.Set.ofList H →\n    RDF11.Set.ofList E = RDF11.Set.ofList F →\n      (RDF11.ClosureEvaluation.rdfs T.literalSyntax.datatype v d G E).length =\n        (RDF11.ClosureEvaluation.rdfs T.literalSyntax.datatype v d H F).length",
+      "role": "engineering_refinement",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE",
+        "MT11-EXECUTABLE-CLOSURE-REFINEMENT"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfs_covers",
+      "module": "RDF11.ClosureAxiomEvaluation",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (v : RDF11.RDFSVocabulary Iri) (t : RDF11.GeneralizedTriple Iri Literal B),\n  RDF11.Set.union v.toRDF.axioms v.axioms t ↔\n    t ∈ RDF11.ClosureEvaluation.rdfsFixed v ∨ ∃ n, t ∈ RDF11.ClosureEvaluation.rdfsIndexed v n",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfs_covers._simp_1_2",
+      "module": "RDF11.ClosureAxiomEvaluation",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_1} {a : α} {s t : List α}, (a ∈ s ++ t) = (a ∈ s ∨ a ∈ t)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.rdfs_covers",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfs_covers._simp_1_3",
+      "module": "RDF11.ClosureAxiomEvaluation",
+      "kind": "theorem",
+      "type": "∀ {a b c : Prop}, ((a ∨ b) ∨ c) = (a ∨ b ∨ c)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.rdfs_covers",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfs_covers._simp_1_4",
+      "module": "RDF11.ClosureAxiomEvaluation",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_1} {b : α} {l : List α} {a : α}, (a ∈ b :: l) = (a = b ∨ a ∈ l)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.rdfs_covers",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfs_covers._simp_1_5",
+      "module": "RDF11.ClosureAxiomEvaluation",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_1} {a : α}, (a ∈ []) = False",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.rdfs_covers",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfs_exact",
+      "module": "RDF11.ExecutableClosure",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B₁ B₂ Value : Type} [inst : DecidableEq Iri] [inst_1 : DecidableEq Literal] [inst_2 : DecidableEq B₁]\n  (T : RDF11.DatatypeTheory Iri Literal Value) (v : RDF11.RDFSVocabulary Iri)\n  (d : RDF11.ClosureEvaluation.ContainerDecoder fun n => v.iri (RDF11.RDFSSymbol.rdf (RDF11.RDFSymbol.container n)))\n  (G : List (RDF11.GeneralizedTriple Iri Literal B₁)) (E : List (RDF11.GeneralizedTriple Iri Literal B₂)),\n  RDF11.Set.ofList (RDF11.ClosureEvaluation.rdfs T.literalSyntax.datatype v d G E) =\n    RDF11.RDFSClosure T v (RDF11.Set.ofList G) (RDF11.Set.ofList E)",
+      "role": "engineering_refinement",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE",
+        "MT11-GENERALIZED-CLOSURE",
+        "MT11-EXECUTABLE-CLOSURE-REFINEMENT"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfs_exact._proof_1_1",
+      "module": "RDF11.ExecutableClosure",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B₁ B₂ Value : Type} [inst : DecidableEq Iri] [inst_1 : DecidableEq Literal] [inst_2 : DecidableEq B₁]\n  (T : RDF11.DatatypeTheory Iri Literal Value) (v : RDF11.RDFSVocabulary Iri)\n  (d : RDF11.ClosureEvaluation.ContainerDecoder fun n => v.iri (RDF11.RDFSSymbol.rdf (RDF11.RDFSymbol.container n)))\n  (G : List (RDF11.GeneralizedTriple Iri Literal B₁)) (E : List (RDF11.GeneralizedTriple Iri Literal B₂)),\n  ¬(RDF11.ClosureEvaluation.rdfsCarrier T.literalSyntax.datatype v d G E).length ≤\n        ((RDF11.ClosureEvaluation.rdfsAxiomLists T.literalSyntax.datatype v).seed d G E).length +\n          (RDF11.ClosureEvaluation.rdfsCarrier T.literalSyntax.datatype v d G E).length →\n    False",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.rdfs_exact",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfs_fixed_names",
+      "module": "RDF11.ClosureAxiomEvaluation",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri B : Type} (datatype : Literal → Iri) (v : RDF11.RDFSVocabulary Iri)\n  (t : RDF11.GeneralizedTriple Iri Literal B),\n  t ∈ RDF11.ClosureEvaluation.rdfsFixed v →\n    ∀ (n : Nat),\n      ¬RDF11.GeneralizedTriple.names datatype t (Sum.inl (v.iri (RDF11.RDFSSymbol.rdf (RDF11.RDFSymbol.container n))))",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfs_fixed_names._simp_1_2",
+      "module": "RDF11.ClosureAxiomEvaluation",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_1} {a : α} {s t : List α}, (a ∈ s ++ t) = (a ∈ s ∨ a ∈ t)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.rdfs_fixed_names",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfs_fixed_names._simp_1_3",
+      "module": "RDF11.ClosureAxiomEvaluation",
+      "kind": "theorem",
+      "type": "∀ {a b c : Prop}, ((a ∨ b) ∨ c) = (a ∨ b ∨ c)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.rdfs_fixed_names",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfs_fuel_bound",
+      "module": "RDF11.ExecutableClosure",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B₁ B₂ : Type} [inst : DecidableEq Iri] [inst_1 : DecidableEq Literal] [inst_2 : DecidableEq B₁]\n  (datatype : Literal → Iri) (v : RDF11.RDFSVocabulary Iri)\n  (d : RDF11.ClosureEvaluation.ContainerDecoder fun n => v.iri (RDF11.RDFSSymbol.rdf (RDF11.RDFSymbol.container n)))\n  (G : List (RDF11.GeneralizedTriple Iri Literal B₁)) (E : List (RDF11.GeneralizedTriple Iri Literal B₂)),\n  (RDF11.ClosureEvaluation.rdfsCarrier datatype v d G E).length =\n    (RDF11.Enumeration.unique (RDF11.ClosureEvaluation.rdfsTermList datatype v d G E)).length ^ 3",
+      "role": "engineering_refinement",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE",
+        "MT11-FINITE-CLOSURE-COMPLEXITY"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfs_indexed_names",
+      "module": "RDF11.ClosureAxiomEvaluation",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri B : Type} (datatype : Literal → Iri) (v : RDF11.RDFSVocabulary Iri) (n : Nat)\n  (t : RDF11.GeneralizedTriple Iri Literal B),\n  t ∈ RDF11.ClosureEvaluation.rdfsIndexed v n →\n    ∀ (k : Nat),\n      RDF11.GeneralizedTriple.names datatype t (Sum.inl (v.iri (RDF11.RDFSSymbol.rdf (RDF11.RDFSymbol.container k)))) ↔\n        k = n",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfs_indexed_names._simp_1_1",
+      "module": "RDF11.ClosureAxiomEvaluation",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_1} {b : α} {l : List α} {a : α}, (a ∈ b :: l) = (a = b ∨ a ∈ l)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.rdfs_indexed_names",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfs_indexed_names._simp_1_2",
+      "module": "RDF11.ClosureAxiomEvaluation",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_1} {a : α}, (a ∈ []) = False",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.rdfs_indexed_names",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfs_indexed_names._simp_1_3",
+      "module": "RDF11.ClosureAxiomEvaluation",
+      "kind": "theorem",
+      "type": "∀ {Iri : Type} (v : RDF11.RDFSVocabulary Iri) (a b : RDF11.RDFSSymbol), (v.iri a = v.iri b) = (a = b)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.rdfs_indexed_names",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfs_next_bounded",
+      "module": "RDF11.ExecutableClosure",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B₁ B₂ Value : Type} [inst : DecidableEq Iri] [inst_1 : DecidableEq Literal] [inst_2 : DecidableEq B₁]\n  (T : RDF11.DatatypeTheory Iri Literal Value) (v : RDF11.RDFSVocabulary Iri)\n  (d : RDF11.ClosureEvaluation.ContainerDecoder fun n => v.iri (RDF11.RDFSSymbol.rdf (RDF11.RDFSymbol.container n)))\n  (G : List (RDF11.GeneralizedTriple Iri Literal B₁)) (E : List (RDF11.GeneralizedTriple Iri Literal B₂))\n  (xs : List (RDF11.GeneralizedTriple Iri Literal B₁)),\n  xs ⊆ RDF11.ClosureEvaluation.rdfsCarrier T.literalSyntax.datatype v d G E →\n    RDF11.ClosureEvaluation.combinedNext T.literalSyntax.datatype v xs ⊆\n      RDF11.ClosureEvaluation.rdfsCarrier T.literalSyntax.datatype v d G E",
+      "role": "engineering_refinement",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfs_next_bounded._simp_1_1",
+      "module": "RDF11.ExecutableClosure",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_1} {b : α} {l : List α} {a : α}, (a ∈ b :: l) = (a = b ∨ a ∈ l)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.rdfs_next_bounded",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfs_next_bounded._simp_1_2",
+      "module": "RDF11.ExecutableClosure",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_1} {a : α}, (a ∈ []) = False",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.rdfs_next_bounded",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfs_nodup",
+      "module": "RDF11.ExecutableClosure",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B₁ B₂ : Type} [inst : DecidableEq Iri] [inst_1 : DecidableEq Literal] [inst_2 : DecidableEq B₁]\n  (datatype : Literal → Iri) (v : RDF11.RDFSVocabulary Iri)\n  (d : RDF11.ClosureEvaluation.ContainerDecoder fun n => v.iri (RDF11.RDFSSymbol.rdf (RDF11.RDFSymbol.container n)))\n  (G : List (RDF11.GeneralizedTriple Iri Literal B₁)) (E : List (RDF11.GeneralizedTriple Iri Literal B₂)),\n  (RDF11.ClosureEvaluation.rdfs datatype v d G E).Nodup",
+      "role": "engineering_refinement",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE",
+        "MT11-EXECUTABLE-CLOSURE-REFINEMENT"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfs_result_satisfaction",
+      "module": "RDF11.ExecutableClosure",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B₁ B₂ Value : Type} [inst : DecidableEq Iri] [inst_1 : DecidableEq Literal] [inst_2 : DecidableEq B₁]\n  {U : Type u_1} (T : RDF11.DatatypeTheory Iri Literal Value) (v : RDF11.RDFSVocabulary Iri)\n  (d : RDF11.ClosureEvaluation.ContainerDecoder fun n => v.iri (RDF11.RDFSSymbol.rdf (RDF11.RDFSymbol.container n)))\n  (G : List (RDF11.GeneralizedTriple Iri Literal B₁)) (E : List (RDF11.GeneralizedTriple Iri Literal B₂))\n  (I : RDF11.SimpleInterpretation Iri Literal U),\n  I.RDFSModel T v.toRDF.baseDatatypes v →\n    (I.Satisfies (RDF11.Set.ofList (RDF11.ClosureEvaluation.rdfs T.literalSyntax.datatype v d G E)) ↔\n      I.Satisfies (RDF11.Set.ofList G))",
+      "role": "engineering_refinement",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE",
+        "MT11-EXECUTABLE-CLOSURE-REFINEMENT"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfs_seed_bounded",
+      "module": "RDF11.ExecutableClosure",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B₁ B₂ Value : Type} [inst : DecidableEq Iri] [inst_1 : DecidableEq Literal] [inst_2 : DecidableEq B₁]\n  (T : RDF11.DatatypeTheory Iri Literal Value) (v : RDF11.RDFSVocabulary Iri)\n  (d : RDF11.ClosureEvaluation.ContainerDecoder fun n => v.iri (RDF11.RDFSSymbol.rdf (RDF11.RDFSymbol.container n)))\n  (G : List (RDF11.GeneralizedTriple Iri Literal B₁)) (E : List (RDF11.GeneralizedTriple Iri Literal B₂)),\n  (RDF11.ClosureEvaluation.rdfsAxiomLists T.literalSyntax.datatype v).seed d G E ⊆\n    RDF11.ClosureEvaluation.rdfsCarrier T.literalSyntax.datatype v d G E",
+      "role": "engineering_refinement",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ConclusionAxioms.eq_1",
+      "module": "RDF11.ClosureSeedEvaluation",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri B₁ B₂ : Type} (datatype : Literal → Iri) (container : Nat → Iri)\n  (axioms : RDF11.GeneralizedGraph Iri Literal B₁) (E : RDF11.GeneralizedGraph Iri Literal B₂)\n  (t : RDF11.GeneralizedTriple Iri Literal B₁),\n  RDF11.ConclusionAxioms datatype container axioms E t =\n    ∃ n,\n      RDF11.GeneralizedGraph.vocabulary datatype E (Sum.inl (container n)) ∧\n        RDF11.ContainerAxioms datatype container axioms n t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ConclusionAxioms",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.FiniteSaturation.advance",
+      "module": "RDF11.FiniteSaturation",
+      "kind": "definition",
+      "type": "{α : Type u} → [DecidableEq α] → (List α → List α) → List α → List α",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.FiniteSaturation.advance.eq_1",
+      "module": "RDF11.FiniteSaturation",
+      "kind": "theorem",
+      "type": "∀ {α : Type u} [inst : DecidableEq α] (next : List α → List α) (xs : List α),\n  RDF11.FiniteSaturation.advance next xs = RDF11.Enumeration.unique (xs ++ next xs)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.FiniteSaturation.advance",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.FiniteSaturation.advance_grows",
+      "module": "RDF11.FiniteSaturation",
+      "kind": "theorem",
+      "type": "∀ {α : Type u} [inst : DecidableEq α] (next : List α → List α) (xs : List α),\n  xs.Nodup → RDF11.FiniteSaturation.stable next xs ≠ true → xs.length < (RDF11.FiniteSaturation.advance next xs).length",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.FiniteSaturation.advance_nodup",
+      "module": "RDF11.FiniteSaturation",
+      "kind": "theorem",
+      "type": "∀ {α : Type u} [inst : DecidableEq α] (next : List α → List α) (xs : List α),\n  (RDF11.FiniteSaturation.advance next xs).Nodup",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.FiniteSaturation.advance_subset",
+      "module": "RDF11.FiniteSaturation",
+      "kind": "theorem",
+      "type": "∀ {α : Type u} [inst : DecidableEq α] (next : List α → List α) (xs carrier : List α),\n  xs ⊆ carrier → next xs ⊆ carrier → RDF11.FiniteSaturation.advance next xs ⊆ carrier",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.FiniteSaturation.decision",
+      "module": "RDF11.FiniteSaturation",
+      "kind": "definition",
+      "type": "{α : Type u} → [DecidableEq α] → (S : RDF11.Set α) → RDF11.Enumeration S → (a : α) → Decidable (S a)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.FiniteSaturation.decision._proof_1",
+      "module": "RDF11.FiniteSaturation",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_1} (S : RDF11.Set α) (e : RDF11.Enumeration S) (a : α), a ∈ e.triples → S a",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.FiniteSaturation.decision",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.FiniteSaturation.decision._proof_2",
+      "module": "RDF11.FiniteSaturation",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_1} (S : RDF11.Set α) (e : RDF11.Enumeration S) (a : α), ¬a ∈ e.triples → S a → False",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.FiniteSaturation.decision",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.FiniteSaturation.mem_advance",
+      "module": "RDF11.FiniteSaturation",
+      "kind": "theorem",
+      "type": "∀ {α : Type u} [inst : DecidableEq α] (next : List α → List α) (xs : List α) (a : α),\n  a ∈ RDF11.FiniteSaturation.advance next xs ↔ a ∈ xs ∨ a ∈ next xs",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.FiniteSaturation.run",
+      "module": "RDF11.FiniteSaturation",
+      "kind": "definition",
+      "type": "{α : Type u} → [DecidableEq α] → (List α → List α) → Nat → List α → List α",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.FiniteSaturation.run.eq_1",
+      "module": "RDF11.FiniteSaturation",
+      "kind": "theorem",
+      "type": "∀ {α : Type u} [inst : DecidableEq α] (next : List α → List α) (fuel : Nat),\n  RDF11.FiniteSaturation.run next fuel =\n    Nat.rec (motive := fun x => List α → List α) (fun xs => xs)\n      (fun x previous xs =>\n        if RDF11.FiniteSaturation.stable next xs = true then xs else previous (RDF11.FiniteSaturation.advance next xs))\n      fuel",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.FiniteSaturation.run",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.FiniteSaturation.run_exact",
+      "module": "RDF11.FiniteSaturation",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} [inst : DecidableEq Iri] [inst_1 : DecidableEq Literal] [inst_2 : DecidableEq B]\n  (step : RDF11.GeneralizedGraph Iri Literal B → RDF11.GeneralizedTriple Iri Literal B → Prop)\n  (next : List (RDF11.GeneralizedTriple Iri Literal B) → List (RDF11.GeneralizedTriple Iri Literal B)),\n  (∀ (xs : List (RDF11.GeneralizedTriple Iri Literal B)) (t : RDF11.GeneralizedTriple Iri Literal B),\n      t ∈ next xs ↔ step (RDF11.Set.ofList xs) t) →\n    (∀ (G H : RDF11.Set (RDF11.GeneralizedTriple Iri Literal B)),\n        G.subset H → ∀ (t : RDF11.GeneralizedTriple Iri Literal B), step G t → step H t) →\n      ∀ (carrier : List (RDF11.GeneralizedTriple Iri Literal B)),\n        (∀ (xs : List (RDF11.GeneralizedTriple Iri Literal B)), xs ⊆ carrier → next xs ⊆ carrier) →\n          ∀ (fuel : Nat) (seed : List (RDF11.GeneralizedTriple Iri Literal B)),\n            seed.Nodup →\n              seed ⊆ carrier →\n                carrier.length ≤ seed.length + fuel →\n                  RDF11.Set.ofList (RDF11.FiniteSaturation.run next fuel seed) =\n                    RDF11.RuleDerives step (RDF11.Set.ofList seed)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE",
+        "MT11-FINITE-CLOSURE-COMPLEXITY",
+        "MT11-EXECUTABLE-CLOSURE-REFINEMENT"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.FiniteSaturation.run_length",
+      "module": "RDF11.FiniteSaturation",
+      "kind": "theorem",
+      "type": "∀ {α : Type u} [inst : DecidableEq α] (next : List α → List α) (carrier : List α),\n  (∀ (xs : List α), xs ⊆ carrier → next xs ⊆ carrier) →\n    ∀ (fuel : Nat) (xs : List α),\n      xs.Nodup → xs ⊆ carrier → (RDF11.FiniteSaturation.run next fuel xs).length ≤ carrier.length",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.FiniteSaturation.run_nodup",
+      "module": "RDF11.FiniteSaturation",
+      "kind": "theorem",
+      "type": "∀ {α : Type u} [inst : DecidableEq α] (next : List α → List α) (fuel : Nat) (xs : List α),\n  xs.Nodup → (RDF11.FiniteSaturation.run next fuel xs).Nodup",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.FiniteSaturation.run_preserves",
+      "module": "RDF11.FiniteSaturation",
+      "kind": "theorem",
+      "type": "∀ {α : Type u} [inst : DecidableEq α] (next : List α → List α) (P : RDF11.Set α),\n  (∀ (xs : List α), (∀ (a : α), a ∈ xs → P a) → ∀ (a : α), a ∈ next xs → P a) →\n    ∀ (fuel : Nat) (xs : List α),\n      (∀ (a : α), a ∈ xs → P a) → ∀ (a : α), a ∈ RDF11.FiniteSaturation.run next fuel xs → P a",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.FiniteSaturation.run_stable",
+      "module": "RDF11.FiniteSaturation",
+      "kind": "theorem",
+      "type": "∀ {α : Type u} [inst : DecidableEq α] (next : List α → List α) (carrier : List α),\n  (∀ (xs : List α), xs ⊆ carrier → next xs ⊆ carrier) →\n    ∀ (fuel : Nat) (xs : List α),\n      xs.Nodup →\n        xs ⊆ carrier →\n          carrier.length ≤ xs.length + fuel →\n            RDF11.FiniteSaturation.stable next (RDF11.FiniteSaturation.run next fuel xs) = true",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE",
+        "MT11-FINITE-CLOSURE-COMPLEXITY",
+        "MT11-EXECUTABLE-CLOSURE-REFINEMENT"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.FiniteSaturation.run_stable._proof_1_1",
+      "module": "RDF11.FiniteSaturation",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_1} [inst : DecidableEq α] (next : List α → List α) (carrier xs : List α),\n  carrier.length ≤ xs.length + 0 →\n    xs.length < (RDF11.FiniteSaturation.advance next xs).length →\n      (RDF11.FiniteSaturation.advance next xs).length ≤ carrier.length → False",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.FiniteSaturation.run_stable",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.FiniteSaturation.run_stable._proof_1_4",
+      "module": "RDF11.FiniteSaturation",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_1} [inst : DecidableEq α] (next : List α → List α) (carrier : List α) (fuel : Nat) (xs : List α),\n  carrier.length ≤ xs.length + (fuel + 1) →\n    xs.length < (RDF11.FiniteSaturation.advance next xs).length →\n      ¬carrier.length ≤ (RDF11.FiniteSaturation.advance next xs).length + fuel → False",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.FiniteSaturation.run_stable",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.FiniteSaturation.run_subset",
+      "module": "RDF11.FiniteSaturation",
+      "kind": "theorem",
+      "type": "∀ {α : Type u} [inst : DecidableEq α] (next : List α → List α) (carrier : List α),\n  (∀ (xs : List α), xs ⊆ carrier → next xs ⊆ carrier) →\n    ∀ (fuel : Nat) (xs : List α), xs ⊆ carrier → RDF11.FiniteSaturation.run next fuel xs ⊆ carrier",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.FiniteSaturation.stable",
+      "module": "RDF11.FiniteSaturation",
+      "kind": "definition",
+      "type": "{α : Type u} → [DecidableEq α] → (List α → List α) → List α → Bool",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.FiniteSaturation.stable.congr_simp",
+      "module": "RDF11.FiniteSaturation",
+      "kind": "theorem",
+      "type": "∀ {α : Type u} {inst : DecidableEq α} [inst_1 : DecidableEq α] (next next_1 : List α → List α),\n  next = next_1 →\n    ∀ (xs xs_1 : List α), xs = xs_1 → RDF11.FiniteSaturation.stable next xs = RDF11.FiniteSaturation.stable next_1 xs_1",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.FiniteSaturation.stable",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.FiniteSaturation.stable.eq_1",
+      "module": "RDF11.FiniteSaturation",
+      "kind": "theorem",
+      "type": "∀ {α : Type u} [inst : DecidableEq α] (next : List α → List α) (xs : List α),\n  RDF11.FiniteSaturation.stable next xs = (next xs).all fun a => decide (a ∈ xs)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.FiniteSaturation.stable",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.FiniteSaturation.stable_iff",
+      "module": "RDF11.FiniteSaturation",
+      "kind": "theorem",
+      "type": "∀ {α : Type u} [inst : DecidableEq α] (next : List α → List α) (xs : List α),\n  RDF11.FiniteSaturation.stable next xs = true ↔ next xs ⊆ xs",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.FiniteSaturation.stable_iff._simp_1_2",
+      "module": "RDF11.FiniteSaturation",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_1} {l₁ l₂ : List α}, (l₁ ⊆ l₂) = ∀ {a : α}, a ∈ l₁ → a ∈ l₂",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.FiniteSaturation.stable_iff",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.FiniteSaturation.subset_advance",
+      "module": "RDF11.FiniteSaturation",
+      "kind": "theorem",
+      "type": "∀ {α : Type u} [inst : DecidableEq α] (next : List α → List α) (xs : List α),\n  xs ⊆ RDF11.FiniteSaturation.advance next xs",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.FiniteSaturation.subset_run",
+      "module": "RDF11.FiniteSaturation",
+      "kind": "theorem",
+      "type": "∀ {α : Type u} [inst : DecidableEq α] (next : List α → List α) (fuel : Nat) (xs : List α),\n  xs ⊆ RDF11.FiniteSaturation.run next fuel xs",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFSymbol.propertyAxiom._sparseCasesOn_1.else_eq",
+      "module": "RDF11.ClosureAxiomEvaluation",
+      "kind": "theorem",
+      "type": "∀ {motive : RDF11.RDFSymbol → Sort u} (t : RDF11.RDFSymbol) (rdfType : motive RDF11.RDFSymbol.rdfType)\n  (rdfSubject : motive RDF11.RDFSymbol.rdfSubject) (rdfPredicate : motive RDF11.RDFSymbol.rdfPredicate)\n  (rdfObject : motive RDF11.RDFSymbol.rdfObject) (rdfFirst : motive RDF11.RDFSymbol.rdfFirst)\n  (rdfRest : motive RDF11.RDFSymbol.rdfRest) (rdfValue : motive RDF11.RDFSymbol.rdfValue)\n  (container : (a : Nat) → motive (RDF11.RDFSymbol.container a)) («else» : Nat.hasNotBit 65789 t.ctorIdx → motive t)\n  (h : Nat.hasNotBit 65789 t.ctorIdx),\n  RDF11.RDFSymbol.propertyAxiom._sparseCasesOn_1 t rdfType rdfSubject rdfPredicate rdfObject rdfFirst rdfRest rdfValue\n      container «else» =\n    «else» h",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.RDFSymbol.propertyAxiom._sparseCasesOn_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFSymbol.propertyAxiom.eq_1",
+      "module": "RDF11.ClosureAxiomEvaluation",
+      "kind": "theorem",
+      "type": "RDF11.RDFSymbol.rdfType.propertyAxiom = True",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.RDFSymbol.propertyAxiom",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFSymbol.propertyAxiom.eq_2",
+      "module": "RDF11.ClosureAxiomEvaluation",
+      "kind": "theorem",
+      "type": "RDF11.RDFSymbol.rdfSubject.propertyAxiom = True",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.RDFSymbol.propertyAxiom",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFSymbol.propertyAxiom.eq_3",
+      "module": "RDF11.ClosureAxiomEvaluation",
+      "kind": "theorem",
+      "type": "RDF11.RDFSymbol.rdfPredicate.propertyAxiom = True",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.RDFSymbol.propertyAxiom",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFSymbol.propertyAxiom.eq_4",
+      "module": "RDF11.ClosureAxiomEvaluation",
+      "kind": "theorem",
+      "type": "RDF11.RDFSymbol.rdfObject.propertyAxiom = True",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.RDFSymbol.propertyAxiom",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFSymbol.propertyAxiom.eq_5",
+      "module": "RDF11.ClosureAxiomEvaluation",
+      "kind": "theorem",
+      "type": "RDF11.RDFSymbol.rdfFirst.propertyAxiom = True",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.RDFSymbol.propertyAxiom",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFSymbol.propertyAxiom.eq_6",
+      "module": "RDF11.ClosureAxiomEvaluation",
+      "kind": "theorem",
+      "type": "RDF11.RDFSymbol.rdfRest.propertyAxiom = True",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.RDFSymbol.propertyAxiom",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFSymbol.propertyAxiom.eq_7",
+      "module": "RDF11.ClosureAxiomEvaluation",
+      "kind": "theorem",
+      "type": "RDF11.RDFSymbol.rdfValue.propertyAxiom = True",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.RDFSymbol.propertyAxiom",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFSymbol.propertyAxiom.eq_8",
+      "module": "RDF11.ClosureAxiomEvaluation",
+      "kind": "theorem",
+      "type": "∀ (a : Nat), (RDF11.RDFSymbol.container a).propertyAxiom = True",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.RDFSymbol.propertyAxiom",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFSymbol.propertyAxiom.eq_9",
+      "module": "RDF11.ClosureAxiomEvaluation",
+      "kind": "theorem",
+      "type": "∀ (x : RDF11.RDFSymbol),\n  (x = RDF11.RDFSymbol.rdfType → False) →\n    (x = RDF11.RDFSymbol.rdfSubject → False) →\n      (x = RDF11.RDFSymbol.rdfPredicate → False) →\n        (x = RDF11.RDFSymbol.rdfObject → False) →\n          (x = RDF11.RDFSymbol.rdfFirst → False) →\n            (x = RDF11.RDFSymbol.rdfRest → False) →\n              (x = RDF11.RDFSymbol.rdfValue → False) →\n                (∀ (a : Nat), x = RDF11.RDFSymbol.container a → False) → x.propertyAxiom = False",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.RDFSymbol.propertyAxiom",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.RDFVocabulary.baseDatatypes.eq_1",
+      "module": "RDF11.ClosureRuleEvaluation",
+      "kind": "theorem",
+      "type": "∀ {Iri : Type} (v : RDF11.RDFVocabulary Iri) (a : Iri),\n  v.baseDatatypes a = (a = v.iri RDF11.RDFSymbol.rdfLangString ∨ a = v.iri RDF11.RDFSymbol.xsdString)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.RDFVocabulary.baseDatatypes",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "Spec2Lean.ClosureExecution.Iri",
+      "module": "Audit.ClosureExecution",
+      "kind": "definition",
+      "type": "Type",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-CLOSURE-EXECUTION-FIXTURES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "Spec2Lean.ClosureExecution.Literal",
+      "module": "Audit.ClosureExecution",
+      "kind": "definition",
+      "type": "Type",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-CLOSURE-EXECUTION-FIXTURES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "Spec2Lean.ClosureExecution.Triple",
+      "module": "Audit.ClosureExecution",
+      "kind": "definition",
+      "type": "Type",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-CLOSURE-EXECUTION-FIXTURES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "Spec2Lean.ClosureExecution.checks",
+      "module": "Audit.ClosureExecution",
+      "kind": "definition",
+      "type": "List (String × Bool)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-CLOSURE-EXECUTION-FIXTURES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "Spec2Lean.ClosureExecution.conclusion",
+      "module": "Audit.ClosureExecution",
+      "kind": "definition",
+      "type": "Spec2Lean.ClosureExecution.Triple",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-CLOSURE-EXECUTION-FIXTURES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "Spec2Lean.ClosureExecution.decode",
+      "module": "Audit.ClosureExecution",
+      "kind": "definition",
+      "type": "Spec2Lean.ClosureExecution.Iri → Option Nat",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-CLOSURE-EXECUTION-FIXTURES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "Spec2Lean.ClosureExecution.decode._sparseCasesOn_1",
+      "module": "Audit.ClosureExecution",
+      "kind": "definition",
+      "type": "{α : Type u} →\n  {β : Type v} →\n    {motive : α ⊕ β → Sort u_1} →\n      (t : α ⊕ β) → ((val : β) → motive (Sum.inr val)) → (Nat.hasNotBit 2 t.ctorIdx → motive t) → motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-CLOSURE-EXECUTION-FIXTURES"
+      ],
+      "parent_declaration_if_applicable": "Spec2Lean.ClosureExecution.decode",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "Spec2Lean.ClosureExecution.decode._sparseCasesOn_1.else_eq",
+      "module": "Audit.ClosureExecution",
+      "kind": "theorem",
+      "type": "∀ {α : Type u} {β : Type v} {motive : α ⊕ β → Sort u_1} (t : α ⊕ β) (inr : (val : β) → motive (Sum.inr val))\n  («else» : Nat.hasNotBit 2 t.ctorIdx → motive t) (h : Nat.hasNotBit 2 t.ctorIdx),\n  Spec2Lean.ClosureExecution.decode._sparseCasesOn_1 t inr «else» = «else» h",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-CLOSURE-EXECUTION-FIXTURES"
+      ],
+      "parent_declaration_if_applicable": "Spec2Lean.ClosureExecution.decode._sparseCasesOn_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "Spec2Lean.ClosureExecution.decode._sparseCasesOn_2",
+      "module": "Audit.ClosureExecution",
+      "kind": "definition",
+      "type": "{motive : RDF11.RDFSSymbol → Sort u} →\n  (t : RDF11.RDFSSymbol) →\n    ((a : RDF11.RDFSymbol) → motive (RDF11.RDFSSymbol.rdf a)) → (Nat.hasNotBit 1 t.ctorIdx → motive t) → motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-CLOSURE-EXECUTION-FIXTURES"
+      ],
+      "parent_declaration_if_applicable": "Spec2Lean.ClosureExecution.decode",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "Spec2Lean.ClosureExecution.decode._sparseCasesOn_2.else_eq",
+      "module": "Audit.ClosureExecution",
+      "kind": "theorem",
+      "type": "∀ {motive : RDF11.RDFSSymbol → Sort u} (t : RDF11.RDFSSymbol)\n  (rdf : (a : RDF11.RDFSymbol) → motive (RDF11.RDFSSymbol.rdf a)) («else» : Nat.hasNotBit 1 t.ctorIdx → motive t)\n  (h : Nat.hasNotBit 1 t.ctorIdx), Spec2Lean.ClosureExecution.decode._sparseCasesOn_2 t rdf «else» = «else» h",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-CLOSURE-EXECUTION-FIXTURES"
+      ],
+      "parent_declaration_if_applicable": "Spec2Lean.ClosureExecution.decode._sparseCasesOn_2",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "Spec2Lean.ClosureExecution.decode._sparseCasesOn_3",
+      "module": "Audit.ClosureExecution",
+      "kind": "definition",
+      "type": "{motive : RDF11.RDFSymbol → Sort u} →\n  (t : RDF11.RDFSymbol) →\n    ((a : Nat) → motive (RDF11.RDFSymbol.container a)) → (Nat.hasNotBit 65536 t.ctorIdx → motive t) → motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-CLOSURE-EXECUTION-FIXTURES"
+      ],
+      "parent_declaration_if_applicable": "Spec2Lean.ClosureExecution.decode",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "Spec2Lean.ClosureExecution.decode._sparseCasesOn_3.else_eq",
+      "module": "Audit.ClosureExecution",
+      "kind": "theorem",
+      "type": "∀ {motive : RDF11.RDFSymbol → Sort u} (t : RDF11.RDFSymbol)\n  (container : (a : Nat) → motive (RDF11.RDFSymbol.container a)) («else» : Nat.hasNotBit 65536 t.ctorIdx → motive t)\n  (h : Nat.hasNotBit 65536 t.ctorIdx), Spec2Lean.ClosureExecution.decode._sparseCasesOn_3 t container «else» = «else» h",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-CLOSURE-EXECUTION-FIXTURES"
+      ],
+      "parent_declaration_if_applicable": "Spec2Lean.ClosureExecution.decode._sparseCasesOn_3",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "Spec2Lean.ClosureExecution.decode.eq_1",
+      "module": "Audit.ClosureExecution",
+      "kind": "theorem",
+      "type": "∀ (n : Nat), Spec2Lean.ClosureExecution.decode (Sum.inr (RDF11.RDFSSymbol.rdf (RDF11.RDFSymbol.container n))) = some n",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-CLOSURE-EXECUTION-FIXTURES"
+      ],
+      "parent_declaration_if_applicable": "Spec2Lean.ClosureExecution.decode",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "Spec2Lean.ClosureExecution.decode.eq_2",
+      "module": "Audit.ClosureExecution",
+      "kind": "theorem",
+      "type": "∀ (x : Spec2Lean.ClosureExecution.Iri),\n  (∀ (n : Nat), x = Sum.inr (RDF11.RDFSSymbol.rdf (RDF11.RDFSymbol.container n)) → False) →\n    Spec2Lean.ClosureExecution.decode x = none",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-CLOSURE-EXECUTION-FIXTURES"
+      ],
+      "parent_declaration_if_applicable": "Spec2Lean.ClosureExecution.decode",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "Spec2Lean.ClosureExecution.decode.match_1",
+      "module": "Audit.ClosureExecution",
+      "kind": "definition",
+      "type": "(motive : Spec2Lean.ClosureExecution.Iri → Sort u_1) →\n  (x : Spec2Lean.ClosureExecution.Iri) →\n    ((n : Nat) → motive (Sum.inr (RDF11.RDFSSymbol.rdf (RDF11.RDFSymbol.container n)))) →\n      ((x : Spec2Lean.ClosureExecution.Iri) → motive x) → motive x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-CLOSURE-EXECUTION-FIXTURES"
+      ],
+      "parent_declaration_if_applicable": "Spec2Lean.ClosureExecution.decode",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "Spec2Lean.ClosureExecution.decoder",
+      "module": "Audit.ClosureExecution",
+      "kind": "definition",
+      "type": "RDF11.ClosureEvaluation.ContainerDecoder fun n =>\n  Spec2Lean.ClosureExecution.vocabulary.iri (RDF11.RDFSSymbol.rdf (RDF11.RDFSymbol.container n))",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-CLOSURE-EXECUTION-FIXTURES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "Spec2Lean.ClosureExecution.decoder._proof_1",
+      "module": "Audit.ClosureExecution",
+      "kind": "theorem",
+      "type": "∀ (a : Spec2Lean.ClosureExecution.Iri) (n : Nat),\n  Spec2Lean.ClosureExecution.decode a = some n ↔\n    a = Spec2Lean.ClosureExecution.vocabulary.iri (RDF11.RDFSSymbol.rdf (RDF11.RDFSymbol.container n))",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-CLOSURE-EXECUTION-FIXTURES"
+      ],
+      "parent_declaration_if_applicable": "Spec2Lean.ClosureExecution.decoder",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "Spec2Lean.ClosureExecution.named",
+      "module": "Audit.ClosureExecution",
+      "kind": "definition",
+      "type": "Spec2Lean.ClosureExecution.Iri →\n  Spec2Lean.ClosureExecution.Iri → Spec2Lean.ClosureExecution.Iri → Spec2Lean.ClosureExecution.Triple",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-CLOSURE-EXECUTION-FIXTURES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "Spec2Lean.ClosureExecution.premise",
+      "module": "Audit.ClosureExecution",
+      "kind": "definition",
+      "type": "Spec2Lean.ClosureExecution.Triple",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-CLOSURE-EXECUTION-FIXTURES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "Spec2Lean.ClosureExecution.vocabulary",
+      "module": "Audit.ClosureExecution",
+      "kind": "definition",
+      "type": "RDF11.RDFSVocabulary Spec2Lean.ClosureExecution.Iri",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-CLOSURE-EXECUTION-FIXTURES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "Spec2Lean.ClosureExecution.vocabulary.eq_1",
+      "module": "Audit.ClosureExecution",
+      "kind": "theorem",
+      "type": "Spec2Lean.ClosureExecution.vocabulary = { iri := Sum.inr, distinct := ⋯ }",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-CLOSURE-EXECUTION-FIXTURES"
+      ],
+      "parent_declaration_if_applicable": "Spec2Lean.ClosureExecution.vocabulary",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.Audit.ClosureExecution.0.Spec2Lean.ClosureExecution.decode.match_1.eq_1",
+      "module": "Audit.ClosureExecution",
+      "kind": "theorem",
+      "type": "∀ (motive : Spec2Lean.ClosureExecution.Iri → Sort u_1) (n : Nat)\n  (h_1 : (n : Nat) → motive (Sum.inr (RDF11.RDFSSymbol.rdf (RDF11.RDFSymbol.container n))))\n  (h_2 : (x : Spec2Lean.ClosureExecution.Iri) → motive x),\n  (match Sum.inr (RDF11.RDFSSymbol.rdf (RDF11.RDFSymbol.container n)) with\n    | Sum.inr (RDF11.RDFSSymbol.rdf (RDF11.RDFSymbol.container n)) => h_1 n\n    | x => h_2 x) =\n    h_1 n",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-CLOSURE-EXECUTION-FIXTURES"
+      ],
+      "parent_declaration_if_applicable": "Spec2Lean.ClosureExecution.decode.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.Audit.ClosureExecution.0.Spec2Lean.ClosureExecution.decode.match_1.eq_2",
+      "module": "Audit.ClosureExecution",
+      "kind": "theorem",
+      "type": "∀ (motive : Spec2Lean.ClosureExecution.Iri → Sort u_1) (x : Spec2Lean.ClosureExecution.Iri)\n  (h_1 : (n : Nat) → motive (Sum.inr (RDF11.RDFSSymbol.rdf (RDF11.RDFSymbol.container n))))\n  (h_2 : (x : Spec2Lean.ClosureExecution.Iri) → motive x),\n  (∀ (n : Nat), x = Sum.inr (RDF11.RDFSSymbol.rdf (RDF11.RDFSymbol.container n)) → False) →\n    (match x with\n      | Sum.inr (RDF11.RDFSSymbol.rdf (RDF11.RDFSymbol.container n)) => h_1 n\n      | x => h_2 x) =\n      h_2 x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-CLOSURE-EXECUTION-FIXTURES"
+      ],
+      "parent_declaration_if_applicable": "Spec2Lean.ClosureExecution.decode.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.Audit.ClosureExecution.0.Spec2Lean.ClosureExecution.decode.match_1.splitter",
+      "module": "Audit.ClosureExecution",
+      "kind": "definition",
+      "type": "(motive : Spec2Lean.ClosureExecution.Iri → Sort u_1) →\n  (x : Spec2Lean.ClosureExecution.Iri) →\n    ((n : Nat) → motive (Sum.inr (RDF11.RDFSSymbol.rdf (RDF11.RDFSymbol.container n)))) →\n      ((x : Spec2Lean.ClosureExecution.Iri) →\n          (∀ (n : Nat), x = Sum.inr (RDF11.RDFSSymbol.rdf (RDF11.RDFSymbol.container n)) → False) → motive x) →\n        motive x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-CLOSURE-EXECUTION-FIXTURES"
+      ],
+      "parent_declaration_if_applicable": "Spec2Lean.ClosureExecution.decode.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.ClosureAxiomEvaluation.0.RDF11.RDFSymbol.propertyAxiom.match_1.eq_1",
+      "module": "RDF11.ClosureAxiomEvaluation",
+      "kind": "theorem",
+      "type": "∀ (motive : RDF11.RDFSymbol → Sort u_1) (h_1 : Unit → motive RDF11.RDFSymbol.rdfType)\n  (h_2 : Unit → motive RDF11.RDFSymbol.rdfSubject) (h_3 : Unit → motive RDF11.RDFSymbol.rdfPredicate)\n  (h_4 : Unit → motive RDF11.RDFSymbol.rdfObject) (h_5 : Unit → motive RDF11.RDFSymbol.rdfFirst)\n  (h_6 : Unit → motive RDF11.RDFSymbol.rdfRest) (h_7 : Unit → motive RDF11.RDFSymbol.rdfValue)\n  (h_8 : (a : Nat) → motive (RDF11.RDFSymbol.container a)) (h_9 : (x : RDF11.RDFSymbol) → motive x),\n  (match RDF11.RDFSymbol.rdfType with\n    | RDF11.RDFSymbol.rdfType => h_1 ()\n    | RDF11.RDFSymbol.rdfSubject => h_2 ()\n    | RDF11.RDFSymbol.rdfPredicate => h_3 ()\n    | RDF11.RDFSymbol.rdfObject => h_4 ()\n    | RDF11.RDFSymbol.rdfFirst => h_5 ()\n    | RDF11.RDFSymbol.rdfRest => h_6 ()\n    | RDF11.RDFSymbol.rdfValue => h_7 ()\n    | RDF11.RDFSymbol.container a => h_8 a\n    | x => h_9 x) =\n    h_1 ()",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.RDFSymbol.propertyAxiom.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.ClosureAxiomEvaluation.0.RDF11.RDFSymbol.propertyAxiom.match_1.eq_2",
+      "module": "RDF11.ClosureAxiomEvaluation",
+      "kind": "theorem",
+      "type": "∀ (motive : RDF11.RDFSymbol → Sort u_1) (h_1 : Unit → motive RDF11.RDFSymbol.rdfType)\n  (h_2 : Unit → motive RDF11.RDFSymbol.rdfSubject) (h_3 : Unit → motive RDF11.RDFSymbol.rdfPredicate)\n  (h_4 : Unit → motive RDF11.RDFSymbol.rdfObject) (h_5 : Unit → motive RDF11.RDFSymbol.rdfFirst)\n  (h_6 : Unit → motive RDF11.RDFSymbol.rdfRest) (h_7 : Unit → motive RDF11.RDFSymbol.rdfValue)\n  (h_8 : (a : Nat) → motive (RDF11.RDFSymbol.container a)) (h_9 : (x : RDF11.RDFSymbol) → motive x),\n  (match RDF11.RDFSymbol.rdfSubject with\n    | RDF11.RDFSymbol.rdfType => h_1 ()\n    | RDF11.RDFSymbol.rdfSubject => h_2 ()\n    | RDF11.RDFSymbol.rdfPredicate => h_3 ()\n    | RDF11.RDFSymbol.rdfObject => h_4 ()\n    | RDF11.RDFSymbol.rdfFirst => h_5 ()\n    | RDF11.RDFSymbol.rdfRest => h_6 ()\n    | RDF11.RDFSymbol.rdfValue => h_7 ()\n    | RDF11.RDFSymbol.container a => h_8 a\n    | x => h_9 x) =\n    h_2 ()",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.RDFSymbol.propertyAxiom.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.ClosureAxiomEvaluation.0.RDF11.RDFSymbol.propertyAxiom.match_1.eq_3",
+      "module": "RDF11.ClosureAxiomEvaluation",
+      "kind": "theorem",
+      "type": "∀ (motive : RDF11.RDFSymbol → Sort u_1) (h_1 : Unit → motive RDF11.RDFSymbol.rdfType)\n  (h_2 : Unit → motive RDF11.RDFSymbol.rdfSubject) (h_3 : Unit → motive RDF11.RDFSymbol.rdfPredicate)\n  (h_4 : Unit → motive RDF11.RDFSymbol.rdfObject) (h_5 : Unit → motive RDF11.RDFSymbol.rdfFirst)\n  (h_6 : Unit → motive RDF11.RDFSymbol.rdfRest) (h_7 : Unit → motive RDF11.RDFSymbol.rdfValue)\n  (h_8 : (a : Nat) → motive (RDF11.RDFSymbol.container a)) (h_9 : (x : RDF11.RDFSymbol) → motive x),\n  (match RDF11.RDFSymbol.rdfPredicate with\n    | RDF11.RDFSymbol.rdfType => h_1 ()\n    | RDF11.RDFSymbol.rdfSubject => h_2 ()\n    | RDF11.RDFSymbol.rdfPredicate => h_3 ()\n    | RDF11.RDFSymbol.rdfObject => h_4 ()\n    | RDF11.RDFSymbol.rdfFirst => h_5 ()\n    | RDF11.RDFSymbol.rdfRest => h_6 ()\n    | RDF11.RDFSymbol.rdfValue => h_7 ()\n    | RDF11.RDFSymbol.container a => h_8 a\n    | x => h_9 x) =\n    h_3 ()",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.RDFSymbol.propertyAxiom.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.ClosureAxiomEvaluation.0.RDF11.RDFSymbol.propertyAxiom.match_1.eq_4",
+      "module": "RDF11.ClosureAxiomEvaluation",
+      "kind": "theorem",
+      "type": "∀ (motive : RDF11.RDFSymbol → Sort u_1) (h_1 : Unit → motive RDF11.RDFSymbol.rdfType)\n  (h_2 : Unit → motive RDF11.RDFSymbol.rdfSubject) (h_3 : Unit → motive RDF11.RDFSymbol.rdfPredicate)\n  (h_4 : Unit → motive RDF11.RDFSymbol.rdfObject) (h_5 : Unit → motive RDF11.RDFSymbol.rdfFirst)\n  (h_6 : Unit → motive RDF11.RDFSymbol.rdfRest) (h_7 : Unit → motive RDF11.RDFSymbol.rdfValue)\n  (h_8 : (a : Nat) → motive (RDF11.RDFSymbol.container a)) (h_9 : (x : RDF11.RDFSymbol) → motive x),\n  (match RDF11.RDFSymbol.rdfObject with\n    | RDF11.RDFSymbol.rdfType => h_1 ()\n    | RDF11.RDFSymbol.rdfSubject => h_2 ()\n    | RDF11.RDFSymbol.rdfPredicate => h_3 ()\n    | RDF11.RDFSymbol.rdfObject => h_4 ()\n    | RDF11.RDFSymbol.rdfFirst => h_5 ()\n    | RDF11.RDFSymbol.rdfRest => h_6 ()\n    | RDF11.RDFSymbol.rdfValue => h_7 ()\n    | RDF11.RDFSymbol.container a => h_8 a\n    | x => h_9 x) =\n    h_4 ()",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.RDFSymbol.propertyAxiom.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.ClosureAxiomEvaluation.0.RDF11.RDFSymbol.propertyAxiom.match_1.eq_5",
+      "module": "RDF11.ClosureAxiomEvaluation",
+      "kind": "theorem",
+      "type": "∀ (motive : RDF11.RDFSymbol → Sort u_1) (h_1 : Unit → motive RDF11.RDFSymbol.rdfType)\n  (h_2 : Unit → motive RDF11.RDFSymbol.rdfSubject) (h_3 : Unit → motive RDF11.RDFSymbol.rdfPredicate)\n  (h_4 : Unit → motive RDF11.RDFSymbol.rdfObject) (h_5 : Unit → motive RDF11.RDFSymbol.rdfFirst)\n  (h_6 : Unit → motive RDF11.RDFSymbol.rdfRest) (h_7 : Unit → motive RDF11.RDFSymbol.rdfValue)\n  (h_8 : (a : Nat) → motive (RDF11.RDFSymbol.container a)) (h_9 : (x : RDF11.RDFSymbol) → motive x),\n  (match RDF11.RDFSymbol.rdfFirst with\n    | RDF11.RDFSymbol.rdfType => h_1 ()\n    | RDF11.RDFSymbol.rdfSubject => h_2 ()\n    | RDF11.RDFSymbol.rdfPredicate => h_3 ()\n    | RDF11.RDFSymbol.rdfObject => h_4 ()\n    | RDF11.RDFSymbol.rdfFirst => h_5 ()\n    | RDF11.RDFSymbol.rdfRest => h_6 ()\n    | RDF11.RDFSymbol.rdfValue => h_7 ()\n    | RDF11.RDFSymbol.container a => h_8 a\n    | x => h_9 x) =\n    h_5 ()",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.RDFSymbol.propertyAxiom.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.ClosureAxiomEvaluation.0.RDF11.RDFSymbol.propertyAxiom.match_1.eq_6",
+      "module": "RDF11.ClosureAxiomEvaluation",
+      "kind": "theorem",
+      "type": "∀ (motive : RDF11.RDFSymbol → Sort u_1) (h_1 : Unit → motive RDF11.RDFSymbol.rdfType)\n  (h_2 : Unit → motive RDF11.RDFSymbol.rdfSubject) (h_3 : Unit → motive RDF11.RDFSymbol.rdfPredicate)\n  (h_4 : Unit → motive RDF11.RDFSymbol.rdfObject) (h_5 : Unit → motive RDF11.RDFSymbol.rdfFirst)\n  (h_6 : Unit → motive RDF11.RDFSymbol.rdfRest) (h_7 : Unit → motive RDF11.RDFSymbol.rdfValue)\n  (h_8 : (a : Nat) → motive (RDF11.RDFSymbol.container a)) (h_9 : (x : RDF11.RDFSymbol) → motive x),\n  (match RDF11.RDFSymbol.rdfRest with\n    | RDF11.RDFSymbol.rdfType => h_1 ()\n    | RDF11.RDFSymbol.rdfSubject => h_2 ()\n    | RDF11.RDFSymbol.rdfPredicate => h_3 ()\n    | RDF11.RDFSymbol.rdfObject => h_4 ()\n    | RDF11.RDFSymbol.rdfFirst => h_5 ()\n    | RDF11.RDFSymbol.rdfRest => h_6 ()\n    | RDF11.RDFSymbol.rdfValue => h_7 ()\n    | RDF11.RDFSymbol.container a => h_8 a\n    | x => h_9 x) =\n    h_6 ()",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.RDFSymbol.propertyAxiom.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.ClosureAxiomEvaluation.0.RDF11.RDFSymbol.propertyAxiom.match_1.eq_7",
+      "module": "RDF11.ClosureAxiomEvaluation",
+      "kind": "theorem",
+      "type": "∀ (motive : RDF11.RDFSymbol → Sort u_1) (h_1 : Unit → motive RDF11.RDFSymbol.rdfType)\n  (h_2 : Unit → motive RDF11.RDFSymbol.rdfSubject) (h_3 : Unit → motive RDF11.RDFSymbol.rdfPredicate)\n  (h_4 : Unit → motive RDF11.RDFSymbol.rdfObject) (h_5 : Unit → motive RDF11.RDFSymbol.rdfFirst)\n  (h_6 : Unit → motive RDF11.RDFSymbol.rdfRest) (h_7 : Unit → motive RDF11.RDFSymbol.rdfValue)\n  (h_8 : (a : Nat) → motive (RDF11.RDFSymbol.container a)) (h_9 : (x : RDF11.RDFSymbol) → motive x),\n  (match RDF11.RDFSymbol.rdfValue with\n    | RDF11.RDFSymbol.rdfType => h_1 ()\n    | RDF11.RDFSymbol.rdfSubject => h_2 ()\n    | RDF11.RDFSymbol.rdfPredicate => h_3 ()\n    | RDF11.RDFSymbol.rdfObject => h_4 ()\n    | RDF11.RDFSymbol.rdfFirst => h_5 ()\n    | RDF11.RDFSymbol.rdfRest => h_6 ()\n    | RDF11.RDFSymbol.rdfValue => h_7 ()\n    | RDF11.RDFSymbol.container a => h_8 a\n    | x => h_9 x) =\n    h_7 ()",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.RDFSymbol.propertyAxiom.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.ClosureAxiomEvaluation.0.RDF11.RDFSymbol.propertyAxiom.match_1.eq_8",
+      "module": "RDF11.ClosureAxiomEvaluation",
+      "kind": "theorem",
+      "type": "∀ (motive : RDF11.RDFSymbol → Sort u_1) (a : Nat) (h_1 : Unit → motive RDF11.RDFSymbol.rdfType)\n  (h_2 : Unit → motive RDF11.RDFSymbol.rdfSubject) (h_3 : Unit → motive RDF11.RDFSymbol.rdfPredicate)\n  (h_4 : Unit → motive RDF11.RDFSymbol.rdfObject) (h_5 : Unit → motive RDF11.RDFSymbol.rdfFirst)\n  (h_6 : Unit → motive RDF11.RDFSymbol.rdfRest) (h_7 : Unit → motive RDF11.RDFSymbol.rdfValue)\n  (h_8 : (a : Nat) → motive (RDF11.RDFSymbol.container a)) (h_9 : (x : RDF11.RDFSymbol) → motive x),\n  (match RDF11.RDFSymbol.container a with\n    | RDF11.RDFSymbol.rdfType => h_1 ()\n    | RDF11.RDFSymbol.rdfSubject => h_2 ()\n    | RDF11.RDFSymbol.rdfPredicate => h_3 ()\n    | RDF11.RDFSymbol.rdfObject => h_4 ()\n    | RDF11.RDFSymbol.rdfFirst => h_5 ()\n    | RDF11.RDFSymbol.rdfRest => h_6 ()\n    | RDF11.RDFSymbol.rdfValue => h_7 ()\n    | RDF11.RDFSymbol.container a => h_8 a\n    | x => h_9 x) =\n    h_8 a",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.RDFSymbol.propertyAxiom.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.ClosureAxiomEvaluation.0.RDF11.RDFSymbol.propertyAxiom.match_1.eq_9",
+      "module": "RDF11.ClosureAxiomEvaluation",
+      "kind": "theorem",
+      "type": "∀ (motive : RDF11.RDFSymbol → Sort u_1) (x : RDF11.RDFSymbol) (h_1 : Unit → motive RDF11.RDFSymbol.rdfType)\n  (h_2 : Unit → motive RDF11.RDFSymbol.rdfSubject) (h_3 : Unit → motive RDF11.RDFSymbol.rdfPredicate)\n  (h_4 : Unit → motive RDF11.RDFSymbol.rdfObject) (h_5 : Unit → motive RDF11.RDFSymbol.rdfFirst)\n  (h_6 : Unit → motive RDF11.RDFSymbol.rdfRest) (h_7 : Unit → motive RDF11.RDFSymbol.rdfValue)\n  (h_8 : (a : Nat) → motive (RDF11.RDFSymbol.container a)) (h_9 : (x : RDF11.RDFSymbol) → motive x),\n  (x = RDF11.RDFSymbol.rdfType → False) →\n    (x = RDF11.RDFSymbol.rdfSubject → False) →\n      (x = RDF11.RDFSymbol.rdfPredicate → False) →\n        (x = RDF11.RDFSymbol.rdfObject → False) →\n          (x = RDF11.RDFSymbol.rdfFirst → False) →\n            (x = RDF11.RDFSymbol.rdfRest → False) →\n              (x = RDF11.RDFSymbol.rdfValue → False) →\n                (∀ (a : Nat), x = RDF11.RDFSymbol.container a → False) →\n                  (match x with\n                    | RDF11.RDFSymbol.rdfType => h_1 ()\n                    | RDF11.RDFSymbol.rdfSubject => h_2 ()\n                    | RDF11.RDFSymbol.rdfPredicate => h_3 ()\n                    | RDF11.RDFSymbol.rdfObject => h_4 ()\n                    | RDF11.RDFSymbol.rdfFirst => h_5 ()\n                    | RDF11.RDFSymbol.rdfRest => h_6 ()\n                    | RDF11.RDFSymbol.rdfValue => h_7 ()\n                    | RDF11.RDFSymbol.container a => h_8 a\n                    | x => h_9 x) =\n                    h_9 x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.RDFSymbol.propertyAxiom.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.ClosureAxiomEvaluation.0.RDF11.RDFSymbol.propertyAxiom.match_1.splitter",
+      "module": "RDF11.ClosureAxiomEvaluation",
+      "kind": "definition",
+      "type": "(motive : RDF11.RDFSymbol → Sort u_1) →\n  (x : RDF11.RDFSymbol) →\n    (Unit → motive RDF11.RDFSymbol.rdfType) →\n      (Unit → motive RDF11.RDFSymbol.rdfSubject) →\n        (Unit → motive RDF11.RDFSymbol.rdfPredicate) →\n          (Unit → motive RDF11.RDFSymbol.rdfObject) →\n            (Unit → motive RDF11.RDFSymbol.rdfFirst) →\n              (Unit → motive RDF11.RDFSymbol.rdfRest) →\n                (Unit → motive RDF11.RDFSymbol.rdfValue) →\n                  ((a : Nat) → motive (RDF11.RDFSymbol.container a)) →\n                    ((x : RDF11.RDFSymbol) →\n                        (x = RDF11.RDFSymbol.rdfType → False) →\n                          (x = RDF11.RDFSymbol.rdfSubject → False) →\n                            (x = RDF11.RDFSymbol.rdfPredicate → False) →\n                              (x = RDF11.RDFSymbol.rdfObject → False) →\n                                (x = RDF11.RDFSymbol.rdfFirst → False) →\n                                  (x = RDF11.RDFSymbol.rdfRest → False) →\n                                    (x = RDF11.RDFSymbol.rdfValue → False) →\n                                      (∀ (a : Nat), x = RDF11.RDFSymbol.container a → False) → motive x) →\n                      motive x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.RDFSymbol.propertyAxiom.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.ClosureAxiomEvaluation.0.RDF11.RDFSymbol.propertyAxiom.match_1.splitter._sparseCasesOn_9",
+      "module": "RDF11.ClosureAxiomEvaluation",
+      "kind": "definition",
+      "type": "{motive : RDF11.RDFSymbol → Sort u} →\n  (t : RDF11.RDFSymbol) →\n    motive RDF11.RDFSymbol.rdfType →\n      motive RDF11.RDFSymbol.rdfSubject →\n        motive RDF11.RDFSymbol.rdfPredicate →\n          motive RDF11.RDFSymbol.rdfObject →\n            motive RDF11.RDFSymbol.rdfFirst →\n              motive RDF11.RDFSymbol.rdfRest →\n                motive RDF11.RDFSymbol.rdfValue →\n                  ((a : Nat) → motive (RDF11.RDFSymbol.container a)) →\n                    (Nat.hasNotBit 65789 t.ctorIdx → motive t) → motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.RDFSymbol.propertyAxiom.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.ClosureSeedEvaluation.0.RDF11.ClosureEvaluation.ContainerDecoder.term.match_1.eq_1",
+      "module": "RDF11.ClosureSeedEvaluation",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (motive : RDF11.Term Iri Literal B → Sort u_1) (a : Iri)\n  (h_1 : (a : Iri) → motive (RDF11.Term.iri a)) (h_2 : (x : RDF11.Term Iri Literal B) → motive x),\n  (match RDF11.Term.iri a with\n    | RDF11.Term.iri a => h_1 a\n    | x => h_2 x) =\n    h_1 a",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.ContainerDecoder.term.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.ClosureSeedEvaluation.0.RDF11.ClosureEvaluation.ContainerDecoder.term.match_1.eq_2",
+      "module": "RDF11.ClosureSeedEvaluation",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (motive : RDF11.Term Iri Literal B → Sort u_1) (x : RDF11.Term Iri Literal B)\n  (h_1 : (a : Iri) → motive (RDF11.Term.iri a)) (h_2 : (x : RDF11.Term Iri Literal B) → motive x),\n  (∀ (a : Iri), x = RDF11.Term.iri a → False) →\n    (match x with\n      | RDF11.Term.iri a => h_1 a\n      | x => h_2 x) =\n      h_2 x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.ContainerDecoder.term.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.ClosureSeedEvaluation.0.RDF11.ClosureEvaluation.ContainerDecoder.term.match_1.splitter",
+      "module": "RDF11.ClosureSeedEvaluation",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  (motive : RDF11.Term Iri Literal B → Sort u_1) →\n    (x : RDF11.Term Iri Literal B) →\n      ((a : Iri) → motive (RDF11.Term.iri a)) →\n        ((x : RDF11.Term Iri Literal B) → (∀ (a : Iri), x = RDF11.Term.iri a → False) → motive x) → motive x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-EXECUTABLE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.ContainerDecoder.term.match_1",
       "review": "pending_expert_review"
     }
   ],

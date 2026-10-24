@@ -3,8 +3,8 @@
   "status": "draft_not_complete_coverage",
   "method": "Human-readable AI close reading; selectors locate already selected passages and do not extract assertions.",
   "source_inventory": "../ledger/semantics-inventory.json",
-  "inventory_sha256": "bd9dd3c1ee7553a7bf5a8658c801175a4359ae6af8d21fd15761d88c3a6e81ac",
-  "mapping_input_sha256": "4ca42a9845574a7928b44a1e2979005bbcd1fb6d17b969d51ab3710fe3caccdd",
+  "inventory_sha256": "2332e65aaef52f27151e615f3a32184be539940986d77619b0adfc151340e307",
+  "mapping_input_sha256": "fefffcb0c4ff4581a2ac0f8ee67ea3af55b51eafc7db0ad1b00898b3adacba0a",
   "documents": [
     {
       "id": "mt",
@@ -2123,6 +2123,7 @@
           "start": 104238,
           "end": 104990,
           "refs": [
+            "MT11-EXECUTABLE-CLOSURE-REFINEMENT",
             "MT11-GENERALIZED-CLOSURE",
             "MT11-GENERALIZED-CLOSURE-COMPLETENESS"
           ],
@@ -2156,6 +2157,7 @@
           "start": 105272,
           "end": 105485,
           "refs": [
+            "MT11-EXECUTABLE-CLOSURE-REFINEMENT",
             "MT11-FINITE-CLOSURE-COMPLEXITY",
             "MT11-SIMPLE-ENTAILMENT-COMPLEXITY"
           ],
@@ -4587,7 +4589,8 @@
       "end": 104990,
       "claims": [
         "MT11-GENERALIZED-CLOSURE",
-        "MT11-GENERALIZED-CLOSURE-COMPLETENESS"
+        "MT11-GENERALIZED-CLOSURE-COMPLETENESS",
+        "MT11-EXECUTABLE-CLOSURE-REFINEMENT"
       ],
       "slice_sha256": "d552ec46768063e0e25a007141209bbdb502b0d5a1d448ccbd30bd208d2aa7fc",
       "locator_tag": "p",
@@ -5510,7 +5513,8 @@
       "end": 105485,
       "claims": [
         "MT11-FINITE-CLOSURE-COMPLEXITY",
-        "MT11-SIMPLE-ENTAILMENT-COMPLEXITY"
+        "MT11-SIMPLE-ENTAILMENT-COMPLEXITY",
+        "MT11-EXECUTABLE-CLOSURE-REFINEMENT"
       ],
       "slice_sha256": "7a5576713e6dc19bf810024a8604427b8c36089d4af743c280a8a4fefa2c6c63",
       "locator_tag": "p",
@@ -13907,8 +13911,8 @@
       ],
       "cleanroom_mapping": {
         "claim_id": "MT11-GENERALIZED-CLOSURE",
-        "relation": "partial_definition",
-        "symbol_linked_english": "The generalized RDF/RDFS closure of S towards E adds the prescribed finite-vocabulary axioms and saturates generalized triples with GrdfD1, rdfD2 and, for RDFS, rdfs1–rdfs13 at the base recognized datatype set.",
+        "relation": "partial_definition_and_theorem",
+        "symbol_linked_english": "The generalized RDF/RDFS closure of S towards E adds the prescribed finite-vocabulary axioms and saturates generalized triples with GrdfD1, rdfD2 and, for RDFS, rdfs1–rdfs13 at the base recognized datatype set. AxiomLists.seed_iff proves the executable seed matches AxiomSeed; the one-round evaluators match RDFStep/RDFSStep; rdf_exact and rdfs_exact identify their finite saturation results with RDFClosure/RDFSClosure.",
         "bindings": [
           {
             "symbol": "NonContainerAxioms",
@@ -13973,9 +13977,45 @@
           {
             "symbol": "ClosureSelection.conclusion_absent",
             "lean": "RDF11.ClosureSelection.conclusion_absent"
+          },
+          {
+            "symbol": "ContainerDecoder",
+            "lean": "RDF11.ClosureEvaluation.ContainerDecoder"
+          },
+          {
+            "symbol": "AxiomLists",
+            "lean": "RDF11.ClosureEvaluation.AxiomLists"
+          },
+          {
+            "symbol": "AxiomLists.fallback_iff",
+            "lean": "RDF11.ClosureEvaluation.AxiomLists.fallback_iff"
+          },
+          {
+            "symbol": "AxiomLists.seed_iff",
+            "lean": "RDF11.ClosureEvaluation.AxiomLists.seed_iff"
+          },
+          {
+            "symbol": "rdfNext_iff",
+            "lean": "RDF11.ClosureEvaluation.rdfNext_iff"
+          },
+          {
+            "symbol": "rdfsNext_iff",
+            "lean": "RDF11.ClosureEvaluation.rdfsNext_iff"
+          },
+          {
+            "symbol": "combinedNext_iff",
+            "lean": "RDF11.ClosureEvaluation.combinedNext_iff"
+          },
+          {
+            "symbol": "rdf_exact",
+            "lean": "RDF11.ClosureEvaluation.rdf_exact"
+          },
+          {
+            "symbol": "rdfs_exact",
+            "lean": "RDF11.ClosureEvaluation.rdfs_exact"
           }
         ],
-        "limitations": "Transcribes the conclusion-based axiom selection and base recognized set. The rdf:_1 fallback tests literal set growth after step 2, not merely absence of container IRIs in E. Saturation is an inductive least-closure specification; a finite executable generator and its equivalence are not yet proved. Completeness of the printed E-only selection is under review. The twenty-first increment proves that the selected RDFS closure of s rdf:_17 o towards s rdfs:member o omits the conclusion. The syntactic invariant is not an RDFS model. See Q-CLOSURE-CONTAINER-SELECTION for the separate full-model witness and source-fidelity question.",
+        "limitations": "Preserves conclusion-only axiom selection, literal set-growth fallback and the two base recognized datatype IRIs. The inductive definition also admits infinite inputs; the executable evaluator requires finite supplied lists, decidable term equality and a supplied exact indexed-name decoder. It preserves the printed procedure rather than repairing its entailment-completeness obstruction. The selected RDFS closure of s rdf:_17 o towards s rdfs:member o still omits the conclusion. The rule-closed syntactic invariant is separate from the full-model consistency witness. Source fidelity and concrete IRI/literal correspondence remain under review.",
         "extraction_review": "pending_expert_review",
         "formalization_review": "pending_expert_review",
         "implementation_refinement": "not_connected_to_published_package"
@@ -14099,14 +14139,14 @@
         "formal_proof": "unassessed",
         "test_mapping": "unassessed"
       },
-      "formalization_note": "The source does not explicitly state a finite-input premise. The twenty-second increment proves exact finiteness for the printed procedure: finite premise and finitely many conclusion-selected container names. It derives a cubic term-universe bound and a distinct-insertion bound, but not effective generation or runtime complexity. A consistent infinite-premise witness refutes the unqualified finite-closure reading. Expert source adjudication remains pending.",
+      "formalization_note": "The source does not explicitly state a finite-input premise. Exact finiteness requires finite premise and finitely many conclusion-selected container names. The twenty-third increment supplies a separate executable generator for finite supplied G/E lists, decidable term equality and exact container decoding, with equality to the unchanged inductive closure and a sufficient K³ round budget. Neither the size bound nor the round budget proves polynomial machine time. The consistent infinite-premise counterexample and source adjudication remain open.",
       "review_questions": [
         "RQ-FINITE-CLOSURE-DOMAIN"
       ],
       "cleanroom_mapping": {
         "claim_id": "MT11-FINITE-CLOSURE-COMPLEXITY",
         "relation": "partial_theorem",
-        "symbol_linked_english": "The source asserts finite closures and decidable polynomial generation. rdf_closure_finite_iff and rdfs_closure_finite_iff establish the exact finite-input qualification for the transcribed procedure: FiniteGraph G and a finite set of container indices occurring in E’s vocabulary. rdf_closure_bound and rdfs_closure_bound derive a K³ size bound for a certified finite supporting term set; insertion_bound counts distinct new facts. consistent_infinite_closures establishes a boundary of the unqualified source reading.",
+        "symbol_linked_english": "The source asserts finite closures and decidable polynomial generation. rdf_closure_finite_iff and rdfs_closure_finite_iff establish the exact finite-input qualification for the transcribed procedure: FiniteGraph G and a finite set of container indices occurring in E’s vocabulary. rdf_closure_bound and rdfs_closure_bound derive a K³ size bound for a certified finite supporting term set; insertion_bound counts distinct new facts. consistent_infinite_closures establishes a boundary of the unqualified source reading. A separate executable evaluator now returns exact duplicate-free closure enumerations and decides closure membership for finite supplied inputs. run_stable proves that the sufficient K³ round budget reaches a fixed point.",
         "bindings": [
           {
             "symbol": "ClosureBound.rdf_closure_finite",
@@ -14167,9 +14207,41 @@
           {
             "symbol": "ClosureBound.consistent_infinite_closures",
             "lean": "RDF11.ClosureBound.consistent_infinite_closures"
+          },
+          {
+            "symbol": "rdfEnumeration",
+            "lean": "RDF11.ClosureEvaluation.rdfEnumeration"
+          },
+          {
+            "symbol": "rdfsEnumeration",
+            "lean": "RDF11.ClosureEvaluation.rdfsEnumeration"
+          },
+          {
+            "symbol": "rdfDecision",
+            "lean": "RDF11.ClosureEvaluation.rdfDecision"
+          },
+          {
+            "symbol": "rdfsDecision",
+            "lean": "RDF11.ClosureEvaluation.rdfsDecision"
+          },
+          {
+            "symbol": "rdf_fuel_bound",
+            "lean": "RDF11.ClosureEvaluation.rdf_fuel_bound"
+          },
+          {
+            "symbol": "rdfs_fuel_bound",
+            "lean": "RDF11.ClosureEvaluation.rdfs_fuel_bound"
+          },
+          {
+            "symbol": "run_stable",
+            "lean": "RDF11.FiniteSaturation.run_stable"
+          },
+          {
+            "symbol": "run_exact",
+            "lean": "RDF11.FiniteSaturation.run_exact"
           }
         ],
-        "limitations": "Only finiteness and mathematical size/insertion bounds are proved. K counts distinct supporting terms across all positions, including embedded datatype IRIs, premise blanks, fixed axiom/rule names, selected container names and the possible rdf:_1 fallback. It is not a node count supplied by the source and the pool need not be minimal. The premise must be finite; the conclusion may be infinite if it selects only finitely many container names. Consistency and disputed completeness are not assumptions. Enumerating an arbitrary closure subset is noncomputable here; no effective rule scheduler, decidability result, runtime cost model or polynomial-time implementation is claimed. The absence of an explicit finite-input qualification in the source is under review. Larger-D and fresh-blank rdfD1 procedures are separate.",
+        "limitations": "Finiteness, cardinality bounds and executable closure generation under explicit effective-input assumptions are proved. K counts distinct supporting terms across all positions, including embedded datatype IRIs, premise blanks, fixed names, selected names and the possible rdf:_1 fallback. The abstract finiteness theorem allows infinite E with finitely many selected indices; this executable interface takes finite lists for both inputs. The original subset-enumeration bound is noncomputable; the separate list evaluator avoids it. No polynomial runtime cost model is proved: equality, datatype extraction, name decoding, matching, deduplication, repeated applications and scheduling costs remain to be accounted for. The absence of a printed finite-input qualification is still under source review. Full entailment decision, larger-D and fresh-blank rdfD1 procedures are separate.",
         "extraction_review": "pending_expert_review",
         "formalization_review": "pending_expert_review",
         "implementation_refinement": "not_connected_to_published_package"
@@ -16839,6 +16911,119 @@
       },
       "passages": [
         "closure-tautologies"
+      ],
+      "extraction_review": "pending",
+      "formalization_review": "pending"
+    },
+    {
+      "id": "MT11-EXECUTABLE-CLOSURE-REFINEMENT",
+      "section": "A",
+      "anchor": "entailment_rules",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#entailment_rules",
+      "category": "mathematical_consequence",
+      "source_status": "informative",
+      "assertion_basis": "derived",
+      "paraphrase": "For finite supplied premise and conclusion lists, decidable syntactic term equality and an exact container-IRI decoder, the executable RDF/RDFS evaluator returns a duplicate-free enumeration of exactly the printed generalized closure. Membership is decidable and output cardinality depends only on the represented input graphs.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-GENERALIZED-CLOSURE",
+        "MT11-FINITE-CLOSURE-COMPLEXITY",
+        "MT11-GRAPH-SET",
+        "MT11-NAMES-VOCABULARIES"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "Derived executable-refinement obligation, not a new quoted W3C assertion. The decoder is a supplied function with a soundness/completeness proof. Equality is equality in the abstract term types; concrete IRI/literal validity and equality correspondence remain external. Correctness is exact agreement with the printed selection, fallback and rules. It does not establish polynomial machine time, full entailment completeness, concrete parsing, arbitrary-D generation, fresh-blank rdfD1 or published-package refinement.",
+      "cleanroom_mapping": {
+        "claim_id": "MT11-EXECUTABLE-CLOSURE-REFINEMENT",
+        "relation": "theorem",
+        "symbol_linked_english": "rdf and rdfs execute the exact printed finite-input procedure. rdf_exact/rdfs_exact prove equality with RDFClosure/RDFSClosure. rdfEnumeration/rdfsEnumeration certify membership fidelity and uniqueness. rdfDecision/rdfsDecision decide membership in that closure. The count-respects-graphs results preserve cardinality under duplicate/reordered presentations of the same G and E; satisfaction equivalence reuses the existing semantic soundness proof.",
+        "bindings": [
+          {
+            "symbol": "ContainerDecoder",
+            "lean": "RDF11.ClosureEvaluation.ContainerDecoder"
+          },
+          {
+            "symbol": "ContainerDecoder.correct",
+            "lean": "RDF11.ClosureEvaluation.ContainerDecoder.correct"
+          },
+          {
+            "symbol": "rdf",
+            "lean": "RDF11.ClosureEvaluation.rdf"
+          },
+          {
+            "symbol": "rdfs",
+            "lean": "RDF11.ClosureEvaluation.rdfs"
+          },
+          {
+            "symbol": "rdf_exact",
+            "lean": "RDF11.ClosureEvaluation.rdf_exact"
+          },
+          {
+            "symbol": "rdfs_exact",
+            "lean": "RDF11.ClosureEvaluation.rdfs_exact"
+          },
+          {
+            "symbol": "rdf_nodup",
+            "lean": "RDF11.ClosureEvaluation.rdf_nodup"
+          },
+          {
+            "symbol": "rdfs_nodup",
+            "lean": "RDF11.ClosureEvaluation.rdfs_nodup"
+          },
+          {
+            "symbol": "rdfEnumeration",
+            "lean": "RDF11.ClosureEvaluation.rdfEnumeration"
+          },
+          {
+            "symbol": "rdfsEnumeration",
+            "lean": "RDF11.ClosureEvaluation.rdfsEnumeration"
+          },
+          {
+            "symbol": "rdfDecision",
+            "lean": "RDF11.ClosureEvaluation.rdfDecision"
+          },
+          {
+            "symbol": "rdfsDecision",
+            "lean": "RDF11.ClosureEvaluation.rdfsDecision"
+          },
+          {
+            "symbol": "rdf_count_respects_graphs",
+            "lean": "RDF11.ClosureEvaluation.rdf_count_respects_graphs"
+          },
+          {
+            "symbol": "rdfs_count_respects_graphs",
+            "lean": "RDF11.ClosureEvaluation.rdfs_count_respects_graphs"
+          },
+          {
+            "symbol": "rdf_result_satisfaction",
+            "lean": "RDF11.ClosureEvaluation.rdf_result_satisfaction"
+          },
+          {
+            "symbol": "rdfs_result_satisfaction",
+            "lean": "RDF11.ClosureEvaluation.rdfs_result_satisfaction"
+          },
+          {
+            "symbol": "run_stable",
+            "lean": "RDF11.FiniteSaturation.run_stable"
+          },
+          {
+            "symbol": "run_exact",
+            "lean": "RDF11.FiniteSaturation.run_exact"
+          }
+        ],
+        "limitations": "This is a derived refinement theorem for this Lean evaluator. The caller supplies finite lists, computational equality, datatype projection and a decoder satisfying the exact indexed-name contract. The abstract IRI/literal domains are not a concrete parser. The printed procedure retains its known completeness obstruction; failure of a closure check is not a justified semantic non-entailment verdict. Machine-time complexity, final blank-instance search, larger-D procedures and npm/WASM refinement remain separate. Executable examples are project-owned symbolic fixtures, not W3C tests.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "closure-procedure",
+        "closure-finiteness"
       ],
       "extraction_review": "pending",
       "formalization_review": "pending"
