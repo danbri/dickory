@@ -80,3 +80,8 @@ import RDF11.OrdinaryRuleRuns
 import RDF11.OrdinaryRuleFrame
 import RDF11.OrdinaryRuleScope
 import RDF11.SharedLiteralExample
+import RDF11.StringCase
+import RDF11.LanguageTags
+import RDF11.StructuredLiterals
+import RDF11.EnumerationImages
+import RDF11.LiteralIdentityExamples

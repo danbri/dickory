@@ -139,6 +139,26 @@ log = run.stdout + run.stderr
 assert run.returncode != 0 and "False" in log and "unsolved goals" in log, log
 results.append("Lean rejects independent witnesses for one shared conclusion blank")
 
+for label, filename, snippet in [
+    ("Lean rejects an untagged langString literal", "untagged-langstring-rejected.log",
+     """import RDF11
+open RDF11
+def missingTag : StructuredLiteral Unit () := .typed "text" ⟨(), by simp⟩
+"""),
+    ("Lean rejects an empty language tag", "empty-language-tag-rejected.log",
+     """import RDF11
+open RDF11
+def emptyTag : BCP47.Tag := ⟨"", by
+  apply BCP47.wellFormed_of_primary
+  simp [BCP47.subtag, asciiLower, String.map_eq_internal]⟩
+""")]:
+    run = subprocess.run(["lake", "env", "lean", "--stdin"], cwd=ROOT, env=env,
+                         input=snippet, text=True, capture_output=True)
+    log = run.stdout + run.stderr
+    (ROOT / "artifacts" / filename).write_text(log)
+    assert run.returncode != 0 and "False" in log and "unsolved goals" in log, log
+    results.append(label)
+
 (ROOT / "artifacts/negative-checks.json").write_text(json.dumps(
     {"status": "pass", "checks": results}, indent=2) + "\n")
 print(json.dumps(results, indent=2))

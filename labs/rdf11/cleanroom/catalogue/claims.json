@@ -3,11 +3,12 @@
   "status": "draft_not_complete_coverage",
   "method": "Human-readable AI close reading; selectors locate already selected passages and do not extract assertions.",
   "source_inventory": "../ledger/semantics-inventory.json",
-  "inventory_sha256": "823cdbef32769915679824ef09de75e3241af48ed57f2d15b9b8ab6ff273a4e0",
-  "mapping_input_sha256": "de7791e8d3e114b9775b5c186e8cdebdff4b35bbc96baddbff6b0cb227585d8f",
+  "inventory_sha256": "dd735f742b3b5171c25e5be43c61b5810e8a9209a31638c05e5ac8f6055bfbc5",
+  "mapping_input_sha256": "d72496be11501e2bc4321a81c07b413ea1ed5161f6a1021d4a31529646df663b",
   "documents": [
     {
       "id": "mt",
+      "title": "RDF 1.1 Semantics",
       "path": "../specifications/rdf11-mt-20140225.html",
       "url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/",
       "sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
@@ -2919,6 +2920,7 @@
     },
     {
       "id": "concepts",
+      "title": "RDF 1.1 Concepts",
       "path": "../specifications/rdf11-concepts-20140225.html",
       "url": "https://www.w3.org/TR/2014/REC-rdf11-concepts-20140225/",
       "sha256": "3838c992097f72ee8784b6c96194d9879f86f2e08f53ced5a05aa4031750c5ac",
@@ -2945,6 +2947,7 @@
           "end": 45453,
           "refs": [
             "MT11-GRAPH-SET",
+            "MT11-LANGUAGE-NORMALIZATION-ENUMERATION",
             "MT11-SET-IDEMPOTENCE",
             "MT11-TRUTH-DUPLICATION-INVARIANCE"
           ],
@@ -2968,6 +2971,25 @@
         },
         {
           "start": 47945,
+          "end": 53404,
+          "refs": [
+            "UNRESOLVED-concepts"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 53404,
+          "end": 54761,
+          "refs": [
+            "BCP47-WELLFORMED",
+            "MT11-LITERAL-COMPONENT-IDENTITY",
+            "MT11-LITERAL-DATATYPE-IMPORT",
+            "MT11-LITERAL-LEXICAL-ADMISSIBILITY"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 54761,
           "end": 54769,
           "refs": [
             "UNRESOLVED-concepts"
@@ -2979,12 +3001,49 @@
           "end": 55078,
           "refs": [
             "MT11-LANGSTRING-EXCEPTION",
-            "MT11-LANGSTRING-VALUE"
+            "MT11-LANGSTRING-VALUE",
+            "MT11-LANGUAGE-NORMALIZATION-ENUMERATION",
+            "MT11-LANGUAGE-NORMALIZATION-SCOPE",
+            "MT11-LANGUAGE-TAG-NORMALIZATION"
           ],
           "disposition": "claim_passage_pending_review"
         },
         {
           "start": 55078,
+          "end": 57266,
+          "refs": [
+            "UNRESOLVED-concepts"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 57266,
+          "end": 58257,
+          "refs": [
+            "MT11-LITERAL-LEXICAL-ADMISSIBILITY"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 58257,
+          "end": 58645,
+          "refs": [
+            "UNRESOLVED-concepts"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 58645,
+          "end": 59245,
+          "refs": [
+            "MT11-LANGUAGE-NORMALIZATION-SCOPE",
+            "MT11-LITERAL-COMPONENT-IDENTITY",
+            "MT11-TERM-IDENTITY"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 59245,
           "end": 67019,
           "refs": [
             "UNRESOLVED-concepts"
@@ -3111,6 +3170,134 @@
         }
       ],
       "accepted_accountability_certificate": false
+    },
+    {
+      "id": "rfc5646",
+      "title": "RFC 5646 · imported language-tag syntax",
+      "path": "../specifications/rfc5646-200909.html",
+      "url": "https://www.rfc-editor.org/rfc/rfc5646.html",
+      "sha256": "b184da959296601926af6723163b89dcc1f50a39c27f8abbf8b46de905d75a39",
+      "bytes": 246812,
+      "scalars": 246812,
+      "decoding": "strict UTF-8; no normalization; CR and LF retained separately",
+      "coordinate_unit": "Unicode scalar value",
+      "interval_convention": "[start,end)",
+      "byte_boundaries_sha256": "6b81eba86f01cb3853ace3dbea50e9c156345ec367353e17628dffa7ade3e77f",
+      "utf16_boundaries_sha256": "6b81eba86f01cb3853ace3dbea50e9c156345ec367353e17628dffa7ade3e77f",
+      "locator": "Python stdlib html.parser.HTMLParser; not an HTML5 DOM",
+      "python_version": "3.14.7",
+      "atoms": [
+        {
+          "start": 0,
+          "end": 12297,
+          "refs": [
+            "UNRESOLVED-rfc5646"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 12297,
+          "end": 15848,
+          "refs": [
+            "BCP47-WELLFORMED"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 15848,
+          "end": 15884,
+          "refs": [
+            "UNRESOLVED-rfc5646"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 15884,
+          "end": 18224,
+          "refs": [
+            "BCP47-EXTENSION-PRIVATEUSE",
+            "BCP47-GRANDFATHERED",
+            "BCP47-LANGUAGE-PRODUCTION",
+            "BCP47-SCRIPT-REGION-VARIANT",
+            "BCP47-WELLFORMED"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 18224,
+          "end": 18260,
+          "refs": [
+            "UNRESOLVED-rfc5646"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 18260,
+          "end": 21282,
+          "refs": [
+            "BCP47-CASE-INSENSITIVITY",
+            "BCP47-GRANDFATHERED"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 21282,
+          "end": 21318,
+          "refs": [
+            "UNRESOLVED-rfc5646"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 21318,
+          "end": 24585,
+          "refs": [
+            "BCP47-CASE-INSENSITIVITY"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 24585,
+          "end": 57532,
+          "refs": [
+            "UNRESOLVED-rfc5646"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 57532,
+          "end": 60325,
+          "refs": [
+            "BCP47-WELLFORMED"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 60325,
+          "end": 60361,
+          "refs": [
+            "UNRESOLVED-rfc5646"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 60361,
+          "end": 63199,
+          "refs": [
+            "BCP47-WELLFORMED"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 63199,
+          "end": 246812,
+          "refs": [
+            "UNRESOLVED-rfc5646"
+          ],
+          "disposition": "unresolved"
+        }
+      ],
+      "accepted_accountability_certificate": false
     }
   ],
   "passages": [
@@ -3123,7 +3310,8 @@
       "claims": [
         "MT11-GRAPH-SET",
         "MT11-SET-IDEMPOTENCE",
-        "MT11-TRUTH-DUPLICATION-INVARIANCE"
+        "MT11-TRUTH-DUPLICATION-INVARIANCE",
+        "MT11-LANGUAGE-NORMALIZATION-ENUMERATION"
       ],
       "slice_sha256": "b9904497a241962443050475a7623d9b8c793bea451e42ef9e9cad99e596333b",
       "locator_tag": "p",
@@ -5766,6 +5954,158 @@
       "locator_tag": "p",
       "review": "pending",
       "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "literal-components-structured",
+      "source": "concepts",
+      "source_sha256": "3838c992097f72ee8784b6c96194d9879f86f2e08f53ced5a05aa4031750c5ac",
+      "start": 53404,
+      "end": 54761,
+      "claims": [
+        "MT11-LITERAL-COMPONENT-IDENTITY",
+        "MT11-LITERAL-LEXICAL-ADMISSIBILITY",
+        "MT11-LITERAL-DATATYPE-IMPORT",
+        "BCP47-WELLFORMED"
+      ],
+      "slice_sha256": "cb2f367242ed3cfe4c7195f14d8a52247989a0f3c2e3a150928bcc3d5a13cb4c",
+      "locator_tag": "ul",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "literal-component-equality",
+      "source": "concepts",
+      "source_sha256": "3838c992097f72ee8784b6c96194d9879f86f2e08f53ced5a05aa4031750c5ac",
+      "start": 58645,
+      "end": 59245,
+      "claims": [
+        "MT11-LITERAL-COMPONENT-IDENTITY",
+        "MT11-TERM-IDENTITY",
+        "MT11-LANGUAGE-NORMALIZATION-SCOPE"
+      ],
+      "slice_sha256": "852f70bc016e70680f1ca541db28c33ce5dee30d2ce2e56de5c786c59c8133e4",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "literal-optional-case-normalization",
+      "source": "concepts",
+      "source_sha256": "3838c992097f72ee8784b6c96194d9879f86f2e08f53ced5a05aa4031750c5ac",
+      "start": 54769,
+      "end": 55078,
+      "claims": [
+        "MT11-LANGUAGE-TAG-NORMALIZATION",
+        "MT11-LANGUAGE-NORMALIZATION-SCOPE",
+        "MT11-LANGUAGE-NORMALIZATION-ENUMERATION"
+      ],
+      "slice_sha256": "7951a8a068cd2636cdc1bb1882aa841becf7fba9584fd465e23e32684b9f5c80",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "literal-illtyped-syntax",
+      "source": "concepts",
+      "source_sha256": "3838c992097f72ee8784b6c96194d9879f86f2e08f53ced5a05aa4031750c5ac",
+      "start": 57266,
+      "end": 58257,
+      "claims": [
+        "MT11-LITERAL-LEXICAL-ADMISSIBILITY"
+      ],
+      "slice_sha256": "96288f6839675fb55f843ce0a59ad6063d9b65566299f5284b551e91105cf12d",
+      "locator_tag": "ol",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "bcp47-top-grammar",
+      "source": "rfc5646",
+      "source_sha256": "b184da959296601926af6723163b89dcc1f50a39c27f8abbf8b46de905d75a39",
+      "start": 12297,
+      "end": 15848,
+      "claims": [
+        "BCP47-WELLFORMED"
+      ],
+      "slice_sha256": "f3f9c8e36dde442674627cffa0d6bd362e1c03b9d75fec1642032fd72dfab1b3",
+      "locator_tag": "pre",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "bcp47-productions",
+      "source": "rfc5646",
+      "source_sha256": "b184da959296601926af6723163b89dcc1f50a39c27f8abbf8b46de905d75a39",
+      "start": 15884,
+      "end": 18224,
+      "claims": [
+        "BCP47-LANGUAGE-PRODUCTION",
+        "BCP47-SCRIPT-REGION-VARIANT",
+        "BCP47-EXTENSION-PRIVATEUSE",
+        "BCP47-GRANDFATHERED",
+        "BCP47-WELLFORMED"
+      ],
+      "slice_sha256": "b74b0250dc691512df94edbc0178adf944878c0e643662ab16f8a7c67007d41b",
+      "locator_tag": "pre",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "bcp47-grandfathered-tail",
+      "source": "rfc5646",
+      "source_sha256": "b184da959296601926af6723163b89dcc1f50a39c27f8abbf8b46de905d75a39",
+      "start": 18260,
+      "end": 21282,
+      "claims": [
+        "BCP47-GRANDFATHERED",
+        "BCP47-CASE-INSENSITIVITY"
+      ],
+      "slice_sha256": "0c49fa7d12d8b2af0a1eb163a349814b512affe12c51e7a2677178dc14c04270",
+      "locator_tag": "pre",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "bcp47-ascii-case",
+      "source": "rfc5646",
+      "source_sha256": "b184da959296601926af6723163b89dcc1f50a39c27f8abbf8b46de905d75a39",
+      "start": 21318,
+      "end": 24585,
+      "claims": [
+        "BCP47-CASE-INSENSITIVITY"
+      ],
+      "slice_sha256": "256bac75aa825e7753bdffb7ef018b28484716c9b48bcf02440fbae04b37dd20",
+      "locator_tag": "pre",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "bcp47-wellformed-class",
+      "source": "rfc5646",
+      "source_sha256": "b184da959296601926af6723163b89dcc1f50a39c27f8abbf8b46de905d75a39",
+      "start": 57532,
+      "end": 60325,
+      "claims": [
+        "BCP47-WELLFORMED"
+      ],
+      "slice_sha256": "7dccb6f06fb957cff4f27529dcdbf15aaada75e9ddcda9791ab17b0c00e2b827",
+      "locator_tag": "pre",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "bcp47-validity-distinction",
+      "source": "rfc5646",
+      "source_sha256": "b184da959296601926af6723163b89dcc1f50a39c27f8abbf8b46de905d75a39",
+      "start": 60361,
+      "end": 63199,
+      "claims": [
+        "BCP47-WELLFORMED"
+      ],
+      "slice_sha256": "5f8d7fedd1b0c25b2b46b0e774ba69f85de1a7e55b650d93412e6ad3514a3401",
+      "locator_tag": "pre",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
     }
   ],
   "claims": [
@@ -6269,9 +6609,13 @@
           {
             "symbol": "Term",
             "lean": "RDF11.Term"
+          },
+          {
+            "symbol": "StructuredLiteral",
+            "lean": "RDF11.StructuredLiteral"
           }
         ],
-        "limitations": "Disjoint syntactic categories are enforced. IRI and Literal are abstract domains, not validated concrete strings.",
+        "limitations": "Disjoint term categories are enforced. StructuredLiteral provides component identity and imported tag well-formedness; IRI lexical validation remains open. Generic Triple/Graph theorems retain abstract parameters.",
         "extraction_review": "pending_expert_review",
         "formalization_review": "pending_expert_review",
         "implementation_refinement": "not_connected_to_published_package"
@@ -6293,7 +6637,8 @@
       "paraphrase": "Abstract IRI and literal identity follow Concepts, not equality of denoted values; blank-node identifiers are concrete-syntax labels rather than the abstract blank nodes themselves.",
       "official_rule_code": null,
       "dependencies": [
-        "MT11-SYNTAX-IMPORT"
+        "MT11-SYNTAX-IMPORT",
+        "MT11-LITERAL-COMPONENT-IDENTITY"
       ],
       "imports": [
         "https://www.w3.org/TR/2014/REC-rdf11-concepts-20140225/#section-IRIs",
@@ -6306,10 +6651,38 @@
         "test_mapping": "unassessed"
       },
       "formalization_note": "Check literal language-tag identity against Concepts separately from the lowercase language-tag value condition in section 7.1.",
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-TERM-IDENTITY",
+        "relation": "partial_definition_and_theorem",
+        "symbol_linked_english": "StructuredLiteral equality is component identity, including raw language-tag spelling; it is independent of denoted-value equality. Term constructors distinguish IRIs, literals and abstract blanks.",
+        "bindings": [
+          {
+            "symbol": "StructuredLiteral.eq_iff_fields",
+            "lean": "RDF11.StructuredLiteral.eq_iff_fields"
+          },
+          {
+            "symbol": "StructuredLiteral",
+            "lean": "RDF11.StructuredLiteral"
+          },
+          {
+            "symbol": "Term",
+            "lean": "RDF11.Term"
+          },
+          {
+            "symbol": "BCP47.Tag.eq_iff_spelling",
+            "lean": "RDF11.BCP47.Tag.eq_iff_spelling"
+          }
+        ],
+        "limitations": "IRI syntax/equality remains the Iri parameter and needs RFC 3987 correspondence. Unicode lexical strings and raw tag spelling are retained; datatype value equality is separate. No parser or product refinement is proved. Blank-label scoping remains a separate implementation contract.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "literal-component-equality"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-GENERALIZED-SYNTAX",
@@ -9577,7 +9950,9 @@
       "assertion_basis": "incorporated",
       "paraphrase": "Literal structure and datatype definitions come from Concepts: ordinary datatype literals pair a lexical string with a datatype IRI; language-tagged strings additionally use a language tag and rdf:langString.",
       "official_rule_code": null,
-      "dependencies": [],
+      "dependencies": [
+        "BCP47-WELLFORMED"
+      ],
       "imports": [
         "https://www.w3.org/TR/2014/REC-rdf11-concepts-20140225/#section-Graph-Literal",
         "https://www.w3.org/TR/2014/REC-rdf11-concepts-20140225/#section-Datatypes"
@@ -9589,21 +9964,42 @@
       },
       "cleanroom_mapping": {
         "claim_id": "MT11-LITERAL-DATATYPE-IMPORT",
-        "relation": "partial_definition",
-        "symbol_linked_english": "Literal structure and datatype definitions come from Concepts: ordinary datatype literals pair a lexical string with a datatype IRI; language-tagged strings additionally use a language tag and rdf:langString.",
+        "relation": "partial_definition_and_theorem",
+        "symbol_linked_english": "StructuredLiteral supplies lexical strings, datatype IRIs and optional well-formed raw tags, enforces the langString/tag invariant, and instantiates LiteralSyntax. Component equality is proved. The existing generic interface remains available for parameterized theorems.",
         "bindings": [
           {
             "symbol": "LiteralSyntax",
             "lean": "RDF11.LiteralSyntax"
+          },
+          {
+            "symbol": "StructuredLiteral",
+            "lean": "RDF11.StructuredLiteral"
+          },
+          {
+            "symbol": "StructuredLiteral.literalSyntax",
+            "lean": "RDF11.StructuredLiteral.literalSyntax"
+          },
+          {
+            "symbol": "StructuredLiteral.language_iff_datatype",
+            "lean": "RDF11.StructuredLiteral.language_iff_datatype"
+          },
+          {
+            "symbol": "StructuredLiteral.eq_iff_fields",
+            "lean": "RDF11.StructuredLiteral.eq_iff_fields"
+          },
+          {
+            "symbol": "BCP47.WellFormed",
+            "lean": "RDF11.BCP47.WellFormed"
           }
         ],
-        "limitations": "Lexical forms, datatype IRIs and optional tags are an interface. Concrete literal equality, full lexical syntax and a constructor covering all legal forms remain open.",
+        "limitations": "IRI syntax/equality remains the Iri parameter and needs RFC 3987 correspondence. Unicode lexical strings and raw tag spelling are retained; datatype value equality is separate. No parser or product refinement is proved.",
         "extraction_review": "pending_expert_review",
         "formalization_review": "pending_expert_review",
         "implementation_refinement": "not_connected_to_published_package"
       },
       "passages": [
-        "d-lexical"
+        "d-lexical",
+        "literal-components-structured"
       ],
       "extraction_review": "pending",
       "formalization_review": "pending"
@@ -9979,9 +10375,17 @@
           {
             "symbol": "language",
             "lean": "RDF11.SimpleInterpretation.DConditions.language"
+          },
+          {
+            "symbol": "asciiLower_idempotent",
+            "lean": "RDF11.asciiLower_idempotent"
+          },
+          {
+            "symbol": "BCP47.Tag.value",
+            "lean": "RDF11.BCP47.Tag.value"
           }
         ],
-        "limitations": "Lexical strings are unchanged. Lean 4.33.1 Char.toLower changes ASCII A–Z only. Tag validity remains an external interface.",
+        "limitations": "Lexical strings remain unchanged. The structured literal instance supplies the imported well-formed tag grammar; the generic interface remains parameterized. Recognition and the fixed external datatype theory are still explicit.",
         "extraction_review": "pending_expert_review",
         "formalization_review": "pending_expert_review",
         "implementation_refinement": "not_connected_to_published_package"
@@ -16615,9 +17019,17 @@
           {
             "symbol": "RDFSModelConstruction.base_model_exists_iff_language_coverage",
             "lean": "RDF11.RDFSModelConstruction.base_model_exists_iff_language_coverage"
+          },
+          {
+            "symbol": "StructuredLiteral.language_coverage",
+            "lean": "RDF11.StructuredLiteral.language_coverage"
+          },
+          {
+            "symbol": "StructuredLiteral.rdfs_base_model_exists",
+            "lean": "RDF11.StructuredLiteral.rdfs_base_model_exists"
           }
         ],
-        "limitations": "The iff characterizes inhabitation of the current parameterized model class with base D and aligned names. It neither proves that abstract LiteralSyntax supplies coverage nor constructs concrete RDF literals or prescribed built-in datatypes. It does not characterize satisfiability of arbitrary graphs.",
+        "limitations": "Coverage is now constructively proved for theories using StructuredLiteral.literalSyntax. The existing abstract-domain iff remains conditional on coverage; neither result supplies prescribed XSD meanings, concrete IRI syntax or arbitrary-graph consistency.",
         "extraction_review": "pending_expert_review",
         "formalization_review": "pending_expert_review",
         "implementation_refinement": "not_connected_to_published_package"
@@ -18405,6 +18817,688 @@
       ],
       "extraction_review": "pending",
       "formalization_review": "pending"
+    },
+    {
+      "id": "MT11-LITERAL-COMPONENT-IDENTITY",
+      "section": "Concepts 3.3",
+      "anchor": "section-Graph-Literal",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-concepts-20140225/#section-Graph-Literal",
+      "category": "definition",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "A StructuredLiteral is determined by its lexical string, datatype IRI and optional raw language-tag spelling. eq_iff_fields proves both directions. Distinct tag spellings can be distinct RDF 1.1 literal terms despite identical language values.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-LITERAL-DATATYPE-IMPORT",
+        "BCP47-WELLFORMED"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "cleanroom_mapping": {
+        "claim_id": "MT11-LITERAL-COMPONENT-IDENTITY",
+        "relation": "definition_and_theorem",
+        "symbol_linked_english": "A StructuredLiteral is determined by its lexical string, datatype IRI and optional raw language-tag spelling. eq_iff_fields proves both directions. Distinct tag spellings can be distinct RDF 1.1 literal terms despite identical language values.",
+        "bindings": [
+          {
+            "symbol": "StructuredLiteral",
+            "lean": "RDF11.StructuredLiteral"
+          },
+          {
+            "symbol": "StructuredLiteral.lexical",
+            "lean": "RDF11.StructuredLiteral.lexical"
+          },
+          {
+            "symbol": "StructuredLiteral.datatype",
+            "lean": "RDF11.StructuredLiteral.datatype"
+          },
+          {
+            "symbol": "StructuredLiteral.language",
+            "lean": "RDF11.StructuredLiteral.language"
+          },
+          {
+            "symbol": "StructuredLiteral.eq_iff_fields",
+            "lean": "RDF11.StructuredLiteral.eq_iff_fields"
+          }
+        ],
+        "limitations": "IRI syntax/equality remains the Iri parameter and needs RFC 3987 correspondence. Unicode lexical strings and raw tag spelling are retained; datatype value equality is separate. No parser or product refinement is proved.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "literal-components-structured",
+        "literal-component-equality"
+      ],
+      "extraction_review": "pending",
+      "formalization_review": "pending"
+    },
+    {
+      "id": "MT11-LITERAL-LEXICAL-ADMISSIBILITY",
+      "section": "Concepts 3.3",
+      "anchor": "section-Graph-Literal",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-concepts-20140225/#section-Graph-Literal",
+      "category": "general_requirement",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "Every Unicode lexical string can form an ordinary typed literal with a non-langString datatype; a language literal additionally requires a well-formed tag and fixes the datatype to langString. Datatype lexical validity and NFC are not syntax preconditions.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-LITERAL-DATATYPE-IMPORT",
+        "BCP47-WELLFORMED"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "cleanroom_mapping": {
+        "claim_id": "MT11-LITERAL-LEXICAL-ADMISSIBILITY",
+        "relation": "partial_definition_and_theorem",
+        "symbol_linked_english": "Every Unicode lexical string can form an ordinary typed literal with a non-langString datatype; a language literal additionally requires a well-formed tag and fixes the datatype to langString. Datatype lexical validity and NFC are not syntax preconditions.",
+        "bindings": [
+          {
+            "symbol": "StructuredLiteral.typed_fields",
+            "lean": "RDF11.StructuredLiteral.typed_fields"
+          },
+          {
+            "symbol": "StructuredLiteral.tagged_fields",
+            "lean": "RDF11.StructuredLiteral.tagged_fields"
+          },
+          {
+            "symbol": "StructuredLiteral.language_iff_datatype",
+            "lean": "RDF11.StructuredLiteral.language_iff_datatype"
+          },
+          {
+            "symbol": "StructuredLiteral.language_nonempty",
+            "lean": "RDF11.StructuredLiteral.language_nonempty"
+          },
+          {
+            "symbol": "StructuredLiteral.literalSyntax",
+            "lean": "RDF11.StructuredLiteral.literalSyntax"
+          }
+        ],
+        "limitations": "IRI syntax/equality remains the Iri parameter and needs RFC 3987 correspondence. Unicode lexical strings and raw tag spelling are retained; datatype value equality is separate. No parser or product refinement is proved. The representation admits ill-typed lexical forms; the source MUST concerning processor acceptance and optional warnings requires separate implementation evidence.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "literal-components-structured",
+        "literal-illtyped-syntax"
+      ],
+      "extraction_review": "pending",
+      "formalization_review": "pending"
+    },
+    {
+      "id": "MT11-LANGUAGE-TAG-NORMALIZATION",
+      "section": "Concepts 3.3",
+      "anchor": "section-Graph-Literal",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-concepts-20140225/#section-Graph-Literal",
+      "category": "general_requirement",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "RDF 1.1 permits lowercasing lexical language-tag spelling; language-tag values are lowercase. normalize is an explicit idempotent operation retaining lexical form and datatype. With langString recognized, normalize_satisfaction preserves whole-graph truth and normalize_d_equivalent proves both entailment directions.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-LITERAL-COMPONENT-IDENTITY",
+        "MT11-LANGSTRING-VALUE",
+        "BCP47-CASE-INSENSITIVITY"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "cleanroom_mapping": {
+        "claim_id": "MT11-LANGUAGE-TAG-NORMALIZATION",
+        "relation": "definition_and_theorem",
+        "symbol_linked_english": "RDF 1.1 permits lowercasing lexical language-tag spelling; language-tag values are lowercase. normalize is an explicit idempotent operation retaining lexical form and datatype. With langString recognized, normalize_satisfaction preserves whole-graph truth and normalize_d_equivalent proves both entailment directions.",
+        "bindings": [
+          {
+            "symbol": "StructuredLiteral.normalize",
+            "lean": "RDF11.StructuredLiteral.normalize"
+          },
+          {
+            "symbol": "StructuredLiteral.normalize_lexical",
+            "lean": "RDF11.StructuredLiteral.normalize_lexical"
+          },
+          {
+            "symbol": "StructuredLiteral.normalize_datatype",
+            "lean": "RDF11.StructuredLiteral.normalize_datatype"
+          },
+          {
+            "symbol": "StructuredLiteral.normalize_language",
+            "lean": "RDF11.StructuredLiteral.normalize_language"
+          },
+          {
+            "symbol": "StructuredLiteral.normalize_idempotent",
+            "lean": "RDF11.StructuredLiteral.normalize_idempotent"
+          },
+          {
+            "symbol": "StructuredLiteral.normalize_recognized",
+            "lean": "RDF11.StructuredLiteral.normalize_recognized"
+          },
+          {
+            "symbol": "StructuredLiteral.normalize_satisfaction",
+            "lean": "RDF11.StructuredLiteral.normalize_satisfaction"
+          },
+          {
+            "symbol": "StructuredLiteral.normalize_d_equivalent",
+            "lean": "RDF11.StructuredLiteral.normalize_d_equivalent"
+          }
+        ],
+        "limitations": "Normalization is optional, not imposed as RDF 1.1 literal identity. Semantic preservation requires a theory using this syntax and recognized langString. It is not an arbitrary Unicode case fold, lexical-form normalization or a claimed RDF 1.2 bridge.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "literal-optional-case-normalization"
+      ],
+      "extraction_review": "pending",
+      "formalization_review": "pending"
+    },
+    {
+      "id": "BCP47-LANGUAGE-PRODUCTION",
+      "section": "RFC 5646 2.1",
+      "anchor": "section-2.1",
+      "source_url": "https://www.rfc-editor.org/rfc/rfc5646.html#section-2.1",
+      "category": "definition",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "After ASCII case folding, a primary language is 2–3 letters with zero to three three-letter extlang subtags, or exactly four letters, or 5–8 letters. Subtags are delimited by ASCII hyphens.",
+      "official_rule_code": null,
+      "dependencies": [
+        "BCP47-CASE-INSENSITIVITY"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "cleanroom_mapping": {
+        "claim_id": "BCP47-LANGUAGE-PRODUCTION",
+        "relation": "definition_and_theorem",
+        "symbol_linked_english": "After ASCII case folding, a primary language is 2–3 letters with zero to three three-letter extlang subtags, or exactly four letters, or 5–8 letters. Subtags are delimited by ASCII hyphens.",
+        "bindings": [
+          {
+            "symbol": "BCP47.alpha",
+            "lean": "RDF11.BCP47.alpha"
+          },
+          {
+            "symbol": "BCP47.subtag",
+            "lean": "RDF11.BCP47.subtag"
+          },
+          {
+            "symbol": "BCP47.subtags",
+            "lean": "RDF11.BCP47.subtags"
+          },
+          {
+            "symbol": "BCP47.language",
+            "lean": "RDF11.BCP47.language"
+          },
+          {
+            "symbol": "BCP47.parts",
+            "lean": "RDF11.BCP47.parts"
+          },
+          {
+            "symbol": "BCP47.parts_reassemble",
+            "lean": "RDF11.BCP47.parts_reassemble"
+          }
+        ],
+        "limitations": "This is RFC 5646 well-formedness, not registry validity, extension-specific validity or RFC 4647 matching. It is a declarative grammar with checked witnesses; no executable general tag parser is supplied. Source fidelity remains pending expert review.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "bcp47-productions"
+      ],
+      "extraction_review": "pending",
+      "formalization_review": "pending"
+    },
+    {
+      "id": "BCP47-SCRIPT-REGION-VARIANT",
+      "section": "RFC 5646 2.1",
+      "anchor": "section-2.1",
+      "source_url": "https://www.rfc-editor.org/rfc/rfc5646.html#section-2.1",
+      "category": "definition",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "A script subtag has four letters; a region has two letters or three digits. A variant has 5–8 alphanumeric characters, or four alphanumeric characters beginning with a digit.",
+      "official_rule_code": null,
+      "dependencies": [
+        "BCP47-LANGUAGE-PRODUCTION"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "cleanroom_mapping": {
+        "claim_id": "BCP47-SCRIPT-REGION-VARIANT",
+        "relation": "definition",
+        "symbol_linked_english": "A script subtag has four letters; a region has two letters or three digits. A variant has 5–8 alphanumeric characters, or four alphanumeric characters beginning with a digit.",
+        "bindings": [
+          {
+            "symbol": "BCP47.digit",
+            "lean": "RDF11.BCP47.digit"
+          },
+          {
+            "symbol": "BCP47.alphanum",
+            "lean": "RDF11.BCP47.alphanum"
+          },
+          {
+            "symbol": "BCP47.script",
+            "lean": "RDF11.BCP47.script"
+          },
+          {
+            "symbol": "BCP47.region",
+            "lean": "RDF11.BCP47.region"
+          },
+          {
+            "symbol": "BCP47.variant",
+            "lean": "RDF11.BCP47.variant"
+          }
+        ],
+        "limitations": "This is RFC 5646 well-formedness, not registry validity, extension-specific validity or RFC 4647 matching. It is a declarative grammar with checked witnesses; no executable general tag parser is supplied. Source fidelity remains pending expert review.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "bcp47-productions"
+      ],
+      "extraction_review": "pending",
+      "formalization_review": "pending"
+    },
+    {
+      "id": "BCP47-EXTENSION-PRIVATEUSE",
+      "section": "RFC 5646 2.1",
+      "anchor": "section-2.1",
+      "source_url": "https://www.rfc-editor.org/rfc/rfc5646.html#section-2.1",
+      "category": "definition",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "An extension begins with an alphanumeric singleton other than x and has one or more 2–8-character alphanumeric subtags. Private use begins with x and has one or more 1–8-character alphanumeric subtags.",
+      "official_rule_code": null,
+      "dependencies": [
+        "BCP47-LANGUAGE-PRODUCTION",
+        "BCP47-CASE-INSENSITIVITY"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "cleanroom_mapping": {
+        "claim_id": "BCP47-EXTENSION-PRIVATEUSE",
+        "relation": "definition_and_theorem",
+        "symbol_linked_english": "An extension begins with an alphanumeric singleton other than x and has one or more 2–8-character alphanumeric subtags. Private use begins with x and has one or more 1–8-character alphanumeric subtags.",
+        "bindings": [
+          {
+            "symbol": "BCP47.singleton",
+            "lean": "RDF11.BCP47.singleton"
+          },
+          {
+            "symbol": "BCP47.extension",
+            "lean": "RDF11.BCP47.extension"
+          },
+          {
+            "symbol": "BCP47.privateuse",
+            "lean": "RDF11.BCP47.privateuse"
+          },
+          {
+            "symbol": "LiteralIdentity.privateuse_wellFormed",
+            "lean": "RDF11.LiteralIdentity.privateuse_wellFormed"
+          }
+        ],
+        "limitations": "This is RFC 5646 well-formedness, not registry validity, extension-specific validity or RFC 4647 matching. It is a declarative grammar with checked witnesses; no executable general tag parser is supplied. Source fidelity remains pending expert review.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "bcp47-productions"
+      ],
+      "extraction_review": "pending",
+      "formalization_review": "pending"
+    },
+    {
+      "id": "BCP47-GRANDFATHERED",
+      "section": "RFC 5646 2.1",
+      "anchor": "section-2.1",
+      "source_url": "https://www.rfc-editor.org/rfc/rfc5646.html#section-2.1",
+      "category": "definition",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "The RFC grammar additionally admits its fixed 26 regular and irregular grandfathered tags, matched case-insensitively. all_grandfathered_wellFormed and uppercase_grandfathered check these alternatives.",
+      "official_rule_code": null,
+      "dependencies": [
+        "BCP47-CASE-INSENSITIVITY"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "cleanroom_mapping": {
+        "claim_id": "BCP47-GRANDFATHERED",
+        "relation": "definition_and_theorem",
+        "symbol_linked_english": "The RFC grammar additionally admits its fixed 26 regular and irregular grandfathered tags, matched case-insensitively. all_grandfathered_wellFormed and uppercase_grandfathered check these alternatives.",
+        "bindings": [
+          {
+            "symbol": "BCP47.grandfathered",
+            "lean": "RDF11.BCP47.grandfathered"
+          },
+          {
+            "symbol": "BCP47.wellFormed_grandfathered",
+            "lean": "RDF11.BCP47.wellFormed_grandfathered"
+          },
+          {
+            "symbol": "LiteralIdentity.all_grandfathered_wellFormed",
+            "lean": "RDF11.LiteralIdentity.all_grandfathered_wellFormed"
+          },
+          {
+            "symbol": "LiteralIdentity.uppercase_grandfathered",
+            "lean": "RDF11.LiteralIdentity.uppercase_grandfathered"
+          }
+        ],
+        "limitations": "This is RFC 5646 well-formedness, not registry validity, extension-specific validity or RFC 4647 matching. It is a declarative grammar with checked witnesses; no executable general tag parser is supplied. Source fidelity remains pending expert review.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "bcp47-productions",
+        "bcp47-grandfathered-tail"
+      ],
+      "extraction_review": "pending",
+      "formalization_review": "pending"
+    },
+    {
+      "id": "BCP47-WELLFORMED",
+      "section": "RFC 5646 2.1 / 2.2.9",
+      "anchor": "section-2.2.9",
+      "source_url": "https://www.rfc-editor.org/rfc/rfc5646.html#section-2.2.9",
+      "category": "definition",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "WellFormed means conformance to the complete Language-Tag grammar: normal language tags, private-use tags, or grandfathered tags. Normal tags order language, optional script, optional region, variants, extensions and optional private use. Empty tags are excluded. Well-formedness does not require the stronger registry-validity conditions.",
+      "official_rule_code": null,
+      "dependencies": [
+        "BCP47-LANGUAGE-PRODUCTION",
+        "BCP47-SCRIPT-REGION-VARIANT",
+        "BCP47-EXTENSION-PRIVATEUSE",
+        "BCP47-GRANDFATHERED"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "cleanroom_mapping": {
+        "claim_id": "BCP47-WELLFORMED",
+        "relation": "definition_and_theorem",
+        "symbol_linked_english": "WellFormed means conformance to the complete Language-Tag grammar: normal language tags, private-use tags, or grandfathered tags. Normal tags order language, optional script, optional region, variants, extensions and optional private use. Empty tags are excluded. Well-formedness does not require the stronger registry-validity conditions.",
+        "bindings": [
+          {
+            "symbol": "BCP47.optionalSubtag",
+            "lean": "RDF11.BCP47.optionalSubtag"
+          },
+          {
+            "symbol": "BCP47.langtag",
+            "lean": "RDF11.BCP47.langtag"
+          },
+          {
+            "symbol": "BCP47.languageTag",
+            "lean": "RDF11.BCP47.languageTag"
+          },
+          {
+            "symbol": "BCP47.WellFormed",
+            "lean": "RDF11.BCP47.WellFormed"
+          },
+          {
+            "symbol": "BCP47.Tag",
+            "lean": "RDF11.BCP47.Tag"
+          },
+          {
+            "symbol": "BCP47.wellFormed_nonempty",
+            "lean": "RDF11.BCP47.wellFormed_nonempty"
+          },
+          {
+            "symbol": "LiteralIdentity.duplicate_variant_wellFormed",
+            "lean": "RDF11.LiteralIdentity.duplicate_variant_wellFormed"
+          }
+        ],
+        "limitations": "This is RFC 5646 well-formedness, not registry validity, extension-specific validity or RFC 4647 matching. It is a declarative grammar with checked witnesses; no executable general tag parser is supplied. Source fidelity remains pending expert review.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "literal-components-structured",
+        "bcp47-top-grammar",
+        "bcp47-productions",
+        "bcp47-wellformed-class",
+        "bcp47-validity-distinction"
+      ],
+      "extraction_review": "pending",
+      "formalization_review": "pending"
+    },
+    {
+      "id": "BCP47-CASE-INSENSITIVITY",
+      "section": "RFC 5646 2.1.1",
+      "anchor": "section-2.1.1",
+      "source_url": "https://www.rfc-editor.org/rfc/rfc5646.html#section-2.1.1",
+      "category": "definition",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "Language-tag grammar and meaning use case-insensitive ASCII letters. Tag retains the original spelling; Tag.value and Tag.normalize use ASCII lowercase. Normalization is idempotent, preserves well-formedness and identifies exactly tags with equal lowercase values.",
+      "official_rule_code": null,
+      "dependencies": [],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "cleanroom_mapping": {
+        "claim_id": "BCP47-CASE-INSENSITIVITY",
+        "relation": "definition_and_theorem",
+        "symbol_linked_english": "Language-tag grammar and meaning use case-insensitive ASCII letters. Tag retains the original spelling; Tag.value and Tag.normalize use ASCII lowercase. Normalization is idempotent, preserves well-formedness and identifies exactly tags with equal lowercase values.",
+        "bindings": [
+          {
+            "symbol": "charLower_idempotent",
+            "lean": "RDF11.charLower_idempotent"
+          },
+          {
+            "symbol": "asciiLower_idempotent",
+            "lean": "RDF11.asciiLower_idempotent"
+          },
+          {
+            "symbol": "BCP47.Tag.value",
+            "lean": "RDF11.BCP47.Tag.value"
+          },
+          {
+            "symbol": "BCP47.wellFormed_of_lower_eq",
+            "lean": "RDF11.BCP47.wellFormed_of_lower_eq"
+          },
+          {
+            "symbol": "BCP47.wellFormed_lower",
+            "lean": "RDF11.BCP47.wellFormed_lower"
+          },
+          {
+            "symbol": "BCP47.Tag.normalize",
+            "lean": "RDF11.BCP47.Tag.normalize"
+          },
+          {
+            "symbol": "BCP47.Tag.normalize_idempotent",
+            "lean": "RDF11.BCP47.Tag.normalize_idempotent"
+          },
+          {
+            "symbol": "BCP47.Tag.normalize_eq_iff_value",
+            "lean": "RDF11.BCP47.Tag.normalize_eq_iff_value"
+          },
+          {
+            "symbol": "BCP47.Tag.eq_iff_spelling",
+            "lean": "RDF11.BCP47.Tag.eq_iff_spelling"
+          }
+        ],
+        "limitations": "Case-insensitive language-tag values are distinct from RDF 1.1 literal term equality. Raw tag storage is preserved; no RFC 4647 matching or preferred-value registry canonicalization is claimed.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "bcp47-grandfathered-tail",
+        "bcp47-ascii-case"
+      ],
+      "extraction_review": "pending",
+      "formalization_review": "pending"
+    },
+    {
+      "id": "MT11-LANGUAGE-NORMALIZATION-SCOPE",
+      "section": "Concepts 3.3",
+      "anchor": "section-Graph-Literal",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-concepts-20140225/#section-Graph-Literal",
+      "category": "mathematical_consequence",
+      "source_status": "normative",
+      "assertion_basis": "derived",
+      "paraphrase": "From the RDF 1.1 identity and language-value conditions: the symbolic-name triples with \"chat\"@FR and \"chat\"@fr contain different literal terms. The former does not simply entail the latter; with the structured syntax and recognized langString, they are D-equivalent.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-LITERAL-COMPONENT-IDENTITY",
+        "MT11-LANGUAGE-TAG-NORMALIZATION",
+        "MT11-SIMPLE-ENTAILMENT"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "Project-derived consequence of the cited normative definitions; not a named assertion printed by W3C.",
+      "cleanroom_mapping": {
+        "claim_id": "MT11-LANGUAGE-NORMALIZATION-SCOPE",
+        "relation": "theorem",
+        "symbol_linked_english": "From the RDF 1.1 identity and language-value conditions: the symbolic-name triples with \"chat\"@FR and \"chat\"@fr contain different literal terms. The former does not simply entail the latter; with the structured syntax and recognized langString, they are D-equivalent.",
+        "bindings": [
+          {
+            "symbol": "LiteralIdentity.upperLiteral",
+            "lean": "RDF11.LiteralIdentity.upperLiteral"
+          },
+          {
+            "symbol": "LiteralIdentity.lowerLiteral",
+            "lean": "RDF11.LiteralIdentity.lowerLiteral"
+          },
+          {
+            "symbol": "LiteralIdentity.literals_distinct",
+            "lean": "RDF11.LiteralIdentity.literals_distinct"
+          },
+          {
+            "symbol": "LiteralIdentity.case_change_not_simple_entailment",
+            "lean": "RDF11.LiteralIdentity.case_change_not_simple_entailment"
+          },
+          {
+            "symbol": "LiteralIdentity.case_change_d_equivalent",
+            "lean": "RDF11.LiteralIdentity.case_change_d_equivalent"
+          }
+        ],
+        "limitations": "Derived example with symbolic RDF names, not a printed W3C lemma or cross-edition theorem. The positive result retains its theory-alignment and recognition hypotheses.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "literal-component-equality",
+        "literal-optional-case-normalization"
+      ],
+      "extraction_review": "pending",
+      "formalization_review": "pending"
+    },
+    {
+      "id": "MT11-LANGUAGE-NORMALIZATION-ENUMERATION",
+      "section": "Concepts 3.3",
+      "anchor": "section-Graph-Literal",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-concepts-20140225/#section-Graph-Literal",
+      "category": "mathematical_consequence",
+      "source_status": "normative",
+      "assertion_basis": "derived",
+      "paraphrase": "From set-valued graph semantics: mapping literal spellings can identify distinct triples. Enumeration.image certifies membership and uniqueness of the image and cannot increase its size. The case-normalization example changes a two-triple enumeration into a one-triple enumeration.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-GRAPH-SET",
+        "MT11-LANGUAGE-TAG-NORMALIZATION",
+        "MT11-LANGUAGE-NORMALIZATION-SCOPE"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "Project-derived consequence of the cited normative definitions; not a named assertion printed by W3C.",
+      "cleanroom_mapping": {
+        "claim_id": "MT11-LANGUAGE-NORMALIZATION-ENUMERATION",
+        "relation": "theorem",
+        "symbol_linked_english": "From set-valued graph semantics: mapping literal spellings can identify distinct triples. Enumeration.imageDeduplicated certifies membership and uniqueness of the image and cannot increase its size. The case-normalization example changes a two-triple enumeration into a one-triple enumeration.",
+        "bindings": [
+          {
+            "symbol": "Enumeration.imageDeduplicated",
+            "lean": "RDF11.Enumeration.imageDeduplicated"
+          },
+          {
+            "symbol": "Enumeration.image_length_le",
+            "lean": "RDF11.Enumeration.image_length_le"
+          },
+          {
+            "symbol": "LiteralIdentity.original",
+            "lean": "RDF11.LiteralIdentity.original"
+          },
+          {
+            "symbol": "LiteralIdentity.normalized_graph",
+            "lean": "RDF11.LiteralIdentity.normalized_graph"
+          },
+          {
+            "symbol": "LiteralIdentity.originalEnumeration",
+            "lean": "RDF11.LiteralIdentity.originalEnumeration"
+          },
+          {
+            "symbol": "LiteralIdentity.normalizedEnumeration",
+            "lean": "RDF11.LiteralIdentity.normalizedEnumeration"
+          },
+          {
+            "symbol": "LiteralIdentity.original_count",
+            "lean": "RDF11.LiteralIdentity.original_count"
+          },
+          {
+            "symbol": "LiteralIdentity.normalized_count",
+            "lean": "RDF11.LiteralIdentity.normalized_count"
+          }
+        ],
+        "limitations": "Derived engineering refinement for certified finite enumerations. It does not prove that any current Factoidal ingestion, storage, normalization, JS/WASM or enumeration path uses this contract.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "graph",
+        "literal-optional-case-normalization"
+      ],
+      "extraction_review": "pending",
+      "formalization_review": "pending"
     }
   ],
   "context_resolutions": [
@@ -18713,6 +19807,15 @@
       "resolved_meaning": "The legal-RDF-syntax strategy using rdfD1 instead of GrdfD1; the preceding displayed rules remain otherwise the relevant strategy.",
       "inference": "The literal-free blank-predicate obstruction does not depend on rdfD1 allocation. A different composed rule system is not excluded.",
       "review": "pending"
+    },
+    {
+      "claim_id": "MT11-LANGUAGE-TAG-NORMALIZATION",
+      "passage": "literal-optional-case-normalization",
+      "source_phrase": "the third element",
+      "antecedent_passage": "literal-components-structured",
+      "resolved_meaning": "The optional raw language-tag component, present exactly for rdf:langString literals. Lexical tag spelling and its lowercase language value are distinct.",
+      "inference": "Read the lowercasing permission together with componentwise literal identity and the separately specified lowercase denotation; do not change RDF 1.1 equality to a case-insensitive quotient.",
+      "review": "pending"
     }
   ],
   "dispositions": [
@@ -18726,6 +19829,13 @@
     {
       "id": "UNRESOLVED-concepts",
       "source": "concepts",
+      "disposition": "unresolved",
+      "review": "pending",
+      "reason": "No claim extraction has yet been assigned to this source interval."
+    },
+    {
+      "id": "UNRESOLVED-rfc5646",
+      "source": "rfc5646",
       "disposition": "unresolved",
       "review": "pending",
       "reason": "No claim extraction has yet been assigned to this source interval."

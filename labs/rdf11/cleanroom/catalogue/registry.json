@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "status": "frozen_twenty_sixth_increment_ordinary_rules_not_expert_approved",
+  "status": "frozen_twenty_seventh_increment_structured_literals_not_expert_approved",
   "lean_version": "4.33.1",
   "allowed_axioms": [
     "propext",
@@ -43,12 +43,15 @@
     "Init.Data.List.Erase",
     "Init.Data.List.Find",
     "Init.Data.List.Lemmas",
+    "Init.Data.List.Nat.Modify",
     "Init.Data.List.Nat.Range",
     "Init.Data.List.Nat.Sum",
     "Init.Data.List.Nat.TakeDrop",
     "Init.Data.List.Pairwise",
     "Init.Data.List.Perm",
     "Init.Data.List.Range",
+    "Init.Data.List.SplitOn.Basic",
+    "Init.Data.List.SplitOn.Lemmas",
     "Init.Data.List.Sublist",
     "Init.Data.List.TakeDrop",
     "Init.Data.List.ToArray",
@@ -77,7 +80,10 @@
     "Init.Data.String.Bootstrap",
     "Init.Data.String.Decode",
     "Init.Data.String.Defs",
+    "Init.Data.String.Lemmas.Basic",
+    "Init.Data.String.Lemmas.Modify",
     "Init.Data.String.Lemmas.Splits",
+    "Init.Data.String.Length",
     "Init.Data.String.Modify",
     "Init.Data.String.PosRaw",
     "Init.Data.String.Termination",
@@ -710,6 +716,27 @@
         "MT11-ORDINARY-SHARED-LITERAL-EXAMPLE",
         "MT11-PRINTED-BLANK-PREDICATE-DERIVATION"
       ]
+    },
+    {
+      "id": "SUPPORT-STRUCTURED-LITERALS",
+      "purpose": "Structured RDF 1.1 literal components and raw identity; full imported RFC 5646 ABNF well-formedness and ASCII case handling; actual language-value representatives; conditional D-equivalence under normalization and deduplicated finite images. Does not establish a general executable tag recognizer, registry validity, concrete IRI/XSD correspondence, an RDF 1.2 bridge or package refinement.",
+      "requires": [
+        "SUPPORT-DATATYPES",
+        "SUPPORT-LITERAL-SUBSTITUTION",
+        "SUPPORT-RDFS-MODELS",
+        "REFINEMENT-ENUMERATION",
+        "MT11-LITERAL-COMPONENT-IDENTITY",
+        "MT11-LITERAL-LEXICAL-ADMISSIBILITY",
+        "MT11-LANGUAGE-TAG-NORMALIZATION",
+        "BCP47-WELLFORMED",
+        "BCP47-LANGUAGE-PRODUCTION",
+        "BCP47-SCRIPT-REGION-VARIANT",
+        "BCP47-EXTENSION-PRIVATEUSE",
+        "BCP47-GRANDFATHERED",
+        "BCP47-CASE-INSENSITIVITY",
+        "MT11-LANGUAGE-NORMALIZATION-SCOPE",
+        "MT11-LANGUAGE-NORMALIZATION-ENUMERATION"
+      ]
     }
   ],
   "files": [
@@ -736,14 +763,14 @@
     },
     {
       "path": "Audit/Snapshot.lean",
-      "sha256": "b44068c7697dac9d2c578f54f546bc457c0e535c53e9fdaf75ed9d37e5ef0be2",
+      "sha256": "842a101a70dd9848a9f20563188d94b48232ad49a50482eb28a872976d691ed0",
       "role": "formal_source",
       "lifecycle": "active",
       "review": "pending_expert_review"
     },
     {
       "path": "RDF11.lean",
-      "sha256": "3a0b9701d9bbaaede57db496522ff348a8403d580147e22a76ba95e1669dd591",
+      "sha256": "1803790e67fccca68e0149476c14844629037dac719a7cc190fb4a82b6387d49",
       "role": "formal_source",
       "lifecycle": "active",
       "review": "pending_expert_review"
@@ -1367,6 +1394,41 @@
     {
       "path": "RDF11/SharedLiteralExample.lean",
       "sha256": "9a555b676f69f29fd4a39260c4362df6da2488d58edade680101ffbeafae6a22",
+      "role": "formal_source",
+      "lifecycle": "active",
+      "review": "pending_expert_review"
+    },
+    {
+      "path": "RDF11/EnumerationImages.lean",
+      "sha256": "760d0a4365afa3fa6e8eee3f060fa9f245436d5da6352f7c7e00361375f2b1ff",
+      "role": "formal_source",
+      "lifecycle": "active",
+      "review": "pending_expert_review"
+    },
+    {
+      "path": "RDF11/LanguageTags.lean",
+      "sha256": "2aca046be032b7d631e95b193c57ff224a69d1bc42aa72f4b6603c312e756b19",
+      "role": "formal_source",
+      "lifecycle": "active",
+      "review": "pending_expert_review"
+    },
+    {
+      "path": "RDF11/LiteralIdentityExamples.lean",
+      "sha256": "659c78859e343e779b18a8b0f9b0cde313afaadd279974c54a1686f2e9dde543",
+      "role": "formal_source",
+      "lifecycle": "active",
+      "review": "pending_expert_review"
+    },
+    {
+      "path": "RDF11/StringCase.lean",
+      "sha256": "97736e5fe160b67a65d19bda51d7152d06fa5ce221b1f823a866366fc9b74750",
+      "role": "formal_source",
+      "lifecycle": "active",
+      "review": "pending_expert_review"
+    },
+    {
+      "path": "RDF11/StructuredLiterals.lean",
+      "sha256": "7dfb22e983139a748648356d24d664ae3b6df8ab372a66da908957d15fa10351",
       "role": "formal_source",
       "lifecycle": "active",
       "review": "pending_expert_review"
@@ -5127,7 +5189,8 @@
       "type": "Type → Type → Type → Type",
       "role": "source_mapping",
       "grounds": [
-        "MT11-TRIPLE-TERM-DOMAINS"
+        "MT11-TRIPLE-TERM-DOMAINS",
+        "MT11-TERM-IDENTITY"
       ],
       "parent_declaration_if_applicable": null,
       "review": "pending_expert_review"
@@ -40587,6 +40650,2185 @@
         "SUPPORT-ORDINARY-RULES"
       ],
       "parent_declaration_if_applicable": "RDF11.Term.hasLiteral.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.BCP47.Tag",
+      "module": "RDF11.LanguageTags",
+      "kind": "definition",
+      "type": "Type",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS",
+        "BCP47-WELLFORMED"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.BCP47.Tag.eq_iff_spelling",
+      "module": "RDF11.LanguageTags",
+      "kind": "theorem",
+      "type": "∀ (s t : RDF11.BCP47.Tag), s = t ↔ s.val = t.val",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS",
+        "BCP47-CASE-INSENSITIVITY",
+        "MT11-TERM-IDENTITY"
+      ],
+      "parent_declaration_if_applicable": "RDF11.BCP47.Tag",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.BCP47.Tag.normalize",
+      "module": "RDF11.LanguageTags",
+      "kind": "definition",
+      "type": "RDF11.BCP47.Tag → RDF11.BCP47.Tag",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS",
+        "BCP47-CASE-INSENSITIVITY"
+      ],
+      "parent_declaration_if_applicable": "RDF11.BCP47.Tag",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.BCP47.Tag.normalize._proof_1",
+      "module": "RDF11.LanguageTags",
+      "kind": "theorem",
+      "type": "∀ (t : RDF11.BCP47.Tag), RDF11.BCP47.WellFormed (RDF11.asciiLower t.val)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.BCP47.Tag.normalize",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.BCP47.Tag.normalize.eq_1",
+      "module": "RDF11.StructuredLiterals",
+      "kind": "theorem",
+      "type": "∀ (t : RDF11.BCP47.Tag), t.normalize = ⟨t.value, ⋯⟩",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.BCP47.Tag.normalize",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.BCP47.Tag.normalize_eq_iff_value",
+      "module": "RDF11.LanguageTags",
+      "kind": "theorem",
+      "type": "∀ (s t : RDF11.BCP47.Tag), s.normalize = t.normalize ↔ s.value = t.value",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS",
+        "BCP47-CASE-INSENSITIVITY"
+      ],
+      "parent_declaration_if_applicable": "RDF11.BCP47.Tag",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.BCP47.Tag.normalize_idempotent",
+      "module": "RDF11.LanguageTags",
+      "kind": "theorem",
+      "type": "∀ (t : RDF11.BCP47.Tag), t.normalize.normalize = t.normalize",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS",
+        "BCP47-CASE-INSENSITIVITY"
+      ],
+      "parent_declaration_if_applicable": "RDF11.BCP47.Tag",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.BCP47.Tag.normalize_value",
+      "module": "RDF11.LanguageTags",
+      "kind": "theorem",
+      "type": "∀ (t : RDF11.BCP47.Tag), t.normalize.value = t.value",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.BCP47.Tag",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.BCP47.Tag.value",
+      "module": "RDF11.LanguageTags",
+      "kind": "definition",
+      "type": "RDF11.BCP47.Tag → String",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS",
+        "MT11-LANGSTRING-VALUE",
+        "BCP47-CASE-INSENSITIVITY"
+      ],
+      "parent_declaration_if_applicable": "RDF11.BCP47.Tag",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.BCP47.Tag.value.eq_1",
+      "module": "RDF11.StructuredLiterals",
+      "kind": "theorem",
+      "type": "∀ (t : RDF11.BCP47.Tag), t.value = RDF11.asciiLower t.val",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.BCP47.Tag.value",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.BCP47.WellFormed",
+      "module": "RDF11.LanguageTags",
+      "kind": "definition",
+      "type": "String → Prop",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS",
+        "MT11-LITERAL-DATATYPE-IMPORT",
+        "BCP47-WELLFORMED"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.BCP47.WellFormed.eq_1",
+      "module": "RDF11.LanguageTags",
+      "kind": "theorem",
+      "type": "∀ (s : String), RDF11.BCP47.WellFormed s = RDF11.BCP47.languageTag (RDF11.BCP47.parts (RDF11.asciiLower s))",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.BCP47.WellFormed",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.BCP47.alpha",
+      "module": "RDF11.LanguageTags",
+      "kind": "definition",
+      "type": "Char → Prop",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS",
+        "BCP47-LANGUAGE-PRODUCTION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.BCP47.alpha.eq_1",
+      "module": "RDF11.LiteralIdentityExamples",
+      "kind": "theorem",
+      "type": "∀ (c : Char), RDF11.BCP47.alpha c = ('a' ≤ c ∧ c ≤ 'z')",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.BCP47.alpha",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.BCP47.alphanum",
+      "module": "RDF11.LanguageTags",
+      "kind": "definition",
+      "type": "Char → Prop",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS",
+        "BCP47-SCRIPT-REGION-VARIANT"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.BCP47.alphanum.eq_1",
+      "module": "RDF11.LiteralIdentityExamples",
+      "kind": "theorem",
+      "type": "∀ (c : Char), RDF11.BCP47.alphanum c = (RDF11.BCP47.alpha c ∨ RDF11.BCP47.digit c)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.BCP47.alphanum",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.BCP47.digit",
+      "module": "RDF11.LanguageTags",
+      "kind": "definition",
+      "type": "Char → Prop",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS",
+        "BCP47-SCRIPT-REGION-VARIANT"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.BCP47.digit.eq_1",
+      "module": "RDF11.LiteralIdentityExamples",
+      "kind": "theorem",
+      "type": "∀ (c : Char), RDF11.BCP47.digit c = ('0' ≤ c ∧ c ≤ '9')",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.BCP47.digit",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.BCP47.extension",
+      "module": "RDF11.LanguageTags",
+      "kind": "definition",
+      "type": "List String → Prop",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS",
+        "BCP47-EXTENSION-PRIVATEUSE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.BCP47.grandfathered",
+      "module": "RDF11.LanguageTags",
+      "kind": "definition",
+      "type": "List String",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS",
+        "BCP47-GRANDFATHERED"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.BCP47.grandfathered.eq_1",
+      "module": "RDF11.LanguageTags",
+      "kind": "theorem",
+      "type": "RDF11.BCP47.grandfathered =\n  [\"en-gb-oed\", \"i-ami\", \"i-bnn\", \"i-default\", \"i-enochian\", \"i-hak\", \"i-klingon\", \"i-lux\", \"i-mingo\", \"i-navajo\",\n    \"i-pwn\", \"i-tao\", \"i-tay\", \"i-tsu\", \"sgn-be-fr\", \"sgn-be-nl\", \"sgn-ch-de\", \"art-lojban\", \"cel-gaulish\", \"no-bok\",\n    \"no-nyn\", \"zh-guoyu\", \"zh-hakka\", \"zh-min\", \"zh-min-nan\", \"zh-xiang\"]",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.BCP47.grandfathered",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.BCP47.grandfathered_not_empty_parts",
+      "module": "RDF11.LanguageTags",
+      "kind": "theorem",
+      "type": "∀ (s : String), s ∈ RDF11.BCP47.grandfathered → RDF11.BCP47.parts s ≠ [\"\"]",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.BCP47.langtag",
+      "module": "RDF11.LanguageTags",
+      "kind": "definition",
+      "type": "List String → Prop",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS",
+        "BCP47-WELLFORMED"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.BCP47.langtag_head",
+      "module": "RDF11.LanguageTags",
+      "kind": "theorem",
+      "type": "∀ {ss : List String}, RDF11.BCP47.langtag ss → ∃ s rest, ss = s :: rest ∧ s ≠ \"\"",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.BCP47.language",
+      "module": "RDF11.LanguageTags",
+      "kind": "definition",
+      "type": "List String → Prop",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS",
+        "BCP47-LANGUAGE-PRODUCTION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.BCP47.languageTag",
+      "module": "RDF11.LanguageTags",
+      "kind": "definition",
+      "type": "List String → Prop",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS",
+        "BCP47-WELLFORMED"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.BCP47.language_head",
+      "module": "RDF11.LanguageTags",
+      "kind": "theorem",
+      "type": "∀ {ss : List String}, RDF11.BCP47.language ss → ∃ s rest, ss = s :: rest ∧ s ≠ \"\"",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.BCP47.optionalSubtag",
+      "module": "RDF11.LanguageTags",
+      "kind": "definition",
+      "type": "(String → Prop) → List String → Prop",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS",
+        "BCP47-WELLFORMED"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.BCP47.parts",
+      "module": "RDF11.LanguageTags",
+      "kind": "definition",
+      "type": "String → List String",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS",
+        "BCP47-LANGUAGE-PRODUCTION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.BCP47.parts.eq_1",
+      "module": "RDF11.LanguageTags",
+      "kind": "theorem",
+      "type": "∀ (s : String), RDF11.BCP47.parts s = List.map String.ofList (List.splitOn '-' s.toList)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.BCP47.parts",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.BCP47.parts_empty_string",
+      "module": "RDF11.LanguageTags",
+      "kind": "theorem",
+      "type": "∀ {s : String}, RDF11.BCP47.parts s = [\"\"] → s = \"\"",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.BCP47.parts_reassemble",
+      "module": "RDF11.LanguageTags",
+      "kind": "theorem",
+      "type": "∀ (s : String), String.ofList (['-'].intercalate (List.map String.toList (RDF11.BCP47.parts s))) = s",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS",
+        "BCP47-LANGUAGE-PRODUCTION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.BCP47.privateuse",
+      "module": "RDF11.LanguageTags",
+      "kind": "definition",
+      "type": "List String → Prop",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS",
+        "BCP47-EXTENSION-PRIVATEUSE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.BCP47.region",
+      "module": "RDF11.LanguageTags",
+      "kind": "definition",
+      "type": "String → Prop",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS",
+        "BCP47-SCRIPT-REGION-VARIANT"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.BCP47.script",
+      "module": "RDF11.LanguageTags",
+      "kind": "definition",
+      "type": "String → Prop",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS",
+        "BCP47-SCRIPT-REGION-VARIANT"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.BCP47.singleton",
+      "module": "RDF11.LanguageTags",
+      "kind": "definition",
+      "type": "String → Prop",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS",
+        "BCP47-EXTENSION-PRIVATEUSE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.BCP47.subtag",
+      "module": "RDF11.LanguageTags",
+      "kind": "definition",
+      "type": "Nat → Nat → (Char → Prop) → String → Prop",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS",
+        "BCP47-LANGUAGE-PRODUCTION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.BCP47.subtag.eq_1",
+      "module": "RDF11.LiteralIdentityExamples",
+      "kind": "theorem",
+      "type": "∀ (lo hi : Nat) (kind : Char → Prop) (s : String),\n  RDF11.BCP47.subtag lo hi kind s = (lo ≤ s.length ∧ s.length ≤ hi ∧ ∀ (c : Char), c ∈ s.toList → kind c)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.BCP47.subtag",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.BCP47.subtag_nonempty",
+      "module": "RDF11.LanguageTags",
+      "kind": "theorem",
+      "type": "∀ {lo hi : Nat} {P : Char → Prop} {s : String}, 0 < lo → RDF11.BCP47.subtag lo hi P s → s ≠ \"\"",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.BCP47.subtag_nonempty._proof_1_1",
+      "module": "RDF11.LanguageTags",
+      "kind": "theorem",
+      "type": "∀ {lo : Nat}, 0 < lo → lo ≤ 0 → False",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.BCP47.subtag_nonempty",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.BCP47.subtags",
+      "module": "RDF11.LanguageTags",
+      "kind": "definition",
+      "type": "Nat → Nat → (Char → Prop) → List String → Prop",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS",
+        "BCP47-LANGUAGE-PRODUCTION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.BCP47.subtags.eq_1",
+      "module": "RDF11.LanguageTags",
+      "kind": "theorem",
+      "type": "∀ (lo hi : Nat) (kind : Char → Prop) (ss : List String),\n  RDF11.BCP47.subtags lo hi kind ss = ∀ (s : String), s ∈ ss → RDF11.BCP47.subtag lo hi kind s",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.BCP47.subtags",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.BCP47.variant",
+      "module": "RDF11.LanguageTags",
+      "kind": "definition",
+      "type": "String → Prop",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS",
+        "BCP47-SCRIPT-REGION-VARIANT"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.BCP47.wellFormed_grandfathered",
+      "module": "RDF11.LanguageTags",
+      "kind": "theorem",
+      "type": "∀ {s : String}, RDF11.asciiLower s ∈ RDF11.BCP47.grandfathered → RDF11.BCP47.WellFormed s",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS",
+        "BCP47-GRANDFATHERED"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.BCP47.wellFormed_lower",
+      "module": "RDF11.LanguageTags",
+      "kind": "theorem",
+      "type": "∀ {s : String}, RDF11.BCP47.WellFormed s → RDF11.BCP47.WellFormed (RDF11.asciiLower s)",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS",
+        "BCP47-CASE-INSENSITIVITY"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.BCP47.wellFormed_nonempty",
+      "module": "RDF11.LanguageTags",
+      "kind": "theorem",
+      "type": "∀ {s : String}, RDF11.BCP47.WellFormed s → s ≠ \"\"",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS",
+        "BCP47-WELLFORMED"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.BCP47.wellFormed_of_language",
+      "module": "RDF11.LanguageTags",
+      "kind": "theorem",
+      "type": "∀ {s : String}, RDF11.BCP47.language (RDF11.BCP47.parts (RDF11.asciiLower s)) → RDF11.BCP47.WellFormed s",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.BCP47.wellFormed_of_lower_eq",
+      "module": "RDF11.LanguageTags",
+      "kind": "theorem",
+      "type": "∀ {s t : String}, RDF11.asciiLower s = RDF11.asciiLower t → (RDF11.BCP47.WellFormed s ↔ RDF11.BCP47.WellFormed t)",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS",
+        "BCP47-CASE-INSENSITIVITY"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.BCP47.wellFormed_of_primary",
+      "module": "RDF11.LanguageTags",
+      "kind": "theorem",
+      "type": "∀ {s : String}, RDF11.BCP47.subtag 2 3 RDF11.BCP47.alpha (RDF11.asciiLower s) → RDF11.BCP47.WellFormed s",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Enumeration.imageDeduplicated",
+      "module": "RDF11.EnumerationImages",
+      "kind": "definition",
+      "type": "{α : Type u} →\n  {β : Type v} →\n    {G : RDF11.Set α} → [DecidableEq β] → RDF11.Enumeration G → (f : α → β) → RDF11.Enumeration (RDF11.Set.image f G)",
+      "role": "engineering_refinement",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS",
+        "MT11-LANGUAGE-NORMALIZATION-ENUMERATION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Enumeration",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Enumeration.imageDeduplicated._proof_1",
+      "module": "RDF11.EnumerationImages",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_2} {β : Type u_1} {G : RDF11.Set α} [inst : DecidableEq β] (e : RDF11.Enumeration G) (f : α → β),\n  (RDF11.Enumeration.unique (List.map f e.triples)).Nodup",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Enumeration.imageDeduplicated",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Enumeration.imageDeduplicated._proof_2",
+      "module": "RDF11.EnumerationImages",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_2} {β : Type u_1} {G : RDF11.Set α} [inst : DecidableEq β] (e : RDF11.Enumeration G) (f : α → β) (b : β),\n  b ∈ RDF11.Enumeration.unique (List.map f e.triples) ↔ RDF11.Set.image f G b",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Enumeration.imageDeduplicated",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Enumeration.imageDeduplicated._simp_1",
+      "module": "RDF11.EnumerationImages",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_1} [inst : DecidableEq α] (xs : List α) (t : α), (t ∈ RDF11.Enumeration.unique xs) = (t ∈ xs)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Enumeration.imageDeduplicated",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Enumeration.imageDeduplicated._simp_2",
+      "module": "RDF11.EnumerationImages",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_1} {β : Type u_2} {b : β} {f : α → β} {l : List α}, (b ∈ List.map f l) = ∃ a, a ∈ l ∧ f a = b",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Enumeration.imageDeduplicated",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Enumeration.imageDeduplicated.eq_1",
+      "module": "RDF11.EnumerationImages",
+      "kind": "theorem",
+      "type": "∀ {α : Type u} {β : Type v} {G : RDF11.Set α} [inst : DecidableEq β] (e : RDF11.Enumeration G) (f : α → β),\n  e.imageDeduplicated f = { triples := RDF11.Enumeration.unique (List.map f e.triples), nodup := ⋯, membership := ⋯ }",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Enumeration.imageDeduplicated",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Enumeration.imageDeduplicated.match_3",
+      "module": "RDF11.EnumerationImages",
+      "kind": "definition",
+      "type": "∀ {α : Type u_1} {β : Type u_2} {G : RDF11.Set α} (e : RDF11.Enumeration G) (f : α → β) (b : β)\n  (motive : (∃ a, a ∈ e.triples ∧ f a = b) → Prop) (x : ∃ a, a ∈ e.triples ∧ f a = b),\n  (∀ (a : α) (ha : a ∈ e.triples) (hab : f a = b), motive ⋯) → motive x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Enumeration.imageDeduplicated",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Enumeration.imageDeduplicated.match_5",
+      "module": "RDF11.EnumerationImages",
+      "kind": "definition",
+      "type": "∀ {α : Type u_1} {β : Type u_2} {G : RDF11.Set α} (f : α → β) (b : β) (motive : (∃ a, G a ∧ f a = b) → Prop)\n  (x : ∃ a, G a ∧ f a = b), (∀ (a : α) (ha : G a) (hab : f a = b), motive ⋯) → motive x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Enumeration.imageDeduplicated",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Enumeration.image_length_le",
+      "module": "RDF11.EnumerationImages",
+      "kind": "theorem",
+      "type": "∀ {α : Type u} {β : Type v} {G : RDF11.Set α} [inst : DecidableEq β] (e : RDF11.Enumeration G) (f : α → β),\n  (e.imageDeduplicated f).triples.length ≤ e.triples.length",
+      "role": "engineering_refinement",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS",
+        "MT11-LANGUAGE-NORMALIZATION-ENUMERATION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Enumeration",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Enumeration.transport_length",
+      "module": "RDF11.EnumerationImages",
+      "kind": "theorem",
+      "type": "∀ {α : Type u} {G H : RDF11.Set α} (h : G = H) (e : RDF11.Enumeration G), (h ▸ e).triples.length = e.triples.length",
+      "role": "engineering_refinement",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Enumeration",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GeneralizedGraph.mapLiteral.eq_1",
+      "module": "RDF11.LiteralIdentityExamples",
+      "kind": "theorem",
+      "type": "∀ {Literal Literal' Iri B : Type} (f : Literal → Literal') (G : RDF11.GeneralizedGraph Iri Literal B),\n  RDF11.GeneralizedGraph.mapLiteral f G = RDF11.Set.image (RDF11.GeneralizedTriple.mapLiteral f) G",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.GeneralizedGraph.mapLiteral",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.LiteralIdentity.Literal",
+      "module": "RDF11.LiteralIdentityExamples",
+      "kind": "definition",
+      "type": "Type",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.LiteralIdentity.all_grandfathered_wellFormed",
+      "module": "RDF11.LiteralIdentityExamples",
+      "kind": "theorem",
+      "type": "∀ (s : String), s ∈ RDF11.BCP47.grandfathered → RDF11.BCP47.WellFormed s",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS",
+        "BCP47-GRANDFATHERED"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.LiteralIdentity.all_grandfathered_wellFormed._proof_1_1",
+      "module": "RDF11.LiteralIdentityExamples",
+      "kind": "theorem",
+      "type": "∀ (s : String),\n  s ∈\n      [\"en-gb-oed\", \"i-ami\", \"i-bnn\", \"i-default\", \"i-enochian\", \"i-hak\", \"i-klingon\", \"i-lux\", \"i-mingo\", \"i-navajo\",\n        \"i-pwn\", \"i-tao\", \"i-tay\", \"i-tsu\", \"sgn-be-fr\", \"sgn-be-nl\", \"sgn-ch-de\", \"art-lojban\", \"cel-gaulish\",\n        \"no-bok\", \"no-nyn\", \"zh-guoyu\", \"zh-hakka\", \"zh-min\", \"zh-min-nan\", \"zh-xiang\"] →\n    String.ofList (List.map Char.toLower s.toList) = s",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.LiteralIdentity.all_grandfathered_wellFormed",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.LiteralIdentity.case_change_d_equivalent",
+      "module": "RDF11.LiteralIdentityExamples",
+      "kind": "theorem",
+      "type": "∀ {Value : Type} (T : RDF11.DatatypeTheory RDF11.RDFSymbol RDF11.LiteralIdentity.Literal Value),\n  T.literalSyntax = RDF11.StructuredLiteral.literalSyntax RDF11.RDFSymbol.rdfLangString →\n    ∀ (D : RDF11.Set RDF11.RDFSymbol),\n      D RDF11.RDFSymbol.rdfLangString →\n        RDF11.DEntails T D (RDF11.Set.ofList [RDF11.LiteralIdentity.edge RDF11.LiteralIdentity.upperLiteral])\n            (RDF11.Set.ofList [RDF11.LiteralIdentity.edge RDF11.LiteralIdentity.lowerLiteral]) ∧\n          RDF11.DEntails T D (RDF11.Set.ofList [RDF11.LiteralIdentity.edge RDF11.LiteralIdentity.lowerLiteral])\n            (RDF11.Set.ofList [RDF11.LiteralIdentity.edge RDF11.LiteralIdentity.upperLiteral])",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS",
+        "MT11-LANGUAGE-NORMALIZATION-SCOPE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.LiteralIdentity.case_change_not_simple_entailment",
+      "module": "RDF11.LiteralIdentityExamples",
+      "kind": "theorem",
+      "type": "¬RDF11.SimplyEntails (RDF11.Set.ofList [RDF11.LiteralIdentity.edge RDF11.LiteralIdentity.upperLiteral])\n    (RDF11.Set.ofList [RDF11.LiteralIdentity.edge RDF11.LiteralIdentity.lowerLiteral])",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS",
+        "MT11-LANGUAGE-NORMALIZATION-SCOPE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.LiteralIdentity.case_change_not_simple_entailment.match_1_1",
+      "module": "RDF11.LiteralIdentityExamples",
+      "kind": "definition",
+      "type": "∀ (motive : Empty → Prop) (b : Empty), motive b",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.LiteralIdentity.case_change_not_simple_entailment",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.LiteralIdentity.duplicate_variant_wellFormed",
+      "module": "RDF11.LiteralIdentityExamples",
+      "kind": "theorem",
+      "type": "RDF11.BCP47.WellFormed \"de-1901-1901\"",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS",
+        "BCP47-WELLFORMED"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.LiteralIdentity.duplicate_variant_wellFormed._proof_1_5",
+      "module": "RDF11.LiteralIdentityExamples",
+      "kind": "theorem",
+      "type": "4 ≤ \"1901\".length ∧ \"1901\".length ≤ 4 ∧ ∀ (c : Char), c ∈ \"1901\".toList → 'a' ≤ c ∧ c ≤ 'z' ∨ '0' ≤ c ∧ c ≤ '9'",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.LiteralIdentity.duplicate_variant_wellFormed",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.LiteralIdentity.duplicate_variant_wellFormed._proof_1_6",
+      "module": "RDF11.LiteralIdentityExamples",
+      "kind": "theorem",
+      "type": "'0' ≤ '1' ∧ '1' ≤ '9'",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.LiteralIdentity.duplicate_variant_wellFormed",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.LiteralIdentity.duplicate_variant_wellFormed._proof_1_7",
+      "module": "RDF11.LiteralIdentityExamples",
+      "kind": "theorem",
+      "type": "2 ≤ \"de\".length ∧ \"de\".length ≤ 3 ∧ ∀ (c : Char), c ∈ \"de\".toList → 'a' ≤ c ∧ c ≤ 'z'",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.LiteralIdentity.duplicate_variant_wellFormed",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.LiteralIdentity.duplicate_variant_wellFormed._proof_1_8",
+      "module": "RDF11.LiteralIdentityExamples",
+      "kind": "theorem",
+      "type": "∀ (s : String), s ∈ [] → 3 ≤ s.length ∧ s.length ≤ 3 ∧ ∀ (c : Char), c ∈ s.toList → 'a' ≤ c ∧ c ≤ 'z'",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.LiteralIdentity.duplicate_variant_wellFormed",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.LiteralIdentity.edge",
+      "module": "RDF11.LiteralIdentityExamples",
+      "kind": "definition",
+      "type": "RDF11.LiteralIdentity.Literal → RDF11.GeneralizedTriple RDF11.RDFSymbol RDF11.LiteralIdentity.Literal Empty",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.LiteralIdentity.edge_injective",
+      "module": "RDF11.LiteralIdentityExamples",
+      "kind": "theorem",
+      "type": "∀ {l k : RDF11.LiteralIdentity.Literal}, RDF11.LiteralIdentity.edge l = RDF11.LiteralIdentity.edge k → l = k",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.LiteralIdentity.literals_distinct",
+      "module": "RDF11.LiteralIdentityExamples",
+      "kind": "theorem",
+      "type": "RDF11.LiteralIdentity.upperLiteral ≠ RDF11.LiteralIdentity.lowerLiteral",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS",
+        "MT11-LANGUAGE-NORMALIZATION-SCOPE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.LiteralIdentity.lowerLiteral",
+      "module": "RDF11.LiteralIdentityExamples",
+      "kind": "definition",
+      "type": "RDF11.LiteralIdentity.Literal",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS",
+        "MT11-LANGUAGE-NORMALIZATION-SCOPE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.LiteralIdentity.lowerTag",
+      "module": "RDF11.LiteralIdentityExamples",
+      "kind": "definition",
+      "type": "RDF11.BCP47.Tag",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.LiteralIdentity.lower_FR",
+      "module": "RDF11.LiteralIdentityExamples",
+      "kind": "theorem",
+      "type": "RDF11.asciiLower \"FR\" = \"fr\"",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.LiteralIdentity.lower_fr",
+      "module": "RDF11.LiteralIdentityExamples",
+      "kind": "theorem",
+      "type": "RDF11.asciiLower \"fr\" = \"fr\"",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.LiteralIdentity.normalize_edge",
+      "module": "RDF11.LiteralIdentityExamples",
+      "kind": "theorem",
+      "type": "∀ (l : RDF11.LiteralIdentity.Literal),\n  RDF11.GeneralizedTriple.mapLiteral RDF11.StructuredLiteral.normalize (RDF11.LiteralIdentity.edge l) =\n    RDF11.LiteralIdentity.edge (RDF11.StructuredLiteral.normalize l)",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.LiteralIdentity.normalize_lower",
+      "module": "RDF11.LiteralIdentityExamples",
+      "kind": "theorem",
+      "type": "RDF11.StructuredLiteral.normalize RDF11.LiteralIdentity.lowerLiteral = RDF11.LiteralIdentity.lowerLiteral",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.LiteralIdentity.normalize_upper",
+      "module": "RDF11.LiteralIdentityExamples",
+      "kind": "theorem",
+      "type": "RDF11.StructuredLiteral.normalize RDF11.LiteralIdentity.upperLiteral = RDF11.LiteralIdentity.lowerLiteral",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.LiteralIdentity.normalizedEnumeration",
+      "module": "RDF11.LiteralIdentityExamples",
+      "kind": "definition",
+      "type": "RDF11.Enumeration (RDF11.GeneralizedGraph.mapLiteral RDF11.StructuredLiteral.normalize RDF11.LiteralIdentity.original)",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS",
+        "MT11-LANGUAGE-NORMALIZATION-ENUMERATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.LiteralIdentity.normalized_count",
+      "module": "RDF11.LiteralIdentityExamples",
+      "kind": "theorem",
+      "type": "RDF11.LiteralIdentity.normalizedEnumeration.triples.length = 1",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS",
+        "MT11-LANGUAGE-NORMALIZATION-ENUMERATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.LiteralIdentity.normalized_graph",
+      "module": "RDF11.LiteralIdentityExamples",
+      "kind": "theorem",
+      "type": "RDF11.GeneralizedGraph.mapLiteral RDF11.StructuredLiteral.normalize RDF11.LiteralIdentity.original =\n  RDF11.Set.ofList [RDF11.LiteralIdentity.edge RDF11.LiteralIdentity.lowerLiteral]",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS",
+        "MT11-LANGUAGE-NORMALIZATION-ENUMERATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.LiteralIdentity.original",
+      "module": "RDF11.LiteralIdentityExamples",
+      "kind": "definition",
+      "type": "RDF11.GeneralizedGraph RDF11.RDFSymbol RDF11.LiteralIdentity.Literal Empty",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS",
+        "MT11-LANGUAGE-NORMALIZATION-ENUMERATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.LiteralIdentity.originalEnumeration",
+      "module": "RDF11.LiteralIdentityExamples",
+      "kind": "definition",
+      "type": "RDF11.Enumeration RDF11.LiteralIdentity.original",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS",
+        "MT11-LANGUAGE-NORMALIZATION-ENUMERATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.LiteralIdentity.original_count",
+      "module": "RDF11.LiteralIdentityExamples",
+      "kind": "theorem",
+      "type": "RDF11.LiteralIdentity.originalEnumeration.triples.length = 2",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS",
+        "MT11-LANGUAGE-NORMALIZATION-ENUMERATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.LiteralIdentity.privateuse_wellFormed",
+      "module": "RDF11.LiteralIdentityExamples",
+      "kind": "theorem",
+      "type": "RDF11.BCP47.WellFormed \"x-private\"",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS",
+        "BCP47-EXTENSION-PRIVATEUSE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.LiteralIdentity.privateuse_wellFormed._proof_1_1",
+      "module": "RDF11.LiteralIdentityExamples",
+      "kind": "theorem",
+      "type": "∀ (s : String),\n  s ∈ [\"private\"] → 1 ≤ s.length ∧ s.length ≤ 8 ∧ ∀ (c : Char), c ∈ s.toList → 'a' ≤ c ∧ c ≤ 'z' ∨ '0' ≤ c ∧ c ≤ '9'",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.LiteralIdentity.privateuse_wellFormed",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.LiteralIdentity.upperLiteral",
+      "module": "RDF11.LiteralIdentityExamples",
+      "kind": "definition",
+      "type": "RDF11.LiteralIdentity.Literal",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS",
+        "MT11-LANGUAGE-NORMALIZATION-SCOPE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.LiteralIdentity.upperTag",
+      "module": "RDF11.LiteralIdentityExamples",
+      "kind": "definition",
+      "type": "RDF11.BCP47.Tag",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.LiteralIdentity.upperTag._proof_1",
+      "module": "RDF11.LiteralIdentityExamples",
+      "kind": "theorem",
+      "type": "RDF11.BCP47.WellFormed \"FR\"",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.LiteralIdentity.upperTag",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.LiteralIdentity.uppercase_grandfathered",
+      "module": "RDF11.LiteralIdentityExamples",
+      "kind": "theorem",
+      "type": "RDF11.BCP47.WellFormed \"I-AMI\"",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS",
+        "BCP47-GRANDFATHERED"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.LiteralIdentity.uppercase_grandfathered._proof_1_1",
+      "module": "RDF11.LiteralIdentityExamples",
+      "kind": "theorem",
+      "type": "String.ofList (List.map Char.toLower \"I-AMI\".toList) ∈\n  [\"en-gb-oed\", \"i-ami\", \"i-bnn\", \"i-default\", \"i-enochian\", \"i-hak\", \"i-klingon\", \"i-lux\", \"i-mingo\", \"i-navajo\",\n    \"i-pwn\", \"i-tao\", \"i-tay\", \"i-tsu\", \"sgn-be-fr\", \"sgn-be-nl\", \"sgn-ch-de\", \"art-lojban\", \"cel-gaulish\", \"no-bok\",\n    \"no-nyn\", \"zh-guoyu\", \"zh-hakka\", \"zh-min\", \"zh-min-nan\", \"zh-xiang\"]",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.LiteralIdentity.uppercase_grandfathered",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.LiteralIdentity.wellFormed_fr",
+      "module": "RDF11.LiteralIdentityExamples",
+      "kind": "theorem",
+      "type": "RDF11.BCP47.WellFormed \"fr\"",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Set.image_ofList",
+      "module": "RDF11.EnumerationImages",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_1} {β : Type u_2} (f : α → β) (xs : List α),\n  RDF11.Set.image f (RDF11.Set.ofList xs) = RDF11.Set.ofList (List.map f xs)",
+      "role": "engineering_refinement",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Set",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Set.image_ofList._simp_1_1",
+      "module": "RDF11.EnumerationImages",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_1} {β : Type u_2} {b : β} {f : α → β} {l : List α}, (b ∈ List.map f l) = ∃ a, a ∈ l ∧ f a = b",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Set.image_ofList",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.StructuredLiteral",
+      "module": "RDF11.StructuredLiterals",
+      "kind": "inductive",
+      "type": "(Iri : Type) → Iri → Type",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS",
+        "MT11-TRIPLE-TERM-DOMAINS",
+        "MT11-LITERAL-DATATYPE-IMPORT",
+        "MT11-LITERAL-COMPONENT-IDENTITY",
+        "MT11-TERM-IDENTITY"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.StructuredLiteral._sizeOf_1",
+      "module": "RDF11.StructuredLiterals",
+      "kind": "definition",
+      "type": "{Iri : Type} → {langString : Iri} → [SizeOf Iri] → RDF11.StructuredLiteral Iri langString → Nat",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.StructuredLiteral",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.StructuredLiteral._sizeOf_inst",
+      "module": "RDF11.StructuredLiterals",
+      "kind": "definition",
+      "type": "(Iri : Type) → (langString : Iri) → [SizeOf Iri] → SizeOf (RDF11.StructuredLiteral Iri langString)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.StructuredLiteral",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.StructuredLiteral.casesOn",
+      "module": "RDF11.StructuredLiterals",
+      "kind": "definition",
+      "type": "{Iri : Type} →\n  {langString : Iri} →\n    {motive : RDF11.StructuredLiteral Iri langString → Sort u} →\n      (t : RDF11.StructuredLiteral Iri langString) →\n        ((lexical : String) →\n            (datatype : { a // a ≠ langString }) → motive (RDF11.StructuredLiteral.typed lexical datatype)) →\n          ((lexical : String) → (tag : RDF11.BCP47.Tag) → motive (RDF11.StructuredLiteral.tagged lexical tag)) →\n            motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.StructuredLiteral",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.StructuredLiteral.ctorElim",
+      "module": "RDF11.StructuredLiterals",
+      "kind": "definition",
+      "type": "{Iri : Type} →\n  {langString : Iri} →\n    {motive : RDF11.StructuredLiteral Iri langString → Sort u} →\n      (ctorIdx : Nat) →\n        (t : RDF11.StructuredLiteral Iri langString) →\n          ctorIdx = t.ctorIdx → RDF11.StructuredLiteral.ctorElimType ctorIdx → motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.StructuredLiteral",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.StructuredLiteral.ctorElimType",
+      "module": "RDF11.StructuredLiterals",
+      "kind": "definition",
+      "type": "{Iri : Type} → {langString : Iri} → {motive : RDF11.StructuredLiteral Iri langString → Sort u} → Nat → Sort (max 1 u)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.StructuredLiteral",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.StructuredLiteral.ctorIdx",
+      "module": "RDF11.StructuredLiterals",
+      "kind": "definition",
+      "type": "{Iri : Type} → {langString : Iri} → RDF11.StructuredLiteral Iri langString → Nat",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.StructuredLiteral",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.StructuredLiteral.datatype",
+      "module": "RDF11.StructuredLiterals",
+      "kind": "definition",
+      "type": "{Iri : Type} → {langString : Iri} → RDF11.StructuredLiteral Iri langString → Iri",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS",
+        "MT11-LITERAL-COMPONENT-IDENTITY"
+      ],
+      "parent_declaration_if_applicable": "RDF11.StructuredLiteral",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.StructuredLiteral.datatype.eq_1",
+      "module": "RDF11.StructuredLiterals",
+      "kind": "theorem",
+      "type": "∀ {Iri : Type} {langString : Iri} (s : String) (datatype : { a // a ≠ langString }),\n  (RDF11.StructuredLiteral.typed s datatype).datatype = datatype.val",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.StructuredLiteral.datatype",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.StructuredLiteral.datatype.eq_2",
+      "module": "RDF11.StructuredLiterals",
+      "kind": "theorem",
+      "type": "∀ {Iri : Type} {langString : Iri} (s : String) (tag : RDF11.BCP47.Tag),\n  (RDF11.StructuredLiteral.tagged s tag).datatype = langString",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.StructuredLiteral.datatype",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.StructuredLiteral.eq_iff_fields",
+      "module": "RDF11.StructuredLiterals",
+      "kind": "theorem",
+      "type": "∀ {Iri : Type} {langString : Iri} (l k : RDF11.StructuredLiteral Iri langString),\n  l = k ↔ l.lexical = k.lexical ∧ l.datatype = k.datatype ∧ l.language = k.language",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS",
+        "MT11-LITERAL-DATATYPE-IMPORT",
+        "MT11-LITERAL-COMPONENT-IDENTITY",
+        "MT11-TERM-IDENTITY"
+      ],
+      "parent_declaration_if_applicable": "RDF11.StructuredLiteral",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.StructuredLiteral.eq_iff_fields._simp_1_8",
+      "module": "RDF11.StructuredLiterals",
+      "kind": "theorem",
+      "type": "∀ {α : Sort u} {p : α → Prop} {a1 a2 : { x // p x }}, (a1 = a2) = (a1.val = a2.val)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.StructuredLiteral.eq_iff_fields",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.StructuredLiteral.language",
+      "module": "RDF11.StructuredLiterals",
+      "kind": "definition",
+      "type": "{Iri : Type} → {langString : Iri} → RDF11.StructuredLiteral Iri langString → Option String",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS",
+        "MT11-LITERAL-COMPONENT-IDENTITY"
+      ],
+      "parent_declaration_if_applicable": "RDF11.StructuredLiteral",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.StructuredLiteral.language.eq_1",
+      "module": "RDF11.StructuredLiterals",
+      "kind": "theorem",
+      "type": "∀ {Iri : Type} {langString : Iri} (s : String) (datatype : { a // a ≠ langString }),\n  (RDF11.StructuredLiteral.typed s datatype).language = none",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.StructuredLiteral.language",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.StructuredLiteral.language.eq_2",
+      "module": "RDF11.StructuredLiterals",
+      "kind": "theorem",
+      "type": "∀ {Iri : Type} {langString : Iri} (s : String) (tag : RDF11.BCP47.Tag),\n  (RDF11.StructuredLiteral.tagged s tag).language = some tag.val",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.StructuredLiteral.language",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.StructuredLiteral.language_coverage",
+      "module": "RDF11.StructuredLiterals",
+      "kind": "theorem",
+      "type": "∀ {Iri : Type} {langString : Iri} {Value : Type}\n  (T : RDF11.DatatypeTheory Iri (RDF11.StructuredLiteral Iri langString) Value),\n  T.literalSyntax = RDF11.StructuredLiteral.literalSyntax langString → RDF11.RDFSModelConstruction.LanguageCoverage T",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS",
+        "MT11-RDFS-LANGUAGE-LITERAL-COVERAGE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.StructuredLiteral",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.StructuredLiteral.language_iff_datatype",
+      "module": "RDF11.StructuredLiterals",
+      "kind": "theorem",
+      "type": "∀ {Iri : Type} {langString : Iri} (l : RDF11.StructuredLiteral Iri langString),\n  (∃ tag, l.language = some tag) ↔ l.datatype = langString",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS",
+        "MT11-LITERAL-DATATYPE-IMPORT",
+        "MT11-LITERAL-LEXICAL-ADMISSIBILITY"
+      ],
+      "parent_declaration_if_applicable": "RDF11.StructuredLiteral",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.StructuredLiteral.language_nonempty",
+      "module": "RDF11.StructuredLiterals",
+      "kind": "theorem",
+      "type": "∀ {Iri : Type} {langString : Iri} {tag : String} (l : RDF11.StructuredLiteral Iri langString),\n  l.language = some tag → tag ≠ \"\"",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS",
+        "MT11-LITERAL-LEXICAL-ADMISSIBILITY"
+      ],
+      "parent_declaration_if_applicable": "RDF11.StructuredLiteral",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.StructuredLiteral.language_wellFormed",
+      "module": "RDF11.StructuredLiterals",
+      "kind": "theorem",
+      "type": "∀ {Iri : Type} {langString : Iri} {tag : String} (l : RDF11.StructuredLiteral Iri langString),\n  l.language = some tag → RDF11.BCP47.WellFormed tag",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.StructuredLiteral",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.StructuredLiteral.lexical",
+      "module": "RDF11.StructuredLiterals",
+      "kind": "definition",
+      "type": "{Iri : Type} → {langString : Iri} → RDF11.StructuredLiteral Iri langString → String",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS",
+        "MT11-LITERAL-COMPONENT-IDENTITY"
+      ],
+      "parent_declaration_if_applicable": "RDF11.StructuredLiteral",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.StructuredLiteral.lexical.eq_1",
+      "module": "RDF11.StructuredLiterals",
+      "kind": "theorem",
+      "type": "∀ {Iri : Type} {langString : Iri} (s : String) (datatype : { a // a ≠ langString }),\n  (RDF11.StructuredLiteral.typed s datatype).lexical = s",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.StructuredLiteral.lexical",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.StructuredLiteral.lexical.eq_2",
+      "module": "RDF11.StructuredLiterals",
+      "kind": "theorem",
+      "type": "∀ {Iri : Type} {langString : Iri} (s : String) (tag : RDF11.BCP47.Tag),\n  (RDF11.StructuredLiteral.tagged s tag).lexical = s",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.StructuredLiteral.lexical",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.StructuredLiteral.lexical.match_1",
+      "module": "RDF11.StructuredLiterals",
+      "kind": "definition",
+      "type": "{Iri : Type} →\n  {langString : Iri} →\n    (motive : RDF11.StructuredLiteral Iri langString → Sort u_1) →\n      (x : RDF11.StructuredLiteral Iri langString) →\n        ((s : String) → (datatype : { a // a ≠ langString }) → motive (RDF11.StructuredLiteral.typed s datatype)) →\n          ((s : String) → (tag : RDF11.BCP47.Tag) → motive (RDF11.StructuredLiteral.tagged s tag)) → motive x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.StructuredLiteral.lexical",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.StructuredLiteral.literalSyntax",
+      "module": "RDF11.StructuredLiterals",
+      "kind": "definition",
+      "type": "{Iri : Type} → (langString : Iri) → RDF11.LiteralSyntax Iri (RDF11.StructuredLiteral Iri langString)",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS",
+        "MT11-LITERAL-DATATYPE-IMPORT",
+        "MT11-LITERAL-LEXICAL-ADMISSIBILITY"
+      ],
+      "parent_declaration_if_applicable": "RDF11.StructuredLiteral",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.StructuredLiteral.literalSyntax.eq_1",
+      "module": "RDF11.StructuredLiterals",
+      "kind": "theorem",
+      "type": "∀ {Iri : Type} (langString : Iri),\n  RDF11.StructuredLiteral.literalSyntax langString =\n    { langString := langString, lexical := RDF11.StructuredLiteral.lexical,\n      datatype := RDF11.StructuredLiteral.datatype, language := RDF11.StructuredLiteral.language,\n      languageTag := RDF11.BCP47.WellFormed, tag_valid := ⋯, lower_valid := ⋯, tagged_iff := ⋯ }",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.StructuredLiteral.literalSyntax",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.StructuredLiteral.noConfusion",
+      "module": "RDF11.StructuredLiterals",
+      "kind": "definition",
+      "type": "{P : Sort u} →\n  {Iri : Type} →\n    {langString : Iri} →\n      {t : RDF11.StructuredLiteral Iri langString} →\n        {Iri' : Type} →\n          {langString' : Iri'} →\n            {t' : RDF11.StructuredLiteral Iri' langString'} →\n              Iri = Iri' → langString ≍ langString' → t ≍ t' → RDF11.StructuredLiteral.noConfusionType P t t'",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.StructuredLiteral",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.StructuredLiteral.noConfusionType",
+      "module": "RDF11.StructuredLiterals",
+      "kind": "definition",
+      "type": "Sort u →\n  {Iri : Type} →\n    {langString : Iri} →\n      RDF11.StructuredLiteral Iri langString →\n        {Iri' : Type} → {langString' : Iri'} → RDF11.StructuredLiteral Iri' langString' → Sort u",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.StructuredLiteral",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.StructuredLiteral.normalize",
+      "module": "RDF11.StructuredLiterals",
+      "kind": "definition",
+      "type": "{Iri : Type} → {langString : Iri} → RDF11.StructuredLiteral Iri langString → RDF11.StructuredLiteral Iri langString",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS",
+        "MT11-LANGUAGE-TAG-NORMALIZATION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.StructuredLiteral",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.StructuredLiteral.normalize.eq_1",
+      "module": "RDF11.StructuredLiterals",
+      "kind": "theorem",
+      "type": "∀ {Iri : Type} {langString : Iri} (s : String) (datatype : { a // a ≠ langString }),\n  (RDF11.StructuredLiteral.typed s datatype).normalize = RDF11.StructuredLiteral.typed s datatype",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.StructuredLiteral.normalize",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.StructuredLiteral.normalize.eq_2",
+      "module": "RDF11.StructuredLiterals",
+      "kind": "theorem",
+      "type": "∀ {Iri : Type} {langString : Iri} (s : String) (tag : RDF11.BCP47.Tag),\n  (RDF11.StructuredLiteral.tagged s tag).normalize = RDF11.StructuredLiteral.tagged s tag.normalize",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.StructuredLiteral.normalize",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.StructuredLiteral.normalize_d_equivalent",
+      "module": "RDF11.StructuredLiterals",
+      "kind": "theorem",
+      "type": "∀ {Iri : Type} {langString : Iri} {Value B : Type}\n  (T : RDF11.DatatypeTheory Iri (RDF11.StructuredLiteral Iri langString) Value),\n  T.literalSyntax = RDF11.StructuredLiteral.literalSyntax langString →\n    ∀ (D : RDF11.Set Iri),\n      D langString →\n        ∀ (G : RDF11.GeneralizedGraph Iri (RDF11.StructuredLiteral Iri langString) B),\n          RDF11.DEntails T D G (RDF11.GeneralizedGraph.mapLiteral RDF11.StructuredLiteral.normalize G) ∧\n            RDF11.DEntails T D (RDF11.GeneralizedGraph.mapLiteral RDF11.StructuredLiteral.normalize G) G",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS",
+        "MT11-LANGUAGE-TAG-NORMALIZATION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.StructuredLiteral",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.StructuredLiteral.normalize_datatype",
+      "module": "RDF11.StructuredLiterals",
+      "kind": "theorem",
+      "type": "∀ {Iri : Type} {langString : Iri} (l : RDF11.StructuredLiteral Iri langString), l.normalize.datatype = l.datatype",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS",
+        "MT11-LANGUAGE-TAG-NORMALIZATION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.StructuredLiteral",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.StructuredLiteral.normalize_idempotent",
+      "module": "RDF11.StructuredLiterals",
+      "kind": "theorem",
+      "type": "∀ {Iri : Type} {langString : Iri} (l : RDF11.StructuredLiteral Iri langString), l.normalize.normalize = l.normalize",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS",
+        "MT11-LANGUAGE-TAG-NORMALIZATION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.StructuredLiteral",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.StructuredLiteral.normalize_language",
+      "module": "RDF11.StructuredLiterals",
+      "kind": "theorem",
+      "type": "∀ {Iri : Type} {langString : Iri} (l : RDF11.StructuredLiteral Iri langString),\n  l.normalize.language = Option.map RDF11.asciiLower l.language",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS",
+        "MT11-LANGUAGE-TAG-NORMALIZATION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.StructuredLiteral",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.StructuredLiteral.normalize_lexical",
+      "module": "RDF11.StructuredLiterals",
+      "kind": "theorem",
+      "type": "∀ {Iri : Type} {langString : Iri} (l : RDF11.StructuredLiteral Iri langString), l.normalize.lexical = l.lexical",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS",
+        "MT11-LANGUAGE-TAG-NORMALIZATION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.StructuredLiteral",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.StructuredLiteral.normalize_recognized",
+      "module": "RDF11.StructuredLiterals",
+      "kind": "theorem",
+      "type": "∀ {Iri : Type} {langString : Iri} {Value : Type}\n  (T : RDF11.DatatypeTheory Iri (RDF11.StructuredLiteral Iri langString) Value),\n  T.literalSyntax = RDF11.StructuredLiteral.literalSyntax langString →\n    ∀ (D : RDF11.Set Iri),\n      D langString →\n        ∀ (l : RDF11.StructuredLiteral Iri langString),\n          l.normalize = l ∨ ∃ w, T.RecognizedValue D l w ∧ T.RecognizedValue D l.normalize w",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS",
+        "MT11-LANGUAGE-TAG-NORMALIZATION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.StructuredLiteral",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.StructuredLiteral.normalize_satisfaction",
+      "module": "RDF11.StructuredLiterals",
+      "kind": "theorem",
+      "type": "∀ {Iri : Type} {langString : Iri} {Value B : Type} {U : Type u_1}\n  (T : RDF11.DatatypeTheory Iri (RDF11.StructuredLiteral Iri langString) Value),\n  T.literalSyntax = RDF11.StructuredLiteral.literalSyntax langString →\n    ∀ (D : RDF11.Set Iri),\n      D langString →\n        ∀ (G : RDF11.GeneralizedGraph Iri (RDF11.StructuredLiteral Iri langString) B)\n          (I : RDF11.SimpleInterpretation Iri (RDF11.StructuredLiteral Iri langString) U),\n          I.DModel T D →\n            (I.Satisfies (RDF11.GeneralizedGraph.mapLiteral RDF11.StructuredLiteral.normalize G) ↔ I.Satisfies G)",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS",
+        "MT11-LANGUAGE-TAG-NORMALIZATION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.StructuredLiteral",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.StructuredLiteral.normalize_value_preserving",
+      "module": "RDF11.StructuredLiterals",
+      "kind": "theorem",
+      "type": "∀ {Iri : Type} {langString : Iri} {Value B : Type}\n  (T : RDF11.DatatypeTheory Iri (RDF11.StructuredLiteral Iri langString) Value),\n  T.literalSyntax = RDF11.StructuredLiteral.literalSyntax langString →\n    ∀ (D : RDF11.Set Iri),\n      D langString →\n        ∀ (G : RDF11.GeneralizedGraph Iri (RDF11.StructuredLiteral Iri langString) B),\n          RDF11.ValuePreservingLiteralMap T D G RDF11.StructuredLiteral.normalize",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.StructuredLiteral",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.StructuredLiteral.rdfs_base_model_exists",
+      "module": "RDF11.StructuredLiterals",
+      "kind": "theorem",
+      "type": "∀ {Iri : Type} {langString : Iri} {Value : Type}\n  (T : RDF11.DatatypeTheory Iri (RDF11.StructuredLiteral Iri langString) Value),\n  T.literalSyntax = RDF11.StructuredLiteral.literalSyntax langString →\n    ∀ (v : RDF11.RDFSVocabulary Iri),\n      langString = v.iri (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfLangString) →\n        ∃ U I, I.RDFSModel T v.toRDF.baseDatatypes v",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS",
+        "MT11-RDFS-LANGUAGE-LITERAL-COVERAGE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.StructuredLiteral",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.StructuredLiteral.rec",
+      "module": "RDF11.StructuredLiterals",
+      "kind": "recursor",
+      "type": "{Iri : Type} →\n  {langString : Iri} →\n    {motive : RDF11.StructuredLiteral Iri langString → Sort u} →\n      ((lexical : String) →\n          (datatype : { a // a ≠ langString }) → motive (RDF11.StructuredLiteral.typed lexical datatype)) →\n        ((lexical : String) → (tag : RDF11.BCP47.Tag) → motive (RDF11.StructuredLiteral.tagged lexical tag)) →\n          (t : RDF11.StructuredLiteral Iri langString) → motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.StructuredLiteral",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.StructuredLiteral.recOn",
+      "module": "RDF11.StructuredLiterals",
+      "kind": "definition",
+      "type": "{Iri : Type} →\n  {langString : Iri} →\n    {motive : RDF11.StructuredLiteral Iri langString → Sort u} →\n      (t : RDF11.StructuredLiteral Iri langString) →\n        ((lexical : String) →\n            (datatype : { a // a ≠ langString }) → motive (RDF11.StructuredLiteral.typed lexical datatype)) →\n          ((lexical : String) → (tag : RDF11.BCP47.Tag) → motive (RDF11.StructuredLiteral.tagged lexical tag)) →\n            motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.StructuredLiteral",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.StructuredLiteral.tagged",
+      "module": "RDF11.StructuredLiterals",
+      "kind": "constructor",
+      "type": "{Iri : Type} → {langString : Iri} → String → RDF11.BCP47.Tag → RDF11.StructuredLiteral Iri langString",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.StructuredLiteral",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.StructuredLiteral.tagged.elim",
+      "module": "RDF11.StructuredLiterals",
+      "kind": "definition",
+      "type": "{Iri : Type} →\n  {langString : Iri} →\n    {motive : RDF11.StructuredLiteral Iri langString → Sort u} →\n      (t : RDF11.StructuredLiteral Iri langString) →\n        t.ctorIdx = 1 →\n          ((lexical : String) → (tag : RDF11.BCP47.Tag) → motive (RDF11.StructuredLiteral.tagged lexical tag)) →\n            motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.StructuredLiteral.tagged",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.StructuredLiteral.tagged.inj",
+      "module": "RDF11.StructuredLiterals",
+      "kind": "theorem",
+      "type": "∀ {Iri : Type} {langString : Iri} {lexical : String} {tag : RDF11.BCP47.Tag} {lexical_1 : String}\n  {tag_1 : RDF11.BCP47.Tag},\n  RDF11.StructuredLiteral.tagged lexical tag = RDF11.StructuredLiteral.tagged lexical_1 tag_1 →\n    lexical = lexical_1 ∧ tag = tag_1",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.StructuredLiteral.tagged",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.StructuredLiteral.tagged.injEq",
+      "module": "RDF11.StructuredLiterals",
+      "kind": "theorem",
+      "type": "∀ {Iri : Type} {langString : Iri} (lexical : String) (tag : RDF11.BCP47.Tag) (lexical_1 : String)\n  (tag_1 : RDF11.BCP47.Tag),\n  (RDF11.StructuredLiteral.tagged lexical tag = RDF11.StructuredLiteral.tagged lexical_1 tag_1) =\n    (lexical = lexical_1 ∧ tag = tag_1)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.StructuredLiteral.tagged",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.StructuredLiteral.tagged.noConfusion",
+      "module": "RDF11.StructuredLiterals",
+      "kind": "definition",
+      "type": "{Iri : Type} →\n  {langString : Iri} →\n    {P : Sort u} →\n      {lexical : String} →\n        {tag : RDF11.BCP47.Tag} →\n          {lexical' : String} →\n            {tag' : RDF11.BCP47.Tag} →\n              RDF11.StructuredLiteral.tagged lexical tag = RDF11.StructuredLiteral.tagged lexical' tag' →\n                (lexical = lexical' → tag = tag' → P) → P",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.StructuredLiteral.tagged",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.StructuredLiteral.tagged.sizeOf_spec",
+      "module": "RDF11.StructuredLiterals",
+      "kind": "theorem",
+      "type": "∀ {Iri : Type} {langString : Iri} [inst : SizeOf Iri] (lexical : String) (tag : RDF11.BCP47.Tag),\n  sizeOf (RDF11.StructuredLiteral.tagged lexical tag) = 1 + sizeOf lexical + sizeOf tag",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.StructuredLiteral.tagged",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.StructuredLiteral.tagged_fields",
+      "module": "RDF11.StructuredLiterals",
+      "kind": "theorem",
+      "type": "∀ {Iri : Type} {langString : Iri} (s tag : String),\n  RDF11.BCP47.WellFormed tag → ∃ l, l.lexical = s ∧ l.datatype = langString ∧ l.language = some tag",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS",
+        "MT11-LITERAL-LEXICAL-ADMISSIBILITY"
+      ],
+      "parent_declaration_if_applicable": "RDF11.StructuredLiteral",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.StructuredLiteral.typed",
+      "module": "RDF11.StructuredLiterals",
+      "kind": "constructor",
+      "type": "{Iri : Type} → {langString : Iri} → String → { a // a ≠ langString } → RDF11.StructuredLiteral Iri langString",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.StructuredLiteral",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.StructuredLiteral.typed.elim",
+      "module": "RDF11.StructuredLiterals",
+      "kind": "definition",
+      "type": "{Iri : Type} →\n  {langString : Iri} →\n    {motive : RDF11.StructuredLiteral Iri langString → Sort u} →\n      (t : RDF11.StructuredLiteral Iri langString) →\n        t.ctorIdx = 0 →\n          ((lexical : String) →\n              (datatype : { a // a ≠ langString }) → motive (RDF11.StructuredLiteral.typed lexical datatype)) →\n            motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.StructuredLiteral.typed",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.StructuredLiteral.typed.inj",
+      "module": "RDF11.StructuredLiterals",
+      "kind": "theorem",
+      "type": "∀ {Iri : Type} {langString : Iri} {lexical : String} {datatype : { a // a ≠ langString }} {lexical_1 : String}\n  {datatype_1 : { a // a ≠ langString }},\n  RDF11.StructuredLiteral.typed lexical datatype = RDF11.StructuredLiteral.typed lexical_1 datatype_1 →\n    lexical = lexical_1 ∧ datatype = datatype_1",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.StructuredLiteral.typed",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.StructuredLiteral.typed.injEq",
+      "module": "RDF11.StructuredLiterals",
+      "kind": "theorem",
+      "type": "∀ {Iri : Type} {langString : Iri} (lexical : String) (datatype : { a // a ≠ langString }) (lexical_1 : String)\n  (datatype_1 : { a // a ≠ langString }),\n  (RDF11.StructuredLiteral.typed lexical datatype = RDF11.StructuredLiteral.typed lexical_1 datatype_1) =\n    (lexical = lexical_1 ∧ datatype = datatype_1)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.StructuredLiteral.typed",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.StructuredLiteral.typed.noConfusion",
+      "module": "RDF11.StructuredLiterals",
+      "kind": "definition",
+      "type": "{Iri : Type} →\n  {langString : Iri} →\n    {P : Sort u} →\n      {lexical : String} →\n        {datatype : { a // a ≠ langString }} →\n          {lexical' : String} →\n            {datatype' : { a // a ≠ langString }} →\n              RDF11.StructuredLiteral.typed lexical datatype = RDF11.StructuredLiteral.typed lexical' datatype' →\n                (lexical = lexical' → datatype ≍ datatype' → P) → P",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.StructuredLiteral.typed",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.StructuredLiteral.typed.sizeOf_spec",
+      "module": "RDF11.StructuredLiterals",
+      "kind": "theorem",
+      "type": "∀ {Iri : Type} {langString : Iri} [inst : SizeOf Iri] (lexical : String) (datatype : { a // a ≠ langString }),\n  sizeOf (RDF11.StructuredLiteral.typed lexical datatype) = 1 + sizeOf lexical + sizeOf datatype",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.StructuredLiteral.typed",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.StructuredLiteral.typed_fields",
+      "module": "RDF11.StructuredLiterals",
+      "kind": "theorem",
+      "type": "∀ {Iri : Type} {langString : Iri} (s : String) (d : Iri),\n  d ≠ langString → ∃ l, l.lexical = s ∧ l.datatype = d ∧ l.language = none",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS",
+        "MT11-LITERAL-LEXICAL-ADMISSIBILITY"
+      ],
+      "parent_declaration_if_applicable": "RDF11.StructuredLiteral",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.asciiLower.eq_1",
+      "module": "RDF11.StringCase",
+      "kind": "theorem",
+      "type": "∀ (s : String), RDF11.asciiLower s = String.map Char.toLower s",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.asciiLower",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.asciiLower_idempotent",
+      "module": "RDF11.StringCase",
+      "kind": "theorem",
+      "type": "∀ (s : String), RDF11.asciiLower (RDF11.asciiLower s) = RDF11.asciiLower s",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS",
+        "MT11-LANGSTRING-VALUE",
+        "BCP47-CASE-INSENSITIVITY"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.charLower_idempotent",
+      "module": "RDF11.StringCase",
+      "kind": "theorem",
+      "type": "∀ (c : Char), c.toLower.toLower = c.toLower",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS",
+        "BCP47-CASE-INSENSITIVITY"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.charLower_idempotent._proof_1_1",
+      "module": "RDF11.StringCase",
+      "kind": "theorem",
+      "type": "∀ (c : Char), c.val.toNat ≤ 90 → 65 ≤ c.val.toNat → (c.val.toNat + 32) % 4294967296 ≤ 90 → False",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.charLower_idempotent",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.instDecidableEqStructuredLiteral",
+      "module": "RDF11.StructuredLiterals",
+      "kind": "definition",
+      "type": "{Iri : Type} → {langString : Iri} → [DecidableEq Iri] → DecidableEq (RDF11.StructuredLiteral Iri langString)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.StructuredLiteral",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.instDecidableEqStructuredLiteral.decEq",
+      "module": "RDF11.StructuredLiterals",
+      "kind": "definition",
+      "type": "{Iri : Type} →\n  {langString : Iri} → [DecidableEq Iri] → (x x_1 : RDF11.StructuredLiteral Iri langString) → Decidable (x = x_1)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.StructuredLiteral",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.instDecidableEqStructuredLiteral.decEq._proof_1",
+      "module": "RDF11.StructuredLiterals",
+      "kind": "theorem",
+      "type": "∀ {Iri : Type} {langString : Iri} (a : String) (a_1 : { a // a ≠ langString }),\n  RDF11.StructuredLiteral.typed a a_1 = RDF11.StructuredLiteral.typed a a_1",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.StructuredLiteral",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.instDecidableEqStructuredLiteral.decEq._proof_2",
+      "module": "RDF11.StructuredLiterals",
+      "kind": "theorem",
+      "type": "∀ {Iri : Type} {langString : Iri} (a : String) (a_1 b : { a // a ≠ langString }),\n  ¬a_1 = b → RDF11.StructuredLiteral.typed a a_1 = RDF11.StructuredLiteral.typed a b → False",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.StructuredLiteral",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.instDecidableEqStructuredLiteral.decEq._proof_3",
+      "module": "RDF11.StructuredLiterals",
+      "kind": "theorem",
+      "type": "∀ {Iri : Type} {langString : Iri} (a : String) (a_1 : { a // a ≠ langString }) (b : String)\n  (b_1 : { a // a ≠ langString }),\n  ¬a = b → RDF11.StructuredLiteral.typed a a_1 = RDF11.StructuredLiteral.typed b b_1 → False",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.StructuredLiteral",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.instDecidableEqStructuredLiteral.decEq._proof_4",
+      "module": "RDF11.StructuredLiterals",
+      "kind": "theorem",
+      "type": "∀ {Iri : Type} {langString : Iri} (lexical : String) (datatype : { a // a ≠ langString }) (lexical_1 : String)\n  (tag : RDF11.BCP47.Tag),\n  RDF11.StructuredLiteral.typed lexical datatype = RDF11.StructuredLiteral.tagged lexical_1 tag → False",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.StructuredLiteral",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.instDecidableEqStructuredLiteral.decEq._proof_5",
+      "module": "RDF11.StructuredLiterals",
+      "kind": "theorem",
+      "type": "∀ {Iri : Type} {langString : Iri} (lexical : String) (tag : RDF11.BCP47.Tag) (lexical_1 : String)\n  (datatype : { a // a ≠ langString }),\n  RDF11.StructuredLiteral.tagged lexical tag = RDF11.StructuredLiteral.typed lexical_1 datatype → False",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.StructuredLiteral",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.instDecidableEqStructuredLiteral.decEq._proof_6",
+      "module": "RDF11.StructuredLiterals",
+      "kind": "theorem",
+      "type": "∀ {Iri : Type} {langString : Iri} (a : String) (a_1 : RDF11.BCP47.Tag),\n  RDF11.StructuredLiteral.tagged a a_1 = RDF11.StructuredLiteral.tagged a a_1",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.StructuredLiteral",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.instDecidableEqStructuredLiteral.decEq._proof_7",
+      "module": "RDF11.StructuredLiterals",
+      "kind": "theorem",
+      "type": "∀ {Iri : Type} {langString : Iri} (a : String) (a_1 b : RDF11.BCP47.Tag),\n  ¬a_1 = b → RDF11.StructuredLiteral.tagged a a_1 = RDF11.StructuredLiteral.tagged a b → False",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.StructuredLiteral",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.instDecidableEqStructuredLiteral.decEq._proof_8",
+      "module": "RDF11.StructuredLiterals",
+      "kind": "theorem",
+      "type": "∀ {Iri : Type} {langString : Iri} (a : String) (a_1 : RDF11.BCP47.Tag) (b : String) (b_1 : RDF11.BCP47.Tag),\n  ¬a = b → RDF11.StructuredLiteral.tagged a a_1 = RDF11.StructuredLiteral.tagged b b_1 → False",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.StructuredLiteral",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.instDecidableEqStructuredLiteral.decEq.match_1",
+      "module": "RDF11.StructuredLiterals",
+      "kind": "definition",
+      "type": "{Iri : Type} →\n  {langString : Iri} →\n    (motive : RDF11.StructuredLiteral Iri langString → RDF11.StructuredLiteral Iri langString → Sort u_1) →\n      (x x_1 : RDF11.StructuredLiteral Iri langString) →\n        ((a : String) →\n            (a_1 : { a // a ≠ langString }) →\n              (b : String) →\n                (b_1 : { a // a ≠ langString }) →\n                  motive (RDF11.StructuredLiteral.typed a a_1) (RDF11.StructuredLiteral.typed b b_1)) →\n          ((lexical : String) →\n              (datatype : { a // a ≠ langString }) →\n                (lexical_1 : String) →\n                  (tag : RDF11.BCP47.Tag) →\n                    motive (RDF11.StructuredLiteral.typed lexical datatype)\n                      (RDF11.StructuredLiteral.tagged lexical_1 tag)) →\n            ((lexical : String) →\n                (tag : RDF11.BCP47.Tag) →\n                  (lexical_1 : String) →\n                    (datatype : { a // a ≠ langString }) →\n                      motive (RDF11.StructuredLiteral.tagged lexical tag)\n                        (RDF11.StructuredLiteral.typed lexical_1 datatype)) →\n              ((a : String) →\n                  (a_1 : RDF11.BCP47.Tag) →\n                    (b : String) →\n                      (b_1 : RDF11.BCP47.Tag) →\n                        motive (RDF11.StructuredLiteral.tagged a a_1) (RDF11.StructuredLiteral.tagged b b_1)) →\n                motive x x_1",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.StructuredLiteral",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "Spec2Lean.Snapshot.rfc5646Atoms",
+      "module": "Audit.Snapshot",
+      "kind": "definition",
+      "type": "List Spec2Lean.Atom",
+      "role": "coverage_certificate",
+      "grounds": [
+        "SPEC2LEAN-ACCOUNTABILITY"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "Spec2Lean.Snapshot.rfc5646SHA256",
+      "module": "Audit.Snapshot",
+      "kind": "definition",
+      "type": "String",
+      "role": "coverage_certificate",
+      "grounds": [
+        "SPEC2LEAN-ACCOUNTABILITY"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "Spec2Lean.Snapshot.rfc5646_all_positions",
+      "module": "Audit.Snapshot",
+      "kind": "theorem",
+      "type": "∀ (i : Nat),\n  i < 246812 →\n    ∃ a,\n      a ∈ Spec2Lean.Snapshot.rfc5646Atoms ∧\n        Spec2Lean.Contains a i ∧\n          ∀ (b : Spec2Lean.Atom), b ∈ Spec2Lean.Snapshot.rfc5646Atoms → Spec2Lean.Contains b i → b = a",
+      "role": "coverage_certificate",
+      "grounds": [
+        "SPEC2LEAN-ACCOUNTABILITY"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "Spec2Lean.Snapshot.rfc5646_references",
+      "module": "Audit.Snapshot",
+      "kind": "theorem",
+      "type": "∀ {a : Spec2Lean.Atom},\n  a ∈ Spec2Lean.Snapshot.rfc5646Atoms → a.refs ≠ [] ∧ ∀ (r : String), r ∈ a.refs → r ∈ Spec2Lean.Snapshot.ids",
+      "role": "coverage_certificate",
+      "grounds": [
+        "SPEC2LEAN-ACCOUNTABILITY"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "Spec2Lean.Snapshot.rfc5646_valid",
+      "module": "Audit.Snapshot",
+      "kind": "theorem",
+      "type": "Spec2Lean.ValidPartition Spec2Lean.Snapshot.ids 246812 0 Spec2Lean.Snapshot.rfc5646Atoms",
+      "role": "coverage_certificate",
+      "grounds": [
+        "SPEC2LEAN-ACCOUNTABILITY"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.StructuredLiterals.0.RDF11.StructuredLiteral.lexical.match_1.eq_1",
+      "module": "RDF11.StructuredLiterals",
+      "kind": "theorem",
+      "type": "∀ {Iri : Type} {langString : Iri} (motive : RDF11.StructuredLiteral Iri langString → Sort u_1) (s : String)\n  (datatype : { a // a ≠ langString })\n  (h_1 : (s : String) → (datatype : { a // a ≠ langString }) → motive (RDF11.StructuredLiteral.typed s datatype))\n  (h_2 : (s : String) → (tag : RDF11.BCP47.Tag) → motive (RDF11.StructuredLiteral.tagged s tag)),\n  (match RDF11.StructuredLiteral.typed s datatype with\n    | RDF11.StructuredLiteral.typed s datatype => h_1 s datatype\n    | RDF11.StructuredLiteral.tagged s tag => h_2 s tag) =\n    h_1 s datatype",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.StructuredLiteral.lexical.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.StructuredLiterals.0.RDF11.StructuredLiteral.lexical.match_1.eq_2",
+      "module": "RDF11.StructuredLiterals",
+      "kind": "theorem",
+      "type": "∀ {Iri : Type} {langString : Iri} (motive : RDF11.StructuredLiteral Iri langString → Sort u_1) (s : String)\n  (tag : RDF11.BCP47.Tag)\n  (h_1 : (s : String) → (datatype : { a // a ≠ langString }) → motive (RDF11.StructuredLiteral.typed s datatype))\n  (h_2 : (s : String) → (tag : RDF11.BCP47.Tag) → motive (RDF11.StructuredLiteral.tagged s tag)),\n  (match RDF11.StructuredLiteral.tagged s tag with\n    | RDF11.StructuredLiteral.typed s datatype => h_1 s datatype\n    | RDF11.StructuredLiteral.tagged s tag => h_2 s tag) =\n    h_2 s tag",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.StructuredLiteral.lexical.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.StructuredLiterals.0.RDF11.StructuredLiteral.lexical.match_1.splitter",
+      "module": "RDF11.StructuredLiterals",
+      "kind": "definition",
+      "type": "{Iri : Type} →\n  {langString : Iri} →\n    (motive : RDF11.StructuredLiteral Iri langString → Sort u_1) →\n      (x : RDF11.StructuredLiteral Iri langString) →\n        ((s : String) → (datatype : { a // a ≠ langString }) → motive (RDF11.StructuredLiteral.typed s datatype)) →\n          ((s : String) → (tag : RDF11.BCP47.Tag) → motive (RDF11.StructuredLiteral.tagged s tag)) → motive x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-STRUCTURED-LITERALS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.StructuredLiteral.lexical.match_1",
       "review": "pending_expert_review"
     }
   ],

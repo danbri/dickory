@@ -57,7 +57,7 @@ function leanDeclaration(name,ancestors=[]){
  if(external.length){const deps=element("details");deps.append(element("summary","Standard-library / foundation dependencies ("+external.length+")"),element("pre",external.join("\n")));box.append(deps)}
  return box;
 }
-for(const d of data.documents){const o=element("option",d.id==="mt"?"RDF 1.1 Semantics":"RDF 1.1 Concepts");o.value=d.id;docSelect.append(o)}
+for(const d of data.documents){const o=element("option",d.title||d.id);o.value=d.id;docSelect.append(o)}
 claimOptions();
 function appendQuestions(a,id){
  for(const q of data.questions.filter(q=>q.claim_ids.includes(id))){
@@ -161,7 +161,8 @@ function render(){
 function selectClaim(id,updateHash=true){
  if(!claims.has(id))return;
  selectedClaim=id;claimOptions();
- const passage=data.passages.find(p=>p.claims.includes(id));
+ const passage=data.passages.find(p=>p.claims.includes(id)&&p.source===docSelect.value)
+   ||data.passages.find(p=>p.claims.includes(id));
  if(passage)docSelect.value=passage.source;
  render();detail.replaceChildren();showClaim(id);detail.scrollTop=0;
  if(updateHash)history.replaceState(null,"","#claim="+encodeURIComponent(id));

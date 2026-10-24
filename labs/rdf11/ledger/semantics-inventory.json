@@ -828,7 +828,8 @@
       "paraphrase": "Abstract IRI and literal identity follow Concepts, not equality of denoted values; blank-node identifiers are concrete-syntax labels rather than the abstract blank nodes themselves.",
       "official_rule_code": null,
       "dependencies": [
-        "MT11-SYNTAX-IMPORT"
+        "MT11-SYNTAX-IMPORT",
+        "MT11-LITERAL-COMPONENT-IDENTITY"
       ],
       "imports": [
         "https://www.w3.org/TR/2014/REC-rdf11-concepts-20140225/#section-IRIs",
@@ -2223,7 +2224,9 @@
       "assertion_basis": "incorporated",
       "paraphrase": "Literal structure and datatype definitions come from Concepts: ordinary datatype literals pair a lexical string with a datatype IRI; language-tagged strings additionally use a language tag and rdf:langString.",
       "official_rule_code": null,
-      "dependencies": [],
+      "dependencies": [
+        "BCP47-WELLFORMED"
+      ],
       "imports": [
         "https://www.w3.org/TR/2014/REC-rdf11-concepts-20140225/#section-Graph-Literal",
         "https://www.w3.org/TR/2014/REC-rdf11-concepts-20140225/#section-Datatypes"
@@ -5818,7 +5821,245 @@
       "review_questions": [
         "RQ-ORDINARY-EXAMPLE-INTERMEDIATE"
       ]
+    },
+    {
+      "id": "MT11-LITERAL-COMPONENT-IDENTITY",
+      "section": "Concepts 3.3",
+      "anchor": "section-Graph-Literal",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-concepts-20140225/#section-Graph-Literal",
+      "category": "definition",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "A StructuredLiteral is determined by its lexical string, datatype IRI and optional raw language-tag spelling. eq_iff_fields proves both directions. Distinct tag spellings can be distinct RDF 1.1 literal terms despite identical language values.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-LITERAL-DATATYPE-IMPORT",
+        "BCP47-WELLFORMED"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "MT11-LITERAL-LEXICAL-ADMISSIBILITY",
+      "section": "Concepts 3.3",
+      "anchor": "section-Graph-Literal",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-concepts-20140225/#section-Graph-Literal",
+      "category": "general_requirement",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "Every Unicode lexical string can form an ordinary typed literal with a non-langString datatype; a language literal additionally requires a well-formed tag and fixes the datatype to langString. Datatype lexical validity and NFC are not syntax preconditions.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-LITERAL-DATATYPE-IMPORT",
+        "BCP47-WELLFORMED"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "MT11-LANGUAGE-TAG-NORMALIZATION",
+      "section": "Concepts 3.3",
+      "anchor": "section-Graph-Literal",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-concepts-20140225/#section-Graph-Literal",
+      "category": "general_requirement",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "RDF 1.1 permits lowercasing lexical language-tag spelling; language-tag values are lowercase. normalize is an explicit idempotent operation retaining lexical form and datatype. With langString recognized, normalize_satisfaction preserves whole-graph truth and normalize_d_equivalent proves both entailment directions.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-LITERAL-COMPONENT-IDENTITY",
+        "MT11-LANGSTRING-VALUE",
+        "BCP47-CASE-INSENSITIVITY"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "BCP47-LANGUAGE-PRODUCTION",
+      "section": "RFC 5646 2.1",
+      "anchor": "section-2.1",
+      "source_url": "https://www.rfc-editor.org/rfc/rfc5646.html#section-2.1",
+      "category": "definition",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "After ASCII case folding, a primary language is 2–3 letters with zero to three three-letter extlang subtags, or exactly four letters, or 5–8 letters. Subtags are delimited by ASCII hyphens.",
+      "official_rule_code": null,
+      "dependencies": [
+        "BCP47-CASE-INSENSITIVITY"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "BCP47-SCRIPT-REGION-VARIANT",
+      "section": "RFC 5646 2.1",
+      "anchor": "section-2.1",
+      "source_url": "https://www.rfc-editor.org/rfc/rfc5646.html#section-2.1",
+      "category": "definition",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "A script subtag has four letters; a region has two letters or three digits. A variant has 5–8 alphanumeric characters, or four alphanumeric characters beginning with a digit.",
+      "official_rule_code": null,
+      "dependencies": [
+        "BCP47-LANGUAGE-PRODUCTION"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "BCP47-EXTENSION-PRIVATEUSE",
+      "section": "RFC 5646 2.1",
+      "anchor": "section-2.1",
+      "source_url": "https://www.rfc-editor.org/rfc/rfc5646.html#section-2.1",
+      "category": "definition",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "An extension begins with an alphanumeric singleton other than x and has one or more 2–8-character alphanumeric subtags. Private use begins with x and has one or more 1–8-character alphanumeric subtags.",
+      "official_rule_code": null,
+      "dependencies": [
+        "BCP47-LANGUAGE-PRODUCTION",
+        "BCP47-CASE-INSENSITIVITY"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "BCP47-GRANDFATHERED",
+      "section": "RFC 5646 2.1",
+      "anchor": "section-2.1",
+      "source_url": "https://www.rfc-editor.org/rfc/rfc5646.html#section-2.1",
+      "category": "definition",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "The RFC grammar additionally admits its fixed 26 regular and irregular grandfathered tags, matched case-insensitively. all_grandfathered_wellFormed and uppercase_grandfathered check these alternatives.",
+      "official_rule_code": null,
+      "dependencies": [
+        "BCP47-CASE-INSENSITIVITY"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "BCP47-WELLFORMED",
+      "section": "RFC 5646 2.1 / 2.2.9",
+      "anchor": "section-2.2.9",
+      "source_url": "https://www.rfc-editor.org/rfc/rfc5646.html#section-2.2.9",
+      "category": "definition",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "WellFormed means conformance to the complete Language-Tag grammar: normal language tags, private-use tags, or grandfathered tags. Normal tags order language, optional script, optional region, variants, extensions and optional private use. Empty tags are excluded. Well-formedness does not require the stronger registry-validity conditions.",
+      "official_rule_code": null,
+      "dependencies": [
+        "BCP47-LANGUAGE-PRODUCTION",
+        "BCP47-SCRIPT-REGION-VARIANT",
+        "BCP47-EXTENSION-PRIVATEUSE",
+        "BCP47-GRANDFATHERED"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "BCP47-CASE-INSENSITIVITY",
+      "section": "RFC 5646 2.1.1",
+      "anchor": "section-2.1.1",
+      "source_url": "https://www.rfc-editor.org/rfc/rfc5646.html#section-2.1.1",
+      "category": "definition",
+      "source_status": "normative",
+      "assertion_basis": "explicit",
+      "paraphrase": "Language-tag grammar and meaning use case-insensitive ASCII letters. Tag retains the original spelling; Tag.value and Tag.normalize use ASCII lowercase. Normalization is idempotent, preserves well-formedness and identifies exactly tags with equal lowercase values.",
+      "official_rule_code": null,
+      "dependencies": [],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      }
+    },
+    {
+      "id": "MT11-LANGUAGE-NORMALIZATION-SCOPE",
+      "section": "Concepts 3.3",
+      "anchor": "section-Graph-Literal",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-concepts-20140225/#section-Graph-Literal",
+      "category": "mathematical_consequence",
+      "source_status": "normative",
+      "assertion_basis": "derived",
+      "paraphrase": "From the RDF 1.1 identity and language-value conditions: the symbolic-name triples with \"chat\"@FR and \"chat\"@fr contain different literal terms. The former does not simply entail the latter; with the structured syntax and recognized langString, they are D-equivalent.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-LITERAL-COMPONENT-IDENTITY",
+        "MT11-LANGUAGE-TAG-NORMALIZATION",
+        "MT11-SIMPLE-ENTAILMENT"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "Project-derived consequence of the cited normative definitions; not a named assertion printed by W3C."
+    },
+    {
+      "id": "MT11-LANGUAGE-NORMALIZATION-ENUMERATION",
+      "section": "Concepts 3.3",
+      "anchor": "section-Graph-Literal",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-concepts-20140225/#section-Graph-Literal",
+      "category": "mathematical_consequence",
+      "source_status": "normative",
+      "assertion_basis": "derived",
+      "paraphrase": "From set-valued graph semantics: mapping literal spellings can identify distinct triples. Enumeration.image certifies membership and uniqueness of the image and cannot increase its size. The case-normalization example changes a two-triple enumeration into a one-triple enumeration.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-GRAPH-SET",
+        "MT11-LANGUAGE-TAG-NORMALIZATION",
+        "MT11-LANGUAGE-NORMALIZATION-SCOPE"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "Project-derived consequence of the cited normative definitions; not a named assertion printed by W3C."
     }
   ],
-  "record_count": 229
+  "record_count": 240,
+  "incorporated_language_tag_source": {
+    "url": "https://www.rfc-editor.org/rfc/rfc5646.html",
+    "edition": "RFC 5646, September 2009",
+    "sha256": "b184da959296601926af6723163b89dcc1f50a39c27f8abbf8b46de905d75a39",
+    "scope": "Imported well-formed-language-tag grammar and case handling; full RFC registry, registration and matching behavior is not claimed."
+  }
 }
