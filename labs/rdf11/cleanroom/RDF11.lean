@@ -76,3 +76,7 @@ import RDF11.InstanceCheckScope
 import RDF11.FamilyMerge
 import RDF11.MergeInstances
 import RDF11.FamilyMergeExamples
+import RDF11.OrdinaryRuleRuns
+import RDF11.OrdinaryRuleFrame
+import RDF11.OrdinaryRuleScope
+import RDF11.SharedLiteralExample

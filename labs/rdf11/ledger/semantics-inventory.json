@@ -86,6 +86,13 @@
       "question": "The printed conclusion has only an existential blank subject and can reuse the premise metadata witness. Is the intended claim instead about two fixed distinct reification resources or another explicit scope?",
       "status": "review_required_not_confirmed_erratum",
       "mathematical_comparison": "ReificationScopeReview.printed_conclusion_follows proves the positive simple entailment of the exact graph shape."
+    },
+    {
+      "id": "RQ-ORDINARY-EXAMPLE-INTERMEDIATE",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#entailment_rules",
+      "question": "Is the printed object ex:c in Appendix A paragraph 12 a transcription error for ex:e? Review the displayed rule instance separately from semantic entailment of a standalone existential-predicate triple.",
+      "mathematical_comparison": "The printed rdfs7 intermediate changes ex:e to ex:c. The stated rdfs7 pattern preserves the premise object; the checked instantiation has ex:e. The final ex:d rdf:type ex:c follows from that object-preserving intermediate.",
+      "status": "review_required_not_confirmed_erratum"
     }
   ],
   "section_coverage": [
@@ -508,7 +515,10 @@
         "MT11-GENERALIZED-CLOSURE-COMPLETENESS",
         "MT11-FINITE-CLOSURE-COMPLEXITY",
         "MT11-SIMPLE-ENTAILMENT-COMPLEXITY",
-        "MT11-RULE-STRATEGY-LIMITS"
+        "MT11-RULE-STRATEGY-LIMITS",
+        "MT11-ORDINARY-BLANK-PREDICATE-EXAMPLE",
+        "MT11-ORDINARY-SHARED-LITERAL-EXAMPLE",
+        "MT11-PRINTED-BLANK-PREDICATE-DERIVATION"
       ]
     },
     {
@@ -5736,7 +5746,79 @@
         "test_mapping": "unassessed"
       },
       "formalization_note": "The final sentence of the section 5.2 technical note makes a distinct historical correspondence assertion. It remains unmapped until the dated 2004 set-satisfaction, entailment, blank-scope, syntax and interpretation definitions are pinned and related explicitly. The proved RDF 1.1 merge correspondence supplies only one side. No full RDF/RDFS/datatype, dataset or shared-blank-joint-meaning equivalence is claimed."
+    },
+    {
+      "id": "MT11-ORDINARY-BLANK-PREDICATE-EXAMPLE",
+      "section": "A",
+      "anchor": "entailment_rules",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#entailment_rules",
+      "category": "mathematical_consequence",
+      "source_status": "informative",
+      "assertion_basis": "explicit",
+      "paraphrase": "The three-triple graph a subPropertyOf _:b, _:b domain c, d a e RDFS-entails d type c, but the displayed rule strategy restricted to ordinary conclusions misses it. Generalized rdfs7 and rdfs2 supply the derivation.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-ORDINARY-RULE-SOUND-INCOMPLETE",
+        "MT11-RULE-rdfs7",
+        "MT11-RULE-rdfs2"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "The relation Supported is a syntactic proof invariant, not an RDFS model. All-axiom closure is explicitly stronger than the printed seed. The conclusion is ground, so every simultaneous instance is that same conclusion. The fresh-witness policy cannot affect this literal-free example. The consistency witness retains sufficient RDFSModelConstruction.Parameters; these are not conditions on every RDFS interpretation. IRI and literal domains remain abstract. Concrete syntax/datatype correspondence, accepted expert review and package refinement remain outstanding."
+    },
+    {
+      "id": "MT11-ORDINARY-SHARED-LITERAL-EXAMPLE",
+      "section": "A",
+      "anchor": "entailment_rules",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#entailment_rules",
+      "category": "mathematical_consequence",
+      "source_status": "informative",
+      "assertion_basis": "explicit",
+      "paraphrase": "Two premise triples using the same xsd:string literal RDF-entail two corresponding edges to one shared blank together with that blank’s xsd:string type. Generalized GrdfD1 makes the literal itself an instance witness.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-ORDINARY-RULE-SOUND-INCOMPLETE",
+        "MT11-RULE-GrdfD1",
+        "MT11-GRAPH-INSTANCE"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "The positive entailment and generalized derivation are proved. Failure of every ordinary rdfD1 policy is not: a certified common representative for an identical literal can recover this witness. The literal’s concrete spelling is not material to this stronger parameterized implication and is not implemented here. IRI and literal domains remain abstract. Concrete syntax/datatype correspondence, accepted expert review and package refinement remain outstanding."
+    },
+    {
+      "id": "MT11-PRINTED-BLANK-PREDICATE-DERIVATION",
+      "section": "A",
+      "anchor": "entailment_rules",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#entailment_rules",
+      "category": "mathematical_consequence",
+      "source_status": "informative",
+      "assertion_basis": "explicit",
+      "paraphrase": "The printed Appendix A derivation labels d _:b c as the rdfs7 result from a subPropertyOf _:b and d a e, before deriving d type c.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-ORDINARY-BLANK-PREDICATE-EXAMPLE",
+        "MT11-RULE-rdfs7",
+        "MT11-RULE-rdfs2"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "This checks a mismatch in the displayed rule instantiation, not the printed step as a valid inference. No non-entailment of the printed triple considered as a separate existential graph is asserted. The archived source remains unchanged, and the question awaits expert review; it is not a declared erratum.",
+      "review_questions": [
+        "RQ-ORDINARY-EXAMPLE-INTERMEDIATE"
+      ]
     }
   ],
-  "record_count": 226
+  "record_count": 229
 }

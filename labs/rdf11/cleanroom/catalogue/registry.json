@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "status": "frozen_twenty_fifth_increment_family_merge_not_expert_approved",
+  "status": "frozen_twenty_sixth_increment_ordinary_rules_not_expert_approved",
   "lean_version": "4.33.1",
   "allowed_axioms": [
     "propext",
@@ -694,6 +694,22 @@
         "MT11-UNION-MERGE-RELATION",
         "MT11-GRAPH-SET-ENTAILMENT"
       ]
+    },
+    {
+      "id": "SUPPORT-ORDINARY-RULES",
+      "purpose": "Appendix A ordinary no-fallback seed and finite sound graph transitions; explicit fresh rdfD1 policy; all-axiom ordinary-conclusion invariant and printed RDFS example; shared-literal generalized instance; distinct printed intermediate review question. Not an ordinary saturation evaluator or a blanket rejection of certified witness reuse.",
+      "requires": [
+        "SUPPORT-SYNTAX",
+        "SUPPORT-ENTAILMENT-CLOSURE",
+        "SUPPORT-RDF-RULES",
+        "SUPPORT-RDFS-RULES",
+        "SUPPORT-RDFS-MODELS",
+        "MT11-ORDINARY-RULE-CHECK-PROCEDURE",
+        "MT11-ORDINARY-RULE-SOUND-INCOMPLETE",
+        "MT11-ORDINARY-BLANK-PREDICATE-EXAMPLE",
+        "MT11-ORDINARY-SHARED-LITERAL-EXAMPLE",
+        "MT11-PRINTED-BLANK-PREDICATE-DERIVATION"
+      ]
     }
   ],
   "files": [
@@ -720,14 +736,14 @@
     },
     {
       "path": "Audit/Snapshot.lean",
-      "sha256": "345513a35176a45c7d00dbe93390fa9eeb259c479a1a93cf9ca7f84ccac0ebc6",
+      "sha256": "b44068c7697dac9d2c578f54f546bc457c0e535c53e9fdaf75ed9d37e5ef0be2",
       "role": "formal_source",
       "lifecycle": "active",
       "review": "pending_expert_review"
     },
     {
       "path": "RDF11.lean",
-      "sha256": "a5d0622ffa7a1a0a636e3d6c50ed1d722d6f768eb81c25b186fb644a786713da",
+      "sha256": "3a0b9701d9bbaaede57db496522ff348a8403d580147e22a76ba95e1669dd591",
       "role": "formal_source",
       "lifecycle": "active",
       "review": "pending_expert_review"
@@ -1323,6 +1339,34 @@
     {
       "path": "RDF11/FamilyMergeExamples.lean",
       "sha256": "7ed43970caa8fa4ede8be8ce9108e6a76099d65d0ab097db25cffc65327f4ad9",
+      "role": "formal_source",
+      "lifecycle": "active",
+      "review": "pending_expert_review"
+    },
+    {
+      "path": "RDF11/OrdinaryRuleFrame.lean",
+      "sha256": "0fb872548840b60f3056370d486d3fd10a1f2f3b32b2b01c5e0abfa749d97d90",
+      "role": "formal_source",
+      "lifecycle": "active",
+      "review": "pending_expert_review"
+    },
+    {
+      "path": "RDF11/OrdinaryRuleRuns.lean",
+      "sha256": "cfa47d5222e75d08b55d5cf680083655705a116bd70a75003ae59a6a7c1d5a5e",
+      "role": "formal_source",
+      "lifecycle": "active",
+      "review": "pending_expert_review"
+    },
+    {
+      "path": "RDF11/OrdinaryRuleScope.lean",
+      "sha256": "f8e7001c2e39be9d45717aa1855e6ff880f50b9f1dc3650a8c417599e54ecbd6",
+      "role": "formal_source",
+      "lifecycle": "active",
+      "review": "pending_expert_review"
+    },
+    {
+      "path": "RDF11/SharedLiteralExample.lean",
+      "sha256": "9a555b676f69f29fd4a39260c4362df6da2488d58edade680101ffbeafae6a22",
       "role": "formal_source",
       "lifecycle": "active",
       "review": "pending_expert_review"
@@ -37260,6 +37304,3289 @@
         "SUPPORT-FAMILY-MERGE"
       ],
       "parent_declaration_if_applicable": "RDF11.GraphFamily.forget.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GeneralizedGraph.Ordinary",
+      "module": "RDF11.OrdinaryRuleRuns",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} → RDF11.GeneralizedGraph Iri Literal B → Prop",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES",
+        "MT11-ORDINARY-RULE-CHECK-PROCEDURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.GeneralizedGraph",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GeneralizedTriple.Ordinary",
+      "module": "RDF11.OrdinaryRuleRuns",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} → RDF11.GeneralizedTriple Iri Literal B → Prop",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES",
+        "MT11-ORDINARY-RULE-CHECK-PROCEDURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.GeneralizedTriple",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Graph.generalize_ordinary",
+      "module": "RDF11.OrdinaryRuleRuns",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (G : RDF11.Graph Iri Literal B), G.generalize.Ordinary",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES",
+        "MT11-ORDINARY-RULE-CHECK-PROCEDURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Graph",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Graph.generalize_ordinary.match_1_1",
+      "module": "RDF11.OrdinaryRuleRuns",
+      "kind": "definition",
+      "type": "∀ {Iri Literal B : Type} (G : RDF11.Graph Iri Literal B) (x : RDF11.GeneralizedTriple Iri Literal B)\n  (motive : G.generalize x → Prop) (x_1 : G.generalize x),\n  (∀ (q : RDF11.Triple Iri Literal B) (left : G q) (hq : q.generalize = x), motive ⋯) → motive x_1",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Graph.generalize_ordinary",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryAxiomSeed",
+      "module": "RDF11.OrdinaryRuleRuns",
+      "kind": "definition",
+      "type": "{Literal Iri B₁ B₂ : Type} →\n  (Literal → Iri) →\n    (Nat → Iri) →\n      RDF11.GeneralizedGraph Iri Literal B₁ →\n        RDF11.GeneralizedGraph Iri Literal B₁ →\n          RDF11.GeneralizedGraph Iri Literal B₂ → RDF11.GeneralizedGraph Iri Literal B₁",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES",
+        "MT11-ORDINARY-RULE-CHECK-PROCEDURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRDFRun",
+      "module": "RDF11.OrdinaryRuleRuns",
+      "kind": "definition",
+      "type": "{Iri Literal Value B₁ B₂ : Type} →\n  RDF11.DatatypeTheory Iri Literal Value →\n    RDF11.RDFVocabulary Iri →\n      RDF11.GeneralizedGraph Iri Literal B₁ →\n        RDF11.GeneralizedGraph Iri Literal B₂ → RDF11.GeneralizedGraph Iri Literal B₁ → Prop",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES",
+        "MT11-ORDINARY-RULE-CHECK-PROCEDURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRDFSRun",
+      "module": "RDF11.OrdinaryRuleRuns",
+      "kind": "definition",
+      "type": "{Iri Literal Value B₁ B₂ : Type} →\n  RDF11.DatatypeTheory Iri Literal Value →\n    RDF11.RDFSVocabulary Iri →\n      RDF11.GeneralizedGraph Iri Literal B₁ →\n        RDF11.GeneralizedGraph Iri Literal B₂ → RDF11.GeneralizedGraph Iri Literal B₁ → Prop",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES",
+        "MT11-ORDINARY-RULE-CHECK-PROCEDURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.Iri",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "definition",
+      "type": "Type",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.Supported",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "definition",
+      "type": "{Literal B : Type} → RDF11.GeneralizedTriple RDF11.OrdinaryRuleScope.Iri Literal B → Prop",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.Tag",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "inductive",
+      "type": "Type",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.Tag._sizeOf_1",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "definition",
+      "type": "RDF11.OrdinaryRuleScope.Tag → Nat",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.Tag",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.Tag._sizeOf_inst",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "definition",
+      "type": "SizeOf RDF11.OrdinaryRuleScope.Tag",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.Tag",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.Tag.casesOn",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "definition",
+      "type": "{motive : RDF11.OrdinaryRuleScope.Tag → Sort u} →\n  (t : RDF11.OrdinaryRuleScope.Tag) →\n    motive RDF11.OrdinaryRuleScope.Tag.top →\n      motive RDF11.OrdinaryRuleScope.Tag.typing →\n        motive RDF11.OrdinaryRuleScope.Tag.domain →\n          motive RDF11.OrdinaryRuleScope.Tag.range →\n            motive RDF11.OrdinaryRuleScope.Tag.subproperty →\n              motive RDF11.OrdinaryRuleScope.Tag.subclass →\n                motive RDF11.OrdinaryRuleScope.Tag.member →\n                  motive RDF11.OrdinaryRuleScope.Tag.propertyA →\n                    motive RDF11.OrdinaryRuleScope.Tag.classC →\n                      motive RDF11.OrdinaryRuleScope.Tag.subjectD →\n                        motive RDF11.OrdinaryRuleScope.Tag.objectE →\n                          motive RDF11.OrdinaryRuleScope.Tag.hidden →\n                            motive RDF11.OrdinaryRuleScope.Tag.invalid → motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.Tag",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.Tag.classC",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "constructor",
+      "type": "RDF11.OrdinaryRuleScope.Tag",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.Tag",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.Tag.classC.elim",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "definition",
+      "type": "{motive : RDF11.OrdinaryRuleScope.Tag → Sort u} →\n  (t : RDF11.OrdinaryRuleScope.Tag) → t.ctorIdx = 8 → motive RDF11.OrdinaryRuleScope.Tag.classC → motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.Tag.classC",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.Tag.classC.sizeOf_spec",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "sizeOf RDF11.OrdinaryRuleScope.Tag.classC = 1",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.Tag.classC",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.Tag.ctorElim",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "definition",
+      "type": "{motive : RDF11.OrdinaryRuleScope.Tag → Sort u} →\n  (ctorIdx : Nat) →\n    (t : RDF11.OrdinaryRuleScope.Tag) →\n      ctorIdx = t.ctorIdx → RDF11.OrdinaryRuleScope.Tag.ctorElimType ctorIdx → motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.Tag",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.Tag.ctorElimType",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "definition",
+      "type": "{motive : RDF11.OrdinaryRuleScope.Tag → Sort u} → Nat → Sort (max 1 u)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.Tag",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.Tag.ctorIdx",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "definition",
+      "type": "RDF11.OrdinaryRuleScope.Tag → Nat",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.Tag",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.Tag.domain",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "constructor",
+      "type": "RDF11.OrdinaryRuleScope.Tag",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.Tag",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.Tag.domain.elim",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "definition",
+      "type": "{motive : RDF11.OrdinaryRuleScope.Tag → Sort u} →\n  (t : RDF11.OrdinaryRuleScope.Tag) → t.ctorIdx = 2 → motive RDF11.OrdinaryRuleScope.Tag.domain → motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.Tag.domain",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.Tag.domain.sizeOf_spec",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "sizeOf RDF11.OrdinaryRuleScope.Tag.domain = 1",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.Tag.domain",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.Tag.hidden",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "constructor",
+      "type": "RDF11.OrdinaryRuleScope.Tag",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.Tag",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.Tag.hidden.elim",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "definition",
+      "type": "{motive : RDF11.OrdinaryRuleScope.Tag → Sort u} →\n  (t : RDF11.OrdinaryRuleScope.Tag) → t.ctorIdx = 11 → motive RDF11.OrdinaryRuleScope.Tag.hidden → motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.Tag.hidden",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.Tag.hidden.sizeOf_spec",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "sizeOf RDF11.OrdinaryRuleScope.Tag.hidden = 1",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.Tag.hidden",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.Tag.invalid",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "constructor",
+      "type": "RDF11.OrdinaryRuleScope.Tag",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.Tag",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.Tag.invalid.elim",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "definition",
+      "type": "{motive : RDF11.OrdinaryRuleScope.Tag → Sort u} →\n  (t : RDF11.OrdinaryRuleScope.Tag) → t.ctorIdx = 12 → motive RDF11.OrdinaryRuleScope.Tag.invalid → motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.Tag.invalid",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.Tag.invalid.sizeOf_spec",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "sizeOf RDF11.OrdinaryRuleScope.Tag.invalid = 1",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.Tag.invalid",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.Tag.member",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "constructor",
+      "type": "RDF11.OrdinaryRuleScope.Tag",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.Tag",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.Tag.member.elim",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "definition",
+      "type": "{motive : RDF11.OrdinaryRuleScope.Tag → Sort u} →\n  (t : RDF11.OrdinaryRuleScope.Tag) → t.ctorIdx = 6 → motive RDF11.OrdinaryRuleScope.Tag.member → motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.Tag.member",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.Tag.member.sizeOf_spec",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "sizeOf RDF11.OrdinaryRuleScope.Tag.member = 1",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.Tag.member",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.Tag.noConfusion",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "definition",
+      "type": "{P : Sort v✝} → {x y : RDF11.OrdinaryRuleScope.Tag} → x = y → RDF11.OrdinaryRuleScope.Tag.noConfusionType P x y",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.Tag",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.Tag.noConfusionType",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "definition",
+      "type": "Sort v✝ → RDF11.OrdinaryRuleScope.Tag → RDF11.OrdinaryRuleScope.Tag → Sort v✝",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.Tag",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.Tag.objectE",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "constructor",
+      "type": "RDF11.OrdinaryRuleScope.Tag",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.Tag",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.Tag.objectE.elim",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "definition",
+      "type": "{motive : RDF11.OrdinaryRuleScope.Tag → Sort u} →\n  (t : RDF11.OrdinaryRuleScope.Tag) → t.ctorIdx = 10 → motive RDF11.OrdinaryRuleScope.Tag.objectE → motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.Tag.objectE",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.Tag.objectE.sizeOf_spec",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "sizeOf RDF11.OrdinaryRuleScope.Tag.objectE = 1",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.Tag.objectE",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.Tag.ofNat",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "definition",
+      "type": "Nat → RDF11.OrdinaryRuleScope.Tag",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.Tag",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.Tag.ofNat_ctorIdx",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "∀ (x : RDF11.OrdinaryRuleScope.Tag), RDF11.OrdinaryRuleScope.Tag.ofNat x.ctorIdx = x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.Tag",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.Tag.propertyA",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "constructor",
+      "type": "RDF11.OrdinaryRuleScope.Tag",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.Tag",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.Tag.propertyA.elim",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "definition",
+      "type": "{motive : RDF11.OrdinaryRuleScope.Tag → Sort u} →\n  (t : RDF11.OrdinaryRuleScope.Tag) → t.ctorIdx = 7 → motive RDF11.OrdinaryRuleScope.Tag.propertyA → motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.Tag.propertyA",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.Tag.propertyA.sizeOf_spec",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "sizeOf RDF11.OrdinaryRuleScope.Tag.propertyA = 1",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.Tag.propertyA",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.Tag.range",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "constructor",
+      "type": "RDF11.OrdinaryRuleScope.Tag",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.Tag",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.Tag.range.elim",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "definition",
+      "type": "{motive : RDF11.OrdinaryRuleScope.Tag → Sort u} →\n  (t : RDF11.OrdinaryRuleScope.Tag) → t.ctorIdx = 3 → motive RDF11.OrdinaryRuleScope.Tag.range → motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.Tag.range",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.Tag.range.sizeOf_spec",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "sizeOf RDF11.OrdinaryRuleScope.Tag.range = 1",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.Tag.range",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.Tag.rec",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "recursor",
+      "type": "{motive : RDF11.OrdinaryRuleScope.Tag → Sort u} →\n  motive RDF11.OrdinaryRuleScope.Tag.top →\n    motive RDF11.OrdinaryRuleScope.Tag.typing →\n      motive RDF11.OrdinaryRuleScope.Tag.domain →\n        motive RDF11.OrdinaryRuleScope.Tag.range →\n          motive RDF11.OrdinaryRuleScope.Tag.subproperty →\n            motive RDF11.OrdinaryRuleScope.Tag.subclass →\n              motive RDF11.OrdinaryRuleScope.Tag.member →\n                motive RDF11.OrdinaryRuleScope.Tag.propertyA →\n                  motive RDF11.OrdinaryRuleScope.Tag.classC →\n                    motive RDF11.OrdinaryRuleScope.Tag.subjectD →\n                      motive RDF11.OrdinaryRuleScope.Tag.objectE →\n                        motive RDF11.OrdinaryRuleScope.Tag.hidden →\n                          motive RDF11.OrdinaryRuleScope.Tag.invalid → (t : RDF11.OrdinaryRuleScope.Tag) → motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.Tag",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.Tag.recOn",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "definition",
+      "type": "{motive : RDF11.OrdinaryRuleScope.Tag → Sort u} →\n  (t : RDF11.OrdinaryRuleScope.Tag) →\n    motive RDF11.OrdinaryRuleScope.Tag.top →\n      motive RDF11.OrdinaryRuleScope.Tag.typing →\n        motive RDF11.OrdinaryRuleScope.Tag.domain →\n          motive RDF11.OrdinaryRuleScope.Tag.range →\n            motive RDF11.OrdinaryRuleScope.Tag.subproperty →\n              motive RDF11.OrdinaryRuleScope.Tag.subclass →\n                motive RDF11.OrdinaryRuleScope.Tag.member →\n                  motive RDF11.OrdinaryRuleScope.Tag.propertyA →\n                    motive RDF11.OrdinaryRuleScope.Tag.classC →\n                      motive RDF11.OrdinaryRuleScope.Tag.subjectD →\n                        motive RDF11.OrdinaryRuleScope.Tag.objectE →\n                          motive RDF11.OrdinaryRuleScope.Tag.hidden →\n                            motive RDF11.OrdinaryRuleScope.Tag.invalid → motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.Tag",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.Tag.subclass",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "constructor",
+      "type": "RDF11.OrdinaryRuleScope.Tag",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.Tag",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.Tag.subclass.elim",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "definition",
+      "type": "{motive : RDF11.OrdinaryRuleScope.Tag → Sort u} →\n  (t : RDF11.OrdinaryRuleScope.Tag) → t.ctorIdx = 5 → motive RDF11.OrdinaryRuleScope.Tag.subclass → motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.Tag.subclass",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.Tag.subclass.sizeOf_spec",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "sizeOf RDF11.OrdinaryRuleScope.Tag.subclass = 1",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.Tag.subclass",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.Tag.subjectD",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "constructor",
+      "type": "RDF11.OrdinaryRuleScope.Tag",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.Tag",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.Tag.subjectD.elim",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "definition",
+      "type": "{motive : RDF11.OrdinaryRuleScope.Tag → Sort u} →\n  (t : RDF11.OrdinaryRuleScope.Tag) → t.ctorIdx = 9 → motive RDF11.OrdinaryRuleScope.Tag.subjectD → motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.Tag.subjectD",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.Tag.subjectD.sizeOf_spec",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "sizeOf RDF11.OrdinaryRuleScope.Tag.subjectD = 1",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.Tag.subjectD",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.Tag.subproperty",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "constructor",
+      "type": "RDF11.OrdinaryRuleScope.Tag",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.Tag",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.Tag.subproperty.elim",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "definition",
+      "type": "{motive : RDF11.OrdinaryRuleScope.Tag → Sort u} →\n  (t : RDF11.OrdinaryRuleScope.Tag) → t.ctorIdx = 4 → motive RDF11.OrdinaryRuleScope.Tag.subproperty → motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.Tag.subproperty",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.Tag.subproperty.sizeOf_spec",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "sizeOf RDF11.OrdinaryRuleScope.Tag.subproperty = 1",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.Tag.subproperty",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.Tag.toCtorIdx",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "definition",
+      "type": "RDF11.OrdinaryRuleScope.Tag → Nat",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.Tag",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.Tag.top",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "constructor",
+      "type": "RDF11.OrdinaryRuleScope.Tag",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.Tag",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.Tag.top.elim",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "definition",
+      "type": "{motive : RDF11.OrdinaryRuleScope.Tag → Sort u} →\n  (t : RDF11.OrdinaryRuleScope.Tag) → t.ctorIdx = 0 → motive RDF11.OrdinaryRuleScope.Tag.top → motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.Tag.top",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.Tag.top.sizeOf_spec",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "sizeOf RDF11.OrdinaryRuleScope.Tag.top = 1",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.Tag.top",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.Tag.typing",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "constructor",
+      "type": "RDF11.OrdinaryRuleScope.Tag",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.Tag",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.Tag.typing.elim",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "definition",
+      "type": "{motive : RDF11.OrdinaryRuleScope.Tag → Sort u} →\n  (t : RDF11.OrdinaryRuleScope.Tag) → t.ctorIdx = 1 → motive RDF11.OrdinaryRuleScope.Tag.typing → motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.Tag.typing",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.Tag.typing.sizeOf_spec",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "sizeOf RDF11.OrdinaryRuleScope.Tag.typing = 1",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.Tag.typing",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.UserName",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "inductive",
+      "type": "Type",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.UserName._sizeOf_1",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "definition",
+      "type": "RDF11.OrdinaryRuleScope.UserName → Nat",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.UserName",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.UserName._sizeOf_inst",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "definition",
+      "type": "SizeOf RDF11.OrdinaryRuleScope.UserName",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.UserName",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.UserName.a",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "constructor",
+      "type": "RDF11.OrdinaryRuleScope.UserName",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.UserName",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.UserName.a.elim",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "definition",
+      "type": "{motive : RDF11.OrdinaryRuleScope.UserName → Sort u} →\n  (t : RDF11.OrdinaryRuleScope.UserName) → t.ctorIdx = 0 → motive RDF11.OrdinaryRuleScope.UserName.a → motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.UserName.a",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.UserName.a.sizeOf_spec",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "sizeOf RDF11.OrdinaryRuleScope.UserName.a = 1",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.UserName.a",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.UserName.c",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "constructor",
+      "type": "RDF11.OrdinaryRuleScope.UserName",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.UserName",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.UserName.c.elim",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "definition",
+      "type": "{motive : RDF11.OrdinaryRuleScope.UserName → Sort u} →\n  (t : RDF11.OrdinaryRuleScope.UserName) → t.ctorIdx = 1 → motive RDF11.OrdinaryRuleScope.UserName.c → motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.UserName.c",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.UserName.c.sizeOf_spec",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "sizeOf RDF11.OrdinaryRuleScope.UserName.c = 1",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.UserName.c",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.UserName.casesOn",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "definition",
+      "type": "{motive : RDF11.OrdinaryRuleScope.UserName → Sort u} →\n  (t : RDF11.OrdinaryRuleScope.UserName) →\n    motive RDF11.OrdinaryRuleScope.UserName.a →\n      motive RDF11.OrdinaryRuleScope.UserName.c →\n        motive RDF11.OrdinaryRuleScope.UserName.d → motive RDF11.OrdinaryRuleScope.UserName.e → motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.UserName",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.UserName.ctorElim",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "definition",
+      "type": "{motive : RDF11.OrdinaryRuleScope.UserName → Sort u} →\n  (ctorIdx : Nat) →\n    (t : RDF11.OrdinaryRuleScope.UserName) →\n      ctorIdx = t.ctorIdx → RDF11.OrdinaryRuleScope.UserName.ctorElimType ctorIdx → motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.UserName",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.UserName.ctorElimType",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "definition",
+      "type": "{motive : RDF11.OrdinaryRuleScope.UserName → Sort u} → Nat → Sort (max 1 u)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.UserName",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.UserName.ctorIdx",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "definition",
+      "type": "RDF11.OrdinaryRuleScope.UserName → Nat",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.UserName",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.UserName.d",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "constructor",
+      "type": "RDF11.OrdinaryRuleScope.UserName",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.UserName",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.UserName.d.elim",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "definition",
+      "type": "{motive : RDF11.OrdinaryRuleScope.UserName → Sort u} →\n  (t : RDF11.OrdinaryRuleScope.UserName) → t.ctorIdx = 2 → motive RDF11.OrdinaryRuleScope.UserName.d → motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.UserName.d",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.UserName.d.sizeOf_spec",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "sizeOf RDF11.OrdinaryRuleScope.UserName.d = 1",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.UserName.d",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.UserName.e",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "constructor",
+      "type": "RDF11.OrdinaryRuleScope.UserName",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.UserName",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.UserName.e.elim",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "definition",
+      "type": "{motive : RDF11.OrdinaryRuleScope.UserName → Sort u} →\n  (t : RDF11.OrdinaryRuleScope.UserName) → t.ctorIdx = 3 → motive RDF11.OrdinaryRuleScope.UserName.e → motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.UserName.e",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.UserName.e.sizeOf_spec",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "sizeOf RDF11.OrdinaryRuleScope.UserName.e = 1",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.UserName.e",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.UserName.noConfusion",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "definition",
+      "type": "{P : Sort v✝} →\n  {x y : RDF11.OrdinaryRuleScope.UserName} → x = y → RDF11.OrdinaryRuleScope.UserName.noConfusionType P x y",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.UserName",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.UserName.noConfusionType",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "definition",
+      "type": "Sort v✝ → RDF11.OrdinaryRuleScope.UserName → RDF11.OrdinaryRuleScope.UserName → Sort v✝",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.UserName",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.UserName.ofNat",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "definition",
+      "type": "Nat → RDF11.OrdinaryRuleScope.UserName",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.UserName",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.UserName.ofNat_ctorIdx",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "∀ (x : RDF11.OrdinaryRuleScope.UserName), RDF11.OrdinaryRuleScope.UserName.ofNat x.ctorIdx = x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.UserName",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.UserName.rec",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "recursor",
+      "type": "{motive : RDF11.OrdinaryRuleScope.UserName → Sort u} →\n  motive RDF11.OrdinaryRuleScope.UserName.a →\n    motive RDF11.OrdinaryRuleScope.UserName.c →\n      motive RDF11.OrdinaryRuleScope.UserName.d →\n        motive RDF11.OrdinaryRuleScope.UserName.e → (t : RDF11.OrdinaryRuleScope.UserName) → motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.UserName",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.UserName.recOn",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "definition",
+      "type": "{motive : RDF11.OrdinaryRuleScope.UserName → Sort u} →\n  (t : RDF11.OrdinaryRuleScope.UserName) →\n    motive RDF11.OrdinaryRuleScope.UserName.a →\n      motive RDF11.OrdinaryRuleScope.UserName.c →\n        motive RDF11.OrdinaryRuleScope.UserName.d → motive RDF11.OrdinaryRuleScope.UserName.e → motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.UserName",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.UserName.toCtorIdx",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "definition",
+      "type": "RDF11.OrdinaryRuleScope.UserName → Nat",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.UserName",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.allAxiomOrdinaryClosure",
+      "module": "RDF11.OrdinaryRuleScope",
+      "kind": "definition",
+      "type": "{Literal Value B : Type} →\n  RDF11.DatatypeTheory RDF11.OrdinaryRuleScope.Iri Literal Value →\n    B → RDF11.GeneralizedGraph RDF11.OrdinaryRuleScope.Iri Literal B",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES",
+        "MT11-RULE-STRATEGY-LIMITS",
+        "MT11-ORDINARY-BLANK-PREDICATE-EXAMPLE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.allAxiomOrdinaryClosure_not_entails",
+      "module": "RDF11.OrdinaryRuleScope",
+      "kind": "theorem",
+      "type": "∀ {Literal Value B : Type} (T : RDF11.DatatypeTheory RDF11.OrdinaryRuleScope.Iri Literal Value) (b : B),\n  ¬RDF11.SimplyEntails (RDF11.OrdinaryRuleScope.allAxiomOrdinaryClosure T b)\n      RDF11.OrdinaryRuleScope.conclusion.generalize",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES",
+        "MT11-ORDINARY-RULE-SOUND-INCOMPLETE",
+        "MT11-RULE-STRATEGY-LIMITS",
+        "MT11-ORDINARY-BLANK-PREDICATE-EXAMPLE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.allAxiomOrdinaryClosure_supported",
+      "module": "RDF11.OrdinaryRuleScope",
+      "kind": "theorem",
+      "type": "∀ {Literal Value B : Type} (T : RDF11.DatatypeTheory RDF11.OrdinaryRuleScope.Iri Literal Value) (b : B),\n  RDF11.Set.subset (RDF11.OrdinaryRuleScope.allAxiomOrdinaryClosure T b) RDF11.OrdinaryRuleScope.Supported",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES",
+        "MT11-ORDINARY-BLANK-PREDICATE-EXAMPLE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.all_axioms_still_insufficient",
+      "module": "RDF11.OrdinaryRuleScope",
+      "kind": "theorem",
+      "type": "∀ {Literal Value B : Type} {H : RDF11.GeneralizedGraph RDF11.OrdinaryRuleScope.Iri Literal B}\n  (T : RDF11.DatatypeTheory RDF11.OrdinaryRuleScope.Iri Literal Value) (b : B),\n  RDF11.OrdinaryRun T RDF11.OrdinaryRuleScope.vocabulary.toRDF.baseDatatypes RDF11.OrdinaryRuleScope.vocabulary.toRDF\n      (RDF11.RDFSGeneralizedStep T RDF11.OrdinaryRuleScope.vocabulary.toRDF.baseDatatypes\n        RDF11.OrdinaryRuleScope.vocabulary)\n      (RDF11.Set.union (RDF11.OrdinaryRuleScope.premise b).generalize\n        (RDF11.Set.union RDF11.OrdinaryRuleScope.vocabulary.toRDF.axioms RDF11.OrdinaryRuleScope.vocabulary.axioms))\n      H →\n    ¬H RDF11.OrdinaryRuleScope.conclusionTriple.generalize",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES",
+        "MT11-RULE-STRATEGY-LIMITS",
+        "MT11-ORDINARY-BLANK-PREDICATE-EXAMPLE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.assertionTriple",
+      "module": "RDF11.OrdinaryRuleScope",
+      "kind": "definition",
+      "type": "{Literal B : Type} → RDF11.Triple RDF11.OrdinaryRuleScope.Iri Literal B",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES",
+        "MT11-ORDINARY-BLANK-PREDICATE-EXAMPLE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.closure_no_literal",
+      "module": "RDF11.OrdinaryRuleScope",
+      "kind": "theorem",
+      "type": "∀ {Literal Value B : Type} {t : RDF11.GeneralizedTriple RDF11.OrdinaryRuleScope.Iri Literal B}\n  (T : RDF11.DatatypeTheory RDF11.OrdinaryRuleScope.Iri Literal Value) (b : B),\n  RDF11.OrdinaryRuleScope.allAxiomOrdinaryClosure T b t → ∀ (l : Literal), ¬RDF11.GeneralizedTriple.hasLiteral l t",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES",
+        "MT11-RULE-STRATEGY-LIMITS",
+        "MT11-ORDINARY-BLANK-PREDICATE-EXAMPLE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.conclusion",
+      "module": "RDF11.OrdinaryRuleScope",
+      "kind": "definition",
+      "type": "{Literal B : Type} → RDF11.Graph RDF11.OrdinaryRuleScope.Iri Literal B",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES",
+        "MT11-ORDINARY-BLANK-PREDICATE-EXAMPLE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.conclusionTriple",
+      "module": "RDF11.OrdinaryRuleScope",
+      "kind": "definition",
+      "type": "{Literal B : Type} → RDF11.Triple RDF11.OrdinaryRuleScope.Iri Literal B",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES",
+        "MT11-ORDINARY-BLANK-PREDICATE-EXAMPLE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.conclusion_ground",
+      "module": "RDF11.OrdinaryRuleScope",
+      "kind": "theorem",
+      "type": "∀ {Literal B : Type}, RDF11.OrdinaryRuleScope.conclusion.generalize.ground",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES",
+        "MT11-ORDINARY-BLANK-PREDICATE-EXAMPLE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.conclusion_unsupported",
+      "module": "RDF11.OrdinaryRuleScope",
+      "kind": "theorem",
+      "type": "∀ {Literal B : Type}, ¬RDF11.OrdinaryRuleScope.Supported RDF11.OrdinaryRuleScope.conclusionTriple.generalize",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.domainTriple",
+      "module": "RDF11.OrdinaryRuleScope",
+      "kind": "definition",
+      "type": "{B Literal : Type} → B → RDF11.Triple RDF11.OrdinaryRuleScope.Iri Literal B",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES",
+        "MT11-ORDINARY-BLANK-PREDICATE-EXAMPLE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.domain_axioms_supported",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "∀ (pair : RDF11.RDFSSymbol × RDF11.RDFSSymbol),\n  pair ∈ RDF11.rdfsDomainAxioms →\n    RDF11.OrdinaryRuleScope.holds (RDF11.OrdinaryRuleScope.schemaTag pair.fst) RDF11.OrdinaryRuleScope.Tag.domain\n      (RDF11.OrdinaryRuleScope.schemaTag pair.snd)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.domain_closed",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "∀ {p c s o : RDF11.OrdinaryRuleScope.Tag},\n  RDF11.OrdinaryRuleScope.holds p RDF11.OrdinaryRuleScope.Tag.domain c →\n    RDF11.OrdinaryRuleScope.holds s p o → RDF11.OrdinaryRuleScope.holds s RDF11.OrdinaryRuleScope.Tag.typing c",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.full_entailment",
+      "module": "RDF11.OrdinaryRuleScope",
+      "kind": "theorem",
+      "type": "∀ {Literal Value B : Type} (T : RDF11.DatatypeTheory RDF11.OrdinaryRuleScope.Iri Literal Value) (b : B),\n  RDF11.RDFSEntails T RDF11.OrdinaryRuleScope.vocabulary.toRDF.baseDatatypes RDF11.OrdinaryRuleScope.vocabulary\n    (RDF11.OrdinaryRuleScope.premise b).generalize RDF11.OrdinaryRuleScope.conclusion.generalize",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES",
+        "MT11-ORDINARY-RULE-SOUND-INCOMPLETE",
+        "MT11-ORDINARY-BLANK-PREDICATE-EXAMPLE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.generalized_conclusion",
+      "module": "RDF11.OrdinaryRuleScope",
+      "kind": "theorem",
+      "type": "∀ {Literal Value B : Type} (T : RDF11.DatatypeTheory RDF11.OrdinaryRuleScope.Iri Literal Value) (b : B),\n  RDF11.RDFSClosure T RDF11.OrdinaryRuleScope.vocabulary (RDF11.OrdinaryRuleScope.premise b).generalize\n    RDF11.OrdinaryRuleScope.conclusion.generalize RDF11.OrdinaryRuleScope.conclusionTriple.generalize",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES",
+        "MT11-ORDINARY-BLANK-PREDICATE-EXAMPLE",
+        "MT11-PRINTED-BLANK-PREDICATE-DERIVATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.generalized_intermediate",
+      "module": "RDF11.OrdinaryRuleScope",
+      "kind": "theorem",
+      "type": "∀ {Literal Value B : Type} (T : RDF11.DatatypeTheory RDF11.OrdinaryRuleScope.Iri Literal Value) (b : B),\n  RDF11.RDFSClosure T RDF11.OrdinaryRuleScope.vocabulary (RDF11.OrdinaryRuleScope.premise b).generalize\n    RDF11.OrdinaryRuleScope.conclusion.generalize (RDF11.OrdinaryRuleScope.intermediate b)",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES",
+        "MT11-ORDINARY-BLANK-PREDICATE-EXAMPLE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.hierarchy_axioms_supported",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "∀ (t : RDF11.RDFSSymbol × RDF11.RDFSSymbol × RDF11.RDFSSymbol),\n  t ∈ RDF11.rdfsHierarchyAxioms →\n    RDF11.OrdinaryRuleScope.holds (RDF11.OrdinaryRuleScope.schemaTag t.fst)\n      (RDF11.OrdinaryRuleScope.schemaTag t.snd.fst) (RDF11.OrdinaryRuleScope.schemaTag t.snd.snd)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.holds",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "definition",
+      "type": "RDF11.OrdinaryRuleScope.Tag → RDF11.OrdinaryRuleScope.Tag → RDF11.OrdinaryRuleScope.Tag → Prop",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.holds._sparseCasesOn_1",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "definition",
+      "type": "{motive : RDF11.OrdinaryRuleScope.Tag → Sort u} →\n  (t : RDF11.OrdinaryRuleScope.Tag) →\n    motive RDF11.OrdinaryRuleScope.Tag.typing →\n      motive RDF11.OrdinaryRuleScope.Tag.domain →\n        motive RDF11.OrdinaryRuleScope.Tag.range →\n          motive RDF11.OrdinaryRuleScope.Tag.subproperty →\n            motive RDF11.OrdinaryRuleScope.Tag.subclass →\n              motive RDF11.OrdinaryRuleScope.Tag.member →\n                motive RDF11.OrdinaryRuleScope.Tag.propertyA → (Nat.hasNotBit 254 t.ctorIdx → motive t) → motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.holds",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.holds._sparseCasesOn_1.else_eq",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "∀ {motive : RDF11.OrdinaryRuleScope.Tag → Sort u} (t : RDF11.OrdinaryRuleScope.Tag)\n  (typing : motive RDF11.OrdinaryRuleScope.Tag.typing) (domain : motive RDF11.OrdinaryRuleScope.Tag.domain)\n  (range : motive RDF11.OrdinaryRuleScope.Tag.range) (subproperty : motive RDF11.OrdinaryRuleScope.Tag.subproperty)\n  (subclass : motive RDF11.OrdinaryRuleScope.Tag.subclass) (member : motive RDF11.OrdinaryRuleScope.Tag.member)\n  (propertyA : motive RDF11.OrdinaryRuleScope.Tag.propertyA) («else» : Nat.hasNotBit 254 t.ctorIdx → motive t)\n  (h : Nat.hasNotBit 254 t.ctorIdx),\n  RDF11.OrdinaryRuleScope.holds._sparseCasesOn_1 t typing domain range subproperty subclass member propertyA «else» =\n    «else» h",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.holds._sparseCasesOn_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.holds.eq_1",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "∀ (s o : RDF11.OrdinaryRuleScope.Tag),\n  RDF11.OrdinaryRuleScope.holds s RDF11.OrdinaryRuleScope.Tag.typing o =\n    (s ≠ RDF11.OrdinaryRuleScope.Tag.invalid ∧ o = RDF11.OrdinaryRuleScope.Tag.top)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.holds",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.holds.eq_2",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "∀ (s o : RDF11.OrdinaryRuleScope.Tag),\n  RDF11.OrdinaryRuleScope.holds s RDF11.OrdinaryRuleScope.Tag.domain o =\n    (s ≠ RDF11.OrdinaryRuleScope.Tag.invalid ∧\n      (o = RDF11.OrdinaryRuleScope.Tag.top ∨\n        s = RDF11.OrdinaryRuleScope.Tag.hidden ∧ o = RDF11.OrdinaryRuleScope.Tag.classC))",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.holds",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.holds.eq_3",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "∀ (s o : RDF11.OrdinaryRuleScope.Tag),\n  RDF11.OrdinaryRuleScope.holds s RDF11.OrdinaryRuleScope.Tag.range o =\n    (s ≠ RDF11.OrdinaryRuleScope.Tag.invalid ∧ o = RDF11.OrdinaryRuleScope.Tag.top)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.holds",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.holds.eq_4",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "∀ (s o : RDF11.OrdinaryRuleScope.Tag),\n  RDF11.OrdinaryRuleScope.holds s RDF11.OrdinaryRuleScope.Tag.subproperty o =\n    (s ≠ RDF11.OrdinaryRuleScope.Tag.invalid ∧\n      o ≠ RDF11.OrdinaryRuleScope.Tag.invalid ∧\n        (s = o ∨\n          o = RDF11.OrdinaryRuleScope.Tag.member ∨\n            s = RDF11.OrdinaryRuleScope.Tag.propertyA ∧ o = RDF11.OrdinaryRuleScope.Tag.hidden))",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.holds",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.holds.eq_5",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "∀ (s o : RDF11.OrdinaryRuleScope.Tag),\n  RDF11.OrdinaryRuleScope.holds s RDF11.OrdinaryRuleScope.Tag.subclass o =\n    (s ≠ RDF11.OrdinaryRuleScope.Tag.invalid ∧\n      o ≠ RDF11.OrdinaryRuleScope.Tag.invalid ∧ (o = RDF11.OrdinaryRuleScope.Tag.top ∨ s = o))",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.holds",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.holds.eq_6",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "∀ (s o : RDF11.OrdinaryRuleScope.Tag),\n  RDF11.OrdinaryRuleScope.holds s RDF11.OrdinaryRuleScope.Tag.member o =\n    (s ≠ RDF11.OrdinaryRuleScope.Tag.invalid ∧ o ≠ RDF11.OrdinaryRuleScope.Tag.invalid)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.holds",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.holds.eq_7",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "∀ (s o : RDF11.OrdinaryRuleScope.Tag),\n  RDF11.OrdinaryRuleScope.holds s RDF11.OrdinaryRuleScope.Tag.propertyA o =\n    (s = RDF11.OrdinaryRuleScope.Tag.subjectD ∧ o = RDF11.OrdinaryRuleScope.Tag.objectE)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.holds",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.holds.eq_8",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "∀ (s p o : RDF11.OrdinaryRuleScope.Tag),\n  (p = RDF11.OrdinaryRuleScope.Tag.typing → False) →\n    (p = RDF11.OrdinaryRuleScope.Tag.domain → False) →\n      (p = RDF11.OrdinaryRuleScope.Tag.range → False) →\n        (p = RDF11.OrdinaryRuleScope.Tag.subproperty → False) →\n          (p = RDF11.OrdinaryRuleScope.Tag.subclass → False) →\n            (p = RDF11.OrdinaryRuleScope.Tag.member → False) →\n              (p = RDF11.OrdinaryRuleScope.Tag.propertyA → False) → RDF11.OrdinaryRuleScope.holds s p o = False",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.holds",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.holds.match_1",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "definition",
+      "type": "(motive : RDF11.OrdinaryRuleScope.Tag → Sort u_1) →\n  (p : RDF11.OrdinaryRuleScope.Tag) →\n    (Unit → motive RDF11.OrdinaryRuleScope.Tag.typing) →\n      (Unit → motive RDF11.OrdinaryRuleScope.Tag.domain) →\n        (Unit → motive RDF11.OrdinaryRuleScope.Tag.range) →\n          (Unit → motive RDF11.OrdinaryRuleScope.Tag.subproperty) →\n            (Unit → motive RDF11.OrdinaryRuleScope.Tag.subclass) →\n              (Unit → motive RDF11.OrdinaryRuleScope.Tag.member) →\n                (Unit → motive RDF11.OrdinaryRuleScope.Tag.propertyA) →\n                  ((x : RDF11.OrdinaryRuleScope.Tag) → motive x) → motive p",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.holds",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.instDecidableEqTag",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "definition",
+      "type": "DecidableEq RDF11.OrdinaryRuleScope.Tag",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.Tag",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.instDecidableEqTag._proof_1",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "∀ (x y : RDF11.OrdinaryRuleScope.Tag), x.ctorIdx = y.ctorIdx → x = y",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.instDecidableEqTag",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.instDecidableEqTag._proof_2",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "∀ (x y : RDF11.OrdinaryRuleScope.Tag), ¬x.ctorIdx = y.ctorIdx → x = y → False",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.instDecidableEqTag",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.instDecidableEqUserName",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "definition",
+      "type": "DecidableEq RDF11.OrdinaryRuleScope.UserName",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.UserName",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.instDecidableEqUserName._proof_1",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "∀ (x y : RDF11.OrdinaryRuleScope.UserName), x.ctorIdx = y.ctorIdx → x = y",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.instDecidableEqUserName",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.instDecidableEqUserName._proof_2",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "∀ (x y : RDF11.OrdinaryRuleScope.UserName), ¬x.ctorIdx = y.ctorIdx → x = y → False",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.instDecidableEqUserName",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.intermediate",
+      "module": "RDF11.OrdinaryRuleScope",
+      "kind": "definition",
+      "type": "{B Literal : Type} → B → RDF11.GeneralizedTriple RDF11.OrdinaryRuleScope.Iri Literal B",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES",
+        "MT11-ORDINARY-BLANK-PREDICATE-EXAMPLE",
+        "MT11-PRINTED-BLANK-PREDICATE-DERIVATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.intermediate_not_ordinary",
+      "module": "RDF11.OrdinaryRuleScope",
+      "kind": "theorem",
+      "type": "∀ {B Literal : Type} (b : B), ¬(RDF11.OrdinaryRuleScope.intermediate b).Ordinary",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES",
+        "MT11-ORDINARY-BLANK-PREDICATE-EXAMPLE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.intermediate_not_printed",
+      "module": "RDF11.OrdinaryRuleScope",
+      "kind": "theorem",
+      "type": "∀ {B Literal : Type} (b : B), RDF11.OrdinaryRuleScope.intermediate b ≠ RDF11.OrdinaryRuleScope.printedIntermediate b",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES",
+        "MT11-PRINTED-BLANK-PREDICATE-DERIVATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.iriTag",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "definition",
+      "type": "RDF11.OrdinaryRuleScope.Iri → RDF11.OrdinaryRuleScope.Tag",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.iriTag.eq_1",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "∀ (s : RDF11.RDFSSymbol), RDF11.OrdinaryRuleScope.iriTag (Sum.inl s) = RDF11.OrdinaryRuleScope.schemaTag s",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.iriTag",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.iriTag.eq_2",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "RDF11.OrdinaryRuleScope.iriTag (Sum.inr RDF11.OrdinaryRuleScope.UserName.a) = RDF11.OrdinaryRuleScope.Tag.propertyA",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.iriTag",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.iriTag.eq_3",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "RDF11.OrdinaryRuleScope.iriTag (Sum.inr RDF11.OrdinaryRuleScope.UserName.c) = RDF11.OrdinaryRuleScope.Tag.classC",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.iriTag",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.iriTag.eq_4",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "RDF11.OrdinaryRuleScope.iriTag (Sum.inr RDF11.OrdinaryRuleScope.UserName.d) = RDF11.OrdinaryRuleScope.Tag.subjectD",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.iriTag",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.iriTag.eq_5",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "RDF11.OrdinaryRuleScope.iriTag (Sum.inr RDF11.OrdinaryRuleScope.UserName.e) = RDF11.OrdinaryRuleScope.Tag.objectE",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.iriTag",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.iriTag.match_1",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "definition",
+      "type": "(motive : RDF11.OrdinaryRuleScope.Iri → Sort u_1) →\n  (x : RDF11.OrdinaryRuleScope.Iri) →\n    ((s : RDF11.RDFSSymbol) → motive (Sum.inl s)) →\n      (Unit → motive (Sum.inr RDF11.OrdinaryRuleScope.UserName.a)) →\n        (Unit → motive (Sum.inr RDF11.OrdinaryRuleScope.UserName.c)) →\n          (Unit → motive (Sum.inr RDF11.OrdinaryRuleScope.UserName.d)) →\n            (Unit → motive (Sum.inr RDF11.OrdinaryRuleScope.UserName.e)) → motive x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.iriTag",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.iri_not_hidden",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "∀ (a : RDF11.OrdinaryRuleScope.Iri), RDF11.OrdinaryRuleScope.iriTag a ≠ RDF11.OrdinaryRuleScope.Tag.hidden",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.object_valid",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "∀ {s p o : RDF11.OrdinaryRuleScope.Tag}, RDF11.OrdinaryRuleScope.holds s p o → o ≠ RDF11.OrdinaryRuleScope.Tag.invalid",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.ordinary_conclusion_absent",
+      "module": "RDF11.OrdinaryRuleScope",
+      "kind": "theorem",
+      "type": "∀ {Literal Value B : Type} {H : RDF11.GeneralizedGraph RDF11.OrdinaryRuleScope.Iri Literal B}\n  (T : RDF11.DatatypeTheory RDF11.OrdinaryRuleScope.Iri Literal Value) (b : B),\n  RDF11.OrdinaryRDFSRun T RDF11.OrdinaryRuleScope.vocabulary (RDF11.OrdinaryRuleScope.premise b).generalize\n      RDF11.OrdinaryRuleScope.conclusion.generalize H →\n    ¬H RDF11.OrdinaryRuleScope.conclusionTriple.generalize",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES",
+        "MT11-ORDINARY-BLANK-PREDICATE-EXAMPLE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.ordinary_incompleteness",
+      "module": "RDF11.OrdinaryRuleScope",
+      "kind": "theorem",
+      "type": "∀ {Literal Value B : Type} (T : RDF11.DatatypeTheory RDF11.OrdinaryRuleScope.Iri Literal Value) (b : B),\n  RDF11.RDFSModelConstruction.Parameters T RDF11.OrdinaryRuleScope.vocabulary.toRDF.baseDatatypes\n      RDF11.OrdinaryRuleScope.vocabulary →\n    (∃ U I,\n        I.RDFSModel T RDF11.OrdinaryRuleScope.vocabulary.toRDF.baseDatatypes RDF11.OrdinaryRuleScope.vocabulary ∧\n          I.Satisfies (RDF11.OrdinaryRuleScope.premise b).generalize) ∧\n      RDF11.RDFSEntails T RDF11.OrdinaryRuleScope.vocabulary.toRDF.baseDatatypes RDF11.OrdinaryRuleScope.vocabulary\n          (RDF11.OrdinaryRuleScope.premise b).generalize RDF11.OrdinaryRuleScope.conclusion.generalize ∧\n        ∀ (H : RDF11.GeneralizedGraph RDF11.OrdinaryRuleScope.Iri Literal B),\n          RDF11.OrdinaryRDFSRun T RDF11.OrdinaryRuleScope.vocabulary (RDF11.OrdinaryRuleScope.premise b).generalize\n              RDF11.OrdinaryRuleScope.conclusion.generalize H →\n            ∀ (μ : RDF11.Substitution RDF11.OrdinaryRuleScope.Iri Literal B),\n              ¬RDF11.Set.subset (RDF11.GeneralizedGraph.substitute μ RDF11.OrdinaryRuleScope.conclusion.generalize) H",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES",
+        "MT11-ORDINARY-RULE-SOUND-INCOMPLETE",
+        "MT11-ORDINARY-BLANK-PREDICATE-EXAMPLE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.ordinary_no_conclusion_instance",
+      "module": "RDF11.OrdinaryRuleScope",
+      "kind": "theorem",
+      "type": "∀ {Literal Value B : Type} {H : RDF11.GeneralizedGraph RDF11.OrdinaryRuleScope.Iri Literal B}\n  (T : RDF11.DatatypeTheory RDF11.OrdinaryRuleScope.Iri Literal Value) (b : B),\n  RDF11.OrdinaryRDFSRun T RDF11.OrdinaryRuleScope.vocabulary (RDF11.OrdinaryRuleScope.premise b).generalize\n      RDF11.OrdinaryRuleScope.conclusion.generalize H →\n    ∀ (μ : RDF11.Substitution RDF11.OrdinaryRuleScope.Iri Literal B),\n      ¬RDF11.Set.subset (RDF11.GeneralizedGraph.substitute μ RDF11.OrdinaryRuleScope.conclusion.generalize) H",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES",
+        "MT11-ORDINARY-RULE-SOUND-INCOMPLETE",
+        "MT11-ORDINARY-BLANK-PREDICATE-EXAMPLE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.ordinary_not_simply_entails",
+      "module": "RDF11.OrdinaryRuleScope",
+      "kind": "theorem",
+      "type": "∀ {Literal Value B : Type} {H : RDF11.GeneralizedGraph RDF11.OrdinaryRuleScope.Iri Literal B}\n  (T : RDF11.DatatypeTheory RDF11.OrdinaryRuleScope.Iri Literal Value) (b : B),\n  RDF11.OrdinaryRDFSRun T RDF11.OrdinaryRuleScope.vocabulary (RDF11.OrdinaryRuleScope.premise b).generalize\n      RDF11.OrdinaryRuleScope.conclusion.generalize H →\n    ¬RDF11.SimplyEntails H RDF11.OrdinaryRuleScope.conclusion.generalize",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES",
+        "MT11-ORDINARY-BLANK-PREDICATE-EXAMPLE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.ordinary_predicate_not_hidden",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "∀ {Literal B : Type} {t : RDF11.GeneralizedTriple RDF11.OrdinaryRuleScope.Iri Literal B},\n  t.Ordinary → RDF11.OrdinaryRuleScope.termTag t.predicate ≠ RDF11.OrdinaryRuleScope.Tag.hidden",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.ordinary_run_supported",
+      "module": "RDF11.OrdinaryRuleScope",
+      "kind": "theorem",
+      "type": "∀ {Literal Value B : Type} {H : RDF11.GeneralizedGraph RDF11.OrdinaryRuleScope.Iri Literal B}\n  (T : RDF11.DatatypeTheory RDF11.OrdinaryRuleScope.Iri Literal Value) (b : B),\n  RDF11.OrdinaryRDFSRun T RDF11.OrdinaryRuleScope.vocabulary (RDF11.OrdinaryRuleScope.premise b).generalize\n      RDF11.OrdinaryRuleScope.conclusion.generalize H →\n    RDF11.Set.subset H RDF11.OrdinaryRuleScope.Supported",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES",
+        "MT11-ORDINARY-BLANK-PREDICATE-EXAMPLE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.predicate_valid",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "∀ {s p o : RDF11.OrdinaryRuleScope.Tag}, RDF11.OrdinaryRuleScope.holds s p o → p ≠ RDF11.OrdinaryRuleScope.Tag.invalid",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.premise",
+      "module": "RDF11.OrdinaryRuleScope",
+      "kind": "definition",
+      "type": "{B Literal : Type} → B → RDF11.Graph RDF11.OrdinaryRuleScope.Iri Literal B",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES",
+        "MT11-ORDINARY-BLANK-PREDICATE-EXAMPLE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.premise.eq_1",
+      "module": "RDF11.OrdinaryRuleScope",
+      "kind": "theorem",
+      "type": "∀ {B Literal : Type} (b : B),\n  RDF11.OrdinaryRuleScope.premise b =\n    RDF11.Set.ofList\n      [RDF11.OrdinaryRuleScope.subpropertyTriple b, RDF11.OrdinaryRuleScope.domainTriple b,\n        RDF11.OrdinaryRuleScope.assertionTriple]",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.premise",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.premise_consistent",
+      "module": "RDF11.OrdinaryRuleScope",
+      "kind": "theorem",
+      "type": "∀ {Literal Value B : Type} (T : RDF11.DatatypeTheory RDF11.OrdinaryRuleScope.Iri Literal Value) (b : B),\n  RDF11.RDFSModelConstruction.Parameters T RDF11.OrdinaryRuleScope.vocabulary.toRDF.baseDatatypes\n      RDF11.OrdinaryRuleScope.vocabulary →\n    ∃ U I,\n      I.RDFSModel T RDF11.OrdinaryRuleScope.vocabulary.toRDF.baseDatatypes RDF11.OrdinaryRuleScope.vocabulary ∧\n        I.Satisfies (RDF11.OrdinaryRuleScope.premise b).generalize",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES",
+        "MT11-ORDINARY-RULE-SOUND-INCOMPLETE",
+        "MT11-ORDINARY-BLANK-PREDICATE-EXAMPLE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.premise_supported",
+      "module": "RDF11.OrdinaryRuleScope",
+      "kind": "theorem",
+      "type": "∀ {B Literal : Type} (b : B),\n  RDF11.Set.subset (RDF11.OrdinaryRuleScope.premise b).generalize RDF11.OrdinaryRuleScope.Supported",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES",
+        "MT11-ORDINARY-BLANK-PREDICATE-EXAMPLE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.printedIntermediate",
+      "module": "RDF11.OrdinaryRuleScope",
+      "kind": "definition",
+      "type": "{B Literal : Type} → B → RDF11.GeneralizedTriple RDF11.OrdinaryRuleScope.Iri Literal B",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES",
+        "MT11-PRINTED-BLANK-PREDICATE-DERIVATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.range_axioms_supported",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "∀ (pair : RDF11.RDFSSymbol × RDF11.RDFSSymbol),\n  pair ∈ RDF11.rdfsRangeAxioms →\n    RDF11.OrdinaryRuleScope.holds (RDF11.OrdinaryRuleScope.schemaTag pair.fst) RDF11.OrdinaryRuleScope.Tag.range\n      (RDF11.OrdinaryRuleScope.schemaTag pair.snd)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.range_closed",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "∀ {p c s o : RDF11.OrdinaryRuleScope.Tag},\n  RDF11.OrdinaryRuleScope.holds p RDF11.OrdinaryRuleScope.Tag.range c →\n    RDF11.OrdinaryRuleScope.holds s p o → RDF11.OrdinaryRuleScope.holds o RDF11.OrdinaryRuleScope.Tag.typing c",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.rdf_axioms_supported",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "∀ {Literal B : Type}, RDF11.Set.subset RDF11.OrdinaryRuleScope.vocabulary.toRDF.axioms RDF11.OrdinaryRuleScope.Supported",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.rdf_step_closed",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "∀ {Literal Value B : Type} {t : RDF11.GeneralizedTriple RDF11.OrdinaryRuleScope.Iri Literal B}\n  (T : RDF11.DatatypeTheory RDF11.OrdinaryRuleScope.Iri Literal Value)\n  (H : RDF11.GeneralizedGraph RDF11.OrdinaryRuleScope.Iri Literal B),\n  RDF11.Set.subset H RDF11.OrdinaryRuleScope.Supported →\n    RDF11.RDFStep T RDF11.OrdinaryRuleScope.vocabulary.toRDF.baseDatatypes RDF11.OrdinaryRuleScope.vocabulary.toRDF H\n        t →\n      RDF11.OrdinaryRuleScope.Supported t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.rdfs7_step",
+      "module": "RDF11.OrdinaryRuleScope",
+      "kind": "theorem",
+      "type": "∀ {Literal Value B : Type} (T : RDF11.DatatypeTheory RDF11.OrdinaryRuleScope.Iri Literal Value) (b : B),\n  RDF11.RDFSStep T RDF11.OrdinaryRuleScope.vocabulary.toRDF.baseDatatypes RDF11.OrdinaryRuleScope.vocabulary\n    (RDF11.OrdinaryRuleScope.premise b).generalize (RDF11.OrdinaryRuleScope.intermediate b)",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES",
+        "MT11-ORDINARY-BLANK-PREDICATE-EXAMPLE",
+        "MT11-PRINTED-BLANK-PREDICATE-DERIVATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.rdfs_axioms_supported",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "∀ {Literal B : Type}, RDF11.Set.subset RDF11.OrdinaryRuleScope.vocabulary.axioms RDF11.OrdinaryRuleScope.Supported",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.rdfs_step_closed",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "∀ {Literal Value B : Type} {t : RDF11.GeneralizedTriple RDF11.OrdinaryRuleScope.Iri Literal B}\n  (T : RDF11.DatatypeTheory RDF11.OrdinaryRuleScope.Iri Literal Value)\n  (H : RDF11.GeneralizedGraph RDF11.OrdinaryRuleScope.Iri Literal B),\n  RDF11.Set.subset H RDF11.OrdinaryRuleScope.Supported →\n    RDF11.RDFSStep T RDF11.OrdinaryRuleScope.vocabulary.toRDF.baseDatatypes RDF11.OrdinaryRuleScope.vocabulary H t →\n      t.Ordinary → RDF11.OrdinaryRuleScope.Supported t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.run_supported",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "∀ {Literal Value B : Type} (T : RDF11.DatatypeTheory RDF11.OrdinaryRuleScope.Iri Literal Value)\n  {seed H : RDF11.GeneralizedGraph RDF11.OrdinaryRuleScope.Iri Literal B},\n  RDF11.Set.subset seed RDF11.OrdinaryRuleScope.Supported →\n    RDF11.OrdinaryRun T RDF11.OrdinaryRuleScope.vocabulary.toRDF.baseDatatypes RDF11.OrdinaryRuleScope.vocabulary.toRDF\n        (RDF11.RDFSGeneralizedStep T RDF11.OrdinaryRuleScope.vocabulary.toRDF.baseDatatypes\n          RDF11.OrdinaryRuleScope.vocabulary)\n        seed H →\n      RDF11.Set.subset H RDF11.OrdinaryRuleScope.Supported",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.schemaTag",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "definition",
+      "type": "RDF11.RDFSSymbol → RDF11.OrdinaryRuleScope.Tag",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.schemaTag._sparseCasesOn_1",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "definition",
+      "type": "{motive : RDF11.RDFSSymbol → Sort u} →\n  (t : RDF11.RDFSSymbol) →\n    ((a : RDF11.RDFSymbol) → motive (RDF11.RDFSSymbol.rdf a)) →\n      motive RDF11.RDFSSymbol.domain →\n        motive RDF11.RDFSSymbol.range →\n          motive RDF11.RDFSSymbol.subPropertyOf →\n            motive RDF11.RDFSSymbol.subClassOf →\n              motive RDF11.RDFSSymbol.member → (Nat.hasNotBit 903 t.ctorIdx → motive t) → motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.schemaTag",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.schemaTag._sparseCasesOn_1.else_eq",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "∀ {motive : RDF11.RDFSSymbol → Sort u} (t : RDF11.RDFSSymbol)\n  (rdf : (a : RDF11.RDFSymbol) → motive (RDF11.RDFSSymbol.rdf a)) (domain : motive RDF11.RDFSSymbol.domain)\n  (range : motive RDF11.RDFSSymbol.range) (subPropertyOf : motive RDF11.RDFSSymbol.subPropertyOf)\n  (subClassOf : motive RDF11.RDFSSymbol.subClassOf) (member : motive RDF11.RDFSSymbol.member)\n  («else» : Nat.hasNotBit 903 t.ctorIdx → motive t) (h : Nat.hasNotBit 903 t.ctorIdx),\n  RDF11.OrdinaryRuleScope.schemaTag._sparseCasesOn_1 t rdf domain range subPropertyOf subClassOf member «else» =\n    «else» h",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.schemaTag._sparseCasesOn_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.schemaTag._sparseCasesOn_2",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "definition",
+      "type": "{motive : RDF11.RDFSymbol → Sort u} →\n  (t : RDF11.RDFSymbol) → motive RDF11.RDFSymbol.rdfType → (Nat.hasNotBit 1 t.ctorIdx → motive t) → motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.schemaTag",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.schemaTag._sparseCasesOn_2.else_eq",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "∀ {motive : RDF11.RDFSymbol → Sort u} (t : RDF11.RDFSymbol) (rdfType : motive RDF11.RDFSymbol.rdfType)\n  («else» : Nat.hasNotBit 1 t.ctorIdx → motive t) (h : Nat.hasNotBit 1 t.ctorIdx),\n  RDF11.OrdinaryRuleScope.schemaTag._sparseCasesOn_2 t rdfType «else» = «else» h",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.schemaTag._sparseCasesOn_2",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.schemaTag.eq_1",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "RDF11.OrdinaryRuleScope.schemaTag (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfType) = RDF11.OrdinaryRuleScope.Tag.typing",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.schemaTag",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.schemaTag.eq_2",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "RDF11.OrdinaryRuleScope.schemaTag RDF11.RDFSSymbol.domain = RDF11.OrdinaryRuleScope.Tag.domain",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.schemaTag",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.schemaTag.eq_3",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "RDF11.OrdinaryRuleScope.schemaTag RDF11.RDFSSymbol.range = RDF11.OrdinaryRuleScope.Tag.range",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.schemaTag",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.schemaTag.eq_4",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "RDF11.OrdinaryRuleScope.schemaTag RDF11.RDFSSymbol.subPropertyOf = RDF11.OrdinaryRuleScope.Tag.subproperty",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.schemaTag",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.schemaTag.eq_5",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "RDF11.OrdinaryRuleScope.schemaTag RDF11.RDFSSymbol.subClassOf = RDF11.OrdinaryRuleScope.Tag.subclass",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.schemaTag",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.schemaTag.eq_6",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "RDF11.OrdinaryRuleScope.schemaTag RDF11.RDFSSymbol.member = RDF11.OrdinaryRuleScope.Tag.member",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.schemaTag",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.schemaTag.eq_7",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "∀ (x : RDF11.RDFSSymbol),\n  (x = RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfType → False) →\n    (x = RDF11.RDFSSymbol.domain → False) →\n      (x = RDF11.RDFSSymbol.range → False) →\n        (x = RDF11.RDFSSymbol.subPropertyOf → False) →\n          (x = RDF11.RDFSSymbol.subClassOf → False) →\n            (x = RDF11.RDFSSymbol.member → False) →\n              RDF11.OrdinaryRuleScope.schemaTag x = RDF11.OrdinaryRuleScope.Tag.top",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.schemaTag",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.schemaTag.match_1",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "definition",
+      "type": "(motive : RDF11.RDFSSymbol → Sort u_1) →\n  (x : RDF11.RDFSSymbol) →\n    (Unit → motive (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfType)) →\n      (Unit → motive RDF11.RDFSSymbol.domain) →\n        (Unit → motive RDF11.RDFSSymbol.range) →\n          (Unit → motive RDF11.RDFSSymbol.subPropertyOf) →\n            (Unit → motive RDF11.RDFSSymbol.subClassOf) →\n              (Unit → motive RDF11.RDFSSymbol.member) → ((x : RDF11.RDFSSymbol) → motive x) → motive x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.schemaTag",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.schema_valid",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "∀ (s : RDF11.RDFSSymbol), RDF11.OrdinaryRuleScope.schemaTag s ≠ RDF11.OrdinaryRuleScope.Tag.invalid",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.seed_supported",
+      "module": "RDF11.OrdinaryRuleScope",
+      "kind": "theorem",
+      "type": "∀ {Literal Value B : Type} (T : RDF11.DatatypeTheory RDF11.OrdinaryRuleScope.Iri Literal Value) (b : B),\n  RDF11.Set.subset\n    (RDF11.OrdinaryAxiomSeed T.literalSyntax.datatype\n      (fun n => RDF11.OrdinaryRuleScope.vocabulary.iri (RDF11.RDFSSymbol.rdf (RDF11.RDFSymbol.container n)))\n      (RDF11.Set.union RDF11.OrdinaryRuleScope.vocabulary.toRDF.axioms RDF11.OrdinaryRuleScope.vocabulary.axioms)\n      (RDF11.OrdinaryRuleScope.premise b).generalize RDF11.OrdinaryRuleScope.conclusion.generalize)\n    RDF11.OrdinaryRuleScope.Supported",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES",
+        "MT11-ORDINARY-BLANK-PREDICATE-EXAMPLE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.step_closed",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "∀ {Literal Value B : Type} {t : RDF11.GeneralizedTriple RDF11.OrdinaryRuleScope.Iri Literal B}\n  (T : RDF11.DatatypeTheory RDF11.OrdinaryRuleScope.Iri Literal Value)\n  (H : RDF11.GeneralizedGraph RDF11.OrdinaryRuleScope.Iri Literal B),\n  RDF11.Set.subset H RDF11.OrdinaryRuleScope.Supported →\n    RDF11.RDFSGeneralizedStep T RDF11.OrdinaryRuleScope.vocabulary.toRDF.baseDatatypes\n        RDF11.OrdinaryRuleScope.vocabulary H t →\n      t.Ordinary → RDF11.OrdinaryRuleScope.Supported t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.subclass_refl",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "∀ {c : RDF11.OrdinaryRuleScope.Tag},\n  c ≠ RDF11.OrdinaryRuleScope.Tag.invalid → RDF11.OrdinaryRuleScope.holds c RDF11.OrdinaryRuleScope.Tag.subclass c",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.subclass_top",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "∀ {c : RDF11.OrdinaryRuleScope.Tag},\n  c ≠ RDF11.OrdinaryRuleScope.Tag.invalid →\n    RDF11.OrdinaryRuleScope.holds c RDF11.OrdinaryRuleScope.Tag.subclass RDF11.OrdinaryRuleScope.Tag.top",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.subclass_trans",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "∀ {c d e : RDF11.OrdinaryRuleScope.Tag},\n  RDF11.OrdinaryRuleScope.holds c RDF11.OrdinaryRuleScope.Tag.subclass d →\n    RDF11.OrdinaryRuleScope.holds d RDF11.OrdinaryRuleScope.Tag.subclass e →\n      RDF11.OrdinaryRuleScope.holds c RDF11.OrdinaryRuleScope.Tag.subclass e",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.subclass_use",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "∀ {c d x : RDF11.OrdinaryRuleScope.Tag},\n  RDF11.OrdinaryRuleScope.holds c RDF11.OrdinaryRuleScope.Tag.subclass d →\n    RDF11.OrdinaryRuleScope.holds x RDF11.OrdinaryRuleScope.Tag.typing c →\n      RDF11.OrdinaryRuleScope.holds x RDF11.OrdinaryRuleScope.Tag.typing d",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.subject_valid",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "∀ {s p o : RDF11.OrdinaryRuleScope.Tag}, RDF11.OrdinaryRuleScope.holds s p o → s ≠ RDF11.OrdinaryRuleScope.Tag.invalid",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.subpropertyTriple",
+      "module": "RDF11.OrdinaryRuleScope",
+      "kind": "definition",
+      "type": "{B Literal : Type} → B → RDF11.Triple RDF11.OrdinaryRuleScope.Iri Literal B",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES",
+        "MT11-ORDINARY-BLANK-PREDICATE-EXAMPLE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.subproperty_refl",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "∀ {p : RDF11.OrdinaryRuleScope.Tag},\n  p ≠ RDF11.OrdinaryRuleScope.Tag.invalid → RDF11.OrdinaryRuleScope.holds p RDF11.OrdinaryRuleScope.Tag.subproperty p",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.subproperty_trans",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "∀ {p q r : RDF11.OrdinaryRuleScope.Tag},\n  RDF11.OrdinaryRuleScope.holds p RDF11.OrdinaryRuleScope.Tag.subproperty q →\n    RDF11.OrdinaryRuleScope.holds q RDF11.OrdinaryRuleScope.Tag.subproperty r →\n      RDF11.OrdinaryRuleScope.holds p RDF11.OrdinaryRuleScope.Tag.subproperty r",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.subproperty_use",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "∀ {p q s o : RDF11.OrdinaryRuleScope.Tag},\n  RDF11.OrdinaryRuleScope.holds p RDF11.OrdinaryRuleScope.Tag.subproperty q →\n    RDF11.OrdinaryRuleScope.holds s p o → q ≠ RDF11.OrdinaryRuleScope.Tag.hidden → RDF11.OrdinaryRuleScope.holds s q o",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.supported_no_literal",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "∀ {Literal B : Type} {t : RDF11.GeneralizedTriple RDF11.OrdinaryRuleScope.Iri Literal B},\n  RDF11.OrdinaryRuleScope.Supported t → ∀ (l : Literal), ¬RDF11.GeneralizedTriple.hasLiteral l t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.termTag",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "definition",
+      "type": "{Literal B : Type} → RDF11.Term RDF11.OrdinaryRuleScope.Iri Literal B → RDF11.OrdinaryRuleScope.Tag",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.termTag.eq_1",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "∀ {Literal B : Type} (a : RDF11.OrdinaryRuleScope.Iri),\n  RDF11.OrdinaryRuleScope.termTag (RDF11.Term.iri a) = RDF11.OrdinaryRuleScope.iriTag a",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.termTag",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.termTag.eq_2",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "∀ {Literal B : Type} (a : B), RDF11.OrdinaryRuleScope.termTag (RDF11.Term.blank a) = RDF11.OrdinaryRuleScope.Tag.hidden",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.termTag",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.termTag.eq_3",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "∀ {Literal B : Type} (a : Literal),\n  RDF11.OrdinaryRuleScope.termTag (RDF11.Term.literal a) = RDF11.OrdinaryRuleScope.Tag.invalid",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.termTag",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.termTag.match_1",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "definition",
+      "type": "{Literal B : Type} →\n  (motive : RDF11.Term RDF11.OrdinaryRuleScope.Iri Literal B → Sort u_1) →\n    (x : RDF11.Term RDF11.OrdinaryRuleScope.Iri Literal B) →\n      ((a : RDF11.OrdinaryRuleScope.Iri) → motive (RDF11.Term.iri a)) →\n        ((a : B) → motive (RDF11.Term.blank a)) → ((a : Literal) → motive (RDF11.Term.literal a)) → motive x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.termTag",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.to_member",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "∀ {p : RDF11.OrdinaryRuleScope.Tag},\n  p ≠ RDF11.OrdinaryRuleScope.Tag.invalid →\n    RDF11.OrdinaryRuleScope.holds p RDF11.OrdinaryRuleScope.Tag.subproperty RDF11.OrdinaryRuleScope.Tag.member",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.type_top",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "∀ {s : RDF11.OrdinaryRuleScope.Tag},\n  s ≠ RDF11.OrdinaryRuleScope.Tag.invalid →\n    RDF11.OrdinaryRuleScope.holds s RDF11.OrdinaryRuleScope.Tag.typing RDF11.OrdinaryRuleScope.Tag.top",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.vocabulary",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "definition",
+      "type": "RDF11.RDFSVocabulary RDF11.OrdinaryRuleScope.Iri",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRuleScope.vocabulary.eq_1",
+      "module": "RDF11.OrdinaryRuleScope",
+      "kind": "theorem",
+      "type": "RDF11.OrdinaryRuleScope.vocabulary = { iri := Sum.inl, distinct := ⋯ }",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.vocabulary",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRun",
+      "module": "RDF11.OrdinaryRuleRuns",
+      "kind": "inductive",
+      "type": "{Iri Literal Value B : Type} →\n  RDF11.DatatypeTheory Iri Literal Value →\n    RDF11.Set Iri →\n      RDF11.RDFVocabulary Iri →\n        (RDF11.GeneralizedGraph Iri Literal B → RDF11.GeneralizedTriple Iri Literal B → Prop) →\n          RDF11.GeneralizedGraph Iri Literal B → RDF11.GeneralizedGraph Iri Literal B → Prop",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES",
+        "MT11-ORDINARY-RULE-CHECK-PROCEDURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRun.below",
+      "module": "RDF11.OrdinaryRuleRuns",
+      "kind": "inductive",
+      "type": "{Iri Literal Value B : Type} →\n  {T : RDF11.DatatypeTheory Iri Literal Value} →\n    {D : RDF11.Set Iri} →\n      {v : RDF11.RDFVocabulary Iri} →\n        {step : RDF11.GeneralizedGraph Iri Literal B → RDF11.GeneralizedTriple Iri Literal B → Prop} →\n          {seed : RDF11.GeneralizedGraph Iri Literal B} →\n            {motive : (a : RDF11.GeneralizedGraph Iri Literal B) → RDF11.OrdinaryRun T D v step seed a → Prop} →\n              {a : RDF11.GeneralizedGraph Iri Literal B} → RDF11.OrdinaryRun T D v step seed a → Prop",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRun",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRun.below.casesOn",
+      "module": "RDF11.OrdinaryRuleRuns",
+      "kind": "definition",
+      "type": "∀ {Iri Literal Value B : Type} {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri}\n  {v : RDF11.RDFVocabulary Iri}\n  {step : RDF11.GeneralizedGraph Iri Literal B → RDF11.GeneralizedTriple Iri Literal B → Prop}\n  {seed : RDF11.GeneralizedGraph Iri Literal B}\n  {motive : (a : RDF11.GeneralizedGraph Iri Literal B) → RDF11.OrdinaryRun T D v step seed a → Prop}\n  {motive_1 :\n    {a : RDF11.GeneralizedGraph Iri Literal B} →\n      (t : RDF11.OrdinaryRun T D v step seed a) → RDF11.OrdinaryRun.below t → Prop}\n  {a : RDF11.GeneralizedGraph Iri Literal B} {t : RDF11.OrdinaryRun T D v step seed a}\n  (t_1 : RDF11.OrdinaryRun.below t),\n  motive_1 ⋯ ⋯ →\n    (∀ {H K : RDF11.GeneralizedGraph Iri Literal B} (a : RDF11.OrdinaryRun T D v step seed H)\n        (a_1 : RDF11.OrdinaryStep T D v step H K) (ih : RDF11.OrdinaryRun.below a) (a_ih : motive H a), motive_1 ⋯ ⋯) →\n      motive_1 t t_1",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRun.below",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRun.below.next",
+      "module": "RDF11.OrdinaryRuleRuns",
+      "kind": "constructor",
+      "type": "∀ {Iri Literal Value B : Type} {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri}\n  {v : RDF11.RDFVocabulary Iri}\n  {step : RDF11.GeneralizedGraph Iri Literal B → RDF11.GeneralizedTriple Iri Literal B → Prop}\n  {seed : RDF11.GeneralizedGraph Iri Literal B}\n  {motive : (a : RDF11.GeneralizedGraph Iri Literal B) → RDF11.OrdinaryRun T D v step seed a → Prop}\n  {H K : RDF11.GeneralizedGraph Iri Literal B} (a : RDF11.OrdinaryRun T D v step seed H)\n  (a_1 : RDF11.OrdinaryStep T D v step H K), RDF11.OrdinaryRun.below a → motive H a → RDF11.OrdinaryRun.below ⋯",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRun.below",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRun.below.rec",
+      "module": "RDF11.OrdinaryRuleRuns",
+      "kind": "recursor",
+      "type": "∀ {Iri Literal Value B : Type} {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri}\n  {v : RDF11.RDFVocabulary Iri}\n  {step : RDF11.GeneralizedGraph Iri Literal B → RDF11.GeneralizedTriple Iri Literal B → Prop}\n  {seed : RDF11.GeneralizedGraph Iri Literal B}\n  {motive : (a : RDF11.GeneralizedGraph Iri Literal B) → RDF11.OrdinaryRun T D v step seed a → Prop}\n  {motive_1 :\n    {a : RDF11.GeneralizedGraph Iri Literal B} →\n      (t : RDF11.OrdinaryRun T D v step seed a) → RDF11.OrdinaryRun.below t → Prop},\n  motive_1 ⋯ ⋯ →\n    (∀ {H K : RDF11.GeneralizedGraph Iri Literal B} (a : RDF11.OrdinaryRun T D v step seed H)\n        (a_1 : RDF11.OrdinaryStep T D v step H K) (ih : RDF11.OrdinaryRun.below a) (a_ih : motive H a),\n        motive_1 a ih → motive_1 ⋯ ⋯) →\n      ∀ {a : RDF11.GeneralizedGraph Iri Literal B} {t : RDF11.OrdinaryRun T D v step seed a}\n        (t_1 : RDF11.OrdinaryRun.below t), motive_1 t t_1",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRun.below",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRun.below.start",
+      "module": "RDF11.OrdinaryRuleRuns",
+      "kind": "constructor",
+      "type": "∀ {Iri Literal Value B : Type} {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri}\n  {v : RDF11.RDFVocabulary Iri}\n  {step : RDF11.GeneralizedGraph Iri Literal B → RDF11.GeneralizedTriple Iri Literal B → Prop}\n  {seed : RDF11.GeneralizedGraph Iri Literal B}\n  {motive : (a : RDF11.GeneralizedGraph Iri Literal B) → RDF11.OrdinaryRun T D v step seed a → Prop},\n  RDF11.OrdinaryRun.below ⋯",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRun.below",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRun.brecOn",
+      "module": "RDF11.OrdinaryRuleRuns",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B : Type} {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri}\n  {v : RDF11.RDFVocabulary Iri}\n  {step : RDF11.GeneralizedGraph Iri Literal B → RDF11.GeneralizedTriple Iri Literal B → Prop}\n  {seed : RDF11.GeneralizedGraph Iri Literal B}\n  {motive : (a : RDF11.GeneralizedGraph Iri Literal B) → RDF11.OrdinaryRun T D v step seed a → Prop}\n  {a : RDF11.GeneralizedGraph Iri Literal B} (t : RDF11.OrdinaryRun T D v step seed a),\n  (∀ (a : RDF11.GeneralizedGraph Iri Literal B) (t : RDF11.OrdinaryRun T D v step seed a),\n      RDF11.OrdinaryRun.below t → motive a t) →\n    motive a t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRun",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRun.casesOn",
+      "module": "RDF11.OrdinaryRuleRuns",
+      "kind": "definition",
+      "type": "∀ {Iri Literal Value B : Type} {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri}\n  {v : RDF11.RDFVocabulary Iri}\n  {step : RDF11.GeneralizedGraph Iri Literal B → RDF11.GeneralizedTriple Iri Literal B → Prop}\n  {seed : RDF11.GeneralizedGraph Iri Literal B}\n  {motive : (a : RDF11.GeneralizedGraph Iri Literal B) → RDF11.OrdinaryRun T D v step seed a → Prop}\n  {a : RDF11.GeneralizedGraph Iri Literal B} (t : RDF11.OrdinaryRun T D v step seed a),\n  motive seed ⋯ →\n    (∀ {H K : RDF11.GeneralizedGraph Iri Literal B} (a : RDF11.OrdinaryRun T D v step seed H)\n        (a_1 : RDF11.OrdinaryStep T D v step H K), motive K ⋯) →\n      motive a t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRun",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRun.contains",
+      "module": "RDF11.OrdinaryRuleRuns",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri}\n  {v : RDF11.RDFVocabulary Iri} {Blank : Type}\n  {step : RDF11.GeneralizedGraph Iri Literal Blank → RDF11.GeneralizedTriple Iri Literal Blank → Prop}\n  {seed H : RDF11.GeneralizedGraph Iri Literal Blank}, RDF11.OrdinaryRun T D v step seed H → RDF11.Set.subset seed H",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES",
+        "MT11-ORDINARY-RULE-CHECK-PROCEDURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRun",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRun.next",
+      "module": "RDF11.OrdinaryRuleRuns",
+      "kind": "constructor",
+      "type": "∀ {Iri Literal Value B : Type} {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri}\n  {v : RDF11.RDFVocabulary Iri}\n  {step : RDF11.GeneralizedGraph Iri Literal B → RDF11.GeneralizedTriple Iri Literal B → Prop}\n  {seed H K : RDF11.GeneralizedGraph Iri Literal B},\n  RDF11.OrdinaryRun T D v step seed H → RDF11.OrdinaryStep T D v step H K → RDF11.OrdinaryRun T D v step seed K",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRun",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRun.ordinary",
+      "module": "RDF11.OrdinaryRuleRuns",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri}\n  {v : RDF11.RDFVocabulary Iri} {Blank : Type}\n  {step : RDF11.GeneralizedGraph Iri Literal Blank → RDF11.GeneralizedTriple Iri Literal Blank → Prop}\n  {seed H : RDF11.GeneralizedGraph Iri Literal Blank}, RDF11.OrdinaryRun T D v step seed H → seed.Ordinary → H.Ordinary",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES",
+        "MT11-ORDINARY-RULE-CHECK-PROCEDURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRun",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRun.rec",
+      "module": "RDF11.OrdinaryRuleRuns",
+      "kind": "recursor",
+      "type": "∀ {Iri Literal Value B : Type} {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri}\n  {v : RDF11.RDFVocabulary Iri}\n  {step : RDF11.GeneralizedGraph Iri Literal B → RDF11.GeneralizedTriple Iri Literal B → Prop}\n  {seed : RDF11.GeneralizedGraph Iri Literal B}\n  {motive : (a : RDF11.GeneralizedGraph Iri Literal B) → RDF11.OrdinaryRun T D v step seed a → Prop},\n  motive seed ⋯ →\n    (∀ {H K : RDF11.GeneralizedGraph Iri Literal B} (a : RDF11.OrdinaryRun T D v step seed H)\n        (a_1 : RDF11.OrdinaryStep T D v step H K), motive H a → motive K ⋯) →\n      ∀ {a : RDF11.GeneralizedGraph Iri Literal B} (t : RDF11.OrdinaryRun T D v step seed a), motive a t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRun",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRun.recOn",
+      "module": "RDF11.OrdinaryRuleRuns",
+      "kind": "definition",
+      "type": "∀ {Iri Literal Value B : Type} {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri}\n  {v : RDF11.RDFVocabulary Iri}\n  {step : RDF11.GeneralizedGraph Iri Literal B → RDF11.GeneralizedTriple Iri Literal B → Prop}\n  {seed : RDF11.GeneralizedGraph Iri Literal B}\n  {motive : (a : RDF11.GeneralizedGraph Iri Literal B) → RDF11.OrdinaryRun T D v step seed a → Prop}\n  {a : RDF11.GeneralizedGraph Iri Literal B} (t : RDF11.OrdinaryRun T D v step seed a),\n  motive seed ⋯ →\n    (∀ {H K : RDF11.GeneralizedGraph Iri Literal B} (a : RDF11.OrdinaryRun T D v step seed H)\n        (a_1 : RDF11.OrdinaryStep T D v step H K), motive H a → motive K ⋯) →\n      motive a t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRun",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRun.rules_mono",
+      "module": "RDF11.OrdinaryRuleRuns",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B Value : Type} {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri}\n  {v : RDF11.RDFVocabulary Iri} {seed H : RDF11.GeneralizedGraph Iri Literal B}\n  {step₁ step₂ : RDF11.GeneralizedGraph Iri Literal B → RDF11.GeneralizedTriple Iri Literal B → Prop},\n  (∀ (H : RDF11.GeneralizedGraph Iri Literal B) (t : RDF11.GeneralizedTriple Iri Literal B), step₁ H t → step₂ H t) →\n    RDF11.OrdinaryRun T D v step₁ seed H → RDF11.OrdinaryRun T D v step₂ seed H",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES",
+        "MT11-RULE-STRATEGY-LIMITS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRun",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryRun.start",
+      "module": "RDF11.OrdinaryRuleRuns",
+      "kind": "constructor",
+      "type": "∀ {Iri Literal Value B : Type} {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri}\n  {v : RDF11.RDFVocabulary Iri}\n  {step : RDF11.GeneralizedGraph Iri Literal B → RDF11.GeneralizedTriple Iri Literal B → Prop}\n  {seed : RDF11.GeneralizedGraph Iri Literal B}, RDF11.OrdinaryRun T D v step seed seed",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRun",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryStep",
+      "module": "RDF11.OrdinaryRuleRuns",
+      "kind": "inductive",
+      "type": "{Iri Literal Value B : Type} →\n  RDF11.DatatypeTheory Iri Literal Value →\n    RDF11.Set Iri →\n      RDF11.RDFVocabulary Iri →\n        (RDF11.GeneralizedGraph Iri Literal B → RDF11.GeneralizedTriple Iri Literal B → Prop) →\n          RDF11.GeneralizedGraph Iri Literal B → RDF11.GeneralizedGraph Iri Literal B → Prop",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES",
+        "MT11-RULE-rdfD1",
+        "MT11-ORDINARY-RULE-CHECK-PROCEDURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryStep.casesOn",
+      "module": "RDF11.OrdinaryRuleRuns",
+      "kind": "definition",
+      "type": "∀ {Iri Literal Value B : Type} {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri}\n  {v : RDF11.RDFVocabulary Iri}\n  {step : RDF11.GeneralizedGraph Iri Literal B → RDF11.GeneralizedTriple Iri Literal B → Prop}\n  {H : RDF11.GeneralizedGraph Iri Literal B}\n  {motive : (a : RDF11.GeneralizedGraph Iri Literal B) → RDF11.OrdinaryStep T D v step H a → Prop}\n  {a : RDF11.GeneralizedGraph Iri Literal B} (t : RDF11.OrdinaryStep T D v step H a),\n  (∀ (t : RDF11.GeneralizedTriple Iri Literal B) (a : step H t) (a_1 : t.Ordinary),\n      motive (RDF11.Set.union H (RDF11.Set.singleton t)) ⋯) →\n    (∀ (s p : RDF11.Term Iri Literal B) (l : Literal) (b : B)\n        (a : H { subject := s, predicate := p, object := RDF11.Term.literal l }) (a_1 : D (T.literalSyntax.datatype l))\n        (a_2 : ¬H.hasBlank b) (a_3 : { subject := s, predicate := p, object := RDF11.Term.literal l }.Ordinary),\n        motive (RDF11.freshLiteralExpansion v (T.literalSyntax.datatype l) H s p b) ⋯) →\n      motive a t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryStep",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryStep.contains",
+      "module": "RDF11.OrdinaryRuleRuns",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri}\n  {v : RDF11.RDFVocabulary Iri} {Blank : Type}\n  {step : RDF11.GeneralizedGraph Iri Literal Blank → RDF11.GeneralizedTriple Iri Literal Blank → Prop}\n  {H K : RDF11.GeneralizedGraph Iri Literal Blank}, RDF11.OrdinaryStep T D v step H K → RDF11.Set.subset H K",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES",
+        "MT11-ORDINARY-RULE-CHECK-PROCEDURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryStep",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryStep.ordinary",
+      "module": "RDF11.OrdinaryRuleRuns",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri}\n  {v : RDF11.RDFVocabulary Iri} {Blank : Type}\n  {step : RDF11.GeneralizedGraph Iri Literal Blank → RDF11.GeneralizedTriple Iri Literal Blank → Prop}\n  {H K : RDF11.GeneralizedGraph Iri Literal Blank}, RDF11.OrdinaryStep T D v step H K → H.Ordinary → K.Ordinary",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES",
+        "MT11-ORDINARY-RULE-CHECK-PROCEDURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryStep",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryStep.rdfD1",
+      "module": "RDF11.OrdinaryRuleRuns",
+      "kind": "constructor",
+      "type": "∀ {Iri Literal Value B : Type} {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri}\n  {v : RDF11.RDFVocabulary Iri}\n  {step : RDF11.GeneralizedGraph Iri Literal B → RDF11.GeneralizedTriple Iri Literal B → Prop}\n  {H : RDF11.GeneralizedGraph Iri Literal B} (s p : RDF11.Term Iri Literal B) (l : Literal) (b : B),\n  H { subject := s, predicate := p, object := RDF11.Term.literal l } →\n    D (T.literalSyntax.datatype l) →\n      ¬H.hasBlank b →\n        { subject := s, predicate := p, object := RDF11.Term.literal l }.Ordinary →\n          RDF11.OrdinaryStep T D v step H (RDF11.freshLiteralExpansion v (T.literalSyntax.datatype l) H s p b)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryStep",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryStep.rec",
+      "module": "RDF11.OrdinaryRuleRuns",
+      "kind": "recursor",
+      "type": "∀ {Iri Literal Value B : Type} {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri}\n  {v : RDF11.RDFVocabulary Iri}\n  {step : RDF11.GeneralizedGraph Iri Literal B → RDF11.GeneralizedTriple Iri Literal B → Prop}\n  {H : RDF11.GeneralizedGraph Iri Literal B}\n  {motive : (a : RDF11.GeneralizedGraph Iri Literal B) → RDF11.OrdinaryStep T D v step H a → Prop},\n  (∀ (t : RDF11.GeneralizedTriple Iri Literal B) (a : step H t) (a_1 : t.Ordinary),\n      motive (RDF11.Set.union H (RDF11.Set.singleton t)) ⋯) →\n    (∀ (s p : RDF11.Term Iri Literal B) (l : Literal) (b : B)\n        (a : H { subject := s, predicate := p, object := RDF11.Term.literal l }) (a_1 : D (T.literalSyntax.datatype l))\n        (a_2 : ¬H.hasBlank b) (a_3 : { subject := s, predicate := p, object := RDF11.Term.literal l }.Ordinary),\n        motive (RDF11.freshLiteralExpansion v (T.literalSyntax.datatype l) H s p b) ⋯) →\n      ∀ {a : RDF11.GeneralizedGraph Iri Literal B} (t : RDF11.OrdinaryStep T D v step H a), motive a t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryStep",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryStep.recOn",
+      "module": "RDF11.OrdinaryRuleRuns",
+      "kind": "definition",
+      "type": "∀ {Iri Literal Value B : Type} {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri}\n  {v : RDF11.RDFVocabulary Iri}\n  {step : RDF11.GeneralizedGraph Iri Literal B → RDF11.GeneralizedTriple Iri Literal B → Prop}\n  {H : RDF11.GeneralizedGraph Iri Literal B}\n  {motive : (a : RDF11.GeneralizedGraph Iri Literal B) → RDF11.OrdinaryStep T D v step H a → Prop}\n  {a : RDF11.GeneralizedGraph Iri Literal B} (t : RDF11.OrdinaryStep T D v step H a),\n  (∀ (t : RDF11.GeneralizedTriple Iri Literal B) (a : step H t) (a_1 : t.Ordinary),\n      motive (RDF11.Set.union H (RDF11.Set.singleton t)) ⋯) →\n    (∀ (s p : RDF11.Term Iri Literal B) (l : Literal) (b : B)\n        (a : H { subject := s, predicate := p, object := RDF11.Term.literal l }) (a_1 : D (T.literalSyntax.datatype l))\n        (a_2 : ¬H.hasBlank b) (a_3 : { subject := s, predicate := p, object := RDF11.Term.literal l }.Ordinary),\n        motive (RDF11.freshLiteralExpansion v (T.literalSyntax.datatype l) H s p b) ⋯) →\n      motive a t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryStep",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryStep.rule",
+      "module": "RDF11.OrdinaryRuleRuns",
+      "kind": "constructor",
+      "type": "∀ {Iri Literal Value B : Type} {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri}\n  {v : RDF11.RDFVocabulary Iri}\n  {step : RDF11.GeneralizedGraph Iri Literal B → RDF11.GeneralizedTriple Iri Literal B → Prop}\n  {H : RDF11.GeneralizedGraph Iri Literal B} (t : RDF11.GeneralizedTriple Iri Literal B),\n  step H t → t.Ordinary → RDF11.OrdinaryStep T D v step H (RDF11.Set.union H (RDF11.Set.singleton t))",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryStep",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.OrdinaryStep.rules_mono",
+      "module": "RDF11.OrdinaryRuleRuns",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B Value : Type} {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri}\n  {v : RDF11.RDFVocabulary Iri} {H K : RDF11.GeneralizedGraph Iri Literal B}\n  {step₁ step₂ : RDF11.GeneralizedGraph Iri Literal B → RDF11.GeneralizedTriple Iri Literal B → Prop},\n  (∀ (H : RDF11.GeneralizedGraph Iri Literal B) (t : RDF11.GeneralizedTriple Iri Literal B), step₁ H t → step₂ H t) →\n    RDF11.OrdinaryStep T D v step₁ H K → RDF11.OrdinaryStep T D v step₂ H K",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES",
+        "MT11-RULE-STRATEGY-LIMITS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryStep",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SharedLiteralExample.conclusion",
+      "module": "RDF11.SharedLiteralExample",
+      "kind": "definition",
+      "type": "{Iri B Literal : Type} → RDF11.RDFVocabulary Iri → Iri → Iri → Iri → Iri → Iri → B → RDF11.Graph Iri Literal B",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES",
+        "MT11-ORDINARY-SHARED-LITERAL-EXAMPLE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SharedLiteralExample.conclusion.eq_1",
+      "module": "RDF11.SharedLiteralExample",
+      "kind": "theorem",
+      "type": "∀ {Iri B Literal : Type} (v : RDF11.RDFVocabulary Iri) (datatype s₁ p₁ s₂ p₂ : Iri) (b : B),\n  RDF11.SharedLiteralExample.conclusion v datatype s₁ p₁ s₂ p₂ b =\n    RDF11.Set.ofList\n      [{ subject := RDF11.Subject.iri s₁, predicate := p₁, object := RDF11.Term.blank b },\n        { subject := RDF11.Subject.iri s₂, predicate := p₂, object := RDF11.Term.blank b },\n        { subject := RDF11.Subject.blank b, predicate := v.iri RDF11.RDFSymbol.rdfType,\n          object := RDF11.Term.iri datatype }]",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SharedLiteralExample.conclusion",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SharedLiteralExample.entailment",
+      "module": "RDF11.SharedLiteralExample",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (v : RDF11.RDFVocabulary Iri)\n  (s₁ p₁ s₂ p₂ : Iri) (l : Literal) (b : B),\n  v.baseDatatypes (T.literalSyntax.datatype l) →\n    RDF11.RDFEntails T v.baseDatatypes v (RDF11.SharedLiteralExample.premise s₁ p₁ s₂ p₂ l).generalize\n      (RDF11.SharedLiteralExample.conclusion v (T.literalSyntax.datatype l) s₁ p₁ s₂ p₂ b).generalize",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES",
+        "MT11-ORDINARY-SHARED-LITERAL-EXAMPLE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SharedLiteralExample.generalized_instance",
+      "module": "RDF11.SharedLiteralExample",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (v : RDF11.RDFVocabulary Iri)\n  (s₁ p₁ s₂ p₂ : Iri) (l : Literal) (b : B),\n  v.baseDatatypes (T.literalSyntax.datatype l) →\n    RDF11.Set.subset\n      (RDF11.GeneralizedGraph.substitute (RDF11.SharedLiteralExample.substitution l)\n        (RDF11.SharedLiteralExample.conclusion v (T.literalSyntax.datatype l) s₁ p₁ s₂ p₂ b).generalize)\n      (RDF11.RDFClosure T v (RDF11.SharedLiteralExample.premise s₁ p₁ s₂ p₂ l).generalize\n        (RDF11.SharedLiteralExample.conclusion v (T.literalSyntax.datatype l) s₁ p₁ s₂ p₂ b).generalize)",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES",
+        "MT11-ORDINARY-SHARED-LITERAL-EXAMPLE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SharedLiteralExample.premise",
+      "module": "RDF11.SharedLiteralExample",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} → Iri → Iri → Iri → Iri → Literal → RDF11.Graph Iri Literal B",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES",
+        "MT11-ORDINARY-SHARED-LITERAL-EXAMPLE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SharedLiteralExample.premise.eq_1",
+      "module": "RDF11.SharedLiteralExample",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (s₁ p₁ s₂ p₂ : Iri) (l : Literal),\n  RDF11.SharedLiteralExample.premise s₁ p₁ s₂ p₂ l =\n    RDF11.Set.ofList\n      [{ subject := RDF11.Subject.iri s₁, predicate := p₁, object := RDF11.Term.literal l },\n        { subject := RDF11.Subject.iri s₂, predicate := p₂, object := RDF11.Term.literal l }]",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SharedLiteralExample.premise",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SharedLiteralExample.string_entailment",
+      "module": "RDF11.SharedLiteralExample",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (v : RDF11.RDFVocabulary Iri)\n  (s₁ p₁ s₂ p₂ : Iri) (l : Literal) (b : B),\n  T.literalSyntax.datatype l = v.iri RDF11.RDFSymbol.xsdString →\n    RDF11.RDFEntails T v.baseDatatypes v (RDF11.SharedLiteralExample.premise s₁ p₁ s₂ p₂ l).generalize\n      (RDF11.SharedLiteralExample.conclusion v (v.iri RDF11.RDFSymbol.xsdString) s₁ p₁ s₂ p₂ b).generalize",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES",
+        "MT11-ORDINARY-SHARED-LITERAL-EXAMPLE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SharedLiteralExample.substitution",
+      "module": "RDF11.SharedLiteralExample",
+      "kind": "definition",
+      "type": "{Literal Iri B : Type} → Literal → RDF11.Substitution Iri Literal B",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES",
+        "MT11-ORDINARY-SHARED-LITERAL-EXAMPLE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.freshLiteralExpansion_satisfaction",
+      "module": "RDF11.OrdinaryRuleRuns",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u_1} {Value : Type} {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri}\n  {v : RDF11.RDFVocabulary Iri} {ρ : RDF11.ValueRealization Value U} {B : Type}\n  (I : RDF11.SimpleInterpretation Iri Literal U),\n  I.RDFConditions T D v ρ →\n    ∀ (H : RDF11.GeneralizedGraph Iri Literal B) (s p : RDF11.Term Iri Literal B) (l : Literal) (b : B),\n      H { subject := s, predicate := p, object := RDF11.Term.literal l } →\n        D (T.literalSyntax.datatype l) →\n          ¬H.hasBlank b →\n            (I.Satisfies (RDF11.freshLiteralExpansion v (T.literalSyntax.datatype l) H s p b) ↔ I.Satisfies H)",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES",
+        "MT11-RULE-rdfD1",
+        "MT11-ORDINARY-RULE-SOUND-INCOMPLETE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.ordinaryAxiomSeed_satisfaction",
+      "module": "RDF11.OrdinaryRuleRuns",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u_1} {B₁ B₂ : Type} (I : RDF11.SimpleInterpretation Iri Literal U)\n  (datatype : Literal → Iri) (container : Nat → Iri) (axioms G : RDF11.GeneralizedGraph Iri Literal B₁)\n  (E : RDF11.GeneralizedGraph Iri Literal B₂),\n  (∀ (A : I.Assignment B₁), I.GraphTrue A axioms) →\n    (I.Satisfies (RDF11.OrdinaryAxiomSeed datatype container axioms G E) ↔ I.Satisfies G)",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES",
+        "MT11-ORDINARY-RULE-SOUND-INCOMPLETE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.ordinaryRun_satisfaction",
+      "module": "RDF11.OrdinaryRuleRuns",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u_1} {Value : Type} {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri}\n  {v : RDF11.RDFVocabulary Iri} {ρ : RDF11.ValueRealization Value U} {B : Type}\n  {step : RDF11.GeneralizedGraph Iri Literal B → RDF11.GeneralizedTriple Iri Literal B → Prop}\n  {seed H : RDF11.GeneralizedGraph Iri Literal B} (I : RDF11.SimpleInterpretation Iri Literal U),\n  I.RDFConditions T D v ρ →\n    (∀ (H : RDF11.GeneralizedGraph Iri Literal B) (t : RDF11.GeneralizedTriple Iri Literal B) (A : I.Assignment B),\n        I.GraphTrue A H → step H t → I.TripleTrue A t) →\n      RDF11.OrdinaryRun T D v step seed H → (I.Satisfies H ↔ I.Satisfies seed)",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES",
+        "MT11-ORDINARY-RULE-SOUND-INCOMPLETE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.ordinaryStep_satisfaction",
+      "module": "RDF11.OrdinaryRuleRuns",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u_1} {Value : Type} {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri}\n  {v : RDF11.RDFVocabulary Iri} {ρ : RDF11.ValueRealization Value U} {B : Type}\n  {step : RDF11.GeneralizedGraph Iri Literal B → RDF11.GeneralizedTriple Iri Literal B → Prop}\n  {H K : RDF11.GeneralizedGraph Iri Literal B} (I : RDF11.SimpleInterpretation Iri Literal U),\n  I.RDFConditions T D v ρ →\n    (∀ (H : RDF11.GeneralizedGraph Iri Literal B) (t : RDF11.GeneralizedTriple Iri Literal B) (A : I.Assignment B),\n        I.GraphTrue A H → step H t → I.TripleTrue A t) →\n      RDF11.OrdinaryStep T D v step H K → (I.Satisfies K ↔ I.Satisfies H)",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES",
+        "MT11-ORDINARY-RULE-SOUND-INCOMPLETE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.freshLiteralExpansion",
+      "module": "RDF11.OrdinaryRuleRuns",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  RDF11.RDFVocabulary Iri →\n    Iri →\n      RDF11.GeneralizedGraph Iri Literal B →\n        RDF11.Term Iri Literal B → RDF11.Term Iri Literal B → B → RDF11.GeneralizedGraph Iri Literal B",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES",
+        "MT11-RULE-rdfD1",
+        "MT11-ORDINARY-RULE-CHECK-PROCEDURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ordinaryAxiomSeed_subset",
+      "module": "RDF11.OrdinaryRuleRuns",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri B₁ B₂ : Type} (datatype : Literal → Iri) (container : Nat → Iri)\n  (axioms G : RDF11.GeneralizedGraph Iri Literal B₁) (E : RDF11.GeneralizedGraph Iri Literal B₂),\n  RDF11.Set.subset (RDF11.OrdinaryAxiomSeed datatype container axioms G E) (RDF11.Set.union G axioms)",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES",
+        "MT11-ORDINARY-RULE-CHECK-PROCEDURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ordinary_rdf_check_sound",
+      "module": "RDF11.OrdinaryRuleRuns",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B Value : Type} {T : RDF11.DatatypeTheory Iri Literal Value} {v : RDF11.RDFVocabulary Iri}\n  {G E H : RDF11.GeneralizedGraph Iri Literal B},\n  RDF11.OrdinaryRDFRun T v G E H →\n    ∀ (μ : RDF11.Substitution Iri Literal B),\n      RDF11.Set.subset (RDF11.GeneralizedGraph.substitute μ E) H → RDF11.RDFEntails T v.baseDatatypes v G E",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES",
+        "MT11-ORDINARY-RULE-SOUND-INCOMPLETE",
+        "MT11-RULE-STRATEGY-LIMITS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ordinary_rdf_run_ordinary",
+      "module": "RDF11.OrdinaryRuleRuns",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} {T : RDF11.DatatypeTheory Iri Literal Value} {v : RDF11.RDFVocabulary Iri} {Blank : Type}\n  {G : RDF11.GeneralizedGraph Iri Literal Blank} {Blank_1 : Type} {E : RDF11.GeneralizedGraph Iri Literal Blank_1}\n  {H : RDF11.GeneralizedGraph Iri Literal Blank}, RDF11.OrdinaryRDFRun T v G E H → G.Ordinary → H.Ordinary",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES",
+        "MT11-ORDINARY-RULE-CHECK-PROCEDURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ordinary_rdf_run_satisfaction",
+      "module": "RDF11.OrdinaryRuleRuns",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u_1} {Value : Type} {T : RDF11.DatatypeTheory Iri Literal Value}\n  {v : RDF11.RDFVocabulary Iri} {Blank : Type} {G : RDF11.GeneralizedGraph Iri Literal Blank} {Blank_1 : Type}\n  {E : RDF11.GeneralizedGraph Iri Literal Blank_1} {H : RDF11.GeneralizedGraph Iri Literal Blank}\n  (I : RDF11.SimpleInterpretation Iri Literal U),\n  I.RDFModel T v.baseDatatypes v → RDF11.OrdinaryRDFRun T v G E H → (I.Satisfies H ↔ I.Satisfies G)",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES",
+        "MT11-ORDINARY-RULE-SOUND-INCOMPLETE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ordinary_rdfs_check_sound",
+      "module": "RDF11.OrdinaryRuleRuns",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B Value : Type} {T : RDF11.DatatypeTheory Iri Literal Value} {v : RDF11.RDFSVocabulary Iri}\n  {G E H : RDF11.GeneralizedGraph Iri Literal B},\n  RDF11.OrdinaryRDFSRun T v G E H →\n    ∀ (μ : RDF11.Substitution Iri Literal B),\n      RDF11.Set.subset (RDF11.GeneralizedGraph.substitute μ E) H → RDF11.RDFSEntails T v.toRDF.baseDatatypes v G E",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES",
+        "MT11-ORDINARY-RULE-SOUND-INCOMPLETE",
+        "MT11-RULE-STRATEGY-LIMITS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ordinary_rdfs_run_ordinary",
+      "module": "RDF11.OrdinaryRuleRuns",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} {T : RDF11.DatatypeTheory Iri Literal Value} {v : RDF11.RDFSVocabulary Iri} {Blank : Type}\n  {G : RDF11.GeneralizedGraph Iri Literal Blank} {Blank_1 : Type} {E : RDF11.GeneralizedGraph Iri Literal Blank_1}\n  {H : RDF11.GeneralizedGraph Iri Literal Blank}, RDF11.OrdinaryRDFSRun T v G E H → G.Ordinary → H.Ordinary",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES",
+        "MT11-ORDINARY-RULE-CHECK-PROCEDURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ordinary_rdfs_run_satisfaction",
+      "module": "RDF11.OrdinaryRuleRuns",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u_1} {Value : Type} {T : RDF11.DatatypeTheory Iri Literal Value}\n  {v : RDF11.RDFSVocabulary Iri} {Blank : Type} {G : RDF11.GeneralizedGraph Iri Literal Blank} {Blank_1 : Type}\n  {E : RDF11.GeneralizedGraph Iri Literal Blank_1} {H : RDF11.GeneralizedGraph Iri Literal Blank}\n  (I : RDF11.SimpleInterpretation Iri Literal U),\n  I.RDFSModel T v.toRDF.baseDatatypes v → RDF11.OrdinaryRDFSRun T v G E H → (I.Satisfies H ↔ I.Satisfies G)",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES",
+        "MT11-ORDINARY-RULE-SOUND-INCOMPLETE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.rdf_axioms_ordinary",
+      "module": "RDF11.OrdinaryRuleRuns",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (v : RDF11.RDFVocabulary Iri), v.axioms.Ordinary",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES",
+        "MT11-ORDINARY-RULE-CHECK-PROCEDURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.rdfs_axioms_ordinary",
+      "module": "RDF11.OrdinaryRuleRuns",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (v : RDF11.RDFSVocabulary Iri), v.axioms.Ordinary",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES",
+        "MT11-ORDINARY-RULE-CHECK-PROCEDURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.OrdinaryRuleFrame.0.RDF11.OrdinaryRuleScope.holds.match_1.eq_1",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "∀ (motive : RDF11.OrdinaryRuleScope.Tag → Sort u_1) (h_1 : Unit → motive RDF11.OrdinaryRuleScope.Tag.typing)\n  (h_2 : Unit → motive RDF11.OrdinaryRuleScope.Tag.domain) (h_3 : Unit → motive RDF11.OrdinaryRuleScope.Tag.range)\n  (h_4 : Unit → motive RDF11.OrdinaryRuleScope.Tag.subproperty)\n  (h_5 : Unit → motive RDF11.OrdinaryRuleScope.Tag.subclass) (h_6 : Unit → motive RDF11.OrdinaryRuleScope.Tag.member)\n  (h_7 : Unit → motive RDF11.OrdinaryRuleScope.Tag.propertyA) (h_8 : (x : RDF11.OrdinaryRuleScope.Tag) → motive x),\n  (match RDF11.OrdinaryRuleScope.Tag.typing with\n    | RDF11.OrdinaryRuleScope.Tag.typing => h_1 ()\n    | RDF11.OrdinaryRuleScope.Tag.domain => h_2 ()\n    | RDF11.OrdinaryRuleScope.Tag.range => h_3 ()\n    | RDF11.OrdinaryRuleScope.Tag.subproperty => h_4 ()\n    | RDF11.OrdinaryRuleScope.Tag.subclass => h_5 ()\n    | RDF11.OrdinaryRuleScope.Tag.member => h_6 ()\n    | RDF11.OrdinaryRuleScope.Tag.propertyA => h_7 ()\n    | x => h_8 x) =\n    h_1 ()",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.holds.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.OrdinaryRuleFrame.0.RDF11.OrdinaryRuleScope.holds.match_1.eq_2",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "∀ (motive : RDF11.OrdinaryRuleScope.Tag → Sort u_1) (h_1 : Unit → motive RDF11.OrdinaryRuleScope.Tag.typing)\n  (h_2 : Unit → motive RDF11.OrdinaryRuleScope.Tag.domain) (h_3 : Unit → motive RDF11.OrdinaryRuleScope.Tag.range)\n  (h_4 : Unit → motive RDF11.OrdinaryRuleScope.Tag.subproperty)\n  (h_5 : Unit → motive RDF11.OrdinaryRuleScope.Tag.subclass) (h_6 : Unit → motive RDF11.OrdinaryRuleScope.Tag.member)\n  (h_7 : Unit → motive RDF11.OrdinaryRuleScope.Tag.propertyA) (h_8 : (x : RDF11.OrdinaryRuleScope.Tag) → motive x),\n  (match RDF11.OrdinaryRuleScope.Tag.domain with\n    | RDF11.OrdinaryRuleScope.Tag.typing => h_1 ()\n    | RDF11.OrdinaryRuleScope.Tag.domain => h_2 ()\n    | RDF11.OrdinaryRuleScope.Tag.range => h_3 ()\n    | RDF11.OrdinaryRuleScope.Tag.subproperty => h_4 ()\n    | RDF11.OrdinaryRuleScope.Tag.subclass => h_5 ()\n    | RDF11.OrdinaryRuleScope.Tag.member => h_6 ()\n    | RDF11.OrdinaryRuleScope.Tag.propertyA => h_7 ()\n    | x => h_8 x) =\n    h_2 ()",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.holds.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.OrdinaryRuleFrame.0.RDF11.OrdinaryRuleScope.holds.match_1.eq_3",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "∀ (motive : RDF11.OrdinaryRuleScope.Tag → Sort u_1) (h_1 : Unit → motive RDF11.OrdinaryRuleScope.Tag.typing)\n  (h_2 : Unit → motive RDF11.OrdinaryRuleScope.Tag.domain) (h_3 : Unit → motive RDF11.OrdinaryRuleScope.Tag.range)\n  (h_4 : Unit → motive RDF11.OrdinaryRuleScope.Tag.subproperty)\n  (h_5 : Unit → motive RDF11.OrdinaryRuleScope.Tag.subclass) (h_6 : Unit → motive RDF11.OrdinaryRuleScope.Tag.member)\n  (h_7 : Unit → motive RDF11.OrdinaryRuleScope.Tag.propertyA) (h_8 : (x : RDF11.OrdinaryRuleScope.Tag) → motive x),\n  (match RDF11.OrdinaryRuleScope.Tag.range with\n    | RDF11.OrdinaryRuleScope.Tag.typing => h_1 ()\n    | RDF11.OrdinaryRuleScope.Tag.domain => h_2 ()\n    | RDF11.OrdinaryRuleScope.Tag.range => h_3 ()\n    | RDF11.OrdinaryRuleScope.Tag.subproperty => h_4 ()\n    | RDF11.OrdinaryRuleScope.Tag.subclass => h_5 ()\n    | RDF11.OrdinaryRuleScope.Tag.member => h_6 ()\n    | RDF11.OrdinaryRuleScope.Tag.propertyA => h_7 ()\n    | x => h_8 x) =\n    h_3 ()",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.holds.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.OrdinaryRuleFrame.0.RDF11.OrdinaryRuleScope.holds.match_1.eq_4",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "∀ (motive : RDF11.OrdinaryRuleScope.Tag → Sort u_1) (h_1 : Unit → motive RDF11.OrdinaryRuleScope.Tag.typing)\n  (h_2 : Unit → motive RDF11.OrdinaryRuleScope.Tag.domain) (h_3 : Unit → motive RDF11.OrdinaryRuleScope.Tag.range)\n  (h_4 : Unit → motive RDF11.OrdinaryRuleScope.Tag.subproperty)\n  (h_5 : Unit → motive RDF11.OrdinaryRuleScope.Tag.subclass) (h_6 : Unit → motive RDF11.OrdinaryRuleScope.Tag.member)\n  (h_7 : Unit → motive RDF11.OrdinaryRuleScope.Tag.propertyA) (h_8 : (x : RDF11.OrdinaryRuleScope.Tag) → motive x),\n  (match RDF11.OrdinaryRuleScope.Tag.subproperty with\n    | RDF11.OrdinaryRuleScope.Tag.typing => h_1 ()\n    | RDF11.OrdinaryRuleScope.Tag.domain => h_2 ()\n    | RDF11.OrdinaryRuleScope.Tag.range => h_3 ()\n    | RDF11.OrdinaryRuleScope.Tag.subproperty => h_4 ()\n    | RDF11.OrdinaryRuleScope.Tag.subclass => h_5 ()\n    | RDF11.OrdinaryRuleScope.Tag.member => h_6 ()\n    | RDF11.OrdinaryRuleScope.Tag.propertyA => h_7 ()\n    | x => h_8 x) =\n    h_4 ()",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.holds.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.OrdinaryRuleFrame.0.RDF11.OrdinaryRuleScope.holds.match_1.eq_5",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "∀ (motive : RDF11.OrdinaryRuleScope.Tag → Sort u_1) (h_1 : Unit → motive RDF11.OrdinaryRuleScope.Tag.typing)\n  (h_2 : Unit → motive RDF11.OrdinaryRuleScope.Tag.domain) (h_3 : Unit → motive RDF11.OrdinaryRuleScope.Tag.range)\n  (h_4 : Unit → motive RDF11.OrdinaryRuleScope.Tag.subproperty)\n  (h_5 : Unit → motive RDF11.OrdinaryRuleScope.Tag.subclass) (h_6 : Unit → motive RDF11.OrdinaryRuleScope.Tag.member)\n  (h_7 : Unit → motive RDF11.OrdinaryRuleScope.Tag.propertyA) (h_8 : (x : RDF11.OrdinaryRuleScope.Tag) → motive x),\n  (match RDF11.OrdinaryRuleScope.Tag.subclass with\n    | RDF11.OrdinaryRuleScope.Tag.typing => h_1 ()\n    | RDF11.OrdinaryRuleScope.Tag.domain => h_2 ()\n    | RDF11.OrdinaryRuleScope.Tag.range => h_3 ()\n    | RDF11.OrdinaryRuleScope.Tag.subproperty => h_4 ()\n    | RDF11.OrdinaryRuleScope.Tag.subclass => h_5 ()\n    | RDF11.OrdinaryRuleScope.Tag.member => h_6 ()\n    | RDF11.OrdinaryRuleScope.Tag.propertyA => h_7 ()\n    | x => h_8 x) =\n    h_5 ()",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.holds.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.OrdinaryRuleFrame.0.RDF11.OrdinaryRuleScope.holds.match_1.eq_6",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "∀ (motive : RDF11.OrdinaryRuleScope.Tag → Sort u_1) (h_1 : Unit → motive RDF11.OrdinaryRuleScope.Tag.typing)\n  (h_2 : Unit → motive RDF11.OrdinaryRuleScope.Tag.domain) (h_3 : Unit → motive RDF11.OrdinaryRuleScope.Tag.range)\n  (h_4 : Unit → motive RDF11.OrdinaryRuleScope.Tag.subproperty)\n  (h_5 : Unit → motive RDF11.OrdinaryRuleScope.Tag.subclass) (h_6 : Unit → motive RDF11.OrdinaryRuleScope.Tag.member)\n  (h_7 : Unit → motive RDF11.OrdinaryRuleScope.Tag.propertyA) (h_8 : (x : RDF11.OrdinaryRuleScope.Tag) → motive x),\n  (match RDF11.OrdinaryRuleScope.Tag.member with\n    | RDF11.OrdinaryRuleScope.Tag.typing => h_1 ()\n    | RDF11.OrdinaryRuleScope.Tag.domain => h_2 ()\n    | RDF11.OrdinaryRuleScope.Tag.range => h_3 ()\n    | RDF11.OrdinaryRuleScope.Tag.subproperty => h_4 ()\n    | RDF11.OrdinaryRuleScope.Tag.subclass => h_5 ()\n    | RDF11.OrdinaryRuleScope.Tag.member => h_6 ()\n    | RDF11.OrdinaryRuleScope.Tag.propertyA => h_7 ()\n    | x => h_8 x) =\n    h_6 ()",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.holds.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.OrdinaryRuleFrame.0.RDF11.OrdinaryRuleScope.holds.match_1.eq_7",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "∀ (motive : RDF11.OrdinaryRuleScope.Tag → Sort u_1) (h_1 : Unit → motive RDF11.OrdinaryRuleScope.Tag.typing)\n  (h_2 : Unit → motive RDF11.OrdinaryRuleScope.Tag.domain) (h_3 : Unit → motive RDF11.OrdinaryRuleScope.Tag.range)\n  (h_4 : Unit → motive RDF11.OrdinaryRuleScope.Tag.subproperty)\n  (h_5 : Unit → motive RDF11.OrdinaryRuleScope.Tag.subclass) (h_6 : Unit → motive RDF11.OrdinaryRuleScope.Tag.member)\n  (h_7 : Unit → motive RDF11.OrdinaryRuleScope.Tag.propertyA) (h_8 : (x : RDF11.OrdinaryRuleScope.Tag) → motive x),\n  (match RDF11.OrdinaryRuleScope.Tag.propertyA with\n    | RDF11.OrdinaryRuleScope.Tag.typing => h_1 ()\n    | RDF11.OrdinaryRuleScope.Tag.domain => h_2 ()\n    | RDF11.OrdinaryRuleScope.Tag.range => h_3 ()\n    | RDF11.OrdinaryRuleScope.Tag.subproperty => h_4 ()\n    | RDF11.OrdinaryRuleScope.Tag.subclass => h_5 ()\n    | RDF11.OrdinaryRuleScope.Tag.member => h_6 ()\n    | RDF11.OrdinaryRuleScope.Tag.propertyA => h_7 ()\n    | x => h_8 x) =\n    h_7 ()",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.holds.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.OrdinaryRuleFrame.0.RDF11.OrdinaryRuleScope.holds.match_1.eq_8",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "∀ (motive : RDF11.OrdinaryRuleScope.Tag → Sort u_1) (x : RDF11.OrdinaryRuleScope.Tag)\n  (h_1 : Unit → motive RDF11.OrdinaryRuleScope.Tag.typing) (h_2 : Unit → motive RDF11.OrdinaryRuleScope.Tag.domain)\n  (h_3 : Unit → motive RDF11.OrdinaryRuleScope.Tag.range) (h_4 : Unit → motive RDF11.OrdinaryRuleScope.Tag.subproperty)\n  (h_5 : Unit → motive RDF11.OrdinaryRuleScope.Tag.subclass) (h_6 : Unit → motive RDF11.OrdinaryRuleScope.Tag.member)\n  (h_7 : Unit → motive RDF11.OrdinaryRuleScope.Tag.propertyA) (h_8 : (x : RDF11.OrdinaryRuleScope.Tag) → motive x),\n  (x = RDF11.OrdinaryRuleScope.Tag.typing → False) →\n    (x = RDF11.OrdinaryRuleScope.Tag.domain → False) →\n      (x = RDF11.OrdinaryRuleScope.Tag.range → False) →\n        (x = RDF11.OrdinaryRuleScope.Tag.subproperty → False) →\n          (x = RDF11.OrdinaryRuleScope.Tag.subclass → False) →\n            (x = RDF11.OrdinaryRuleScope.Tag.member → False) →\n              (x = RDF11.OrdinaryRuleScope.Tag.propertyA → False) →\n                (match x with\n                  | RDF11.OrdinaryRuleScope.Tag.typing => h_1 ()\n                  | RDF11.OrdinaryRuleScope.Tag.domain => h_2 ()\n                  | RDF11.OrdinaryRuleScope.Tag.range => h_3 ()\n                  | RDF11.OrdinaryRuleScope.Tag.subproperty => h_4 ()\n                  | RDF11.OrdinaryRuleScope.Tag.subclass => h_5 ()\n                  | RDF11.OrdinaryRuleScope.Tag.member => h_6 ()\n                  | RDF11.OrdinaryRuleScope.Tag.propertyA => h_7 ()\n                  | x => h_8 x) =\n                  h_8 x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.holds.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.OrdinaryRuleFrame.0.RDF11.OrdinaryRuleScope.holds.match_1.splitter",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "definition",
+      "type": "(motive : RDF11.OrdinaryRuleScope.Tag → Sort u_1) →\n  (p : RDF11.OrdinaryRuleScope.Tag) →\n    (Unit → motive RDF11.OrdinaryRuleScope.Tag.typing) →\n      (Unit → motive RDF11.OrdinaryRuleScope.Tag.domain) →\n        (Unit → motive RDF11.OrdinaryRuleScope.Tag.range) →\n          (Unit → motive RDF11.OrdinaryRuleScope.Tag.subproperty) →\n            (Unit → motive RDF11.OrdinaryRuleScope.Tag.subclass) →\n              (Unit → motive RDF11.OrdinaryRuleScope.Tag.member) →\n                (Unit → motive RDF11.OrdinaryRuleScope.Tag.propertyA) →\n                  ((x : RDF11.OrdinaryRuleScope.Tag) →\n                      (x = RDF11.OrdinaryRuleScope.Tag.typing → False) →\n                        (x = RDF11.OrdinaryRuleScope.Tag.domain → False) →\n                          (x = RDF11.OrdinaryRuleScope.Tag.range → False) →\n                            (x = RDF11.OrdinaryRuleScope.Tag.subproperty → False) →\n                              (x = RDF11.OrdinaryRuleScope.Tag.subclass → False) →\n                                (x = RDF11.OrdinaryRuleScope.Tag.member → False) →\n                                  (x = RDF11.OrdinaryRuleScope.Tag.propertyA → False) → motive x) →\n                    motive p",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.holds.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.OrdinaryRuleFrame.0.RDF11.OrdinaryRuleScope.iriTag.match_1.eq_1",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "∀ (motive : RDF11.OrdinaryRuleScope.Iri → Sort u_1) (s : RDF11.RDFSSymbol)\n  (h_1 : (s : RDF11.RDFSSymbol) → motive (Sum.inl s)) (h_2 : Unit → motive (Sum.inr RDF11.OrdinaryRuleScope.UserName.a))\n  (h_3 : Unit → motive (Sum.inr RDF11.OrdinaryRuleScope.UserName.c))\n  (h_4 : Unit → motive (Sum.inr RDF11.OrdinaryRuleScope.UserName.d))\n  (h_5 : Unit → motive (Sum.inr RDF11.OrdinaryRuleScope.UserName.e)),\n  (match Sum.inl s with\n    | Sum.inl s => h_1 s\n    | Sum.inr RDF11.OrdinaryRuleScope.UserName.a => h_2 ()\n    | Sum.inr RDF11.OrdinaryRuleScope.UserName.c => h_3 ()\n    | Sum.inr RDF11.OrdinaryRuleScope.UserName.d => h_4 ()\n    | Sum.inr RDF11.OrdinaryRuleScope.UserName.e => h_5 ()) =\n    h_1 s",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.iriTag.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.OrdinaryRuleFrame.0.RDF11.OrdinaryRuleScope.iriTag.match_1.eq_2",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "∀ (motive : RDF11.OrdinaryRuleScope.Iri → Sort u_1) (h_1 : (s : RDF11.RDFSSymbol) → motive (Sum.inl s))\n  (h_2 : Unit → motive (Sum.inr RDF11.OrdinaryRuleScope.UserName.a))\n  (h_3 : Unit → motive (Sum.inr RDF11.OrdinaryRuleScope.UserName.c))\n  (h_4 : Unit → motive (Sum.inr RDF11.OrdinaryRuleScope.UserName.d))\n  (h_5 : Unit → motive (Sum.inr RDF11.OrdinaryRuleScope.UserName.e)),\n  (match Sum.inr RDF11.OrdinaryRuleScope.UserName.a with\n    | Sum.inl s => h_1 s\n    | Sum.inr RDF11.OrdinaryRuleScope.UserName.a => h_2 ()\n    | Sum.inr RDF11.OrdinaryRuleScope.UserName.c => h_3 ()\n    | Sum.inr RDF11.OrdinaryRuleScope.UserName.d => h_4 ()\n    | Sum.inr RDF11.OrdinaryRuleScope.UserName.e => h_5 ()) =\n    h_2 ()",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.iriTag.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.OrdinaryRuleFrame.0.RDF11.OrdinaryRuleScope.iriTag.match_1.eq_3",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "∀ (motive : RDF11.OrdinaryRuleScope.Iri → Sort u_1) (h_1 : (s : RDF11.RDFSSymbol) → motive (Sum.inl s))\n  (h_2 : Unit → motive (Sum.inr RDF11.OrdinaryRuleScope.UserName.a))\n  (h_3 : Unit → motive (Sum.inr RDF11.OrdinaryRuleScope.UserName.c))\n  (h_4 : Unit → motive (Sum.inr RDF11.OrdinaryRuleScope.UserName.d))\n  (h_5 : Unit → motive (Sum.inr RDF11.OrdinaryRuleScope.UserName.e)),\n  (match Sum.inr RDF11.OrdinaryRuleScope.UserName.c with\n    | Sum.inl s => h_1 s\n    | Sum.inr RDF11.OrdinaryRuleScope.UserName.a => h_2 ()\n    | Sum.inr RDF11.OrdinaryRuleScope.UserName.c => h_3 ()\n    | Sum.inr RDF11.OrdinaryRuleScope.UserName.d => h_4 ()\n    | Sum.inr RDF11.OrdinaryRuleScope.UserName.e => h_5 ()) =\n    h_3 ()",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.iriTag.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.OrdinaryRuleFrame.0.RDF11.OrdinaryRuleScope.iriTag.match_1.eq_4",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "∀ (motive : RDF11.OrdinaryRuleScope.Iri → Sort u_1) (h_1 : (s : RDF11.RDFSSymbol) → motive (Sum.inl s))\n  (h_2 : Unit → motive (Sum.inr RDF11.OrdinaryRuleScope.UserName.a))\n  (h_3 : Unit → motive (Sum.inr RDF11.OrdinaryRuleScope.UserName.c))\n  (h_4 : Unit → motive (Sum.inr RDF11.OrdinaryRuleScope.UserName.d))\n  (h_5 : Unit → motive (Sum.inr RDF11.OrdinaryRuleScope.UserName.e)),\n  (match Sum.inr RDF11.OrdinaryRuleScope.UserName.d with\n    | Sum.inl s => h_1 s\n    | Sum.inr RDF11.OrdinaryRuleScope.UserName.a => h_2 ()\n    | Sum.inr RDF11.OrdinaryRuleScope.UserName.c => h_3 ()\n    | Sum.inr RDF11.OrdinaryRuleScope.UserName.d => h_4 ()\n    | Sum.inr RDF11.OrdinaryRuleScope.UserName.e => h_5 ()) =\n    h_4 ()",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.iriTag.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.OrdinaryRuleFrame.0.RDF11.OrdinaryRuleScope.iriTag.match_1.eq_5",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "∀ (motive : RDF11.OrdinaryRuleScope.Iri → Sort u_1) (h_1 : (s : RDF11.RDFSSymbol) → motive (Sum.inl s))\n  (h_2 : Unit → motive (Sum.inr RDF11.OrdinaryRuleScope.UserName.a))\n  (h_3 : Unit → motive (Sum.inr RDF11.OrdinaryRuleScope.UserName.c))\n  (h_4 : Unit → motive (Sum.inr RDF11.OrdinaryRuleScope.UserName.d))\n  (h_5 : Unit → motive (Sum.inr RDF11.OrdinaryRuleScope.UserName.e)),\n  (match Sum.inr RDF11.OrdinaryRuleScope.UserName.e with\n    | Sum.inl s => h_1 s\n    | Sum.inr RDF11.OrdinaryRuleScope.UserName.a => h_2 ()\n    | Sum.inr RDF11.OrdinaryRuleScope.UserName.c => h_3 ()\n    | Sum.inr RDF11.OrdinaryRuleScope.UserName.d => h_4 ()\n    | Sum.inr RDF11.OrdinaryRuleScope.UserName.e => h_5 ()) =\n    h_5 ()",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.iriTag.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.OrdinaryRuleFrame.0.RDF11.OrdinaryRuleScope.iriTag.match_1.splitter",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "definition",
+      "type": "(motive : RDF11.OrdinaryRuleScope.Iri → Sort u_1) →\n  (x : RDF11.OrdinaryRuleScope.Iri) →\n    ((s : RDF11.RDFSSymbol) → motive (Sum.inl s)) →\n      (Unit → motive (Sum.inr RDF11.OrdinaryRuleScope.UserName.a)) →\n        (Unit → motive (Sum.inr RDF11.OrdinaryRuleScope.UserName.c)) →\n          (Unit → motive (Sum.inr RDF11.OrdinaryRuleScope.UserName.d)) →\n            (Unit → motive (Sum.inr RDF11.OrdinaryRuleScope.UserName.e)) → motive x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.iriTag.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.OrdinaryRuleFrame.0.RDF11.OrdinaryRuleScope.schemaTag.match_1.eq_1",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "∀ (motive : RDF11.RDFSSymbol → Sort u_1) (h_1 : Unit → motive (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfType))\n  (h_2 : Unit → motive RDF11.RDFSSymbol.domain) (h_3 : Unit → motive RDF11.RDFSSymbol.range)\n  (h_4 : Unit → motive RDF11.RDFSSymbol.subPropertyOf) (h_5 : Unit → motive RDF11.RDFSSymbol.subClassOf)\n  (h_6 : Unit → motive RDF11.RDFSSymbol.member) (h_7 : (x : RDF11.RDFSSymbol) → motive x),\n  (match RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfType with\n    | RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfType => h_1 ()\n    | RDF11.RDFSSymbol.domain => h_2 ()\n    | RDF11.RDFSSymbol.range => h_3 ()\n    | RDF11.RDFSSymbol.subPropertyOf => h_4 ()\n    | RDF11.RDFSSymbol.subClassOf => h_5 ()\n    | RDF11.RDFSSymbol.member => h_6 ()\n    | x => h_7 x) =\n    h_1 ()",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.schemaTag.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.OrdinaryRuleFrame.0.RDF11.OrdinaryRuleScope.schemaTag.match_1.eq_2",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "∀ (motive : RDF11.RDFSSymbol → Sort u_1) (h_1 : Unit → motive (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfType))\n  (h_2 : Unit → motive RDF11.RDFSSymbol.domain) (h_3 : Unit → motive RDF11.RDFSSymbol.range)\n  (h_4 : Unit → motive RDF11.RDFSSymbol.subPropertyOf) (h_5 : Unit → motive RDF11.RDFSSymbol.subClassOf)\n  (h_6 : Unit → motive RDF11.RDFSSymbol.member) (h_7 : (x : RDF11.RDFSSymbol) → motive x),\n  (match RDF11.RDFSSymbol.domain with\n    | RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfType => h_1 ()\n    | RDF11.RDFSSymbol.domain => h_2 ()\n    | RDF11.RDFSSymbol.range => h_3 ()\n    | RDF11.RDFSSymbol.subPropertyOf => h_4 ()\n    | RDF11.RDFSSymbol.subClassOf => h_5 ()\n    | RDF11.RDFSSymbol.member => h_6 ()\n    | x => h_7 x) =\n    h_2 ()",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.schemaTag.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.OrdinaryRuleFrame.0.RDF11.OrdinaryRuleScope.schemaTag.match_1.eq_3",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "∀ (motive : RDF11.RDFSSymbol → Sort u_1) (h_1 : Unit → motive (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfType))\n  (h_2 : Unit → motive RDF11.RDFSSymbol.domain) (h_3 : Unit → motive RDF11.RDFSSymbol.range)\n  (h_4 : Unit → motive RDF11.RDFSSymbol.subPropertyOf) (h_5 : Unit → motive RDF11.RDFSSymbol.subClassOf)\n  (h_6 : Unit → motive RDF11.RDFSSymbol.member) (h_7 : (x : RDF11.RDFSSymbol) → motive x),\n  (match RDF11.RDFSSymbol.range with\n    | RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfType => h_1 ()\n    | RDF11.RDFSSymbol.domain => h_2 ()\n    | RDF11.RDFSSymbol.range => h_3 ()\n    | RDF11.RDFSSymbol.subPropertyOf => h_4 ()\n    | RDF11.RDFSSymbol.subClassOf => h_5 ()\n    | RDF11.RDFSSymbol.member => h_6 ()\n    | x => h_7 x) =\n    h_3 ()",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.schemaTag.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.OrdinaryRuleFrame.0.RDF11.OrdinaryRuleScope.schemaTag.match_1.eq_4",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "∀ (motive : RDF11.RDFSSymbol → Sort u_1) (h_1 : Unit → motive (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfType))\n  (h_2 : Unit → motive RDF11.RDFSSymbol.domain) (h_3 : Unit → motive RDF11.RDFSSymbol.range)\n  (h_4 : Unit → motive RDF11.RDFSSymbol.subPropertyOf) (h_5 : Unit → motive RDF11.RDFSSymbol.subClassOf)\n  (h_6 : Unit → motive RDF11.RDFSSymbol.member) (h_7 : (x : RDF11.RDFSSymbol) → motive x),\n  (match RDF11.RDFSSymbol.subPropertyOf with\n    | RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfType => h_1 ()\n    | RDF11.RDFSSymbol.domain => h_2 ()\n    | RDF11.RDFSSymbol.range => h_3 ()\n    | RDF11.RDFSSymbol.subPropertyOf => h_4 ()\n    | RDF11.RDFSSymbol.subClassOf => h_5 ()\n    | RDF11.RDFSSymbol.member => h_6 ()\n    | x => h_7 x) =\n    h_4 ()",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.schemaTag.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.OrdinaryRuleFrame.0.RDF11.OrdinaryRuleScope.schemaTag.match_1.eq_5",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "∀ (motive : RDF11.RDFSSymbol → Sort u_1) (h_1 : Unit → motive (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfType))\n  (h_2 : Unit → motive RDF11.RDFSSymbol.domain) (h_3 : Unit → motive RDF11.RDFSSymbol.range)\n  (h_4 : Unit → motive RDF11.RDFSSymbol.subPropertyOf) (h_5 : Unit → motive RDF11.RDFSSymbol.subClassOf)\n  (h_6 : Unit → motive RDF11.RDFSSymbol.member) (h_7 : (x : RDF11.RDFSSymbol) → motive x),\n  (match RDF11.RDFSSymbol.subClassOf with\n    | RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfType => h_1 ()\n    | RDF11.RDFSSymbol.domain => h_2 ()\n    | RDF11.RDFSSymbol.range => h_3 ()\n    | RDF11.RDFSSymbol.subPropertyOf => h_4 ()\n    | RDF11.RDFSSymbol.subClassOf => h_5 ()\n    | RDF11.RDFSSymbol.member => h_6 ()\n    | x => h_7 x) =\n    h_5 ()",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.schemaTag.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.OrdinaryRuleFrame.0.RDF11.OrdinaryRuleScope.schemaTag.match_1.eq_6",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "∀ (motive : RDF11.RDFSSymbol → Sort u_1) (h_1 : Unit → motive (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfType))\n  (h_2 : Unit → motive RDF11.RDFSSymbol.domain) (h_3 : Unit → motive RDF11.RDFSSymbol.range)\n  (h_4 : Unit → motive RDF11.RDFSSymbol.subPropertyOf) (h_5 : Unit → motive RDF11.RDFSSymbol.subClassOf)\n  (h_6 : Unit → motive RDF11.RDFSSymbol.member) (h_7 : (x : RDF11.RDFSSymbol) → motive x),\n  (match RDF11.RDFSSymbol.member with\n    | RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfType => h_1 ()\n    | RDF11.RDFSSymbol.domain => h_2 ()\n    | RDF11.RDFSSymbol.range => h_3 ()\n    | RDF11.RDFSSymbol.subPropertyOf => h_4 ()\n    | RDF11.RDFSSymbol.subClassOf => h_5 ()\n    | RDF11.RDFSSymbol.member => h_6 ()\n    | x => h_7 x) =\n    h_6 ()",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.schemaTag.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.OrdinaryRuleFrame.0.RDF11.OrdinaryRuleScope.schemaTag.match_1.eq_7",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "∀ (motive : RDF11.RDFSSymbol → Sort u_1) (x : RDF11.RDFSSymbol)\n  (h_1 : Unit → motive (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfType)) (h_2 : Unit → motive RDF11.RDFSSymbol.domain)\n  (h_3 : Unit → motive RDF11.RDFSSymbol.range) (h_4 : Unit → motive RDF11.RDFSSymbol.subPropertyOf)\n  (h_5 : Unit → motive RDF11.RDFSSymbol.subClassOf) (h_6 : Unit → motive RDF11.RDFSSymbol.member)\n  (h_7 : (x : RDF11.RDFSSymbol) → motive x),\n  (x = RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfType → False) →\n    (x = RDF11.RDFSSymbol.domain → False) →\n      (x = RDF11.RDFSSymbol.range → False) →\n        (x = RDF11.RDFSSymbol.subPropertyOf → False) →\n          (x = RDF11.RDFSSymbol.subClassOf → False) →\n            (x = RDF11.RDFSSymbol.member → False) →\n              (match x with\n                | RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfType => h_1 ()\n                | RDF11.RDFSSymbol.domain => h_2 ()\n                | RDF11.RDFSSymbol.range => h_3 ()\n                | RDF11.RDFSSymbol.subPropertyOf => h_4 ()\n                | RDF11.RDFSSymbol.subClassOf => h_5 ()\n                | RDF11.RDFSSymbol.member => h_6 ()\n                | x => h_7 x) =\n                h_7 x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.schemaTag.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.OrdinaryRuleFrame.0.RDF11.OrdinaryRuleScope.schemaTag.match_1.splitter",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "definition",
+      "type": "(motive : RDF11.RDFSSymbol → Sort u_1) →\n  (x : RDF11.RDFSSymbol) →\n    (Unit → motive (RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfType)) →\n      (Unit → motive RDF11.RDFSSymbol.domain) →\n        (Unit → motive RDF11.RDFSSymbol.range) →\n          (Unit → motive RDF11.RDFSSymbol.subPropertyOf) →\n            (Unit → motive RDF11.RDFSSymbol.subClassOf) →\n              (Unit → motive RDF11.RDFSSymbol.member) →\n                ((x : RDF11.RDFSSymbol) →\n                    (x = RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfType → False) →\n                      (x = RDF11.RDFSSymbol.domain → False) →\n                        (x = RDF11.RDFSSymbol.range → False) →\n                          (x = RDF11.RDFSSymbol.subPropertyOf → False) →\n                            (x = RDF11.RDFSSymbol.subClassOf → False) →\n                              (x = RDF11.RDFSSymbol.member → False) → motive x) →\n                  motive x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.schemaTag.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.OrdinaryRuleFrame.0.RDF11.OrdinaryRuleScope.termTag.match_1.eq_1",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "∀ {Literal B : Type} (motive : RDF11.Term RDF11.OrdinaryRuleScope.Iri Literal B → Sort u_1)\n  (a : RDF11.OrdinaryRuleScope.Iri) (h_1 : (a : RDF11.OrdinaryRuleScope.Iri) → motive (RDF11.Term.iri a))\n  (h_2 : (a : B) → motive (RDF11.Term.blank a)) (h_3 : (a : Literal) → motive (RDF11.Term.literal a)),\n  (match RDF11.Term.iri a with\n    | RDF11.Term.iri a => h_1 a\n    | RDF11.Term.blank a => h_2 a\n    | RDF11.Term.literal a => h_3 a) =\n    h_1 a",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.termTag.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.OrdinaryRuleFrame.0.RDF11.OrdinaryRuleScope.termTag.match_1.eq_2",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "∀ {Literal B : Type} (motive : RDF11.Term RDF11.OrdinaryRuleScope.Iri Literal B → Sort u_1) (a : B)\n  (h_1 : (a : RDF11.OrdinaryRuleScope.Iri) → motive (RDF11.Term.iri a)) (h_2 : (a : B) → motive (RDF11.Term.blank a))\n  (h_3 : (a : Literal) → motive (RDF11.Term.literal a)),\n  (match RDF11.Term.blank a with\n    | RDF11.Term.iri a => h_1 a\n    | RDF11.Term.blank a => h_2 a\n    | RDF11.Term.literal a => h_3 a) =\n    h_2 a",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.termTag.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.OrdinaryRuleFrame.0.RDF11.OrdinaryRuleScope.termTag.match_1.eq_3",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "∀ {Literal B : Type} (motive : RDF11.Term RDF11.OrdinaryRuleScope.Iri Literal B → Sort u_1) (a : Literal)\n  (h_1 : (a : RDF11.OrdinaryRuleScope.Iri) → motive (RDF11.Term.iri a)) (h_2 : (a : B) → motive (RDF11.Term.blank a))\n  (h_3 : (a : Literal) → motive (RDF11.Term.literal a)),\n  (match RDF11.Term.literal a with\n    | RDF11.Term.iri a => h_1 a\n    | RDF11.Term.blank a => h_2 a\n    | RDF11.Term.literal a => h_3 a) =\n    h_3 a",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.termTag.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.OrdinaryRuleFrame.0.RDF11.OrdinaryRuleScope.termTag.match_1.splitter",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "definition",
+      "type": "{Literal B : Type} →\n  (motive : RDF11.Term RDF11.OrdinaryRuleScope.Iri Literal B → Sort u_1) →\n    (x : RDF11.Term RDF11.OrdinaryRuleScope.Iri Literal B) →\n      ((a : RDF11.OrdinaryRuleScope.Iri) → motive (RDF11.Term.iri a)) →\n        ((a : B) → motive (RDF11.Term.blank a)) → ((a : Literal) → motive (RDF11.Term.literal a)) → motive x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.OrdinaryRuleScope.termTag.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.OrdinaryRuleFrame.0.RDF11.Term.hasLiteral.match_1.eq_1",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri Blank : Type} (motive : RDF11.Term Iri Literal Blank → Sort u_1) (k : Literal)\n  (h_1 : (k : Literal) → motive (RDF11.Term.literal k)) (h_2 : (a : Iri) → motive (RDF11.Term.iri a))\n  (h_3 : (a : Blank) → motive (RDF11.Term.blank a)),\n  (match RDF11.Term.literal k with\n    | RDF11.Term.literal k => h_1 k\n    | RDF11.Term.iri a => h_2 a\n    | RDF11.Term.blank a => h_3 a) =\n    h_1 k",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Term.hasLiteral.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.OrdinaryRuleFrame.0.RDF11.Term.hasLiteral.match_1.eq_2",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri Blank : Type} (motive : RDF11.Term Iri Literal Blank → Sort u_1) (a : Iri)\n  (h_1 : (k : Literal) → motive (RDF11.Term.literal k)) (h_2 : (a : Iri) → motive (RDF11.Term.iri a))\n  (h_3 : (a : Blank) → motive (RDF11.Term.blank a)),\n  (match RDF11.Term.iri a with\n    | RDF11.Term.literal k => h_1 k\n    | RDF11.Term.iri a => h_2 a\n    | RDF11.Term.blank a => h_3 a) =\n    h_2 a",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Term.hasLiteral.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.OrdinaryRuleFrame.0.RDF11.Term.hasLiteral.match_1.eq_3",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri Blank : Type} (motive : RDF11.Term Iri Literal Blank → Sort u_1) (a : Blank)\n  (h_1 : (k : Literal) → motive (RDF11.Term.literal k)) (h_2 : (a : Iri) → motive (RDF11.Term.iri a))\n  (h_3 : (a : Blank) → motive (RDF11.Term.blank a)),\n  (match RDF11.Term.blank a with\n    | RDF11.Term.literal k => h_1 k\n    | RDF11.Term.iri a => h_2 a\n    | RDF11.Term.blank a => h_3 a) =\n    h_3 a",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Term.hasLiteral.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.OrdinaryRuleFrame.0.RDF11.Term.hasLiteral.match_1.splitter",
+      "module": "RDF11.OrdinaryRuleFrame",
+      "kind": "definition",
+      "type": "{Literal Iri Blank : Type} →\n  (motive : RDF11.Term Iri Literal Blank → Sort u_1) →\n    (x : RDF11.Term Iri Literal Blank) →\n      ((k : Literal) → motive (RDF11.Term.literal k)) →\n        ((a : Iri) → motive (RDF11.Term.iri a)) → ((a : Blank) → motive (RDF11.Term.blank a)) → motive x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-ORDINARY-RULES"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Term.hasLiteral.match_1",
       "review": "pending_expert_review"
     }
   ],

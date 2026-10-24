@@ -439,6 +439,31 @@
       "review_question": "Does paragraph 20 intend tautologies over only the selected finite vocabulary, rather than the full RDF/RDFS vocabularies it names? What exact restriction and result are intended?",
       "implementation_policy": "Retain the source assertion and publish the obstruction. A narrowed or corrected claim requires a separate reviewed claim/baseline record.",
       "review_status": "pending_expert_review"
+    },
+    {
+      "id": "Q-ORDINARY-EXAMPLE-INTERMEDIATE",
+      "status": "object_preserving_rule_instance_and_printed_mismatch_checked_review_pending",
+      "not_a_declared_erratum": true,
+      "claim_ids": [
+        "MT11-PRINTED-BLANK-PREDICATE-DERIVATION",
+        "MT11-ORDINARY-BLANK-PREDICATE-EXAMPLE"
+      ],
+      "passage_ids": [
+        "ordinary-rdfs-example",
+        "ordinary-printed-intermediate",
+        "rule-rdfs7"
+      ],
+      "summary": "The printed rdfs7 intermediate changes ex:e to ex:c. The stated rdfs7 pattern preserves the premise object; the checked instantiation has ex:e. The final ex:d rdf:type ex:c follows from that object-preserving intermediate.",
+      "lean": [
+        "RDF11.OrdinaryRuleScope.printedIntermediate",
+        "RDF11.OrdinaryRuleScope.intermediate",
+        "RDF11.OrdinaryRuleScope.intermediate_not_printed",
+        "RDF11.OrdinaryRuleScope.rdfs7_step",
+        "RDF11.OrdinaryRuleScope.generalized_conclusion"
+      ],
+      "review_question": "Is the printed object ex:c in Appendix A paragraph 12 a transcription error for ex:e? Review the displayed rule instance separately from semantic entailment of a standalone existential-predicate triple.",
+      "implementation_policy": "Preserve both the printed triple and the actual rdfs7 result. Do not silently alter the source, claim the displayed step proved, or infer that the printed triple considered independently is semantically nonentailed. No official erratum is declared.",
+      "review_status": "pending_expert_review"
     }
   ]
 }

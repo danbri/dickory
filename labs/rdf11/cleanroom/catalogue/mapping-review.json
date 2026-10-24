@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "status": "draft_twenty_fifth_formalization_increment",
+  "status": "draft_twenty_sixth_formalization_increment",
   "selection_method": "Human-readable AI close reading; selectors locate already selected passages and do not extract assertions.",
   "mappings": [
     {
@@ -2078,9 +2078,21 @@
         {
           "symbol": "rdfD1",
           "lean": "RDF11.rdfD1"
+        },
+        {
+          "symbol": "freshLiteralExpansion",
+          "lean": "RDF11.freshLiteralExpansion"
+        },
+        {
+          "symbol": "OrdinaryStep",
+          "lean": "RDF11.OrdinaryStep"
+        },
+        {
+          "symbol": "freshLiteralExpansion_satisfaction",
+          "lean": "RDF11.SimpleInterpretation.freshLiteralExpansion_satisfaction"
         }
       ],
-      "limitations": "The conclusion uses one structurally fresh blank in Sum B Unit, shared across both triples. Generalized syntax is used. No fallback value is supplied for an ill-typed literal; an unsatisfiable premise has no countermodel.",
+      "limitations": "The conclusion uses one structurally fresh blank in Sum B Unit, shared across both triples. Generalized syntax is used. No fallback value is supplied for an ill-typed literal; an unsatisfiable premise has no countermodel. The later ordinary-run construction preserves the old graph by allocating one fresh blank per application. This is a sufficient operational policy; the source rule does not mandate that allocation algorithm or guarantee termination.",
       "extraction_review": "pending_expert_review",
       "formalization_review": "pending_expert_review",
       "implementation_refinement": "not_connected_to_published_package"
@@ -5721,8 +5733,8 @@
     },
     {
       "claim_id": "MT11-ORDINARY-RULE-CHECK-PROCEDURE",
-      "relation": "partial_theorem",
-      "symbol_linked_english": "The final step is implemented by search/check: for a finite supplied enlarged premise, check succeeds exactly when some simultaneous instance of E is a subgraph. A successful certificate carries that substitution and the inclusion proof.",
+      "relation": "partial_definition_and_theorem",
+      "symbol_linked_english": "OrdinaryAxiomSeed transcribes the initial ordinary procedure without the later rdf:_1 fallback. OrdinaryStep adds an ordinary shared-assignment conclusion or both rdfD1 triples with one fresh blank. OrdinaryRun composes finitely many steps, preserving the seed and ordinary syntax. The existing finite instance search supplies the final check when an exact finite enumeration is available.",
       "bindings": [
         {
           "symbol": "search",
@@ -5739,9 +5751,81 @@
         {
           "symbol": "search_sound",
           "lean": "RDF11.InstanceSearch.search_sound"
+        },
+        {
+          "symbol": "GeneralizedTriple.Ordinary",
+          "lean": "RDF11.GeneralizedTriple.Ordinary"
+        },
+        {
+          "symbol": "GeneralizedGraph.Ordinary",
+          "lean": "RDF11.GeneralizedGraph.Ordinary"
+        },
+        {
+          "symbol": "Graph.generalize_ordinary",
+          "lean": "RDF11.Graph.generalize_ordinary"
+        },
+        {
+          "symbol": "rdf_axioms_ordinary",
+          "lean": "RDF11.rdf_axioms_ordinary"
+        },
+        {
+          "symbol": "rdfs_axioms_ordinary",
+          "lean": "RDF11.rdfs_axioms_ordinary"
+        },
+        {
+          "symbol": "OrdinaryAxiomSeed",
+          "lean": "RDF11.OrdinaryAxiomSeed"
+        },
+        {
+          "symbol": "ordinaryAxiomSeed_subset",
+          "lean": "RDF11.ordinaryAxiomSeed_subset"
+        },
+        {
+          "symbol": "freshLiteralExpansion",
+          "lean": "RDF11.freshLiteralExpansion"
+        },
+        {
+          "symbol": "OrdinaryStep",
+          "lean": "RDF11.OrdinaryStep"
+        },
+        {
+          "symbol": "OrdinaryRun",
+          "lean": "RDF11.OrdinaryRun"
+        },
+        {
+          "symbol": "OrdinaryStep.contains",
+          "lean": "RDF11.OrdinaryStep.contains"
+        },
+        {
+          "symbol": "OrdinaryRun.contains",
+          "lean": "RDF11.OrdinaryRun.contains"
+        },
+        {
+          "symbol": "OrdinaryStep.ordinary",
+          "lean": "RDF11.OrdinaryStep.ordinary"
+        },
+        {
+          "symbol": "OrdinaryRun.ordinary",
+          "lean": "RDF11.OrdinaryRun.ordinary"
+        },
+        {
+          "symbol": "OrdinaryRDFRun",
+          "lean": "RDF11.OrdinaryRDFRun"
+        },
+        {
+          "symbol": "OrdinaryRDFSRun",
+          "lean": "RDF11.OrdinaryRDFSRun"
+        },
+        {
+          "symbol": "ordinary_rdf_run_ordinary",
+          "lean": "RDF11.ordinary_rdf_run_ordinary"
+        },
+        {
+          "symbol": "ordinary_rdfs_run_ordinary",
+          "lean": "RDF11.ordinary_rdfs_run_ordinary"
         }
       ],
-      "limitations": "Only the final finite instance test is mapped here. The ordinary rule procedure that constructs the enlarged graph, including fresh blank generation, its termination and completeness are not established by this mapping. The separate generalized-closure evaluator has its own exactness and source-scope limitations.",
+      "limitations": "Finite runs use one fresh blank per rdfD1 application as a sufficient sound allocation policy, not a source-mandated algorithm. Freshness concerns occurring blanks of the current graph, not distinct resource values. Certified reuse and a terminating saturation scheduler need separate contracts. No well-typedness test is added to the recognized-datatype rule premise. The initial graph may be infinite; only the number of run steps is finite. No exhaustion, finiteness of all possible fresh-witness states, or end-to-end ordinary evaluator is claimed. IRI and literal domains remain abstract. Concrete syntax/datatype correspondence, accepted expert review and package refinement remain outstanding.",
       "extraction_review": "pending_expert_review",
       "formalization_review": "pending_expert_review",
       "implementation_refinement": "not_connected_to_published_package"
@@ -5820,6 +5904,293 @@
         }
       ],
       "limitations": "The source passage is an informative technical note. These correspondences expose the caller’s choice of union or merge; they do not introduce a separately mandated family-entailment regime. Every component is interpreted in the same model. EntailsUnder concerns fixed model conditions and does not establish additional syntax admission, dataset policies or OWL/SPARQL conformance. The final historical RDF 2004 correspondence sentence has its own unmapped claim record; this mapping does not prove that bridge.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-ORDINARY-RULE-SOUND-INCOMPLETE",
+      "relation": "partial_theorem",
+      "symbol_linked_english": "ordinary_rdf_run_satisfaction and ordinary_rdfs_run_satisfaction preserve satisfaction in each fixed full model. Positive instance checks therefore imply entailment. The printed blank-predicate example has a valid generalized derivation but fails every ordinary run and the all-axiom ordinary-conclusion closure. The separate shared-literal example has its RDF entailment proved.",
+      "bindings": [
+        {
+          "symbol": "ordinary_rdf_run_satisfaction",
+          "lean": "RDF11.ordinary_rdf_run_satisfaction"
+        },
+        {
+          "symbol": "ordinary_rdfs_run_satisfaction",
+          "lean": "RDF11.ordinary_rdfs_run_satisfaction"
+        },
+        {
+          "symbol": "ordinary_rdf_check_sound",
+          "lean": "RDF11.ordinary_rdf_check_sound"
+        },
+        {
+          "symbol": "ordinary_rdfs_check_sound",
+          "lean": "RDF11.ordinary_rdfs_check_sound"
+        },
+        {
+          "symbol": "freshLiteralExpansion_satisfaction",
+          "lean": "RDF11.SimpleInterpretation.freshLiteralExpansion_satisfaction"
+        },
+        {
+          "symbol": "ordinaryStep_satisfaction",
+          "lean": "RDF11.SimpleInterpretation.ordinaryStep_satisfaction"
+        },
+        {
+          "symbol": "ordinaryRun_satisfaction",
+          "lean": "RDF11.SimpleInterpretation.ordinaryRun_satisfaction"
+        },
+        {
+          "symbol": "ordinaryAxiomSeed_satisfaction",
+          "lean": "RDF11.SimpleInterpretation.ordinaryAxiomSeed_satisfaction"
+        },
+        {
+          "symbol": "ordinary_incompleteness",
+          "lean": "RDF11.OrdinaryRuleScope.ordinary_incompleteness"
+        },
+        {
+          "symbol": "full_entailment",
+          "lean": "RDF11.OrdinaryRuleScope.full_entailment"
+        },
+        {
+          "symbol": "premise_consistent",
+          "lean": "RDF11.OrdinaryRuleScope.premise_consistent"
+        },
+        {
+          "symbol": "ordinary_no_conclusion_instance",
+          "lean": "RDF11.OrdinaryRuleScope.ordinary_no_conclusion_instance"
+        },
+        {
+          "symbol": "allAxiomOrdinaryClosure_not_entails",
+          "lean": "RDF11.OrdinaryRuleScope.allAxiomOrdinaryClosure_not_entails"
+        }
+      ],
+      "limitations": "Finite runs use one fresh blank per rdfD1 application as a sufficient sound allocation policy, not a source-mandated algorithm. Freshness concerns occurring blanks of the current graph, not distinct resource values. Certified reuse and a terminating saturation scheduler need separate contracts. No well-typedness test is added to the recognized-datatype rule premise. Incompleteness is proved for the displayed RDFS rule strategy; no literal occurs, so its obstruction is independent of witness allocation. The shared-literal example is not claimed to fail every certified reuse strategy. Premise consistency uses the existing RDFS model-construction hypotheses, not extra requirements on all interpretations. IRI and literal domains remain abstract. Concrete syntax/datatype correspondence, accepted expert review and package refinement remain outstanding.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-RULE-STRATEGY-LIMITS",
+      "relation": "partial_theorem",
+      "symbol_linked_english": "OrdinaryStep.rules_mono and OrdinaryRun.rules_mono embed runs of an explicitly restricted rule relation into the larger strategy, retaining positive soundness. The blank-predicate example still fails when every axiom is supplied and rdfD1 is allowed, because no literal occurs to enable it.",
+      "bindings": [
+        {
+          "symbol": "OrdinaryStep.rules_mono",
+          "lean": "RDF11.OrdinaryStep.rules_mono"
+        },
+        {
+          "symbol": "OrdinaryRun.rules_mono",
+          "lean": "RDF11.OrdinaryRun.rules_mono"
+        },
+        {
+          "symbol": "ordinary_rdf_check_sound",
+          "lean": "RDF11.ordinary_rdf_check_sound"
+        },
+        {
+          "symbol": "ordinary_rdfs_check_sound",
+          "lean": "RDF11.ordinary_rdfs_check_sound"
+        },
+        {
+          "symbol": "all_axioms_still_insufficient",
+          "lean": "RDF11.OrdinaryRuleScope.all_axioms_still_insufficient"
+        },
+        {
+          "symbol": "allAxiomOrdinaryClosure",
+          "lean": "RDF11.OrdinaryRuleScope.allAxiomOrdinaryClosure"
+        },
+        {
+          "symbol": "closure_no_literal",
+          "lean": "RDF11.OrdinaryRuleScope.closure_no_literal"
+        },
+        {
+          "symbol": "allAxiomOrdinaryClosure_not_entails",
+          "lean": "RDF11.OrdinaryRuleScope.allAxiomOrdinaryClosure_not_entails"
+        }
+      ],
+      "limitations": "No formal measure of practical usefulness or claim that every proper rule subset is incomplete is made. A further sound composed rule can bypass the missing intermediate; ordinary RDF syntax does not inherently prevent the entailment. Larger-datatype reasoning is a separate, unproved part of this compound source claim. Finite runs use one fresh blank per rdfD1 application as a sufficient sound allocation policy, not a source-mandated algorithm. Freshness concerns occurring blanks of the current graph, not distinct resource values. Certified reuse and a terminating saturation scheduler need separate contracts. No well-typedness test is added to the recognized-datatype rule premise. IRI and literal domains remain abstract. Concrete syntax/datatype correspondence, accepted expert review and package refinement remain outstanding.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-ORDINARY-BLANK-PREDICATE-EXAMPLE",
+      "relation": "partial_theorem",
+      "symbol_linked_english": "premise keeps exactly three ordinary triples and one shared blank. generalized_intermediate and generalized_conclusion use the existing RDFSClosure and rules. ordinary_run_supported excludes the ground conclusion from every ordinary run. The all-axiom least closure also excludes it, so container-axiom selection is irrelevant. premise_consistent constructs a full RDFS model under its stated parameters.",
+      "bindings": [
+        {
+          "symbol": "subpropertyTriple",
+          "lean": "RDF11.OrdinaryRuleScope.subpropertyTriple"
+        },
+        {
+          "symbol": "domainTriple",
+          "lean": "RDF11.OrdinaryRuleScope.domainTriple"
+        },
+        {
+          "symbol": "assertionTriple",
+          "lean": "RDF11.OrdinaryRuleScope.assertionTriple"
+        },
+        {
+          "symbol": "conclusionTriple",
+          "lean": "RDF11.OrdinaryRuleScope.conclusionTriple"
+        },
+        {
+          "symbol": "premise",
+          "lean": "RDF11.OrdinaryRuleScope.premise"
+        },
+        {
+          "symbol": "conclusion",
+          "lean": "RDF11.OrdinaryRuleScope.conclusion"
+        },
+        {
+          "symbol": "intermediate",
+          "lean": "RDF11.OrdinaryRuleScope.intermediate"
+        },
+        {
+          "symbol": "intermediate_not_ordinary",
+          "lean": "RDF11.OrdinaryRuleScope.intermediate_not_ordinary"
+        },
+        {
+          "symbol": "premise_supported",
+          "lean": "RDF11.OrdinaryRuleScope.premise_supported"
+        },
+        {
+          "symbol": "seed_supported",
+          "lean": "RDF11.OrdinaryRuleScope.seed_supported"
+        },
+        {
+          "symbol": "ordinary_run_supported",
+          "lean": "RDF11.OrdinaryRuleScope.ordinary_run_supported"
+        },
+        {
+          "symbol": "ordinary_conclusion_absent",
+          "lean": "RDF11.OrdinaryRuleScope.ordinary_conclusion_absent"
+        },
+        {
+          "symbol": "conclusion_ground",
+          "lean": "RDF11.OrdinaryRuleScope.conclusion_ground"
+        },
+        {
+          "symbol": "ordinary_no_conclusion_instance",
+          "lean": "RDF11.OrdinaryRuleScope.ordinary_no_conclusion_instance"
+        },
+        {
+          "symbol": "ordinary_not_simply_entails",
+          "lean": "RDF11.OrdinaryRuleScope.ordinary_not_simply_entails"
+        },
+        {
+          "symbol": "all_axioms_still_insufficient",
+          "lean": "RDF11.OrdinaryRuleScope.all_axioms_still_insufficient"
+        },
+        {
+          "symbol": "allAxiomOrdinaryClosure",
+          "lean": "RDF11.OrdinaryRuleScope.allAxiomOrdinaryClosure"
+        },
+        {
+          "symbol": "allAxiomOrdinaryClosure_supported",
+          "lean": "RDF11.OrdinaryRuleScope.allAxiomOrdinaryClosure_supported"
+        },
+        {
+          "symbol": "closure_no_literal",
+          "lean": "RDF11.OrdinaryRuleScope.closure_no_literal"
+        },
+        {
+          "symbol": "allAxiomOrdinaryClosure_not_entails",
+          "lean": "RDF11.OrdinaryRuleScope.allAxiomOrdinaryClosure_not_entails"
+        },
+        {
+          "symbol": "rdfs7_step",
+          "lean": "RDF11.OrdinaryRuleScope.rdfs7_step"
+        },
+        {
+          "symbol": "generalized_intermediate",
+          "lean": "RDF11.OrdinaryRuleScope.generalized_intermediate"
+        },
+        {
+          "symbol": "generalized_conclusion",
+          "lean": "RDF11.OrdinaryRuleScope.generalized_conclusion"
+        },
+        {
+          "symbol": "full_entailment",
+          "lean": "RDF11.OrdinaryRuleScope.full_entailment"
+        },
+        {
+          "symbol": "premise_consistent",
+          "lean": "RDF11.OrdinaryRuleScope.premise_consistent"
+        },
+        {
+          "symbol": "ordinary_incompleteness",
+          "lean": "RDF11.OrdinaryRuleScope.ordinary_incompleteness"
+        }
+      ],
+      "limitations": "The relation Supported is a syntactic proof invariant, not an RDFS model. All-axiom closure is explicitly stronger than the printed seed. The conclusion is ground, so every simultaneous instance is that same conclusion. The fresh-witness policy cannot affect this literal-free example. The consistency witness retains sufficient RDFSModelConstruction.Parameters; these are not conditions on every RDFS interpretation. IRI and literal domains remain abstract. Concrete syntax/datatype correspondence, accepted expert review and package refinement remain outstanding.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-ORDINARY-SHARED-LITERAL-EXAMPLE",
+      "relation": "partial_theorem",
+      "symbol_linked_english": "SharedLiteralExample.conclusion uses the same blank in all three triples. generalized_instance replaces it everywhere with the identical premise literal and proves inclusion in the existing RDFClosure. string_entailment instantiates the recognized datatype to xsd:string; the four IRI positions remain explicit parameters.",
+      "bindings": [
+        {
+          "symbol": "premise",
+          "lean": "RDF11.SharedLiteralExample.premise"
+        },
+        {
+          "symbol": "conclusion",
+          "lean": "RDF11.SharedLiteralExample.conclusion"
+        },
+        {
+          "symbol": "substitution",
+          "lean": "RDF11.SharedLiteralExample.substitution"
+        },
+        {
+          "symbol": "generalized_instance",
+          "lean": "RDF11.SharedLiteralExample.generalized_instance"
+        },
+        {
+          "symbol": "entailment",
+          "lean": "RDF11.SharedLiteralExample.entailment"
+        },
+        {
+          "symbol": "string_entailment",
+          "lean": "RDF11.SharedLiteralExample.string_entailment"
+        }
+      ],
+      "limitations": "The positive entailment and generalized derivation are proved. Failure of every ordinary rdfD1 policy is not: a certified common representative for an identical literal can recover this witness. The literal’s concrete spelling is not material to this stronger parameterized implication and is not implemented here. IRI and literal domains remain abstract. Concrete syntax/datatype correspondence, accepted expert review and package refinement remain outstanding.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-PRINTED-BLANK-PREDICATE-DERIVATION",
+      "relation": "partial_theorem",
+      "symbol_linked_english": "printedIntermediate transcribes the displayed object c. rdfs7_step instantiates the stated rule and preserves object e; intermediate_not_printed proves the two triples differ syntactically. generalized_conclusion proves the valid final conclusion using the object-preserving intermediate.",
+      "bindings": [
+        {
+          "symbol": "printedIntermediate",
+          "lean": "RDF11.OrdinaryRuleScope.printedIntermediate"
+        },
+        {
+          "symbol": "intermediate",
+          "lean": "RDF11.OrdinaryRuleScope.intermediate"
+        },
+        {
+          "symbol": "intermediate_not_printed",
+          "lean": "RDF11.OrdinaryRuleScope.intermediate_not_printed"
+        },
+        {
+          "symbol": "rdfs7_step",
+          "lean": "RDF11.OrdinaryRuleScope.rdfs7_step"
+        },
+        {
+          "symbol": "generalized_conclusion",
+          "lean": "RDF11.OrdinaryRuleScope.generalized_conclusion"
+        }
+      ],
+      "limitations": "This checks a mismatch in the displayed rule instantiation, not the printed step as a valid inference. No non-entailment of the printed triple considered as a separate existential graph is asserted. The archived source remains unchanged, and the question awaits expert review; it is not a declared erratum.",
       "extraction_review": "pending_expert_review",
       "formalization_review": "pending_expert_review",
       "implementation_refinement": "not_connected_to_published_package"
@@ -7657,7 +8028,8 @@
       "text": "Every RDF(S) closure, even starting with the empty graph",
       "within_section": "entailment-rules-informative",
       "claims": [
-        "MT11-CLOSURE-TAUTOLOGIES"
+        "MT11-CLOSURE-TAUTOLOGIES",
+        "MT11-RULE-STRATEGY-LIMITS"
       ]
     },
     {
@@ -7680,6 +8052,60 @@
       "claims": [
         "MT11-GRAPH-SET-ENTAILMENT",
         "MT11-MERGE-RDF2004-ENTAILMENT-CORRESPONDENCE"
+      ]
+    },
+    {
+      "id": "ordinary-sound-incomplete",
+      "source": "mt",
+      "tag": "p",
+      "text": "This process is clearly correct",
+      "within_section": "entailment-rules-informative",
+      "claims": [
+        "MT11-ORDINARY-RULE-SOUND-INCOMPLETE"
+      ]
+    },
+    {
+      "id": "ordinary-rdfs-example",
+      "source": "mt",
+      "tag": "tr",
+      "text": "ex:a rdfs:subPropertyOf _:b .",
+      "within_section": "entailment-rules-informative",
+      "claims": [
+        "MT11-ORDINARY-BLANK-PREDICATE-EXAMPLE",
+        "MT11-ORDINARY-RULE-SOUND-INCOMPLETE"
+      ]
+    },
+    {
+      "id": "ordinary-literal-example",
+      "source": "mt",
+      "tag": "tr",
+      "text": "ex:a ex:p \"string\"^^xsd:string .",
+      "within_section": "entailment-rules-informative",
+      "claims": [
+        "MT11-ORDINARY-SHARED-LITERAL-EXAMPLE",
+        "MT11-ORDINARY-RULE-SOUND-INCOMPLETE"
+      ]
+    },
+    {
+      "id": "ordinary-printed-intermediate",
+      "source": "mt",
+      "tag": "p",
+      "text": "ex:d _:b ex:c",
+      "within_section": "entailment-rules-informative",
+      "claims": [
+        "MT11-PRINTED-BLANK-PREDICATE-DERIVATION",
+        "MT11-ORDINARY-BLANK-PREDICATE-EXAMPLE"
+      ]
+    },
+    {
+      "id": "ordinary-legal-strategy",
+      "source": "mt",
+      "tag": "p",
+      "text": "If it is important to stay within legal RDF syntax",
+      "within_section": "entailment-rules-informative",
+      "claims": [
+        "MT11-RULE-STRATEGY-LIMITS",
+        "MT11-ORDINARY-RULE-CHECK-PROCEDURE"
       ]
     }
   ],
@@ -7970,6 +8396,24 @@
       "antecedent_passage": "merge",
       "resolved_meaning": "The merge of the same set of input graphs whose union is being compared; separate fresh copies retain the original IRI and literal identities.",
       "inference": "The projection identifies copies of each original blank. With disjoint occurring supports its inverse exists on exactly the used blanks; canonical representatives agree up to the specification’s isomorphism convention.",
+      "review": "pending"
+    },
+    {
+      "claim_id": "MT11-ORDINARY-RULE-SOUND-INCOMPLETE",
+      "passage": "ordinary-sound-incomplete",
+      "source_phrase": "This process",
+      "antecedent_passage": "ordinary-procedure-instance-check",
+      "resolved_meaning": "The first ordinary-triple axiom-addition, rule-application and instance-check sequence in Appendix A; it has no rdf:_1 fallback.",
+      "inference": "Finite runs are a sound operational refinement with explicitly chosen fresh allocation. Exhaustion is not inferred.",
+      "review": "pending"
+    },
+    {
+      "claim_id": "MT11-RULE-STRATEGY-LIMITS",
+      "passage": "ordinary-legal-strategy",
+      "source_phrase": "The resulting set of rules",
+      "antecedent_passage": "ordinary-legal-strategy",
+      "resolved_meaning": "The legal-RDF-syntax strategy using rdfD1 instead of GrdfD1; the preceding displayed rules remain otherwise the relevant strategy.",
+      "inference": "The literal-free blank-predicate obstruction does not depend on rdfD1 allocation. A different composed rule system is not excluded.",
       "review": "pending"
     }
   ]
