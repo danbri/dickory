@@ -2,6 +2,7 @@ import RDF11.FiniteInstances
 import RDF11.SkolemLifting
 import RDF11.FiniteSimpleModels
 import RDF11.FiniteDatatypeModels
+import RDF11.DatatypeCompletion
 
 /-!
 # Headline statements for RDF 1.1 Semantics review
@@ -91,5 +92,11 @@ Appendix B https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#finite_interpretati
 Uses N+B+1 active objects and localized §7 conditions. This does not assert
 the printed (N+B)*(D+1) bound or entailment-preserving datatype completion. -/
 theorem datatype_preinterpretation_satisfiability (T : DatatypeTheory Iri Literal Value) (D : Set Iri) (V : Set (Name Iri Literal)) (S : Set B) (v : Enumeration V) (b : Enumeration S) (G : GeneralizedGraph Iri Literal B) (hG : Set.subset (G.vocabulary T.literalSyntax.datatype) V) (hB : Set.subset G.hasBlank S) : DSatisfiable.{u} T D G ↔ ∃ (U : Type u) (P : PreInterpretation V U), P.BoundedDomain (v.triples.length + b.triples.length + 1) ∧ PreInterpretation.DModel P T D ∧ P.Satisfies (G.restrictNames T.literalSyntax.datatype V hG) := RDF11.d_satisfiable_iff_bounded_preinterpretations T D v b G hG hB
+
+/-- Datatype entailment by bounded pre-models, with an ordinary conclusion.
+Appendix B https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#finite_interpretations
+The N+B+1 bound is derived. A checked generalized-predicate-blank example
+prevents silently removing the ordinary-conclusion hypothesis. -/
+theorem datatype_preinterpretation_ordinary_entailment (T : DatatypeTheory Iri Literal Value) (D : Set Iri) (V : Set (Name Iri Literal)) (S : Set B₁) (v : Enumeration V) (b : Enumeration S) (G : GeneralizedGraph Iri Literal B₁) (E : Graph Iri Literal B₂) (hG : Set.subset (G.vocabulary T.literalSyntax.datatype) V) (hE : Set.subset (E.generalize.vocabulary T.literalSyntax.datatype) V) (hB : Set.subset G.hasBlank S) : DEntails.{u} T D G E.generalize ↔ ∀ (U : Type u) (P : PreInterpretation V U), P.BoundedDomain (v.triples.length + b.triples.length + 1) → PreInterpretation.DModel P T D → P.Satisfies (G.restrictNames T.literalSyntax.datatype V hG) → P.Satisfies (E.generalize.restrictNames T.literalSyntax.datatype V hE) := RDF11.d_entailment_iff_bounded_preinterpretations_ordinary T D V S v b G E hG hE hB
 
 end RDF11.Statements

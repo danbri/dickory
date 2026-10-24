@@ -4686,7 +4686,7 @@
         "formal_proof": "unassessed",
         "test_mapping": "unassessed"
       },
-      "formalization_note": "Localized datatype conditions now admit an N+B+1 active-domain compression, a full-to-weakened countermodel theorem and bounded satisfiability equivalence. This is partial evidence for the printed (N+B)*(D+1) claim, not that formula or entailment equivalence. For empty G and E the printed bound is zero for every finite datatype count, incompatible with the section-5 nonempty-IR refinement; an explicit theorem records this boundary and empty-graph D-satisfiability. No source correction is adopted. The numerical D must be distinguished from the recognized-IRI set; counting aliases and datatype identities is an external scope question.",
+      "formalization_note": "Localized datatype conditions now admit an N+B+1 active-domain compression, a full-to-weakened countermodel theorem and bounded satisfiability equivalence. This is partial evidence for the printed (N+B)*(D+1) claim, not that formula or entailment equivalence. For empty G and E the printed bound is zero for every finite datatype count, incompatible with the section-5 nonempty-IR refinement; an explicit theorem records this boundary and empty-graph D-satisfiability. No source correction is adopted. The numerical D must be distinguished from the recognized-IRI set; counting aliases and datatype identities is an external scope question. A separate completion proof now gives bounded-pre-model entailment equivalence for ordinary conclusions; the generalized conclusion case has a checked scope obstruction under the chosen weakening.",
       "review_questions": [
         "Q-DATATYPE-PREINTERPRETATION-ZERO-BOUND"
       ]
@@ -5579,8 +5579,36 @@
         "formal_proof": "unassessed",
         "test_mapping": "unassessed"
       },
-      "formalization_note": "Unmapped. Restoring globally required literal values can enlarge IR, unlike simple name completion. Whole-graph satisfaction preservation requires a shared assignment argument; equality of individual ground triple truth is insufficient. Generalized predicate blanks need explicit attention when previously property-only values enter IR. No completed counterexample or general completion theorem is asserted.",
-      "split_from": "MT11-FINITE-DATATYPE-PREINTERPRETATION"
+      "formalization_note": "A full D-interpretation is now constructed on U+Value, preserving local name values, all generalized triple/graph truth under the same embedded assignment, and ordinary graph satisfaction in both directions. A checked abstract custom-datatype example shows that the current weakened conditions do not suffice for generalized satisfaction/entailment equivalence: an omitted literal forces a local property-only referent into the full resource universe, enabling a predicate-blank witness. The scope of the informative sketch requires expert review; this is not an adopted source erratum.",
+      "split_from": "MT11-FINITE-DATATYPE-PREINTERPRETATION",
+      "review_questions": [
+        "Q-DATATYPE-COMPLETION-GENERALIZED-SCOPE"
+      ]
+    },
+    {
+      "id": "MT11-DATATYPE-PREINTERPRETATION-ORDINARY-ENTAILMENT",
+      "section": "B",
+      "anchor": "finite_interpretations",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#finite_interpretations",
+      "category": "mathematical_consequence",
+      "source_status": "informative",
+      "assertion_basis": "derived",
+      "paraphrase": "Under the localized datatype conditions, D-entailment to an ordinary RDF conclusion is equivalent to truth preservation in all weakened pre-interpretations with the N+B+1 active-domain bound.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-DATATYPE-PREINTERPRETATION-CONDITIONS",
+        "MT11-DATATYPE-PREINTERPRETATION-COMPLETION",
+        "MT11-FINITE-DATATYPE-PREINTERPRETATION",
+        "MT11-TRIPLE-TERM-DOMAINS",
+        "MT11-GRAPH-TRUTH"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "The premise may be generalized and the two graphs may use different blank domains. V covers both vocabularies, including datatype IRIs; the enumerated blank support covers the premise. The proof combines full completion with the previous countermodel compression. The conclusion remains an ordinary Graph, the bound is N+B+1 rather than the printed product, and quantification over bounded models is not an implemented decision procedure."
     }
   ],
   "record_count": 217

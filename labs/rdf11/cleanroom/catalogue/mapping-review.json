@@ -4421,7 +4421,7 @@
           "lean": "RDF11.SimpleInterpretation.DomainRestriction.literal_undefined_iff"
         }
       ],
-      "limitations": "This is an explicit precise refinement of an informative sketch using normative section 5 IR/IP typing and partial IL. Only local names/literals constrain denotation; global datatype identities, L2V and language pair values remain external fixed parameters. ValueRealization may describe values outside the active IR/IP domain without requiring their membership. No full datatype completion follows from the definition. Concrete datatype correspondence and expert review remain open.",
+      "limitations": "This is an explicit precise refinement of an informative sketch using normative section 5 IR/IP typing and partial IL. Only local names/literals constrain denotation; global datatype identities, L2V and language pair values remain external fixed parameters. ValueRealization may describe values outside the active IR/IP domain without requiring their membership. A separate full completion is now proved, preserving embedded-assignment truth and ordinary graph satisfaction; unrestricted generalized comparison preservation fails for this weakening in a checked abstract witness. Concrete datatype correspondence and expert review remain open.",
       "extraction_review": "pending_expert_review",
       "formalization_review": "pending_expert_review",
       "implementation_refinement": "not_connected_to_published_package"
@@ -4468,7 +4468,7 @@
           "lean": "RDF11.FiniteDatatypeModel.empty_comparison_printed_bound_conflict"
         }
       ],
-      "limitations": "Only the full-to-weakened countermodel direction is proved. Universal validity over the bounded weak models is sufficient for full D-entailment; the converse and a truth-preserving datatype completion are not established. N+B+1 is not the printed multiplicative bound. The empty-comparison conflict is relative to retaining section 5 nonempty IR and is pending source review, not a declared erratum. The compression permits arbitrary recognized-IRI sets and does not enumerate them or prove effective search.",
+      "limitations": "For unrestricted generalized comparisons, only the full-to-weakened countermodel direction is proved. Universal validity over the bounded weak models is sufficient for full D-entailment; a separate completion now proves the converse for ordinary conclusions, while generalized comparison preservation has a checked obstruction under the chosen weakening. N+B+1 is not the printed multiplicative bound. The empty-comparison conflict is relative to retaining section 5 nonempty IR and is pending source review, not a declared erratum. The compression permits arbitrary recognized-IRI sets and does not enumerate them or prove effective search.",
       "extraction_review": "pending_expert_review",
       "formalization_review": "pending_expert_review",
       "implementation_refinement": "not_connected_to_published_package"
@@ -4508,6 +4508,188 @@
         }
       ],
       "limitations": "This is a derived theorem for the explicitly chosen localized conditions and N+B+1 bound, including generalized graphs and arbitrary recognized sets. The original comparison pre-model is not completed in the reverse direction: a new full D-model witnesses satisfiability. Other graph truths and falsities need not be preserved, so this does not establish entailment equivalence or the printed datatype bound. Concrete terms/datatypes, source fidelity and product refinement remain external.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-DATATYPE-PREINTERPRETATION-COMPLETION",
+      "relation": "partial_theorem",
+      "symbol_linked_english": "ValueRealization.complete extends the fixed values injectively into U+Value. DatatypeCompletion.interpretation keeps local name values, supplies global recognized literal values, and retains exactly embedded old relation edges. conditions proves the full DConditions. tripleTrue_lift_iff and graphTrue_lift_iff preserve truth with one embedded assignment; ordinary_satisfies_iff reflects arbitrary satisfying assignments for ordinary graphs. DatatypeCompletionScope proves the generalized comparison obstruction separately.",
+      "bindings": [
+        {
+          "symbol": "ValueRealization.embed",
+          "lean": "RDF11.ValueRealization.embed"
+        },
+        {
+          "symbol": "ValueRealization.embed_injective",
+          "lean": "RDF11.ValueRealization.embed_injective"
+        },
+        {
+          "symbol": "ValueRealization.complete",
+          "lean": "RDF11.ValueRealization.complete"
+        },
+        {
+          "symbol": "DatatypeCompletion.interpretation",
+          "lean": "RDF11.DatatypeCompletion.interpretation"
+        },
+        {
+          "symbol": "DatatypeCompletion.conditions",
+          "lean": "RDF11.DatatypeCompletion.conditions"
+        },
+        {
+          "symbol": "DatatypeCompletion.iriValue_local",
+          "lean": "RDF11.DatatypeCompletion.iriValue_local"
+        },
+        {
+          "symbol": "DatatypeCompletion.literalValue_local",
+          "lean": "RDF11.DatatypeCompletion.literalValue_local"
+        },
+        {
+          "symbol": "DatatypeCompletion.relates_iff",
+          "lean": "RDF11.DatatypeCompletion.relates_iff"
+        },
+        {
+          "symbol": "DatatypeCompletion.tripleTrue_lift_iff",
+          "lean": "RDF11.DatatypeCompletion.tripleTrue_lift_iff"
+        },
+        {
+          "symbol": "DatatypeCompletion.graphTrue_lift_iff",
+          "lean": "RDF11.DatatypeCompletion.graphTrue_lift_iff"
+        },
+        {
+          "symbol": "DatatypeCompletion.satisfies_forward",
+          "lean": "RDF11.DatatypeCompletion.satisfies_forward"
+        },
+        {
+          "symbol": "DatatypeCompletion.lowerAssignment",
+          "lean": "RDF11.DatatypeCompletion.lowerAssignment"
+        },
+        {
+          "symbol": "DatatypeCompletion.ordinary_triple_reflect",
+          "lean": "RDF11.DatatypeCompletion.ordinary_triple_reflect"
+        },
+        {
+          "symbol": "DatatypeCompletion.ordinary_satisfies_iff",
+          "lean": "RDF11.DatatypeCompletion.ordinary_satisfies_iff"
+        },
+        {
+          "symbol": "DatatypeCompletionScope.theory",
+          "lean": "RDF11.DatatypeCompletionScope.theory"
+        },
+        {
+          "symbol": "DatatypeCompletionScope.premodel",
+          "lean": "RDF11.DatatypeCompletionScope.premodel"
+        },
+        {
+          "symbol": "DatatypeCompletionScope.local_conditions",
+          "lean": "RDF11.DatatypeCompletionScope.local_conditions"
+        },
+        {
+          "symbol": "DatatypeCompletionScope.premodel_bounded",
+          "lean": "RDF11.DatatypeCompletionScope.premodel_bounded"
+        },
+        {
+          "symbol": "DatatypeCompletionScope.comparison_vocabulary",
+          "lean": "RDF11.DatatypeCompletionScope.comparison_vocabulary"
+        },
+        {
+          "symbol": "DatatypeCompletionScope.global_literal_absent",
+          "lean": "RDF11.DatatypeCompletionScope.global_literal_absent"
+        },
+        {
+          "symbol": "DatatypeCompletionScope.premise_true",
+          "lean": "RDF11.DatatypeCompletionScope.premise_true"
+        },
+        {
+          "symbol": "DatatypeCompletionScope.conclusion_false",
+          "lean": "RDF11.DatatypeCompletionScope.conclusion_false"
+        },
+        {
+          "symbol": "DatatypeCompletionScope.full_premise_satisfiable",
+          "lean": "RDF11.DatatypeCompletionScope.full_premise_satisfiable"
+        },
+        {
+          "symbol": "DatatypeCompletionScope.full_entailment",
+          "lean": "RDF11.DatatypeCompletionScope.full_entailment"
+        },
+        {
+          "symbol": "DatatypeCompletionScope.no_comparison_preserving_completion",
+          "lean": "RDF11.DatatypeCompletionScope.no_comparison_preserving_completion"
+        },
+        {
+          "symbol": "SimpleInterpretation.datatype_name_resource_of_literal",
+          "lean": "RDF11.SimpleInterpretation.datatype_name_resource_of_literal"
+        },
+        {
+          "symbol": "d_predicate_blank_of_datatype_value",
+          "lean": "RDF11.d_predicate_blank_of_datatype_value"
+        },
+        {
+          "symbol": "DatatypeCompletionScope.recognized_value_spaces_nonempty",
+          "lean": "RDF11.DatatypeCompletionScope.recognized_value_spaces_nonempty"
+        }
+      ],
+      "limitations": "The completed carrier may be infinite. Universal IR/IP are constructor choices, while relation edges still require the original roles and endpoints. Satisfaction reflection is proved for ordinary graphs; pointwise truth preservation under an embedded assignment also covers generalized triples but does not exclude new existential witnesses. The checked scope example uses an abstract custom datatype theory, not a built-in XSD datatype, and the full premise is proved satisfiable. It refutes unrestricted comparison preservation for these localized conditions, not every possible refinement of the informative sketch. The source question remains pending expert review, not a declared erratum. Both recognized datatype spaces in the witness are nonempty. The witness has abstract finite name domains and uses the section-5-faithful IS codomain IR union IP; Appendix B's loose V-to-IR phrasing is a separate fidelity question.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-DATATYPE-PREINTERPRETATION-ORDINARY-ENTAILMENT",
+      "relation": "theorem",
+      "symbol_linked_english": "d_entailment_iff_preinterpretations_ordinary gives the exact all-pre-model comparison for a generalized premise and ordinary conclusion. d_entailment_iff_bounded_preinterpretations_ordinary combines it with finite compression: V covers both full vocabularies, S covers G.hasBlank, and N+B+1 bounds IR union IP. Graph.generalize_restrictNames proves that restricting names does not lose the ordinary conclusion type.",
+      "bindings": [
+        {
+          "symbol": "Statements.datatype_preinterpretation_ordinary_entailment",
+          "lean": "RDF11.Statements.datatype_preinterpretation_ordinary_entailment"
+        },
+        {
+          "symbol": "d_entailment_iff_bounded_preinterpretations_ordinary",
+          "lean": "RDF11.d_entailment_iff_bounded_preinterpretations_ordinary"
+        },
+        {
+          "symbol": "d_entailment_iff_preinterpretations_ordinary",
+          "lean": "RDF11.d_entailment_iff_preinterpretations_ordinary"
+        },
+        {
+          "symbol": "DatatypeCompletion.ordinary_satisfies_iff",
+          "lean": "RDF11.DatatypeCompletion.ordinary_satisfies_iff"
+        },
+        {
+          "symbol": "DatatypeCompletion.conditions",
+          "lean": "RDF11.DatatypeCompletion.conditions"
+        },
+        {
+          "symbol": "FiniteDatatypeModel.compress",
+          "lean": "RDF11.FiniteDatatypeModel.compress"
+        },
+        {
+          "symbol": "Subject.restrictNames",
+          "lean": "RDF11.Subject.restrictNames"
+        },
+        {
+          "symbol": "Subject.toTerm_restrictNames",
+          "lean": "RDF11.Subject.toTerm_restrictNames"
+        },
+        {
+          "symbol": "Triple.restrictNames",
+          "lean": "RDF11.Triple.restrictNames"
+        },
+        {
+          "symbol": "Triple.generalize_restrictNames",
+          "lean": "RDF11.Triple.generalize_restrictNames"
+        },
+        {
+          "symbol": "Graph.restrictNames",
+          "lean": "RDF11.Graph.restrictNames"
+        },
+        {
+          "symbol": "Graph.generalize_restrictNames",
+          "lean": "RDF11.Graph.generalize_restrictNames"
+        }
+      ],
+      "limitations": "The ordinary-conclusion hypothesis is essential to this theorem and is retained in the headline alias. G may be generalized, and no common satisfaction witness is imposed across G and E. Exact union-name and union-blank enumerations from finite inputs can instantiate the covering sets; the theorem itself only requires the stated covers. The N+B+1 bound is derived, not the printed (N+B)*(D+1) formula. Fixed meanings remain abstract; no executable decision procedure, concrete datatype correspondence, accepted expert review or package refinement is claimed.",
       "extraction_review": "pending_expert_review",
       "formalization_review": "pending_expert_review",
       "implementation_refinement": "not_connected_to_published_package"
@@ -6273,7 +6455,8 @@
         "MT11-DATATYPE-PREINTERPRETATION-CONDITIONS",
         "MT11-DATATYPE-PREINTERPRETATION-SATISFIABILITY",
         "MT11-DATATYPE-PREINTERPRETATION-COMPLETION",
-        "MT11-FINITE-RDF-RDFS-PRESERVATION"
+        "MT11-FINITE-RDF-RDFS-PRESERVATION",
+        "MT11-DATATYPE-PREINTERPRETATION-ORDINARY-ENTAILMENT"
       ]
     },
     {
@@ -6286,7 +6469,8 @@
         "MT11-FINITE-DATATYPE-PREINTERPRETATION",
         "MT11-DATATYPE-PREINTERPRETATION-SATISFIABILITY",
         "MT11-DATATYPE-PREINTERPRETATION-COMPLETION",
-        "MT11-FINITE-RDF-RDFS-PRESERVATION"
+        "MT11-FINITE-RDF-RDFS-PRESERVATION",
+        "MT11-DATATYPE-PREINTERPRETATION-ORDINARY-ENTAILMENT"
       ]
     }
   ],
@@ -6522,7 +6706,7 @@
       "source_phrase": "In all these cases",
       "antecedent_passage": "preinterpretation-datatype",
       "resolved_meaning": "The datatype, RDF and RDFS cases sketched in this paragraph, together with the preceding simple case.",
-      "inference": "The datatype completion obligation is now separated from the bounded reduction and from existence of some full model for a satisfiable graph. Enlargement of IR requires a separate graph-satisfaction argument, particularly for generalized predicate blanks.",
+      "inference": "Completion now preserves all old-assignment triple and graph truth, and ordinary graph satisfaction in both directions. A checked custom-datatype example separates this from generalized existential graph satisfaction: new resource membership can enable a predicate blank. The proposed weakened conditions, not the printed source text, are held fixed while this scope question is reviewed.",
       "review": "pending"
     }
   ]

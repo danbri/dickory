@@ -283,7 +283,58 @@
         "The conflict concerns the satisfiable empty case, not an exhibited failure of a nonempty-graph datatype bound or an entailment countermodel."
       ],
       "review_question": "Is an empty-comparison exception, an extra resource, an augmented vocabulary, or a different pre-interpretation convention intended? Which reading should be adopted while preserving the printed source?",
-      "implementation_policy": "Preserve the original formula, keep its unrestricted mapping partial, and display the checked conflict separately. Do not silently replace the bound or claim full datatype completion.",
+      "implementation_policy": "Preserve the original formula, keep its unrestricted mapping partial, and display the checked conflict separately. The separate completion and ordinary-entailment proofs do not establish this printed bound or unrestricted generalized comparison preservation.",
+      "review_status": "pending_expert_review"
+    },
+    {
+      "id": "Q-DATATYPE-COMPLETION-GENERALIZED-SCOPE",
+      "status": "abstract_counterexample_and_ordinary_completion_checked_source_scope_needs_expert_review",
+      "not_a_declared_erratum": true,
+      "claim_ids": [
+        "MT11-DATATYPE-PREINTERPRETATION-COMPLETION",
+        "MT11-DATATYPE-PREINTERPRETATION-CONDITIONS",
+        "MT11-FINITE-DATATYPE-PREINTERPRETATION",
+        "MT11-DATATYPE-PREINTERPRETATION-ORDINARY-ENTAILMENT",
+        "MT11-GENERALIZED-SYNTAX",
+        "MT11-SIMPLE-IR",
+        "MT11-SIMPLE-IP",
+        "MT11-BLANK-ASSIGNMENT"
+      ],
+      "passage_ids": [
+        "preinterpretation-datatype",
+        "preinterpretation-entire-semantics",
+        "generalized",
+        "interpretation",
+        "property-overlap",
+        "assignment",
+        "d-interpretation"
+      ],
+      "summary": "The current localized datatype conditions permit a finite pre-model satisfying s p s but not s _:b s. An omitted recognized literal has the fixed datatype object identified by p as its value. Every full D-model must therefore put the denotation of p into IR, so the first graph D-entails the second. No full model preserves both local satisfaction values; ordinary conclusion preservation is proved separately.",
+      "lean": [
+        "RDF11.DatatypeCompletionScope.local_conditions",
+        "RDF11.DatatypeCompletionScope.premodel_bounded",
+        "RDF11.DatatypeCompletionScope.comparison_vocabulary",
+        "RDF11.DatatypeCompletionScope.global_literal_absent",
+        "RDF11.DatatypeCompletionScope.premise_true",
+        "RDF11.DatatypeCompletionScope.conclusion_false",
+        "RDF11.DatatypeCompletionScope.full_premise_satisfiable",
+        "RDF11.DatatypeCompletionScope.full_entailment",
+        "RDF11.DatatypeCompletionScope.no_comparison_preserving_completion",
+        "RDF11.DatatypeCompletion.tripleTrue_lift_iff",
+        "RDF11.DatatypeCompletion.ordinary_satisfies_iff",
+        "RDF11.DatatypeCompletionScope.recognized_value_spaces_nonempty"
+      ],
+      "limitations": [
+        "The witness inhabits the abstract custom-datatype interface; it is not a claim about a particular XSD datatype or concrete parser.",
+        "This disproves generalized comparison preservation for the present precise weakening, not every possible refinement of Appendix B.",
+        "The completed interpretation still preserves every triple under the same embedded old assignment. The failure concerns new existential witnesses and hence graph satisfaction/entailment.",
+        "The ground premise is proved D-satisfiable, so the full entailment is not vacuous through inconsistency.",
+        "Both recognized datatype value spaces are proved nonempty; the obstruction does not depend on an empty datatype.",
+        "The checked witness uses four abstract IRIs and one abstract literal; correspondence with the complete concrete RDF name domains remains a separate obligation.",
+        "The local property-only denotation is permitted by the section-5-faithful refinement. Appendix B loosely describes V-to-IR mapping, which would itself exclude this local witness and needs an explicit fidelity decision."
+      ],
+      "review_question": "Which additional datatype/resource conditions or scope qualifications are intended for finite pre-interpretations to yield unchanged generalized entailments? How should the assignment-preservation claim and whole-graph equivalence claim be separated?",
+      "implementation_policy": "Preserve normative IR/IP and blank-assignment domains, the original source and the existing localized conditions. Keep generalized coverage partial, publish the ordinary theorem with its hypothesis, and treat any stronger local condition as an explicit new refinement requiring review.",
       "review_status": "pending_expert_review"
     }
   ]

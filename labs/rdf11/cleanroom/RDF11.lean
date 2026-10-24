@@ -52,3 +52,5 @@ import RDF11.SkolemLifting
 import RDF11.Preinterpretations
 import RDF11.FiniteSimpleModels
 import RDF11.FiniteDatatypeModels
+import RDF11.DatatypeCompletion
+import RDF11.DatatypeCompletionScope

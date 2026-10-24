@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "status": "frozen_eighteenth_increment_datatype_preinterpretations_not_expert_approved",
+  "status": "frozen_nineteenth_increment_datatype_completion_not_expert_approved",
   "lean_version": "4.33.1",
   "allowed_axioms": [
     "propext",
@@ -586,6 +586,23 @@
         "MT11-SIMPLE-IR",
         "MT11-NAMES-VOCABULARIES"
       ]
+    },
+    {
+      "id": "SUPPORT-DATATYPE-COMPLETION",
+      "purpose": "Injective completion of fixed values and full-name D-interpretations; embedded-assignment truth and ordinary graph satisfaction; ordinary vocabulary restriction and bounded entailment equivalence; a finite abstract generalized-scope obstruction with nonempty datatype spaces and a satisfiable full premise. Does not establish generalized comparison preservation or concrete datatype/name correspondence.",
+      "requires": [
+        "MT11-DATATYPE-PREINTERPRETATION-COMPLETION",
+        "MT11-DATATYPE-PREINTERPRETATION-ORDINARY-ENTAILMENT",
+        "MT11-DATATYPE-PREINTERPRETATION-CONDITIONS",
+        "MT11-FINITE-DATATYPE-PREINTERPRETATION",
+        "MT11-D-INTERPRETATION",
+        "MT11-TRIPLE-TERM-DOMAINS",
+        "MT11-NAMES-VOCABULARIES",
+        "MT11-SIMPLE-IR",
+        "MT11-SIMPLE-IP",
+        "MT11-BLANK-ASSIGNMENT",
+        "MT11-GRAPH-TRUTH"
+      ]
     }
   ],
   "files": [
@@ -612,14 +629,14 @@
     },
     {
       "path": "Audit/Snapshot.lean",
-      "sha256": "5952fb662975b77ccc1d7ab27f93e07dc93c878f5056ac2aa518053730c0613f",
+      "sha256": "9bdacbebd6a8c5778a9c75ebbf88e7e0e70c899a6118ac15c3c7f2f0fe431c86",
       "role": "formal_source",
       "lifecycle": "active",
       "review": "pending_expert_review"
     },
     {
       "path": "RDF11.lean",
-      "sha256": "eea9716d752060bfa822a367ed032e076a1774b7f0f1442499bdc8c4b37b770e",
+      "sha256": "72f9dd4403699bcbbeb810a3765d88203c97957bd97d924a16d72839b4b32d50",
       "role": "formal_source",
       "lifecycle": "active",
       "review": "pending_expert_review"
@@ -783,7 +800,7 @@
       "role": "formal_source",
       "lifecycle": "active",
       "review": "pending_expert_review",
-      "sha256": "6356722ce619335c4f1062111e0b441bf363ae218b2984ab4276d9112ac7f07b"
+      "sha256": "ed0ca3e1ca084475e53c5a5fd096525c52b3d4ea28e6b9cc100cecfb972c981e"
     },
     {
       "path": "RDF11/EntailmentClosure.lean",
@@ -1026,6 +1043,27 @@
     {
       "path": "RDF11/FiniteDatatypeModels.lean",
       "sha256": "0630a468b769929e7acdc02087cb88fbc45e6a2718ccd7035fe6ebc87cc2a025",
+      "role": "formal_source",
+      "lifecycle": "active",
+      "review": "pending_expert_review"
+    },
+    {
+      "path": "RDF11/DatatypeCompletion.lean",
+      "sha256": "87b3a1fc0499294edce4974a97f2f74966097b7b5bbabf1955cab99256ca4465",
+      "role": "formal_source",
+      "lifecycle": "active",
+      "review": "pending_expert_review"
+    },
+    {
+      "path": "RDF11/DatatypeCompletionScope.lean",
+      "sha256": "567f70b37a974f4a08afb634c7e783e04072a4fc7d812bea58417fad932aeb5d",
+      "role": "formal_source",
+      "lifecycle": "active",
+      "review": "pending_expert_review"
+    },
+    {
+      "path": "RDF11/OrdinaryPreinterpretations.lean",
+      "sha256": "5cd2d0c42fddb28271e5d42fbe6a143a94e887ac72d839818baea23a5ba6aad1",
       "role": "formal_source",
       "lifecycle": "active",
       "review": "pending_expert_review"
@@ -17770,7 +17808,7 @@
     },
     {
       "name": "RDF11.SimpleInterpretation.Relates.eq_1",
-      "module": "RDF11.RDFModels",
+      "module": "RDF11.DatatypeCompletion",
       "kind": "theorem",
       "type": "∀ {Iri Literal : Type} {U : Type u_1} (I : RDF11.SimpleInterpretation Iri Literal U) (p x y : U),\n  I.Relates p x y = ∃ hp hx hy, I.IEXT ⟨p, hp⟩ (⟨x, hx⟩, ⟨y, hy⟩)",
       "role": "proof_support",
@@ -23569,7 +23607,8 @@
       "role": "proof_support",
       "grounds": [
         "SUPPORT-DATATYPE-PREINTERPRETATIONS",
-        "MT11-FINITE-DATATYPE-PREINTERPRETATION"
+        "MT11-FINITE-DATATYPE-PREINTERPRETATION",
+        "MT11-DATATYPE-PREINTERPRETATION-ORDINARY-ENTAILMENT"
       ],
       "parent_declaration_if_applicable": null,
       "review": "pending_expert_review"
@@ -24078,6 +24117,1905 @@
         "SUPPORT-DATATYPE-PREINTERPRETATIONS"
       ],
       "parent_declaration_if_applicable": "RDF11.Term.hasLiteral.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletion.conditions",
+      "module": "RDF11.DatatypeCompletion",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} {U : Type u} {V : RDF11.Set (RDF11.Name Iri Literal)}\n  {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri} {ρ : RDF11.ValueRealization Value U}\n  (P : RDF11.PreInterpretation V U),\n  P.DConditions T D ρ → (RDF11.DatatypeCompletion.interpretation P T D ρ).DConditions T D ρ.complete",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION",
+        "MT11-DATATYPE-PREINTERPRETATION-COMPLETION",
+        "MT11-DATATYPE-PREINTERPRETATION-ORDINARY-ENTAILMENT"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletion.denote_lift",
+      "module": "RDF11.DatatypeCompletion",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} {U : Type u} {V : RDF11.Set (RDF11.Name Iri Literal)}\n  {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri} {ρ : RDF11.ValueRealization Value U} {B : Type}\n  (P : RDF11.PreInterpretation V U),\n  P.DConditions T D ρ →\n    ∀ (A : RDF11.SimpleInterpretation.Assignment P B)\n      (t : RDF11.Term (RDF11.VocabularyIRI V) (RDF11.VocabularyLiteral V) B),\n      (RDF11.DatatypeCompletion.interpretation P T D ρ).denote (RDF11.DatatypeCompletion.liftAssignment P T D ρ A)\n          (RDF11.Term.mapNames Subtype.val Subtype.val t) =\n        Option.map Sum.inl (RDF11.SimpleInterpretation.denote P A t)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletion.denote_reflect_resource",
+      "module": "RDF11.DatatypeCompletion",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} {U : Type u} {V : RDF11.Set (RDF11.Name Iri Literal)}\n  {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri} {ρ : RDF11.ValueRealization Value U} {B : Type}\n  (P : RDF11.PreInterpretation V U),\n  P.DConditions T D ρ →\n    ∀ (A : (RDF11.DatatypeCompletion.interpretation P T D ρ).Assignment B)\n      (t : RDF11.Term (RDF11.VocabularyIRI V) (RDF11.VocabularyLiteral V) B) (x : U),\n      P.IR x →\n        (RDF11.DatatypeCompletion.interpretation P T D ρ).denote A (RDF11.Term.mapNames Subtype.val Subtype.val t) =\n            some (Sum.inl x) →\n          RDF11.SimpleInterpretation.denote P (RDF11.DatatypeCompletion.lowerAssignment P T D ρ A) t = some x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletion.denote_reflect_resource._simp_1_1",
+      "module": "RDF11.DatatypeCompletion",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_1} {b : α} {α_1 : Type u_2} {x : Option α_1} {f : α_1 → α},\n  (Option.map f x = some b) = ∃ a, x = some a ∧ f a = b",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.DatatypeCompletion.denote_reflect_resource",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletion.denote_reflect_resource._simp_1_2",
+      "module": "RDF11.DatatypeCompletion",
+      "kind": "theorem",
+      "type": "∀ {α : Sort u_1} {p : α → Prop} {a' : α}, (∃ a, p a ∧ a = a') = p a'",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.DatatypeCompletion.denote_reflect_resource",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletion.graphTrue_lift_iff",
+      "module": "RDF11.DatatypeCompletion",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} {U : Type u} {V : RDF11.Set (RDF11.Name Iri Literal)}\n  {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri} {ρ : RDF11.ValueRealization Value U} {B : Type}\n  (P : RDF11.PreInterpretation V U),\n  P.DConditions T D ρ →\n    ∀ (A : RDF11.SimpleInterpretation.Assignment P B)\n      (G : RDF11.GeneralizedGraph (RDF11.VocabularyIRI V) (RDF11.VocabularyLiteral V) B),\n      (RDF11.DatatypeCompletion.interpretation P T D ρ).GraphTrue (RDF11.DatatypeCompletion.liftAssignment P T D ρ A)\n          (RDF11.GeneralizedGraph.mapNames Subtype.val Subtype.val G) ↔\n        RDF11.SimpleInterpretation.GraphTrue P A G",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION",
+        "MT11-DATATYPE-PREINTERPRETATION-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletion.interpretation",
+      "module": "RDF11.DatatypeCompletion",
+      "kind": "definition",
+      "type": "{Iri Literal Value : Type} →\n  {U : Type u} →\n    {V : RDF11.Set (RDF11.Name Iri Literal)} →\n      RDF11.PreInterpretation V U →\n        RDF11.DatatypeTheory Iri Literal Value →\n          RDF11.Set Iri → RDF11.ValueRealization Value U → RDF11.SimpleInterpretation Iri Literal (U ⊕ Value)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION",
+        "MT11-DATATYPE-PREINTERPRETATION-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletion.interpretation._proof_1",
+      "module": "RDF11.DatatypeCompletion",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} {U : Type u_1} {V : RDF11.Set (RDF11.Name Iri Literal)} (P : RDF11.PreInterpretation V U),\n  ∃ x, True",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.DatatypeCompletion.interpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletion.interpretation._sparseCasesOn_1",
+      "module": "RDF11.DatatypeCompletion",
+      "kind": "definition",
+      "type": "{α : Type u} →\n  {β : Type v} →\n    {motive : α ⊕ β → Sort u_1} →\n      (t : α ⊕ β) → ((val : α) → motive (Sum.inl val)) → (Nat.hasNotBit 1 t.ctorIdx → motive t) → motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.DatatypeCompletion.interpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletion.interpretation.eq_1",
+      "module": "RDF11.DatatypeCompletion",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} {U : Type u} {V : RDF11.Set (RDF11.Name Iri Literal)} (P : RDF11.PreInterpretation V U)\n  (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri) (ρ : RDF11.ValueRealization Value U),\n  RDF11.DatatypeCompletion.interpretation P T D ρ =\n    { IR := fun x => True, IR_nonempty := ⋯, IP := fun x => True,\n      IEXT := fun p pair =>\n        match p.val, pair.fst.val, pair.snd.val with\n        | Sum.inl q, Sum.inl x, Sum.inl y => RDF11.SimpleInterpretation.Relates P q x y\n        | x, x_1, x_2 => False,\n      IS := fun i => ⟨RDF11.DatatypeCompletion.iriValue P T D ρ i, ⋯⟩,\n      IL := fun l => Option.map (fun x => ⟨x, True.intro⟩) (RDF11.DatatypeCompletion.literalValue P T D ρ l) }",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.DatatypeCompletion.interpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletion.interpretation.match_1",
+      "module": "RDF11.DatatypeCompletion",
+      "kind": "definition",
+      "type": "{Value : Type} →\n  {U : Type u_1} →\n    (motive : U ⊕ Value → U ⊕ Value → U ⊕ Value → Sort u_2) →\n      (x x_1 x_2 : U ⊕ Value) →\n        ((q x y : U) → motive (Sum.inl q) (Sum.inl x) (Sum.inl y)) →\n          ((x x_3 x_4 : U ⊕ Value) → motive x x_3 x_4) → motive x x_1 x_2",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.DatatypeCompletion.interpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletion.iriValue",
+      "module": "RDF11.DatatypeCompletion",
+      "kind": "definition",
+      "type": "{Iri Literal Value : Type} →\n  {U : Type u} →\n    {V : RDF11.Set (RDF11.Name Iri Literal)} →\n      RDF11.PreInterpretation V U →\n        RDF11.DatatypeTheory Iri Literal Value → RDF11.Set Iri → RDF11.ValueRealization Value U → Iri → U ⊕ Value",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletion.iriValue._proof_1",
+      "module": "RDF11.DatatypeCompletion",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u_1} {V : RDF11.Set (RDF11.Name Iri Literal)} (P : RDF11.PreInterpretation V U),\n  ∃ x, P.IR x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.DatatypeCompletion.iriValue",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletion.iriValue.eq_1",
+      "module": "RDF11.DatatypeCompletion",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} {U : Type u} {V : RDF11.Set (RDF11.Name Iri Literal)} (P : RDF11.PreInterpretation V U)\n  (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri) (ρ : RDF11.ValueRealization Value U) (i : Iri),\n  RDF11.DatatypeCompletion.iriValue P T D ρ i =\n    if hi : V (Sum.inl i) then Sum.inl (P.IS ⟨i, hi⟩).val\n    else if D i then ρ.embed (T.identified i) else Sum.inl (Classical.choose ⋯)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.DatatypeCompletion.iriValue",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletion.iriValue_local",
+      "module": "RDF11.DatatypeCompletion",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} {U : Type u} {V : RDF11.Set (RDF11.Name Iri Literal)} (P : RDF11.PreInterpretation V U)\n  (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri) (ρ : RDF11.ValueRealization Value U)\n  (i : RDF11.VocabularyIRI V), RDF11.DatatypeCompletion.iriValue P T D ρ i.val = Sum.inl (P.IS i).val",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION",
+        "MT11-DATATYPE-PREINTERPRETATION-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletion.iriValue_recognized",
+      "module": "RDF11.DatatypeCompletion",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} {U : Type u} {V : RDF11.Set (RDF11.Name Iri Literal)}\n  {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri} {ρ : RDF11.ValueRealization Value U}\n  (P : RDF11.PreInterpretation V U),\n  P.DConditions T D ρ → ∀ (i : Iri), D i → RDF11.DatatypeCompletion.iriValue P T D ρ i = ρ.embed (T.identified i)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletion.liftAssignment",
+      "module": "RDF11.DatatypeCompletion",
+      "kind": "definition",
+      "type": "{Iri Literal Value : Type} →\n  {U : Type u} →\n    {V : RDF11.Set (RDF11.Name Iri Literal)} →\n      {B : Type} →\n        (P : RDF11.PreInterpretation V U) →\n          (T : RDF11.DatatypeTheory Iri Literal Value) →\n            (D : RDF11.Set Iri) →\n              (ρ : RDF11.ValueRealization Value U) →\n                RDF11.SimpleInterpretation.Assignment P B →\n                  (RDF11.DatatypeCompletion.interpretation P T D ρ).Assignment B",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletion.liftAssignment.eq_1",
+      "module": "RDF11.DatatypeCompletion",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} {U : Type u} {V : RDF11.Set (RDF11.Name Iri Literal)} {B : Type}\n  (P : RDF11.PreInterpretation V U) (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (ρ : RDF11.ValueRealization Value U) (A : RDF11.SimpleInterpretation.Assignment P B) (b : B),\n  RDF11.DatatypeCompletion.liftAssignment P T D ρ A b = Option.map (fun r => ⟨Sum.inl r.val, True.intro⟩) (A b)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.DatatypeCompletion.liftAssignment",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletion.literalValue",
+      "module": "RDF11.DatatypeCompletion",
+      "kind": "definition",
+      "type": "{Iri Literal Value : Type} →\n  {U : Type u} →\n    {V : RDF11.Set (RDF11.Name Iri Literal)} →\n      RDF11.PreInterpretation V U →\n        RDF11.DatatypeTheory Iri Literal Value →\n          RDF11.Set Iri → RDF11.ValueRealization Value U → Literal → Option (U ⊕ Value)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletion.literalValue.eq_1",
+      "module": "RDF11.DatatypeCompletion",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} {U : Type u} {V : RDF11.Set (RDF11.Name Iri Literal)} (P : RDF11.PreInterpretation V U)\n  (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri) (ρ : RDF11.ValueRealization Value U) (l : Literal),\n  RDF11.DatatypeCompletion.literalValue P T D ρ l =\n    if D (T.literalSyntax.datatype l) then\n      if T.literalSyntax.datatype l = T.literalSyntax.langString then\n        Option.map (fun tag => ρ.embed (T.languageValue (T.literalSyntax.lexical l) (RDF11.asciiLower tag)))\n          (T.literalSyntax.language l)\n      else Option.map ρ.embed (T.L2V (T.identified (T.literalSyntax.datatype l)) (T.literalSyntax.lexical l))\n    else if hl : V (Sum.inr l) then Option.map (fun r => Sum.inl r.val) (P.IL ⟨l, hl⟩) else none",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.DatatypeCompletion.literalValue",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletion.literalValue_language",
+      "module": "RDF11.DatatypeCompletion",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} {U : Type u} {V : RDF11.Set (RDF11.Name Iri Literal)} (P : RDF11.PreInterpretation V U)\n  (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri) (ρ : RDF11.ValueRealization Value U) (l : Literal)\n  (tag : String),\n  D T.literalSyntax.langString →\n    T.literalSyntax.language l = some tag →\n      RDF11.DatatypeCompletion.literalValue P T D ρ l =\n        some (ρ.embed (T.languageValue (T.literalSyntax.lexical l) (RDF11.asciiLower tag)))",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletion.literalValue_local",
+      "module": "RDF11.DatatypeCompletion",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} {U : Type u} {V : RDF11.Set (RDF11.Name Iri Literal)}\n  {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri} {ρ : RDF11.ValueRealization Value U}\n  (P : RDF11.PreInterpretation V U),\n  P.DConditions T D ρ →\n    ∀ (l : RDF11.VocabularyLiteral V),\n      RDF11.DatatypeCompletion.literalValue P T D ρ l.val = Option.map (fun r => Sum.inl r.val) (P.IL l)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION",
+        "MT11-DATATYPE-PREINTERPRETATION-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletion.literalValue_ordinary",
+      "module": "RDF11.DatatypeCompletion",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} {U : Type u} {V : RDF11.Set (RDF11.Name Iri Literal)} (P : RDF11.PreInterpretation V U)\n  (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri) (ρ : RDF11.ValueRealization Value U) (l : Literal),\n  D (T.literalSyntax.datatype l) →\n    T.literalSyntax.datatype l ≠ T.literalSyntax.langString →\n      RDF11.DatatypeCompletion.literalValue P T D ρ l =\n        Option.map ρ.embed (T.L2V (T.identified (T.literalSyntax.datatype l)) (T.literalSyntax.lexical l))",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletion.lowerAssignment",
+      "module": "RDF11.DatatypeCompletion",
+      "kind": "definition",
+      "type": "{Iri Literal Value : Type} →\n  {U : Type u} →\n    {V : RDF11.Set (RDF11.Name Iri Literal)} →\n      {B : Type} →\n        (P : RDF11.PreInterpretation V U) →\n          (T : RDF11.DatatypeTheory Iri Literal Value) →\n            (D : RDF11.Set Iri) →\n              (ρ : RDF11.ValueRealization Value U) →\n                (RDF11.DatatypeCompletion.interpretation P T D ρ).Assignment B →\n                  RDF11.SimpleInterpretation.Assignment P B",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION",
+        "MT11-DATATYPE-PREINTERPRETATION-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletion.lowerAssignment.eq_1",
+      "module": "RDF11.DatatypeCompletion",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} {U : Type u} {V : RDF11.Set (RDF11.Name Iri Literal)} {B : Type}\n  (P : RDF11.PreInterpretation V U) (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (ρ : RDF11.ValueRealization Value U) (A : (RDF11.DatatypeCompletion.interpretation P T D ρ).Assignment B) (b : B),\n  RDF11.DatatypeCompletion.lowerAssignment P T D ρ A b =\n    match A b with\n    | none => none\n    | some r =>\n      match r.val with\n      | Sum.inl x => if hx : P.IR x then some ⟨x, hx⟩ else none\n      | Sum.inr val => none",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.DatatypeCompletion.lowerAssignment",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletion.lowerAssignment.match_1",
+      "module": "RDF11.DatatypeCompletion",
+      "kind": "definition",
+      "type": "{Value : Type} →\n  {U : Type u_1} →\n    (motive : U ⊕ Value → Sort u_2) →\n      (x : U ⊕ Value) → ((x : U) → motive (Sum.inl x)) → ((val : Value) → motive (Sum.inr val)) → motive x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.DatatypeCompletion.lowerAssignment",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletion.lowerAssignment.match_3",
+      "module": "RDF11.DatatypeCompletion",
+      "kind": "definition",
+      "type": "{Iri Literal Value : Type} →\n  {U : Type u_1} →\n    {V : RDF11.Set (RDF11.Name Iri Literal)} →\n      (P : RDF11.PreInterpretation V U) →\n        (T : RDF11.DatatypeTheory Iri Literal Value) →\n          (D : RDF11.Set Iri) →\n            (ρ : RDF11.ValueRealization Value U) →\n              (motive : Option (RDF11.DatatypeCompletion.interpretation P T D ρ).Resource → Sort u_2) →\n                (x : Option (RDF11.DatatypeCompletion.interpretation P T D ρ).Resource) →\n                  (Unit → motive none) →\n                    ((r : (RDF11.DatatypeCompletion.interpretation P T D ρ).Resource) → motive (some r)) → motive x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.DatatypeCompletion.lowerAssignment",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletion.ordinary_satisfies_iff",
+      "module": "RDF11.DatatypeCompletion",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} {U : Type u} {V : RDF11.Set (RDF11.Name Iri Literal)}\n  {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri} {ρ : RDF11.ValueRealization Value U} {B : Type}\n  (P : RDF11.PreInterpretation V U),\n  P.DConditions T D ρ →\n    ∀ (G : RDF11.Graph (RDF11.VocabularyIRI V) (RDF11.VocabularyLiteral V) B),\n      (RDF11.DatatypeCompletion.interpretation P T D ρ).Satisfies\n          (RDF11.GeneralizedGraph.mapNames Subtype.val Subtype.val G.generalize) ↔\n        RDF11.SimpleInterpretation.Satisfies P G.generalize",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION",
+        "MT11-DATATYPE-PREINTERPRETATION-COMPLETION",
+        "MT11-DATATYPE-PREINTERPRETATION-ORDINARY-ENTAILMENT"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletion.ordinary_triple_reflect",
+      "module": "RDF11.DatatypeCompletion",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} {U : Type u} {V : RDF11.Set (RDF11.Name Iri Literal)}\n  {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri} {ρ : RDF11.ValueRealization Value U} {B : Type}\n  (P : RDF11.PreInterpretation V U),\n  P.DConditions T D ρ →\n    ∀ (A : (RDF11.DatatypeCompletion.interpretation P T D ρ).Assignment B)\n      (t : RDF11.Triple (RDF11.VocabularyIRI V) (RDF11.VocabularyLiteral V) B),\n      (RDF11.DatatypeCompletion.interpretation P T D ρ).TripleTrue A\n          (RDF11.GeneralizedTriple.mapNames Subtype.val Subtype.val t.generalize) →\n        RDF11.SimpleInterpretation.TripleTrue P (RDF11.DatatypeCompletion.lowerAssignment P T D ρ A) t.generalize",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION",
+        "MT11-DATATYPE-PREINTERPRETATION-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletion.ordinary_triple_reflect._simp_1_1",
+      "module": "RDF11.DatatypeCompletion",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_1} {b : α} {α_1 : Type u_2} {x : Option α_1} {f : α_1 → α},\n  (Option.map f x = some b) = ∃ a, x = some a ∧ f a = b",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.DatatypeCompletion.ordinary_triple_reflect",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletion.ordinary_triple_reflect._simp_1_2",
+      "module": "RDF11.DatatypeCompletion",
+      "kind": "theorem",
+      "type": "∀ {α : Sort u_1} {p : α → Prop} {a' : α}, (∃ a, p a ∧ a = a') = p a'",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.DatatypeCompletion.ordinary_triple_reflect",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletion.relates_iff",
+      "module": "RDF11.DatatypeCompletion",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} {U : Type u} {V : RDF11.Set (RDF11.Name Iri Literal)} (P : RDF11.PreInterpretation V U)\n  (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri) (ρ : RDF11.ValueRealization Value U)\n  (p s o : U ⊕ Value),\n  (RDF11.DatatypeCompletion.interpretation P T D ρ).Relates p s o ↔\n    ∃ q x y, p = Sum.inl q ∧ s = Sum.inl x ∧ o = Sum.inl y ∧ RDF11.SimpleInterpretation.Relates P q x y",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION",
+        "MT11-DATATYPE-PREINTERPRETATION-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletion.satisfies_forward",
+      "module": "RDF11.DatatypeCompletion",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} {U : Type u} {V : RDF11.Set (RDF11.Name Iri Literal)}\n  {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri} {ρ : RDF11.ValueRealization Value U} {B : Type}\n  (P : RDF11.PreInterpretation V U),\n  P.DConditions T D ρ →\n    ∀ (G : RDF11.GeneralizedGraph (RDF11.VocabularyIRI V) (RDF11.VocabularyLiteral V) B),\n      RDF11.SimpleInterpretation.Satisfies P G →\n        (RDF11.DatatypeCompletion.interpretation P T D ρ).Satisfies\n          (RDF11.GeneralizedGraph.mapNames Subtype.val Subtype.val G)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION",
+        "MT11-DATATYPE-PREINTERPRETATION-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletion.tripleTrue_lift_iff",
+      "module": "RDF11.DatatypeCompletion",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} {U : Type u} {V : RDF11.Set (RDF11.Name Iri Literal)}\n  {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri} {ρ : RDF11.ValueRealization Value U} {B : Type}\n  (P : RDF11.PreInterpretation V U),\n  P.DConditions T D ρ →\n    ∀ (A : RDF11.SimpleInterpretation.Assignment P B)\n      (t : RDF11.GeneralizedTriple (RDF11.VocabularyIRI V) (RDF11.VocabularyLiteral V) B),\n      (RDF11.DatatypeCompletion.interpretation P T D ρ).TripleTrue (RDF11.DatatypeCompletion.liftAssignment P T D ρ A)\n          (RDF11.GeneralizedTriple.mapNames Subtype.val Subtype.val t) ↔\n        RDF11.SimpleInterpretation.TripleTrue P A t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION",
+        "MT11-DATATYPE-PREINTERPRETATION-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletion.tripleTrue_lift_iff._simp_1_1",
+      "module": "RDF11.DatatypeCompletion",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_1} {b : α} {α_1 : Type u_2} {x : Option α_1} {f : α_1 → α},\n  (Option.map f x = some b) = ∃ a, x = some a ∧ f a = b",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.DatatypeCompletion.tripleTrue_lift_iff",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletion.tripleTrue_lift_iff._simp_1_2",
+      "module": "RDF11.DatatypeCompletion",
+      "kind": "theorem",
+      "type": "∀ {α : Sort u_1} {p : α → Prop} {a' : α}, (∃ a, p a ∧ a = a') = p a'",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.DatatypeCompletion.tripleTrue_lift_iff",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletionScope.Iri",
+      "module": "RDF11.DatatypeCompletionScope",
+      "kind": "inductive",
+      "type": "Type",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletionScope.Iri._sizeOf_1",
+      "module": "RDF11.DatatypeCompletionScope",
+      "kind": "definition",
+      "type": "RDF11.DatatypeCompletionScope.Iri → Nat",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.DatatypeCompletionScope.Iri",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletionScope.Iri._sizeOf_inst",
+      "module": "RDF11.DatatypeCompletionScope",
+      "kind": "definition",
+      "type": "SizeOf RDF11.DatatypeCompletionScope.Iri",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.DatatypeCompletionScope.Iri",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletionScope.Iri.casesOn",
+      "module": "RDF11.DatatypeCompletionScope",
+      "kind": "definition",
+      "type": "{motive : RDF11.DatatypeCompletionScope.Iri → Sort u} →\n  (t : RDF11.DatatypeCompletionScope.Iri) →\n    motive RDF11.DatatypeCompletionScope.Iri.node →\n      motive RDF11.DatatypeCompletionScope.Iri.property →\n        motive RDF11.DatatypeCompletionScope.Iri.datatype → motive RDF11.DatatypeCompletionScope.Iri.lang → motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.DatatypeCompletionScope.Iri",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletionScope.Iri.ctorElim",
+      "module": "RDF11.DatatypeCompletionScope",
+      "kind": "definition",
+      "type": "{motive : RDF11.DatatypeCompletionScope.Iri → Sort u} →\n  (ctorIdx : Nat) →\n    (t : RDF11.DatatypeCompletionScope.Iri) →\n      ctorIdx = t.ctorIdx → RDF11.DatatypeCompletionScope.Iri.ctorElimType ctorIdx → motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.DatatypeCompletionScope.Iri",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletionScope.Iri.ctorElimType",
+      "module": "RDF11.DatatypeCompletionScope",
+      "kind": "definition",
+      "type": "{motive : RDF11.DatatypeCompletionScope.Iri → Sort u} → Nat → Sort (max 1 u)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.DatatypeCompletionScope.Iri",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletionScope.Iri.ctorIdx",
+      "module": "RDF11.DatatypeCompletionScope",
+      "kind": "definition",
+      "type": "RDF11.DatatypeCompletionScope.Iri → Nat",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.DatatypeCompletionScope.Iri",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletionScope.Iri.datatype",
+      "module": "RDF11.DatatypeCompletionScope",
+      "kind": "constructor",
+      "type": "RDF11.DatatypeCompletionScope.Iri",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.DatatypeCompletionScope.Iri",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletionScope.Iri.datatype.elim",
+      "module": "RDF11.DatatypeCompletionScope",
+      "kind": "definition",
+      "type": "{motive : RDF11.DatatypeCompletionScope.Iri → Sort u} →\n  (t : RDF11.DatatypeCompletionScope.Iri) → t.ctorIdx = 2 → motive RDF11.DatatypeCompletionScope.Iri.datatype → motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.DatatypeCompletionScope.Iri.datatype",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletionScope.Iri.datatype.sizeOf_spec",
+      "module": "RDF11.DatatypeCompletionScope",
+      "kind": "theorem",
+      "type": "sizeOf RDF11.DatatypeCompletionScope.Iri.datatype = 1",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.DatatypeCompletionScope.Iri.datatype",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletionScope.Iri.lang",
+      "module": "RDF11.DatatypeCompletionScope",
+      "kind": "constructor",
+      "type": "RDF11.DatatypeCompletionScope.Iri",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.DatatypeCompletionScope.Iri",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletionScope.Iri.lang.elim",
+      "module": "RDF11.DatatypeCompletionScope",
+      "kind": "definition",
+      "type": "{motive : RDF11.DatatypeCompletionScope.Iri → Sort u} →\n  (t : RDF11.DatatypeCompletionScope.Iri) → t.ctorIdx = 3 → motive RDF11.DatatypeCompletionScope.Iri.lang → motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.DatatypeCompletionScope.Iri.lang",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletionScope.Iri.lang.sizeOf_spec",
+      "module": "RDF11.DatatypeCompletionScope",
+      "kind": "theorem",
+      "type": "sizeOf RDF11.DatatypeCompletionScope.Iri.lang = 1",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.DatatypeCompletionScope.Iri.lang",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletionScope.Iri.noConfusion",
+      "module": "RDF11.DatatypeCompletionScope",
+      "kind": "definition",
+      "type": "{P : Sort v✝} →\n  {x y : RDF11.DatatypeCompletionScope.Iri} → x = y → RDF11.DatatypeCompletionScope.Iri.noConfusionType P x y",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.DatatypeCompletionScope.Iri",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletionScope.Iri.noConfusionType",
+      "module": "RDF11.DatatypeCompletionScope",
+      "kind": "definition",
+      "type": "Sort v✝ → RDF11.DatatypeCompletionScope.Iri → RDF11.DatatypeCompletionScope.Iri → Sort v✝",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.DatatypeCompletionScope.Iri",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletionScope.Iri.node",
+      "module": "RDF11.DatatypeCompletionScope",
+      "kind": "constructor",
+      "type": "RDF11.DatatypeCompletionScope.Iri",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.DatatypeCompletionScope.Iri",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletionScope.Iri.node.elim",
+      "module": "RDF11.DatatypeCompletionScope",
+      "kind": "definition",
+      "type": "{motive : RDF11.DatatypeCompletionScope.Iri → Sort u} →\n  (t : RDF11.DatatypeCompletionScope.Iri) → t.ctorIdx = 0 → motive RDF11.DatatypeCompletionScope.Iri.node → motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.DatatypeCompletionScope.Iri.node",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletionScope.Iri.node.sizeOf_spec",
+      "module": "RDF11.DatatypeCompletionScope",
+      "kind": "theorem",
+      "type": "sizeOf RDF11.DatatypeCompletionScope.Iri.node = 1",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.DatatypeCompletionScope.Iri.node",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletionScope.Iri.ofNat",
+      "module": "RDF11.DatatypeCompletionScope",
+      "kind": "definition",
+      "type": "Nat → RDF11.DatatypeCompletionScope.Iri",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.DatatypeCompletionScope.Iri",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletionScope.Iri.ofNat_ctorIdx",
+      "module": "RDF11.DatatypeCompletionScope",
+      "kind": "theorem",
+      "type": "∀ (x : RDF11.DatatypeCompletionScope.Iri), RDF11.DatatypeCompletionScope.Iri.ofNat x.ctorIdx = x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.DatatypeCompletionScope.Iri",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletionScope.Iri.property",
+      "module": "RDF11.DatatypeCompletionScope",
+      "kind": "constructor",
+      "type": "RDF11.DatatypeCompletionScope.Iri",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.DatatypeCompletionScope.Iri",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletionScope.Iri.property.elim",
+      "module": "RDF11.DatatypeCompletionScope",
+      "kind": "definition",
+      "type": "{motive : RDF11.DatatypeCompletionScope.Iri → Sort u} →\n  (t : RDF11.DatatypeCompletionScope.Iri) → t.ctorIdx = 1 → motive RDF11.DatatypeCompletionScope.Iri.property → motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.DatatypeCompletionScope.Iri.property",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletionScope.Iri.property.sizeOf_spec",
+      "module": "RDF11.DatatypeCompletionScope",
+      "kind": "theorem",
+      "type": "sizeOf RDF11.DatatypeCompletionScope.Iri.property = 1",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.DatatypeCompletionScope.Iri.property",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletionScope.Iri.rec",
+      "module": "RDF11.DatatypeCompletionScope",
+      "kind": "recursor",
+      "type": "{motive : RDF11.DatatypeCompletionScope.Iri → Sort u} →\n  motive RDF11.DatatypeCompletionScope.Iri.node →\n    motive RDF11.DatatypeCompletionScope.Iri.property →\n      motive RDF11.DatatypeCompletionScope.Iri.datatype →\n        motive RDF11.DatatypeCompletionScope.Iri.lang → (t : RDF11.DatatypeCompletionScope.Iri) → motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.DatatypeCompletionScope.Iri",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletionScope.Iri.recOn",
+      "module": "RDF11.DatatypeCompletionScope",
+      "kind": "definition",
+      "type": "{motive : RDF11.DatatypeCompletionScope.Iri → Sort u} →\n  (t : RDF11.DatatypeCompletionScope.Iri) →\n    motive RDF11.DatatypeCompletionScope.Iri.node →\n      motive RDF11.DatatypeCompletionScope.Iri.property →\n        motive RDF11.DatatypeCompletionScope.Iri.datatype → motive RDF11.DatatypeCompletionScope.Iri.lang → motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.DatatypeCompletionScope.Iri",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletionScope.Iri.toCtorIdx",
+      "module": "RDF11.DatatypeCompletionScope",
+      "kind": "definition",
+      "type": "RDF11.DatatypeCompletionScope.Iri → Nat",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.DatatypeCompletionScope.Iri",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletionScope.Value",
+      "module": "RDF11.DatatypeCompletionScope",
+      "kind": "definition",
+      "type": "Type",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletionScope.comparison_vocabulary",
+      "module": "RDF11.DatatypeCompletionScope",
+      "kind": "theorem",
+      "type": "(RDF11.GeneralizedGraph.vocabulary RDF11.DatatypeCompletionScope.theory.literalSyntax.datatype\n        (RDF11.GeneralizedGraph.mapNames Subtype.val Subtype.val RDF11.DatatypeCompletionScope.premise)).union\n    (RDF11.GeneralizedGraph.vocabulary RDF11.DatatypeCompletionScope.theory.literalSyntax.datatype\n      (RDF11.GeneralizedGraph.mapNames Subtype.val Subtype.val RDF11.DatatypeCompletionScope.conclusion)) =\n  RDF11.DatatypeCompletionScope.vocabulary",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION",
+        "MT11-DATATYPE-PREINTERPRETATION-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletionScope.conclusion",
+      "module": "RDF11.DatatypeCompletionScope",
+      "kind": "definition",
+      "type": "RDF11.GeneralizedGraph (RDF11.VocabularyIRI RDF11.DatatypeCompletionScope.vocabulary)\n  (RDF11.VocabularyLiteral RDF11.DatatypeCompletionScope.vocabulary) Unit",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletionScope.conclusion.eq_1",
+      "module": "RDF11.DatatypeCompletionScope",
+      "kind": "theorem",
+      "type": "RDF11.DatatypeCompletionScope.conclusion =\n  RDF11.Set.singleton\n    { subject := RDF11.Term.iri RDF11.DatatypeCompletionScope.node, predicate := RDF11.Term.blank (),\n      object := RDF11.Term.iri RDF11.DatatypeCompletionScope.node }",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.DatatypeCompletionScope.conclusion",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletionScope.conclusion_false",
+      "module": "RDF11.DatatypeCompletionScope",
+      "kind": "theorem",
+      "type": "¬RDF11.SimpleInterpretation.Satisfies RDF11.DatatypeCompletionScope.premodel RDF11.DatatypeCompletionScope.conclusion",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION",
+        "MT11-DATATYPE-PREINTERPRETATION-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletionScope.conclusion_inclusion",
+      "module": "RDF11.DatatypeCompletionScope",
+      "kind": "theorem",
+      "type": "RDF11.GeneralizedGraph.mapNames Subtype.val Subtype.val RDF11.DatatypeCompletionScope.conclusion =\n  RDF11.Set.singleton\n    { subject := RDF11.Term.iri RDF11.DatatypeCompletionScope.Iri.node, predicate := RDF11.Term.blank (),\n      object := RDF11.Term.iri RDF11.DatatypeCompletionScope.Iri.node }",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletionScope.conclusion_inclusion._simp_1_5",
+      "module": "RDF11.DatatypeCompletionScope",
+      "kind": "theorem",
+      "type": "∀ {α : Sort u_1} {a b : α}, (a = b) = (b = a)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.DatatypeCompletionScope.conclusion_inclusion",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletionScope.full_entailment",
+      "module": "RDF11.DatatypeCompletionScope",
+      "kind": "theorem",
+      "type": "RDF11.DEntails RDF11.DatatypeCompletionScope.theory RDF11.DatatypeCompletionScope.recognized\n  (RDF11.GeneralizedGraph.mapNames Subtype.val Subtype.val RDF11.DatatypeCompletionScope.premise)\n  (RDF11.GeneralizedGraph.mapNames Subtype.val Subtype.val RDF11.DatatypeCompletionScope.conclusion)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION",
+        "MT11-DATATYPE-PREINTERPRETATION-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletionScope.full_premise_satisfiable",
+      "module": "RDF11.DatatypeCompletionScope",
+      "kind": "theorem",
+      "type": "RDF11.DSatisfiable RDF11.DatatypeCompletionScope.theory RDF11.DatatypeCompletionScope.recognized\n  (RDF11.GeneralizedGraph.mapNames Subtype.val Subtype.val RDF11.DatatypeCompletionScope.premise)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION",
+        "MT11-DATATYPE-PREINTERPRETATION-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletionScope.global_literal_absent",
+      "module": "RDF11.DatatypeCompletionScope",
+      "kind": "theorem",
+      "type": "¬RDF11.DatatypeCompletionScope.vocabulary (Sum.inr ())",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION",
+        "MT11-DATATYPE-PREINTERPRETATION-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletionScope.instDecidableEqIri",
+      "module": "RDF11.DatatypeCompletionScope",
+      "kind": "definition",
+      "type": "DecidableEq RDF11.DatatypeCompletionScope.Iri",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.DatatypeCompletionScope.Iri",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletionScope.instDecidableEqIri._proof_1",
+      "module": "RDF11.DatatypeCompletionScope",
+      "kind": "theorem",
+      "type": "∀ (x y : RDF11.DatatypeCompletionScope.Iri), x.ctorIdx = y.ctorIdx → x = y",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.DatatypeCompletionScope.instDecidableEqIri",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletionScope.instDecidableEqIri._proof_2",
+      "module": "RDF11.DatatypeCompletionScope",
+      "kind": "theorem",
+      "type": "∀ (x y : RDF11.DatatypeCompletionScope.Iri), ¬x.ctorIdx = y.ctorIdx → x = y → False",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.DatatypeCompletionScope.instDecidableEqIri",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletionScope.literal_forces_property_resource",
+      "module": "RDF11.DatatypeCompletionScope",
+      "kind": "theorem",
+      "type": "RDF11.DatatypeCompletionScope.theory.RecognizedValue RDF11.DatatypeCompletionScope.recognized ()\n  (RDF11.DatatypeCompletionScope.theory.identified RDF11.DatatypeCompletionScope.Iri.property)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletionScope.local_conditions",
+      "module": "RDF11.DatatypeCompletionScope",
+      "kind": "theorem",
+      "type": "RDF11.DatatypeCompletionScope.premodel.DConditions RDF11.DatatypeCompletionScope.theory\n  RDF11.DatatypeCompletionScope.recognized RDF11.DatatypeCompletionScope.realization",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION",
+        "MT11-DATATYPE-PREINTERPRETATION-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletionScope.no_comparison_preserving_completion",
+      "module": "RDF11.DatatypeCompletionScope",
+      "kind": "theorem",
+      "type": "¬∃ U I,\n    I.DModel RDF11.DatatypeCompletionScope.theory RDF11.DatatypeCompletionScope.recognized ∧\n      (I.Satisfies (RDF11.GeneralizedGraph.mapNames Subtype.val Subtype.val RDF11.DatatypeCompletionScope.premise) ↔\n          RDF11.SimpleInterpretation.Satisfies RDF11.DatatypeCompletionScope.premodel\n            RDF11.DatatypeCompletionScope.premise) ∧\n        (I.Satisfies\n            (RDF11.GeneralizedGraph.mapNames Subtype.val Subtype.val RDF11.DatatypeCompletionScope.conclusion) ↔\n          RDF11.SimpleInterpretation.Satisfies RDF11.DatatypeCompletionScope.premodel\n            RDF11.DatatypeCompletionScope.conclusion)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION",
+        "MT11-DATATYPE-PREINTERPRETATION-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletionScope.node",
+      "module": "RDF11.DatatypeCompletionScope",
+      "kind": "definition",
+      "type": "RDF11.VocabularyIRI RDF11.DatatypeCompletionScope.vocabulary",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletionScope.node.eq_1",
+      "module": "RDF11.DatatypeCompletionScope",
+      "kind": "theorem",
+      "type": "RDF11.DatatypeCompletionScope.node = ⟨RDF11.DatatypeCompletionScope.Iri.node, True.intro⟩",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.DatatypeCompletionScope.node",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletionScope.premise",
+      "module": "RDF11.DatatypeCompletionScope",
+      "kind": "definition",
+      "type": "RDF11.GeneralizedGraph (RDF11.VocabularyIRI RDF11.DatatypeCompletionScope.vocabulary)\n  (RDF11.VocabularyLiteral RDF11.DatatypeCompletionScope.vocabulary) Unit",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletionScope.premise.eq_1",
+      "module": "RDF11.DatatypeCompletionScope",
+      "kind": "theorem",
+      "type": "RDF11.DatatypeCompletionScope.premise =\n  RDF11.Set.singleton\n    { subject := RDF11.Term.iri RDF11.DatatypeCompletionScope.node,\n      predicate := RDF11.Term.iri RDF11.DatatypeCompletionScope.property,\n      object := RDF11.Term.iri RDF11.DatatypeCompletionScope.node }",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.DatatypeCompletionScope.premise",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletionScope.premise_inclusion",
+      "module": "RDF11.DatatypeCompletionScope",
+      "kind": "theorem",
+      "type": "RDF11.GeneralizedGraph.mapNames Subtype.val Subtype.val RDF11.DatatypeCompletionScope.premise =\n  RDF11.Set.singleton\n    { subject := RDF11.Term.iri RDF11.DatatypeCompletionScope.Iri.node,\n      predicate := RDF11.Term.iri RDF11.DatatypeCompletionScope.Iri.property,\n      object := RDF11.Term.iri RDF11.DatatypeCompletionScope.Iri.node }",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletionScope.premise_inclusion._simp_1_6",
+      "module": "RDF11.DatatypeCompletionScope",
+      "kind": "theorem",
+      "type": "∀ {α : Sort u_1} {a b : α}, (a = b) = (b = a)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.DatatypeCompletionScope.premise_inclusion",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletionScope.premise_true",
+      "module": "RDF11.DatatypeCompletionScope",
+      "kind": "theorem",
+      "type": "RDF11.SimpleInterpretation.Satisfies RDF11.DatatypeCompletionScope.premodel RDF11.DatatypeCompletionScope.premise",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION",
+        "MT11-DATATYPE-PREINTERPRETATION-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletionScope.premodel",
+      "module": "RDF11.DatatypeCompletionScope",
+      "kind": "definition",
+      "type": "RDF11.PreInterpretation RDF11.DatatypeCompletionScope.vocabulary Bool",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION",
+        "MT11-DATATYPE-PREINTERPRETATION-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletionScope.premodel._proof_1",
+      "module": "RDF11.DatatypeCompletionScope",
+      "kind": "theorem",
+      "type": "∃ x, x = false",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.DatatypeCompletionScope.premodel",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletionScope.premodel._proof_2",
+      "module": "RDF11.DatatypeCompletionScope",
+      "kind": "theorem",
+      "type": "true = false ∨ true = true",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.DatatypeCompletionScope.premodel",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletionScope.premodel._proof_3",
+      "module": "RDF11.DatatypeCompletionScope",
+      "kind": "theorem",
+      "type": "false = false ∨ false = true",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.DatatypeCompletionScope.premodel",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletionScope.premodel._proof_4",
+      "module": "RDF11.DatatypeCompletionScope",
+      "kind": "theorem",
+      "type": "∀ (l : RDF11.VocabularyLiteral RDF11.DatatypeCompletionScope.vocabulary),\n  RDF11.DatatypeCompletionScope.vocabulary (Sum.inr l.val)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.DatatypeCompletionScope.premodel",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletionScope.premodel.eq_1",
+      "module": "RDF11.DatatypeCompletionScope",
+      "kind": "theorem",
+      "type": "RDF11.DatatypeCompletionScope.premodel =\n  { IR := fun x => x = false, IR_nonempty := RDF11.DatatypeCompletionScope.premodel._proof_1, IP := fun x => x = true,\n    IEXT := fun x x_1 => True,\n    IS := fun i =>\n      if i.val = RDF11.DatatypeCompletionScope.Iri.property then ⟨true, RDF11.DatatypeCompletionScope.premodel._proof_2⟩\n      else ⟨false, RDF11.DatatypeCompletionScope.premodel._proof_3⟩,\n    IL := fun l => False.elim ⋯ }",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.DatatypeCompletionScope.premodel",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletionScope.premodel_bounded",
+      "module": "RDF11.DatatypeCompletionScope",
+      "kind": "theorem",
+      "type": "RDF11.SimpleInterpretation.BoundedDomain RDF11.DatatypeCompletionScope.premodel 2",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION",
+        "MT11-DATATYPE-PREINTERPRETATION-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletionScope.property",
+      "module": "RDF11.DatatypeCompletionScope",
+      "kind": "definition",
+      "type": "RDF11.VocabularyIRI RDF11.DatatypeCompletionScope.vocabulary",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletionScope.property.eq_1",
+      "module": "RDF11.DatatypeCompletionScope",
+      "kind": "theorem",
+      "type": "RDF11.DatatypeCompletionScope.property = ⟨RDF11.DatatypeCompletionScope.Iri.property, True.intro⟩",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.DatatypeCompletionScope.property",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletionScope.realization",
+      "module": "RDF11.DatatypeCompletionScope",
+      "kind": "definition",
+      "type": "RDF11.ValueRealization RDF11.DatatypeCompletionScope.Value Bool",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletionScope.realization._proof_1",
+      "module": "RDF11.DatatypeCompletionScope",
+      "kind": "theorem",
+      "type": "∀ (v w : RDF11.DatatypeCompletionScope.Value) (x : Bool),\n  (if v = Sum.inr RDF11.DatatypeCompletionScope.Iri.property then some true else none) = some x →\n    (if w = Sum.inr RDF11.DatatypeCompletionScope.Iri.property then some true else none) = some x → v = w",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.DatatypeCompletionScope.realization",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletionScope.realization.eq_1",
+      "module": "RDF11.DatatypeCompletionScope",
+      "kind": "theorem",
+      "type": "RDF11.DatatypeCompletionScope.realization =\n  { value := fun v => if v = Sum.inr RDF11.DatatypeCompletionScope.Iri.property then some true else none,\n    injective := RDF11.DatatypeCompletionScope.realization._proof_1 }",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.DatatypeCompletionScope.realization",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletionScope.recognized",
+      "module": "RDF11.DatatypeCompletionScope",
+      "kind": "definition",
+      "type": "RDF11.Set RDF11.DatatypeCompletionScope.Iri",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletionScope.recognized_value_spaces_nonempty",
+      "module": "RDF11.DatatypeCompletionScope",
+      "kind": "theorem",
+      "type": "∀ (a : RDF11.DatatypeCompletionScope.Iri),\n  RDF11.DatatypeCompletionScope.recognized a → ∃ v, RDF11.DatatypeCompletionScope.theory.recognizedSpace a v",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION",
+        "MT11-DATATYPE-PREINTERPRETATION-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletionScope.theory",
+      "module": "RDF11.DatatypeCompletionScope",
+      "kind": "definition",
+      "type": "RDF11.DatatypeTheory RDF11.DatatypeCompletionScope.Iri Unit RDF11.DatatypeCompletionScope.Value",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION",
+        "MT11-DATATYPE-PREINTERPRETATION-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletionScope.theory._proof_1",
+      "module": "RDF11.DatatypeCompletionScope",
+      "kind": "theorem",
+      "type": "∀ (x : Unit) (x : String), none = some x → True",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.DatatypeCompletionScope.theory",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletionScope.theory._proof_2",
+      "module": "RDF11.DatatypeCompletionScope",
+      "kind": "theorem",
+      "type": "∀ (x : Unit),\n  (∃ tag, none = some tag) ↔ RDF11.DatatypeCompletionScope.Iri.datatype = RDF11.DatatypeCompletionScope.Iri.lang",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.DatatypeCompletionScope.theory",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletionScope.theory._proof_3",
+      "module": "RDF11.DatatypeCompletionScope",
+      "kind": "theorem",
+      "type": "∀ (x x_1 x_2 x_3 : String), Sum.inl (x, x_1) = Sum.inl (x_2, x_3) → x = x_2 ∧ x_1 = x_3",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.DatatypeCompletionScope.theory",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletionScope.theory._proof_4",
+      "module": "RDF11.DatatypeCompletionScope",
+      "kind": "theorem",
+      "type": "∀ (x : String),\n  (if\n        Sum.inr\n            { langString := RDF11.DatatypeCompletionScope.Iri.lang, lexical := fun x => \"\",\n                datatype := fun x => RDF11.DatatypeCompletionScope.Iri.datatype, language := fun x => none,\n                languageTag := fun x => True, tag_valid := RDF11.DatatypeCompletionScope.theory._proof_1,\n                lower_valid := ⋯, tagged_iff := RDF11.DatatypeCompletionScope.theory._proof_2 }.langString =\n          Sum.inr RDF11.DatatypeCompletionScope.Iri.datatype then\n      some (Sum.inr RDF11.DatatypeCompletionScope.Iri.property)\n    else\n      if\n          Sum.inr\n              { langString := RDF11.DatatypeCompletionScope.Iri.lang, lexical := fun x => \"\",\n                  datatype := fun x => RDF11.DatatypeCompletionScope.Iri.datatype, language := fun x => none,\n                  languageTag := fun x => True, tag_valid := RDF11.DatatypeCompletionScope.theory._proof_1,\n                  lower_valid := ⋯, tagged_iff := RDF11.DatatypeCompletionScope.theory._proof_2 }.langString =\n            Sum.inr RDF11.DatatypeCompletionScope.Iri.lang then\n        none\n      else some (Sum.inl (\"\", \"en\"))) =\n    none",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.DatatypeCompletionScope.theory",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletionScope.theory.eq_1",
+      "module": "RDF11.DatatypeCompletionScope",
+      "kind": "theorem",
+      "type": "RDF11.DatatypeCompletionScope.theory =\n  {\n    literalSyntax :=\n      { langString := RDF11.DatatypeCompletionScope.Iri.lang, lexical := fun x => \"\",\n        datatype := fun x => RDF11.DatatypeCompletionScope.Iri.datatype, language := fun x => none,\n        languageTag := fun x => True, tag_valid := RDF11.DatatypeCompletionScope.theory._proof_1, lower_valid := ⋯,\n        tagged_iff := RDF11.DatatypeCompletionScope.theory._proof_2 },\n    identified := Sum.inr,\n    L2V := fun d x =>\n      if d = Sum.inr RDF11.DatatypeCompletionScope.Iri.datatype then\n        some (Sum.inr RDF11.DatatypeCompletionScope.Iri.property)\n      else if d = Sum.inr RDF11.DatatypeCompletionScope.Iri.lang then none else some (Sum.inl (\"\", \"en\")),\n    languageValue := fun s t => Sum.inl (s, t), language_injective := RDF11.DatatypeCompletionScope.theory._proof_3,\n    language_noL2V := RDF11.DatatypeCompletionScope.theory._proof_4 }",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.DatatypeCompletionScope.theory",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletionScope.vocabulary",
+      "module": "RDF11.DatatypeCompletionScope",
+      "kind": "definition",
+      "type": "RDF11.Set (RDF11.Name RDF11.DatatypeCompletionScope.Iri Unit)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletionScope.vocabulary._sparseCasesOn_1",
+      "module": "RDF11.DatatypeCompletionScope",
+      "kind": "definition",
+      "type": "{α : Type u} →\n  {β : Type v} →\n    {motive : α ⊕ β → Sort u_1} →\n      (t : α ⊕ β) → ((val : α) → motive (Sum.inl val)) → (Nat.hasNotBit 1 t.ctorIdx → motive t) → motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.DatatypeCompletionScope.vocabulary",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletionScope.vocabulary._sparseCasesOn_1.else_eq",
+      "module": "RDF11.DatatypeCompletionScope",
+      "kind": "theorem",
+      "type": "∀ {α : Type u} {β : Type v} {motive : α ⊕ β → Sort u_1} (t : α ⊕ β) (inl : (val : α) → motive (Sum.inl val))\n  («else» : Nat.hasNotBit 1 t.ctorIdx → motive t) (h : Nat.hasNotBit 1 t.ctorIdx),\n  RDF11.DatatypeCompletionScope.vocabulary._sparseCasesOn_1 t inl «else» = «else» h",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.DatatypeCompletionScope.vocabulary._sparseCasesOn_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletionScope.vocabulary._sparseCasesOn_2",
+      "module": "RDF11.DatatypeCompletionScope",
+      "kind": "definition",
+      "type": "{motive : RDF11.DatatypeCompletionScope.Iri → Sort u} →\n  (t : RDF11.DatatypeCompletionScope.Iri) →\n    motive RDF11.DatatypeCompletionScope.Iri.node →\n      motive RDF11.DatatypeCompletionScope.Iri.property → (Nat.hasNotBit 3 t.ctorIdx → motive t) → motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.DatatypeCompletionScope.vocabulary",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletionScope.vocabulary._sparseCasesOn_2.else_eq",
+      "module": "RDF11.DatatypeCompletionScope",
+      "kind": "theorem",
+      "type": "∀ {motive : RDF11.DatatypeCompletionScope.Iri → Sort u} (t : RDF11.DatatypeCompletionScope.Iri)\n  (node : motive RDF11.DatatypeCompletionScope.Iri.node) (property : motive RDF11.DatatypeCompletionScope.Iri.property)\n  («else» : Nat.hasNotBit 3 t.ctorIdx → motive t) (h : Nat.hasNotBit 3 t.ctorIdx),\n  RDF11.DatatypeCompletionScope.vocabulary._sparseCasesOn_2 t node property «else» = «else» h",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.DatatypeCompletionScope.vocabulary._sparseCasesOn_2",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletionScope.vocabulary.eq_1",
+      "module": "RDF11.DatatypeCompletionScope",
+      "kind": "theorem",
+      "type": "RDF11.DatatypeCompletionScope.vocabulary (Sum.inl RDF11.DatatypeCompletionScope.Iri.node) = True",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.DatatypeCompletionScope.vocabulary",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletionScope.vocabulary.eq_2",
+      "module": "RDF11.DatatypeCompletionScope",
+      "kind": "theorem",
+      "type": "RDF11.DatatypeCompletionScope.vocabulary (Sum.inl RDF11.DatatypeCompletionScope.Iri.property) = True",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.DatatypeCompletionScope.vocabulary",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletionScope.vocabulary.eq_3",
+      "module": "RDF11.DatatypeCompletionScope",
+      "kind": "theorem",
+      "type": "∀ (x : RDF11.Name RDF11.DatatypeCompletionScope.Iri Unit),\n  (x = Sum.inl RDF11.DatatypeCompletionScope.Iri.node → False) →\n    (x = Sum.inl RDF11.DatatypeCompletionScope.Iri.property → False) →\n      RDF11.DatatypeCompletionScope.vocabulary x = False",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.DatatypeCompletionScope.vocabulary",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeCompletionScope.vocabulary.match_1",
+      "module": "RDF11.DatatypeCompletionScope",
+      "kind": "definition",
+      "type": "(motive : RDF11.Name RDF11.DatatypeCompletionScope.Iri Unit → Sort u_1) →\n  (x : RDF11.Name RDF11.DatatypeCompletionScope.Iri Unit) →\n    (Unit → motive (Sum.inl RDF11.DatatypeCompletionScope.Iri.node)) →\n      (Unit → motive (Sum.inl RDF11.DatatypeCompletionScope.Iri.property)) →\n        ((x : RDF11.Name RDF11.DatatypeCompletionScope.Iri Unit) → motive x) → motive x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.DatatypeCompletionScope.vocabulary",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.DatatypeTheory.mk.congr_simp",
+      "module": "RDF11.DatatypeCompletionScope",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} (literalSyntax literalSyntax_1 : RDF11.LiteralSyntax Iri Literal)\n  (e_literalSyntax : literalSyntax = literalSyntax_1) (identified identified_1 : Iri → Value)\n  (e_identified : identified = identified_1) (L2V L2V_1 : Value → String → Option Value) (e_L2V : L2V = L2V_1)\n  (languageValue languageValue_1 : String → String → Value) (e_languageValue : languageValue = languageValue_1)\n  (language_injective : ∀ (s t s' t' : String), languageValue s t = languageValue s' t' → s = s' ∧ t = t')\n  (language_noL2V : ∀ (s : String), L2V (identified literalSyntax.langString) s = none),\n  { literalSyntax := literalSyntax, identified := identified, L2V := L2V, languageValue := languageValue,\n      language_injective := language_injective, language_noL2V := language_noL2V } =\n    { literalSyntax := literalSyntax_1, identified := identified_1, L2V := L2V_1, languageValue := languageValue_1,\n      language_injective := ⋯, language_noL2V := ⋯ }",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.DatatypeTheory.mk",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GeneralizedGraph.mapNames.eq_1",
+      "module": "RDF11.DatatypeCompletionScope",
+      "kind": "theorem",
+      "type": "∀ {Iri₁ Iri₂ Literal₁ Literal₂ B : Type} (f : Iri₁ → Iri₂) (g : Literal₁ → Literal₂)\n  (G : RDF11.GeneralizedGraph Iri₁ Literal₁ B),\n  RDF11.GeneralizedGraph.mapNames f g G = RDF11.Set.image (RDF11.GeneralizedTriple.mapNames f g) G",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.GeneralizedGraph.mapNames",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GeneralizedGraph.vocabulary.eq_1",
+      "module": "RDF11.DatatypeCompletionScope",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri B : Type} (datatype : Literal → Iri) (G : RDF11.GeneralizedGraph Iri Literal B)\n  (n : RDF11.Name Iri Literal),\n  RDF11.GeneralizedGraph.vocabulary datatype G n = ∃ t, G t ∧ RDF11.GeneralizedTriple.names datatype t n",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.GeneralizedGraph.vocabulary",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GeneralizedTriple.hasLiteral.eq_1",
+      "module": "RDF11.DatatypeCompletionScope",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri Blank : Type} (l : Literal) (t : RDF11.GeneralizedTriple Iri Literal Blank),\n  RDF11.GeneralizedTriple.hasLiteral l t =\n    (RDF11.Term.hasLiteral l t.subject ∨ RDF11.Term.hasLiteral l t.predicate ∨ RDF11.Term.hasLiteral l t.object)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.GeneralizedTriple.hasLiteral",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Graph.generalize_restrictNames",
+      "module": "RDF11.OrdinaryPreinterpretations",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri B : Type} (datatype : Literal → Iri) (V : RDF11.Set (RDF11.Name Iri Literal))\n  (G : RDF11.Graph Iri Literal B) (h : (RDF11.GeneralizedGraph.vocabulary datatype G.generalize).subset V),\n  (RDF11.Graph.restrictNames datatype V G h).generalize = RDF11.GeneralizedGraph.restrictNames datatype V G.generalize h",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION",
+        "MT11-DATATYPE-PREINTERPRETATION-ORDINARY-ENTAILMENT"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Graph",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Graph.restrictNames",
+      "module": "RDF11.OrdinaryPreinterpretations",
+      "kind": "definition",
+      "type": "{Literal Iri B : Type} →\n  (datatype : Literal → Iri) →\n    (V : RDF11.Set (RDF11.Name Iri Literal)) →\n      (G : RDF11.Graph Iri Literal B) →\n        (RDF11.GeneralizedGraph.vocabulary datatype G.generalize).subset V →\n          RDF11.Graph (RDF11.VocabularyIRI V) (RDF11.VocabularyLiteral V) B",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION",
+        "MT11-DATATYPE-PREINTERPRETATION-ORDINARY-ENTAILMENT"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Graph",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Graph.restrictNames._proof_1",
+      "module": "RDF11.OrdinaryPreinterpretations",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri B : Type} (datatype : Literal → Iri) (V : RDF11.Set (RDF11.Name Iri Literal))\n  (G : RDF11.Graph Iri Literal B),\n  (RDF11.GeneralizedGraph.vocabulary datatype G.generalize).subset V →\n    ∀ (t : RDF11.Triple Iri Literal B),\n      G t → ∀ (n : RDF11.Name Iri Literal), RDF11.GeneralizedTriple.names datatype t.generalize n → V n",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Graph.restrictNames",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.LiteralSyntax.mk.congr_simp",
+      "module": "RDF11.DatatypeCompletionScope",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} (langString langString_1 : Iri) (e_langString : langString = langString_1)\n  (lexical lexical_1 : Literal → String),\n  lexical = lexical_1 →\n    ∀ (datatype datatype_1 : Literal → Iri) (e_datatype : datatype = datatype_1)\n      (language language_1 : Literal → Option String) (e_language : language = language_1)\n      (languageTag languageTag_1 : RDF11.Set String) (e_languageTag : languageTag = languageTag_1)\n      (tag_valid : ∀ (l : Literal) (tag : String), language l = some tag → languageTag tag)\n      (lower_valid : ∀ (tag : String), languageTag tag → languageTag (RDF11.asciiLower tag))\n      (tagged_iff : ∀ (l : Literal), (∃ tag, language l = some tag) ↔ datatype l = langString),\n      { langString := langString, lexical := lexical, datatype := datatype, language := language,\n          languageTag := languageTag, tag_valid := tag_valid, lower_valid := lower_valid, tagged_iff := tagged_iff } =\n        { langString := langString_1, lexical := lexical_1, datatype := datatype_1, language := language_1,\n          languageTag := languageTag_1, tag_valid := ⋯, lower_valid := ⋯, tagged_iff := ⋯ }",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.LiteralSyntax.mk",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.datatype_name_resource_of_literal",
+      "module": "RDF11.DatatypeCompletionScope",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u_1} {Value : Type} {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri}\n  {ρ : RDF11.ValueRealization Value U} {a : Iri} {l : Literal} (I : RDF11.SimpleInterpretation Iri Literal U),\n  I.DConditions T D ρ → D a → T.RecognizedValue D l (T.identified a) → I.IR (I.IS a).val",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION",
+        "MT11-DATATYPE-PREINTERPRETATION-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Statements.datatype_preinterpretation_ordinary_entailment",
+      "module": "RDF11.Statements",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B₁ B₂ Value : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (V : RDF11.Set (RDF11.Name Iri Literal)) (S : RDF11.Set B₁) (v : RDF11.Enumeration V) (b : RDF11.Enumeration S)\n  (G : RDF11.GeneralizedGraph Iri Literal B₁) (E : RDF11.Graph Iri Literal B₂)\n  (hG : (RDF11.GeneralizedGraph.vocabulary T.literalSyntax.datatype G).subset V)\n  (hE : (RDF11.GeneralizedGraph.vocabulary T.literalSyntax.datatype E.generalize).subset V),\n  RDF11.Set.subset G.hasBlank S →\n    (RDF11.DEntails T D G E.generalize ↔\n      ∀ (U : Type u) (P : RDF11.PreInterpretation V U),\n        RDF11.SimpleInterpretation.BoundedDomain P (v.triples.length + b.triples.length + 1) →\n          P.DModel T D →\n            RDF11.SimpleInterpretation.Satisfies P\n                (RDF11.GeneralizedGraph.restrictNames T.literalSyntax.datatype V G hG) →\n              RDF11.SimpleInterpretation.Satisfies P\n                (RDF11.GeneralizedGraph.restrictNames T.literalSyntax.datatype V E.generalize hE))",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION",
+        "MT11-DATATYPE-PREINTERPRETATION-ORDINARY-ENTAILMENT"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Subject.restrictNames",
+      "module": "RDF11.OrdinaryPreinterpretations",
+      "kind": "definition",
+      "type": "{Literal Iri B : Type} →\n  (datatype : Literal → Iri) →\n    (V : RDF11.Set (RDF11.Name Iri Literal)) →\n      (s : RDF11.Subject Iri B) →\n        (RDF11.Term.names datatype s.toTerm).subset V → RDF11.Subject (RDF11.VocabularyIRI V) B",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION",
+        "MT11-DATATYPE-PREINTERPRETATION-ORDINARY-ENTAILMENT"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Subject",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Subject.restrictNames._proof_1",
+      "module": "RDF11.OrdinaryPreinterpretations",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri B : Type} (datatype : Literal → Iri) (V : RDF11.Set (RDF11.Name Iri Literal)) (i : Iri),\n  (RDF11.Term.names datatype (RDF11.Subject.iri i).toTerm).subset V → V (Sum.inl i)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Subject.restrictNames",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Subject.restrictNames.match_1",
+      "module": "RDF11.OrdinaryPreinterpretations",
+      "kind": "definition",
+      "type": "{Literal Iri B : Type} →\n  (datatype : Literal → Iri) →\n    (V : RDF11.Set (RDF11.Name Iri Literal)) →\n      (motive : (s : RDF11.Subject Iri B) → (RDF11.Term.names datatype s.toTerm).subset V → Sort u_1) →\n        (s : RDF11.Subject Iri B) →\n          (h : (RDF11.Term.names datatype s.toTerm).subset V) →\n            ((i : Iri) →\n                (h : (RDF11.Term.names datatype (RDF11.Subject.iri i).toTerm).subset V) →\n                  motive (RDF11.Subject.iri i) h) →\n              ((b : B) →\n                  (h : (RDF11.Term.names datatype (RDF11.Subject.blank b).toTerm).subset V) →\n                    motive (RDF11.Subject.blank b) h) →\n                motive s h",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Subject.restrictNames",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Subject.toTerm_restrictNames",
+      "module": "RDF11.OrdinaryPreinterpretations",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri B : Type} (datatype : Literal → Iri) (V : RDF11.Set (RDF11.Name Iri Literal)) (s : RDF11.Subject Iri B)\n  (h : (RDF11.Term.names datatype s.toTerm).subset V),\n  (RDF11.Subject.restrictNames datatype V s h).toTerm = RDF11.Term.restrictNames datatype V s.toTerm h",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION",
+        "MT11-DATATYPE-PREINTERPRETATION-ORDINARY-ENTAILMENT"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Subject",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Triple.generalize_restrictNames",
+      "module": "RDF11.OrdinaryPreinterpretations",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri B : Type} (datatype : Literal → Iri) (V : RDF11.Set (RDF11.Name Iri Literal))\n  (t : RDF11.Triple Iri Literal B) (h : (RDF11.GeneralizedTriple.names datatype t.generalize).subset V),\n  (RDF11.Triple.restrictNames datatype V t h).generalize =\n    RDF11.GeneralizedTriple.restrictNames datatype V t.generalize h",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION",
+        "MT11-DATATYPE-PREINTERPRETATION-ORDINARY-ENTAILMENT"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Triple",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Triple.restrictNames",
+      "module": "RDF11.OrdinaryPreinterpretations",
+      "kind": "definition",
+      "type": "{Literal Iri B : Type} →\n  (datatype : Literal → Iri) →\n    (V : RDF11.Set (RDF11.Name Iri Literal)) →\n      (t : RDF11.Triple Iri Literal B) →\n        (RDF11.GeneralizedTriple.names datatype t.generalize).subset V →\n          RDF11.Triple (RDF11.VocabularyIRI V) (RDF11.VocabularyLiteral V) B",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION",
+        "MT11-DATATYPE-PREINTERPRETATION-ORDINARY-ENTAILMENT"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Triple",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Triple.restrictNames._proof_1",
+      "module": "RDF11.OrdinaryPreinterpretations",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri B : Type} (datatype : Literal → Iri) (V : RDF11.Set (RDF11.Name Iri Literal))\n  (t : RDF11.Triple Iri Literal B),\n  (RDF11.GeneralizedTriple.names datatype t.generalize).subset V →\n    ∀ (n : RDF11.Name Iri Literal), RDF11.Term.names datatype t.subject.toTerm n → V n",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Triple.restrictNames",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Triple.restrictNames._proof_2",
+      "module": "RDF11.OrdinaryPreinterpretations",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri B : Type} (datatype : Literal → Iri) (V : RDF11.Set (RDF11.Name Iri Literal))\n  (t : RDF11.Triple Iri Literal B),\n  (RDF11.GeneralizedTriple.names datatype t.generalize).subset V → V (Sum.inl t.predicate)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Triple.restrictNames",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Triple.restrictNames._proof_3",
+      "module": "RDF11.OrdinaryPreinterpretations",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri B : Type} (datatype : Literal → Iri) (V : RDF11.Set (RDF11.Name Iri Literal))\n  (t : RDF11.Triple Iri Literal B),\n  (RDF11.GeneralizedTriple.names datatype t.generalize).subset V →\n    ∀ (n : RDF11.Name Iri Literal), RDF11.Term.names datatype t.object n → V n",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Triple.restrictNames",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ValueRealization.complete",
+      "module": "RDF11.DatatypeCompletion",
+      "kind": "definition",
+      "type": "{Value : Type} → {U : Type u_1} → RDF11.ValueRealization Value U → RDF11.ValueRealization Value (U ⊕ Value)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION",
+        "MT11-DATATYPE-PREINTERPRETATION-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ValueRealization",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ValueRealization.complete._proof_1",
+      "module": "RDF11.DatatypeCompletion",
+      "kind": "theorem",
+      "type": "∀ {Value : Type} {U : Type u_1} (ρ : RDF11.ValueRealization Value U) (x x_1 : Value) (x_2 : U ⊕ Value),\n  some (ρ.embed x) = some x_2 → some (ρ.embed x_1) = some x_2 → x = x_1",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ValueRealization.complete",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ValueRealization.embed",
+      "module": "RDF11.DatatypeCompletion",
+      "kind": "definition",
+      "type": "{Value : Type} → {U : Type u_1} → RDF11.ValueRealization Value U → Value → U ⊕ Value",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION",
+        "MT11-DATATYPE-PREINTERPRETATION-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ValueRealization",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ValueRealization.embed.eq_1",
+      "module": "RDF11.DatatypeCompletion",
+      "kind": "theorem",
+      "type": "∀ {Value : Type} {U : Type u_1} (ρ : RDF11.ValueRealization Value U) (v : Value),\n  ρ.embed v =\n    match ρ.value v with\n    | some x => Sum.inl x\n    | none => Sum.inr v",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ValueRealization.embed",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ValueRealization.embed.match_1",
+      "module": "RDF11.DatatypeCompletion",
+      "kind": "definition",
+      "type": "{U : Type u_1} →\n  (motive : Option U → Sort u_2) → (x : Option U) → ((x : U) → motive (some x)) → (Unit → motive none) → motive x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ValueRealization.embed",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ValueRealization.embed_injective",
+      "module": "RDF11.DatatypeCompletion",
+      "kind": "theorem",
+      "type": "∀ {Value : Type} {U : Type u_1} (ρ : RDF11.ValueRealization Value U) {v w : Value}, ρ.embed v = ρ.embed w → v = w",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION",
+        "MT11-DATATYPE-PREINTERPRETATION-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ValueRealization",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ValueRealization.embed_of_defined",
+      "module": "RDF11.DatatypeCompletion",
+      "kind": "theorem",
+      "type": "∀ {Value : Type} {U : Type u_1} {v : Value} {x : U} (ρ : RDF11.ValueRealization Value U),\n  ρ.value v = some x → ρ.embed v = Sum.inl x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ValueRealization",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.d_entailment_iff_bounded_preinterpretations_ordinary",
+      "module": "RDF11.DatatypeCompletion",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B₁ B₂ : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (V : RDF11.Set (RDF11.Name Iri Literal)) (S : RDF11.Set B₁) (v : RDF11.Enumeration V) (b : RDF11.Enumeration S)\n  (G : RDF11.GeneralizedGraph Iri Literal B₁) (E : RDF11.Graph Iri Literal B₂)\n  (hG : (RDF11.GeneralizedGraph.vocabulary T.literalSyntax.datatype G).subset V)\n  (hE : (RDF11.GeneralizedGraph.vocabulary T.literalSyntax.datatype E.generalize).subset V),\n  RDF11.Set.subset G.hasBlank S →\n    (RDF11.DEntails T D G E.generalize ↔\n      ∀ (U : Type u) (P : RDF11.PreInterpretation V U),\n        RDF11.SimpleInterpretation.BoundedDomain P (v.triples.length + b.triples.length + 1) →\n          P.DModel T D →\n            RDF11.SimpleInterpretation.Satisfies P\n                (RDF11.GeneralizedGraph.restrictNames T.literalSyntax.datatype V G hG) →\n              RDF11.SimpleInterpretation.Satisfies P\n                (RDF11.GeneralizedGraph.restrictNames T.literalSyntax.datatype V E.generalize hE))",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION",
+        "MT11-DATATYPE-PREINTERPRETATION-ORDINARY-ENTAILMENT"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.d_entailment_iff_preinterpretations_ordinary",
+      "module": "RDF11.DatatypeCompletion",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B₁ B₂ : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (V : RDF11.Set (RDF11.Name Iri Literal))\n  (G : RDF11.GeneralizedGraph (RDF11.VocabularyIRI V) (RDF11.VocabularyLiteral V) B₁)\n  (E : RDF11.Graph (RDF11.VocabularyIRI V) (RDF11.VocabularyLiteral V) B₂),\n  RDF11.DEntails T D (RDF11.GeneralizedGraph.mapNames Subtype.val Subtype.val G)\n      (RDF11.GeneralizedGraph.mapNames Subtype.val Subtype.val E.generalize) ↔\n    ∀ (U : Type u) (P : RDF11.PreInterpretation V U),\n      P.DModel T D → RDF11.SimpleInterpretation.Satisfies P G → RDF11.SimpleInterpretation.Satisfies P E.generalize",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION",
+        "MT11-DATATYPE-PREINTERPRETATION-ORDINARY-ENTAILMENT"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.d_predicate_blank_of_datatype_value",
+      "module": "RDF11.DatatypeCompletionScope",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri) (s p o : Iri)\n  (l : Literal),\n  D p →\n    T.RecognizedValue D l (T.identified p) →\n      RDF11.DEntails T D\n        (RDF11.Set.singleton { subject := RDF11.Term.iri s, predicate := RDF11.Term.iri p, object := RDF11.Term.iri o })\n        (RDF11.Set.singleton\n          { subject := RDF11.Term.iri s, predicate := RDF11.Term.blank (), object := RDF11.Term.iri o })",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION",
+        "MT11-DATATYPE-PREINTERPRETATION-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.DatatypeCompletionScope.0.RDF11.DatatypeCompletionScope.vocabulary.match_1.eq_1",
+      "module": "RDF11.DatatypeCompletionScope",
+      "kind": "theorem",
+      "type": "∀ (motive : RDF11.Name RDF11.DatatypeCompletionScope.Iri Unit → Sort u_1)\n  (h_1 : Unit → motive (Sum.inl RDF11.DatatypeCompletionScope.Iri.node))\n  (h_2 : Unit → motive (Sum.inl RDF11.DatatypeCompletionScope.Iri.property))\n  (h_3 : (x : RDF11.Name RDF11.DatatypeCompletionScope.Iri Unit) → motive x),\n  (match Sum.inl RDF11.DatatypeCompletionScope.Iri.node with\n    | Sum.inl RDF11.DatatypeCompletionScope.Iri.node => h_1 ()\n    | Sum.inl RDF11.DatatypeCompletionScope.Iri.property => h_2 ()\n    | x => h_3 x) =\n    h_1 ()",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.DatatypeCompletionScope.vocabulary.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.DatatypeCompletionScope.0.RDF11.DatatypeCompletionScope.vocabulary.match_1.eq_2",
+      "module": "RDF11.DatatypeCompletionScope",
+      "kind": "theorem",
+      "type": "∀ (motive : RDF11.Name RDF11.DatatypeCompletionScope.Iri Unit → Sort u_1)\n  (h_1 : Unit → motive (Sum.inl RDF11.DatatypeCompletionScope.Iri.node))\n  (h_2 : Unit → motive (Sum.inl RDF11.DatatypeCompletionScope.Iri.property))\n  (h_3 : (x : RDF11.Name RDF11.DatatypeCompletionScope.Iri Unit) → motive x),\n  (match Sum.inl RDF11.DatatypeCompletionScope.Iri.property with\n    | Sum.inl RDF11.DatatypeCompletionScope.Iri.node => h_1 ()\n    | Sum.inl RDF11.DatatypeCompletionScope.Iri.property => h_2 ()\n    | x => h_3 x) =\n    h_2 ()",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.DatatypeCompletionScope.vocabulary.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.DatatypeCompletionScope.0.RDF11.DatatypeCompletionScope.vocabulary.match_1.eq_3",
+      "module": "RDF11.DatatypeCompletionScope",
+      "kind": "theorem",
+      "type": "∀ (motive : RDF11.Name RDF11.DatatypeCompletionScope.Iri Unit → Sort u_1)\n  (x : RDF11.Name RDF11.DatatypeCompletionScope.Iri Unit)\n  (h_1 : Unit → motive (Sum.inl RDF11.DatatypeCompletionScope.Iri.node))\n  (h_2 : Unit → motive (Sum.inl RDF11.DatatypeCompletionScope.Iri.property))\n  (h_3 : (x : RDF11.Name RDF11.DatatypeCompletionScope.Iri Unit) → motive x),\n  (x = Sum.inl RDF11.DatatypeCompletionScope.Iri.node → False) →\n    (x = Sum.inl RDF11.DatatypeCompletionScope.Iri.property → False) →\n      (match x with\n        | Sum.inl RDF11.DatatypeCompletionScope.Iri.node => h_1 ()\n        | Sum.inl RDF11.DatatypeCompletionScope.Iri.property => h_2 ()\n        | x => h_3 x) =\n        h_3 x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.DatatypeCompletionScope.vocabulary.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.DatatypeCompletionScope.0.RDF11.DatatypeCompletionScope.vocabulary.match_1.splitter",
+      "module": "RDF11.DatatypeCompletionScope",
+      "kind": "definition",
+      "type": "(motive : RDF11.Name RDF11.DatatypeCompletionScope.Iri Unit → Sort u_1) →\n  (x : RDF11.Name RDF11.DatatypeCompletionScope.Iri Unit) →\n    (Unit → motive (Sum.inl RDF11.DatatypeCompletionScope.Iri.node)) →\n      (Unit → motive (Sum.inl RDF11.DatatypeCompletionScope.Iri.property)) →\n        ((x : RDF11.Name RDF11.DatatypeCompletionScope.Iri Unit) →\n            (x = Sum.inl RDF11.DatatypeCompletionScope.Iri.node → False) →\n              (x = Sum.inl RDF11.DatatypeCompletionScope.Iri.property → False) → motive x) →\n          motive x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.DatatypeCompletionScope.vocabulary.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.DatatypeCompletionScope.0.RDF11.Term.mapNames.match_1.eq_1",
+      "module": "RDF11.DatatypeCompletionScope",
+      "kind": "theorem",
+      "type": "∀ {Iri₁ Literal₁ B : Type} (motive : RDF11.Term Iri₁ Literal₁ B → Sort u_1) (i : Iri₁)\n  (h_1 : (i : Iri₁) → motive (RDF11.Term.iri i)) (h_2 : (l : Literal₁) → motive (RDF11.Term.literal l))\n  (h_3 : (b : B) → motive (RDF11.Term.blank b)),\n  (match RDF11.Term.iri i with\n    | RDF11.Term.iri i => h_1 i\n    | RDF11.Term.literal l => h_2 l\n    | RDF11.Term.blank b => h_3 b) =\n    h_1 i",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Term.mapNames.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.DatatypeCompletionScope.0.RDF11.Term.mapNames.match_1.eq_2",
+      "module": "RDF11.DatatypeCompletionScope",
+      "kind": "theorem",
+      "type": "∀ {Iri₁ Literal₁ B : Type} (motive : RDF11.Term Iri₁ Literal₁ B → Sort u_1) (l : Literal₁)\n  (h_1 : (i : Iri₁) → motive (RDF11.Term.iri i)) (h_2 : (l : Literal₁) → motive (RDF11.Term.literal l))\n  (h_3 : (b : B) → motive (RDF11.Term.blank b)),\n  (match RDF11.Term.literal l with\n    | RDF11.Term.iri i => h_1 i\n    | RDF11.Term.literal l => h_2 l\n    | RDF11.Term.blank b => h_3 b) =\n    h_2 l",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Term.mapNames.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.DatatypeCompletionScope.0.RDF11.Term.mapNames.match_1.eq_3",
+      "module": "RDF11.DatatypeCompletionScope",
+      "kind": "theorem",
+      "type": "∀ {Iri₁ Literal₁ B : Type} (motive : RDF11.Term Iri₁ Literal₁ B → Sort u_1) (b : B)\n  (h_1 : (i : Iri₁) → motive (RDF11.Term.iri i)) (h_2 : (l : Literal₁) → motive (RDF11.Term.literal l))\n  (h_3 : (b : B) → motive (RDF11.Term.blank b)),\n  (match RDF11.Term.blank b with\n    | RDF11.Term.iri i => h_1 i\n    | RDF11.Term.literal l => h_2 l\n    | RDF11.Term.blank b => h_3 b) =\n    h_3 b",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Term.mapNames.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.DatatypeCompletionScope.0.RDF11.Term.mapNames.match_1.splitter",
+      "module": "RDF11.DatatypeCompletionScope",
+      "kind": "definition",
+      "type": "{Iri₁ Literal₁ B : Type} →\n  (motive : RDF11.Term Iri₁ Literal₁ B → Sort u_1) →\n    (x : RDF11.Term Iri₁ Literal₁ B) →\n      ((i : Iri₁) → motive (RDF11.Term.iri i)) →\n        ((l : Literal₁) → motive (RDF11.Term.literal l)) → ((b : B) → motive (RDF11.Term.blank b)) → motive x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Term.mapNames.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.DatatypeCompletionScope.0.RDF11.Term.names.match_1.eq_1",
+      "module": "RDF11.DatatypeCompletionScope",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri B : Type} (motive : RDF11.Term Iri Literal B → Sort u_1) (i : Iri)\n  (h_1 : (i : Iri) → motive (RDF11.Term.iri i)) (h_2 : (l : Literal) → motive (RDF11.Term.literal l))\n  (h_3 : (a : B) → motive (RDF11.Term.blank a)),\n  (match RDF11.Term.iri i with\n    | RDF11.Term.iri i => h_1 i\n    | RDF11.Term.literal l => h_2 l\n    | RDF11.Term.blank a => h_3 a) =\n    h_1 i",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Term.names.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.DatatypeCompletionScope.0.RDF11.Term.names.match_1.eq_2",
+      "module": "RDF11.DatatypeCompletionScope",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri B : Type} (motive : RDF11.Term Iri Literal B → Sort u_1) (l : Literal)\n  (h_1 : (i : Iri) → motive (RDF11.Term.iri i)) (h_2 : (l : Literal) → motive (RDF11.Term.literal l))\n  (h_3 : (a : B) → motive (RDF11.Term.blank a)),\n  (match RDF11.Term.literal l with\n    | RDF11.Term.iri i => h_1 i\n    | RDF11.Term.literal l => h_2 l\n    | RDF11.Term.blank a => h_3 a) =\n    h_2 l",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Term.names.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.DatatypeCompletionScope.0.RDF11.Term.names.match_1.eq_3",
+      "module": "RDF11.DatatypeCompletionScope",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri B : Type} (motive : RDF11.Term Iri Literal B → Sort u_1) (a : B)\n  (h_1 : (i : Iri) → motive (RDF11.Term.iri i)) (h_2 : (l : Literal) → motive (RDF11.Term.literal l))\n  (h_3 : (a : B) → motive (RDF11.Term.blank a)),\n  (match RDF11.Term.blank a with\n    | RDF11.Term.iri i => h_1 i\n    | RDF11.Term.literal l => h_2 l\n    | RDF11.Term.blank a => h_3 a) =\n    h_3 a",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Term.names.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.DatatypeCompletionScope.0.RDF11.Term.names.match_1.splitter",
+      "module": "RDF11.DatatypeCompletionScope",
+      "kind": "definition",
+      "type": "{Literal Iri B : Type} →\n  (motive : RDF11.Term Iri Literal B → Sort u_1) →\n    (x : RDF11.Term Iri Literal B) →\n      ((i : Iri) → motive (RDF11.Term.iri i)) →\n        ((l : Literal) → motive (RDF11.Term.literal l)) → ((a : B) → motive (RDF11.Term.blank a)) → motive x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-COMPLETION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Term.names.match_1",
       "review": "pending_expert_review"
     }
   ],

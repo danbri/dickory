@@ -1,5 +1,7 @@
 # Local datatype models and bounded satisfiability
 
+Update: the [nineteenth increment](20261024-datatype-completion.md) now constructs full datatype completions, proves ordinary-conclusion entailment equivalence and checks the generalized scope obstruction. The following records the eighteenth increment as published.
+
 24 October 2026, eighteenth increment. Source extraction and formalization review remain pending. This increment adds checked datatype results; it does not establish full RDF/RDFS coverage, the printed datatype bound, datatype entailment equivalence, or package refinement.
 
 ## Source reading and the selected precise definition
