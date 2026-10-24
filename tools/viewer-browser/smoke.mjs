@@ -49,7 +49,7 @@ try {
   assert(fieldTypes.includes('RDF11.Term'));
   await page.reload();
   assert.equal(await page.locator('#claim').inputValue(),'MT11-TRIPLE-TERM-DOMAINS');
-  assert.equal(await page.locator('#details > article > .lean-declaration > .lean-code').count(),3);
+  assert.equal(await page.locator('#details > article > .lean-declaration > .lean-code').count(),4);
   await page.locator('#mapping-filter').selectOption('partial');
   assert(await page.locator('#claim option').evaluateAll(opts=>opts.slice(1).every(o=>o.textContent.endsWith(' · partial'))));
   await page.locator('#search').fill('instance');
