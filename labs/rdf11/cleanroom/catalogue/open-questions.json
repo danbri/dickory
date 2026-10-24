@@ -135,7 +135,7 @@
     },
     {
       "id": "Q-CLOSURE-CONTAINER-SELECTION",
-      "status": "positive_entailment_proved_closure_absence_and_consistency_not_yet_proved",
+      "status": "entailment_closure_absence_and_full_consistency_checked_source_fidelity_pending",
       "not_a_declared_erratum": true,
       "claim_ids": [
         "MT11-GENERALIZED-CLOSURE",
@@ -147,16 +147,48 @@
         "closure-completeness",
         "rdfs-axioms"
       ],
-      "summary": "The procedure selects container axioms using E only. Candidate: S is s rdf:_17 o, and E is s rdfs:member o. Full RDFS semantics entails E by the container axiom, rdfs12 and rdfs7; the printed seed appears to include only rdf:_1 container axioms.",
+      "summary": "For the printed E-only container-axiom selection, S = s rdf:_17 o and E = s rdfs:member o now have all three checked obligations: full RDFS entailment, absence of simple entailment from the selected closure, and a satisfying full RDFS model under explicit inhabited datatype parameters.",
       "lean": [
         "RDF11.AxiomSeed",
         "RDF11.RDFSClosure",
         "RDF11.container_membership_derivable",
-        "RDF11.container_membership_entailment"
+        "RDF11.container_membership_entailment",
+        "RDF11.ClosureSelection.premiseTriple",
+        "RDF11.ClosureSelection.conclusionTriple",
+        "RDF11.ClosureSelection.conclusion_has_no_container",
+        "RDF11.ClosureSelection.seed_supported",
+        "RDF11.ClosureSelection.closure_supported",
+        "RDF11.ClosureSelection.conclusion_absent",
+        "RDF11.ClosureSelection.closure_not_simply_entails",
+        "RDF11.ClosureSelection.closure_has_no_conclusion_instance",
+        "RDF11.ClosureSelection.full_entailment",
+        "RDF11.ClosureSelection.premise_consistent",
+        "RDF11.ClosureSelection.witnessTheory",
+        "RDF11.ClosureSelection.witness_parameters",
+        "RDF11.ClosureSelection.witness_parameters_inhabited",
+        "RDF11.ClosureSelection.selection_counterexample"
       ],
-      "review_question": "Does the printed E-only selection omit necessary premise-container axioms? The absence of this consequence from the specified closure and a suitable full-model consistency witness still need Lean proofs.",
-      "implementation_policy": "Preserve the printed selection. Publish soundness, keep completeness open, and do not call the candidate a confirmed erratum.",
-      "review_status": "pending_expert_review"
+      "review_question": "Does Appendix A intend to import container axioms mentioned by S as well as E, or another premise that changes this result? AI close reading found no such qualification. All three formal obligations for the current transcription are now checked; adjudication concerns source fidelity and any intended correction.",
+      "implementation_policy": "Preserve the archived procedure, E-only selection, fallback and rule premises. Publish the checked discrepancy and existing soundness. Do not silently repair the procedure, mark the converse proved, or adopt a correction without a separate version/baseline record.",
+      "review_status": "pending_expert_review",
+      "example": {
+        "premise": "s rdf:_17 o .",
+        "conclusion": "s rdfs:member o .",
+        "shape": "Two ordinary ground singleton graphs; no literal or blank occurs.",
+        "index_convention": "RDFSymbol.container 16 represents rdf:_17; container 0 is the rdf:_1 fallback.",
+        "selected_axioms": "E mentions no rdf:_n IRI, so step 2 selects none. The fallback supplies rdf:_1 axioms.",
+        "full_entailment": "The full rdf:_17 type axiom, rdfs12 and rdfs7 entail E.",
+        "closure_obstruction": "A syntactic relation contains the seed, is closed under every listed rule, and excludes E. Because E is ground, no instance of E is a closure subgraph.",
+        "consistency": "The existing full RDFS model construction with a universal free-property relation satisfies S. It retains every RDF/RDFS condition and all container axioms.",
+        "datatype_witness": "The theory family parameterizes string lexical validity and lowercase-closed language-tag validity, retains string/pair values, and proves actual language-literal coverage."
+      },
+      "limitations": [
+        "The closed syntactic relation is not an RDFS interpretation and is used only to bound rule derivations. The consistency witness is a separate full model.",
+        "The generic absence proof is independent of literal meanings; the consistency theorem states sufficient datatype parameters and a separate theory construction inhabits them.",
+        "The IRI domain distinguishes all schema/container names and two example names abstractly. Concrete Unicode IRI spelling is not verified here.",
+        "The witness family parameterizes string lexical validity (including the source’s XML10 Char restriction) and language-tag validity; it does not implement XML10 or BCP47 validators. Its all-strings/all-tags instance only proves abstract-interface inhabitation.",
+        "Appendix A is informative. Source-to-definition fidelity and any intended additional procedure qualification still require expert review. This is not a declared W3C erratum."
+      ]
     },
     {
       "id": "Q-REIFICATION-BLANK-CONCLUSION",

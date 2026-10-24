@@ -4532,7 +4532,7 @@
         "formal_proof": "unassessed",
         "test_mapping": "unassessed"
       },
-      "formalization_note": "Retain the consistency premise, regime-specific closure and base datatype set. This theorem does not automatically cover arbitrary additional datatypes or inconsistent inputs."
+      "formalization_note": "The twenty-first increment proves soundness plus an obstruction to the converse for the printed selection transcription: ordinary singleton premise/conclusion, full RDFS entailment, closure non-entailment and full premise consistency with an inhabited datatype interface. Source fidelity remains pending; no official erratum or repaired completeness theorem is claimed."
     },
     {
       "id": "MT11-FINITE-CLOSURE-COMPLEXITY",

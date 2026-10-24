@@ -57,3 +57,6 @@ import RDF11.DatatypeCompletionScope
 import RDF11.SemanticExtensions
 import RDF11.ExtensionBoundaries
 import RDF11.ExtensionPresentations
+import RDF11.ClosureSelectionFrame
+import RDF11.ClosureSelectionScope
+import RDF11.ClosureSelectionWitness

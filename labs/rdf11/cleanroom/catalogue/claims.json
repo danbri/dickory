@@ -3,8 +3,8 @@
   "status": "draft_not_complete_coverage",
   "method": "Human-readable AI close reading; selectors locate already selected passages and do not extract assertions.",
   "source_inventory": "../ledger/semantics-inventory.json",
-  "inventory_sha256": "83377c3bc6c8cafd1f02196df27ea304e5a32d747ae46d6d63043970320ae6b8",
-  "mapping_input_sha256": "0914dc4ea528d7bbbebdf2bcdbc3c26754d3c626b0fe37a119419b4336f5f4c0",
+  "inventory_sha256": "6cb02cb1b2c9584a927950fefe9922c949e01b934c3064c9e484e98d16744d09",
+  "mapping_input_sha256": "f7edfa21903c2a38002b701f61e3ad46ae77f7d8dc895da4f4d1328a78c2343b",
   "documents": [
     {
       "id": "mt",
@@ -13887,9 +13887,33 @@
           {
             "symbol": "RDFSClosure",
             "lean": "RDF11.RDFSClosure"
+          },
+          {
+            "symbol": "ClosureSelection.premiseTriple",
+            "lean": "RDF11.ClosureSelection.premiseTriple"
+          },
+          {
+            "symbol": "ClosureSelection.conclusionTriple",
+            "lean": "RDF11.ClosureSelection.conclusionTriple"
+          },
+          {
+            "symbol": "ClosureSelection.conclusion_has_no_container",
+            "lean": "RDF11.ClosureSelection.conclusion_has_no_container"
+          },
+          {
+            "symbol": "ClosureSelection.seed_supported",
+            "lean": "RDF11.ClosureSelection.seed_supported"
+          },
+          {
+            "symbol": "ClosureSelection.closure_supported",
+            "lean": "RDF11.ClosureSelection.closure_supported"
+          },
+          {
+            "symbol": "ClosureSelection.conclusion_absent",
+            "lean": "RDF11.ClosureSelection.conclusion_absent"
           }
         ],
-        "limitations": "Transcribes the conclusion-based axiom selection and base recognized set. The rdf:_1 fallback tests literal set growth after step 2, not merely absence of container IRIs in E. Saturation is an inductive least-closure specification; a finite executable generator and its equivalence are not yet proved. Completeness of the printed E-only selection is under review.",
+        "limitations": "Transcribes the conclusion-based axiom selection and base recognized set. The rdf:_1 fallback tests literal set growth after step 2, not merely absence of container IRIs in E. Saturation is an inductive least-closure specification; a finite executable generator and its equivalence are not yet proved. Completeness of the printed E-only selection is under review. The twenty-first increment proves that the selected RDFS closure of s rdf:_17 o towards s rdfs:member o omits the conclusion. The syntactic invariant is not an RDFS model. See Q-CLOSURE-CONTAINER-SELECTION for the separate full-model witness and source-fidelity question.",
         "extraction_review": "pending_expert_review",
         "formalization_review": "pending_expert_review",
         "implementation_refinement": "not_connected_to_published_package"
@@ -13923,7 +13947,7 @@
         "formal_proof": "unassessed",
         "test_mapping": "unassessed"
       },
-      "formalization_note": "Retain the consistency premise, regime-specific closure and base datatype set. This theorem does not automatically cover arbitrary additional datatypes or inconsistent inputs.",
+      "formalization_note": "The twenty-first increment proves soundness plus an obstruction to the converse for the printed selection transcription: ordinary singleton premise/conclusion, full RDFS entailment, closure non-entailment and full premise consistency with an inhabited datatype interface. Source fidelity remains pending; no official erratum or repaired completeness theorem is claimed.",
       "cleanroom_mapping": {
         "claim_id": "MT11-GENERALIZED-CLOSURE-COMPLETENESS",
         "relation": "partial_theorem",
@@ -13952,9 +13976,37 @@
           {
             "symbol": "rdfs_closure_instance_check_sound",
             "lean": "RDF11.rdfs_closure_instance_check_sound"
+          },
+          {
+            "symbol": "ClosureSelection.full_entailment",
+            "lean": "RDF11.ClosureSelection.full_entailment"
+          },
+          {
+            "symbol": "ClosureSelection.premise_consistent",
+            "lean": "RDF11.ClosureSelection.premise_consistent"
+          },
+          {
+            "symbol": "ClosureSelection.closure_not_simply_entails",
+            "lean": "RDF11.ClosureSelection.closure_not_simply_entails"
+          },
+          {
+            "symbol": "ClosureSelection.closure_has_no_conclusion_instance",
+            "lean": "RDF11.ClosureSelection.closure_has_no_conclusion_instance"
+          },
+          {
+            "symbol": "ClosureSelection.witness_parameters",
+            "lean": "RDF11.ClosureSelection.witness_parameters"
+          },
+          {
+            "symbol": "ClosureSelection.witness_parameters_inhabited",
+            "lean": "RDF11.ClosureSelection.witness_parameters_inhabited"
+          },
+          {
+            "symbol": "ClosureSelection.selection_counterexample",
+            "lean": "RDF11.ClosureSelection.selection_counterexample"
           }
         ],
-        "limitations": "Only the positive/sound direction is proved, including a concrete instance-subgraph criterion. The proof works for generalized endpoints, does not require consistency or finiteness, and retains one common assignment. No converse or complete algorithm is claimed. The printed container-axiom selection has an open source-scope question.",
+        "limitations": "The positive/sound direction is proved. For the current E-only selection transcription, the converse fails on the displayed ordinary ground singleton pair: s rdf:_17 o RDFS-entails s rdfs:member o, but the selected closure does not simply entail it and contains no instance of it. A full RDFS model satisfies the premise under explicit sufficient datatype parameters; a constructed theory family supplies those parameters. These are checked facts about the formal transcription. Abstract IRI-to-concrete spelling, external language-tag validation and expert source fidelity remain boundaries. The source claim is not marked proved or declared an official erratum; Q-CLOSURE-CONTAINER-SELECTION remains open. Finite executable generation and any repaired completeness theorem remain unproved.",
         "extraction_review": "pending_expert_review",
         "formalization_review": "pending_expert_review",
         "implementation_refinement": "not_connected_to_published_package"
@@ -14661,6 +14713,14 @@
           {
             "symbol": "container_membership_entailment",
             "lean": "RDF11.container_membership_entailment"
+          },
+          {
+            "symbol": "ClosureSelection.full_entailment",
+            "lean": "RDF11.ClosureSelection.full_entailment"
+          },
+          {
+            "symbol": "ClosureSelection.premise_consistent",
+            "lean": "RDF11.ClosureSelection.premise_consistent"
           }
         ],
         "limitations": "Proves that every indexed membership assertion entails generic rdfs:member membership through its full-family axiom, rdfs12 and rdfs7. Other container-description assertions remain unformalized; concrete IRI spelling is still an external vocabulary binding.",
