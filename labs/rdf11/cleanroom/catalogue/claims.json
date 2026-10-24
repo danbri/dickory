@@ -4,7 +4,7 @@
   "method": "Human-readable AI close reading; selectors locate already selected passages and do not extract assertions.",
   "source_inventory": "../ledger/semantics-inventory.json",
   "inventory_sha256": "bd9dd3c1ee7553a7bf5a8658c801175a4359ae6af8d21fd15761d88c3a6e81ac",
-  "mapping_input_sha256": "b49f80ba714dc34b7516fd704b26f8871f96bbea3e363e3ed37cd8410c8cf042",
+  "mapping_input_sha256": "4ca42a9845574a7928b44a1e2979005bbcd1fb6d17b969d51ab3710fe3caccdd",
   "documents": [
     {
       "id": "mt",
@@ -14169,7 +14169,7 @@
             "lean": "RDF11.ClosureBound.consistent_infinite_closures"
           }
         ],
-        "limitations": "Only finiteness and mathematical size/insertion bounds are proved. K counts distinct supporting terms across all positions, including embedded datatype IRIs, premise blanks, fixed axiom/rule names, selected container names and the possible rdf:_1 fallback. It is not a node count supplied by the source and the pool need not be minimal. The premise must be finite; the conclusion may be infinite if it selects only finitely many container names. Consistency and disputed completeness are not assumptions. Enumerating an arbitrary closure subset is noncomputable here; no effective rule scheduler, decidability result, runtime cost model or polynomial-time implementation is claimed. The printed finite-input qualification is under source review. Larger-D and fresh-blank rdfD1 procedures are separate.",
+        "limitations": "Only finiteness and mathematical size/insertion bounds are proved. K counts distinct supporting terms across all positions, including embedded datatype IRIs, premise blanks, fixed axiom/rule names, selected container names and the possible rdf:_1 fallback. It is not a node count supplied by the source and the pool need not be minimal. The premise must be finite; the conclusion may be infinite if it selects only finitely many container names. Consistency and disputed completeness are not assumptions. Enumerating an arbitrary closure subset is noncomputable here; no effective rule scheduler, decidability result, runtime cost model or polynomial-time implementation is claimed. The absence of an explicit finite-input qualification in the source is under review. Larger-D and fresh-blank rdfD1 procedures are separate.",
         "extraction_review": "pending_expert_review",
         "formalization_review": "pending_expert_review",
         "implementation_refinement": "not_connected_to_published_package"
