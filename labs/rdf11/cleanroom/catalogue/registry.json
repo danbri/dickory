@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "status": "frozen_nineteenth_increment_datatype_completion_not_expert_approved",
+  "status": "frozen_twentieth_increment_semantic_extensions_not_expert_approved",
   "lean_version": "4.33.1",
   "allowed_axioms": [
     "propext",
@@ -603,6 +603,20 @@
         "MT11-BLANK-ASSIGNMENT",
         "MT11-GRAPH-TRUTH"
       ]
+    },
+    {
+      "id": "SUPPORT-SEMANTIC-EXTENSIONS",
+      "purpose": "Additional ordinary-graph admission and fixed simple-model conditions; exact simple/D/RDF/RDFS regime connections; actual syntax/model refinement; legal-but-unsatisfiable and deletion/admission boundaries; an enriched-model reduct with proved truth correspondence. Does not classify all richer languages or prove cross-edition or executable compatibility.",
+      "requires": [
+        "MT11-EXTENSION-REGIME",
+        "MT11-EXTENSION-SYNTAX",
+        "MT11-EXTENSION-MONOTONICITY",
+        "MT11-SIMPLE-EXTENSION-BASE",
+        "MT11-SIMPLE-ENTAILMENT",
+        "MT11-ILL-TYPED-UNSATISFIABILITY",
+        "MT11-GRAPH-TRUTH",
+        "MT11-TRIPLE-TERM-DOMAINS"
+      ]
     }
   ],
   "files": [
@@ -629,14 +643,14 @@
     },
     {
       "path": "Audit/Snapshot.lean",
-      "sha256": "9bdacbebd6a8c5778a9c75ebbf88e7e0e70c899a6118ac15c3c7f2f0fe431c86",
+      "sha256": "3aaa7f883f513c187e770a66f592f61d1a458a2de16d57633bb8a9d90351f083",
       "role": "formal_source",
       "lifecycle": "active",
       "review": "pending_expert_review"
     },
     {
       "path": "RDF11.lean",
-      "sha256": "72f9dd4403699bcbbeb810a3765d88203c97957bd97d924a16d72839b4b32d50",
+      "sha256": "1f0fc3785c2fd4424a4b55035d338d17dbe4fdab8fd2d48ae6a3f73885212003",
       "role": "formal_source",
       "lifecycle": "active",
       "review": "pending_expert_review"
@@ -1064,6 +1078,27 @@
     {
       "path": "RDF11/OrdinaryPreinterpretations.lean",
       "sha256": "5cd2d0c42fddb28271e5d42fbe6a143a94e887ac72d839818baea23a5ba6aad1",
+      "role": "formal_source",
+      "lifecycle": "active",
+      "review": "pending_expert_review"
+    },
+    {
+      "path": "RDF11/SemanticExtensions.lean",
+      "sha256": "2e747a6fcc2a82916df0339292ea2e940df8a82e21db5a4e8dc1eb66daf898ea",
+      "role": "formal_source",
+      "lifecycle": "active",
+      "review": "pending_expert_review"
+    },
+    {
+      "path": "RDF11/ExtensionBoundaries.lean",
+      "sha256": "a8e6fdf1f2122d7155397d6b86777c5272f48b780a2617ead3d61599aeececfc",
+      "role": "formal_source",
+      "lifecycle": "active",
+      "review": "pending_expert_review"
+    },
+    {
+      "path": "RDF11/ExtensionPresentations.lean",
+      "sha256": "46a3d608e902a2ec66c41211143dd2655170ca181718aa7164306070376d6848",
       "role": "formal_source",
       "lifecycle": "active",
       "review": "pending_expert_review"
@@ -26016,6 +26051,1173 @@
         "SUPPORT-DATATYPE-COMPLETION"
       ],
       "parent_declaration_if_applicable": "RDF11.Term.names.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ExtensionBoundary.assertion",
+      "module": "RDF11.ExtensionBoundaries",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} → Iri → Iri → Iri → RDF11.Graph Iri Literal B",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SEMANTIC-EXTENSIONS",
+        "MT11-EXTENSION-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ExtensionBoundary.deletion_breaks_admissibility",
+      "module": "RDF11.ExtensionBoundaries",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (s p o : Iri),\n  have R := RDF11.ExtensionBoundary.requiresTriple s p o;\n  have G := RDF11.ExtensionBoundary.assertion s p o;\n  have E := RDF11.Set.empty;\n  R.legal G ∧ ¬R.legal E ∧ RDF11.SimplyEntails G.generalize E.generalize",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SEMANTIC-EXTENSIONS",
+        "MT11-EXTENSION-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ExtensionBoundary.illTyped_admitted_unsatisfiable",
+      "module": "RDF11.ExtensionBoundaries",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (G : RDF11.Graph Iri Literal B) (t : RDF11.Triple Iri Literal B) (l : Literal),\n  G t →\n    RDF11.GeneralizedTriple.hasLiteral l t.generalize →\n      T.IllTyped D l →\n        (RDF11.SemanticExtension.datatypes T D).legal G ∧\n          ¬(RDF11.SemanticExtension.datatypes T D).Satisfiable ⟨G, True.intro⟩",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SEMANTIC-EXTENSIONS",
+        "MT11-EXTENSION-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ExtensionBoundary.illTyped_entails_admitted",
+      "module": "RDF11.ExtensionBoundaries",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B₁ B₂ : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (G : RDF11.Graph Iri Literal B₁) (E : RDF11.Graph Iri Literal B₂) (t : RDF11.Triple Iri Literal B₁) (l : Literal),\n  G t →\n    RDF11.GeneralizedTriple.hasLiteral l t.generalize →\n      T.IllTyped D l → (RDF11.SemanticExtension.datatypes T D).Entails ⟨G, True.intro⟩ ⟨E, True.intro⟩",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SEMANTIC-EXTENSIONS",
+        "MT11-EXTENSION-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ExtensionBoundary.requiresTriple",
+      "module": "RDF11.ExtensionBoundaries",
+      "kind": "definition",
+      "type": "{Iri Literal : Type} → Iri → Iri → Iri → RDF11.SemanticExtension Iri Literal",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SEMANTIC-EXTENSIONS",
+        "MT11-EXTENSION-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ExtensionPresentation",
+      "module": "RDF11.ExtensionPresentations",
+      "kind": "inductive",
+      "type": "Type → Type → Type (max (u + 1) (v + 1))",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SEMANTIC-EXTENSIONS",
+        "MT11-SIMPLE-EXTENSION-BASE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ExtensionPresentation.Entails",
+      "module": "RDF11.ExtensionPresentations",
+      "kind": "definition",
+      "type": "{Iri Literal B₁ B₂ : Type} →\n  (P : RDF11.ExtensionPresentation Iri Literal) →\n    P.toExtension.AdmissibleGraph B₁ → P.toExtension.AdmissibleGraph B₂ → Prop",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SEMANTIC-EXTENSIONS",
+        "MT11-SIMPLE-EXTENSION-BASE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ExtensionPresentation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ExtensionPresentation.Models",
+      "module": "RDF11.ExtensionPresentations",
+      "kind": "definition",
+      "type": "{Iri Literal : Type} → RDF11.ExtensionPresentation Iri Literal → Type u → Type v",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SEMANTIC-EXTENSIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ExtensionPresentation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ExtensionPresentation._sizeOf_1",
+      "module": "RDF11.ExtensionPresentations",
+      "kind": "definition",
+      "type": "{Iri Literal : Type} → [SizeOf Iri] → [SizeOf Literal] → RDF11.ExtensionPresentation Iri Literal → Nat",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SEMANTIC-EXTENSIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ExtensionPresentation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ExtensionPresentation._sizeOf_inst",
+      "module": "RDF11.ExtensionPresentations",
+      "kind": "definition",
+      "type": "(Iri Literal : Type) → [SizeOf Iri] → [SizeOf Literal] → SizeOf (RDF11.ExtensionPresentation Iri Literal)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SEMANTIC-EXTENSIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ExtensionPresentation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ExtensionPresentation.casesOn",
+      "module": "RDF11.ExtensionPresentations",
+      "kind": "definition",
+      "type": "{Iri Literal : Type} →\n  {motive : RDF11.ExtensionPresentation Iri Literal → Sort u_1} →\n    (t : RDF11.ExtensionPresentation Iri Literal) →\n      ((Models : Type u → Type v) →\n          (legal : {B : Type} → RDF11.Graph Iri Literal B → Prop) →\n            (interpretation : (U : Type u) → Models U → RDF11.SimpleInterpretation Iri Literal U) →\n              (truth : {B : Type} → (U : Type u) → Models U → RDF11.Graph Iri Literal B → Prop) →\n                (preserves_truth :\n                    ∀ {B : Type} (U : Type u) (m : Models U) (G : RDF11.Graph Iri Literal B),\n                      legal G → (truth U m G ↔ (interpretation U m).Satisfies G.generalize)) →\n                  motive\n                    { Models := Models, legal := legal, interpretation := interpretation, truth := truth,\n                      preserves_truth := preserves_truth }) →\n        motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SEMANTIC-EXTENSIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ExtensionPresentation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ExtensionPresentation.ctorIdx",
+      "module": "RDF11.ExtensionPresentations",
+      "kind": "definition",
+      "type": "{Iri Literal : Type} → RDF11.ExtensionPresentation Iri Literal → Nat",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SEMANTIC-EXTENSIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ExtensionPresentation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ExtensionPresentation.entails_iff",
+      "module": "RDF11.ExtensionPresentations",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B₁ B₂ : Type} (P : RDF11.ExtensionPresentation Iri Literal) (G : P.toExtension.AdmissibleGraph B₁)\n  (E : P.toExtension.AdmissibleGraph B₂), P.Entails G E ↔ P.toExtension.Entails G E",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SEMANTIC-EXTENSIONS",
+        "MT11-SIMPLE-EXTENSION-BASE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ExtensionPresentation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ExtensionPresentation.interpretation",
+      "module": "RDF11.ExtensionPresentations",
+      "kind": "definition",
+      "type": "{Iri Literal : Type} →\n  (self : RDF11.ExtensionPresentation Iri Literal) →\n    (U : Type u) → self.Models U → RDF11.SimpleInterpretation Iri Literal U",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SEMANTIC-EXTENSIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ExtensionPresentation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ExtensionPresentation.legal",
+      "module": "RDF11.ExtensionPresentations",
+      "kind": "definition",
+      "type": "{Iri Literal : Type} → RDF11.ExtensionPresentation Iri Literal → {B : Type} → RDF11.Graph Iri Literal B → Prop",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SEMANTIC-EXTENSIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ExtensionPresentation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ExtensionPresentation.mk",
+      "module": "RDF11.ExtensionPresentations",
+      "kind": "constructor",
+      "type": "{Iri Literal : Type} →\n  (Models : Type u → Type v) →\n    (legal : {B : Type} → RDF11.Graph Iri Literal B → Prop) →\n      (interpretation : (U : Type u) → Models U → RDF11.SimpleInterpretation Iri Literal U) →\n        (truth : {B : Type} → (U : Type u) → Models U → RDF11.Graph Iri Literal B → Prop) →\n          (∀ {B : Type} (U : Type u) (m : Models U) (G : RDF11.Graph Iri Literal B),\n              legal G → (truth U m G ↔ (interpretation U m).Satisfies G.generalize)) →\n            RDF11.ExtensionPresentation Iri Literal",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SEMANTIC-EXTENSIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ExtensionPresentation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ExtensionPresentation.mk._flat_ctor",
+      "module": "RDF11.ExtensionPresentations",
+      "kind": "definition",
+      "type": "{Iri Literal : Type} →\n  (Models : Type u → Type v) →\n    (legal : {B : Type} → RDF11.Graph Iri Literal B → Prop) →\n      (interpretation : (U : Type u) → Models U → RDF11.SimpleInterpretation Iri Literal U) →\n        (truth : {B : Type} → (U : Type u) → Models U → RDF11.Graph Iri Literal B → Prop) →\n          (∀ {B : Type} (U : Type u) (m : Models U) (G : RDF11.Graph Iri Literal B),\n              legal G → (truth U m G ↔ (interpretation U m).Satisfies G.generalize)) →\n            RDF11.ExtensionPresentation Iri Literal",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SEMANTIC-EXTENSIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ExtensionPresentation.mk",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ExtensionPresentation.mk.inj",
+      "module": "RDF11.ExtensionPresentations",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {Models : Type u → Type v} {legal : {B : Type} → RDF11.Graph Iri Literal B → Prop}\n  {interpretation : (U : Type u) → Models U → RDF11.SimpleInterpretation Iri Literal U}\n  {truth : {B : Type} → (U : Type u) → Models U → RDF11.Graph Iri Literal B → Prop}\n  {preserves_truth :\n    ∀ {B : Type} (U : Type u) (m : Models U) (G : RDF11.Graph Iri Literal B),\n      legal G → (truth U m G ↔ (interpretation U m).Satisfies G.generalize)}\n  {Models_1 : Type u → Type v} {legal_1 : {B : Type} → RDF11.Graph Iri Literal B → Prop}\n  {interpretation_1 : (U : Type u) → Models_1 U → RDF11.SimpleInterpretation Iri Literal U}\n  {truth_1 : {B : Type} → (U : Type u) → Models_1 U → RDF11.Graph Iri Literal B → Prop}\n  {preserves_truth_1 :\n    ∀ {B : Type} (U : Type u) (m : Models_1 U) (G : RDF11.Graph Iri Literal B),\n      legal_1 G → (truth_1 U m G ↔ (interpretation_1 U m).Satisfies G.generalize)},\n  { Models := Models, legal := legal, interpretation := interpretation, truth := truth,\n        preserves_truth := preserves_truth } =\n      { Models := Models_1, legal := legal_1, interpretation := interpretation_1, truth := truth_1,\n        preserves_truth := preserves_truth_1 } →\n    Models = Models_1 ∧ legal = legal_1 ∧ interpretation ≍ interpretation_1 ∧ truth ≍ truth_1",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SEMANTIC-EXTENSIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ExtensionPresentation.mk",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ExtensionPresentation.mk.injEq",
+      "module": "RDF11.ExtensionPresentations",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} (Models : Type u → Type v) (legal : {B : Type} → RDF11.Graph Iri Literal B → Prop)\n  (interpretation : (U : Type u) → Models U → RDF11.SimpleInterpretation Iri Literal U)\n  (truth : {B : Type} → (U : Type u) → Models U → RDF11.Graph Iri Literal B → Prop)\n  (preserves_truth :\n    ∀ {B : Type} (U : Type u) (m : Models U) (G : RDF11.Graph Iri Literal B),\n      legal G → (truth U m G ↔ (interpretation U m).Satisfies G.generalize))\n  (Models_1 : Type u → Type v) (legal_1 : {B : Type} → RDF11.Graph Iri Literal B → Prop)\n  (interpretation_1 : (U : Type u) → Models_1 U → RDF11.SimpleInterpretation Iri Literal U)\n  (truth_1 : {B : Type} → (U : Type u) → Models_1 U → RDF11.Graph Iri Literal B → Prop)\n  (preserves_truth_1 :\n    ∀ {B : Type} (U : Type u) (m : Models_1 U) (G : RDF11.Graph Iri Literal B),\n      legal_1 G → (truth_1 U m G ↔ (interpretation_1 U m).Satisfies G.generalize)),\n  ({ Models := Models, legal := legal, interpretation := interpretation, truth := truth,\n        preserves_truth := preserves_truth } =\n      { Models := Models_1, legal := legal_1, interpretation := interpretation_1, truth := truth_1,\n        preserves_truth := preserves_truth_1 }) =\n    (Models = Models_1 ∧ legal = legal_1 ∧ interpretation ≍ interpretation_1 ∧ truth ≍ truth_1)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SEMANTIC-EXTENSIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ExtensionPresentation.mk",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ExtensionPresentation.mk.noConfusion",
+      "module": "RDF11.ExtensionPresentations",
+      "kind": "definition",
+      "type": "{Iri Literal : Type} →\n  {P : Sort u_1} →\n    {Models : Type u → Type v} →\n      {legal : {B : Type} → RDF11.Graph Iri Literal B → Prop} →\n        {interpretation : (U : Type u) → Models U → RDF11.SimpleInterpretation Iri Literal U} →\n          {truth : {B : Type} → (U : Type u) → Models U → RDF11.Graph Iri Literal B → Prop} →\n            {preserves_truth :\n                ∀ {B : Type} (U : Type u) (m : Models U) (G : RDF11.Graph Iri Literal B),\n                  legal G → (truth U m G ↔ (interpretation U m).Satisfies G.generalize)} →\n              {Models' : Type u → Type v} →\n                {legal' : {B : Type} → RDF11.Graph Iri Literal B → Prop} →\n                  {interpretation' : (U : Type u) → Models' U → RDF11.SimpleInterpretation Iri Literal U} →\n                    {truth' : {B : Type} → (U : Type u) → Models' U → RDF11.Graph Iri Literal B → Prop} →\n                      {preserves_truth' :\n                          ∀ {B : Type} (U : Type u) (m : Models' U) (G : RDF11.Graph Iri Literal B),\n                            legal' G → (truth' U m G ↔ (interpretation' U m).Satisfies G.generalize)} →\n                        { Models := Models, legal := legal, interpretation := interpretation, truth := truth,\n                              preserves_truth := preserves_truth } =\n                            { Models := Models', legal := legal', interpretation := interpretation', truth := truth',\n                              preserves_truth := preserves_truth' } →\n                          (Models = Models' → legal ≍ legal' → interpretation ≍ interpretation' → truth ≍ truth' → P) →\n                            P",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SEMANTIC-EXTENSIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ExtensionPresentation.mk",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ExtensionPresentation.mk.sizeOf_spec",
+      "module": "RDF11.ExtensionPresentations",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} [inst : SizeOf Iri] [inst_1 : SizeOf Literal] (Models : Type u → Type v)\n  (legal : {B : Type} → RDF11.Graph Iri Literal B → Prop)\n  (interpretation : (U : Type u) → Models U → RDF11.SimpleInterpretation Iri Literal U)\n  (truth : {B : Type} → (U : Type u) → Models U → RDF11.Graph Iri Literal B → Prop)\n  (preserves_truth :\n    ∀ {B : Type} (U : Type u) (m : Models U) (G : RDF11.Graph Iri Literal B),\n      legal G → (truth U m G ↔ (interpretation U m).Satisfies G.generalize)),\n  sizeOf\n      { Models := Models, legal := legal, interpretation := interpretation, truth := truth,\n        preserves_truth := preserves_truth } =\n    1",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SEMANTIC-EXTENSIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ExtensionPresentation.mk",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ExtensionPresentation.noConfusion",
+      "module": "RDF11.ExtensionPresentations",
+      "kind": "definition",
+      "type": "{P : Sort u_1} →\n  {Iri Literal : Type} →\n    {t : RDF11.ExtensionPresentation Iri Literal} →\n      {Iri' Literal' : Type} →\n        {t' : RDF11.ExtensionPresentation Iri' Literal'} →\n          Iri = Iri' → Literal = Literal' → t ≍ t' → RDF11.ExtensionPresentation.noConfusionType P t t'",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SEMANTIC-EXTENSIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ExtensionPresentation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ExtensionPresentation.noConfusionType",
+      "module": "RDF11.ExtensionPresentations",
+      "kind": "definition",
+      "type": "Sort u_1 →\n  {Iri Literal : Type} →\n    RDF11.ExtensionPresentation Iri Literal →\n      {Iri' Literal' : Type} → RDF11.ExtensionPresentation Iri' Literal' → Sort u_1",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SEMANTIC-EXTENSIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ExtensionPresentation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ExtensionPresentation.preserves_simple",
+      "module": "RDF11.ExtensionPresentations",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B₁ B₂ : Type} (P : RDF11.ExtensionPresentation Iri Literal) (G : P.toExtension.AdmissibleGraph B₁)\n  (E : P.toExtension.AdmissibleGraph B₂), RDF11.SimplyEntails G.val.generalize E.val.generalize → P.Entails G E",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SEMANTIC-EXTENSIONS",
+        "MT11-SIMPLE-EXTENSION-BASE",
+        "MT11-EXTENSION-MONOTONICITY"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ExtensionPresentation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ExtensionPresentation.preserves_truth",
+      "module": "RDF11.ExtensionPresentations",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} (self : RDF11.ExtensionPresentation Iri Literal) {B : Type} (U : Type u) (m : self.Models U)\n  (G : RDF11.Graph Iri Literal B), self.legal G → (self.truth U m G ↔ (self.interpretation U m).Satisfies G.generalize)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SEMANTIC-EXTENSIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ExtensionPresentation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ExtensionPresentation.rec",
+      "module": "RDF11.ExtensionPresentations",
+      "kind": "recursor",
+      "type": "{Iri Literal : Type} →\n  {motive : RDF11.ExtensionPresentation Iri Literal → Sort u_1} →\n    ((Models : Type u → Type v) →\n        (legal : {B : Type} → RDF11.Graph Iri Literal B → Prop) →\n          (interpretation : (U : Type u) → Models U → RDF11.SimpleInterpretation Iri Literal U) →\n            (truth : {B : Type} → (U : Type u) → Models U → RDF11.Graph Iri Literal B → Prop) →\n              (preserves_truth :\n                  ∀ {B : Type} (U : Type u) (m : Models U) (G : RDF11.Graph Iri Literal B),\n                    legal G → (truth U m G ↔ (interpretation U m).Satisfies G.generalize)) →\n                motive\n                  { Models := Models, legal := legal, interpretation := interpretation, truth := truth,\n                    preserves_truth := preserves_truth }) →\n      (t : RDF11.ExtensionPresentation Iri Literal) → motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SEMANTIC-EXTENSIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ExtensionPresentation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ExtensionPresentation.recOn",
+      "module": "RDF11.ExtensionPresentations",
+      "kind": "definition",
+      "type": "{Iri Literal : Type} →\n  {motive : RDF11.ExtensionPresentation Iri Literal → Sort u_1} →\n    (t : RDF11.ExtensionPresentation Iri Literal) →\n      ((Models : Type u → Type v) →\n          (legal : {B : Type} → RDF11.Graph Iri Literal B → Prop) →\n            (interpretation : (U : Type u) → Models U → RDF11.SimpleInterpretation Iri Literal U) →\n              (truth : {B : Type} → (U : Type u) → Models U → RDF11.Graph Iri Literal B → Prop) →\n                (preserves_truth :\n                    ∀ {B : Type} (U : Type u) (m : Models U) (G : RDF11.Graph Iri Literal B),\n                      legal G → (truth U m G ↔ (interpretation U m).Satisfies G.generalize)) →\n                  motive\n                    { Models := Models, legal := legal, interpretation := interpretation, truth := truth,\n                      preserves_truth := preserves_truth }) →\n        motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SEMANTIC-EXTENSIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ExtensionPresentation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ExtensionPresentation.toExtension",
+      "module": "RDF11.ExtensionPresentations",
+      "kind": "definition",
+      "type": "{Iri Literal : Type} → RDF11.ExtensionPresentation Iri Literal → RDF11.SemanticExtension Iri Literal",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SEMANTIC-EXTENSIONS",
+        "MT11-SIMPLE-EXTENSION-BASE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ExtensionPresentation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ExtensionPresentation.truth",
+      "module": "RDF11.ExtensionPresentations",
+      "kind": "definition",
+      "type": "{Iri Literal : Type} →\n  (self : RDF11.ExtensionPresentation Iri Literal) →\n    {B : Type} → (U : Type u) → self.Models U → RDF11.Graph Iri Literal B → Prop",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SEMANTIC-EXTENSIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ExtensionPresentation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SemanticExtension",
+      "module": "RDF11.SemanticExtensions",
+      "kind": "inductive",
+      "type": "Type → Type → Type (u + 1)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SEMANTIC-EXTENSIONS",
+        "MT11-EXTENSION-REGIME",
+        "MT11-EXTENSION-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SemanticExtension.AdmissibleGraph",
+      "module": "RDF11.SemanticExtensions",
+      "kind": "definition",
+      "type": "{Iri Literal : Type} → RDF11.SemanticExtension Iri Literal → Type → Type",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SEMANTIC-EXTENSIONS",
+        "MT11-EXTENSION-REGIME",
+        "MT11-EXTENSION-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SemanticExtension",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SemanticExtension.Entails",
+      "module": "RDF11.SemanticExtensions",
+      "kind": "definition",
+      "type": "{Iri Literal B₁ B₂ : Type} →\n  (R : RDF11.SemanticExtension Iri Literal) → R.AdmissibleGraph B₁ → R.AdmissibleGraph B₂ → Prop",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SEMANTIC-EXTENSIONS",
+        "MT11-EXTENSION-REGIME",
+        "MT11-EXTENSION-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SemanticExtension",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SemanticExtension.Model",
+      "module": "RDF11.SemanticExtensions",
+      "kind": "definition",
+      "type": "{Iri Literal : Type} → RDF11.SemanticExtension Iri Literal → Type u → Type (max 0 u)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SEMANTIC-EXTENSIONS",
+        "MT11-EXTENSION-REGIME"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SemanticExtension",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SemanticExtension.Refines",
+      "module": "RDF11.SemanticExtensions",
+      "kind": "inductive",
+      "type": "{Iri Literal : Type} → RDF11.SemanticExtension Iri Literal → RDF11.SemanticExtension Iri Literal → Prop",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SEMANTIC-EXTENSIONS",
+        "MT11-EXTENSION-REGIME"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SemanticExtension",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SemanticExtension.Refines.admissible",
+      "module": "RDF11.SemanticExtensions",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {stronger weaker : RDF11.SemanticExtension Iri Literal},\n  stronger.Refines weaker → ∀ {B : Type} (G : RDF11.Graph Iri Literal B), stronger.legal G → weaker.legal G",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SEMANTIC-EXTENSIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SemanticExtension.Refines",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SemanticExtension.Refines.casesOn",
+      "module": "RDF11.SemanticExtensions",
+      "kind": "definition",
+      "type": "{Iri Literal : Type} →\n  {stronger weaker : RDF11.SemanticExtension Iri Literal} →\n    {motive : stronger.Refines weaker → Sort u_1} →\n      (t : stronger.Refines weaker) →\n        ((admissible : ∀ {B : Type} (G : RDF11.Graph Iri Literal B), stronger.legal G → weaker.legal G) →\n            (models :\n                ∀ (U : Type u) (I : RDF11.SimpleInterpretation Iri Literal U),\n                  stronger.conditions U I → weaker.conditions U I) →\n              motive ⋯) →\n          motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SEMANTIC-EXTENSIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SemanticExtension.Refines",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SemanticExtension.Refines.entailment",
+      "module": "RDF11.SemanticExtensions",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B₁ B₂ : Type} {S R : RDF11.SemanticExtension Iri Literal} (h : S.Refines R) (G : S.AdmissibleGraph B₁)\n  (E : S.AdmissibleGraph B₂), R.Entails (h.graph G) (h.graph E) → S.Entails G E",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SEMANTIC-EXTENSIONS",
+        "MT11-EXTENSION-MONOTONICITY",
+        "MT11-EXTENSION-REGIME"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SemanticExtension.Refines",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SemanticExtension.Refines.graph",
+      "module": "RDF11.SemanticExtensions",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  {S R : RDF11.SemanticExtension Iri Literal} → S.Refines R → S.AdmissibleGraph B → R.AdmissibleGraph B",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SEMANTIC-EXTENSIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SemanticExtension.Refines",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SemanticExtension.Refines.graph._proof_1",
+      "module": "RDF11.SemanticExtensions",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {S R : RDF11.SemanticExtension Iri Literal},\n  S.Refines R → ∀ (G : S.AdmissibleGraph B), R.legal G.val",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SEMANTIC-EXTENSIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SemanticExtension.Refines.graph",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SemanticExtension.Refines.mk",
+      "module": "RDF11.SemanticExtensions",
+      "kind": "constructor",
+      "type": "∀ {Iri Literal : Type} {stronger weaker : RDF11.SemanticExtension Iri Literal},\n  (∀ {B : Type} (G : RDF11.Graph Iri Literal B), stronger.legal G → weaker.legal G) →\n    (∀ (U : Type u) (I : RDF11.SimpleInterpretation Iri Literal U), stronger.conditions U I → weaker.conditions U I) →\n      stronger.Refines weaker",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SEMANTIC-EXTENSIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SemanticExtension.Refines",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SemanticExtension.Refines.mk._flat_ctor",
+      "module": "RDF11.SemanticExtensions",
+      "kind": "definition",
+      "type": "∀ {Iri Literal : Type} {stronger weaker : RDF11.SemanticExtension Iri Literal},\n  (∀ {B : Type} (G : RDF11.Graph Iri Literal B), stronger.legal G → weaker.legal G) →\n    (∀ (U : Type u) (I : RDF11.SimpleInterpretation Iri Literal U), stronger.conditions U I → weaker.conditions U I) →\n      stronger.Refines weaker",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SEMANTIC-EXTENSIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SemanticExtension.Refines.mk",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SemanticExtension.Refines.models",
+      "module": "RDF11.SemanticExtensions",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {stronger weaker : RDF11.SemanticExtension Iri Literal},\n  stronger.Refines weaker →\n    ∀ (U : Type u) (I : RDF11.SimpleInterpretation Iri Literal U), stronger.conditions U I → weaker.conditions U I",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SEMANTIC-EXTENSIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SemanticExtension.Refines",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SemanticExtension.Refines.rec",
+      "module": "RDF11.SemanticExtensions",
+      "kind": "recursor",
+      "type": "{Iri Literal : Type} →\n  {stronger weaker : RDF11.SemanticExtension Iri Literal} →\n    {motive : stronger.Refines weaker → Sort u_1} →\n      ((admissible : ∀ {B : Type} (G : RDF11.Graph Iri Literal B), stronger.legal G → weaker.legal G) →\n          (models :\n              ∀ (U : Type u) (I : RDF11.SimpleInterpretation Iri Literal U),\n                stronger.conditions U I → weaker.conditions U I) →\n            motive ⋯) →\n        (t : stronger.Refines weaker) → motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SEMANTIC-EXTENSIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SemanticExtension.Refines",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SemanticExtension.Refines.recOn",
+      "module": "RDF11.SemanticExtensions",
+      "kind": "definition",
+      "type": "{Iri Literal : Type} →\n  {stronger weaker : RDF11.SemanticExtension Iri Literal} →\n    {motive : stronger.Refines weaker → Sort u_1} →\n      (t : stronger.Refines weaker) →\n        ((admissible : ∀ {B : Type} (G : RDF11.Graph Iri Literal B), stronger.legal G → weaker.legal G) →\n            (models :\n                ∀ (U : Type u) (I : RDF11.SimpleInterpretation Iri Literal U),\n                  stronger.conditions U I → weaker.conditions U I) →\n              motive ⋯) →\n          motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SEMANTIC-EXTENSIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SemanticExtension.Refines",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SemanticExtension.Refines.satisfiability",
+      "module": "RDF11.SemanticExtensions",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {S R : RDF11.SemanticExtension Iri Literal} (h : S.Refines R) (G : S.AdmissibleGraph B),\n  S.Satisfiable G → R.Satisfiable (h.graph G)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SEMANTIC-EXTENSIONS",
+        "MT11-EXTENSION-REGIME"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SemanticExtension.Refines",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SemanticExtension.Refines.trans",
+      "module": "RDF11.SemanticExtensions",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {S R Q : RDF11.SemanticExtension Iri Literal}, S.Refines R → R.Refines Q → S.Refines Q",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SEMANTIC-EXTENSIONS",
+        "MT11-EXTENSION-MONOTONICITY"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SemanticExtension.Refines",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SemanticExtension.Satisfiable",
+      "module": "RDF11.SemanticExtensions",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} → (R : RDF11.SemanticExtension Iri Literal) → R.AdmissibleGraph B → Prop",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SEMANTIC-EXTENSIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SemanticExtension",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SemanticExtension.Satisfies",
+      "module": "RDF11.SemanticExtensions",
+      "kind": "definition",
+      "type": "{Iri Literal : Type} →\n  {U : Type u} → {B : Type} → (R : RDF11.SemanticExtension Iri Literal) → R.Model U → R.AdmissibleGraph B → Prop",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SEMANTIC-EXTENSIONS",
+        "MT11-SIMPLE-EXTENSION-BASE",
+        "MT11-EXTENSION-REGIME"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SemanticExtension",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SemanticExtension._sizeOf_1",
+      "module": "RDF11.SemanticExtensions",
+      "kind": "definition",
+      "type": "{Iri Literal : Type} → [SizeOf Iri] → [SizeOf Literal] → RDF11.SemanticExtension Iri Literal → Nat",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SEMANTIC-EXTENSIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SemanticExtension",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SemanticExtension._sizeOf_inst",
+      "module": "RDF11.SemanticExtensions",
+      "kind": "definition",
+      "type": "(Iri Literal : Type) → [SizeOf Iri] → [SizeOf Literal] → SizeOf (RDF11.SemanticExtension Iri Literal)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SEMANTIC-EXTENSIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SemanticExtension",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SemanticExtension.casesOn",
+      "module": "RDF11.SemanticExtensions",
+      "kind": "definition",
+      "type": "{Iri Literal : Type} →\n  {motive : RDF11.SemanticExtension Iri Literal → Sort u_1} →\n    (t : RDF11.SemanticExtension Iri Literal) →\n      ((legal : {B : Type} → RDF11.Graph Iri Literal B → Prop) →\n          (conditions : (U : Type u) → RDF11.SimpleInterpretation Iri Literal U → Prop) →\n            motive { legal := legal, conditions := conditions }) →\n        motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SEMANTIC-EXTENSIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SemanticExtension",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SemanticExtension.conditions",
+      "module": "RDF11.SemanticExtensions",
+      "kind": "definition",
+      "type": "{Iri Literal : Type} →\n  RDF11.SemanticExtension Iri Literal → (U : Type u) → RDF11.SimpleInterpretation Iri Literal U → Prop",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SEMANTIC-EXTENSIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SemanticExtension",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SemanticExtension.ctorIdx",
+      "module": "RDF11.SemanticExtensions",
+      "kind": "definition",
+      "type": "{Iri Literal : Type} → RDF11.SemanticExtension Iri Literal → Nat",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SEMANTIC-EXTENSIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SemanticExtension",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SemanticExtension.datatype_refinement",
+      "module": "RDF11.SemanticExtensions",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} (T : RDF11.DatatypeTheory Iri Literal Value) {D E : RDF11.Set Iri},\n  D.subset E → (RDF11.SemanticExtension.datatypes T E).Refines (RDF11.SemanticExtension.datatypes T D)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SEMANTIC-EXTENSIONS",
+        "MT11-EXTENSION-MONOTONICITY",
+        "MT11-EXTENSION-REGIME"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SemanticExtension",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SemanticExtension.datatypes",
+      "module": "RDF11.SemanticExtensions",
+      "kind": "definition",
+      "type": "{Iri Literal Value : Type} →\n  RDF11.DatatypeTheory Iri Literal Value → RDF11.Set Iri → RDF11.SemanticExtension Iri Literal",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SEMANTIC-EXTENSIONS",
+        "MT11-EXTENSION-REGIME"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SemanticExtension",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SemanticExtension.datatypes_entails_iff",
+      "module": "RDF11.SemanticExtensions",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B₁ B₂ : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (G : RDF11.Graph Iri Literal B₁) (E : RDF11.Graph Iri Literal B₂),\n  (RDF11.SemanticExtension.datatypes T D).Entails ⟨G, True.intro⟩ ⟨E, True.intro⟩ ↔\n    RDF11.DEntails T D G.generalize E.generalize",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SEMANTIC-EXTENSIONS",
+        "MT11-EXTENSION-REGIME"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SemanticExtension",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SemanticExtension.datatypes_satisfiable_iff",
+      "module": "RDF11.SemanticExtensions",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (G : RDF11.Graph Iri Literal B),\n  (RDF11.SemanticExtension.datatypes T D).Satisfiable ⟨G, True.intro⟩ ↔ RDF11.DSatisfiable T D G.generalize",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SEMANTIC-EXTENSIONS",
+        "MT11-EXTENSION-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SemanticExtension",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SemanticExtension.entails_iff",
+      "module": "RDF11.SemanticExtensions",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B₁ B₂ : Type} (R : RDF11.SemanticExtension Iri Literal) (G : R.AdmissibleGraph B₁)\n  (E : R.AdmissibleGraph B₂), R.Entails G E ↔ RDF11.EntailsUnder R.conditions G.val.generalize E.val.generalize",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SEMANTIC-EXTENSIONS",
+        "MT11-SIMPLE-EXTENSION-BASE",
+        "MT11-EXTENSION-REGIME"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SemanticExtension",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SemanticExtension.entails_refl",
+      "module": "RDF11.SemanticExtensions",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (R : RDF11.SemanticExtension Iri Literal) (G : R.AdmissibleGraph B), R.Entails G G",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SEMANTIC-EXTENSIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SemanticExtension",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SemanticExtension.entails_trans",
+      "module": "RDF11.SemanticExtensions",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B₁ B₂ B₃ : Type} (R : RDF11.SemanticExtension Iri Literal) {G : R.AdmissibleGraph B₁}\n  {H : R.AdmissibleGraph B₂} {E : R.AdmissibleGraph B₃}, R.Entails G H → R.Entails H E → R.Entails G E",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SEMANTIC-EXTENSIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SemanticExtension",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SemanticExtension.legal",
+      "module": "RDF11.SemanticExtensions",
+      "kind": "definition",
+      "type": "{Iri Literal : Type} → RDF11.SemanticExtension Iri Literal → {B : Type} → RDF11.Graph Iri Literal B → Prop",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SEMANTIC-EXTENSIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SemanticExtension",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SemanticExtension.meet",
+      "module": "RDF11.SemanticExtensions",
+      "kind": "definition",
+      "type": "{Iri Literal : Type} →\n  RDF11.SemanticExtension Iri Literal → RDF11.SemanticExtension Iri Literal → RDF11.SemanticExtension Iri Literal",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SEMANTIC-EXTENSIONS",
+        "MT11-EXTENSION-REGIME"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SemanticExtension",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SemanticExtension.meet_refines_left",
+      "module": "RDF11.SemanticExtensions",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} (R S : RDF11.SemanticExtension Iri Literal), (R.meet S).Refines R",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SEMANTIC-EXTENSIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SemanticExtension",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SemanticExtension.meet_refines_right",
+      "module": "RDF11.SemanticExtensions",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} (R S : RDF11.SemanticExtension Iri Literal), (R.meet S).Refines S",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SEMANTIC-EXTENSIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SemanticExtension",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SemanticExtension.mk",
+      "module": "RDF11.SemanticExtensions",
+      "kind": "constructor",
+      "type": "{Iri Literal : Type} →\n  ({B : Type} → RDF11.Graph Iri Literal B → Prop) →\n    ((U : Type u) → RDF11.SimpleInterpretation Iri Literal U → Prop) → RDF11.SemanticExtension Iri Literal",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SEMANTIC-EXTENSIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SemanticExtension",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SemanticExtension.mk._flat_ctor",
+      "module": "RDF11.SemanticExtensions",
+      "kind": "definition",
+      "type": "{Iri Literal : Type} →\n  ({B : Type} → RDF11.Graph Iri Literal B → Prop) →\n    ((U : Type u) → RDF11.SimpleInterpretation Iri Literal U → Prop) → RDF11.SemanticExtension Iri Literal",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SEMANTIC-EXTENSIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SemanticExtension.mk",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SemanticExtension.mk.inj",
+      "module": "RDF11.SemanticExtensions",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {legal : {B : Type} → RDF11.Graph Iri Literal B → Prop}\n  {conditions : (U : Type u) → RDF11.SimpleInterpretation Iri Literal U → Prop}\n  {legal_1 : {B : Type} → RDF11.Graph Iri Literal B → Prop}\n  {conditions_1 : (U : Type u) → RDF11.SimpleInterpretation Iri Literal U → Prop},\n  { legal := legal, conditions := conditions } = { legal := legal_1, conditions := conditions_1 } →\n    legal = legal_1 ∧ conditions = conditions_1",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SEMANTIC-EXTENSIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SemanticExtension.mk",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SemanticExtension.mk.injEq",
+      "module": "RDF11.SemanticExtensions",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} (legal : {B : Type} → RDF11.Graph Iri Literal B → Prop)\n  (conditions : (U : Type u) → RDF11.SimpleInterpretation Iri Literal U → Prop)\n  (legal_1 : {B : Type} → RDF11.Graph Iri Literal B → Prop)\n  (conditions_1 : (U : Type u) → RDF11.SimpleInterpretation Iri Literal U → Prop),\n  ({ legal := legal, conditions := conditions } = { legal := legal_1, conditions := conditions_1 }) =\n    (legal = legal_1 ∧ conditions = conditions_1)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SEMANTIC-EXTENSIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SemanticExtension.mk",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SemanticExtension.mk.noConfusion",
+      "module": "RDF11.SemanticExtensions",
+      "kind": "definition",
+      "type": "{Iri Literal : Type} →\n  {P : Sort u_1} →\n    {legal : {B : Type} → RDF11.Graph Iri Literal B → Prop} →\n      {conditions : (U : Type u) → RDF11.SimpleInterpretation Iri Literal U → Prop} →\n        {legal' : {B : Type} → RDF11.Graph Iri Literal B → Prop} →\n          {conditions' : (U : Type u) → RDF11.SimpleInterpretation Iri Literal U → Prop} →\n            { legal := legal, conditions := conditions } = { legal := legal', conditions := conditions' } →\n              (legal ≍ legal' → conditions ≍ conditions' → P) → P",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SEMANTIC-EXTENSIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SemanticExtension.mk",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SemanticExtension.mk.sizeOf_spec",
+      "module": "RDF11.SemanticExtensions",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} [inst : SizeOf Iri] [inst_1 : SizeOf Literal]\n  (legal : {B : Type} → RDF11.Graph Iri Literal B → Prop)\n  (conditions : (U : Type u) → RDF11.SimpleInterpretation Iri Literal U → Prop),\n  sizeOf { legal := legal, conditions := conditions } = 1",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SEMANTIC-EXTENSIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SemanticExtension.mk",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SemanticExtension.noConfusion",
+      "module": "RDF11.SemanticExtensions",
+      "kind": "definition",
+      "type": "{P : Sort u_1} →\n  {Iri Literal : Type} →\n    {t : RDF11.SemanticExtension Iri Literal} →\n      {Iri' Literal' : Type} →\n        {t' : RDF11.SemanticExtension Iri' Literal'} →\n          Iri = Iri' → Literal = Literal' → t ≍ t' → RDF11.SemanticExtension.noConfusionType P t t'",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SEMANTIC-EXTENSIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SemanticExtension",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SemanticExtension.noConfusionType",
+      "module": "RDF11.SemanticExtensions",
+      "kind": "definition",
+      "type": "Sort u_1 →\n  {Iri Literal : Type} →\n    RDF11.SemanticExtension Iri Literal → {Iri' Literal' : Type} → RDF11.SemanticExtension Iri' Literal' → Sort u_1",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SEMANTIC-EXTENSIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SemanticExtension",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SemanticExtension.no_additional_syntax",
+      "module": "RDF11.SemanticExtensions",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (v : RDF11.RDFSVocabulary Iri) (G : RDF11.Graph Iri Literal B),\n  RDF11.SemanticExtension.simple.legal G ∧\n    (RDF11.SemanticExtension.datatypes T D).legal G ∧\n      (RDF11.SemanticExtension.rdf T D v.toRDF).legal G ∧ (RDF11.SemanticExtension.rdfs T D v).legal G",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SEMANTIC-EXTENSIONS",
+        "MT11-EXTENSION-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SemanticExtension",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SemanticExtension.ofConditions",
+      "module": "RDF11.SemanticExtensions",
+      "kind": "definition",
+      "type": "{Iri Literal : Type} →\n  ((U : Type u) → RDF11.SimpleInterpretation Iri Literal U → Prop) → RDF11.SemanticExtension Iri Literal",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SEMANTIC-EXTENSIONS",
+        "MT11-EXTENSION-SYNTAX"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SemanticExtension",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SemanticExtension.ofConditions.graph",
+      "module": "RDF11.SemanticExtensions",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  (C : (U : Type u) → RDF11.SimpleInterpretation Iri Literal U → Prop) →\n    RDF11.Graph Iri Literal B → (RDF11.SemanticExtension.ofConditions C).AdmissibleGraph B",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SEMANTIC-EXTENSIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SemanticExtension.ofConditions",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SemanticExtension.ofConditions_entails_iff",
+      "module": "RDF11.SemanticExtensions",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B₁ B₂ : Type} (C : (U : Type u) → RDF11.SimpleInterpretation Iri Literal U → Prop)\n  (G : RDF11.Graph Iri Literal B₁) (E : RDF11.Graph Iri Literal B₂),\n  (RDF11.SemanticExtension.ofConditions C).Entails (RDF11.SemanticExtension.ofConditions.graph C G)\n      (RDF11.SemanticExtension.ofConditions.graph C E) ↔\n    RDF11.EntailsUnder C G.generalize E.generalize",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SEMANTIC-EXTENSIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SemanticExtension",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SemanticExtension.premise_monotone",
+      "module": "RDF11.SemanticExtensions",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B₁ B₂ : Type} (R : RDF11.SemanticExtension Iri Literal) (G H : R.AdmissibleGraph B₁)\n  (E : R.AdmissibleGraph B₂), RDF11.Set.subset G.val H.val → R.Entails G E → R.Entails H E",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SEMANTIC-EXTENSIONS",
+        "MT11-EXTENSION-MONOTONICITY"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SemanticExtension",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SemanticExtension.preserves_simple",
+      "module": "RDF11.SemanticExtensions",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B₁ B₂ : Type} (R : RDF11.SemanticExtension Iri Literal) (G : R.AdmissibleGraph B₁)\n  (E : R.AdmissibleGraph B₂), RDF11.SimplyEntails G.val.generalize E.val.generalize → R.Entails G E",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SEMANTIC-EXTENSIONS",
+        "MT11-EXTENSION-MONOTONICITY"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SemanticExtension",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SemanticExtension.rdf",
+      "module": "RDF11.SemanticExtensions",
+      "kind": "definition",
+      "type": "{Iri Literal Value : Type} →\n  RDF11.DatatypeTheory Iri Literal Value → RDF11.Set Iri → RDF11.RDFVocabulary Iri → RDF11.SemanticExtension Iri Literal",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SEMANTIC-EXTENSIONS",
+        "MT11-EXTENSION-REGIME"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SemanticExtension",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SemanticExtension.rdf_entails_iff",
+      "module": "RDF11.SemanticExtensions",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B₁ B₂ : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (v : RDF11.RDFVocabulary Iri) (G : RDF11.Graph Iri Literal B₁) (E : RDF11.Graph Iri Literal B₂),\n  (RDF11.SemanticExtension.rdf T D v).Entails ⟨G, True.intro⟩ ⟨E, True.intro⟩ ↔\n    RDF11.RDFEntails T D v G.generalize E.generalize",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SEMANTIC-EXTENSIONS",
+        "MT11-EXTENSION-REGIME"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SemanticExtension",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SemanticExtension.rdf_refines_datatypes",
+      "module": "RDF11.SemanticExtensions",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (v : RDF11.RDFVocabulary Iri), (RDF11.SemanticExtension.rdf T D v).Refines (RDF11.SemanticExtension.datatypes T D)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SEMANTIC-EXTENSIONS",
+        "MT11-EXTENSION-MONOTONICITY",
+        "MT11-EXTENSION-REGIME"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SemanticExtension",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SemanticExtension.rdfs",
+      "module": "RDF11.SemanticExtensions",
+      "kind": "definition",
+      "type": "{Iri Literal Value : Type} →\n  RDF11.DatatypeTheory Iri Literal Value →\n    RDF11.Set Iri → RDF11.RDFSVocabulary Iri → RDF11.SemanticExtension Iri Literal",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SEMANTIC-EXTENSIONS",
+        "MT11-EXTENSION-REGIME"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SemanticExtension",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SemanticExtension.rdfs_entails_iff",
+      "module": "RDF11.SemanticExtensions",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B₁ B₂ : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (v : RDF11.RDFSVocabulary Iri) (G : RDF11.Graph Iri Literal B₁) (E : RDF11.Graph Iri Literal B₂),\n  (RDF11.SemanticExtension.rdfs T D v).Entails ⟨G, True.intro⟩ ⟨E, True.intro⟩ ↔\n    RDF11.RDFSEntails T D v G.generalize E.generalize",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SEMANTIC-EXTENSIONS",
+        "MT11-EXTENSION-REGIME"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SemanticExtension",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SemanticExtension.rdfs_refines_rdf",
+      "module": "RDF11.SemanticExtensions",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (v : RDF11.RDFSVocabulary Iri), (RDF11.SemanticExtension.rdfs T D v).Refines (RDF11.SemanticExtension.rdf T D v.toRDF)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SEMANTIC-EXTENSIONS",
+        "MT11-EXTENSION-MONOTONICITY",
+        "MT11-EXTENSION-REGIME"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SemanticExtension",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SemanticExtension.rec",
+      "module": "RDF11.SemanticExtensions",
+      "kind": "recursor",
+      "type": "{Iri Literal : Type} →\n  {motive : RDF11.SemanticExtension Iri Literal → Sort u_1} →\n    ((legal : {B : Type} → RDF11.Graph Iri Literal B → Prop) →\n        (conditions : (U : Type u) → RDF11.SimpleInterpretation Iri Literal U → Prop) →\n          motive { legal := legal, conditions := conditions }) →\n      (t : RDF11.SemanticExtension Iri Literal) → motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SEMANTIC-EXTENSIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SemanticExtension",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SemanticExtension.recOn",
+      "module": "RDF11.SemanticExtensions",
+      "kind": "definition",
+      "type": "{Iri Literal : Type} →\n  {motive : RDF11.SemanticExtension Iri Literal → Sort u_1} →\n    (t : RDF11.SemanticExtension Iri Literal) →\n      ((legal : {B : Type} → RDF11.Graph Iri Literal B → Prop) →\n          (conditions : (U : Type u) → RDF11.SimpleInterpretation Iri Literal U → Prop) →\n            motive { legal := legal, conditions := conditions }) →\n        motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SEMANTIC-EXTENSIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SemanticExtension",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SemanticExtension.refines_simple",
+      "module": "RDF11.SemanticExtensions",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} (R : RDF11.SemanticExtension Iri Literal), R.Refines RDF11.SemanticExtension.simple",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SEMANTIC-EXTENSIONS",
+        "MT11-EXTENSION-MONOTONICITY"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SemanticExtension",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SemanticExtension.satisfies_iff",
+      "module": "RDF11.SemanticExtensions",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u} {B : Type} (R : RDF11.SemanticExtension Iri Literal) (I : R.Model U)\n  (G : R.AdmissibleGraph B), R.Satisfies I G ↔ I.val.Satisfies G.val.generalize",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SEMANTIC-EXTENSIONS",
+        "MT11-SIMPLE-EXTENSION-BASE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SemanticExtension",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SemanticExtension.simple",
+      "module": "RDF11.SemanticExtensions",
+      "kind": "definition",
+      "type": "{Iri Literal : Type} → RDF11.SemanticExtension Iri Literal",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SEMANTIC-EXTENSIONS",
+        "MT11-EXTENSION-REGIME"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SemanticExtension",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SemanticExtension.simple_entails_iff",
+      "module": "RDF11.SemanticExtensions",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B₁ B₂ : Type} (G : RDF11.Graph Iri Literal B₁) (E : RDF11.Graph Iri Literal B₂),\n  RDF11.SemanticExtension.simple.Entails ⟨G, True.intro⟩ ⟨E, True.intro⟩ ↔ RDF11.SimplyEntails G.generalize E.generalize",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SEMANTIC-EXTENSIONS",
+        "MT11-EXTENSION-REGIME"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SemanticExtension",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SemanticExtension.subgraph_entails",
+      "module": "RDF11.SemanticExtensions",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (R : RDF11.SemanticExtension Iri Literal) (G E : R.AdmissibleGraph B),\n  RDF11.Set.subset E.val G.val → R.Entails G E",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SEMANTIC-EXTENSIONS",
+        "MT11-EXTENSION-MONOTONICITY"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SemanticExtension",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SemanticExtension.unsatisfiable_entails",
+      "module": "RDF11.SemanticExtensions",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B₁ B₂ : Type} (R : RDF11.SemanticExtension Iri Literal) (G : R.AdmissibleGraph B₁)\n  (E : R.AdmissibleGraph B₂), ¬R.Satisfiable G → R.Entails G E",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SEMANTIC-EXTENSIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SemanticExtension",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SemanticExtension.valid_process",
+      "module": "RDF11.SemanticExtensions",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B₁ B₂ : Type} (R : RDF11.SemanticExtension Iri Literal)\n  (process : RDF11.GeneralizedGraph Iri Literal B₁ → RDF11.GeneralizedGraph Iri Literal B₂ → Prop),\n  RDF11.SimplyValid process →\n    ∀ (G : R.AdmissibleGraph B₁) (E : R.AdmissibleGraph B₂), process G.val.generalize E.val.generalize → R.Entails G E",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-SEMANTIC-EXTENSIONS",
+        "MT11-EXTENSION-MONOTONICITY"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SemanticExtension",
       "review": "pending_expert_review"
     }
   ],

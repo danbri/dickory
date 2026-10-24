@@ -54,3 +54,6 @@ import RDF11.FiniteSimpleModels
 import RDF11.FiniteDatatypeModels
 import RDF11.DatatypeCompletion
 import RDF11.DatatypeCompletionScope
+import RDF11.SemanticExtensions
+import RDF11.ExtensionBoundaries
+import RDF11.ExtensionPresentations

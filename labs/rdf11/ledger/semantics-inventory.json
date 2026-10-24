@@ -693,7 +693,8 @@
         "implementation_mapping": "unassessed",
         "formal_proof": "unassessed",
         "test_mapping": "unassessed"
-      }
+      },
+      "formalization_note": "The twentieth increment adds explicit syntax admission, unchanged simple truth, exact simple/D/RDF/RDFS regime bridges, refinement transport and an enriched-model reduct theorem. The source-reading subagent closely read sections 3 and 5 and the regime definitions; expert approval remains pending. Higher-level languages and runtime implementations still need their own correspondence proofs."
     },
     {
       "id": "MT11-EXTENSION-SYNTAX",
@@ -711,7 +712,8 @@
         "implementation_mapping": "unassessed",
         "formal_proof": "unassessed",
         "test_mapping": "unassessed"
-      }
+      },
+      "formalization_note": "The twentieth increment adds explicit syntax admission, unchanged simple truth, exact simple/D/RDF/RDFS regime bridges, refinement transport and an enriched-model reduct theorem. The source-reading subagent closely read sections 3 and 5 and the regime definitions; expert approval remains pending. Higher-level languages and runtime implementations still need their own correspondence proofs."
     },
     {
       "id": "MT11-EXTENSION-MONOTONICITY",
@@ -731,7 +733,8 @@
         "implementation_mapping": "unassessed",
         "formal_proof": "unassessed",
         "test_mapping": "unassessed"
-      }
+      },
+      "formalization_note": "The twentieth increment adds explicit syntax admission, unchanged simple truth, exact simple/D/RDF/RDFS regime bridges, refinement transport and an enriched-model reduct theorem. The source-reading subagent closely read sections 3 and 5 and the regime definitions; expert approval remains pending. Higher-level languages and runtime implementations still need their own correspondence proofs."
     },
     {
       "id": "MT11-SYNTAX-IMPORT",
@@ -1265,7 +1268,8 @@
         "implementation_mapping": "unassessed",
         "formal_proof": "unassessed",
         "test_mapping": "unassessed"
-      }
+      },
+      "formalization_note": "The twentieth increment adds explicit syntax admission, unchanged simple truth, exact simple/D/RDF/RDFS regime bridges, refinement transport and an enriched-model reduct theorem. The source-reading subagent closely read sections 3 and 5 and the regime definitions; expert approval remains pending. Higher-level languages and runtime implementations still need their own correspondence proofs."
     },
     {
       "id": "MT11-GRAPH-SOURCE-SEMANTICS",
@@ -5611,5 +5615,5 @@
       "formalization_note": "The premise may be generalized and the two graphs may use different blank domains. V covers both vocabularies, including datatype IRIs; the enumerated blank support covers the premise. The proof combines full completion with the previous countermodel compression. The conclusion remains an ordinary Graph, the bound is N+B+1 rather than the printed product, and quantification over bounded models is not an implemented decision procedure."
     }
   ],
-  "record_count": 217
+  "record_count": 221
 }

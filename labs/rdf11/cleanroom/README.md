@@ -1,6 +1,6 @@
 # RDF 1.1 Semantics: fresh Lean 4 reconstruction
 
-**Nineteenth working increment: datatype completion and bounded ordinary entailment, 24 October 2026. Not complete RDF formalization or package verification.**
+**Twentieth working increment: semantic extensions, admitted graphs and regime connections, 24 October 2026. Not complete RDF formalization or package verification.**
 
 This project reconstructs definitions and proofs from the pinned RDF 1.1 specifications. It imports no Factoidal implementation modules and copies no existing Factoidal proofs. The author has previously reviewed that implementation: “clean-room” here means a separate, source-first reconstruction, not an independently isolated team with no prior exposure.
 
@@ -20,6 +20,7 @@ The viewer's trusted presentation tool, `tools/lean_sources.py`, obtains declara
 
 The full library builds with **Lean 4.33.1**, using only its standard distribution. There are no added axioms, proof placeholders, native-decision proofs, or unsafe local declarations. The audited logical axioms are `propext`, `Classical.choice`, and `Quot.sound`.
 
+- Semantic extensions now pair graph-admission requirements with fixed conditions on simple interpretations. Entailment accepts only admitted ordinary graphs, retains the same truth relation and connects exactly to the existing simple/D/RDF/RDFS definitions. Refinement preserves weaker entailments on admitted pairs; an enriched-model reduct bridge requires proved truth correspondence. A required-triple example distinguishes valid deletion from syntax preservation, while admitted ill-typed graphs remain semantically unsatisfiable. This does not implement OWL, SPARQL, modal datasets or cross-edition compatibility.
 - Graphs are extensional sets, including possibly infinite graphs. Repetition and order cannot distinguish sets with the same members.
 - Ordinary triples enforce the subject/predicate/object categories. Generalized triples have a separate type.
 - Simple interpretations retain W3C’s `IR`, `IP`, `IEXT`, `IS`, and partial `IL`. An infinite family of abstract IRI names makes the graph of IS non-enumerable by any finite list, even in a simple interpretation with just one resource. Concrete name-domain correspondence remains external.
@@ -45,7 +46,7 @@ The full library builds with **Lean 4.33.1**, using only its standard distributi
 - Local datatype pre-interpretations retain fixed identities, aliases, language values and ill-typed-literal behavior. Full D-models restrict to these conditions, and all-name localization recovers full conditions exactly. N+B+1 compression yields weakened countermodels from full countermodels. Bounded weakened satisfiability is equivalent to full D-satisfiability; its reverse proof constructs a new full model and does not preserve other graph truths. A separate full datatype completion now preserves every embedded-assignment truth and ordinary graph satisfaction. Combining it with compression proves bounded entailment equivalence for ordinary conclusions. A finite custom-datatype witness refutes unrestricted generalized comparison preservation for the current localized conditions; its full premise is satisfiable and both recognized value spaces are nonempty. A checked empty-comparison conflict for the printed (N+B)*(D+1) formula is recorded for source review, without changing the formula.
 - Finite enumerations carry both membership and uniqueness proofs. Any two enumerations of the same set have the same length; each member occurs at most once.
 
-The source catalogue has **177 mappings among 221 preliminary claim records**. Several mappings are partial. These numbers are not a compliance percentage. No extraction or formalization review is marked accepted.
+The source catalogue has **179 mappings among 221 preliminary claim records**. Several mappings are partial. These numbers are not a compliance percentage. No extraction or formalization review is marked accepted.
 
 Why some countermodels use `rdf:value`: [Semantics §8](https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#rdf-interpretations) requires its `rdf:Property` typing, and [§9](https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#rdfs-interpretations) requires its Resource domain and range. These axioms are included in our models. [Schema §5.4.3](https://www.w3.org/TR/2014/REC-rdf-schema-20140225/#ch_value) describes a structured-value idiom without giving the property a special operational meaning. The proofs choose its subject/object relation to exhibit counterexamples; they do not treat it as a literal evaluator, require a single value, or identify a resource with its value. This example choice is separate from the datatype theory's lexical-to-value mapping.
 
@@ -57,6 +58,9 @@ Why some countermodels use `rdf:value`: [Semantics §8](https://www.w3.org/TR/20
 | [Set.lean](RDF11/Set.lean) | Predicate sets, extensionality, union and membership algebra |
 | [Syntax.lean](RDF11/Syntax.lean) | Ordinary/generalized syntax, occurrence and renaming |
 | [Simple.lean](RDF11/Simple.lean) | Interpretation components and truth conditions |
+| [SemanticExtensions.lean](RDF11/SemanticExtensions.lean) | Admission, fixed truth, model refinement and exact simple/D/RDF/RDFS regime connections |
+| [ExtensionBoundaries.lean](RDF11/ExtensionBoundaries.lean) | Valid deletion can break admission; ill-typed graphs remain admitted but unsatisfiable |
+| [ExtensionPresentations.lean](RDF11/ExtensionPresentations.lean) | Enriched models reduce to a model class through a proved RDF truth correspondence |
 | [Entailment.lean](RDF11/Entailment.lean) | Model-theoretic entailment and initial consequences |
 | [Merge.lean](RDF11/Merge.lean) | Disjoint-domain merge and assignment transport |
 | [Instances.lean](RDF11/Instances.lean) | Simultaneous substitution, properness, isomorphism, leanness and ordinary instance entailment |
@@ -115,7 +119,7 @@ Why some countermodels use `rdf:value`: [Semantics §8](https://www.w3.org/TR/20
 | [Snapshot.lean](Audit/Snapshot.lean) | Concrete draft certificates for both archived specifications |
 | [Export.lean](Audit/Export.lean) | Trusted extractor of actual elaborated types and dependencies |
 
-[registry.json](catalogue/registry.json) inventories every local Lean file and 2,027 declarations, including generated helpers. [declarations.json](https://danbri.github.io/dickory/labs/rdf11/cleanroom/artifacts/declarations.json) records their closure through 6,684 declarations. The checker rejects unregistered files even when they are not imported.
+[registry.json](catalogue/registry.json) inventories every local Lean file and 2,120 declarations, including generated helpers. [declarations.json](https://danbri.github.io/dickory/labs/rdf11/cleanroom/artifacts/declarations.json) records their closure through 6,777 declarations. The checker rejects unregistered files even when they are not imported.
 
 ## Reproduce
 

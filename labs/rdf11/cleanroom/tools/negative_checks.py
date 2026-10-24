@@ -69,6 +69,20 @@ log = run.stdout + run.stderr
 assert run.returncode != 0 and "False" in log and "unsolved goals" in log, log
 results.append("Lean rejects duplicate-bearing Enumeration")
 
+# Admission is required before entailment; illegal syntax is not vacuous success.
+snippet = """import RDF11
+open RDF11
+def rejectedEmpty : (ExtensionBoundary.requiresTriple (Literal := Unit) () () () : SemanticExtension.{0} Unit Unit).AdmissibleGraph Unit where
+  val := Set.empty
+  property := by simp [ExtensionBoundary.requiresTriple, Set.empty]
+"""
+run = subprocess.run(["lake", "env", "lean", "--stdin"], cwd=ROOT, env=env,
+                     input=snippet, text=True, capture_output=True)
+log = run.stdout + run.stderr
+(ROOT / "artifacts/inadmissible-graph-rejected.log").write_text(log)
+assert run.returncode != 0 and "False" in log and "unsolved goals" in log, log
+results.append("Lean rejects an inadmissible graph before entailment")
+
 (ROOT / "artifacts/negative-checks.json").write_text(json.dumps(
     {"status": "pass", "checks": results}, indent=2) + "\n")
 print(json.dumps(results, indent=2))

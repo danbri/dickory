@@ -619,22 +619,46 @@
     {
       "claim_id": "MT11-SIMPLE-EXTENSION-BASE",
       "relation": "partial_definition_and_theorem",
-      "symbol_linked_english": "For an extension represented by additional conditions C on simple interpretations, simple entailment implies entailment under C.",
+      "symbol_linked_english": "SemanticExtension.Satisfies is exactly the underlying SimpleInterpretation.Satisfies on an admitted ordinary graph. ExtensionPresentation requires an interpretation reduct and an exact truth correspondence on every admitted graph; its toExtension selects precisely the reducts, and entails_iff proves equivalence of the two entailment quantifications.",
       "bindings": [
+        {
+          "symbol": "SemanticExtension.Satisfies",
+          "lean": "RDF11.SemanticExtension.Satisfies"
+        },
+        {
+          "symbol": "SemanticExtension.satisfies_iff",
+          "lean": "RDF11.SemanticExtension.satisfies_iff"
+        },
+        {
+          "symbol": "SemanticExtension.entails_iff",
+          "lean": "RDF11.SemanticExtension.entails_iff"
+        },
+        {
+          "symbol": "ExtensionPresentation",
+          "lean": "RDF11.ExtensionPresentation"
+        },
+        {
+          "symbol": "ExtensionPresentation.toExtension",
+          "lean": "RDF11.ExtensionPresentation.toExtension"
+        },
+        {
+          "symbol": "ExtensionPresentation.Entails",
+          "lean": "RDF11.ExtensionPresentation.Entails"
+        },
+        {
+          "symbol": "ExtensionPresentation.entails_iff",
+          "lean": "RDF11.ExtensionPresentation.entails_iff"
+        },
+        {
+          "symbol": "ExtensionPresentation.preserves_simple",
+          "lean": "RDF11.ExtensionPresentation.preserves_simple"
+        },
         {
           "symbol": "EntailsUnder",
           "lean": "RDF11.EntailsUnder"
-        },
-        {
-          "symbol": "extension_preserves_simple_entailment",
-          "lean": "RDF11.extension_preserves_simple_entailment"
-        },
-        {
-          "symbol": "stronger_conditions_preserve_entailment",
-          "lean": "RDF11.stronger_conditions_preserve_entailment"
         }
       ],
-      "limitations": "Models only extensions over this graph syntax; does not formalize every permitted higher-level notation.",
+      "limitations": "The construction concerns admitted ordinary RDF graphs and fixed conditions on simple interpretations. Richer model data can use ExtensionPresentation only after proving its explicit reduct/truth correspondence. No exhaustive classification of OWL, SPARQL, RIF, modal or dataset semantics, concrete parser validation, accepted expert review or package refinement is claimed. The presentation law is a proof obligation, not inferred from an interface name. Both directions of truth correspondence are retained.",
       "extraction_review": "pending_expert_review",
       "formalization_review": "pending_expert_review",
       "implementation_refinement": "not_connected_to_published_package"
@@ -1131,8 +1155,52 @@
     {
       "claim_id": "MT11-EXTENSION-MONOTONICITY",
       "relation": "partial_theorem",
-      "symbol_linked_english": "Restricting simple interpretations by conditions C preserves every simple entailment and every SimplyValid process.",
+      "symbol_linked_english": "SemanticExtension.preserves_simple proves the section-3 requirement for admitted premise and conclusion, with the old simple Satisfies relation retained. Refines.entailment preserves weaker entailment under explicit stronger conditions and compatible syntax; premise_monotone retains admission proofs. valid_process transports each admitted input/output pair of a SimplyValid process. ExtensionPresentation.preserves_simple obtains the same guarantee through a proved truth correspondence.",
       "bindings": [
+        {
+          "symbol": "SemanticExtension.preserves_simple",
+          "lean": "RDF11.SemanticExtension.preserves_simple"
+        },
+        {
+          "symbol": "SemanticExtension.Refines.entailment",
+          "lean": "RDF11.SemanticExtension.Refines.entailment"
+        },
+        {
+          "symbol": "SemanticExtension.Refines.trans",
+          "lean": "RDF11.SemanticExtension.Refines.trans"
+        },
+        {
+          "symbol": "SemanticExtension.subgraph_entails",
+          "lean": "RDF11.SemanticExtension.subgraph_entails"
+        },
+        {
+          "symbol": "SemanticExtension.premise_monotone",
+          "lean": "RDF11.SemanticExtension.premise_monotone"
+        },
+        {
+          "symbol": "SemanticExtension.valid_process",
+          "lean": "RDF11.SemanticExtension.valid_process"
+        },
+        {
+          "symbol": "SemanticExtension.refines_simple",
+          "lean": "RDF11.SemanticExtension.refines_simple"
+        },
+        {
+          "symbol": "SemanticExtension.rdf_refines_datatypes",
+          "lean": "RDF11.SemanticExtension.rdf_refines_datatypes"
+        },
+        {
+          "symbol": "SemanticExtension.rdfs_refines_rdf",
+          "lean": "RDF11.SemanticExtension.rdfs_refines_rdf"
+        },
+        {
+          "symbol": "SemanticExtension.datatype_refinement",
+          "lean": "RDF11.SemanticExtension.datatype_refinement"
+        },
+        {
+          "symbol": "ExtensionPresentation.preserves_simple",
+          "lean": "RDF11.ExtensionPresentation.preserves_simple"
+        },
         {
           "symbol": "extension_preserves_simple_entailment",
           "lean": "RDF11.extension_preserves_simple_entailment"
@@ -1146,7 +1214,7 @@
           "lean": "RDF11.valid_under_extension"
         }
       ],
-      "limitations": "C retains the same Satisfies relation and graph syntax. The source also permits separate syntactic admissibility conditions, not represented by C; their satisfaction remains a separate obligation.",
+      "limitations": "The construction concerns admitted ordinary RDF graphs and fixed conditions on simple interpretations. Richer model data can use ExtensionPresentation only after proving its explicit reduct/truth correspondence. No exhaustive classification of OWL, SPARQL, RIF, modal or dataset semantics, concrete parser validation, accepted expert review or package refinement is claimed. No ordering of arbitrary extensions or admission of an entailed conclusion is inferred.",
       "extraction_review": "pending_expert_review",
       "formalization_review": "pending_expert_review",
       "implementation_refinement": "not_connected_to_published_package"
@@ -4693,6 +4761,156 @@
       "extraction_review": "pending_expert_review",
       "formalization_review": "pending_expert_review",
       "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-EXTENSION-REGIME",
+      "relation": "partial_definition_and_theorem",
+      "symbol_linked_english": "SemanticExtension pairs a legal predicate on ordinary Graph with conditions on SimpleInterpretation. AdmissibleGraph and Model carry the respective evidence; Satisfies retains simple graph truth. Entails quantifies over all models in the selected class. The simple, datatypes, rdf and rdfs constructors are linked exactly to the pre-existing entailment definitions. Refines expresses actual syntax/model inclusion; meet combines requirements without asserting model existence.",
+      "bindings": [
+        {
+          "symbol": "SemanticExtension",
+          "lean": "RDF11.SemanticExtension"
+        },
+        {
+          "symbol": "SemanticExtension.AdmissibleGraph",
+          "lean": "RDF11.SemanticExtension.AdmissibleGraph"
+        },
+        {
+          "symbol": "SemanticExtension.Model",
+          "lean": "RDF11.SemanticExtension.Model"
+        },
+        {
+          "symbol": "SemanticExtension.Satisfies",
+          "lean": "RDF11.SemanticExtension.Satisfies"
+        },
+        {
+          "symbol": "SemanticExtension.Entails",
+          "lean": "RDF11.SemanticExtension.Entails"
+        },
+        {
+          "symbol": "SemanticExtension.entails_iff",
+          "lean": "RDF11.SemanticExtension.entails_iff"
+        },
+        {
+          "symbol": "SemanticExtension.simple",
+          "lean": "RDF11.SemanticExtension.simple"
+        },
+        {
+          "symbol": "SemanticExtension.datatypes",
+          "lean": "RDF11.SemanticExtension.datatypes"
+        },
+        {
+          "symbol": "SemanticExtension.rdf",
+          "lean": "RDF11.SemanticExtension.rdf"
+        },
+        {
+          "symbol": "SemanticExtension.rdfs",
+          "lean": "RDF11.SemanticExtension.rdfs"
+        },
+        {
+          "symbol": "SemanticExtension.simple_entails_iff",
+          "lean": "RDF11.SemanticExtension.simple_entails_iff"
+        },
+        {
+          "symbol": "SemanticExtension.datatypes_entails_iff",
+          "lean": "RDF11.SemanticExtension.datatypes_entails_iff"
+        },
+        {
+          "symbol": "SemanticExtension.rdf_entails_iff",
+          "lean": "RDF11.SemanticExtension.rdf_entails_iff"
+        },
+        {
+          "symbol": "SemanticExtension.rdfs_entails_iff",
+          "lean": "RDF11.SemanticExtension.rdfs_entails_iff"
+        },
+        {
+          "symbol": "SemanticExtension.Refines",
+          "lean": "RDF11.SemanticExtension.Refines"
+        },
+        {
+          "symbol": "SemanticExtension.Refines.entailment",
+          "lean": "RDF11.SemanticExtension.Refines.entailment"
+        },
+        {
+          "symbol": "SemanticExtension.Refines.satisfiability",
+          "lean": "RDF11.SemanticExtension.Refines.satisfiability"
+        },
+        {
+          "symbol": "SemanticExtension.rdf_refines_datatypes",
+          "lean": "RDF11.SemanticExtension.rdf_refines_datatypes"
+        },
+        {
+          "symbol": "SemanticExtension.rdfs_refines_rdf",
+          "lean": "RDF11.SemanticExtension.rdfs_refines_rdf"
+        },
+        {
+          "symbol": "SemanticExtension.datatype_refinement",
+          "lean": "RDF11.SemanticExtension.datatype_refinement"
+        },
+        {
+          "symbol": "SemanticExtension.meet",
+          "lean": "RDF11.SemanticExtension.meet"
+        }
+      ],
+      "limitations": "The construction concerns admitted ordinary RDF graphs and fixed conditions on simple interpretations. Richer model data can use ExtensionPresentation only after proving its explicit reduct/truth correspondence. No exhaustive classification of OWL, SPARQL, RIF, modal or dataset semantics, concrete parser validation, accepted expert review or package refinement is claimed.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-EXTENSION-SYNTAX",
+      "relation": "partial_definition_and_theorem",
+      "symbol_linked_english": "SemanticExtension.legal adds requirements to ordinary Graph syntax. Entails accepts only AdmissibleGraph values, so an illegal comparison is not a vacuously successful entailment. no_additional_syntax admits all ordinary graphs in the four defined regimes. ExtensionBoundary.deletion_breaks_admissibility gives a simple-valid deletion that violates an illustrative required-triple policy. illTyped_admitted_unsatisfiable distinguishes semantic inconsistency from syntax rejection.",
+      "bindings": [
+        {
+          "symbol": "SemanticExtension",
+          "lean": "RDF11.SemanticExtension"
+        },
+        {
+          "symbol": "SemanticExtension.AdmissibleGraph",
+          "lean": "RDF11.SemanticExtension.AdmissibleGraph"
+        },
+        {
+          "symbol": "SemanticExtension.Entails",
+          "lean": "RDF11.SemanticExtension.Entails"
+        },
+        {
+          "symbol": "SemanticExtension.ofConditions",
+          "lean": "RDF11.SemanticExtension.ofConditions"
+        },
+        {
+          "symbol": "SemanticExtension.no_additional_syntax",
+          "lean": "RDF11.SemanticExtension.no_additional_syntax"
+        },
+        {
+          "symbol": "ExtensionBoundary.requiresTriple",
+          "lean": "RDF11.ExtensionBoundary.requiresTriple"
+        },
+        {
+          "symbol": "ExtensionBoundary.assertion",
+          "lean": "RDF11.ExtensionBoundary.assertion"
+        },
+        {
+          "symbol": "ExtensionBoundary.deletion_breaks_admissibility",
+          "lean": "RDF11.ExtensionBoundary.deletion_breaks_admissibility"
+        },
+        {
+          "symbol": "ExtensionBoundary.illTyped_admitted_unsatisfiable",
+          "lean": "RDF11.ExtensionBoundary.illTyped_admitted_unsatisfiable"
+        },
+        {
+          "symbol": "ExtensionBoundary.illTyped_entails_admitted",
+          "lean": "RDF11.ExtensionBoundary.illTyped_entails_admitted"
+        },
+        {
+          "symbol": "SemanticExtension.datatypes_satisfiable_iff",
+          "lean": "RDF11.SemanticExtension.datatypes_satisfiable_iff"
+        }
+      ],
+      "limitations": "Required triples illustrate an optional syntax policy, not a new RDF requirement. The subtype is a proof-level admission boundary; no executable parser or error-reporting policy is supplied. Concrete IRI/literal lexical syntax remains external. Syntactic admissibility is not assumed to survive subgraphs, unions, merges or valid inference. Unsatisfiable admitted inputs remain different from rejected syntax. The construction concerns admitted ordinary RDF graphs and fixed conditions on simple interpretations. Richer model data can use ExtensionPresentation only after proving its explicit reduct/truth correspondence. No exhaustive classification of OWL, SPARQL, RIF, modal or dataset semantics, concrete parser validation, accepted expert review or package refinement is claimed.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
     }
   ],
   "passage_selectors": [
@@ -6472,6 +6690,36 @@
         "MT11-FINITE-RDF-RDFS-PRESERVATION",
         "MT11-DATATYPE-PREINTERPRETATION-ORDINARY-ENTAILMENT"
       ]
+    },
+    {
+      "id": "extension-context",
+      "source": "mt",
+      "tag": "p",
+      "text": "RDF is intended for use as a base notation",
+      "within_section": "semantic-extensions-and-entailment-regimes",
+      "claims": [
+        "MT11-EXTENSION-REGIME"
+      ]
+    },
+    {
+      "id": "extension-regime",
+      "source": "mt",
+      "tag": "p",
+      "text": "A particular such set of semantic assumptions",
+      "within_section": "semantic-extensions-and-entailment-regimes",
+      "claims": [
+        "MT11-EXTENSION-REGIME"
+      ]
+    },
+    {
+      "id": "extension-syntax",
+      "source": "mt",
+      "tag": "p",
+      "text": "Semantic extensions MAY impose special syntactic conditions",
+      "within_section": "semantic-extensions-and-entailment-regimes",
+      "claims": [
+        "MT11-EXTENSION-SYNTAX"
+      ]
     }
   ],
   "context_resolutions": [
@@ -6707,6 +6955,33 @@
       "antecedent_passage": "preinterpretation-datatype",
       "resolved_meaning": "The datatype, RDF and RDFS cases sketched in this paragraph, together with the preceding simple case.",
       "inference": "Completion now preserves all old-assignment triple and graph truth, and ordinary graph satisfaction in both directions. A checked custom-datatype example separates this from generalized existential graph satisfaction: new resource membership can enable a predicate blank. The proposed weakened conditions, not the printed source text, are held fixed while this scope question is reviewed.",
+      "review": "pending"
+    },
+    {
+      "claim_id": "MT11-EXTENSION-REGIME",
+      "passage": "extension-regime",
+      "source_phrase": "such set of semantic assumptions",
+      "antecedent_passage": "extension-context",
+      "resolved_meaning": "The additional vocabulary meanings and semantic assumptions introduced in the preceding paragraph.",
+      "inference": "Represent a fixed set of model conditions while retaining the existing RDF truth relation. References to OWL and RIF motivate possible extensions but do not supply a proved compatibility bridge.",
+      "review": "pending"
+    },
+    {
+      "claim_id": "MT11-EXTENSION-SYNTAX",
+      "passage": "extension-syntax",
+      "source_phrase": "In such cases",
+      "antecedent_passage": "extension-syntax",
+      "resolved_meaning": "Cases where an extension imposes additional syntactic restrictions on RDF graphs.",
+      "inference": "A truth-preserving graph operation need not preserve that separate admission predicate. The required-triple example exhibits deletion of the required assertion.",
+      "review": "pending"
+    },
+    {
+      "claim_id": "MT11-EXTENSION-MONOTONICITY",
+      "passage": "extension-monotonicity",
+      "source_phrase": "any syntactic conditions of the extension",
+      "antecedent_passage": "extension-syntax",
+      "resolved_meaning": "The optional additional graph restrictions described in the preceding paragraph, applied to the premise and conclusion being compared.",
+      "inference": "Require both admission proofs before constructing the entailment judgement, avoiding vacuous success on an illegal graph.",
       "review": "pending"
     }
   ]
