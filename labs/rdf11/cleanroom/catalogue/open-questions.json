@@ -253,6 +253,38 @@
       "review_question": "Can a lean graph with infinitely many occurring blanks admit a proper self-instance under the stated definitions? What justifies the printed proof's strict-subgraph step without finiteness?",
       "implementation_policy": "Keep the finite-blank hypothesis explicit and the unrestricted source statement open. Do not redefine LeanGraph or ProperInstance, label the non-lean example a counterexample to the theorem, or infer an erratum.",
       "review_status": "pending_expert_review"
+    },
+    {
+      "id": "Q-DATATYPE-PREINTERPRETATION-ZERO-BOUND",
+      "status": "zero_bound_conflict_checked_preinterpretation_scope_needs_expert_review",
+      "not_a_declared_erratum": true,
+      "claim_ids": [
+        "MT11-FINITE-DATATYPE-PREINTERPRETATION",
+        "MT11-DATATYPE-PREINTERPRETATION-CONDITIONS",
+        "MT11-DATATYPE-PREINTERPRETATION-SATISFIABILITY",
+        "MT11-SIMPLE-IR"
+      ],
+      "passage_ids": [
+        "preinterpretation-datatype",
+        "preinterpretation-simple",
+        "interpretation"
+      ],
+      "summary": "For G=E=the empty graph, the exact name and blank counts are zero. Appendix B's printed (N+B)*(D+1) bound is therefore zero for every finite datatype count. Under the explicit section-5-faithful pre-interpretation definition, IR must be nonempty, so no such pre-model exists, while the empty graph is D-satisfiable.",
+      "lean": [
+        "RDF11.FiniteDatatypeModel.empty_comparison_counts",
+        "RDF11.FiniteDatatypeModel.resource_enumeration_pos",
+        "RDF11.FiniteDatatypeModel.empty_comparison_printed_bound_conflict",
+        "RDF11.empty_d_satisfiable"
+      ],
+      "limitations": [
+        "The proof concerns the stated formula under our explicit nonempty-IR refinement of the informal sketch.",
+        "The source reader found no stated empty-graph exception; expert interpretation remains pending.",
+        "The checked N+B+1 weakened-model bound is a separate derived result, not an adopted correction to (N+B)*(D+1).",
+        "The conflict concerns the satisfiable empty case, not an exhibited failure of a nonempty-graph datatype bound or an entailment countermodel."
+      ],
+      "review_question": "Is an empty-comparison exception, an extra resource, an augmented vocabulary, or a different pre-interpretation convention intended? Which reading should be adopted while preserving the printed source?",
+      "implementation_policy": "Preserve the original formula, keep its unrestricted mapping partial, and display the checked conflict separately. Do not silently replace the bound or claim full datatype completion.",
+      "review_status": "pending_expert_review"
     }
   ]
 }

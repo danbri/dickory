@@ -1,6 +1,7 @@
 import RDF11.FiniteInstances
 import RDF11.SkolemLifting
 import RDF11.FiniteSimpleModels
+import RDF11.FiniteDatatypeModels
 
 /-!
 # Headline statements for RDF 1.1 Semantics review
@@ -84,5 +85,11 @@ Appendix B https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#finite_interpretati
 N counts the union vocabulary; B counts the union of occurring blank identities.
 The completed interpretation maps all names; its active domain is bounded. -/
 theorem finite_simple_countermodel_bound (datatype : Literal → Iri) (G E : GeneralizedGraph Iri Literal B) (hG : FiniteGraph G) (hE : FiniteGraph E) (h : ¬ SimplyEntails.{u} G E) : ∃ (v : Enumeration (Set.union (G.vocabulary datatype) (E.vocabulary datatype))) (b : Enumeration (Set.union G.hasBlank E.hasBlank)) (U : Type u) (I : SimpleInterpretation Iri Literal U), I.BoundedDomain (v.triples.length + b.triples.length + 1) ∧ I.Satisfies G ∧ ¬ I.Satisfies E := RDF11.finite_simple_countermodel datatype G E hG hE h
+
+/-- Datatype pre-interpretation satisfiability, a derived precise refinement.
+Appendix B https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#finite_interpretations
+Uses N+B+1 active objects and localized §7 conditions. This does not assert
+the printed (N+B)*(D+1) bound or entailment-preserving datatype completion. -/
+theorem datatype_preinterpretation_satisfiability (T : DatatypeTheory Iri Literal Value) (D : Set Iri) (V : Set (Name Iri Literal)) (S : Set B) (v : Enumeration V) (b : Enumeration S) (G : GeneralizedGraph Iri Literal B) (hG : Set.subset (G.vocabulary T.literalSyntax.datatype) V) (hB : Set.subset G.hasBlank S) : DSatisfiable.{u} T D G ↔ ∃ (U : Type u) (P : PreInterpretation V U), P.BoundedDomain (v.triples.length + b.triples.length + 1) ∧ PreInterpretation.DModel P T D ∧ P.Satisfies (G.restrictNames T.literalSyntax.datatype V hG) := RDF11.d_satisfiable_iff_bounded_preinterpretations T D v b G hG hB
 
 end RDF11.Statements

@@ -3,8 +3,8 @@
   "status": "draft_not_complete_coverage",
   "method": "Human-readable AI close reading; selectors locate already selected passages and do not extract assertions.",
   "source_inventory": "../ledger/semantics-inventory.json",
-  "inventory_sha256": "1314c6fb97cb68fcae2e3d45daafa3b331b267e89e0cc1b163d0fec1d13d05ff",
-  "mapping_input_sha256": "a3b6fc35d21f0ca8ddabcbca43d0db211114064d1ccf4fcfe6b6ce9b517c54a9",
+  "inventory_sha256": "ff4995b3131ea07fcb5adfd52e48054796b2bebef3d187db04f0e402b1d1fd58",
+  "mapping_input_sha256": "b91e46789e9aa48a3aa116fa1173338bc589f2f13f346aee801e78d8dc6eeab2",
   "documents": [
     {
       "id": "mt",
@@ -879,6 +879,7 @@
           "end": 64216,
           "refs": [
             "MT11-D-INTERPRETATION",
+            "MT11-DATATYPE-PREINTERPRETATION-CONDITIONS",
             "MT11-RDF-MODEL-EXISTENCE-CONSTRUCTION"
           ],
           "disposition": "claim_passage_pending_review"
@@ -895,6 +896,7 @@
           "start": 64305,
           "end": 64551,
           "refs": [
+            "MT11-DATATYPE-PREINTERPRETATION-CONDITIONS",
             "MT11-LANGSTRING-DENOTATION",
             "MT11-LANGSTRING-VALUE",
             "MT11-RDFS-LANGUAGE-LITERAL-COVERAGE"
@@ -2132,6 +2134,45 @@
         },
         {
           "start": 108632,
+          "end": 108634,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 108634,
+          "end": 109702,
+          "refs": [
+            "MT11-DATATYPE-PREINTERPRETATION-COMPLETION",
+            "MT11-DATATYPE-PREINTERPRETATION-CONDITIONS",
+            "MT11-DATATYPE-PREINTERPRETATION-SATISFIABILITY",
+            "MT11-FINITE-DATATYPE-PREINTERPRETATION",
+            "MT11-FINITE-RDF-RDFS-PRESERVATION"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 109702,
+          "end": 109704,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 109704,
+          "end": 109946,
+          "refs": [
+            "MT11-DATATYPE-PREINTERPRETATION-COMPLETION",
+            "MT11-DATATYPE-PREINTERPRETATION-SATISFIABILITY",
+            "MT11-FINITE-DATATYPE-PREINTERPRETATION",
+            "MT11-FINITE-RDF-RDFS-PRESERVATION"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 109946,
           "end": 111179,
           "refs": [
             "UNRESOLVED-mt"
@@ -3589,7 +3630,8 @@
       "end": 64216,
       "claims": [
         "MT11-D-INTERPRETATION",
-        "MT11-RDF-MODEL-EXISTENCE-CONSTRUCTION"
+        "MT11-RDF-MODEL-EXISTENCE-CONSTRUCTION",
+        "MT11-DATATYPE-PREINTERPRETATION-CONDITIONS"
       ],
       "slice_sha256": "006ec580af75f6a151eea9699af0fc8ed0c3acba3d0e16758ee3ae8e6f009a61",
       "locator_tag": "p",
@@ -3605,7 +3647,8 @@
       "claims": [
         "MT11-LANGSTRING-VALUE",
         "MT11-RDFS-LANGUAGE-LITERAL-COVERAGE",
-        "MT11-LANGSTRING-DENOTATION"
+        "MT11-LANGSTRING-DENOTATION",
+        "MT11-DATATYPE-PREINTERPRETATION-CONDITIONS"
       ],
       "slice_sha256": "6667247535ed048e544b58cfb36f822c2f11d58835a6b8320b5642bd81a31515",
       "locator_tag": "td",
@@ -5293,6 +5336,41 @@
         "MT11-SIMPLE-PREINTERPRETATION-COMPLETION"
       ],
       "slice_sha256": "4ba0aca1dda435e419eef7a1dbd9fe568ee219a9c3b1eeaee0c6bbec4de95c86",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "preinterpretation-datatype",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 108634,
+      "end": 109702,
+      "claims": [
+        "MT11-FINITE-DATATYPE-PREINTERPRETATION",
+        "MT11-DATATYPE-PREINTERPRETATION-CONDITIONS",
+        "MT11-DATATYPE-PREINTERPRETATION-SATISFIABILITY",
+        "MT11-DATATYPE-PREINTERPRETATION-COMPLETION",
+        "MT11-FINITE-RDF-RDFS-PRESERVATION"
+      ],
+      "slice_sha256": "e8b4736bf981019b098d5110a1d609217ffdb5ab5ed02089831e79996e4191a7",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "preinterpretation-entire-semantics",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 109704,
+      "end": 109946,
+      "claims": [
+        "MT11-FINITE-DATATYPE-PREINTERPRETATION",
+        "MT11-DATATYPE-PREINTERPRETATION-SATISFIABILITY",
+        "MT11-DATATYPE-PREINTERPRETATION-COMPLETION",
+        "MT11-FINITE-RDF-RDFS-PRESERVATION"
+      ],
+      "slice_sha256": "2bde57fd92a20d725d7a9d4119117ea0d23fad5c0286948b0761980e2f88e2e0",
       "locator_tag": "p",
       "review": "pending",
       "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
@@ -13924,11 +14002,63 @@
         "formal_proof": "unassessed",
         "test_mapping": "unassessed"
       },
-      "formalization_note": "The cardinality D in the bound is not a multiplication of the datatype-IRI set; finite datatype-set assumptions must be explicit.",
-      "cleanroom_mapping": null,
-      "passages": [],
+      "formalization_note": "Localized datatype conditions now admit an N+B+1 active-domain compression, a full-to-weakened countermodel theorem and bounded satisfiability equivalence. This is partial evidence for the printed (N+B)*(D+1) claim, not that formula or entailment equivalence. For empty G and E the printed bound is zero for every finite datatype count, incompatible with the section-5 nonempty-IR refinement; an explicit theorem records this boundary and empty-graph D-satisfiability. No source correction is adopted. The numerical D must be distinguished from the recognized-IRI set; counting aliases and datatype identities is an external scope question.",
+      "review_questions": [
+        "Q-DATATYPE-PREINTERPRETATION-ZERO-BOUND"
+      ],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-FINITE-DATATYPE-PREINTERPRETATION",
+        "relation": "partial_theorem",
+        "symbol_linked_english": "FiniteDatatypeModel.compress reuses the simple support construction and retains local datatype conditions with the same ValueRealization. finite_d_pre_countermodel turns full D-nonentailment into a bounded weakened countermodel, with exact comparison name/blank enumerations. The checked bound is N+B+1 on IR union IP. empty_comparison_printed_bound_conflict separately exposes the zero case of the printed (N+B)*(d+1) formula.",
+        "bindings": [
+          {
+            "symbol": "FiniteDatatypeModel.compress",
+            "lean": "RDF11.FiniteDatatypeModel.compress"
+          },
+          {
+            "symbol": "bounded_d_pre_countermodel",
+            "lean": "RDF11.bounded_d_pre_countermodel"
+          },
+          {
+            "symbol": "finite_d_pre_countermodel",
+            "lean": "RDF11.finite_d_pre_countermodel"
+          },
+          {
+            "symbol": "d_entailment_of_bounded_preinterpretations",
+            "lean": "RDF11.d_entailment_of_bounded_preinterpretations"
+          },
+          {
+            "symbol": "SimpleInterpretation.BoundedDomain.resources",
+            "lean": "RDF11.SimpleInterpretation.BoundedDomain.resources"
+          },
+          {
+            "symbol": "FiniteDatatypeModel.resource_enumeration_pos",
+            "lean": "RDF11.FiniteDatatypeModel.resource_enumeration_pos"
+          },
+          {
+            "symbol": "FiniteDatatypeModel.no_zero_resource_bound",
+            "lean": "RDF11.FiniteDatatypeModel.no_zero_resource_bound"
+          },
+          {
+            "symbol": "FiniteDatatypeModel.empty_comparison_counts",
+            "lean": "RDF11.FiniteDatatypeModel.empty_comparison_counts"
+          },
+          {
+            "symbol": "FiniteDatatypeModel.empty_comparison_printed_bound_conflict",
+            "lean": "RDF11.FiniteDatatypeModel.empty_comparison_printed_bound_conflict"
+          }
+        ],
+        "limitations": "Only the full-to-weakened countermodel direction is proved. Universal validity over the bounded weak models is sufficient for full D-entailment; the converse and a truth-preserving datatype completion are not established. N+B+1 is not the printed multiplicative bound. The empty-comparison conflict is relative to retaining section 5 nonempty IR and is pending source review, not a declared erratum. The compression permits arbitrary recognized-IRI sets and does not enumerate them or prove effective search.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "preinterpretation-datatype",
+        "preinterpretation-entire-semantics"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-FINITE-RDF-RDFS-PRESERVATION",
@@ -13953,7 +14083,10 @@
       },
       "formalization_note": "Do not replace global datatype value-space conditions by finite observed values without the stated extension/preservation argument.",
       "cleanroom_mapping": null,
-      "passages": [],
+      "passages": [
+        "preinterpretation-datatype",
+        "preinterpretation-entire-semantics"
+      ],
       "extraction_review": "pending",
       "formalization_review": "not_started"
     },
@@ -15711,6 +15844,201 @@
       ],
       "extraction_review": "pending",
       "formalization_review": "pending"
+    },
+    {
+      "id": "MT11-DATATYPE-PREINTERPRETATION-CONDITIONS",
+      "section": "B",
+      "anchor": "finite_interpretations",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#finite_interpretations",
+      "category": "definition",
+      "source_status": "informative",
+      "assertion_basis": "explicit",
+      "paraphrase": "For datatype pre-interpretations, literal-value obligations are weakened to the literals occurring in the comparison vocabulary, retaining their recognized datatype meanings.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-PREINTERPRETATION",
+        "MT11-D-INTERPRETATION",
+        "MT11-DATATYPE-IDENTIFICATION-FIXED",
+        "MT11-LANGSTRING-DENOTATION"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "A precise partial mapping of the sketch: reuse section 5 on vocabulary subtypes, fix recognized local IRI denotations, and impose section 7 language and ordinary evaluation only on vocabulary literals. The external datatype theory, aliases and undefined ill-typed literals remain unchanged. With all names present these conditions are proved equivalent to full DConditions. Fidelity of this chosen weakening remains under review.",
+      "split_from": "MT11-FINITE-DATATYPE-PREINTERPRETATION",
+      "cleanroom_mapping": {
+        "claim_id": "MT11-DATATYPE-PREINTERPRETATION-CONDITIONS",
+        "relation": "partial_definition",
+        "symbol_linked_english": "PreInterpretation.DConditions retains fixed recognized_denotation for vocabulary IRIs and the language/ordinary literal rows for VocabularyLiteral V. conditions_of_full restricts full section-7 conditions; conditions_full_iff proves exact recovery when V includes every name. conditions_domainRestriction retains these localized obligations under the existing supported IR/IP restriction.",
+        "bindings": [
+          {
+            "symbol": "PreInterpretation.DConditions",
+            "lean": "RDF11.PreInterpretation.DConditions"
+          },
+          {
+            "symbol": "PreInterpretation.DConditions.recognized_denotation",
+            "lean": "RDF11.PreInterpretation.DConditions.recognized_denotation"
+          },
+          {
+            "symbol": "PreInterpretation.DConditions.language",
+            "lean": "RDF11.PreInterpretation.DConditions.language"
+          },
+          {
+            "symbol": "PreInterpretation.DConditions.ordinary",
+            "lean": "RDF11.PreInterpretation.DConditions.ordinary"
+          },
+          {
+            "symbol": "PreInterpretation.DModel",
+            "lean": "RDF11.PreInterpretation.DModel"
+          },
+          {
+            "symbol": "PreInterpretation.conditions_of_full",
+            "lean": "RDF11.PreInterpretation.conditions_of_full"
+          },
+          {
+            "symbol": "PreInterpretation.conditions_full_iff",
+            "lean": "RDF11.PreInterpretation.conditions_full_iff"
+          },
+          {
+            "symbol": "PreInterpretation.conditions_empty",
+            "lean": "RDF11.PreInterpretation.conditions_empty"
+          },
+          {
+            "symbol": "PreInterpretation.recognized_aliases",
+            "lean": "RDF11.PreInterpretation.recognized_aliases"
+          },
+          {
+            "symbol": "PreInterpretation.illTyped_undefined",
+            "lean": "RDF11.PreInterpretation.illTyped_undefined"
+          },
+          {
+            "symbol": "PreInterpretation.conditions_domainRestriction",
+            "lean": "RDF11.PreInterpretation.conditions_domainRestriction"
+          },
+          {
+            "symbol": "SimpleInterpretation.DomainRestriction.literalValue_iff",
+            "lean": "RDF11.SimpleInterpretation.DomainRestriction.literalValue_iff"
+          },
+          {
+            "symbol": "SimpleInterpretation.DomainRestriction.literal_undefined_iff",
+            "lean": "RDF11.SimpleInterpretation.DomainRestriction.literal_undefined_iff"
+          }
+        ],
+        "limitations": "This is an explicit precise refinement of an informative sketch using normative section 5 IR/IP typing and partial IL. Only local names/literals constrain denotation; global datatype identities, L2V and language pair values remain external fixed parameters. ValueRealization may describe values outside the active IR/IP domain without requiring their membership. No full datatype completion follows from the definition. Concrete datatype correspondence and expert review remain open.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "d-interpretation",
+        "d-language",
+        "preinterpretation-datatype"
+      ],
+      "extraction_review": "pending",
+      "formalization_review": "pending"
+    },
+    {
+      "id": "MT11-DATATYPE-PREINTERPRETATION-SATISFIABILITY",
+      "section": "B",
+      "anchor": "finite_interpretations",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#finite_interpretations",
+      "category": "mathematical_consequence",
+      "source_status": "informative",
+      "assertion_basis": "derived",
+      "paraphrase": "Under the localized datatype conditions, a graph whose vocabulary and blank support have finite enumerations is D-satisfiable exactly when its vocabulary restriction has a weakened pre-model with at most N+B+1 active objects.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-DATATYPE-PREINTERPRETATION-CONDITIONS",
+        "MT11-FINITE-SIMPLE-PREINTERPRETATION",
+        "MT11-ILL-TYPED-UNSATISFIABILITY"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "Derived precise result connected to Appendix B, not the printed multiplicative bound. The reverse direction constructs a full D-model from absence of ill-typed occurring literals; it does not complete the same pre-interpretation or preserve other graph truths. Entailment equivalence remains open.",
+      "split_from": "MT11-FINITE-DATATYPE-PREINTERPRETATION",
+      "cleanroom_mapping": {
+        "claim_id": "MT11-DATATYPE-PREINTERPRETATION-SATISFIABILITY",
+        "relation": "theorem",
+        "symbol_linked_english": "d_satisfiable_iff_bounded_preinterpretations proves both directions between DSatisfiable and existence of a PreInterpretation.DModel with at most N+B+1 active objects satisfying the restricted graph. The forward direction compresses a full model; the reverse uses d_satisfiable_of_preinterpretation to rule out ill-typed occurring literals, then reuses the full DatatypeModel construction.",
+        "bindings": [
+          {
+            "symbol": "Statements.datatype_preinterpretation_satisfiability",
+            "lean": "RDF11.Statements.datatype_preinterpretation_satisfiability"
+          },
+          {
+            "symbol": "d_satisfiable_iff_bounded_preinterpretations",
+            "lean": "RDF11.d_satisfiable_iff_bounded_preinterpretations"
+          },
+          {
+            "symbol": "bounded_d_pre_model_of_satisfiable",
+            "lean": "RDF11.bounded_d_pre_model_of_satisfiable"
+          },
+          {
+            "symbol": "d_satisfiable_of_preinterpretation",
+            "lean": "RDF11.d_satisfiable_of_preinterpretation"
+          },
+          {
+            "symbol": "GeneralizedTriple.literal_in_names",
+            "lean": "RDF11.GeneralizedTriple.literal_in_names"
+          },
+          {
+            "symbol": "Term.literal_in_names",
+            "lean": "RDF11.Term.literal_in_names"
+          },
+          {
+            "symbol": "d_satisfiable_iff_no_illTyped",
+            "lean": "RDF11.d_satisfiable_iff_no_illTyped"
+          }
+        ],
+        "limitations": "This is a derived theorem for the explicitly chosen localized conditions and N+B+1 bound, including generalized graphs and arbitrary recognized sets. The original comparison pre-model is not completed in the reverse direction: a new full D-model witnesses satisfiability. Other graph truths and falsities need not be preserved, so this does not establish entailment equivalence or the printed datatype bound. Concrete terms/datatypes, source fidelity and product refinement remain external.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "preinterpretation-datatype",
+        "preinterpretation-entire-semantics"
+      ],
+      "extraction_review": "pending",
+      "formalization_review": "pending"
+    },
+    {
+      "id": "MT11-DATATYPE-PREINTERPRETATION-COMPLETION",
+      "section": "B",
+      "anchor": "finite_interpretations",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#finite_interpretations",
+      "category": "mathematical_consequence",
+      "source_status": "informative",
+      "assertion_basis": "explicit",
+      "paraphrase": "The datatype case of Appendix B claims that a pre-interpretation can be extended to a full interpretation of the appropriate kind while preserving the relevant triple truth values, within the sketch of unchanged entailments.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-DATATYPE-PREINTERPRETATION-CONDITIONS",
+        "MT11-D-INTERPRETATION",
+        "MT11-PREINTERPRETATION"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "Unmapped. Restoring globally required literal values can enlarge IR, unlike simple name completion. Whole-graph satisfaction preservation requires a shared assignment argument; equality of individual ground triple truth is insufficient. Generalized predicate blanks need explicit attention when previously property-only values enter IR. No completed counterexample or general completion theorem is asserted.",
+      "split_from": "MT11-FINITE-DATATYPE-PREINTERPRETATION",
+      "cleanroom_mapping": null,
+      "passages": [
+        "preinterpretation-datatype",
+        "preinterpretation-entire-semantics"
+      ],
+      "extraction_review": "pending",
+      "formalization_review": "not_started"
     }
   ],
   "context_resolutions": [
@@ -15919,6 +16247,33 @@
       "antecedent_passage": "preinterpretation-simple",
       "resolved_meaning": "Full simple interpretations obtained by completing the specified pre-interpretation on the selected comparison vocabulary.",
       "inference": "Truth preservation belongs to name-domain completion. The preceding compression to a bounded domain retains the premise witness and conclusion falsity; it need not retain every original positive witness.",
+      "review": "pending"
+    },
+    {
+      "claim_id": "MT11-DATATYPE-PREINTERPRETATION-CONDITIONS",
+      "passage": "preinterpretation-datatype",
+      "source_phrase": "weakening the semantic conditions for datatyped literals",
+      "antecedent_passage": "d-interpretation",
+      "resolved_meaning": "Localize the fixed section-7 literal evaluation conditions to literals present in the comparison vocabulary, retaining fixed meanings for recognized datatype names.",
+      "inference": "This selected precise refinement is explicitly reviewed; it neither changes the external datatype theory nor requires all datatype values to be in the local resource universe.",
+      "review": "pending"
+    },
+    {
+      "claim_id": "MT11-FINITE-DATATYPE-PREINTERPRETATION",
+      "passage": "preinterpretation-datatype",
+      "source_phrase": "where D is the number of recognized datatypes",
+      "antecedent_passage": "d-recognition",
+      "resolved_meaning": "The multiplier uses a finite cardinality, unlike the set of recognized IRIs denoted D in section 7.",
+      "inference": "Aliases may make counting IRIs differ from counting distinct datatype identities. The new zero-bound certificate holds for every natural d; it does not choose between those counts or alter the printed formula.",
+      "review": "pending"
+    },
+    {
+      "claim_id": "MT11-DATATYPE-PREINTERPRETATION-COMPLETION",
+      "passage": "preinterpretation-datatype",
+      "source_phrase": "In all these cases",
+      "antecedent_passage": "preinterpretation-datatype",
+      "resolved_meaning": "The datatype, RDF and RDFS cases sketched in this paragraph, together with the preceding simple case.",
+      "inference": "The datatype completion obligation is now separated from the bounded reduction and from existence of some full model for a satisfiable graph. Enlargement of IR requires a separate graph-satisfaction argument, particularly for generalized predicate blanks.",
       "review": "pending"
     }
   ],

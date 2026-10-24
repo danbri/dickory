@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "status": "frozen_seventeenth_increment_finite_simple_models_not_expert_approved",
+  "status": "frozen_eighteenth_increment_datatype_preinterpretations_not_expert_approved",
   "lean_version": "4.33.1",
   "allowed_axioms": [
     "propext",
@@ -571,6 +571,21 @@
         "MT11-TRIPLE-TRUTH",
         "MT11-GRAPH-TRUTH"
       ]
+    },
+    {
+      "id": "SUPPORT-DATATYPE-PREINTERPRETATIONS",
+      "purpose": "Localized fixed datatype conditions and supported restriction; N+B+1 weakened countermodels, bounded satisfiability equivalence, and the checked empty-comparison printed-bound conflict under nonempty IR. Does not certify datatype entailment completion or the printed multiplicative bound.",
+      "requires": [
+        "MT11-DATATYPE-PREINTERPRETATION-CONDITIONS",
+        "MT11-FINITE-DATATYPE-PREINTERPRETATION",
+        "MT11-DATATYPE-PREINTERPRETATION-SATISFIABILITY",
+        "MT11-D-INTERPRETATION",
+        "MT11-DATATYPE-IDENTIFICATION-FIXED",
+        "MT11-ILL-TYPED-UNSATISFIABILITY",
+        "MT11-FINITE-SIMPLE-PREINTERPRETATION",
+        "MT11-SIMPLE-IR",
+        "MT11-NAMES-VOCABULARIES"
+      ]
     }
   ],
   "files": [
@@ -597,14 +612,14 @@
     },
     {
       "path": "Audit/Snapshot.lean",
-      "sha256": "7d1f589b60470ebdf7bf51bca1c0f2dd00329e3a597d9cf6d28abb7b695384a6",
+      "sha256": "5952fb662975b77ccc1d7ab27f93e07dc93c878f5056ac2aa518053730c0613f",
       "role": "formal_source",
       "lifecycle": "active",
       "review": "pending_expert_review"
     },
     {
       "path": "RDF11.lean",
-      "sha256": "608c80920d64bd535487cef7869bd3e977e1c38ed8b8082ae5d5b2092f9e5ec1",
+      "sha256": "eea9716d752060bfa822a367ed032e076a1774b7f0f1442499bdc8c4b37b770e",
       "role": "formal_source",
       "lifecycle": "active",
       "review": "pending_expert_review"
@@ -768,7 +783,7 @@
       "role": "formal_source",
       "lifecycle": "active",
       "review": "pending_expert_review",
-      "sha256": "209b3e8ee78a11b78fb8655a56c8df92a89a665decfb08d2aea0298b38400446"
+      "sha256": "6356722ce619335c4f1062111e0b441bf363ae218b2984ab4276d9112ac7f07b"
     },
     {
       "path": "RDF11/EntailmentClosure.lean",
@@ -997,6 +1012,20 @@
     {
       "path": "RDF11/FiniteSimpleModels.lean",
       "sha256": "204e5dea8046e2245f3779fb826cdee1656f75647d2c7327fe43159137963b18",
+      "role": "formal_source",
+      "lifecycle": "active",
+      "review": "pending_expert_review"
+    },
+    {
+      "path": "RDF11/DatatypePreinterpretations.lean",
+      "sha256": "66f929fd153026f64797ddfdbaf66d89aef8becf6af453af5c5e8cca944c3590",
+      "role": "formal_source",
+      "lifecycle": "active",
+      "review": "pending_expert_review"
+    },
+    {
+      "path": "RDF11/FiniteDatatypeModels.lean",
+      "sha256": "0630a468b769929e7acdc02087cb88fbc45e6a2718ccd7035fe6ebc87cc2a025",
       "role": "formal_source",
       "lifecycle": "active",
       "review": "pending_expert_review"
@@ -13985,7 +14014,8 @@
       "role": "source_mapping",
       "grounds": [
         "SUPPORT-DATATYPE-MODELS",
-        "MT11-SIMPLE-D-INCONSISTENCY-CHARACTERIZATION"
+        "MT11-SIMPLE-D-INCONSISTENCY-CHARACTERIZATION",
+        "MT11-DATATYPE-PREINTERPRETATION-SATISFIABILITY"
       ],
       "parent_declaration_if_applicable": null,
       "review": "pending_expert_review"
@@ -22856,7 +22886,8 @@
       "role": "proof_support",
       "grounds": [
         "SUPPORT-FINITE-SIMPLE-MODELS",
-        "MT11-FINITE-SIMPLE-PREINTERPRETATION"
+        "MT11-FINITE-SIMPLE-PREINTERPRETATION",
+        "MT11-FINITE-DATATYPE-PREINTERPRETATION"
       ],
       "parent_declaration_if_applicable": "RDF11.SimpleInterpretation.BoundedDomain",
       "review": "pending_expert_review"
@@ -23528,6 +23559,525 @@
         "SUPPORT-FINITE-SIMPLE-MODELS"
       ],
       "parent_declaration_if_applicable": "RDF11.SimpleInterpretation.DomainRestriction.lowerAssignment.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.FiniteDatatypeModel.compress",
+      "module": "RDF11.FiniteDatatypeModels",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B : Type} {U : Type u} {V : RDF11.Set (RDF11.Name Iri Literal)} {S : RDF11.Set B}\n  (I : RDF11.SimpleInterpretation Iri Literal U) (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (ρ : RDF11.ValueRealization Value U),\n  I.DConditions T D ρ →\n    ∀ (v : RDF11.Enumeration V) (b : RDF11.Enumeration S) (G : RDF11.GeneralizedGraph Iri Literal B)\n      (hV : (RDF11.GeneralizedGraph.vocabulary T.literalSyntax.datatype G).subset V),\n      RDF11.Set.subset G.hasBlank S →\n        I.Satisfies G →\n          ∃ P,\n            RDF11.SimpleInterpretation.BoundedDomain P (v.triples.length + b.triples.length + 1) ∧\n              P.DConditions T D ρ ∧\n                RDF11.SimpleInterpretation.Satisfies P\n                    (RDF11.GeneralizedGraph.restrictNames T.literalSyntax.datatype V G hV) ∧\n                  ∀ (C : Type) (E : RDF11.GeneralizedGraph Iri Literal C)\n                    (hE : (RDF11.GeneralizedGraph.vocabulary T.literalSyntax.datatype E).subset V),\n                    RDF11.SimpleInterpretation.Satisfies P\n                        (RDF11.GeneralizedGraph.restrictNames T.literalSyntax.datatype V E hE) →\n                      I.Satisfies E",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-PREINTERPRETATIONS",
+        "MT11-FINITE-DATATYPE-PREINTERPRETATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.FiniteDatatypeModel.empty_comparison_counts",
+      "module": "RDF11.FiniteDatatypeModels",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri B : Type} (datatype : Literal → Iri)\n  (v :\n    RDF11.Enumeration\n      ((RDF11.GeneralizedGraph.vocabulary datatype RDF11.Set.empty).union\n        (RDF11.GeneralizedGraph.vocabulary datatype RDF11.Set.empty)))\n  (b :\n    RDF11.Enumeration\n      (RDF11.Set.union (RDF11.GeneralizedGraph.hasBlank RDF11.Set.empty)\n        (RDF11.GeneralizedGraph.hasBlank RDF11.Set.empty))),\n  v.triples.length = 0 ∧ b.triples.length = 0",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-PREINTERPRETATIONS",
+        "MT11-FINITE-DATATYPE-PREINTERPRETATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.FiniteDatatypeModel.empty_comparison_printed_bound_conflict",
+      "module": "RDF11.FiniteDatatypeModels",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri) (d : Nat)\n  (v :\n    RDF11.Enumeration\n      ((RDF11.GeneralizedGraph.vocabulary T.literalSyntax.datatype RDF11.Set.empty).union\n        (RDF11.GeneralizedGraph.vocabulary T.literalSyntax.datatype RDF11.Set.empty)))\n  (b :\n    RDF11.Enumeration\n      (RDF11.Set.union (RDF11.GeneralizedGraph.hasBlank RDF11.Set.empty)\n        (RDF11.GeneralizedGraph.hasBlank RDF11.Set.empty))),\n  RDF11.DSatisfiable T D RDF11.Set.empty ∧ ¬∃ U P e, e.triples.length ≤ (v.triples.length + b.triples.length) * (d + 1)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-PREINTERPRETATIONS",
+        "MT11-FINITE-DATATYPE-PREINTERPRETATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.FiniteDatatypeModel.no_zero_resource_bound",
+      "module": "RDF11.FiniteDatatypeModels",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u_1} (I : RDF11.SimpleInterpretation Iri Literal U), ¬∃ e, e.triples.length ≤ 0",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-PREINTERPRETATIONS",
+        "MT11-FINITE-DATATYPE-PREINTERPRETATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.FiniteDatatypeModel.resource_enumeration_pos",
+      "module": "RDF11.FiniteDatatypeModels",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u_1} (I : RDF11.SimpleInterpretation Iri Literal U) (e : RDF11.Enumeration I.IR),\n  0 < e.triples.length",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-PREINTERPRETATIONS",
+        "MT11-FINITE-DATATYPE-PREINTERPRETATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GeneralizedTriple.literal_in_names",
+      "module": "RDF11.FiniteDatatypeModels",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri B : Type} (datatype : Literal → Iri) (t : RDF11.GeneralizedTriple Iri Literal B) (l : Literal),\n  RDF11.GeneralizedTriple.hasLiteral l t → RDF11.GeneralizedTriple.names datatype t (Sum.inr l)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-PREINTERPRETATIONS",
+        "MT11-DATATYPE-PREINTERPRETATION-SATISFIABILITY"
+      ],
+      "parent_declaration_if_applicable": "RDF11.GeneralizedTriple",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.PreInterpretation.DConditions",
+      "module": "RDF11.DatatypePreinterpretations",
+      "kind": "inductive",
+      "type": "{Iri Literal Value : Type} →\n  {U : Type u} →\n    {V : RDF11.Set (RDF11.Name Iri Literal)} →\n      RDF11.PreInterpretation V U →\n        RDF11.DatatypeTheory Iri Literal Value → RDF11.Set Iri → RDF11.ValueRealization Value U → Prop",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-PREINTERPRETATIONS",
+        "MT11-DATATYPE-PREINTERPRETATION-CONDITIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.PreInterpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.PreInterpretation.DConditions.casesOn",
+      "module": "RDF11.DatatypePreinterpretations",
+      "kind": "definition",
+      "type": "{Iri Literal Value : Type} →\n  {U : Type u} →\n    {V : RDF11.Set (RDF11.Name Iri Literal)} →\n      {P : RDF11.PreInterpretation V U} →\n        {T : RDF11.DatatypeTheory Iri Literal Value} →\n          {D : RDF11.Set Iri} →\n            {ρ : RDF11.ValueRealization Value U} →\n              {motive : P.DConditions T D ρ → Sort u_1} →\n                (t : P.DConditions T D ρ) →\n                  ((recognized_denotation :\n                        ∀ (a : RDF11.VocabularyIRI V), D a.val → ρ.value (T.identified a.val) = some (P.IS a).val) →\n                      (language :\n                          ∀ (l : RDF11.VocabularyLiteral V) (tag : String),\n                            D T.literalSyntax.langString →\n                              T.literalSyntax.language l.val = some tag →\n                                RDF11.SimpleInterpretation.LiteralValue P ρ l\n                                  (T.languageValue (T.literalSyntax.lexical l.val) (RDF11.asciiLower tag))) →\n                        (ordinary :\n                            ∀ (l : RDF11.VocabularyLiteral V),\n                              D (T.literalSyntax.datatype l.val) →\n                                T.literalSyntax.datatype l.val ≠ T.literalSyntax.langString →\n                                  match\n                                    T.L2V (T.identified (T.literalSyntax.datatype l.val))\n                                      (T.literalSyntax.lexical l.val) with\n                                  | none => P.IL l = none\n                                  | some v => RDF11.SimpleInterpretation.LiteralValue P ρ l v) →\n                          motive ⋯) →\n                    motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-PREINTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.PreInterpretation.DConditions",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.PreInterpretation.DConditions.language",
+      "module": "RDF11.DatatypePreinterpretations",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} {U : Type u} {V : RDF11.Set (RDF11.Name Iri Literal)} {P : RDF11.PreInterpretation V U}\n  {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri} {ρ : RDF11.ValueRealization Value U},\n  P.DConditions T D ρ →\n    ∀ (l : RDF11.VocabularyLiteral V) (tag : String),\n      D T.literalSyntax.langString →\n        T.literalSyntax.language l.val = some tag →\n          RDF11.SimpleInterpretation.LiteralValue P ρ l\n            (T.languageValue (T.literalSyntax.lexical l.val) (RDF11.asciiLower tag))",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-PREINTERPRETATIONS",
+        "MT11-DATATYPE-PREINTERPRETATION-CONDITIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.PreInterpretation.DConditions",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.PreInterpretation.DConditions.match_1",
+      "module": "RDF11.DatatypePreinterpretations",
+      "kind": "definition",
+      "type": "{Value : Type} →\n  (motive : Option Value → Sort u_1) →\n    (x : Option Value) → (Unit → motive none) → ((v : Value) → motive (some v)) → motive x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-PREINTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.PreInterpretation.DConditions",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.PreInterpretation.DConditions.mk",
+      "module": "RDF11.DatatypePreinterpretations",
+      "kind": "constructor",
+      "type": "∀ {Iri Literal Value : Type} {U : Type u} {V : RDF11.Set (RDF11.Name Iri Literal)} {P : RDF11.PreInterpretation V U}\n  {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri} {ρ : RDF11.ValueRealization Value U},\n  (∀ (a : RDF11.VocabularyIRI V), D a.val → ρ.value (T.identified a.val) = some (P.IS a).val) →\n    (∀ (l : RDF11.VocabularyLiteral V) (tag : String),\n        D T.literalSyntax.langString →\n          T.literalSyntax.language l.val = some tag →\n            RDF11.SimpleInterpretation.LiteralValue P ρ l\n              (T.languageValue (T.literalSyntax.lexical l.val) (RDF11.asciiLower tag))) →\n      (∀ (l : RDF11.VocabularyLiteral V),\n          D (T.literalSyntax.datatype l.val) →\n            T.literalSyntax.datatype l.val ≠ T.literalSyntax.langString →\n              match T.L2V (T.identified (T.literalSyntax.datatype l.val)) (T.literalSyntax.lexical l.val) with\n              | none => P.IL l = none\n              | some v => RDF11.SimpleInterpretation.LiteralValue P ρ l v) →\n        P.DConditions T D ρ",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-PREINTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.PreInterpretation.DConditions",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.PreInterpretation.DConditions.mk._flat_ctor",
+      "module": "RDF11.DatatypePreinterpretations",
+      "kind": "definition",
+      "type": "∀ {Iri Literal Value : Type} {U : Type u} {V : RDF11.Set (RDF11.Name Iri Literal)} {P : RDF11.PreInterpretation V U}\n  {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri} {ρ : RDF11.ValueRealization Value U},\n  (∀ (a : RDF11.VocabularyIRI V), D a.val → ρ.value (T.identified a.val) = some (P.IS a).val) →\n    (∀ (l : RDF11.VocabularyLiteral V) (tag : String),\n        D T.literalSyntax.langString →\n          T.literalSyntax.language l.val = some tag →\n            RDF11.SimpleInterpretation.LiteralValue P ρ l\n              (T.languageValue (T.literalSyntax.lexical l.val) (RDF11.asciiLower tag))) →\n      (∀ (l : RDF11.VocabularyLiteral V),\n          D (T.literalSyntax.datatype l.val) →\n            T.literalSyntax.datatype l.val ≠ T.literalSyntax.langString →\n              match T.L2V (T.identified (T.literalSyntax.datatype l.val)) (T.literalSyntax.lexical l.val) with\n              | none => P.IL l = none\n              | some v => RDF11.SimpleInterpretation.LiteralValue P ρ l v) →\n        P.DConditions T D ρ",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-PREINTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.PreInterpretation.DConditions.mk",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.PreInterpretation.DConditions.ordinary",
+      "module": "RDF11.DatatypePreinterpretations",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} {U : Type u} {V : RDF11.Set (RDF11.Name Iri Literal)} {P : RDF11.PreInterpretation V U}\n  {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri} {ρ : RDF11.ValueRealization Value U},\n  P.DConditions T D ρ →\n    ∀ (l : RDF11.VocabularyLiteral V),\n      D (T.literalSyntax.datatype l.val) →\n        T.literalSyntax.datatype l.val ≠ T.literalSyntax.langString →\n          match T.L2V (T.identified (T.literalSyntax.datatype l.val)) (T.literalSyntax.lexical l.val) with\n          | none => P.IL l = none\n          | some v => RDF11.SimpleInterpretation.LiteralValue P ρ l v",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-PREINTERPRETATIONS",
+        "MT11-DATATYPE-PREINTERPRETATION-CONDITIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.PreInterpretation.DConditions",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.PreInterpretation.DConditions.rec",
+      "module": "RDF11.DatatypePreinterpretations",
+      "kind": "recursor",
+      "type": "{Iri Literal Value : Type} →\n  {U : Type u} →\n    {V : RDF11.Set (RDF11.Name Iri Literal)} →\n      {P : RDF11.PreInterpretation V U} →\n        {T : RDF11.DatatypeTheory Iri Literal Value} →\n          {D : RDF11.Set Iri} →\n            {ρ : RDF11.ValueRealization Value U} →\n              {motive : P.DConditions T D ρ → Sort u_1} →\n                ((recognized_denotation :\n                      ∀ (a : RDF11.VocabularyIRI V), D a.val → ρ.value (T.identified a.val) = some (P.IS a).val) →\n                    (language :\n                        ∀ (l : RDF11.VocabularyLiteral V) (tag : String),\n                          D T.literalSyntax.langString →\n                            T.literalSyntax.language l.val = some tag →\n                              RDF11.SimpleInterpretation.LiteralValue P ρ l\n                                (T.languageValue (T.literalSyntax.lexical l.val) (RDF11.asciiLower tag))) →\n                      (ordinary :\n                          ∀ (l : RDF11.VocabularyLiteral V),\n                            D (T.literalSyntax.datatype l.val) →\n                              T.literalSyntax.datatype l.val ≠ T.literalSyntax.langString →\n                                match\n                                  T.L2V (T.identified (T.literalSyntax.datatype l.val))\n                                    (T.literalSyntax.lexical l.val) with\n                                | none => P.IL l = none\n                                | some v => RDF11.SimpleInterpretation.LiteralValue P ρ l v) →\n                        motive ⋯) →\n                  (t : P.DConditions T D ρ) → motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-PREINTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.PreInterpretation.DConditions",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.PreInterpretation.DConditions.recOn",
+      "module": "RDF11.DatatypePreinterpretations",
+      "kind": "definition",
+      "type": "{Iri Literal Value : Type} →\n  {U : Type u} →\n    {V : RDF11.Set (RDF11.Name Iri Literal)} →\n      {P : RDF11.PreInterpretation V U} →\n        {T : RDF11.DatatypeTheory Iri Literal Value} →\n          {D : RDF11.Set Iri} →\n            {ρ : RDF11.ValueRealization Value U} →\n              {motive : P.DConditions T D ρ → Sort u_1} →\n                (t : P.DConditions T D ρ) →\n                  ((recognized_denotation :\n                        ∀ (a : RDF11.VocabularyIRI V), D a.val → ρ.value (T.identified a.val) = some (P.IS a).val) →\n                      (language :\n                          ∀ (l : RDF11.VocabularyLiteral V) (tag : String),\n                            D T.literalSyntax.langString →\n                              T.literalSyntax.language l.val = some tag →\n                                RDF11.SimpleInterpretation.LiteralValue P ρ l\n                                  (T.languageValue (T.literalSyntax.lexical l.val) (RDF11.asciiLower tag))) →\n                        (ordinary :\n                            ∀ (l : RDF11.VocabularyLiteral V),\n                              D (T.literalSyntax.datatype l.val) →\n                                T.literalSyntax.datatype l.val ≠ T.literalSyntax.langString →\n                                  match\n                                    T.L2V (T.identified (T.literalSyntax.datatype l.val))\n                                      (T.literalSyntax.lexical l.val) with\n                                  | none => P.IL l = none\n                                  | some v => RDF11.SimpleInterpretation.LiteralValue P ρ l v) →\n                          motive ⋯) →\n                    motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-PREINTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.PreInterpretation.DConditions",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.PreInterpretation.DConditions.recognized_denotation",
+      "module": "RDF11.DatatypePreinterpretations",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} {U : Type u} {V : RDF11.Set (RDF11.Name Iri Literal)} {P : RDF11.PreInterpretation V U}\n  {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri} {ρ : RDF11.ValueRealization Value U},\n  P.DConditions T D ρ → ∀ (a : RDF11.VocabularyIRI V), D a.val → ρ.value (T.identified a.val) = some (P.IS a).val",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-PREINTERPRETATIONS",
+        "MT11-DATATYPE-PREINTERPRETATION-CONDITIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.PreInterpretation.DConditions",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.PreInterpretation.DModel",
+      "module": "RDF11.DatatypePreinterpretations",
+      "kind": "definition",
+      "type": "{Iri Literal Value : Type} →\n  {U : Type u} →\n    {V : RDF11.Set (RDF11.Name Iri Literal)} →\n      RDF11.PreInterpretation V U → RDF11.DatatypeTheory Iri Literal Value → RDF11.Set Iri → Prop",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-PREINTERPRETATIONS",
+        "MT11-DATATYPE-PREINTERPRETATION-CONDITIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.PreInterpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.PreInterpretation.conditions_domainRestriction",
+      "module": "RDF11.DatatypePreinterpretations",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u} {V : RDF11.Set (RDF11.Name Iri Literal)} {Value : Type}\n  {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri} {ρ : RDF11.ValueRealization Value U}\n  (P : RDF11.PreInterpretation V U) (R : RDF11.SimpleInterpretation.DomainRestriction P),\n  P.DConditions T D ρ → RDF11.PreInterpretation.DConditions R.interpretation T D ρ",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-PREINTERPRETATIONS",
+        "MT11-DATATYPE-PREINTERPRETATION-CONDITIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.PreInterpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.PreInterpretation.conditions_empty",
+      "module": "RDF11.DatatypePreinterpretations",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} {U : Type u} {V : RDF11.Set (RDF11.Name Iri Literal)} (P : RDF11.PreInterpretation V U)\n  (T : RDF11.DatatypeTheory Iri Literal Value), P.DConditions T RDF11.Set.empty RDF11.ValueRealization.empty",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-PREINTERPRETATIONS",
+        "MT11-DATATYPE-PREINTERPRETATION-CONDITIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.PreInterpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.PreInterpretation.conditions_full_iff",
+      "module": "RDF11.DatatypePreinterpretations",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u} {V : RDF11.Set (RDF11.Name Iri Literal)} {Value : Type}\n  {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri} {ρ : RDF11.ValueRealization Value U}\n  (I : RDF11.SimpleInterpretation Iri Literal U),\n  (∀ (i : Iri), V (Sum.inl i)) →\n    (∀ (l : Literal), V (Sum.inr l)) →\n      (RDF11.PreInterpretation.DConditions (I.comapNames (fun i => i.val) fun l => l.val) T D ρ ↔ I.DConditions T D ρ)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-PREINTERPRETATIONS",
+        "MT11-DATATYPE-PREINTERPRETATION-CONDITIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.PreInterpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.PreInterpretation.conditions_of_full",
+      "module": "RDF11.DatatypePreinterpretations",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u} {V : RDF11.Set (RDF11.Name Iri Literal)} {Value : Type}\n  {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri} {ρ : RDF11.ValueRealization Value U}\n  (I : RDF11.SimpleInterpretation Iri Literal U),\n  I.DConditions T D ρ → RDF11.PreInterpretation.DConditions (I.comapNames (fun i => i.val) fun l => l.val) T D ρ",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-PREINTERPRETATIONS",
+        "MT11-DATATYPE-PREINTERPRETATION-CONDITIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.PreInterpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.PreInterpretation.illTyped_undefined",
+      "module": "RDF11.DatatypePreinterpretations",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u} {V : RDF11.Set (RDF11.Name Iri Literal)} {Value : Type}\n  {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri} {ρ : RDF11.ValueRealization Value U}\n  (P : RDF11.PreInterpretation V U),\n  P.DConditions T D ρ → ∀ (l : RDF11.VocabularyLiteral V), T.IllTyped D l.val → P.IL l = none",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-PREINTERPRETATIONS",
+        "MT11-DATATYPE-PREINTERPRETATION-CONDITIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.PreInterpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.PreInterpretation.recognized_aliases",
+      "module": "RDF11.DatatypePreinterpretations",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u} {V : RDF11.Set (RDF11.Name Iri Literal)} {Value : Type}\n  {T : RDF11.DatatypeTheory Iri Literal Value} {D : RDF11.Set Iri} {ρ : RDF11.ValueRealization Value U}\n  (P : RDF11.PreInterpretation V U),\n  P.DConditions T D ρ →\n    ∀ (a b : RDF11.VocabularyIRI V),\n      D a.val → D b.val → T.identified a.val = T.identified b.val → (P.IS a).val = (P.IS b).val",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-PREINTERPRETATIONS",
+        "MT11-DATATYPE-PREINTERPRETATION-CONDITIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.PreInterpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.DomainRestriction.literalValue_iff",
+      "module": "RDF11.DatatypePreinterpretations",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} {U : Type u} {I : RDF11.SimpleInterpretation Iri Literal U} (R : I.DomainRestriction)\n  (ρ : RDF11.ValueRealization Value U) (l : Literal) (v : Value),\n  R.interpretation.LiteralValue ρ l v ↔ I.LiteralValue ρ l v",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-PREINTERPRETATIONS",
+        "MT11-DATATYPE-PREINTERPRETATION-CONDITIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation.DomainRestriction",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.DomainRestriction.literal_undefined_iff",
+      "module": "RDF11.DatatypePreinterpretations",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u} {I : RDF11.SimpleInterpretation Iri Literal U} (R : I.DomainRestriction)\n  (l : Literal), R.interpretation.IL l = none ↔ I.IL l = none",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-PREINTERPRETATIONS",
+        "MT11-DATATYPE-PREINTERPRETATION-CONDITIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation.DomainRestriction",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.LiteralValue.eq_1",
+      "module": "RDF11.DatatypePreinterpretations",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u_1} {Value : Type} (I : RDF11.SimpleInterpretation Iri Literal U)\n  (ρ : RDF11.ValueRealization Value U) (l : Literal) (v : Value),\n  I.LiteralValue ρ l v = ∃ r, I.IL l = some r ∧ ρ.value v = some r.val",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-PREINTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation.LiteralValue",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Statements.datatype_preinterpretation_satisfiability",
+      "module": "RDF11.Statements",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B Value : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (V : RDF11.Set (RDF11.Name Iri Literal)) (S : RDF11.Set B) (v : RDF11.Enumeration V) (b : RDF11.Enumeration S)\n  (G : RDF11.GeneralizedGraph Iri Literal B)\n  (hG : (RDF11.GeneralizedGraph.vocabulary T.literalSyntax.datatype G).subset V),\n  RDF11.Set.subset G.hasBlank S →\n    (RDF11.DSatisfiable T D G ↔\n      ∃ U P,\n        RDF11.SimpleInterpretation.BoundedDomain P (v.triples.length + b.triples.length + 1) ∧\n          P.DModel T D ∧\n            RDF11.SimpleInterpretation.Satisfies P\n              (RDF11.GeneralizedGraph.restrictNames T.literalSyntax.datatype V G hG))",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-PREINTERPRETATIONS",
+        "MT11-DATATYPE-PREINTERPRETATION-SATISFIABILITY"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Term.hasLiteral.eq_1",
+      "module": "RDF11.FiniteDatatypeModels",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri Blank : Type} (l k : Literal), RDF11.Term.hasLiteral l (RDF11.Term.literal k) = (k = l)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-PREINTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Term.hasLiteral",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Term.hasLiteral.eq_2",
+      "module": "RDF11.FiniteDatatypeModels",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri Blank : Type} (l : Literal) (a : Iri), RDF11.Term.hasLiteral l (RDF11.Term.iri a) = False",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-PREINTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Term.hasLiteral",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Term.hasLiteral.eq_3",
+      "module": "RDF11.FiniteDatatypeModels",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri Blank : Type} (l : Literal) (a : Blank), RDF11.Term.hasLiteral l (RDF11.Term.blank a) = False",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-PREINTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Term.hasLiteral",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Term.literal_in_names",
+      "module": "RDF11.FiniteDatatypeModels",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri B : Type} (datatype : Literal → Iri) (t : RDF11.Term Iri Literal B) (l : Literal),\n  RDF11.Term.hasLiteral l t → RDF11.Term.names datatype t (Sum.inr l)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-PREINTERPRETATIONS",
+        "MT11-DATATYPE-PREINTERPRETATION-SATISFIABILITY"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Term",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.bounded_d_pre_countermodel",
+      "module": "RDF11.FiniteDatatypeModels",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B₁ B₂ : Type} {V : RDF11.Set (RDF11.Name Iri Literal)} {S : RDF11.Set B₁}\n  (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri) (v : RDF11.Enumeration V) (b : RDF11.Enumeration S)\n  (G : RDF11.GeneralizedGraph Iri Literal B₁) (E : RDF11.GeneralizedGraph Iri Literal B₂)\n  (hG : (RDF11.GeneralizedGraph.vocabulary T.literalSyntax.datatype G).subset V)\n  (hE : (RDF11.GeneralizedGraph.vocabulary T.literalSyntax.datatype E).subset V),\n  RDF11.Set.subset G.hasBlank S →\n    ¬RDF11.DEntails T D G E →\n      ∃ U P,\n        RDF11.SimpleInterpretation.BoundedDomain P (v.triples.length + b.triples.length + 1) ∧\n          P.DModel T D ∧\n            RDF11.SimpleInterpretation.Satisfies P\n                (RDF11.GeneralizedGraph.restrictNames T.literalSyntax.datatype V G hG) ∧\n              ¬RDF11.SimpleInterpretation.Satisfies P\n                  (RDF11.GeneralizedGraph.restrictNames T.literalSyntax.datatype V E hE)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-PREINTERPRETATIONS",
+        "MT11-FINITE-DATATYPE-PREINTERPRETATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.bounded_d_pre_model_of_satisfiable",
+      "module": "RDF11.FiniteDatatypeModels",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B₁ : Type} {V : RDF11.Set (RDF11.Name Iri Literal)} {S : RDF11.Set B₁}\n  (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri) (v : RDF11.Enumeration V) (b : RDF11.Enumeration S)\n  (G : RDF11.GeneralizedGraph Iri Literal B₁)\n  (hG : (RDF11.GeneralizedGraph.vocabulary T.literalSyntax.datatype G).subset V),\n  RDF11.Set.subset G.hasBlank S →\n    RDF11.DSatisfiable T D G →\n      ∃ U P,\n        RDF11.SimpleInterpretation.BoundedDomain P (v.triples.length + b.triples.length + 1) ∧\n          P.DModel T D ∧\n            RDF11.SimpleInterpretation.Satisfies P\n              (RDF11.GeneralizedGraph.restrictNames T.literalSyntax.datatype V G hG)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-PREINTERPRETATIONS",
+        "MT11-DATATYPE-PREINTERPRETATION-SATISFIABILITY"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.d_entailment_of_bounded_preinterpretations",
+      "module": "RDF11.FiniteDatatypeModels",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B₁ B₂ : Type} {V : RDF11.Set (RDF11.Name Iri Literal)} {S : RDF11.Set B₁}\n  (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri) (v : RDF11.Enumeration V) (b : RDF11.Enumeration S)\n  (G : RDF11.GeneralizedGraph Iri Literal B₁) (E : RDF11.GeneralizedGraph Iri Literal B₂)\n  (hG : (RDF11.GeneralizedGraph.vocabulary T.literalSyntax.datatype G).subset V)\n  (hE : (RDF11.GeneralizedGraph.vocabulary T.literalSyntax.datatype E).subset V),\n  RDF11.Set.subset G.hasBlank S →\n    (∀ (U : Type u) (P : RDF11.PreInterpretation V U),\n        RDF11.SimpleInterpretation.BoundedDomain P (v.triples.length + b.triples.length + 1) →\n          P.DModel T D →\n            RDF11.SimpleInterpretation.Satisfies P\n                (RDF11.GeneralizedGraph.restrictNames T.literalSyntax.datatype V G hG) →\n              RDF11.SimpleInterpretation.Satisfies P\n                (RDF11.GeneralizedGraph.restrictNames T.literalSyntax.datatype V E hE)) →\n      RDF11.DEntails T D G E",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-PREINTERPRETATIONS",
+        "MT11-FINITE-DATATYPE-PREINTERPRETATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.d_satisfiable_iff_bounded_preinterpretations",
+      "module": "RDF11.FiniteDatatypeModels",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B₁ : Type} {V : RDF11.Set (RDF11.Name Iri Literal)} {S : RDF11.Set B₁}\n  (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri) (v : RDF11.Enumeration V) (b : RDF11.Enumeration S)\n  (G : RDF11.GeneralizedGraph Iri Literal B₁)\n  (hG : (RDF11.GeneralizedGraph.vocabulary T.literalSyntax.datatype G).subset V),\n  RDF11.Set.subset G.hasBlank S →\n    (RDF11.DSatisfiable T D G ↔\n      ∃ U P,\n        RDF11.SimpleInterpretation.BoundedDomain P (v.triples.length + b.triples.length + 1) ∧\n          P.DModel T D ∧\n            RDF11.SimpleInterpretation.Satisfies P\n              (RDF11.GeneralizedGraph.restrictNames T.literalSyntax.datatype V G hG))",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-PREINTERPRETATIONS",
+        "MT11-DATATYPE-PREINTERPRETATION-SATISFIABILITY"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.d_satisfiable_of_preinterpretation",
+      "module": "RDF11.FiniteDatatypeModels",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B : Type} {U : Type u_1} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (G : RDF11.GeneralizedGraph Iri Literal B) (V : RDF11.Set (RDF11.Name Iri Literal))\n  (hV : (RDF11.GeneralizedGraph.vocabulary T.literalSyntax.datatype G).subset V) (P : RDF11.PreInterpretation V U),\n  P.DModel T D →\n    RDF11.SimpleInterpretation.Satisfies P (RDF11.GeneralizedGraph.restrictNames T.literalSyntax.datatype V G hV) →\n      RDF11.DSatisfiable T D G",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-PREINTERPRETATIONS",
+        "MT11-DATATYPE-PREINTERPRETATION-SATISFIABILITY"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.finite_d_pre_countermodel",
+      "module": "RDF11.FiniteDatatypeModels",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (G E : RDF11.GeneralizedGraph Iri Literal B),\n  RDF11.FiniteGraph G →\n    RDF11.FiniteGraph E →\n      ¬RDF11.DEntails T D G E →\n        let V :=\n          (RDF11.GeneralizedGraph.vocabulary T.literalSyntax.datatype G).union\n            (RDF11.GeneralizedGraph.vocabulary T.literalSyntax.datatype E);\n        ∃ v b U P,\n          RDF11.SimpleInterpretation.BoundedDomain P (v.triples.length + b.triples.length + 1) ∧\n            P.DModel T D ∧\n              RDF11.SimpleInterpretation.Satisfies P\n                  (RDF11.GeneralizedGraph.restrictNames T.literalSyntax.datatype V G ⋯) ∧\n                ¬RDF11.SimpleInterpretation.Satisfies P\n                    (RDF11.GeneralizedGraph.restrictNames T.literalSyntax.datatype V E ⋯)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-PREINTERPRETATIONS",
+        "MT11-FINITE-DATATYPE-PREINTERPRETATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.FiniteDatatypeModels.0.RDF11.Term.hasLiteral.match_1.eq_1",
+      "module": "RDF11.FiniteDatatypeModels",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri Blank : Type} (motive : RDF11.Term Iri Literal Blank → Sort u_1) (k : Literal)\n  (h_1 : (k : Literal) → motive (RDF11.Term.literal k)) (h_2 : (a : Iri) → motive (RDF11.Term.iri a))\n  (h_3 : (a : Blank) → motive (RDF11.Term.blank a)),\n  (match RDF11.Term.literal k with\n    | RDF11.Term.literal k => h_1 k\n    | RDF11.Term.iri a => h_2 a\n    | RDF11.Term.blank a => h_3 a) =\n    h_1 k",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-PREINTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Term.hasLiteral.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.FiniteDatatypeModels.0.RDF11.Term.hasLiteral.match_1.eq_2",
+      "module": "RDF11.FiniteDatatypeModels",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri Blank : Type} (motive : RDF11.Term Iri Literal Blank → Sort u_1) (a : Iri)\n  (h_1 : (k : Literal) → motive (RDF11.Term.literal k)) (h_2 : (a : Iri) → motive (RDF11.Term.iri a))\n  (h_3 : (a : Blank) → motive (RDF11.Term.blank a)),\n  (match RDF11.Term.iri a with\n    | RDF11.Term.literal k => h_1 k\n    | RDF11.Term.iri a => h_2 a\n    | RDF11.Term.blank a => h_3 a) =\n    h_2 a",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-PREINTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Term.hasLiteral.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.FiniteDatatypeModels.0.RDF11.Term.hasLiteral.match_1.eq_3",
+      "module": "RDF11.FiniteDatatypeModels",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri Blank : Type} (motive : RDF11.Term Iri Literal Blank → Sort u_1) (a : Blank)\n  (h_1 : (k : Literal) → motive (RDF11.Term.literal k)) (h_2 : (a : Iri) → motive (RDF11.Term.iri a))\n  (h_3 : (a : Blank) → motive (RDF11.Term.blank a)),\n  (match RDF11.Term.blank a with\n    | RDF11.Term.literal k => h_1 k\n    | RDF11.Term.iri a => h_2 a\n    | RDF11.Term.blank a => h_3 a) =\n    h_3 a",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-PREINTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Term.hasLiteral.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.FiniteDatatypeModels.0.RDF11.Term.hasLiteral.match_1.splitter",
+      "module": "RDF11.FiniteDatatypeModels",
+      "kind": "definition",
+      "type": "{Literal Iri Blank : Type} →\n  (motive : RDF11.Term Iri Literal Blank → Sort u_1) →\n    (x : RDF11.Term Iri Literal Blank) →\n      ((k : Literal) → motive (RDF11.Term.literal k)) →\n        ((a : Iri) → motive (RDF11.Term.iri a)) → ((a : Blank) → motive (RDF11.Term.blank a)) → motive x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-DATATYPE-PREINTERPRETATIONS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Term.hasLiteral.match_1",
       "review": "pending_expert_review"
     }
   ],

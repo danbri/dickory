@@ -4686,7 +4686,10 @@
         "formal_proof": "unassessed",
         "test_mapping": "unassessed"
       },
-      "formalization_note": "The cardinality D in the bound is not a multiplication of the datatype-IRI set; finite datatype-set assumptions must be explicit."
+      "formalization_note": "Localized datatype conditions now admit an N+B+1 active-domain compression, a full-to-weakened countermodel theorem and bounded satisfiability equivalence. This is partial evidence for the printed (N+B)*(D+1) claim, not that formula or entailment equivalence. For empty G and E the printed bound is zero for every finite datatype count, incompatible with the section-5 nonempty-IR refinement; an explicit theorem records this boundary and empty-graph D-satisfiability. No source correction is adopted. The numerical D must be distinguished from the recognized-IRI set; counting aliases and datatype identities is an external scope question.",
+      "review_questions": [
+        "Q-DATATYPE-PREINTERPRETATION-ZERO-BOUND"
+      ]
     },
     {
       "id": "MT11-FINITE-RDF-RDFS-PRESERVATION",
@@ -5505,6 +5508,79 @@
         "test_mapping": "unassessed"
       },
       "formalization_note": "Derived conditional witness, not an explicitly printed D.3 assertion. This separates the empty-collection convention from outgoing-edge prohibition and acyclicity. The model retains all RDF/RDFS axioms."
+    },
+    {
+      "id": "MT11-DATATYPE-PREINTERPRETATION-CONDITIONS",
+      "section": "B",
+      "anchor": "finite_interpretations",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#finite_interpretations",
+      "category": "definition",
+      "source_status": "informative",
+      "assertion_basis": "explicit",
+      "paraphrase": "For datatype pre-interpretations, literal-value obligations are weakened to the literals occurring in the comparison vocabulary, retaining their recognized datatype meanings.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-PREINTERPRETATION",
+        "MT11-D-INTERPRETATION",
+        "MT11-DATATYPE-IDENTIFICATION-FIXED",
+        "MT11-LANGSTRING-DENOTATION"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "A precise partial mapping of the sketch: reuse section 5 on vocabulary subtypes, fix recognized local IRI denotations, and impose section 7 language and ordinary evaluation only on vocabulary literals. The external datatype theory, aliases and undefined ill-typed literals remain unchanged. With all names present these conditions are proved equivalent to full DConditions. Fidelity of this chosen weakening remains under review.",
+      "split_from": "MT11-FINITE-DATATYPE-PREINTERPRETATION"
+    },
+    {
+      "id": "MT11-DATATYPE-PREINTERPRETATION-SATISFIABILITY",
+      "section": "B",
+      "anchor": "finite_interpretations",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#finite_interpretations",
+      "category": "mathematical_consequence",
+      "source_status": "informative",
+      "assertion_basis": "derived",
+      "paraphrase": "Under the localized datatype conditions, a graph whose vocabulary and blank support have finite enumerations is D-satisfiable exactly when its vocabulary restriction has a weakened pre-model with at most N+B+1 active objects.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-DATATYPE-PREINTERPRETATION-CONDITIONS",
+        "MT11-FINITE-SIMPLE-PREINTERPRETATION",
+        "MT11-ILL-TYPED-UNSATISFIABILITY"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "Derived precise result connected to Appendix B, not the printed multiplicative bound. The reverse direction constructs a full D-model from absence of ill-typed occurring literals; it does not complete the same pre-interpretation or preserve other graph truths. Entailment equivalence remains open.",
+      "split_from": "MT11-FINITE-DATATYPE-PREINTERPRETATION"
+    },
+    {
+      "id": "MT11-DATATYPE-PREINTERPRETATION-COMPLETION",
+      "section": "B",
+      "anchor": "finite_interpretations",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#finite_interpretations",
+      "category": "mathematical_consequence",
+      "source_status": "informative",
+      "assertion_basis": "explicit",
+      "paraphrase": "The datatype case of Appendix B claims that a pre-interpretation can be extended to a full interpretation of the appropriate kind while preserving the relevant triple truth values, within the sketch of unchanged entailments.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-DATATYPE-PREINTERPRETATION-CONDITIONS",
+        "MT11-D-INTERPRETATION",
+        "MT11-PREINTERPRETATION"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "Unmapped. Restoring globally required literal values can enlarge IR, unlike simple name completion. Whole-graph satisfaction preservation requires a shared assignment argument; equality of individual ground triple truth is insufficient. Generalized predicate blanks need explicit attention when previously property-only values enter IR. No completed counterexample or general completion theorem is asserted.",
+      "split_from": "MT11-FINITE-DATATYPE-PREINTERPRETATION"
     }
   ],
   "record_count": 217
