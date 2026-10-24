@@ -505,11 +505,17 @@ try {
   assert.match(await saturationRow('run_exact').locator(':scope > .lean-code').textContent(),/Set\.ofList \(run next fuel seed\) = RuleDerives[\s\S]*run_preserves[\s\S]*ruleDerives_least/);
   await page.locator('#claim').selectOption('MT11-FINITE-CLOSURE-COMPLEXITY');
   assert.equal(await page.evaluate(()=>data.claims.find(c=>c.id==='MT11-FINITE-CLOSURE-COMPLEXITY').cleanroom_mapping.relation),'partial_theorem');
-  const executionReport=await page.evaluate(async()=>{
-    const response=await fetch(new URL('closure-execution.json',location.href));
-    if (!response.ok) throw new Error(`Execution report HTTP ${response.status}`);
-    return response.json();
-  });
+  const executionReportURL=new URL('closure-execution.json',root);
+  let executionReport;
+  if (executionReportURL.protocol==='file:') {
+    // Chromium deliberately disallows fetch between local files; this suite
+    // also exercises the review viewer as an offline document.
+    executionReport=JSON.parse(await fs.readFile(executionReportURL,'utf8'));
+  } else {
+    const response=await page.request.get(executionReportURL.href);
+    assert(response.ok(),`Execution report HTTP ${response.status()}`);
+    executionReport=await response.json();
+  }
   assert.equal(executionReport.status,'pass');
   assert.equal(executionReport.not_w3c_fixtures,true);
   assert.equal(executionReport.package_refinement,false);
