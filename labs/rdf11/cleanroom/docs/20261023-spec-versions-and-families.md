@@ -76,3 +76,21 @@ CI should reject cross-hash range reuse, a shared rule name resolving to the wro
 6. Connect pinned W3C fixtures and product refinement to those named bundles and regimes; expand through the full specified obligations without treating tests as exhaustive.
 
 This architecture prepares those tracks now while the RDF 1.1 formalization continues. It does not count planned OWL, SPARQL or RDF 1.2 work toward current coverage.
+
+## First implementation milestone: one claim across two editions
+
+Clarification on 24 October 2026. Start with graph sethood and its term/triple dependencies. Preserve the existing RDF 1.1 records; add one pinned RDF 1.2 source bundle and new claim occurrences. The sentence that a graph is a set of triples may remain mathematically familiar while the definition of a triple changes. Text similarity must therefore propose a lineage link, not approve semantic equivalence. Even an unchanged Lean theorem type can change meaning through a changed definition in its dependency closure.
+
+The minimum review packet should contain:
+
+1. Both source assets and their independent Unicode ranges, with each occurrence's resolved context and normative status.
+2. Both English/symbol claims and the exact versions of the definitions they depend on.
+3. A proposed correspondence, with separate syntax and semantic obligations. A graph embedding must preserve term identity and blank sharing; entailment preservation and reflection need their own theorems and hypotheses.
+4. A proof or counterexample tied to the exact Lean environment and dependency closure. A declaration name or printed type alone is not the evidence identity.
+5. Three review decisions: source extraction in each edition, fidelity of each formalization, and correctness of the correspondence. None can substitute for another.
+
+Acceptance should be demonstrated by changing a dependency while leaving the source sentence unchanged: the comparison approval must become stale, the old approval must remain in history, and neither edition's coverage may silently inherit the other's status. A second exercise should adopt a proposed correction in an experimental bundle while leaving the Recommendation bundle unchanged. There is no requirement to create a Git branch for either exercise.
+
+The baseline manifest should act as a semantic lockfile: exact source and catalogue versions, adopted corrections, imported editions, datatype assumptions, entailment regime, Lean environment and test expectations. Hashes make the evidence reproducible; expert review establishes whether the selected dependencies and assumptions are faithful. A rolling “latest RDF” label may help discovery but cannot identify a checked baseline.
+
+For OWL and SPARQL, prepare document/dependency inventories now and defer implementation breadth until these baseline and bridge mechanisms work. Start OWL with the relationship between its RDF-Based and Direct semantics; start SPARQL with basic graph patterns, solution multiplicity and the chosen entailment regime. Keep the cited 2004 RDF baseline visible when relating either to our RDF 1.1 work. Each track can reuse proved mathematics through explicit imports, but carries its own source-accounting and fidelity obligations.
