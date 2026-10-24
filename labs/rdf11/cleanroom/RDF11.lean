@@ -69,3 +69,7 @@ import RDF11.ClosureRuleEvaluation
 import RDF11.ClosureSeedEvaluation
 import RDF11.ClosureAxiomEvaluation
 import RDF11.ExecutableClosure
+import RDF11.InstanceSearch
+import RDF11.InstanceDecision
+import RDF11.ClosureInstanceCheck
+import RDF11.InstanceCheckScope

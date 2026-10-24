@@ -1864,7 +1864,7 @@
         "formal_proof": "unassessed",
         "test_mapping": "unassessed"
       },
-      "formalization_note": "The text permits infinite graphs elsewhere; an algorithmic decidability claim requires finite effective input. Appendix A states NP-completeness explicitly."
+      "formalization_note": "Finite effective inputs and decidable abstract equality are explicit. The twenty-fourth increment proves exact instance search, a simple-entailment decision for ordinary conclusions, ground reduction and negative countermodels. Source complexity assertions, concrete term correspondence and unrestricted generalized positive interpolation remain separate."
     },
     {
       "id": "MT11-EMPTY-ENTAILMENTS",
@@ -4407,7 +4407,7 @@
         "formal_proof": "unassessed",
         "test_mapping": "unassessed"
       },
-      "formalization_note": "The appendix is informative; this procedure is not a mandatory implementation architecture.",
+      "formalization_note": "The appendix is informative and does not mandate this implementation architecture. The twenty-fourth increment formalizes the final instance-subgraph check for a finite supplied enlarged graph; this does not implement ordinary fresh-blank rule saturation or prove its termination/completeness.",
       "procedure_steps": [
         {
           "source_step": 1,
@@ -5662,7 +5662,54 @@
         "test_mapping": "unassessed"
       },
       "formalization_note": "Derived executable-refinement obligation, not a new quoted W3C assertion. The decoder is a supplied function with a soundness/completeness proof. Equality is equality in the abstract term types; concrete IRI/literal validity and equality correspondence remain external. Correctness is exact agreement with the printed selection, fallback and rules. It does not establish polynomial machine time, full entailment completeness, concrete parsing, arbitrary-D generation, fresh-blank rdfD1 or published-package refinement."
+    },
+    {
+      "id": "MT11-FINITE-INSTANCE-DECISION",
+      "section": "5.3",
+      "anchor": "dfn-interpolation",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#dfn-interpolation",
+      "category": "mathematical_consequence",
+      "source_status": "informative",
+      "assertion_basis": "derived",
+      "paraphrase": "For finite supplied lists and decidable syntactic equality, exhaustive simultaneous substitution search decides exactly whether an instance of the conclusion is included in the premise. With an ordinary conclusion it decides simple entailment, including separately typed blank domains. It can return a certified substitution, and failure gives a Herbrand countermodel.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-GRAPH-INSTANCE",
+        "MT11-INTERPOLATION",
+        "MT11-SIMPLE-DECIDABILITY",
+        "MT11-GRAPH-SET"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "Derived executable refinement with finite effective inputs. Only occurring conclusion blanks and actual premise triple-position terms are enumerated; no finite ambient blank type is required. The K^b candidate-list length is not an NP-completeness or runtime proof. Generalized success need not imply simple entailment; ordinary conclusions retain the proved interpolation scope."
+    },
+    {
+      "id": "MT11-EXECUTABLE-CLOSURE-INSTANCE-CHECK",
+      "section": "A",
+      "anchor": "entailment_rules",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#entailment_rules",
+      "category": "mathematical_consequence",
+      "source_status": "informative",
+      "assertion_basis": "derived",
+      "paraphrase": "For finite supplied inputs and the executable closure interfaces, the composed RDF/RDFS check decides whether the selected printed closure contains an instance of the conclusion. Success implies entailment in the respective regime. For an ordinary conclusion the check is exactly simple entailment from that closure; failure is not a full RDF/RDFS non-entailment decision.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-EXECUTABLE-CLOSURE-REFINEMENT",
+        "MT11-FINITE-INSTANCE-DECISION",
+        "MT11-GENERALIZED-CLOSURE-COMPLETENESS"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "Derived composition of exact closure generation, exact finite instance search and existing rule/model soundness. The current selection obstruction is linked to an executable false result with full entailment and a consistency witness under explicit model-constructor hypotheses. The printed procedure is not repaired or declared an official erratum."
     }
   ],
-  "record_count": 223
+  "record_count": 225
 }

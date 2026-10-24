@@ -110,6 +110,35 @@ log = run.stdout + run.stderr
 assert run.returncode != 0 and "False" in log and "unsolved goals" in log, log
 results.append("Lean rejects a zero-fuel result as saturated")
 
+snippet = """import RDF11
+open RDF11
+def illegalConclusion : Bool := InstanceSearch.ordinaryCheck
+  [(GeneralizedScope.substitutedTriple false true : GeneralizedTriple Bool Unit Unit)]
+  [GeneralizedScope.originalTriple false]
+"""
+run = subprocess.run(["lake", "env", "lean", "--stdin"], cwd=ROOT, env=env,
+                     input=snippet, text=True, capture_output=True)
+log = run.stdout + run.stderr
+(ROOT / "artifacts/generalized-decision-rejected.log").write_text(log)
+assert run.returncode != 0 and "type mismatch" in log.lower() and "Triple" in log, log
+results.append("Lean rejects a generalized conclusion at the ordinary decision interface")
+
+snippet = """import RDF11
+open RDF11
+example : InstanceSearch.check
+  ([⟨.iri false, .iri false, .iri false⟩, ⟨.iri true, .iri true, .iri true⟩] :
+    List (GeneralizedTriple Bool Unit Unit))
+  [⟨.blank (), .iri false, .iri false⟩, ⟨.blank (), .iri true, .iri true⟩] = true := by
+  change false = true
+  simp
+"""
+run = subprocess.run(["lake", "env", "lean", "--stdin"], cwd=ROOT, env=env,
+                     input=snippet, text=True, capture_output=True)
+log = run.stdout + run.stderr
+(ROOT / "artifacts/incompatible-blank-witnesses-rejected.log").write_text(log)
+assert run.returncode != 0 and "False" in log and "unsolved goals" in log, log
+results.append("Lean rejects independent witnesses for one shared conclusion blank")
+
 (ROOT / "artifacts/negative-checks.json").write_text(json.dumps(
     {"status": "pass", "checks": results}, indent=2) + "\n")
 print(json.dumps(results, indent=2))

@@ -34,6 +34,9 @@ jobs:
       - name: Exercise executable closure regressions
         working-directory: labs/rdf11/cleanroom
         run: python3 tools/closure_execution.py
+      - name: Exercise executable instance regressions
+        working-directory: labs/rdf11/cleanroom
+        run: python3 tools/instance_execution.py
       - name: Generate review viewer
         working-directory: labs/rdf11/cleanroom
         run: |

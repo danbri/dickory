@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "status": "frozen_twenty_third_increment_executable_closure_not_expert_approved",
+  "status": "frozen_twenty_fourth_increment_instance_search_not_expert_approved",
   "lean_version": "4.33.1",
   "allowed_axioms": [
     "propext",
@@ -41,8 +41,10 @@
     "Init.Data.List.Control",
     "Init.Data.List.Count",
     "Init.Data.List.Erase",
+    "Init.Data.List.Find",
     "Init.Data.List.Lemmas",
     "Init.Data.List.Nat.Range",
+    "Init.Data.List.Nat.Sum",
     "Init.Data.List.Nat.TakeDrop",
     "Init.Data.List.Pairwise",
     "Init.Data.List.Perm",
@@ -659,12 +661,32 @@
       "requires": [
         "MT11-EXECUTABLE-CLOSURE-REFINEMENT"
       ]
+    },
+    {
+      "id": "SUPPORT-FINITE-INSTANCE-SEARCH",
+      "purpose": "Exact finite simultaneous instance-subgraph search, certified witnesses, ordinary simple-entailment decisions, independent blank-domain transport and selected-closure composition. Includes explicit generalized-positive and selected-closure-negative scope witnesses. No runtime complexity, full RDF/RDFS completeness, concrete parser or package refinement claim.",
+      "requires": [
+        "MT11-FINITE-INSTANCE-DECISION",
+        "MT11-EXECUTABLE-CLOSURE-INSTANCE-CHECK",
+        "MT11-GRAPH-INSTANCE",
+        "MT11-INTERPOLATION",
+        "MT11-SIMPLE-DECIDABILITY",
+        "MT11-GENERALIZED-CLOSURE-COMPLETENESS"
+      ]
+    },
+    {
+      "id": "SUPPORT-INSTANCE-EXECUTION-FIXTURES",
+      "purpose": "Project-owned symbolic execution regressions for instance search and closure composition. Runtime checks supplement universal kernel proofs and are distinct from W3C fixtures, native-evaluation proof shortcuts and npm verification.",
+      "requires": [
+        "MT11-FINITE-INSTANCE-DECISION",
+        "MT11-EXECUTABLE-CLOSURE-INSTANCE-CHECK"
+      ]
     }
   ],
   "files": [
     {
       "path": "Audit.lean",
-      "sha256": "1efd28c9acd3d8e3ec632653c56e4feabaf9710edf1d75cc7e74d9e6c9b5be92",
+      "sha256": "11330c7479e1e13eef6b98c0bcdcecb3332c94c0d1886976d4771117973abe3d",
       "role": "formal_source",
       "lifecycle": "active",
       "review": "pending_expert_review"
@@ -685,14 +707,14 @@
     },
     {
       "path": "Audit/Snapshot.lean",
-      "sha256": "5154558eb8af24d0178dc2a1365d1e0fe7481dabf827df0940db5dd4c6087224",
+      "sha256": "4ac0ce56ce91dcd3abb08dd574639db5a8c3d976f6d350623553cd3cb10eb94e",
       "role": "formal_source",
       "lifecycle": "active",
       "review": "pending_expert_review"
     },
     {
       "path": "RDF11.lean",
-      "sha256": "cf705a012b3847a56a791ec6a51f25c88a6b8e924c82aa3c0564e8e7b8af0139",
+      "sha256": "153d373c04e98c61a947a6adafd4a6f4768ae9b8239bf0fcc9501ba95e7b7350",
       "role": "formal_source",
       "lifecycle": "active",
       "review": "pending_expert_review"
@@ -1232,6 +1254,41 @@
     {
       "path": "Audit/ClosureExecution.lean",
       "sha256": "326f40039d167381af001d0bdd9746dbbbe30ca3518d30cbc42d9d2b6bef1585",
+      "role": "formal_source",
+      "lifecycle": "active",
+      "review": "pending_expert_review"
+    },
+    {
+      "path": "RDF11/InstanceSearch.lean",
+      "sha256": "596b5107ea098a71acf9ac38f7d4656e8a2fd29808403f4a995d1a247a871465",
+      "role": "formal_source",
+      "lifecycle": "active",
+      "review": "pending_expert_review"
+    },
+    {
+      "path": "RDF11/InstanceDecision.lean",
+      "sha256": "783105771d0470cf7ec488b9f6c7128c38162c292f65d14736093fa7202ceb10",
+      "role": "formal_source",
+      "lifecycle": "active",
+      "review": "pending_expert_review"
+    },
+    {
+      "path": "RDF11/ClosureInstanceCheck.lean",
+      "sha256": "0907efd3dcd2d44282758e50582ef8e7f937be4d14b42069c5bdbe292a738d29",
+      "role": "formal_source",
+      "lifecycle": "active",
+      "review": "pending_expert_review"
+    },
+    {
+      "path": "RDF11/InstanceCheckScope.lean",
+      "sha256": "807c46aac1c7b6a09a4a2a66ac46c9ddb0b87944d44c39054c916b1d76c08e2d",
+      "role": "formal_source",
+      "lifecycle": "active",
+      "review": "pending_expert_review"
+    },
+    {
+      "path": "Audit/InstanceExecution.lean",
+      "sha256": "dcbee0cefeec9ec89cb1c172919e4960aec0b103e39c95a6b65614a03f9edbf1",
       "role": "formal_source",
       "lifecycle": "active",
       "review": "pending_expert_review"
@@ -34528,6 +34585,1440 @@
         "SUPPORT-EXECUTABLE-CLOSURE"
       ],
       "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.ContainerDecoder.term.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfApartCheck",
+      "module": "RDF11.ClosureInstanceCheck",
+      "kind": "definition",
+      "type": "{Iri Literal B₁ B₂ : Type} →\n  [DecidableEq Iri] →\n    [DecidableEq Literal] →\n      [DecidableEq B₁] →\n        [DecidableEq B₂] →\n          (Literal → Iri) →\n            (v : RDF11.RDFVocabulary Iri) →\n              (RDF11.ClosureEvaluation.ContainerDecoder fun n => v.iri (RDF11.RDFSymbol.container n)) →\n                List (RDF11.GeneralizedTriple Iri Literal B₁) → List (RDF11.GeneralizedTriple Iri Literal B₂) → Bool",
+      "role": "engineering_refinement",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH",
+        "MT11-EXECUTABLE-CLOSURE-INSTANCE-CHECK"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfApartCheck_sound",
+      "module": "RDF11.ClosureInstanceCheck",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B₁ B₂ : Type} [inst : DecidableEq Iri] [inst_1 : DecidableEq Literal] [inst_2 : DecidableEq B₁]\n  [inst_3 : DecidableEq B₂] (T : RDF11.DatatypeTheory Iri Literal Value) (v : RDF11.RDFVocabulary Iri)\n  (d : RDF11.ClosureEvaluation.ContainerDecoder fun n => v.iri (RDF11.RDFSymbol.container n))\n  (G : List (RDF11.GeneralizedTriple Iri Literal B₁)) (E : List (RDF11.GeneralizedTriple Iri Literal B₂)),\n  RDF11.ClosureEvaluation.rdfApartCheck T.literalSyntax.datatype v d G E = true →\n    RDF11.RDFEntails T v.baseDatatypes v (RDF11.Set.ofList G) (RDF11.Set.ofList E)",
+      "role": "engineering_refinement",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH",
+        "MT11-EXECUTABLE-CLOSURE-INSTANCE-CHECK"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfCheck",
+      "module": "RDF11.ClosureInstanceCheck",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  [DecidableEq Iri] →\n    [DecidableEq Literal] →\n      [DecidableEq B] →\n        (Literal → Iri) →\n          (v : RDF11.RDFVocabulary Iri) →\n            (RDF11.ClosureEvaluation.ContainerDecoder fun n => v.iri (RDF11.RDFSymbol.container n)) →\n              List (RDF11.GeneralizedTriple Iri Literal B) → List (RDF11.GeneralizedTriple Iri Literal B) → Bool",
+      "role": "engineering_refinement",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH",
+        "MT11-EXECUTABLE-CLOSURE-INSTANCE-CHECK"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfCheck.eq_1",
+      "module": "RDF11.ClosureInstanceCheck",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} [inst : DecidableEq Iri] [inst_1 : DecidableEq Literal] [inst_2 : DecidableEq B]\n  (datatype : Literal → Iri) (v : RDF11.RDFVocabulary Iri)\n  (d : RDF11.ClosureEvaluation.ContainerDecoder fun n => v.iri (RDF11.RDFSymbol.container n))\n  (G E : List (RDF11.GeneralizedTriple Iri Literal B)),\n  RDF11.ClosureEvaluation.rdfCheck datatype v d G E =\n    RDF11.InstanceSearch.check (RDF11.ClosureEvaluation.rdf datatype v d G E) E",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.rdfCheck",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfCheck_iff",
+      "module": "RDF11.ClosureInstanceCheck",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B : Type} [inst : DecidableEq Iri] [inst_1 : DecidableEq Literal] [inst_2 : DecidableEq B]\n  (T : RDF11.DatatypeTheory Iri Literal Value) (v : RDF11.RDFVocabulary Iri)\n  (d : RDF11.ClosureEvaluation.ContainerDecoder fun n => v.iri (RDF11.RDFSymbol.container n))\n  (G E : List (RDF11.GeneralizedTriple Iri Literal B)),\n  RDF11.ClosureEvaluation.rdfCheck T.literalSyntax.datatype v d G E = true ↔\n    ∃ μ,\n      RDF11.Set.subset (RDF11.GeneralizedGraph.substitute μ (RDF11.Set.ofList E))\n        (RDF11.RDFClosure T v (RDF11.Set.ofList G) (RDF11.Set.ofList E))",
+      "role": "engineering_refinement",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH",
+        "MT11-EXECUTABLE-CLOSURE-INSTANCE-CHECK"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfCheck_ordinary_iff",
+      "module": "RDF11.ClosureInstanceCheck",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B : Type} [inst : DecidableEq Iri] [inst_1 : DecidableEq Literal] [inst_2 : DecidableEq B]\n  (T : RDF11.DatatypeTheory Iri Literal Value) (v : RDF11.RDFVocabulary Iri)\n  (d : RDF11.ClosureEvaluation.ContainerDecoder fun n => v.iri (RDF11.RDFSymbol.container n))\n  (G : List (RDF11.GeneralizedTriple Iri Literal B)) (E : List (RDF11.Triple Iri Literal B)),\n  RDF11.ClosureEvaluation.rdfCheck T.literalSyntax.datatype v d G (List.map RDF11.Triple.generalize E) = true ↔\n    RDF11.SimplyEntails (RDF11.RDFClosure T v (RDF11.Set.ofList G) (RDF11.Graph.generalize (RDF11.Set.ofList E)))\n      (RDF11.Graph.generalize (RDF11.Set.ofList E))",
+      "role": "engineering_refinement",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH",
+        "MT11-GENERALIZED-CLOSURE-COMPLETENESS",
+        "MT11-EXECUTABLE-CLOSURE-INSTANCE-CHECK"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfCheck_respects_graphs",
+      "module": "RDF11.ClosureInstanceCheck",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B : Type} [inst : DecidableEq Iri] [inst_1 : DecidableEq Literal] [inst_2 : DecidableEq B]\n  (T : RDF11.DatatypeTheory Iri Literal Value) (v : RDF11.RDFVocabulary Iri)\n  (d : RDF11.ClosureEvaluation.ContainerDecoder fun n => v.iri (RDF11.RDFSymbol.container n))\n  (G H E F : List (RDF11.GeneralizedTriple Iri Literal B)),\n  RDF11.Set.ofList G = RDF11.Set.ofList H →\n    RDF11.Set.ofList E = RDF11.Set.ofList F →\n      RDF11.ClosureEvaluation.rdfCheck T.literalSyntax.datatype v d G E =\n        RDF11.ClosureEvaluation.rdfCheck T.literalSyntax.datatype v d H F",
+      "role": "engineering_refinement",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH",
+        "MT11-EXECUTABLE-CLOSURE-INSTANCE-CHECK"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfCheck_sound",
+      "module": "RDF11.ClosureInstanceCheck",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B : Type} [inst : DecidableEq Iri] [inst_1 : DecidableEq Literal] [inst_2 : DecidableEq B]\n  (T : RDF11.DatatypeTheory Iri Literal Value) (v : RDF11.RDFVocabulary Iri)\n  (d : RDF11.ClosureEvaluation.ContainerDecoder fun n => v.iri (RDF11.RDFSymbol.container n))\n  (G E : List (RDF11.GeneralizedTriple Iri Literal B)),\n  RDF11.ClosureEvaluation.rdfCheck T.literalSyntax.datatype v d G E = true →\n    RDF11.RDFEntails T v.baseDatatypes v (RDF11.Set.ofList G) (RDF11.Set.ofList E)",
+      "role": "engineering_refinement",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH",
+        "MT11-GENERALIZED-CLOSURE-COMPLETENESS",
+        "MT11-EXECUTABLE-CLOSURE-INSTANCE-CHECK"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfInstanceDecision",
+      "module": "RDF11.ClosureInstanceCheck",
+      "kind": "definition",
+      "type": "{Iri Literal Value B : Type} →\n  [DecidableEq Iri] →\n    [DecidableEq Literal] →\n      [DecidableEq B] →\n        (T : RDF11.DatatypeTheory Iri Literal Value) →\n          (v : RDF11.RDFVocabulary Iri) →\n            (RDF11.ClosureEvaluation.ContainerDecoder fun n => v.iri (RDF11.RDFSymbol.container n)) →\n              (G E : List (RDF11.GeneralizedTriple Iri Literal B)) →\n                Decidable\n                  (∃ μ,\n                    RDF11.Set.subset (RDF11.GeneralizedGraph.substitute μ (RDF11.Set.ofList E))\n                      (RDF11.RDFClosure T v (RDF11.Set.ofList G) (RDF11.Set.ofList E)))",
+      "role": "engineering_refinement",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH",
+        "MT11-EXECUTABLE-CLOSURE-INSTANCE-CHECK"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfsApartCheck",
+      "module": "RDF11.ClosureInstanceCheck",
+      "kind": "definition",
+      "type": "{Iri Literal B₁ B₂ : Type} →\n  [DecidableEq Iri] →\n    [DecidableEq Literal] →\n      [DecidableEq B₁] →\n        [DecidableEq B₂] →\n          (Literal → Iri) →\n            (v : RDF11.RDFSVocabulary Iri) →\n              (RDF11.ClosureEvaluation.ContainerDecoder fun n =>\n                  v.iri (RDF11.RDFSSymbol.rdf (RDF11.RDFSymbol.container n))) →\n                List (RDF11.GeneralizedTriple Iri Literal B₁) → List (RDF11.GeneralizedTriple Iri Literal B₂) → Bool",
+      "role": "engineering_refinement",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH",
+        "MT11-EXECUTABLE-CLOSURE-INSTANCE-CHECK"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfsApartCheck_sound",
+      "module": "RDF11.ClosureInstanceCheck",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B₁ B₂ : Type} [inst : DecidableEq Iri] [inst_1 : DecidableEq Literal] [inst_2 : DecidableEq B₁]\n  [inst_3 : DecidableEq B₂] (T : RDF11.DatatypeTheory Iri Literal Value) (v : RDF11.RDFSVocabulary Iri)\n  (d : RDF11.ClosureEvaluation.ContainerDecoder fun n => v.iri (RDF11.RDFSSymbol.rdf (RDF11.RDFSymbol.container n)))\n  (G : List (RDF11.GeneralizedTriple Iri Literal B₁)) (E : List (RDF11.GeneralizedTriple Iri Literal B₂)),\n  RDF11.ClosureEvaluation.rdfsApartCheck T.literalSyntax.datatype v d G E = true →\n    RDF11.RDFSEntails T v.toRDF.baseDatatypes v (RDF11.Set.ofList G) (RDF11.Set.ofList E)",
+      "role": "engineering_refinement",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH",
+        "MT11-EXECUTABLE-CLOSURE-INSTANCE-CHECK"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfsCheck",
+      "module": "RDF11.ClosureInstanceCheck",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  [DecidableEq Iri] →\n    [DecidableEq Literal] →\n      [DecidableEq B] →\n        (Literal → Iri) →\n          (v : RDF11.RDFSVocabulary Iri) →\n            (RDF11.ClosureEvaluation.ContainerDecoder fun n =>\n                v.iri (RDF11.RDFSSymbol.rdf (RDF11.RDFSymbol.container n))) →\n              List (RDF11.GeneralizedTriple Iri Literal B) → List (RDF11.GeneralizedTriple Iri Literal B) → Bool",
+      "role": "engineering_refinement",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH",
+        "MT11-EXECUTABLE-CLOSURE-INSTANCE-CHECK"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfsCheck.eq_1",
+      "module": "RDF11.ClosureInstanceCheck",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} [inst : DecidableEq Iri] [inst_1 : DecidableEq Literal] [inst_2 : DecidableEq B]\n  (datatype : Literal → Iri) (v : RDF11.RDFSVocabulary Iri)\n  (d : RDF11.ClosureEvaluation.ContainerDecoder fun n => v.iri (RDF11.RDFSSymbol.rdf (RDF11.RDFSymbol.container n)))\n  (G E : List (RDF11.GeneralizedTriple Iri Literal B)),\n  RDF11.ClosureEvaluation.rdfsCheck datatype v d G E =\n    RDF11.InstanceSearch.check (RDF11.ClosureEvaluation.rdfs datatype v d G E) E",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureEvaluation.rdfsCheck",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfsCheck_iff",
+      "module": "RDF11.ClosureInstanceCheck",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B : Type} [inst : DecidableEq Iri] [inst_1 : DecidableEq Literal] [inst_2 : DecidableEq B]\n  (T : RDF11.DatatypeTheory Iri Literal Value) (v : RDF11.RDFSVocabulary Iri)\n  (d : RDF11.ClosureEvaluation.ContainerDecoder fun n => v.iri (RDF11.RDFSSymbol.rdf (RDF11.RDFSymbol.container n)))\n  (G E : List (RDF11.GeneralizedTriple Iri Literal B)),\n  RDF11.ClosureEvaluation.rdfsCheck T.literalSyntax.datatype v d G E = true ↔\n    ∃ μ,\n      RDF11.Set.subset (RDF11.GeneralizedGraph.substitute μ (RDF11.Set.ofList E))\n        (RDF11.RDFSClosure T v (RDF11.Set.ofList G) (RDF11.Set.ofList E))",
+      "role": "engineering_refinement",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH",
+        "MT11-EXECUTABLE-CLOSURE-INSTANCE-CHECK"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfsCheck_ordinary_iff",
+      "module": "RDF11.ClosureInstanceCheck",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B : Type} [inst : DecidableEq Iri] [inst_1 : DecidableEq Literal] [inst_2 : DecidableEq B]\n  (T : RDF11.DatatypeTheory Iri Literal Value) (v : RDF11.RDFSVocabulary Iri)\n  (d : RDF11.ClosureEvaluation.ContainerDecoder fun n => v.iri (RDF11.RDFSSymbol.rdf (RDF11.RDFSymbol.container n)))\n  (G : List (RDF11.GeneralizedTriple Iri Literal B)) (E : List (RDF11.Triple Iri Literal B)),\n  RDF11.ClosureEvaluation.rdfsCheck T.literalSyntax.datatype v d G (List.map RDF11.Triple.generalize E) = true ↔\n    RDF11.SimplyEntails (RDF11.RDFSClosure T v (RDF11.Set.ofList G) (RDF11.Graph.generalize (RDF11.Set.ofList E)))\n      (RDF11.Graph.generalize (RDF11.Set.ofList E))",
+      "role": "engineering_refinement",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH",
+        "MT11-GENERALIZED-CLOSURE-COMPLETENESS",
+        "MT11-EXECUTABLE-CLOSURE-INSTANCE-CHECK"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfsCheck_respects_graphs",
+      "module": "RDF11.ClosureInstanceCheck",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B : Type} [inst : DecidableEq Iri] [inst_1 : DecidableEq Literal] [inst_2 : DecidableEq B]\n  (T : RDF11.DatatypeTheory Iri Literal Value) (v : RDF11.RDFSVocabulary Iri)\n  (d : RDF11.ClosureEvaluation.ContainerDecoder fun n => v.iri (RDF11.RDFSSymbol.rdf (RDF11.RDFSymbol.container n)))\n  (G H E F : List (RDF11.GeneralizedTriple Iri Literal B)),\n  RDF11.Set.ofList G = RDF11.Set.ofList H →\n    RDF11.Set.ofList E = RDF11.Set.ofList F →\n      RDF11.ClosureEvaluation.rdfsCheck T.literalSyntax.datatype v d G E =\n        RDF11.ClosureEvaluation.rdfsCheck T.literalSyntax.datatype v d H F",
+      "role": "engineering_refinement",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH",
+        "MT11-EXECUTABLE-CLOSURE-INSTANCE-CHECK"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfsCheck_sound",
+      "module": "RDF11.ClosureInstanceCheck",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B : Type} [inst : DecidableEq Iri] [inst_1 : DecidableEq Literal] [inst_2 : DecidableEq B]\n  (T : RDF11.DatatypeTheory Iri Literal Value) (v : RDF11.RDFSVocabulary Iri)\n  (d : RDF11.ClosureEvaluation.ContainerDecoder fun n => v.iri (RDF11.RDFSSymbol.rdf (RDF11.RDFSymbol.container n)))\n  (G E : List (RDF11.GeneralizedTriple Iri Literal B)),\n  RDF11.ClosureEvaluation.rdfsCheck T.literalSyntax.datatype v d G E = true →\n    RDF11.RDFSEntails T v.toRDF.baseDatatypes v (RDF11.Set.ofList G) (RDF11.Set.ofList E)",
+      "role": "engineering_refinement",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH",
+        "MT11-GENERALIZED-CLOSURE-COMPLETENESS",
+        "MT11-EXECUTABLE-CLOSURE-INSTANCE-CHECK"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureEvaluation.rdfsInstanceDecision",
+      "module": "RDF11.ClosureInstanceCheck",
+      "kind": "definition",
+      "type": "{Iri Literal Value B : Type} →\n  [DecidableEq Iri] →\n    [DecidableEq Literal] →\n      [DecidableEq B] →\n        (T : RDF11.DatatypeTheory Iri Literal Value) →\n          (v : RDF11.RDFSVocabulary Iri) →\n            (RDF11.ClosureEvaluation.ContainerDecoder fun n =>\n                v.iri (RDF11.RDFSSymbol.rdf (RDF11.RDFSymbol.container n))) →\n              (G E : List (RDF11.GeneralizedTriple Iri Literal B)) →\n                Decidable\n                  (∃ μ,\n                    RDF11.Set.subset (RDF11.GeneralizedGraph.substitute μ (RDF11.Set.ofList E))\n                      (RDF11.RDFSClosure T v (RDF11.Set.ofList G) (RDF11.Set.ofList E)))",
+      "role": "engineering_refinement",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH",
+        "MT11-EXECUTABLE-CLOSURE-INSTANCE-CHECK"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureSelection.conclusion.eq_1",
+      "module": "RDF11.InstanceCheckScope",
+      "kind": "theorem",
+      "type": "∀ {Literal B : Type}, RDF11.ClosureSelection.conclusion = RDF11.Set.singleton RDF11.ClosureSelection.conclusionTriple",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureSelection.conclusion",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureSelection.premise.eq_1",
+      "module": "RDF11.InstanceCheckScope",
+      "kind": "theorem",
+      "type": "∀ {Literal B : Type}, RDF11.ClosureSelection.premise = RDF11.Set.singleton RDF11.ClosureSelection.premiseTriple",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureSelection.premise",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GeneralizedGraph.hasBlank.eq_1",
+      "module": "RDF11.InstanceSearch",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Blank : Type} (g : RDF11.GeneralizedGraph Iri Literal Blank) (b : Blank),\n  g.hasBlank b = ∃ t, g t ∧ RDF11.GeneralizedTriple.hasBlank b t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH"
+      ],
+      "parent_declaration_if_applicable": "RDF11.GeneralizedGraph.hasBlank",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.InstanceCheckScope.conclusion_list",
+      "module": "RDF11.InstanceCheckScope",
+      "kind": "theorem",
+      "type": "∀ {Literal B : Type},\n  RDF11.Set.ofList [RDF11.ClosureSelection.conclusionTriple.generalize] = RDF11.ClosureSelection.conclusion.generalize",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.InstanceCheckScope.conclusion_list._simp_1_2",
+      "module": "RDF11.InstanceCheckScope",
+      "kind": "theorem",
+      "type": "∀ {α : Sort u_1} {a b : α}, (a = b) = (b = a)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH"
+      ],
+      "parent_declaration_if_applicable": "RDF11.InstanceCheckScope.conclusion_list",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.InstanceCheckScope.decode",
+      "module": "RDF11.InstanceCheckScope",
+      "kind": "definition",
+      "type": "RDF11.ClosureSelection.Iri → Option Nat",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.InstanceCheckScope.decode._sparseCasesOn_1",
+      "module": "RDF11.InstanceCheckScope",
+      "kind": "definition",
+      "type": "{α : Type u} →\n  {β : Type v} →\n    {motive : α ⊕ β → Sort u_1} →\n      (t : α ⊕ β) → ((val : α) → motive (Sum.inl val)) → (Nat.hasNotBit 1 t.ctorIdx → motive t) → motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH"
+      ],
+      "parent_declaration_if_applicable": "RDF11.InstanceCheckScope.decode",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.InstanceCheckScope.decode._sparseCasesOn_1.else_eq",
+      "module": "RDF11.InstanceCheckScope",
+      "kind": "theorem",
+      "type": "∀ {α : Type u} {β : Type v} {motive : α ⊕ β → Sort u_1} (t : α ⊕ β) (inl : (val : α) → motive (Sum.inl val))\n  («else» : Nat.hasNotBit 1 t.ctorIdx → motive t) (h : Nat.hasNotBit 1 t.ctorIdx),\n  RDF11.InstanceCheckScope.decode._sparseCasesOn_1 t inl «else» = «else» h",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH"
+      ],
+      "parent_declaration_if_applicable": "RDF11.InstanceCheckScope.decode._sparseCasesOn_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.InstanceCheckScope.decode._sparseCasesOn_2",
+      "module": "RDF11.InstanceCheckScope",
+      "kind": "definition",
+      "type": "{motive : RDF11.RDFSSymbol → Sort u} →\n  (t : RDF11.RDFSSymbol) →\n    ((a : RDF11.RDFSymbol) → motive (RDF11.RDFSSymbol.rdf a)) → (Nat.hasNotBit 1 t.ctorIdx → motive t) → motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH"
+      ],
+      "parent_declaration_if_applicable": "RDF11.InstanceCheckScope.decode",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.InstanceCheckScope.decode._sparseCasesOn_2.else_eq",
+      "module": "RDF11.InstanceCheckScope",
+      "kind": "theorem",
+      "type": "∀ {motive : RDF11.RDFSSymbol → Sort u} (t : RDF11.RDFSSymbol)\n  (rdf : (a : RDF11.RDFSymbol) → motive (RDF11.RDFSSymbol.rdf a)) («else» : Nat.hasNotBit 1 t.ctorIdx → motive t)\n  (h : Nat.hasNotBit 1 t.ctorIdx), RDF11.InstanceCheckScope.decode._sparseCasesOn_2 t rdf «else» = «else» h",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH"
+      ],
+      "parent_declaration_if_applicable": "RDF11.InstanceCheckScope.decode._sparseCasesOn_2",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.InstanceCheckScope.decode._sparseCasesOn_3",
+      "module": "RDF11.InstanceCheckScope",
+      "kind": "definition",
+      "type": "{motive : RDF11.RDFSymbol → Sort u} →\n  (t : RDF11.RDFSymbol) →\n    ((a : Nat) → motive (RDF11.RDFSymbol.container a)) → (Nat.hasNotBit 65536 t.ctorIdx → motive t) → motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH"
+      ],
+      "parent_declaration_if_applicable": "RDF11.InstanceCheckScope.decode",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.InstanceCheckScope.decode._sparseCasesOn_3.else_eq",
+      "module": "RDF11.InstanceCheckScope",
+      "kind": "theorem",
+      "type": "∀ {motive : RDF11.RDFSymbol → Sort u} (t : RDF11.RDFSymbol)\n  (container : (a : Nat) → motive (RDF11.RDFSymbol.container a)) («else» : Nat.hasNotBit 65536 t.ctorIdx → motive t)\n  (h : Nat.hasNotBit 65536 t.ctorIdx), RDF11.InstanceCheckScope.decode._sparseCasesOn_3 t container «else» = «else» h",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH"
+      ],
+      "parent_declaration_if_applicable": "RDF11.InstanceCheckScope.decode._sparseCasesOn_3",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.InstanceCheckScope.decode.eq_1",
+      "module": "RDF11.InstanceCheckScope",
+      "kind": "theorem",
+      "type": "∀ (n : Nat), RDF11.InstanceCheckScope.decode (Sum.inl (RDF11.RDFSSymbol.rdf (RDF11.RDFSymbol.container n))) = some n",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH"
+      ],
+      "parent_declaration_if_applicable": "RDF11.InstanceCheckScope.decode",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.InstanceCheckScope.decode.eq_2",
+      "module": "RDF11.InstanceCheckScope",
+      "kind": "theorem",
+      "type": "∀ (x : RDF11.ClosureSelection.Iri),\n  (∀ (n : Nat), x = Sum.inl (RDF11.RDFSSymbol.rdf (RDF11.RDFSymbol.container n)) → False) →\n    RDF11.InstanceCheckScope.decode x = none",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH"
+      ],
+      "parent_declaration_if_applicable": "RDF11.InstanceCheckScope.decode",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.InstanceCheckScope.decode.match_1",
+      "module": "RDF11.InstanceCheckScope",
+      "kind": "definition",
+      "type": "(motive : RDF11.ClosureSelection.Iri → Sort u_1) →\n  (x : RDF11.ClosureSelection.Iri) →\n    ((n : Nat) → motive (Sum.inl (RDF11.RDFSSymbol.rdf (RDF11.RDFSymbol.container n)))) →\n      ((x : RDF11.ClosureSelection.Iri) → motive x) → motive x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH"
+      ],
+      "parent_declaration_if_applicable": "RDF11.InstanceCheckScope.decode",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.InstanceCheckScope.decoder",
+      "module": "RDF11.InstanceCheckScope",
+      "kind": "definition",
+      "type": "RDF11.ClosureEvaluation.ContainerDecoder fun n =>\n  RDF11.ClosureSelection.vocabulary.iri (RDF11.RDFSSymbol.rdf (RDF11.RDFSymbol.container n))",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.InstanceCheckScope.decoder._proof_1",
+      "module": "RDF11.InstanceCheckScope",
+      "kind": "theorem",
+      "type": "∀ (a : RDF11.ClosureSelection.Iri) (n : Nat),\n  RDF11.InstanceCheckScope.decode a = some n ↔\n    a = RDF11.ClosureSelection.vocabulary.iri (RDF11.RDFSSymbol.rdf (RDF11.RDFSymbol.container n))",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH"
+      ],
+      "parent_declaration_if_applicable": "RDF11.InstanceCheckScope.decoder",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.InstanceCheckScope.generalized_success",
+      "module": "RDF11.InstanceCheckScope",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} [inst : DecidableEq Iri] [inst_1 : DecidableEq Literal] (s p : Iri),\n  RDF11.InstanceSearch.check [RDF11.GeneralizedScope.substitutedTriple s p] [RDF11.GeneralizedScope.originalTriple s] =\n    true",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.InstanceCheckScope.generalized_success_not_entails",
+      "module": "RDF11.InstanceCheckScope",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} [inst : DecidableEq Iri] [inst_1 : DecidableEq Literal] (s p : Iri),\n  s ≠ p →\n    RDF11.InstanceSearch.check [RDF11.GeneralizedScope.substitutedTriple s p]\n          [RDF11.GeneralizedScope.originalTriple s] =\n        true ∧\n      ¬RDF11.SimplyEntails (RDF11.Set.ofList [RDF11.GeneralizedScope.substitutedTriple s p])\n          (RDF11.Set.ofList [RDF11.GeneralizedScope.originalTriple s])",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH",
+        "MT11-FINITE-INSTANCE-DECISION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.InstanceCheckScope.premise_list",
+      "module": "RDF11.InstanceCheckScope",
+      "kind": "theorem",
+      "type": "∀ {Literal B : Type},\n  RDF11.Set.ofList [RDF11.ClosureSelection.premiseTriple.generalize] = RDF11.ClosureSelection.premise.generalize",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.InstanceCheckScope.premise_list._simp_1_2",
+      "module": "RDF11.InstanceCheckScope",
+      "kind": "theorem",
+      "type": "∀ {α : Sort u_1} {a b : α}, (a = b) = (b = a)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH"
+      ],
+      "parent_declaration_if_applicable": "RDF11.InstanceCheckScope.premise_list",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.InstanceCheckScope.selection_failure",
+      "module": "RDF11.InstanceCheckScope",
+      "kind": "theorem",
+      "type": "∀ {Literal B Value : Type} [inst : DecidableEq Literal] [inst_1 : DecidableEq B]\n  (T : RDF11.DatatypeTheory RDF11.ClosureSelection.Iri Literal Value),\n  RDF11.ClosureEvaluation.rdfsCheck T.literalSyntax.datatype RDF11.ClosureSelection.vocabulary\n      RDF11.InstanceCheckScope.decoder [RDF11.ClosureSelection.premiseTriple.generalize]\n      [RDF11.ClosureSelection.conclusionTriple.generalize] =\n    false",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH",
+        "MT11-GENERALIZED-CLOSURE-COMPLETENESS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.InstanceCheckScope.selection_failure_consistent",
+      "module": "RDF11.InstanceCheckScope",
+      "kind": "theorem",
+      "type": "∀ {Literal B Value : Type} [inst : DecidableEq Literal] [inst_1 : DecidableEq B]\n  (T : RDF11.DatatypeTheory RDF11.ClosureSelection.Iri Literal Value),\n  RDF11.RDFSModelConstruction.Parameters T RDF11.ClosureSelection.vocabulary.toRDF.baseDatatypes\n      RDF11.ClosureSelection.vocabulary →\n    RDF11.ClosureEvaluation.rdfsCheck T.literalSyntax.datatype RDF11.ClosureSelection.vocabulary\n          RDF11.InstanceCheckScope.decoder [RDF11.ClosureSelection.premiseTriple.generalize]\n          [RDF11.ClosureSelection.conclusionTriple.generalize] =\n        false ∧\n      RDF11.RDFSEntails T RDF11.ClosureSelection.vocabulary.toRDF.baseDatatypes RDF11.ClosureSelection.vocabulary\n          RDF11.ClosureSelection.premise.generalize RDF11.ClosureSelection.conclusion.generalize ∧\n        ∃ U I,\n          I.RDFSModel T RDF11.ClosureSelection.vocabulary.toRDF.baseDatatypes RDF11.ClosureSelection.vocabulary ∧\n            I.Satisfies RDF11.ClosureSelection.premise.generalize",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH",
+        "MT11-GENERALIZED-CLOSURE-COMPLETENESS",
+        "MT11-EXECUTABLE-CLOSURE-INSTANCE-CHECK"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.InstanceSearch.accepts",
+      "module": "RDF11.InstanceSearch",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  [DecidableEq Iri] →\n    [DecidableEq Literal] →\n      [DecidableEq B] →\n        List (RDF11.GeneralizedTriple Iri Literal B) →\n          List (RDF11.GeneralizedTriple Iri Literal B) → RDF11.Substitution Iri Literal B → Bool",
+      "role": "engineering_refinement",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.InstanceSearch.accepts._proof_1",
+      "module": "RDF11.InstanceSearch",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} [inst : DecidableEq Iri] [inst_1 : DecidableEq Literal] [inst_2 : DecidableEq B],\n  LawfulBEq (RDF11.GeneralizedTriple Iri Literal B)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH"
+      ],
+      "parent_declaration_if_applicable": "RDF11.InstanceSearch.accepts",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.InstanceSearch.accepts.congr_simp",
+      "module": "RDF11.InstanceSearch",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {inst : DecidableEq Iri} [inst_1 : DecidableEq Iri] {inst_2 : DecidableEq Literal}\n  [inst_3 : DecidableEq Literal] {inst_4 : DecidableEq B} [inst_5 : DecidableEq B]\n  (G G_1 : List (RDF11.GeneralizedTriple Iri Literal B)),\n  G = G_1 →\n    ∀ (E E_1 : List (RDF11.GeneralizedTriple Iri Literal B)),\n      E = E_1 →\n        ∀ (μ μ_1 : RDF11.Substitution Iri Literal B),\n          μ = μ_1 → RDF11.InstanceSearch.accepts G E μ = RDF11.InstanceSearch.accepts G_1 E_1 μ_1",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH"
+      ],
+      "parent_declaration_if_applicable": "RDF11.InstanceSearch.accepts",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.InstanceSearch.accepts.eq_1",
+      "module": "RDF11.InstanceSearch",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} [inst : DecidableEq Iri] [inst_1 : DecidableEq Literal] [inst_2 : DecidableEq B]\n  (G E : List (RDF11.GeneralizedTriple Iri Literal B)) (μ : RDF11.Substitution Iri Literal B),\n  RDF11.InstanceSearch.accepts G E μ = E.all fun t => decide (RDF11.GeneralizedTriple.substitute μ t ∈ G)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH"
+      ],
+      "parent_declaration_if_applicable": "RDF11.InstanceSearch.accepts",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.InstanceSearch.accepts_iff",
+      "module": "RDF11.InstanceSearch",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} [inst : DecidableEq Iri] [inst_1 : DecidableEq Literal] [inst_2 : DecidableEq B]\n  (G E : List (RDF11.GeneralizedTriple Iri Literal B)) (μ : RDF11.Substitution Iri Literal B),\n  RDF11.InstanceSearch.accepts G E μ = true ↔\n    RDF11.Set.subset (RDF11.GeneralizedGraph.substitute μ (RDF11.Set.ofList E)) (RDF11.Set.ofList G)",
+      "role": "engineering_refinement",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.InstanceSearch.accepts_iff._simp_1_2",
+      "module": "RDF11.InstanceSearch",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_1} {p : α → Bool} {l : List α}, (l.all p = true) = ∀ (x : α), x ∈ l → p x = true",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH"
+      ],
+      "parent_declaration_if_applicable": "RDF11.InstanceSearch.accepts_iff",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.InstanceSearch.apartCheck",
+      "module": "RDF11.InstanceDecision",
+      "kind": "definition",
+      "type": "{Iri Literal B₁ B₂ : Type} →\n  [DecidableEq Iri] →\n    [DecidableEq Literal] →\n      [DecidableEq B₁] →\n        [DecidableEq B₂] → List (RDF11.GeneralizedTriple Iri Literal B₁) → List (RDF11.Triple Iri Literal B₂) → Bool",
+      "role": "engineering_refinement",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH",
+        "MT11-SIMPLE-DECIDABILITY"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.InstanceSearch.apartCheck.eq_1",
+      "module": "RDF11.InstanceDecision",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B₁ B₂ : Type} [inst : DecidableEq Iri] [inst_1 : DecidableEq Literal] [inst_2 : DecidableEq B₁]\n  [inst_3 : DecidableEq B₂] (G : List (RDF11.GeneralizedTriple Iri Literal B₁))\n  (E : List (RDF11.Triple Iri Literal B₂)),\n  RDF11.InstanceSearch.apartCheck G E =\n    RDF11.InstanceSearch.ordinaryCheck (List.map (RDF11.GeneralizedTriple.mapBlank Sum.inl) G)\n      (List.map (RDF11.Triple.mapBlank Sum.inr) E)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH"
+      ],
+      "parent_declaration_if_applicable": "RDF11.InstanceSearch.apartCheck",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.InstanceSearch.apartCheck_iff",
+      "module": "RDF11.InstanceDecision",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B₁ B₂ : Type} [inst : DecidableEq Iri] [inst_1 : DecidableEq Literal] [inst_2 : DecidableEq B₁]\n  [inst_3 : DecidableEq B₂] (G : List (RDF11.GeneralizedTriple Iri Literal B₁))\n  (E : List (RDF11.Triple Iri Literal B₂)),\n  RDF11.InstanceSearch.apartCheck G E = true ↔\n    RDF11.SimplyEntails (RDF11.Set.ofList G) (RDF11.Graph.generalize (RDF11.Set.ofList E))",
+      "role": "engineering_refinement",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH",
+        "MT11-SIMPLE-DECIDABILITY",
+        "MT11-FINITE-INSTANCE-DECISION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.InstanceSearch.apartDecision",
+      "module": "RDF11.InstanceDecision",
+      "kind": "definition",
+      "type": "{Iri Literal B₁ B₂ : Type} →\n  [DecidableEq Iri] →\n    [DecidableEq Literal] →\n      [DecidableEq B₁] →\n        [DecidableEq B₂] →\n          (G : List (RDF11.GeneralizedTriple Iri Literal B₁)) →\n            (E : List (RDF11.Triple Iri Literal B₂)) →\n              Decidable (RDF11.SimplyEntails (RDF11.Set.ofList G) (RDF11.Graph.generalize (RDF11.Set.ofList E)))",
+      "role": "engineering_refinement",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH",
+        "MT11-SIMPLE-DECIDABILITY",
+        "MT11-FINITE-INSTANCE-DECISION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.InstanceSearch.assignments",
+      "module": "RDF11.InstanceSearch",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  [DecidableEq B] → List (RDF11.Term Iri Literal B) → List B → List (RDF11.Substitution Iri Literal B)",
+      "role": "engineering_refinement",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.InstanceSearch.assignments.eq_1",
+      "module": "RDF11.InstanceSearch",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} [inst : DecidableEq B] (pool : List (RDF11.Term Iri Literal B)) (bs : List B),\n  RDF11.InstanceSearch.assignments pool bs =\n    List.foldr (fun b previous => List.flatMap (fun μ => List.map (RDF11.InstanceSearch.update μ b) pool) previous)\n      [fun x => none] bs",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH"
+      ],
+      "parent_declaration_if_applicable": "RDF11.InstanceSearch.assignments",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.InstanceSearch.assignments_cover",
+      "module": "RDF11.InstanceSearch",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} [inst : DecidableEq B] (pool : List (RDF11.Term Iri Literal B)) (bs : List B)\n  (μ : RDF11.Substitution Iri Literal B),\n  (∀ (b : B), b ∈ bs → μ.resolve b ∈ pool) →\n    ∃ ν, ν ∈ RDF11.InstanceSearch.assignments pool bs ∧ ∀ (b : B), b ∈ bs → ν.resolve b = μ.resolve b",
+      "role": "engineering_refinement",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH",
+        "MT11-FINITE-INSTANCE-DECISION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.InstanceSearch.assignments_length",
+      "module": "RDF11.InstanceSearch",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} [inst : DecidableEq B] (pool : List (RDF11.Term Iri Literal B)) (bs : List B),\n  (RDF11.InstanceSearch.assignments pool bs).length = pool.length ^ bs.length",
+      "role": "engineering_refinement",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH",
+        "MT11-SIMPLE-ENTAILMENT-COMPLEXITY"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.InstanceSearch.blank_image_in_terms",
+      "module": "RDF11.InstanceSearch",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} [inst : DecidableEq Iri] [inst_1 : DecidableEq Literal] [inst_2 : DecidableEq B]\n  (G E : List (RDF11.GeneralizedTriple Iri Literal B)) (μ : RDF11.Substitution Iri Literal B),\n  RDF11.Set.subset (RDF11.GeneralizedGraph.substitute μ (RDF11.Set.ofList E)) (RDF11.Set.ofList G) →\n    ∀ (b : B), b ∈ RDF11.InstanceSearch.blanks E → μ.resolve b ∈ RDF11.InstanceSearch.terms G",
+      "role": "engineering_refinement",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH",
+        "MT11-FINITE-INSTANCE-DECISION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.InstanceSearch.blanks",
+      "module": "RDF11.InstanceSearch",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} → [DecidableEq B] → List (RDF11.GeneralizedTriple Iri Literal B) → List B",
+      "role": "engineering_refinement",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH",
+        "MT11-FINITE-INSTANCE-DECISION",
+        "MT11-SIMPLE-ENTAILMENT-COMPLEXITY"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.InstanceSearch.blanks.eq_1",
+      "module": "RDF11.InstanceSearch",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} [inst : DecidableEq B] (E : List (RDF11.GeneralizedTriple Iri Literal B)),\n  RDF11.InstanceSearch.blanks E = RDF11.Enumeration.unique (List.flatMap RDF11.GeneralizedTriple.blankList E)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH"
+      ],
+      "parent_declaration_if_applicable": "RDF11.InstanceSearch.blanks",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.InstanceSearch.candidates",
+      "module": "RDF11.InstanceSearch",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  [DecidableEq Iri] →\n    [DecidableEq Literal] →\n      [DecidableEq B] →\n        List (RDF11.GeneralizedTriple Iri Literal B) →\n          List (RDF11.GeneralizedTriple Iri Literal B) → List (RDF11.Substitution Iri Literal B)",
+      "role": "engineering_refinement",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.InstanceSearch.candidates_complete",
+      "module": "RDF11.InstanceSearch",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} [inst : DecidableEq Iri] [inst_1 : DecidableEq Literal] [inst_2 : DecidableEq B]\n  (G E : List (RDF11.GeneralizedTriple Iri Literal B)) (μ : RDF11.Substitution Iri Literal B),\n  RDF11.Set.subset (RDF11.GeneralizedGraph.substitute μ (RDF11.Set.ofList E)) (RDF11.Set.ofList G) →\n    ∃ ν, ν ∈ RDF11.InstanceSearch.candidates G E ∧ RDF11.InstanceSearch.accepts G E ν = true",
+      "role": "engineering_refinement",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH",
+        "MT11-FINITE-INSTANCE-DECISION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.InstanceSearch.candidates_length",
+      "module": "RDF11.InstanceSearch",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} [inst : DecidableEq Iri] [inst_1 : DecidableEq Literal] [inst_2 : DecidableEq B]\n  (G E : List (RDF11.GeneralizedTriple Iri Literal B)),\n  (RDF11.InstanceSearch.candidates G E).length =\n    (RDF11.InstanceSearch.terms G).length ^ (RDF11.InstanceSearch.blanks E).length",
+      "role": "engineering_refinement",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH",
+        "MT11-FINITE-INSTANCE-DECISION",
+        "MT11-SIMPLE-ENTAILMENT-COMPLEXITY"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.InstanceSearch.certificate",
+      "module": "RDF11.InstanceSearch",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  [DecidableEq Iri] →\n    [DecidableEq Literal] →\n      [DecidableEq B] →\n        (G E : List (RDF11.GeneralizedTriple Iri Literal B)) →\n          Option\n            { μ // RDF11.Set.subset (RDF11.GeneralizedGraph.substitute μ (RDF11.Set.ofList E)) (RDF11.Set.ofList G) }",
+      "role": "engineering_refinement",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH",
+        "MT11-FINITE-INSTANCE-DECISION",
+        "MT11-ORDINARY-RULE-CHECK-PROCEDURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.InstanceSearch.certificate.match_1",
+      "module": "RDF11.InstanceSearch",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  (motive : Option (RDF11.Substitution Iri Literal B) → Sort u_1) →\n    (x : Option (RDF11.Substitution Iri Literal B)) →\n      (x = none → motive none) → ((μ : RDF11.Substitution Iri Literal B) → x = some μ → motive (some μ)) → motive x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH"
+      ],
+      "parent_declaration_if_applicable": "RDF11.InstanceSearch.certificate",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.InstanceSearch.certificate_isSome",
+      "module": "RDF11.InstanceSearch",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} [inst : DecidableEq Iri] [inst_1 : DecidableEq Literal] [inst_2 : DecidableEq B]\n  (G E : List (RDF11.GeneralizedTriple Iri Literal B)),\n  (RDF11.InstanceSearch.certificate G E).isSome = RDF11.InstanceSearch.check G E",
+      "role": "engineering_refinement",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH",
+        "MT11-FINITE-INSTANCE-DECISION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.InstanceSearch.check",
+      "module": "RDF11.InstanceSearch",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  [DecidableEq Iri] →\n    [DecidableEq Literal] →\n      [DecidableEq B] →\n        List (RDF11.GeneralizedTriple Iri Literal B) → List (RDF11.GeneralizedTriple Iri Literal B) → Bool",
+      "role": "engineering_refinement",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH",
+        "MT11-FINITE-INSTANCE-DECISION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.InstanceSearch.check.congr_simp",
+      "module": "RDF11.InstanceSearch",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {inst : DecidableEq Iri} [inst_1 : DecidableEq Iri] {inst_2 : DecidableEq Literal}\n  [inst_3 : DecidableEq Literal] {inst_4 : DecidableEq B} [inst_5 : DecidableEq B]\n  (G G_1 : List (RDF11.GeneralizedTriple Iri Literal B)),\n  G = G_1 →\n    ∀ (E E_1 : List (RDF11.GeneralizedTriple Iri Literal B)),\n      E = E_1 → RDF11.InstanceSearch.check G E = RDF11.InstanceSearch.check G_1 E_1",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH"
+      ],
+      "parent_declaration_if_applicable": "RDF11.InstanceSearch.check",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.InstanceSearch.check.eq_1",
+      "module": "RDF11.InstanceSearch",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} [inst : DecidableEq Iri] [inst_1 : DecidableEq Literal] [inst_2 : DecidableEq B]\n  (G E : List (RDF11.GeneralizedTriple Iri Literal B)),\n  RDF11.InstanceSearch.check G E = (RDF11.InstanceSearch.search G E).isSome",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH"
+      ],
+      "parent_declaration_if_applicable": "RDF11.InstanceSearch.check",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.InstanceSearch.check_ground",
+      "module": "RDF11.InstanceSearch",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} [inst : DecidableEq Iri] [inst_1 : DecidableEq Literal] [inst_2 : DecidableEq B]\n  (G E : List (RDF11.GeneralizedTriple Iri Literal B)),\n  RDF11.GeneralizedGraph.ground (RDF11.Set.ofList E) → RDF11.InstanceSearch.check G E = E.all fun t => decide (t ∈ G)",
+      "role": "engineering_refinement",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH",
+        "MT11-SIMPLE-DECIDABILITY",
+        "MT11-FINITE-INSTANCE-DECISION",
+        "MT11-SIMPLE-ENTAILMENT-COMPLEXITY"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.InstanceSearch.check_iff",
+      "module": "RDF11.InstanceSearch",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} [inst : DecidableEq Iri] [inst_1 : DecidableEq Literal] [inst_2 : DecidableEq B]\n  (G E : List (RDF11.GeneralizedTriple Iri Literal B)),\n  RDF11.InstanceSearch.check G E = true ↔\n    ∃ μ, RDF11.Set.subset (RDF11.GeneralizedGraph.substitute μ (RDF11.Set.ofList E)) (RDF11.Set.ofList G)",
+      "role": "engineering_refinement",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH",
+        "MT11-FINITE-INSTANCE-DECISION",
+        "MT11-ORDINARY-RULE-CHECK-PROCEDURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.InstanceSearch.check_iff._simp_1_3",
+      "module": "RDF11.InstanceSearch",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_1} {xs : List α} {p : α → Bool}, ((List.find? p xs).isSome = true) = ∃ x, x ∈ xs ∧ p x = true",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH"
+      ],
+      "parent_declaration_if_applicable": "RDF11.InstanceSearch.check_iff",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.InstanceSearch.check_respects_graphs",
+      "module": "RDF11.InstanceSearch",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} [inst : DecidableEq Iri] [inst_1 : DecidableEq Literal] [inst_2 : DecidableEq B]\n  (G H E F : List (RDF11.GeneralizedTriple Iri Literal B)),\n  RDF11.Set.ofList G = RDF11.Set.ofList H →\n    RDF11.Set.ofList E = RDF11.Set.ofList F → RDF11.InstanceSearch.check G E = RDF11.InstanceSearch.check H F",
+      "role": "engineering_refinement",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH",
+        "MT11-FINITE-INSTANCE-DECISION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.InstanceSearch.decision",
+      "module": "RDF11.InstanceSearch",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  [DecidableEq Iri] →\n    [DecidableEq Literal] →\n      [DecidableEq B] →\n        (G E : List (RDF11.GeneralizedTriple Iri Literal B)) →\n          Decidable\n            (∃ μ, RDF11.Set.subset (RDF11.GeneralizedGraph.substitute μ (RDF11.Set.ofList E)) (RDF11.Set.ofList G))",
+      "role": "engineering_refinement",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH",
+        "MT11-FINITE-INSTANCE-DECISION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.InstanceSearch.entailment_apart_iff",
+      "module": "RDF11.InstanceDecision",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B₁ B₂ : Type} (G : RDF11.GeneralizedGraph Iri Literal B₁) (E : RDF11.GeneralizedGraph Iri Literal B₂),\n  RDF11.SimplyEntails (RDF11.GeneralizedGraph.mapBlank Sum.inl G) (RDF11.GeneralizedGraph.mapBlank Sum.inr E) ↔\n    RDF11.SimplyEntails G E",
+      "role": "engineering_refinement",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH",
+        "MT11-INTERPOLATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.InstanceSearch.generalize_list",
+      "module": "RDF11.InstanceDecision",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (E : List (RDF11.Triple Iri Literal B)),\n  RDF11.Set.ofList (List.map RDF11.Triple.generalize E) = RDF11.Graph.generalize (RDF11.Set.ofList E)",
+      "role": "engineering_refinement",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.InstanceSearch.mapBlank_list",
+      "module": "RDF11.InstanceDecision",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B₁ B₂ : Type} (G : List (RDF11.GeneralizedTriple Iri Literal B₁)) (f : B₁ → B₂),\n  RDF11.Set.ofList (List.map (RDF11.GeneralizedTriple.mapBlank f) G) =\n    RDF11.GeneralizedGraph.mapBlank f (RDF11.Set.ofList G)",
+      "role": "engineering_refinement",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.InstanceSearch.mem_blanks",
+      "module": "RDF11.InstanceSearch",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} [inst : DecidableEq B] (E : List (RDF11.GeneralizedTriple Iri Literal B)) (b : B),\n  b ∈ RDF11.InstanceSearch.blanks E ↔ RDF11.GeneralizedGraph.hasBlank (RDF11.Set.ofList E) b",
+      "role": "engineering_refinement",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.InstanceSearch.mem_blanks._simp_1_2",
+      "module": "RDF11.InstanceSearch",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_1} {β : Type u_2} {f : α → List β} {b : β} {l : List α}, (b ∈ List.flatMap f l) = ∃ a, a ∈ l ∧ b ∈ f a",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH"
+      ],
+      "parent_declaration_if_applicable": "RDF11.InstanceSearch.mem_blanks",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.InstanceSearch.mem_blanks._simp_1_3",
+      "module": "RDF11.InstanceSearch",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (t : RDF11.GeneralizedTriple Iri Literal B) (b : B),\n  (b ∈ t.blankList) = RDF11.GeneralizedTriple.hasBlank b t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH"
+      ],
+      "parent_declaration_if_applicable": "RDF11.InstanceSearch.mem_blanks",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.InstanceSearch.mem_terms",
+      "module": "RDF11.InstanceSearch",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} [inst : DecidableEq Iri] [inst_1 : DecidableEq Literal] [inst_2 : DecidableEq B]\n  (G : List (RDF11.GeneralizedTriple Iri Literal B)) (q : RDF11.Term Iri Literal B),\n  q ∈ RDF11.InstanceSearch.terms G ↔ ∃ t, t ∈ G ∧ (q = t.subject ∨ q = t.predicate ∨ q = t.object)",
+      "role": "engineering_refinement",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.InstanceSearch.mem_terms._simp_1_2",
+      "module": "RDF11.InstanceSearch",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_1} {β : Type u_2} {f : α → List β} {b : β} {l : List α}, (b ∈ List.flatMap f l) = ∃ a, a ∈ l ∧ b ∈ f a",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH"
+      ],
+      "parent_declaration_if_applicable": "RDF11.InstanceSearch.mem_terms",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.InstanceSearch.negative_countermodel",
+      "module": "RDF11.InstanceDecision",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} [inst : DecidableEq Iri] [inst_1 : DecidableEq Literal] [inst_2 : DecidableEq B]\n  (G E : List (RDF11.GeneralizedTriple Iri Literal B)),\n  RDF11.InstanceSearch.check G E = false →\n    (RDF11.Herbrand.interpretation (RDF11.Set.ofList G)).Satisfies (RDF11.Set.ofList G) ∧\n      ¬(RDF11.Herbrand.interpretation (RDF11.Set.ofList G)).Satisfies (RDF11.Set.ofList E)",
+      "role": "engineering_refinement",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH",
+        "MT11-SIMPLE-DECIDABILITY",
+        "MT11-FINITE-INSTANCE-DECISION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.InstanceSearch.negative_not_entails",
+      "module": "RDF11.InstanceDecision",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} [inst : DecidableEq Iri] [inst_1 : DecidableEq Literal] [inst_2 : DecidableEq B]\n  (G E : List (RDF11.GeneralizedTriple Iri Literal B)),\n  RDF11.InstanceSearch.check G E = false → ¬RDF11.SimplyEntails (RDF11.Set.ofList G) (RDF11.Set.ofList E)",
+      "role": "engineering_refinement",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.InstanceSearch.ordinaryCheck",
+      "module": "RDF11.InstanceDecision",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  [DecidableEq Iri] →\n    [DecidableEq Literal] →\n      [DecidableEq B] → List (RDF11.GeneralizedTriple Iri Literal B) → List (RDF11.Triple Iri Literal B) → Bool",
+      "role": "engineering_refinement",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH",
+        "MT11-SIMPLE-DECIDABILITY"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.InstanceSearch.ordinaryCheck.eq_1",
+      "module": "RDF11.InstanceDecision",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} [inst : DecidableEq Iri] [inst_1 : DecidableEq Literal] [inst_2 : DecidableEq B]\n  (G : List (RDF11.GeneralizedTriple Iri Literal B)) (E : List (RDF11.Triple Iri Literal B)),\n  RDF11.InstanceSearch.ordinaryCheck G E = RDF11.InstanceSearch.check G (List.map RDF11.Triple.generalize E)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH"
+      ],
+      "parent_declaration_if_applicable": "RDF11.InstanceSearch.ordinaryCheck",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.InstanceSearch.ordinaryCheck_iff",
+      "module": "RDF11.InstanceDecision",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} [inst : DecidableEq Iri] [inst_1 : DecidableEq Literal] [inst_2 : DecidableEq B]\n  (G : List (RDF11.GeneralizedTriple Iri Literal B)) (E : List (RDF11.Triple Iri Literal B)),\n  RDF11.InstanceSearch.ordinaryCheck G E = true ↔\n    RDF11.SimplyEntails (RDF11.Set.ofList G) (RDF11.Graph.generalize (RDF11.Set.ofList E))",
+      "role": "engineering_refinement",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH",
+        "MT11-SIMPLE-DECIDABILITY",
+        "MT11-FINITE-INSTANCE-DECISION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.InstanceSearch.ordinaryDecision",
+      "module": "RDF11.InstanceDecision",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  [DecidableEq Iri] →\n    [DecidableEq Literal] →\n      [DecidableEq B] →\n        (G : List (RDF11.GeneralizedTriple Iri Literal B)) →\n          (E : List (RDF11.Triple Iri Literal B)) →\n            Decidable (RDF11.SimplyEntails (RDF11.Set.ofList G) (RDF11.Graph.generalize (RDF11.Set.ofList E)))",
+      "role": "engineering_refinement",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH",
+        "MT11-SIMPLE-DECIDABILITY",
+        "MT11-FINITE-INSTANCE-DECISION",
+        "MT11-SIMPLE-ENTAILMENT-COMPLEXITY"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.InstanceSearch.ordinary_interpolation_apart",
+      "module": "RDF11.InstanceDecision",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B₁ B₂ : Type} (G : RDF11.GeneralizedGraph Iri Literal B₁) (E : RDF11.Graph Iri Literal B₂),\n  RDF11.SimplyEntails G E.generalize ↔\n    ∃ μ,\n      RDF11.Set.subset (RDF11.GeneralizedGraph.substitute μ (RDF11.GeneralizedGraph.mapBlank Sum.inr E.generalize))\n        (RDF11.GeneralizedGraph.mapBlank Sum.inl G)",
+      "role": "engineering_refinement",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH",
+        "MT11-INTERPOLATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.InstanceSearch.ordinary_mapBlank_list",
+      "module": "RDF11.InstanceDecision",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B₁ B₂ : Type} (E : List (RDF11.Triple Iri Literal B₁)) (f : B₁ → B₂),\n  RDF11.Set.ofList (List.map (RDF11.Triple.mapBlank f) E) = RDF11.Graph.mapBlank f (RDF11.Set.ofList E)",
+      "role": "engineering_refinement",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.InstanceSearch.resolve_update",
+      "module": "RDF11.InstanceSearch",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} [inst : DecidableEq B] (μ : RDF11.Substitution Iri Literal B) (b c : B)\n  (q : RDF11.Term Iri Literal B), (RDF11.InstanceSearch.update μ b q).resolve c = if c = b then q else μ.resolve c",
+      "role": "engineering_refinement",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.InstanceSearch.satisfies_left",
+      "module": "RDF11.InstanceDecision",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B₁ B₂ : Type} {U : Type u} (I : RDF11.SimpleInterpretation Iri Literal U)\n  (G : RDF11.GeneralizedGraph Iri Literal B₁), I.Satisfies (RDF11.GeneralizedGraph.mapBlank Sum.inl G) ↔ I.Satisfies G",
+      "role": "engineering_refinement",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH",
+        "MT11-INTERPOLATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.InstanceSearch.satisfies_right",
+      "module": "RDF11.InstanceDecision",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B₁ B₂ : Type} {U : Type u} (I : RDF11.SimpleInterpretation Iri Literal U)\n  (E : RDF11.GeneralizedGraph Iri Literal B₂), I.Satisfies (RDF11.GeneralizedGraph.mapBlank Sum.inr E) ↔ I.Satisfies E",
+      "role": "engineering_refinement",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH",
+        "MT11-INTERPOLATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.InstanceSearch.search",
+      "module": "RDF11.InstanceSearch",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  [DecidableEq Iri] →\n    [DecidableEq Literal] →\n      [DecidableEq B] →\n        List (RDF11.GeneralizedTriple Iri Literal B) →\n          List (RDF11.GeneralizedTriple Iri Literal B) → Option (RDF11.Substitution Iri Literal B)",
+      "role": "engineering_refinement",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH",
+        "MT11-FINITE-INSTANCE-DECISION",
+        "MT11-ORDINARY-RULE-CHECK-PROCEDURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.InstanceSearch.search.eq_1",
+      "module": "RDF11.InstanceSearch",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} [inst : DecidableEq Iri] [inst_1 : DecidableEq Literal] [inst_2 : DecidableEq B]\n  (G E : List (RDF11.GeneralizedTriple Iri Literal B)),\n  RDF11.InstanceSearch.search G E = List.find? (RDF11.InstanceSearch.accepts G E) (RDF11.InstanceSearch.candidates G E)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH"
+      ],
+      "parent_declaration_if_applicable": "RDF11.InstanceSearch.search",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.InstanceSearch.search_sound",
+      "module": "RDF11.InstanceSearch",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} [inst : DecidableEq Iri] [inst_1 : DecidableEq Literal] [inst_2 : DecidableEq B]\n  (G E : List (RDF11.GeneralizedTriple Iri Literal B)) (μ : RDF11.Substitution Iri Literal B),\n  RDF11.InstanceSearch.search G E = some μ →\n    RDF11.Set.subset (RDF11.GeneralizedGraph.substitute μ (RDF11.Set.ofList E)) (RDF11.Set.ofList G)",
+      "role": "engineering_refinement",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH",
+        "MT11-FINITE-INSTANCE-DECISION",
+        "MT11-ORDINARY-RULE-CHECK-PROCEDURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.InstanceSearch.singleton_list",
+      "module": "RDF11.InstanceDecision",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_1} (t : α), RDF11.Set.ofList [t] = RDF11.Set.singleton t",
+      "role": "engineering_refinement",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.InstanceSearch.term_substitute_agrees",
+      "module": "RDF11.InstanceSearch",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (q : RDF11.Term Iri Literal B) (μ ν : RDF11.Substitution Iri Literal B),\n  (∀ (b : B), RDF11.Term.hasBlank b q → μ.resolve b = ν.resolve b) →\n    RDF11.Term.substitute μ q = RDF11.Term.substitute ν q",
+      "role": "engineering_refinement",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.InstanceSearch.term_substitute_of_blank",
+      "module": "RDF11.InstanceSearch",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (q : RDF11.Term Iri Literal B) (μ : RDF11.Substitution Iri Literal B) (b : B),\n  RDF11.Term.hasBlank b q → RDF11.Term.substitute μ q = μ.resolve b",
+      "role": "engineering_refinement",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.InstanceSearch.terms",
+      "module": "RDF11.InstanceSearch",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  [DecidableEq Iri] →\n    [DecidableEq Literal] →\n      [DecidableEq B] → List (RDF11.GeneralizedTriple Iri Literal B) → List (RDF11.Term Iri Literal B)",
+      "role": "engineering_refinement",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH",
+        "MT11-FINITE-INSTANCE-DECISION",
+        "MT11-SIMPLE-ENTAILMENT-COMPLEXITY"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.InstanceSearch.terms.eq_1",
+      "module": "RDF11.InstanceSearch",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} [inst : DecidableEq Iri] [inst_1 : DecidableEq Literal] [inst_2 : DecidableEq B]\n  (G : List (RDF11.GeneralizedTriple Iri Literal B)),\n  RDF11.InstanceSearch.terms G = RDF11.Enumeration.unique (List.flatMap (fun t => [t.subject, t.predicate, t.object]) G)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH"
+      ],
+      "parent_declaration_if_applicable": "RDF11.InstanceSearch.terms",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.InstanceSearch.triple_substitute_agrees",
+      "module": "RDF11.InstanceSearch",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (t : RDF11.GeneralizedTriple Iri Literal B) (μ ν : RDF11.Substitution Iri Literal B),\n  (∀ (b : B), RDF11.GeneralizedTriple.hasBlank b t → μ.resolve b = ν.resolve b) →\n    RDF11.GeneralizedTriple.substitute μ t = RDF11.GeneralizedTriple.substitute ν t",
+      "role": "engineering_refinement",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.InstanceSearch.update",
+      "module": "RDF11.InstanceSearch",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  [DecidableEq B] → RDF11.Substitution Iri Literal B → B → RDF11.Term Iri Literal B → RDF11.Substitution Iri Literal B",
+      "role": "engineering_refinement",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.InstanceSearch.update.eq_1",
+      "module": "RDF11.InstanceSearch",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} [inst : DecidableEq B] (μ : RDF11.Substitution Iri Literal B) (b : B)\n  (q : RDF11.Term Iri Literal B) (c : B), RDF11.InstanceSearch.update μ b q c = if c = b then some q else μ c",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH"
+      ],
+      "parent_declaration_if_applicable": "RDF11.InstanceSearch.update",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "Spec2Lean.InstanceExecution.GT",
+      "module": "Audit.InstanceExecution",
+      "kind": "definition",
+      "type": "Type",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INSTANCE-EXECUTION-FIXTURES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "Spec2Lean.InstanceExecution.OT",
+      "module": "Audit.InstanceExecution",
+      "kind": "definition",
+      "type": "Type",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INSTANCE-EXECUTION-FIXTURES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "Spec2Lean.InstanceExecution.checks",
+      "module": "Audit.InstanceExecution",
+      "kind": "definition",
+      "type": "List (String × Bool)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INSTANCE-EXECUTION-FIXTURES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "Spec2Lean.InstanceExecution.checks._proof_1",
+      "module": "Audit.InstanceExecution",
+      "kind": "theorem",
+      "type": "LawfulBEq (RDF11.Term String (String × String) Nat)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INSTANCE-EXECUTION-FIXTURES"
+      ],
+      "parent_declaration_if_applicable": "Spec2Lean.InstanceExecution.checks",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "Spec2Lean.InstanceExecution.checks.match_1",
+      "module": "Audit.InstanceExecution",
+      "kind": "definition",
+      "type": "(g pattern : Spec2Lean.InstanceExecution.GT) →\n  (motive :\n      Option\n          { μ //\n            RDF11.Set.subset (RDF11.GeneralizedGraph.substitute μ (RDF11.Set.ofList [pattern]))\n              (RDF11.Set.ofList [g]) } →\n        Sort u_1) →\n    (x :\n        Option\n          { μ //\n            RDF11.Set.subset (RDF11.GeneralizedGraph.substitute μ (RDF11.Set.ofList [pattern]))\n              (RDF11.Set.ofList [g]) }) →\n      (Unit → motive none) →\n        ((witness :\n              { μ //\n                RDF11.Set.subset (RDF11.GeneralizedGraph.substitute μ (RDF11.Set.ofList [pattern]))\n                  (RDF11.Set.ofList [g]) }) →\n            motive (some witness)) →\n          motive x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INSTANCE-EXECUTION-FIXTURES"
+      ],
+      "parent_declaration_if_applicable": "Spec2Lean.InstanceExecution.checks",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "Spec2Lean.InstanceExecution.edge",
+      "module": "Audit.InstanceExecution",
+      "kind": "definition",
+      "type": "RDF11.Term String (String × String) Nat →\n  String → RDF11.Term String (String × String) Nat → Spec2Lean.InstanceExecution.GT",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-INSTANCE-EXECUTION-FIXTURES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.InstanceCheckScope.0.RDF11.InstanceCheckScope.decode.match_1.eq_1",
+      "module": "RDF11.InstanceCheckScope",
+      "kind": "theorem",
+      "type": "∀ (motive : RDF11.ClosureSelection.Iri → Sort u_1) (n : Nat)\n  (h_1 : (n : Nat) → motive (Sum.inl (RDF11.RDFSSymbol.rdf (RDF11.RDFSymbol.container n))))\n  (h_2 : (x : RDF11.ClosureSelection.Iri) → motive x),\n  (match Sum.inl (RDF11.RDFSSymbol.rdf (RDF11.RDFSymbol.container n)) with\n    | Sum.inl (RDF11.RDFSSymbol.rdf (RDF11.RDFSymbol.container n)) => h_1 n\n    | x => h_2 x) =\n    h_1 n",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH"
+      ],
+      "parent_declaration_if_applicable": "RDF11.InstanceCheckScope.decode.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.InstanceCheckScope.0.RDF11.InstanceCheckScope.decode.match_1.eq_2",
+      "module": "RDF11.InstanceCheckScope",
+      "kind": "theorem",
+      "type": "∀ (motive : RDF11.ClosureSelection.Iri → Sort u_1) (x : RDF11.ClosureSelection.Iri)\n  (h_1 : (n : Nat) → motive (Sum.inl (RDF11.RDFSSymbol.rdf (RDF11.RDFSymbol.container n))))\n  (h_2 : (x : RDF11.ClosureSelection.Iri) → motive x),\n  (∀ (n : Nat), x = Sum.inl (RDF11.RDFSSymbol.rdf (RDF11.RDFSymbol.container n)) → False) →\n    (match x with\n      | Sum.inl (RDF11.RDFSSymbol.rdf (RDF11.RDFSymbol.container n)) => h_1 n\n      | x => h_2 x) =\n      h_2 x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH"
+      ],
+      "parent_declaration_if_applicable": "RDF11.InstanceCheckScope.decode.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.InstanceCheckScope.0.RDF11.InstanceCheckScope.decode.match_1.splitter",
+      "module": "RDF11.InstanceCheckScope",
+      "kind": "definition",
+      "type": "(motive : RDF11.ClosureSelection.Iri → Sort u_1) →\n  (x : RDF11.ClosureSelection.Iri) →\n    ((n : Nat) → motive (Sum.inl (RDF11.RDFSSymbol.rdf (RDF11.RDFSymbol.container n)))) →\n      ((x : RDF11.ClosureSelection.Iri) →\n          (∀ (n : Nat), x = Sum.inl (RDF11.RDFSSymbol.rdf (RDF11.RDFSymbol.container n)) → False) → motive x) →\n        motive x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH"
+      ],
+      "parent_declaration_if_applicable": "RDF11.InstanceCheckScope.decode.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.InstanceSearch.0.RDF11.InstanceSearch.certificate.match_1.eq_1",
+      "module": "RDF11.InstanceSearch",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (motive : Option (RDF11.Substitution Iri Literal B) → Sort u_1)\n  (h_1 : none = none → motive none) (h_2 : (μ : RDF11.Substitution Iri Literal B) → none = some μ → motive (some μ)),\n  (match h : none with\n    | none => h_1 h\n    | some μ => h_2 μ h) =\n    h_1 ⋯",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH"
+      ],
+      "parent_declaration_if_applicable": "RDF11.InstanceSearch.certificate.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.InstanceSearch.0.RDF11.InstanceSearch.certificate.match_1.eq_2",
+      "module": "RDF11.InstanceSearch",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (motive : Option (RDF11.Substitution Iri Literal B) → Sort u_1)\n  (μ : RDF11.Substitution Iri Literal B) (h_1 : some μ = none → motive none)\n  (h_2 : (μ_1 : RDF11.Substitution Iri Literal B) → some μ = some μ_1 → motive (some μ_1)),\n  (match h : some μ with\n    | none => h_1 h\n    | some μ_1 => h_2 μ_1 h) =\n    h_2 μ ⋯",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH"
+      ],
+      "parent_declaration_if_applicable": "RDF11.InstanceSearch.certificate.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.InstanceSearch.0.RDF11.InstanceSearch.certificate.match_1.splitter",
+      "module": "RDF11.InstanceSearch",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  (motive : Option (RDF11.Substitution Iri Literal B) → Sort u_1) →\n    (x : Option (RDF11.Substitution Iri Literal B)) →\n      (x = none → motive none) → ((μ : RDF11.Substitution Iri Literal B) → x = some μ → motive (some μ)) → motive x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-INSTANCE-SEARCH"
+      ],
+      "parent_declaration_if_applicable": "RDF11.InstanceSearch.certificate.match_1",
       "review": "pending_expert_review"
     }
   ],

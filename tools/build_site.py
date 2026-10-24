@@ -15,7 +15,7 @@ ARTIFACTS = LAB / "cleanroom/artifacts"
 FILES = [Path("index.html"), Path("labs/index.html"), LAB / "index.html"]
 FILES += [ARTIFACTS / name for name in (
     "source-review.html", "verification.json", "negative-checks.json", "declarations.json",
-    "closure-execution.json"
+    "closure-execution.json", "instance-execution.json"
 )]
 
 
@@ -36,8 +36,10 @@ def main():
     evidence = json.loads((ROOT / ARTIFACTS / "verification.json").read_text())
     negative = json.loads((ROOT / ARTIFACTS / "negative-checks.json").read_text())
     execution = json.loads((ROOT / ARTIFACTS / "closure-execution.json").read_text())
+    instances = json.loads((ROOT / ARTIFACTS / "instance-execution.json").read_text())
     if (evidence["errors"] or negative["status"] != "pass"
-            or execution["status"] != "pass" or not execution["checks"]):
+            or execution["status"] != "pass" or not execution["checks"]
+            or instances["status"] != "pass" or not instances["checks"]):
         raise SystemExit("Refusing to publish failing verification evidence")
     for path in FILES:
         if not (ROOT / path).is_file():

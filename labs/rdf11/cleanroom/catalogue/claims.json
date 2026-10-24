@@ -3,8 +3,8 @@
   "status": "draft_not_complete_coverage",
   "method": "Human-readable AI close reading; selectors locate already selected passages and do not extract assertions.",
   "source_inventory": "../ledger/semantics-inventory.json",
-  "inventory_sha256": "2332e65aaef52f27151e615f3a32184be539940986d77619b0adfc151340e307",
-  "mapping_input_sha256": "fefffcb0c4ff4581a2ac0f8ee67ea3af55b51eafc7db0ad1b00898b3adacba0a",
+  "inventory_sha256": "ebbb01cb7b645e5f4b504c78ac92e6d6bf56073119d04a962ce2e4dbb81e1b91",
+  "mapping_input_sha256": "fb86db27c31b36322abc68bc182fa05c9fc3d9fd2f676dc0b775c4a7f957f134",
   "documents": [
     {
       "id": "mt",
@@ -595,6 +595,7 @@
           "end": 50942,
           "refs": [
             "MT11-EMPTY-ENTAILMENTS",
+            "MT11-FINITE-INSTANCE-DECISION",
             "MT11-INSTANCE-ENTAILMENT",
             "MT11-INTERPOLATION",
             "MT11-PREMISE-MONOTONICITY",
@@ -618,6 +619,7 @@
           "end": 51785,
           "refs": [
             "MT11-EMPTY-ENTAILMENTS",
+            "MT11-FINITE-INSTANCE-DECISION",
             "MT11-INSTANCE-ENTAILMENT",
             "MT11-PREMISE-MONOTONICITY",
             "MT11-SIMPLE-DECIDABILITY",
@@ -2081,6 +2083,23 @@
         },
         {
           "start": 98912,
+          "end": 99843,
+          "refs": [
+            "UNRESOLVED-mt"
+          ],
+          "disposition": "unresolved"
+        },
+        {
+          "start": 99843,
+          "end": 100436,
+          "refs": [
+            "MT11-FINITE-INSTANCE-DECISION",
+            "MT11-ORDINARY-RULE-CHECK-PROCEDURE"
+          ],
+          "disposition": "claim_passage_pending_review"
+        },
+        {
+          "start": 100436,
           "end": 102737,
           "refs": [
             "UNRESOLVED-mt"
@@ -2123,6 +2142,7 @@
           "start": 104238,
           "end": 104990,
           "refs": [
+            "MT11-EXECUTABLE-CLOSURE-INSTANCE-CHECK",
             "MT11-EXECUTABLE-CLOSURE-REFINEMENT",
             "MT11-GENERALIZED-CLOSURE",
             "MT11-GENERALIZED-CLOSURE-COMPLETENESS"
@@ -2141,6 +2161,7 @@
           "start": 105037,
           "end": 105270,
           "refs": [
+            "MT11-EXECUTABLE-CLOSURE-INSTANCE-CHECK",
             "MT11-GENERALIZED-CLOSURE-COMPLETENESS"
           ],
           "disposition": "claim_passage_pending_review"
@@ -3422,7 +3443,8 @@
       "start": 50840,
       "end": 50942,
       "claims": [
-        "MT11-INTERPOLATION"
+        "MT11-INTERPOLATION",
+        "MT11-FINITE-INSTANCE-DECISION"
       ],
       "slice_sha256": "8f810fe2b527b93f9b260cbed67196b5825f43466f3451caf7292b8e48951ce0",
       "locator_tag": "p",
@@ -3450,7 +3472,8 @@
       "start": 51171,
       "end": 51785,
       "claims": [
-        "MT11-SIMPLE-DECIDABILITY"
+        "MT11-SIMPLE-DECIDABILITY",
+        "MT11-FINITE-INSTANCE-DECISION"
       ],
       "slice_sha256": "c4b8b34e23580ca6460dd0d1003763e78b11348dc1187b70caceebb67bfa6d19",
       "locator_tag": "p",
@@ -4590,7 +4613,8 @@
       "claims": [
         "MT11-GENERALIZED-CLOSURE",
         "MT11-GENERALIZED-CLOSURE-COMPLETENESS",
-        "MT11-EXECUTABLE-CLOSURE-REFINEMENT"
+        "MT11-EXECUTABLE-CLOSURE-REFINEMENT",
+        "MT11-EXECUTABLE-CLOSURE-INSTANCE-CHECK"
       ],
       "slice_sha256": "d552ec46768063e0e25a007141209bbdb502b0d5a1d448ccbd30bd208d2aa7fc",
       "locator_tag": "p",
@@ -4604,7 +4628,8 @@
       "start": 105037,
       "end": 105270,
       "claims": [
-        "MT11-GENERALIZED-CLOSURE-COMPLETENESS"
+        "MT11-GENERALIZED-CLOSURE-COMPLETENESS",
+        "MT11-EXECUTABLE-CLOSURE-INSTANCE-CHECK"
       ],
       "slice_sha256": "9504d967a8206162206e94d82dbb8b895c3c6c9a8fc79049d4eacb19cc006e1a",
       "locator_tag": "p",
@@ -5531,6 +5556,21 @@
         "MT11-CLOSURE-TAUTOLOGIES"
       ],
       "slice_sha256": "9bf5546253c4cc320f07662397f10376589bfd42c91fa5ad2c014683b33a9d62",
+      "locator_tag": "p",
+      "review": "pending",
+      "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
+    },
+    {
+      "id": "ordinary-procedure-instance-check",
+      "source": "mt",
+      "source_sha256": "a4bc1dc53bc66fb7d57cd4b646e2527e35dbcce74fc54d8dd59beb255a830f80",
+      "start": 99843,
+      "end": 100436,
+      "claims": [
+        "MT11-ORDINARY-RULE-CHECK-PROCEDURE",
+        "MT11-FINITE-INSTANCE-DECISION"
+      ],
+      "slice_sha256": "7d919bd2855c4f67dc0a801f6145149c35c3240c278b68de46869d82f0dab849",
       "locator_tag": "p",
       "review": "pending",
       "scope_note": "Association with this full HTML source element is not a claim that every assertion in the element has been extracted."
@@ -8125,7 +8165,7 @@
       "cleanroom_mapping": {
         "claim_id": "MT11-INTERPOLATION",
         "relation": "partial_theorem",
-        "symbol_linked_english": "For an ordinary conclusion E and any generalized premise G, G SimplyEntails E.generalize exactly when an instance of E.generalize is a subgraph of G. A Herbrand interpretation proves necessity; existing ordinary instance entailment proves sufficiency.",
+        "symbol_linked_english": "For an ordinary conclusion E and any generalized premise G, G SimplyEntails E.generalize exactly when an instance of E.generalize is a subgraph of G. A Herbrand interpretation proves necessity; existing ordinary instance entailment proves sufficiency. ordinary_interpolation_apart now supports separately typed premise and conclusion blanks through explicit disjoint embeddings and proved satisfaction equivalence.",
         "bindings": [
           {
             "symbol": "interpolation_lemma",
@@ -8150,9 +8190,25 @@
           {
             "symbol": "ordinary_interpolation_instances",
             "lean": "RDF11.ordinary_interpolation_instances"
+          },
+          {
+            "symbol": "ordinary_interpolation_apart",
+            "lean": "RDF11.InstanceSearch.ordinary_interpolation_apart"
+          },
+          {
+            "symbol": "entailment_apart_iff",
+            "lean": "RDF11.InstanceSearch.entailment_apart_iff"
+          },
+          {
+            "symbol": "satisfies_left",
+            "lean": "RDF11.InstanceSearch.satisfies_left"
+          },
+          {
+            "symbol": "satisfies_right",
+            "lean": "RDF11.InstanceSearch.satisfies_right"
           }
         ],
-        "limitations": "Both directions are proved for ordinary conclusions, without finiteness. Necessity also holds for generalized conclusions; the unrestricted generalized converse remains a source-scope question. One common ambient blank identity type is used.",
+        "limitations": "Both directions are proved for ordinary conclusions without finiteness, now including independent blank domains via disjoint embeddings. Necessity also holds for generalized conclusions; the unrestricted generalized converse remains a source-scope question. Disjoint embeddings here preserve separate graph satisfaction and are not a change from union to merge.",
         "extraction_review": "pending_expert_review",
         "formalization_review": "pending_expert_review",
         "implementation_refinement": "not_connected_to_published_package"
@@ -8182,18 +8238,50 @@
         "formal_proof": "unassessed",
         "test_mapping": "unassessed"
       },
-      "formalization_note": "The text permits infinite graphs elsewhere; an algorithmic decidability claim requires finite effective input. Appendix A states NP-completeness explicitly.",
+      "formalization_note": "Finite effective inputs and decidable abstract equality are explicit. The twenty-fourth increment proves exact instance search, a simple-entailment decision for ordinary conclusions, ground reduction and negative countermodels. Source complexity assertions, concrete term correspondence and unrestricted generalized positive interpolation remain separate.",
       "cleanroom_mapping": {
         "claim_id": "MT11-SIMPLE-DECIDABILITY",
         "relation": "partial_theorem",
-        "symbol_linked_english": "For a ground conclusion E, G SimplyEntails E exactly when E is a subset of G.",
+        "symbol_linked_english": "For finite lists and decidable syntactic equality, ordinaryCheck_iff and apartCheck_iff equate the Boolean search with model-theoretic simple entailment for an ordinary conclusion. ordinaryDecision/apartDecision supply constructive decisions. check_ground reduces a ground instance check to triple inclusion. negative_countermodel gives an explicit interpretation when the instance check fails.",
         "bindings": [
           {
             "symbol": "ground_entailment_iff_subset",
             "lean": "RDF11.ground_entailment_iff_subset"
+          },
+          {
+            "symbol": "ordinaryCheck",
+            "lean": "RDF11.InstanceSearch.ordinaryCheck"
+          },
+          {
+            "symbol": "ordinaryCheck_iff",
+            "lean": "RDF11.InstanceSearch.ordinaryCheck_iff"
+          },
+          {
+            "symbol": "ordinaryDecision",
+            "lean": "RDF11.InstanceSearch.ordinaryDecision"
+          },
+          {
+            "symbol": "apartCheck",
+            "lean": "RDF11.InstanceSearch.apartCheck"
+          },
+          {
+            "symbol": "apartCheck_iff",
+            "lean": "RDF11.InstanceSearch.apartCheck_iff"
+          },
+          {
+            "symbol": "apartDecision",
+            "lean": "RDF11.InstanceSearch.apartDecision"
+          },
+          {
+            "symbol": "check_ground",
+            "lean": "RDF11.InstanceSearch.check_ground"
+          },
+          {
+            "symbol": "negative_countermodel",
+            "lean": "RDF11.InstanceSearch.negative_countermodel"
           }
         ],
-        "limitations": "Captures the ground-conclusion characterization, not an executable finite entailment decision procedure or the source complexity claim. No finiteness restriction on this theorem.",
+        "limitations": "Finite effective inputs and computational equality are required by the executable interface; the earlier ground characterization remains unrestricted by finiteness. Only ordinary conclusions receive a full simple-entailment decision. Generalized instance existence is separately decidable, with failure excluding simple entailment but success not establishing it in general. Concrete IRI/literal correspondence, complexity class claims, parser integration and package refinement remain unproved.",
         "extraction_review": "pending_expert_review",
         "formalization_review": "pending_expert_review",
         "implementation_refinement": "not_connected_to_published_package"
@@ -13763,7 +13851,7 @@
         "formal_proof": "unassessed",
         "test_mapping": "unassessed"
       },
-      "formalization_note": "The appendix is informative; this procedure is not a mandatory implementation architecture.",
+      "formalization_note": "The appendix is informative and does not mandate this implementation architecture. The twenty-fourth increment formalizes the final instance-subgraph check for a finite supplied enlarged graph; this does not implement ordinary fresh-blank rule saturation or prove its termination/completeness.",
       "procedure_steps": [
         {
           "source_step": 1,
@@ -13782,10 +13870,38 @@
           "operation": "Check whether the enlarged graph contains an instance of the conclusion."
         }
       ],
-      "cleanroom_mapping": null,
-      "passages": [],
+      "cleanroom_mapping": {
+        "claim_id": "MT11-ORDINARY-RULE-CHECK-PROCEDURE",
+        "relation": "partial_theorem",
+        "symbol_linked_english": "The final step is implemented by search/check: for a finite supplied enlarged premise, check succeeds exactly when some simultaneous instance of E is a subgraph. A successful certificate carries that substitution and the inclusion proof.",
+        "bindings": [
+          {
+            "symbol": "search",
+            "lean": "RDF11.InstanceSearch.search"
+          },
+          {
+            "symbol": "check_iff",
+            "lean": "RDF11.InstanceSearch.check_iff"
+          },
+          {
+            "symbol": "certificate",
+            "lean": "RDF11.InstanceSearch.certificate"
+          },
+          {
+            "symbol": "search_sound",
+            "lean": "RDF11.InstanceSearch.search_sound"
+          }
+        ],
+        "limitations": "Only the final finite instance test is mapped here. The ordinary rule procedure that constructs the enlarged graph, including fresh blank generation, its termination and completeness are not established by this mapping. The separate generalized-closure evaluator has its own exactness and source-scope limitations.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "ordinary-procedure-instance-check"
+      ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-ORDINARY-RULE-SOUND-INCOMPLETE",
@@ -14053,7 +14169,7 @@
       "cleanroom_mapping": {
         "claim_id": "MT11-GENERALIZED-CLOSURE-COMPLETENESS",
         "relation": "partial_theorem",
-        "symbol_linked_english": "If S is RDF-consistent, respectively RDFS-consistent, then S entails E in that regime exactly when the corresponding generalized closure towards E simply entails E.",
+        "symbol_linked_english": "If S is RDF-consistent, respectively RDFS-consistent, then S entails E in that regime exactly when the corresponding generalized closure towards E simply entails E. The finite composed checks are exact for instance existence, and for ordinary conclusions equal simple entailment from the closure. selection_failure_consistent connects a false executable result to the existing full-entailment and consistency witnesses.",
         "bindings": [
           {
             "symbol": "rdf_closure_satisfaction",
@@ -14106,9 +14222,33 @@
           {
             "symbol": "ClosureSelection.selection_counterexample",
             "lean": "RDF11.ClosureSelection.selection_counterexample"
+          },
+          {
+            "symbol": "rdfCheck_ordinary_iff",
+            "lean": "RDF11.ClosureEvaluation.rdfCheck_ordinary_iff"
+          },
+          {
+            "symbol": "rdfsCheck_ordinary_iff",
+            "lean": "RDF11.ClosureEvaluation.rdfsCheck_ordinary_iff"
+          },
+          {
+            "symbol": "rdfCheck_sound",
+            "lean": "RDF11.ClosureEvaluation.rdfCheck_sound"
+          },
+          {
+            "symbol": "rdfsCheck_sound",
+            "lean": "RDF11.ClosureEvaluation.rdfsCheck_sound"
+          },
+          {
+            "symbol": "selection_failure",
+            "lean": "RDF11.InstanceCheckScope.selection_failure"
+          },
+          {
+            "symbol": "selection_failure_consistent",
+            "lean": "RDF11.InstanceCheckScope.selection_failure_consistent"
           }
         ],
-        "limitations": "The positive/sound direction is proved. For the current E-only selection transcription, the converse fails on the displayed ordinary ground singleton pair: s rdf:_17 o RDFS-entails s rdfs:member o, but the selected closure does not simply entail it and contains no instance of it. A full RDFS model satisfies the premise under explicit sufficient datatype parameters; a constructed theory family supplies those parameters. These are checked facts about the formal transcription. Abstract IRI-to-concrete spelling, external language-tag validation and expert source fidelity remain boundaries. The source claim is not marked proved or declared an official erratum; Q-CLOSURE-CONTAINER-SELECTION remains open. Finite executable generation and any repaired completeness theorem remain unproved.",
+        "limitations": "The positive/sound direction is proved. For the current E-only selection transcription, the converse fails on the displayed ordinary ground singleton pair: s rdf:_17 o RDFS-entails s rdfs:member o, but the selected closure does not simply entail it and contains no instance of it. A full RDFS model satisfies the premise under explicit sufficient datatype parameters; a constructed theory family supplies those parameters. These are checked facts about the formal transcription. Abstract IRI-to-concrete spelling, external language-tag validation and expert source fidelity remain boundaries. The source claim is not marked proved or declared an official erratum; Q-CLOSURE-CONTAINER-SELECTION remains open. Finite executable generation and the final instance search are now proved exact to the transcribed procedure; the composed check is proved to return false on this example. A repaired completeness theorem remains unproved.",
         "extraction_review": "pending_expert_review",
         "formalization_review": "pending_expert_review",
         "implementation_refinement": "not_connected_to_published_package"
@@ -14272,12 +14412,46 @@
         "test_mapping": "unassessed"
       },
       "formalization_note": "Keep the complexity of closure generation separate from the subsequent existential substitution search.",
-      "cleanroom_mapping": null,
+      "cleanroom_mapping": {
+        "claim_id": "MT11-SIMPLE-ENTAILMENT-COMPLEXITY",
+        "relation": "partial_theorem",
+        "symbol_linked_english": "For effective finite inputs the instance search is decidable, with a candidate-list size K^b where K counts distinct premise-position terms and b counts occurring conclusion blanks. A ground conclusion reduces to exact inclusion. These are components supporting the source discussion, not a proof of its complexity classification.",
+        "bindings": [
+          {
+            "symbol": "terms",
+            "lean": "RDF11.InstanceSearch.terms"
+          },
+          {
+            "symbol": "blanks",
+            "lean": "RDF11.InstanceSearch.blanks"
+          },
+          {
+            "symbol": "assignments_length",
+            "lean": "RDF11.InstanceSearch.assignments_length"
+          },
+          {
+            "symbol": "candidates_length",
+            "lean": "RDF11.InstanceSearch.candidates_length"
+          },
+          {
+            "symbol": "check_ground",
+            "lean": "RDF11.InstanceSearch.check_ground"
+          },
+          {
+            "symbol": "ordinaryDecision",
+            "lean": "RDF11.InstanceSearch.ordinaryDecision"
+          }
+        ],
+        "limitations": "No formal machine-cost model, polynomial ground-evaluation bound, NP membership proof or NP-hardness reduction is supplied. The candidate-count equation is a derived bound for this exhaustive algorithm, not a source formula. It must not be displayed as an NP-completeness proof.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
       "passages": [
         "closure-finiteness"
       ],
       "extraction_review": "pending",
-      "formalization_review": "not_started"
+      "formalization_review": "pending"
     },
     {
       "id": "MT11-RULE-STRATEGY-LIMITS",
@@ -17016,7 +17190,7 @@
             "lean": "RDF11.FiniteSaturation.run_exact"
           }
         ],
-        "limitations": "This is a derived refinement theorem for this Lean evaluator. The caller supplies finite lists, computational equality, datatype projection and a decoder satisfying the exact indexed-name contract. The abstract IRI/literal domains are not a concrete parser. The printed procedure retains its known completeness obstruction; failure of a closure check is not a justified semantic non-entailment verdict. Machine-time complexity, final blank-instance search, larger-D procedures and npm/WASM refinement remain separate. Executable examples are project-owned symbolic fixtures, not W3C tests.",
+        "limitations": "This is a derived refinement theorem for this Lean evaluator. The caller supplies finite lists, computational equality, datatype projection and a decoder satisfying the exact indexed-name contract. The abstract IRI/literal domains are not a concrete parser. The printed procedure retains its known completeness obstruction; failure of a closure check is not a justified semantic non-entailment verdict. A separately proved instance-search composition now supplies the final finite check. Machine-time complexity, larger-D procedures and npm/WASM refinement remain separate. Executable examples are project-owned symbolic fixtures, not W3C tests.",
         "extraction_review": "pending_expert_review",
         "formalization_review": "pending_expert_review",
         "implementation_refinement": "not_connected_to_published_package"
@@ -17024,6 +17198,240 @@
       "passages": [
         "closure-procedure",
         "closure-finiteness"
+      ],
+      "extraction_review": "pending",
+      "formalization_review": "pending"
+    },
+    {
+      "id": "MT11-FINITE-INSTANCE-DECISION",
+      "section": "5.3",
+      "anchor": "dfn-interpolation",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#dfn-interpolation",
+      "category": "mathematical_consequence",
+      "source_status": "informative",
+      "assertion_basis": "derived",
+      "paraphrase": "For finite supplied lists and decidable syntactic equality, exhaustive simultaneous substitution search decides exactly whether an instance of the conclusion is included in the premise. With an ordinary conclusion it decides simple entailment, including separately typed blank domains. It can return a certified substitution, and failure gives a Herbrand countermodel.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-GRAPH-INSTANCE",
+        "MT11-INTERPOLATION",
+        "MT11-SIMPLE-DECIDABILITY",
+        "MT11-GRAPH-SET"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "Derived executable refinement with finite effective inputs. Only occurring conclusion blanks and actual premise triple-position terms are enumerated; no finite ambient blank type is required. The K^b candidate-list length is not an NP-completeness or runtime proof. Generalized success need not imply simple entailment; ordinary conclusions retain the proved interpolation scope.",
+      "cleanroom_mapping": {
+        "claim_id": "MT11-FINITE-INSTANCE-DECISION",
+        "relation": "theorem",
+        "symbol_linked_english": "check_iff gives exact instance-subgraph existence. search_sound and certificate retain the returned simultaneous substitution and its inclusion proof. candidates_complete exhausts all relevant replacements; candidates_length counts K^b candidates. ordinaryCheck_iff/apartCheck_iff give the semantic decision for ordinary conclusions, and negative_countermodel witnesses failure.",
+        "bindings": [
+          {
+            "symbol": "terms",
+            "lean": "RDF11.InstanceSearch.terms"
+          },
+          {
+            "symbol": "blanks",
+            "lean": "RDF11.InstanceSearch.blanks"
+          },
+          {
+            "symbol": "blank_image_in_terms",
+            "lean": "RDF11.InstanceSearch.blank_image_in_terms"
+          },
+          {
+            "symbol": "assignments_cover",
+            "lean": "RDF11.InstanceSearch.assignments_cover"
+          },
+          {
+            "symbol": "candidates_complete",
+            "lean": "RDF11.InstanceSearch.candidates_complete"
+          },
+          {
+            "symbol": "search",
+            "lean": "RDF11.InstanceSearch.search"
+          },
+          {
+            "symbol": "check",
+            "lean": "RDF11.InstanceSearch.check"
+          },
+          {
+            "symbol": "check_iff",
+            "lean": "RDF11.InstanceSearch.check_iff"
+          },
+          {
+            "symbol": "search_sound",
+            "lean": "RDF11.InstanceSearch.search_sound"
+          },
+          {
+            "symbol": "certificate",
+            "lean": "RDF11.InstanceSearch.certificate"
+          },
+          {
+            "symbol": "certificate_isSome",
+            "lean": "RDF11.InstanceSearch.certificate_isSome"
+          },
+          {
+            "symbol": "decision",
+            "lean": "RDF11.InstanceSearch.decision"
+          },
+          {
+            "symbol": "check_respects_graphs",
+            "lean": "RDF11.InstanceSearch.check_respects_graphs"
+          },
+          {
+            "symbol": "candidates_length",
+            "lean": "RDF11.InstanceSearch.candidates_length"
+          },
+          {
+            "symbol": "check_ground",
+            "lean": "RDF11.InstanceSearch.check_ground"
+          },
+          {
+            "symbol": "ordinaryCheck_iff",
+            "lean": "RDF11.InstanceSearch.ordinaryCheck_iff"
+          },
+          {
+            "symbol": "ordinaryDecision",
+            "lean": "RDF11.InstanceSearch.ordinaryDecision"
+          },
+          {
+            "symbol": "apartCheck_iff",
+            "lean": "RDF11.InstanceSearch.apartCheck_iff"
+          },
+          {
+            "symbol": "apartDecision",
+            "lean": "RDF11.InstanceSearch.apartDecision"
+          },
+          {
+            "symbol": "negative_countermodel",
+            "lean": "RDF11.InstanceSearch.negative_countermodel"
+          },
+          {
+            "symbol": "generalized_success_not_entails",
+            "lean": "RDF11.InstanceCheckScope.generalized_success_not_entails"
+          }
+        ],
+        "limitations": "Abstract term equality and finite input lists are supplied. Replacements are simultaneous, non-injective and shared over the conclusion; source triples may be reused. Ambient blank domains may be infinite, and separately typed domains are handled by explicit embeddings. K^b counts candidate list entries, not machine time or an NP reduction. Positive generalized instance search does not decide simple entailment. Tests are symbolic; concrete parsing and npm/WASM refinement are absent.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "interpolation",
+        "ground-subset",
+        "ordinary-procedure-instance-check"
+      ],
+      "extraction_review": "pending",
+      "formalization_review": "pending"
+    },
+    {
+      "id": "MT11-EXECUTABLE-CLOSURE-INSTANCE-CHECK",
+      "section": "A",
+      "anchor": "entailment_rules",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#entailment_rules",
+      "category": "mathematical_consequence",
+      "source_status": "informative",
+      "assertion_basis": "derived",
+      "paraphrase": "For finite supplied inputs and the executable closure interfaces, the composed RDF/RDFS check decides whether the selected printed closure contains an instance of the conclusion. Success implies entailment in the respective regime. For an ordinary conclusion the check is exactly simple entailment from that closure; failure is not a full RDF/RDFS non-entailment decision.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-EXECUTABLE-CLOSURE-REFINEMENT",
+        "MT11-FINITE-INSTANCE-DECISION",
+        "MT11-GENERALIZED-CLOSURE-COMPLETENESS"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "Derived composition of exact closure generation, exact finite instance search and existing rule/model soundness. The current selection obstruction is linked to an executable false result with full entailment and a consistency witness under explicit model-constructor hypotheses. The printed procedure is not repaired or declared an official erratum.",
+      "cleanroom_mapping": {
+        "claim_id": "MT11-EXECUTABLE-CLOSURE-INSTANCE-CHECK",
+        "relation": "theorem",
+        "symbol_linked_english": "rdfCheck/rdfsCheck compose exact finite closure generation with exact instance search. Their iff theorems identify the precise syntactic decision; ordinary iff theorems connect it to simple entailment from the closure. Soundness gives RDF/RDFS entailment, including separate blank domains. selection_failure_consistent retains a false check alongside full entailment and a model of the premise.",
+        "bindings": [
+          {
+            "symbol": "rdfCheck",
+            "lean": "RDF11.ClosureEvaluation.rdfCheck"
+          },
+          {
+            "symbol": "rdfsCheck",
+            "lean": "RDF11.ClosureEvaluation.rdfsCheck"
+          },
+          {
+            "symbol": "rdfCheck_iff",
+            "lean": "RDF11.ClosureEvaluation.rdfCheck_iff"
+          },
+          {
+            "symbol": "rdfsCheck_iff",
+            "lean": "RDF11.ClosureEvaluation.rdfsCheck_iff"
+          },
+          {
+            "symbol": "rdfCheck_sound",
+            "lean": "RDF11.ClosureEvaluation.rdfCheck_sound"
+          },
+          {
+            "symbol": "rdfsCheck_sound",
+            "lean": "RDF11.ClosureEvaluation.rdfsCheck_sound"
+          },
+          {
+            "symbol": "rdfInstanceDecision",
+            "lean": "RDF11.ClosureEvaluation.rdfInstanceDecision"
+          },
+          {
+            "symbol": "rdfsInstanceDecision",
+            "lean": "RDF11.ClosureEvaluation.rdfsInstanceDecision"
+          },
+          {
+            "symbol": "rdfCheck_ordinary_iff",
+            "lean": "RDF11.ClosureEvaluation.rdfCheck_ordinary_iff"
+          },
+          {
+            "symbol": "rdfsCheck_ordinary_iff",
+            "lean": "RDF11.ClosureEvaluation.rdfsCheck_ordinary_iff"
+          },
+          {
+            "symbol": "rdfCheck_respects_graphs",
+            "lean": "RDF11.ClosureEvaluation.rdfCheck_respects_graphs"
+          },
+          {
+            "symbol": "rdfsCheck_respects_graphs",
+            "lean": "RDF11.ClosureEvaluation.rdfsCheck_respects_graphs"
+          },
+          {
+            "symbol": "rdfApartCheck",
+            "lean": "RDF11.ClosureEvaluation.rdfApartCheck"
+          },
+          {
+            "symbol": "rdfsApartCheck",
+            "lean": "RDF11.ClosureEvaluation.rdfsApartCheck"
+          },
+          {
+            "symbol": "rdfApartCheck_sound",
+            "lean": "RDF11.ClosureEvaluation.rdfApartCheck_sound"
+          },
+          {
+            "symbol": "rdfsApartCheck_sound",
+            "lean": "RDF11.ClosureEvaluation.rdfsApartCheck_sound"
+          },
+          {
+            "symbol": "selection_failure_consistent",
+            "lean": "RDF11.InstanceCheckScope.selection_failure_consistent"
+          }
+        ],
+        "limitations": "The exact indexed-name decoder, computational equality, datatype projection and finite inputs remain explicit. Negative answers mean no instance in the selected closure. The consistency-qualified completeness obstruction remains open for source adjudication; no repaired algorithm or official erratum is claimed. Larger-D procedures, ordinary fresh-blank saturation, operation costs and published-package refinement are separate.",
+        "extraction_review": "pending_expert_review",
+        "formalization_review": "pending_expert_review",
+        "implementation_refinement": "not_connected_to_published_package"
+      },
+      "passages": [
+        "closure-procedure",
+        "closure-completeness"
       ],
       "extraction_review": "pending",
       "formalization_review": "pending"
