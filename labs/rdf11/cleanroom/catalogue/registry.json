@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "status": "frozen_twenty_first_increment_closure_selection_not_expert_approved",
+  "status": "frozen_twenty_second_increment_finite_closure_not_expert_approved",
   "lean_version": "4.33.1",
   "allowed_axioms": [
     "propext",
@@ -86,6 +86,7 @@
     "Init.Data.UInt.Bitwise",
     "Init.Data.UInt.Lemmas",
     "Init.Data.ULift",
+    "Init.Data.Zero",
     "Init.Ext",
     "Init.GetElem",
     "Init.Omega.Coeffs",
@@ -629,6 +630,17 @@
         "MT11-GRAPH-TRUTH",
         "MT11-TRIPLE-TERM-DOMAINS"
       ]
+    },
+    {
+      "id": "SUPPORT-FINITE-CLOSURE",
+      "purpose": "Finite supporting terms, cubic generalized-triple bounds and exact finiteness of the unchanged Appendix A procedure. Includes a consistent infinite-premise witness and finite empty-input closures omitting full-vocabulary tautologies. These support qualified results and source-review questions, not runtime complexity, corrected completeness, official errata or implementation refinement.",
+      "requires": [
+        "MT11-FINITE-CLOSURE-COMPLEXITY",
+        "MT11-CLOSURE-TAUTOLOGIES",
+        "MT11-GENERALIZED-CLOSURE",
+        "MT11-GRAPH-TRUTH",
+        "MT11-INFINITE-GRAPHS-PERMITTED"
+      ]
     }
   ],
   "files": [
@@ -655,14 +667,14 @@
     },
     {
       "path": "Audit/Snapshot.lean",
-      "sha256": "3aaa7f883f513c187e770a66f592f61d1a458a2de16d57633bb8a9d90351f083",
+      "sha256": "5478565042919a8f2c7b717586200635e8defea574858a3637a8f83b0b226cc3",
       "role": "formal_source",
       "lifecycle": "active",
       "review": "pending_expert_review"
     },
     {
       "path": "RDF11.lean",
-      "sha256": "fd9803807cae668c1d95d782bba1adec67d21f286485e655c360bcd9d3013580",
+      "sha256": "50e14312b307eb121a8107b48c067a56ad8047594df9b3d3e2ba33618abe2a81",
       "role": "formal_source",
       "lifecycle": "active",
       "review": "pending_expert_review"
@@ -1132,6 +1144,34 @@
     {
       "path": "RDF11/ClosureSelectionWitness.lean",
       "sha256": "05e7f3a9a156674667b1a4f3dceb831b4af9d5ea1dfaa9ee1fffb33484f2efca",
+      "role": "formal_source",
+      "lifecycle": "active",
+      "review": "pending_expert_review"
+    },
+    {
+      "path": "RDF11/ClosureTermBounds.lean",
+      "sha256": "830cb01209ffd03c9bb2553a8df9cd1e3859eb4ea02586344d502350cec91a9a",
+      "role": "formal_source",
+      "lifecycle": "active",
+      "review": "pending_expert_review"
+    },
+    {
+      "path": "RDF11/ClosureVocabulary.lean",
+      "sha256": "205e19bcd6ccf4b388ca25732acc280ebd5694e7003e068c5ae2040dbda6ed9e",
+      "role": "formal_source",
+      "lifecycle": "active",
+      "review": "pending_expert_review"
+    },
+    {
+      "path": "RDF11/FiniteClosure.lean",
+      "sha256": "08aa37c4f99ab1a7a1929e7f6478898c4cdc06b6ea520451c34ccab5edf591f3",
+      "role": "formal_source",
+      "lifecycle": "active",
+      "review": "pending_expert_review"
+    },
+    {
+      "path": "RDF11/ClosureFinitenessScope.lean",
+      "sha256": "f1a76a58b35d350f8dd6eb7d276035299204fa2343a2f365b027cb66d1e5c9bb",
       "role": "formal_source",
       "lifecycle": "active",
       "review": "pending_expert_review"
@@ -29930,6 +29970,1361 @@
         "SUPPORT-CLOSURE-SELECTION"
       ],
       "parent_declaration_if_applicable": "RDF11.Term.names.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.OnTerms",
+      "module": "RDF11.ClosureTermBounds",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} → RDF11.Set (RDF11.Term Iri Literal B) → RDF11.GeneralizedTriple Iri Literal B → Prop",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.OnTerms.eq_1",
+      "module": "RDF11.ClosureTermBounds",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (V : RDF11.Set (RDF11.Term Iri Literal B)) (t : RDF11.GeneralizedTriple Iri Literal B),\n  RDF11.ClosureBound.OnTerms V t = (V t.subject ∧ V t.predicate ∧ V t.object)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureBound.OnTerms",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.consistent_infinite_closures",
+      "module": "RDF11.ClosureFinitenessScope",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (v : RDF11.RDFSVocabulary Iri),\n  RDF11.RDFSModelConstruction.Parameters T v.toRDF.baseDatatypes v →\n    have G := (RDF11.ContainerInfinitude.allIndexed v).generalize;\n    have E := RDF11.Set.empty;\n    (∃ U I, I.RDFSModel T v.toRDF.baseDatatypes v ∧ I.Satisfies G) ∧\n      ¬RDF11.FiniteGraph (RDF11.RDFClosure T v.toRDF G E) ∧ ¬RDF11.FiniteGraph (RDF11.RDFSClosure T v G E)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE",
+        "MT11-FINITE-CLOSURE-COMPLEXITY"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.cube",
+      "module": "RDF11.ClosureTermBounds",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} → List (RDF11.Term Iri Literal B) → List (RDF11.GeneralizedTriple Iri Literal B)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.cube.eq_1",
+      "module": "RDF11.ClosureTermBounds",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (xs : List (RDF11.Term Iri Literal B)),\n  RDF11.ClosureBound.cube xs =\n    List.flatMap\n      (fun s => List.flatMap (fun p => List.map (fun o => { subject := s, predicate := p, object := o }) xs) xs) xs",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureBound.cube",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.cube_length",
+      "module": "RDF11.ClosureTermBounds",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (xs : List (RDF11.Term Iri Literal B)), (RDF11.ClosureBound.cube xs).length = xs.length ^ 3",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE",
+        "MT11-FINITE-CLOSURE-COMPLEXITY"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.domain_symbols_fixed",
+      "module": "RDF11.ClosureVocabulary",
+      "kind": "theorem",
+      "type": "∀ (x : RDF11.RDFSSymbol × RDF11.RDFSSymbol),\n  x ∈ RDF11.rdfsDomainAxioms → x.fst ∈ RDF11.ClosureBound.rdfsFixedSymbols ∧ x.snd ∈ RDF11.ClosureBound.rdfsFixedSymbols",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.emptyEnumeration",
+      "module": "RDF11.ClosureFinitenessScope",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} → RDF11.Enumeration RDF11.Set.empty",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.emptyEnumeration._proof_1",
+      "module": "RDF11.ClosureFinitenessScope",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type}, [].Nodup",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureBound.emptyEnumeration",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.emptyEnumeration._proof_2",
+      "module": "RDF11.ClosureFinitenessScope",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (t : RDF11.GeneralizedTriple Iri Literal B), t ∈ [] ↔ False",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureBound.emptyEnumeration",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.emptyEnumeration.eq_1",
+      "module": "RDF11.ClosureFinitenessScope",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type}, RDF11.ClosureBound.emptyEnumeration = { triples := [], nodup := ⋯, membership := ⋯ }",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureBound.emptyEnumeration",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.empty_finite",
+      "module": "RDF11.ClosureFinitenessScope",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type}, RDF11.FiniteGraph RDF11.Set.empty",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.expanded",
+      "module": "RDF11.ClosureTermBounds",
+      "kind": "definition",
+      "type": "{Literal Iri B : Type} → (Literal → Iri) → RDF11.Term Iri Literal B → List (RDF11.Term Iri Literal B)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.expanded._sparseCasesOn_1",
+      "module": "RDF11.ClosureTermBounds",
+      "kind": "definition",
+      "type": "{Iri Literal Blank : Type} →\n  {motive : RDF11.Term Iri Literal Blank → Sort u} →\n    (t : RDF11.Term Iri Literal Blank) →\n      ((a : Literal) → motive (RDF11.Term.literal a)) → (Nat.hasNotBit 2 t.ctorIdx → motive t) → motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureBound.expanded",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.expanded._sparseCasesOn_1.else_eq",
+      "module": "RDF11.ClosureTermBounds",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Blank : Type} {motive : RDF11.Term Iri Literal Blank → Sort u} (t : RDF11.Term Iri Literal Blank)\n  (literal : (a : Literal) → motive (RDF11.Term.literal a)) («else» : Nat.hasNotBit 2 t.ctorIdx → motive t)\n  (h : Nat.hasNotBit 2 t.ctorIdx), RDF11.ClosureBound.expanded._sparseCasesOn_1 t literal «else» = «else» h",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureBound.expanded._sparseCasesOn_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.expanded.eq_1",
+      "module": "RDF11.ClosureTermBounds",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri B : Type} (datatype : Literal → Iri) (l : Literal),\n  RDF11.ClosureBound.expanded datatype (RDF11.Term.literal l) = [RDF11.Term.literal l, RDF11.Term.iri (datatype l)]",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureBound.expanded",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.expanded.eq_2",
+      "module": "RDF11.ClosureTermBounds",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri B : Type} (datatype : Literal → Iri) (x : RDF11.Term Iri Literal B),\n  (∀ (l : Literal), x = RDF11.Term.literal l → False) → RDF11.ClosureBound.expanded datatype x = [x]",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureBound.expanded",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.expanded.match_1",
+      "module": "RDF11.ClosureTermBounds",
+      "kind": "definition",
+      "type": "{Literal Iri B : Type} →\n  (motive : RDF11.Term Iri Literal B → Sort u_1) →\n    (x : RDF11.Term Iri Literal B) →\n      ((l : Literal) → motive (RDF11.Term.literal l)) → ((t : RDF11.Term Iri Literal B) → motive t) → motive x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureBound.expanded",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.expanded_literal",
+      "module": "RDF11.ClosureTermBounds",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri B : Type} {l : Literal} (datatype : Literal → Iri) (t : RDF11.Term Iri Literal B),\n  RDF11.Term.literal l ∈ RDF11.ClosureBound.expanded datatype t →\n    RDF11.Term.iri (datatype l) ∈ RDF11.ClosureBound.expanded datatype t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.finite_omits_indexed_axiom",
+      "module": "RDF11.ClosureFinitenessScope",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (v : RDF11.RDFVocabulary Iri) (G : RDF11.GeneralizedGraph Iri Literal B),\n  RDF11.FiniteGraph G → ∃ n, ¬G (RDF11.ClosureBound.indexedPropertyAxiom v n)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE",
+        "MT11-CLOSURE-TAUTOLOGIES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.finite_preimage_injective",
+      "module": "RDF11.ClosureVocabulary",
+      "kind": "theorem",
+      "type": "∀ {α : Type u} {β : Type v} (f : α → β),\n  (∀ (a b : α), f a = f b → a = b) →\n    ∀ (S : RDF11.Set β) (e : RDF11.Enumeration S), Nonempty (RDF11.Enumeration fun a => S (f a))",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.finite_preimage_injective._simp_1_1",
+      "module": "RDF11.ClosureVocabulary",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_1} {β : Type u_2} {f : α → Option β} {l : List α} {b : β},\n  (b ∈ List.filterMap f l) = ∃ a, a ∈ l ∧ f a = some b",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureBound.finite_preimage_injective",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.finite_selected_of_typings",
+      "module": "RDF11.ClosureFinitenessScope",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri B₂ B₁ : Type} (datatype : Literal → Iri) (v : RDF11.RDFVocabulary Iri)\n  (E : RDF11.GeneralizedGraph Iri Literal B₂) (C : RDF11.GeneralizedGraph Iri Literal B₁),\n  RDF11.FiniteGraph C →\n    (∀ (n : Nat),\n        RDF11.GeneralizedGraph.vocabulary datatype E (Sum.inl (v.iri (RDF11.RDFSymbol.container n))) →\n          C (RDF11.ClosureBound.indexedPropertyAxiom v n)) →\n      Nonempty\n        (RDF11.Enumeration fun n =>\n          RDF11.GeneralizedGraph.vocabulary datatype E (Sum.inl (v.iri (RDF11.RDFSymbol.container n))))",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.graph_bound",
+      "module": "RDF11.ClosureTermBounds",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (V : RDF11.Set (RDF11.Term Iri Literal B)) (e : RDF11.Enumeration V)\n  (G : RDF11.GeneralizedGraph Iri Literal B),\n  RDF11.Set.subset G (RDF11.ClosureBound.OnTerms V) → ∃ g, g.triples.length ≤ e.triples.length ^ 3",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.hierarchy_symbols_fixed",
+      "module": "RDF11.ClosureVocabulary",
+      "kind": "theorem",
+      "type": "∀ (x : RDF11.RDFSSymbol × RDF11.RDFSSymbol × RDF11.RDFSSymbol),\n  x ∈ RDF11.rdfsHierarchyAxioms →\n    x.fst ∈ RDF11.ClosureBound.rdfsFixedSymbols ∧\n      x.snd.fst ∈ RDF11.ClosureBound.rdfsFixedSymbols ∧ x.snd.snd ∈ RDF11.ClosureBound.rdfsFixedSymbols",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.indexedPropertyAxiom",
+      "module": "RDF11.ClosureFinitenessScope",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} → RDF11.RDFVocabulary Iri → Nat → RDF11.GeneralizedTriple Iri Literal B",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE",
+        "MT11-CLOSURE-TAUTOLOGIES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.indexedPropertyAxiom.eq_1",
+      "module": "RDF11.ClosureFinitenessScope",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (v : RDF11.RDFVocabulary Iri) (n : Nat),\n  RDF11.ClosureBound.indexedPropertyAxiom v n =\n    { subject := RDF11.Term.iri (v.iri (RDF11.RDFSymbol.container n)),\n      predicate := RDF11.Term.iri (v.iri RDF11.RDFSymbol.rdfType),\n      object := RDF11.Term.iri (v.iri RDF11.RDFSymbol.rdfProperty) }",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureBound.indexedPropertyAxiom",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.indexedPropertyAxiom_injective",
+      "module": "RDF11.ClosureFinitenessScope",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (v : RDF11.RDFVocabulary Iri) (m n : Nat),\n  RDF11.ClosureBound.indexedPropertyAxiom v m = RDF11.ClosureBound.indexedPropertyAxiom v n → m = n",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE",
+        "MT11-CLOSURE-TAUTOLOGIES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.indexed_axiom_tautology",
+      "module": "RDF11.ClosureFinitenessScope",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B₁ B₂ : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (D : RDF11.Set Iri)\n  (v : RDF11.RDFVocabulary Iri) (n : Nat),\n  RDF11.RDFEntails T D v RDF11.Set.empty (RDF11.Set.singleton (RDF11.ClosureBound.indexedPropertyAxiom v n))",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE",
+        "MT11-CLOSURE-TAUTOLOGIES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.insertion_bound",
+      "module": "RDF11.ClosureTermBounds",
+      "kind": "theorem",
+      "type": "∀ {α : Type u} (S C : RDF11.Set α) (s : RDF11.Enumeration S) (c : RDF11.Enumeration C),\n  S.subset C →\n    ∀ (xs : List α),\n      xs.Nodup →\n        (∀ (x : α), x ∈ xs → C x) →\n          (∀ (x : α), x ∈ xs → ¬S x) → ∀ (n : Nat), c.triples.length ≤ n → xs.length ≤ n - s.triples.length",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE",
+        "MT11-FINITE-CLOSURE-COMPLEXITY"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.insertion_bound._proof_1_1",
+      "module": "RDF11.ClosureTermBounds",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_1} (S C : RDF11.Set α) (s : RDF11.Enumeration S) (c : RDF11.Enumeration C) (xs : List α) (n : Nat),\n  c.triples.length ≤ n → s.triples.length + xs.length ≤ c.triples.length → ¬xs.length ≤ n - s.triples.length → False",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureBound.insertion_bound",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.length_flatMap_constant",
+      "module": "RDF11.ClosureTermBounds",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_1} {β : Type u_2} (xs : List α) (f : α → List β) (n : Nat),\n  (∀ (x : α), x ∈ xs → (f x).length = n) → (List.flatMap f xs).length = xs.length * n",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.mem_cube",
+      "module": "RDF11.ClosureTermBounds",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (xs : List (RDF11.Term Iri Literal B)) (t : RDF11.GeneralizedTriple Iri Literal B),\n  t ∈ RDF11.ClosureBound.cube xs ↔ RDF11.ClosureBound.OnTerms (RDF11.Set.ofList xs) t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.mem_cube._simp_1_2",
+      "module": "RDF11.ClosureTermBounds",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_1} {β : Type u_2} {f : α → List β} {b : β} {l : List α}, (b ∈ List.flatMap f l) = ∃ a, a ∈ l ∧ b ∈ f a",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureBound.mem_cube",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.mem_cube._simp_1_3",
+      "module": "RDF11.ClosureTermBounds",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_1} {β : Type u_2} {b : β} {f : α → β} {l : List α}, (b ∈ List.map f l) = ∃ a, a ∈ l ∧ f a = b",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureBound.mem_cube",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.mem_expanded",
+      "module": "RDF11.ClosureTermBounds",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri B : Type} (datatype : Literal → Iri) (t : RDF11.Term Iri Literal B),\n  t ∈ RDF11.ClosureBound.expanded datatype t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.pool_fixed",
+      "module": "RDF11.ClosureTermBounds",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri B : Type} {a : Iri} (datatype : Literal → Iri) (fixed : List Iri)\n  (triples : List (RDF11.GeneralizedTriple Iri Literal B)),\n  a ∈ fixed → RDF11.Term.iri a ∈ RDF11.ClosureBound.termPool datatype fixed triples",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.pool_literal",
+      "module": "RDF11.ClosureTermBounds",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri B : Type} {l : Literal} (datatype : Literal → Iri) (fixed : List Iri)\n  (triples : List (RDF11.GeneralizedTriple Iri Literal B)),\n  RDF11.Term.literal l ∈ RDF11.ClosureBound.termPool datatype fixed triples →\n    RDF11.Term.iri (datatype l) ∈ RDF11.ClosureBound.termPool datatype fixed triples",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.pool_literal._simp_1_2",
+      "module": "RDF11.ClosureTermBounds",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_1} {a : α} {s t : List α}, (a ∈ s ++ t) = (a ∈ s ∨ a ∈ t)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureBound.pool_literal",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.pool_literal._simp_1_3",
+      "module": "RDF11.ClosureTermBounds",
+      "kind": "theorem",
+      "type": "∀ {a b c : Prop}, ((a ∨ b) ∨ c) = (a ∨ b ∨ c)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureBound.pool_literal",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.pool_triple",
+      "module": "RDF11.ClosureTermBounds",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri B : Type} {t : RDF11.GeneralizedTriple Iri Literal B} (datatype : Literal → Iri) (fixed : List Iri)\n  (triples : List (RDF11.GeneralizedTriple Iri Literal B)),\n  t ∈ triples → RDF11.ClosureBound.OnTerms (RDF11.Set.ofList (RDF11.ClosureBound.termPool datatype fixed triples)) t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.pool_triple._simp_1_2",
+      "module": "RDF11.ClosureTermBounds",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri B : Type} (datatype : Literal → Iri) (t : RDF11.Term Iri Literal B),\n  (t ∈ RDF11.ClosureBound.expanded datatype t) = True",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureBound.pool_triple",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.range_symbols_fixed",
+      "module": "RDF11.ClosureVocabulary",
+      "kind": "theorem",
+      "type": "∀ (x : RDF11.RDFSSymbol × RDF11.RDFSSymbol),\n  x ∈ RDF11.rdfsRangeAxioms → x.fst ∈ RDF11.ClosureBound.rdfsFixedSymbols ∧ x.snd ∈ RDF11.ClosureBound.rdfsFixedSymbols",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.rdfFixedSymbols",
+      "module": "RDF11.ClosureVocabulary",
+      "kind": "definition",
+      "type": "List RDF11.RDFSymbol",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.rdfFixedSymbols.eq_1",
+      "module": "RDF11.ClosureVocabulary",
+      "kind": "theorem",
+      "type": "RDF11.ClosureBound.rdfFixedSymbols =\n  [RDF11.RDFSymbol.rdfType, RDF11.RDFSymbol.rdfProperty, RDF11.RDFSymbol.rdfSubject, RDF11.RDFSymbol.rdfPredicate,\n    RDF11.RDFSymbol.rdfObject, RDF11.RDFSymbol.rdfFirst, RDF11.RDFSymbol.rdfRest, RDF11.RDFSymbol.rdfValue,\n    RDF11.RDFSymbol.rdfNil, RDF11.RDFSymbol.rdfList, RDF11.RDFSymbol.rdfLangString, RDF11.RDFSymbol.xsdString,\n    RDF11.RDFSymbol.rdfStatement, RDF11.RDFSymbol.rdfAlt, RDF11.RDFSymbol.rdfBag, RDF11.RDFSymbol.rdfSeq]",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureBound.rdfFixedSymbols",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.rdfNames",
+      "module": "RDF11.FiniteClosure",
+      "kind": "definition",
+      "type": "{Iri : Type} → RDF11.RDFVocabulary Iri → List Nat → List Iri",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.rdfNames.eq_1",
+      "module": "RDF11.ClosureFinitenessScope",
+      "kind": "theorem",
+      "type": "∀ {Iri : Type} (v : RDF11.RDFVocabulary Iri) (indices : List Nat),\n  RDF11.ClosureBound.rdfNames v indices =\n    List.map v.iri RDF11.ClosureBound.rdfFixedSymbols ++\n      List.map (fun n => v.iri (RDF11.RDFSymbol.container n)) (0 :: indices)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureBound.rdfNames",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.rdfTerms",
+      "module": "RDF11.FiniteClosure",
+      "kind": "definition",
+      "type": "{Iri Literal Value B : Type} →\n  RDF11.DatatypeTheory Iri Literal Value →\n    RDF11.RDFVocabulary Iri → List (RDF11.GeneralizedTriple Iri Literal B) → List Nat → List (RDF11.Term Iri Literal B)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE",
+        "MT11-FINITE-CLOSURE-COMPLEXITY"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.rdfTerms.eq_1",
+      "module": "RDF11.ClosureFinitenessScope",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (v : RDF11.RDFVocabulary Iri)\n  (triples : List (RDF11.GeneralizedTriple Iri Literal B)) (indices : List Nat),\n  RDF11.ClosureBound.rdfTerms T v triples indices =\n    RDF11.ClosureBound.termPool T.literalSyntax.datatype (RDF11.ClosureBound.rdfNames v indices) triples",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureBound.rdfTerms",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.rdf_axiom_container_unique",
+      "module": "RDF11.ClosureVocabulary",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri B : Type} (datatype : Literal → Iri) (v : RDF11.RDFVocabulary Iri)\n  (t : RDF11.GeneralizedTriple Iri Literal B),\n  v.axioms t →\n    ∀ (m n : Nat),\n      RDF11.GeneralizedTriple.names datatype t (Sum.inl (v.iri (RDF11.RDFSymbol.container m))) →\n        RDF11.GeneralizedTriple.names datatype t (Sum.inl (v.iri (RDF11.RDFSymbol.container n))) → m = n",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.rdf_axiom_container_unique._simp_1_1",
+      "module": "RDF11.ClosureVocabulary",
+      "kind": "theorem",
+      "type": "∀ {Iri : Type} (v : RDF11.RDFVocabulary Iri) (a b : RDF11.RDFSymbol), (v.iri a = v.iri b) = (a = b)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureBound.rdf_axiom_container_unique",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.rdf_axioms_onTerms",
+      "module": "RDF11.ClosureVocabulary",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri B : Type} (datatype : Literal → Iri) (v : RDF11.RDFVocabulary Iri)\n  (V : RDF11.Set (RDF11.Term Iri Literal B)),\n  (∀ (s : RDF11.RDFSymbol), s ∈ RDF11.ClosureBound.rdfFixedSymbols → V (RDF11.Term.iri (v.iri s))) →\n    ∀ (t : RDF11.GeneralizedTriple Iri Literal B),\n      v.axioms t →\n        (∀ (n : Nat),\n            RDF11.GeneralizedTriple.names datatype t (Sum.inl (v.iri (RDF11.RDFSymbol.container n))) →\n              V (RDF11.Term.iri (v.iri (RDF11.RDFSymbol.container n)))) →\n          RDF11.ClosureBound.OnTerms V t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.rdf_closure_bound",
+      "module": "RDF11.FiniteClosure",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B₁ B₂ : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (v : RDF11.RDFVocabulary Iri)\n  (G : RDF11.GeneralizedGraph Iri Literal B₁) (E : RDF11.GeneralizedGraph Iri Literal B₂) (g : RDF11.Enumeration G)\n  (indices : List Nat),\n  (∀ (n : Nat),\n      RDF11.GeneralizedGraph.vocabulary T.literalSyntax.datatype E (Sum.inl (v.iri (RDF11.RDFSymbol.container n))) →\n        n ∈ indices) →\n    ∃ terms closure, closure.triples.length ≤ terms.triples.length ^ 3",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE",
+        "MT11-FINITE-CLOSURE-COMPLEXITY"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.rdf_closure_contains",
+      "module": "RDF11.ClosureFinitenessScope",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B₁ B₂ : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (v : RDF11.RDFVocabulary Iri)\n  (G : RDF11.GeneralizedGraph Iri Literal B₁) (E : RDF11.GeneralizedGraph Iri Literal B₂),\n  RDF11.Set.subset G (RDF11.RDFClosure T v G E)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.rdf_closure_finite",
+      "module": "RDF11.FiniteClosure",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B₁ B₂ : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (v : RDF11.RDFVocabulary Iri)\n  (G : RDF11.GeneralizedGraph Iri Literal B₁) (E : RDF11.GeneralizedGraph Iri Literal B₂),\n  RDF11.FiniteGraph G → RDF11.FiniteGraph E → RDF11.FiniteGraph (RDF11.RDFClosure T v G E)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE",
+        "MT11-FINITE-CLOSURE-COMPLEXITY"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.rdf_closure_finite_iff",
+      "module": "RDF11.ClosureFinitenessScope",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B₁ B₂ : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (v : RDF11.RDFVocabulary Iri)\n  (G : RDF11.GeneralizedGraph Iri Literal B₁) (E : RDF11.GeneralizedGraph Iri Literal B₂),\n  RDF11.FiniteGraph (RDF11.RDFClosure T v G E) ↔\n    RDF11.FiniteGraph G ∧\n      Nonempty\n        (RDF11.Enumeration fun n =>\n          RDF11.GeneralizedGraph.vocabulary T.literalSyntax.datatype E (Sum.inl (v.iri (RDF11.RDFSymbol.container n))))",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE",
+        "MT11-FINITE-CLOSURE-COMPLEXITY"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.rdf_closure_finite_selected",
+      "module": "RDF11.FiniteClosure",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B₁ B₂ : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (v : RDF11.RDFVocabulary Iri)\n  (G : RDF11.GeneralizedGraph Iri Literal B₁) (E : RDF11.GeneralizedGraph Iri Literal B₂),\n  RDF11.FiniteGraph G →\n    Nonempty\n        (RDF11.Enumeration fun n =>\n          RDF11.GeneralizedGraph.vocabulary T.literalSyntax.datatype E\n            (Sum.inl (v.iri (RDF11.RDFSymbol.container n)))) →\n      RDF11.FiniteGraph (RDF11.RDFClosure T v G E)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE",
+        "MT11-FINITE-CLOSURE-COMPLEXITY"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.rdf_closure_onTerms",
+      "module": "RDF11.FiniteClosure",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B₁ B₂ : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (v : RDF11.RDFVocabulary Iri)\n  (G : RDF11.GeneralizedGraph Iri Literal B₁) (E : RDF11.GeneralizedGraph Iri Literal B₂) (g : RDF11.Enumeration G)\n  (indices : List Nat),\n  (∀ (n : Nat),\n      RDF11.GeneralizedGraph.vocabulary T.literalSyntax.datatype E (Sum.inl (v.iri (RDF11.RDFSymbol.container n))) →\n        n ∈ indices) →\n    RDF11.Set.subset (RDF11.RDFClosure T v G E)\n      (RDF11.ClosureBound.OnTerms (RDF11.Set.ofList (RDF11.ClosureBound.rdfTerms T v g.triples indices)))",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE",
+        "MT11-FINITE-CLOSURE-COMPLEXITY"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.rdf_container_in_pool",
+      "module": "RDF11.FiniteClosure",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (v : RDF11.RDFVocabulary Iri)\n  (triples : List (RDF11.GeneralizedTriple Iri Literal B)) (indices : List Nat) (n : Nat),\n  n ∈ 0 :: indices →\n    RDF11.Term.iri (v.iri (RDF11.RDFSymbol.container n)) ∈ RDF11.ClosureBound.rdfTerms T v triples indices",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.rdf_empty_closure_indexed_absent",
+      "module": "RDF11.ClosureFinitenessScope",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (v : RDF11.RDFVocabulary Iri) (n : Nat),\n  n ≠ 0 → ¬RDF11.RDFClosure T v RDF11.Set.empty RDF11.Set.empty (RDF11.ClosureBound.indexedPropertyAxiom v n)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE",
+        "MT11-CLOSURE-TAUTOLOGIES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.rdf_empty_closure_indexed_absent._simp_1_6",
+      "module": "RDF11.ClosureFinitenessScope",
+      "kind": "theorem",
+      "type": "∀ {Iri : Type} (v : RDF11.RDFVocabulary Iri) (a b : RDF11.RDFSymbol), (v.iri a = v.iri b) = (a = b)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureBound.rdf_empty_closure_indexed_absent",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.rdf_empty_closure_omits_tautology",
+      "module": "RDF11.ClosureFinitenessScope",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (v : RDF11.RDFVocabulary Iri),\n  have G := RDF11.Set.empty;\n  ∃ n,\n    ¬RDF11.RDFClosure T v G G (RDF11.ClosureBound.indexedPropertyAxiom v n) ∧\n      RDF11.RDFEntails T v.baseDatatypes v G (RDF11.Set.singleton (RDF11.ClosureBound.indexedPropertyAxiom v n))",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE",
+        "MT11-CLOSURE-TAUTOLOGIES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.rdf_finite_premise_of_finite_closure",
+      "module": "RDF11.ClosureFinitenessScope",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B₁ B₂ : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (v : RDF11.RDFVocabulary Iri)\n  (G : RDF11.GeneralizedGraph Iri Literal B₁) (E : RDF11.GeneralizedGraph Iri Literal B₂),\n  RDF11.FiniteGraph (RDF11.RDFClosure T v G E) → RDF11.FiniteGraph G",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.rdf_fixed_in_pool",
+      "module": "RDF11.FiniteClosure",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (v : RDF11.RDFVocabulary Iri)\n  (triples : List (RDF11.GeneralizedTriple Iri Literal B)) (indices : List Nat) (s : RDF11.RDFSymbol),\n  s ∈ RDF11.ClosureBound.rdfFixedSymbols → RDF11.Term.iri (v.iri s) ∈ RDF11.ClosureBound.rdfTerms T v triples indices",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.rdf_fixed_or_container",
+      "module": "RDF11.ClosureVocabulary",
+      "kind": "theorem",
+      "type": "∀ (s : RDF11.RDFSymbol), s ∈ RDF11.ClosureBound.rdfFixedSymbols ∨ ∃ n, s = RDF11.RDFSymbol.container n",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.rdf_iri_eq",
+      "module": "RDF11.ClosureVocabulary",
+      "kind": "theorem",
+      "type": "∀ {Iri : Type} (v : RDF11.RDFVocabulary Iri) (a b : RDF11.RDFSymbol), v.iri a = v.iri b ↔ a = b",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.rdf_seed_onTerms",
+      "module": "RDF11.FiniteClosure",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B₁ B₂ : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (v : RDF11.RDFVocabulary Iri)\n  (G : RDF11.GeneralizedGraph Iri Literal B₁) (E : RDF11.GeneralizedGraph Iri Literal B₂) (g : RDF11.Enumeration G)\n  (indices : List Nat),\n  (∀ (n : Nat),\n      RDF11.GeneralizedGraph.vocabulary T.literalSyntax.datatype E (Sum.inl (v.iri (RDF11.RDFSymbol.container n))) →\n        n ∈ indices) →\n    RDF11.Set.subset\n      (RDF11.AxiomSeed T.literalSyntax.datatype (fun n => v.iri (RDF11.RDFSymbol.container n)) v.axioms G E)\n      (RDF11.ClosureBound.OnTerms (RDF11.Set.ofList (RDF11.ClosureBound.rdfTerms T v g.triples indices)))",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.rdf_selected_typing",
+      "module": "RDF11.ClosureFinitenessScope",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B₁ B₂ : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (v : RDF11.RDFVocabulary Iri)\n  (G : RDF11.GeneralizedGraph Iri Literal B₁) (E : RDF11.GeneralizedGraph Iri Literal B₂) (n : Nat),\n  RDF11.GeneralizedGraph.vocabulary T.literalSyntax.datatype E (Sum.inl (v.iri (RDF11.RDFSymbol.container n))) →\n    RDF11.RDFClosure T v G E (RDF11.ClosureBound.indexedPropertyAxiom v n)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.rdf_step_onTerms",
+      "module": "RDF11.ClosureTermBounds",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B : Type} {t : RDF11.GeneralizedTriple Iri Literal B} (T : RDF11.DatatypeTheory Iri Literal Value)\n  (D : RDF11.Set Iri) (v : RDF11.RDFVocabulary Iri) (V : RDF11.Set (RDF11.Term Iri Literal B)),\n  V (RDF11.Term.iri (v.iri RDF11.RDFSymbol.rdfType)) →\n    V (RDF11.Term.iri (v.iri RDF11.RDFSymbol.rdfProperty)) →\n      (∀ (l : Literal), V (RDF11.Term.literal l) → V (RDF11.Term.iri (T.literalSyntax.datatype l))) →\n        ∀ (H : RDF11.GeneralizedGraph Iri Literal B),\n          RDF11.Set.subset H (RDF11.ClosureBound.OnTerms V) → RDF11.RDFStep T D v H t → RDF11.ClosureBound.OnTerms V t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.rdfsFixedSymbols",
+      "module": "RDF11.ClosureVocabulary",
+      "kind": "definition",
+      "type": "List RDF11.RDFSSymbol",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.rdfsFixedSymbols.eq_1",
+      "module": "RDF11.ClosureVocabulary",
+      "kind": "theorem",
+      "type": "RDF11.ClosureBound.rdfsFixedSymbols =\n  List.map RDF11.RDFSSymbol.rdf RDF11.ClosureBound.rdfFixedSymbols ++\n    [RDF11.RDFSSymbol.domain, RDF11.RDFSSymbol.range, RDF11.RDFSSymbol.resource, RDF11.RDFSSymbol.literal,\n      RDF11.RDFSSymbol.datatype, RDF11.RDFSSymbol.class_, RDF11.RDFSSymbol.subClassOf, RDF11.RDFSSymbol.subPropertyOf,\n      RDF11.RDFSSymbol.member, RDF11.RDFSSymbol.container, RDF11.RDFSSymbol.containerMembershipProperty,\n      RDF11.RDFSSymbol.comment, RDF11.RDFSSymbol.seeAlso, RDF11.RDFSSymbol.isDefinedBy, RDF11.RDFSSymbol.label]",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureBound.rdfsFixedSymbols",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.rdfsNames",
+      "module": "RDF11.FiniteClosure",
+      "kind": "definition",
+      "type": "{Iri : Type} → RDF11.RDFSVocabulary Iri → List Nat → List Iri",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.rdfsNames.eq_1",
+      "module": "RDF11.ClosureFinitenessScope",
+      "kind": "theorem",
+      "type": "∀ {Iri : Type} (v : RDF11.RDFSVocabulary Iri) (indices : List Nat),\n  RDF11.ClosureBound.rdfsNames v indices =\n    List.map v.iri RDF11.ClosureBound.rdfsFixedSymbols ++\n      List.map (fun n => v.iri (RDF11.RDFSSymbol.rdf (RDF11.RDFSymbol.container n))) (0 :: indices)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureBound.rdfsNames",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.rdfsRuleNames",
+      "module": "RDF11.ClosureTermBounds",
+      "kind": "definition",
+      "type": "{Iri : Type} → RDF11.RDFSVocabulary Iri → List Iri",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.rdfsRuleNames.eq_1",
+      "module": "RDF11.ClosureTermBounds",
+      "kind": "theorem",
+      "type": "∀ {Iri : Type} (v : RDF11.RDFSVocabulary Iri),\n  RDF11.ClosureBound.rdfsRuleNames v =\n    List.map v.iri\n      [RDF11.RDFSSymbol.rdf RDF11.RDFSymbol.rdfType, RDF11.RDFSSymbol.resource, RDF11.RDFSSymbol.datatype,\n        RDF11.RDFSSymbol.subPropertyOf, RDF11.RDFSSymbol.subClassOf, RDF11.RDFSSymbol.member, RDF11.RDFSSymbol.literal]",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureBound.rdfsRuleNames",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.rdfsTerms",
+      "module": "RDF11.FiniteClosure",
+      "kind": "definition",
+      "type": "{Iri Literal Value B : Type} →\n  RDF11.DatatypeTheory Iri Literal Value →\n    RDF11.RDFSVocabulary Iri → List (RDF11.GeneralizedTriple Iri Literal B) → List Nat → List (RDF11.Term Iri Literal B)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE",
+        "MT11-FINITE-CLOSURE-COMPLEXITY"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.rdfsTerms.eq_1",
+      "module": "RDF11.ClosureFinitenessScope",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (v : RDF11.RDFSVocabulary Iri)\n  (triples : List (RDF11.GeneralizedTriple Iri Literal B)) (indices : List Nat),\n  RDF11.ClosureBound.rdfsTerms T v triples indices =\n    RDF11.ClosureBound.termPool T.literalSyntax.datatype (RDF11.ClosureBound.rdfsNames v indices) triples",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureBound.rdfsTerms",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.rdfs_axiom_container_unique",
+      "module": "RDF11.ClosureVocabulary",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri B : Type} (datatype : Literal → Iri) (v : RDF11.RDFSVocabulary Iri)\n  (t : RDF11.GeneralizedTriple Iri Literal B),\n  v.axioms t →\n    ∀ (m n : Nat),\n      RDF11.GeneralizedTriple.names datatype t (Sum.inl (v.iri (RDF11.RDFSSymbol.rdf (RDF11.RDFSymbol.container m)))) →\n        RDF11.GeneralizedTriple.names datatype t\n            (Sum.inl (v.iri (RDF11.RDFSSymbol.rdf (RDF11.RDFSymbol.container n)))) →\n          m = n",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.rdfs_axiom_container_unique._proof_1_3",
+      "module": "RDF11.ClosureVocabulary",
+      "kind": "theorem",
+      "type": "∀ (m n k : Nat), m = k → n = k → ¬m = n → False",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureBound.rdfs_axiom_container_unique",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.rdfs_axiom_container_unique._simp_1_2",
+      "module": "RDF11.ClosureVocabulary",
+      "kind": "theorem",
+      "type": "∀ {Iri : Type} (v : RDF11.RDFSVocabulary Iri) (a b : RDF11.RDFSSymbol), (v.iri a = v.iri b) = (a = b)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureBound.rdfs_axiom_container_unique",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.rdfs_axioms_onTerms",
+      "module": "RDF11.ClosureVocabulary",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri B : Type} (datatype : Literal → Iri) (v : RDF11.RDFSVocabulary Iri)\n  (V : RDF11.Set (RDF11.Term Iri Literal B)),\n  (∀ (s : RDF11.RDFSSymbol), s ∈ RDF11.ClosureBound.rdfsFixedSymbols → V (RDF11.Term.iri (v.iri s))) →\n    ∀ (t : RDF11.GeneralizedTriple Iri Literal B),\n      v.axioms t →\n        (∀ (n : Nat),\n            RDF11.GeneralizedTriple.names datatype t\n                (Sum.inl (v.iri (RDF11.RDFSSymbol.rdf (RDF11.RDFSymbol.container n)))) →\n              V (RDF11.Term.iri (v.iri (RDF11.RDFSSymbol.rdf (RDF11.RDFSymbol.container n))))) →\n          RDF11.ClosureBound.OnTerms V t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.rdfs_closure_bound",
+      "module": "RDF11.FiniteClosure",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B₁ B₂ : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (v : RDF11.RDFSVocabulary Iri)\n  (G : RDF11.GeneralizedGraph Iri Literal B₁) (E : RDF11.GeneralizedGraph Iri Literal B₂) (g : RDF11.Enumeration G)\n  (indices : List Nat),\n  (∀ (n : Nat),\n      RDF11.GeneralizedGraph.vocabulary T.literalSyntax.datatype E\n          (Sum.inl (v.iri (RDF11.RDFSSymbol.rdf (RDF11.RDFSymbol.container n)))) →\n        n ∈ indices) →\n    ∃ terms closure, closure.triples.length ≤ terms.triples.length ^ 3",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE",
+        "MT11-FINITE-CLOSURE-COMPLEXITY"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.rdfs_closure_contains",
+      "module": "RDF11.ClosureFinitenessScope",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B₁ B₂ : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (v : RDF11.RDFSVocabulary Iri)\n  (G : RDF11.GeneralizedGraph Iri Literal B₁) (E : RDF11.GeneralizedGraph Iri Literal B₂),\n  RDF11.Set.subset G (RDF11.RDFSClosure T v G E)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.rdfs_closure_finite",
+      "module": "RDF11.FiniteClosure",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B₁ B₂ : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (v : RDF11.RDFSVocabulary Iri)\n  (G : RDF11.GeneralizedGraph Iri Literal B₁) (E : RDF11.GeneralizedGraph Iri Literal B₂),\n  RDF11.FiniteGraph G → RDF11.FiniteGraph E → RDF11.FiniteGraph (RDF11.RDFSClosure T v G E)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE",
+        "MT11-FINITE-CLOSURE-COMPLEXITY"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.rdfs_closure_finite_iff",
+      "module": "RDF11.ClosureFinitenessScope",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B₁ B₂ : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (v : RDF11.RDFSVocabulary Iri)\n  (G : RDF11.GeneralizedGraph Iri Literal B₁) (E : RDF11.GeneralizedGraph Iri Literal B₂),\n  RDF11.FiniteGraph (RDF11.RDFSClosure T v G E) ↔\n    RDF11.FiniteGraph G ∧\n      Nonempty\n        (RDF11.Enumeration fun n =>\n          RDF11.GeneralizedGraph.vocabulary T.literalSyntax.datatype E\n            (Sum.inl (v.iri (RDF11.RDFSSymbol.rdf (RDF11.RDFSymbol.container n)))))",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE",
+        "MT11-FINITE-CLOSURE-COMPLEXITY"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.rdfs_closure_finite_selected",
+      "module": "RDF11.FiniteClosure",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B₁ B₂ : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (v : RDF11.RDFSVocabulary Iri)\n  (G : RDF11.GeneralizedGraph Iri Literal B₁) (E : RDF11.GeneralizedGraph Iri Literal B₂),\n  RDF11.FiniteGraph G →\n    Nonempty\n        (RDF11.Enumeration fun n =>\n          RDF11.GeneralizedGraph.vocabulary T.literalSyntax.datatype E\n            (Sum.inl (v.iri (RDF11.RDFSSymbol.rdf (RDF11.RDFSymbol.container n))))) →\n      RDF11.FiniteGraph (RDF11.RDFSClosure T v G E)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE",
+        "MT11-FINITE-CLOSURE-COMPLEXITY"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.rdfs_closure_onTerms",
+      "module": "RDF11.FiniteClosure",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B₁ B₂ : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (v : RDF11.RDFSVocabulary Iri)\n  (G : RDF11.GeneralizedGraph Iri Literal B₁) (E : RDF11.GeneralizedGraph Iri Literal B₂) (g : RDF11.Enumeration G)\n  (indices : List Nat),\n  (∀ (n : Nat),\n      RDF11.GeneralizedGraph.vocabulary T.literalSyntax.datatype E\n          (Sum.inl (v.iri (RDF11.RDFSSymbol.rdf (RDF11.RDFSymbol.container n)))) →\n        n ∈ indices) →\n    RDF11.Set.subset (RDF11.RDFSClosure T v G E)\n      (RDF11.ClosureBound.OnTerms (RDF11.Set.ofList (RDF11.ClosureBound.rdfsTerms T v g.triples indices)))",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE",
+        "MT11-FINITE-CLOSURE-COMPLEXITY"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.rdfs_container_in_pool",
+      "module": "RDF11.FiniteClosure",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (v : RDF11.RDFSVocabulary Iri)\n  (triples : List (RDF11.GeneralizedTriple Iri Literal B)) (indices : List Nat) (n : Nat),\n  n ∈ 0 :: indices →\n    RDF11.Term.iri (v.iri (RDF11.RDFSSymbol.rdf (RDF11.RDFSymbol.container n))) ∈\n      RDF11.ClosureBound.rdfsTerms T v triples indices",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.rdfs_empty_closure_indexed_absent",
+      "module": "RDF11.ClosureFinitenessScope",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (v : RDF11.RDFSVocabulary Iri) (n : Nat),\n  n ≠ 0 → ¬RDF11.RDFSClosure T v RDF11.Set.empty RDF11.Set.empty (RDF11.ClosureBound.indexedPropertyAxiom v.toRDF n)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE",
+        "MT11-CLOSURE-TAUTOLOGIES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.rdfs_empty_closure_indexed_absent._simp_1_6",
+      "module": "RDF11.ClosureFinitenessScope",
+      "kind": "theorem",
+      "type": "∀ {Iri : Type} (v : RDF11.RDFSVocabulary Iri) (a b : RDF11.RDFSSymbol), (v.iri a = v.iri b) = (a = b)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureBound.rdfs_empty_closure_indexed_absent",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.rdfs_empty_closure_omits_tautology",
+      "module": "RDF11.ClosureFinitenessScope",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (v : RDF11.RDFSVocabulary Iri),\n  have G := RDF11.Set.empty;\n  ∃ n,\n    ¬RDF11.RDFSClosure T v G G (RDF11.ClosureBound.indexedPropertyAxiom v.toRDF n) ∧\n      RDF11.RDFSEntails T v.toRDF.baseDatatypes v G\n        (RDF11.Set.singleton (RDF11.ClosureBound.indexedPropertyAxiom v.toRDF n))",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE",
+        "MT11-CLOSURE-TAUTOLOGIES"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.rdfs_finite_premise_of_finite_closure",
+      "module": "RDF11.ClosureFinitenessScope",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B₁ B₂ : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (v : RDF11.RDFSVocabulary Iri)\n  (G : RDF11.GeneralizedGraph Iri Literal B₁) (E : RDF11.GeneralizedGraph Iri Literal B₂),\n  RDF11.FiniteGraph (RDF11.RDFSClosure T v G E) → RDF11.FiniteGraph G",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.rdfs_fixed_in_pool",
+      "module": "RDF11.FiniteClosure",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (v : RDF11.RDFSVocabulary Iri)\n  (triples : List (RDF11.GeneralizedTriple Iri Literal B)) (indices : List Nat) (s : RDF11.RDFSSymbol),\n  s ∈ RDF11.ClosureBound.rdfsFixedSymbols → RDF11.Term.iri (v.iri s) ∈ RDF11.ClosureBound.rdfsTerms T v triples indices",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.rdfs_fixed_not_container",
+      "module": "RDF11.ClosureVocabulary",
+      "kind": "theorem",
+      "type": "∀ (s : RDF11.RDFSSymbol),\n  s ∈ RDF11.ClosureBound.rdfsFixedSymbols → ∀ (n : Nat), s ≠ RDF11.RDFSSymbol.rdf (RDF11.RDFSymbol.container n)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.rdfs_fixed_or_container",
+      "module": "RDF11.ClosureVocabulary",
+      "kind": "theorem",
+      "type": "∀ (s : RDF11.RDFSSymbol),\n  s ∈ RDF11.ClosureBound.rdfsFixedSymbols ∨ ∃ n, s = RDF11.RDFSSymbol.rdf (RDF11.RDFSymbol.container n)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.rdfs_fixed_triple_no_container",
+      "module": "RDF11.ClosureVocabulary",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri B : Type} (datatype : Literal → Iri) (v : RDF11.RDFSVocabulary Iri) (s p o : RDF11.RDFSSymbol),\n  s ∈ RDF11.ClosureBound.rdfsFixedSymbols →\n    p ∈ RDF11.ClosureBound.rdfsFixedSymbols →\n      o ∈ RDF11.ClosureBound.rdfsFixedSymbols →\n        ∀ (n : Nat),\n          ¬RDF11.GeneralizedTriple.names datatype\n              { subject := RDF11.Term.iri (v.iri s), predicate := RDF11.Term.iri (v.iri p),\n                object := RDF11.Term.iri (v.iri o) }\n              (Sum.inl (v.iri (RDF11.RDFSSymbol.rdf (RDF11.RDFSymbol.container n))))",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.rdfs_fixed_triple_no_container._simp_1_1",
+      "module": "RDF11.ClosureVocabulary",
+      "kind": "theorem",
+      "type": "∀ {Iri : Type} (v : RDF11.RDFSVocabulary Iri) (a b : RDF11.RDFSSymbol), (v.iri a = v.iri b) = (a = b)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureBound.rdfs_fixed_triple_no_container",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.rdfs_iri_eq",
+      "module": "RDF11.ClosureVocabulary",
+      "kind": "theorem",
+      "type": "∀ {Iri : Type} (v : RDF11.RDFSVocabulary Iri) (a b : RDF11.RDFSSymbol), v.iri a = v.iri b ↔ a = b",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.rdfs_seed_onTerms",
+      "module": "RDF11.FiniteClosure",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B₁ B₂ : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (v : RDF11.RDFSVocabulary Iri)\n  (G : RDF11.GeneralizedGraph Iri Literal B₁) (E : RDF11.GeneralizedGraph Iri Literal B₂) (g : RDF11.Enumeration G)\n  (indices : List Nat),\n  (∀ (n : Nat),\n      RDF11.GeneralizedGraph.vocabulary T.literalSyntax.datatype E\n          (Sum.inl (v.iri (RDF11.RDFSSymbol.rdf (RDF11.RDFSymbol.container n)))) →\n        n ∈ indices) →\n    RDF11.Set.subset\n      (RDF11.AxiomSeed T.literalSyntax.datatype (fun n => v.iri (RDF11.RDFSSymbol.rdf (RDF11.RDFSymbol.container n)))\n        (RDF11.Set.union v.toRDF.axioms v.axioms) G E)\n      (RDF11.ClosureBound.OnTerms (RDF11.Set.ofList (RDF11.ClosureBound.rdfsTerms T v g.triples indices)))",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.rdfs_selected_typing",
+      "module": "RDF11.ClosureFinitenessScope",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B₁ B₂ : Type} (T : RDF11.DatatypeTheory Iri Literal Value) (v : RDF11.RDFSVocabulary Iri)\n  (G : RDF11.GeneralizedGraph Iri Literal B₁) (E : RDF11.GeneralizedGraph Iri Literal B₂) (n : Nat),\n  RDF11.GeneralizedGraph.vocabulary T.literalSyntax.datatype E\n      (Sum.inl (v.iri (RDF11.RDFSSymbol.rdf (RDF11.RDFSymbol.container n)))) →\n    RDF11.RDFSClosure T v G E (RDF11.ClosureBound.indexedPropertyAxiom v.toRDF n)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.rdfs_step_onTerms",
+      "module": "RDF11.ClosureTermBounds",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal Value B : Type} {t : RDF11.GeneralizedTriple Iri Literal B} (T : RDF11.DatatypeTheory Iri Literal Value)\n  (D : RDF11.Set Iri) (v : RDF11.RDFSVocabulary Iri) (V : RDF11.Set (RDF11.Term Iri Literal B)),\n  (∀ (a : Iri), a ∈ RDF11.ClosureBound.rdfsRuleNames v → V (RDF11.Term.iri a)) →\n    (∀ (a : Iri), D a → V (RDF11.Term.iri a)) →\n      ∀ (H : RDF11.GeneralizedGraph Iri Literal B),\n        RDF11.Set.subset H (RDF11.ClosureBound.OnTerms V) → RDF11.RDFSStep T D v H t → RDF11.ClosureBound.OnTerms V t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.seed_onTerms",
+      "module": "RDF11.ClosureVocabulary",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri B₁ B₂ : Type} (datatype : Literal → Iri) (container : Nat → Iri)\n  (axioms G : RDF11.GeneralizedGraph Iri Literal B₁) (E : RDF11.GeneralizedGraph Iri Literal B₂)\n  (V : RDF11.Set (RDF11.Term Iri Literal B₁)),\n  RDF11.Set.subset G (RDF11.ClosureBound.OnTerms V) →\n    (∀ (t : RDF11.GeneralizedTriple Iri Literal B₁),\n        axioms t →\n          (∀ (n : Nat),\n              RDF11.GeneralizedTriple.names datatype t (Sum.inl (container n)) → V (RDF11.Term.iri (container n))) →\n            RDF11.ClosureBound.OnTerms V t) →\n      (∀ (t : RDF11.GeneralizedTriple Iri Literal B₁),\n          axioms t →\n            ∀ (m n : Nat),\n              RDF11.GeneralizedTriple.names datatype t (Sum.inl (container m)) →\n                RDF11.GeneralizedTriple.names datatype t (Sum.inl (container n)) → m = n) →\n        (∀ (n : Nat),\n            RDF11.GeneralizedGraph.vocabulary datatype E (Sum.inl (container n)) → V (RDF11.Term.iri (container n))) →\n          V (RDF11.Term.iri (container 0)) →\n            RDF11.Set.subset (RDF11.AxiomSeed datatype container axioms G E) (RDF11.ClosureBound.OnTerms V)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.selected_indices_finite",
+      "module": "RDF11.ClosureVocabulary",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri B : Type} (datatype : Literal → Iri) (container : Nat → Iri),\n  (∀ (m n : Nat), container m = container n → m = n) →\n    ∀ (E : RDF11.GeneralizedGraph Iri Literal B),\n      RDF11.FiniteGraph E →\n        Nonempty (RDF11.Enumeration fun n => RDF11.GeneralizedGraph.vocabulary datatype E (Sum.inl (container n)))",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.termPool",
+      "module": "RDF11.ClosureTermBounds",
+      "kind": "definition",
+      "type": "{Literal Iri B : Type} →\n  (Literal → Iri) → List Iri → List (RDF11.GeneralizedTriple Iri Literal B) → List (RDF11.Term Iri Literal B)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.termPool.eq_1",
+      "module": "RDF11.ClosureFinitenessScope",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri B : Type} (datatype : Literal → Iri) (fixed : List Iri)\n  (triples : List (RDF11.GeneralizedTriple Iri Literal B)),\n  RDF11.ClosureBound.termPool datatype fixed triples =\n    List.map RDF11.Term.iri fixed ++ List.flatMap (RDF11.ClosureBound.tripleTerms datatype) triples",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureBound.termPool",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.tripleTerms",
+      "module": "RDF11.ClosureTermBounds",
+      "kind": "definition",
+      "type": "{Literal Iri B : Type} → (Literal → Iri) → RDF11.GeneralizedTriple Iri Literal B → List (RDF11.Term Iri Literal B)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.ClosureBound.tripleTerms.eq_1",
+      "module": "RDF11.ClosureTermBounds",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri B : Type} (datatype : Literal → Iri) (t : RDF11.GeneralizedTriple Iri Literal B),\n  RDF11.ClosureBound.tripleTerms datatype t =\n    RDF11.ClosureBound.expanded datatype t.subject ++ RDF11.ClosureBound.expanded datatype t.predicate ++\n      RDF11.ClosureBound.expanded datatype t.object",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureBound.tripleTerms",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Enumeration.mk.congr_simp",
+      "module": "RDF11.ClosureFinitenessScope",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_1} {G : RDF11.Set α} (triples triples_1 : List α) (e_triples : triples = triples_1)\n  (nodup : triples.Nodup) (membership : ∀ (t : α), t ∈ triples ↔ G t),\n  { triples := triples, nodup := nodup, membership := membership } =\n    { triples := triples_1, nodup := ⋯, membership := ⋯ }",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Enumeration.mk",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.ClosureTermBounds.0.RDF11.ClosureBound.expanded.match_1.eq_1",
+      "module": "RDF11.ClosureTermBounds",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri B : Type} (motive : RDF11.Term Iri Literal B → Sort u_1) (l : Literal)\n  (h_1 : (l : Literal) → motive (RDF11.Term.literal l)) (h_2 : (t : RDF11.Term Iri Literal B) → motive t),\n  (match RDF11.Term.literal l with\n    | RDF11.Term.literal l => h_1 l\n    | t => h_2 t) =\n    h_1 l",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureBound.expanded.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.ClosureTermBounds.0.RDF11.ClosureBound.expanded.match_1.eq_2",
+      "module": "RDF11.ClosureTermBounds",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri B : Type} (motive : RDF11.Term Iri Literal B → Sort u_1) (t : RDF11.Term Iri Literal B)\n  (h_1 : (l : Literal) → motive (RDF11.Term.literal l)) (h_2 : (t : RDF11.Term Iri Literal B) → motive t),\n  (∀ (l : Literal), t = RDF11.Term.literal l → False) →\n    (match t with\n      | RDF11.Term.literal l => h_1 l\n      | t => h_2 t) =\n      h_2 t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureBound.expanded.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.ClosureTermBounds.0.RDF11.ClosureBound.expanded.match_1.splitter",
+      "module": "RDF11.ClosureTermBounds",
+      "kind": "definition",
+      "type": "{Literal Iri B : Type} →\n  (motive : RDF11.Term Iri Literal B → Sort u_1) →\n    (x : RDF11.Term Iri Literal B) →\n      ((l : Literal) → motive (RDF11.Term.literal l)) →\n        ((t : RDF11.Term Iri Literal B) → (∀ (l : Literal), t = RDF11.Term.literal l → False) → motive t) → motive x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-CLOSURE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.ClosureBound.expanded.match_1",
       "review": "pending_expert_review"
     }
   ],

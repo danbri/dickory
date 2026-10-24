@@ -60,3 +60,7 @@ import RDF11.ExtensionPresentations
 import RDF11.ClosureSelectionFrame
 import RDF11.ClosureSelectionScope
 import RDF11.ClosureSelectionWitness
+import RDF11.ClosureTermBounds
+import RDF11.ClosureVocabulary
+import RDF11.FiniteClosure
+import RDF11.ClosureFinitenessScope

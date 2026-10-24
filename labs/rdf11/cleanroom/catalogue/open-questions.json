@@ -368,6 +368,77 @@
       "review_question": "Which additional datatype/resource conditions or scope qualifications are intended for finite pre-interpretations to yield unchanged generalized entailments? How should the assignment-preservation claim and whole-graph equivalence claim be separated?",
       "implementation_policy": "Preserve normative IR/IP and blank-assignment domains, the original source and the existing localized conditions. Keep generalized coverage partial, publish the ordinary theorem with its hypothesis, and treat any stronger local condition as an explicit new refinement requiring review.",
       "review_status": "pending_expert_review"
+    },
+    {
+      "id": "Q-CLOSURE-FINITE-INPUT",
+      "status": "exact_finiteness_condition_and_consistent_infinite_witness_checked",
+      "not_a_declared_erratum": true,
+      "claim_ids": [
+        "MT11-FINITE-CLOSURE-COMPLEXITY",
+        "MT11-GENERALIZED-CLOSURE",
+        "MT11-INFINITE-GRAPHS-PERMITTED"
+      ],
+      "passage_ids": [
+        "closure-definition",
+        "closure-procedure",
+        "closure-finiteness"
+      ],
+      "summary": "Appendix A states finite closures without an explicit finite-input qualification. The unchanged procedure has finite closure exactly when the premise and the set of conclusion-selected container names are finite.",
+      "lean": [
+        "RDF11.ClosureBound.rdf_closure_finite_iff",
+        "RDF11.ClosureBound.rdfs_closure_finite_iff",
+        "RDF11.ClosureBound.consistent_infinite_closures"
+      ],
+      "example": {
+        "premise": "An ordinary Bag graph containing every indexed membership assertion.",
+        "conclusion": "The empty graph.",
+        "result": "The premise is RDFS-consistent under explicit sufficient datatype parameters, and both its RDF and RDFS closures are infinite."
+      },
+      "limitations": [
+        "The infinite-name vocabulary remains symbolic; concrete IRI correspondence is external.",
+        "The full consistency witness retains explicit datatype compatibility and language-literal coverage hypotheses.",
+        "The finiteness proofs are mathematical and do not establish generation decidability, runtime complexity or entailment completeness."
+      ],
+      "review_question": "Is finite input an intended qualification of paragraph 19? The exact weaker condition only requires a finite premise and finitely many container names selected by E. How should that qualification be recorded without rewriting the original assertion?",
+      "implementation_policy": "Keep the unqualified source wording and explicit theorem hypotheses visible. Do not impose global graph finiteness or treat consistency as a substitute for finite input.",
+      "review_status": "pending_expert_review"
+    },
+    {
+      "id": "Q-CLOSURE-TAUTOLOGY-VOCABULARY",
+      "status": "finite_empty_closures_omit_valid_indexed_axioms_checked",
+      "not_a_declared_erratum": true,
+      "claim_ids": [
+        "MT11-CLOSURE-TAUTOLOGIES",
+        "MT11-FINITE-CLOSURE-COMPLEXITY",
+        "MT11-GENERALIZED-CLOSURE"
+      ],
+      "passage_ids": [
+        "closure-tautologies",
+        "closure-finiteness",
+        "closure-procedure"
+      ],
+      "summary": "The asserted closure inclusion of every tautology over the full RDF/RDFS vocabularies conflicts with their infinite indexed-property family and finite empty-input closures.",
+      "lean": [
+        "RDF11.ClosureBound.indexed_axiom_tautology",
+        "RDF11.ClosureBound.finite_omits_indexed_axiom",
+        "RDF11.ClosureBound.rdf_empty_closure_omits_tautology",
+        "RDF11.ClosureBound.rdfs_empty_closure_omits_tautology",
+        "RDF11.ClosureBound.rdf_empty_closure_indexed_absent",
+        "RDF11.ClosureBound.rdfs_empty_closure_indexed_absent"
+      ],
+      "example": {
+        "inputs": "Both premise and conclusion are empty.",
+        "tautologies": "rdf:_n rdf:type rdf:Property for every positive index n.",
+        "result": "The closures omit every indexed property-typing axiom except the possible rdf:_1 fallback. rdf:_2 rdf:type rdf:Property is an explicit valid axiom absent from both empty-input closures."
+      },
+      "limitations": [
+        "The result concerns the full infinite-vocabulary reading. A selected-vocabulary theorem is a separate unproved claim.",
+        "Concrete IRI spelling and expert source-fidelity review remain external.",
+        "This is not an official erratum and does not change the printed axiom selection."
+      ],
+      "review_question": "Does paragraph 20 intend tautologies over only the selected finite vocabulary, rather than the full RDF/RDFS vocabularies it names? What exact restriction and result are intended?",
+      "implementation_policy": "Retain the source assertion and publish the obstruction. A narrowed or corrected claim requires a separate reviewed claim/baseline record.",
+      "review_status": "pending_expert_review"
     }
   ]
 }

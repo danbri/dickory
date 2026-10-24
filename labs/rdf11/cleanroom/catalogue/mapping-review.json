@@ -4971,6 +4971,120 @@
       "extraction_review": "pending_expert_review",
       "formalization_review": "pending_expert_review",
       "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-FINITE-CLOSURE-COMPLEXITY",
+      "relation": "partial_theorem",
+      "symbol_linked_english": "The source asserts finite closures and decidable polynomial generation. rdf_closure_finite_iff and rdfs_closure_finite_iff establish the exact finite-input qualification for the transcribed procedure: FiniteGraph G and a finite set of container indices occurring in E’s vocabulary. rdf_closure_bound and rdfs_closure_bound derive a K³ size bound for a certified finite supporting term set; insertion_bound counts distinct new facts. consistent_infinite_closures establishes a boundary of the unqualified source reading.",
+      "bindings": [
+        {
+          "symbol": "ClosureBound.rdf_closure_finite",
+          "lean": "RDF11.ClosureBound.rdf_closure_finite"
+        },
+        {
+          "symbol": "ClosureBound.rdfs_closure_finite",
+          "lean": "RDF11.ClosureBound.rdfs_closure_finite"
+        },
+        {
+          "symbol": "ClosureBound.rdf_closure_finite_selected",
+          "lean": "RDF11.ClosureBound.rdf_closure_finite_selected"
+        },
+        {
+          "symbol": "ClosureBound.rdfs_closure_finite_selected",
+          "lean": "RDF11.ClosureBound.rdfs_closure_finite_selected"
+        },
+        {
+          "symbol": "ClosureBound.rdf_closure_finite_iff",
+          "lean": "RDF11.ClosureBound.rdf_closure_finite_iff"
+        },
+        {
+          "symbol": "ClosureBound.rdfs_closure_finite_iff",
+          "lean": "RDF11.ClosureBound.rdfs_closure_finite_iff"
+        },
+        {
+          "symbol": "ClosureBound.rdfTerms",
+          "lean": "RDF11.ClosureBound.rdfTerms"
+        },
+        {
+          "symbol": "ClosureBound.rdfsTerms",
+          "lean": "RDF11.ClosureBound.rdfsTerms"
+        },
+        {
+          "symbol": "ClosureBound.rdf_closure_onTerms",
+          "lean": "RDF11.ClosureBound.rdf_closure_onTerms"
+        },
+        {
+          "symbol": "ClosureBound.rdfs_closure_onTerms",
+          "lean": "RDF11.ClosureBound.rdfs_closure_onTerms"
+        },
+        {
+          "symbol": "ClosureBound.rdf_closure_bound",
+          "lean": "RDF11.ClosureBound.rdf_closure_bound"
+        },
+        {
+          "symbol": "ClosureBound.rdfs_closure_bound",
+          "lean": "RDF11.ClosureBound.rdfs_closure_bound"
+        },
+        {
+          "symbol": "ClosureBound.cube_length",
+          "lean": "RDF11.ClosureBound.cube_length"
+        },
+        {
+          "symbol": "ClosureBound.insertion_bound",
+          "lean": "RDF11.ClosureBound.insertion_bound"
+        },
+        {
+          "symbol": "ClosureBound.consistent_infinite_closures",
+          "lean": "RDF11.ClosureBound.consistent_infinite_closures"
+        }
+      ],
+      "limitations": "Only finiteness and mathematical size/insertion bounds are proved. K counts distinct supporting terms across all positions, including embedded datatype IRIs, premise blanks, fixed axiom/rule names, selected container names and the possible rdf:_1 fallback. It is not a node count supplied by the source and the pool need not be minimal. The premise must be finite; the conclusion may be infinite if it selects only finitely many container names. Consistency and disputed completeness are not assumptions. Enumerating an arbitrary closure subset is noncomputable here; no effective rule scheduler, decidability result, runtime cost model or polynomial-time implementation is claimed. The printed finite-input qualification is under source review. Larger-D and fresh-blank rdfD1 procedures are separate.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-CLOSURE-TAUTOLOGIES",
+      "relation": "partial_theorem",
+      "symbol_linked_english": "The source says every RDF/RDFS closure contains all tautologies over the original graph vocabulary plus the RDF/RDFS vocabularies. indexed_axiom_tautology proves that every rdf:_n rdf:type rdf:Property assertion is valid. finite_omits_indexed_axiom shows that any finite graph omits one. rdf_empty_closure_omits_tautology and rdfs_empty_closure_omits_tautology apply this to the printed empty-input closures. The term-pool invariant additionally proves that every indexed property-typing axiom other than the rdf:_1 fallback is absent from the empty-input closures; rdf:_2 is an explicit example.",
+      "bindings": [
+        {
+          "symbol": "ClosureBound.indexedPropertyAxiom",
+          "lean": "RDF11.ClosureBound.indexedPropertyAxiom"
+        },
+        {
+          "symbol": "ClosureBound.indexedPropertyAxiom_injective",
+          "lean": "RDF11.ClosureBound.indexedPropertyAxiom_injective"
+        },
+        {
+          "symbol": "ClosureBound.indexed_axiom_tautology",
+          "lean": "RDF11.ClosureBound.indexed_axiom_tautology"
+        },
+        {
+          "symbol": "ClosureBound.finite_omits_indexed_axiom",
+          "lean": "RDF11.ClosureBound.finite_omits_indexed_axiom"
+        },
+        {
+          "symbol": "ClosureBound.rdf_empty_closure_omits_tautology",
+          "lean": "RDF11.ClosureBound.rdf_empty_closure_omits_tautology"
+        },
+        {
+          "symbol": "ClosureBound.rdfs_empty_closure_omits_tautology",
+          "lean": "RDF11.ClosureBound.rdfs_empty_closure_omits_tautology"
+        },
+        {
+          "symbol": "ClosureBound.rdf_empty_closure_indexed_absent",
+          "lean": "RDF11.ClosureBound.rdf_empty_closure_indexed_absent"
+        },
+        {
+          "symbol": "ClosureBound.rdfs_empty_closure_indexed_absent",
+          "lean": "RDF11.ClosureBound.rdfs_empty_closure_indexed_absent"
+        }
+      ],
+      "limitations": "These are counterexample obligations for the unrestricted infinite-vocabulary reading, not a proof of the source assertion. The symbolic vocabulary distinguishes every indexed IRI; concrete spelling remains external. A selected-finite-vocabulary qualification is not assumed or proved. Expert source fidelity and any correction remain pending; no official erratum is declared.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
     }
   ],
   "passage_selectors": [
@@ -6780,6 +6894,27 @@
       "claims": [
         "MT11-EXTENSION-SYNTAX"
       ]
+    },
+    {
+      "id": "closure-finiteness",
+      "source": "mt",
+      "tag": "p",
+      "text": "The closures are finite.",
+      "within_section": "entailment-rules-informative",
+      "claims": [
+        "MT11-FINITE-CLOSURE-COMPLEXITY",
+        "MT11-SIMPLE-ENTAILMENT-COMPLEXITY"
+      ]
+    },
+    {
+      "id": "closure-tautologies",
+      "source": "mt",
+      "tag": "p",
+      "text": "Every RDF(S) closure, even starting with the empty graph",
+      "within_section": "entailment-rules-informative",
+      "claims": [
+        "MT11-CLOSURE-TAUTOLOGIES"
+      ]
     }
   ],
   "context_resolutions": [
@@ -7042,6 +7177,24 @@
       "antecedent_passage": "extension-syntax",
       "resolved_meaning": "The optional additional graph restrictions described in the preceding paragraph, applied to the premise and conclusion being compared.",
       "inference": "Require both admission proofs before constructing the entailment judgement, avoiding vacuous success on an illegal graph.",
+      "review": "pending"
+    },
+    {
+      "claim_id": "MT11-FINITE-CLOSURE-COMPLEXITY",
+      "passage": "closure-finiteness",
+      "source_phrase": "The closures",
+      "antecedent_passage": "closure-procedure",
+      "resolved_meaning": "The generalized RDF/RDFS closures towards E defined by the preceding E-only selection, fallback and base-recognition saturation procedure.",
+      "inference": "No finite-input premise is printed here. State the exact proved finiteness condition separately and retain the consistent infinite-input counterexample.",
+      "review": "pending"
+    },
+    {
+      "claim_id": "MT11-CLOSURE-TAUTOLOGIES",
+      "passage": "closure-tautologies",
+      "source_phrase": "the original graph",
+      "antecedent_passage": "closure-definition",
+      "resolved_meaning": "The premise graph S whose closure towards E is being constructed.",
+      "inference": "The added RDF/RDFS vocabularies contain infinitely many indexed properties. Do not silently replace them by the finite vocabulary selected for this run.",
       "review": "pending"
     }
   ]

@@ -4542,7 +4542,7 @@
       "category": "mathematical_consequence",
       "source_status": "informative",
       "assertion_basis": "explicit",
-      "paraphrase": "For finite effective input, the generalized closure is finite and its generation is decidable with polynomial complexity.",
+      "paraphrase": "The generalized RDF/RDFS closures are finite, and the generation process is decidable and of polynomial complexity.",
       "official_rule_code": null,
       "dependencies": [
         "MT11-GENERALIZED-CLOSURE"
@@ -4553,7 +4553,7 @@
         "formal_proof": "unassessed",
         "test_mapping": "unassessed"
       },
-      "formalization_note": "The source states finite closures without restating a finite-input premise; an infinite S cannot have a finite closure containing it. This is a scope question, not a confirmed erratum.",
+      "formalization_note": "The source does not explicitly state a finite-input premise. The twenty-second increment proves exact finiteness for the printed procedure: finite premise and finitely many conclusion-selected container names. It derives a cubic term-universe bound and a distinct-insertion bound, but not effective generation or runtime complexity. A consistent infinite-premise witness refutes the unqualified finite-closure reading. Expert source adjudication remains pending.",
       "review_questions": [
         "RQ-FINITE-CLOSURE-DOMAIN"
       ]
@@ -5613,7 +5613,32 @@
         "test_mapping": "unassessed"
       },
       "formalization_note": "The premise may be generalized and the two graphs may use different blank domains. V covers both vocabularies, including datatype IRIs; the enumerated blank support covers the premise. The proof combines full completion with the previous countermodel compression. The conclusion remains an ordinary Graph, the bound is N+B+1 rather than the printed product, and quantification over bounded models is not an implemented decision procedure."
+    },
+    {
+      "id": "MT11-CLOSURE-TAUTOLOGIES",
+      "section": "A",
+      "anchor": "entailment_rules",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#entailment_rules",
+      "source_locator": "#entailment-rules-informative > p:nth-of-type(20)",
+      "category": "mathematical_consequence",
+      "source_status": "informative",
+      "assertion_basis": "explicit",
+      "paraphrase": "Every RDF/RDFS closure, including one starting from the empty graph, contains all RDF/RDFS tautologies expressible using the original graph vocabulary together with the RDF and RDFS vocabularies.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-GENERALIZED-CLOSURE"
+      ],
+      "imports": [],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "A finite closure cannot contain every indexed rdf:_n property-typing axiom from the full infinite vocabulary. The formal transcription proves that empty-input RDF and RDFS closures omit such tautologies. A selected-finite-vocabulary interpretation is plausible but not silently adopted; expert review is pending.",
+      "review_questions": [
+        "Q-CLOSURE-TAUTOLOGY-VOCABULARY"
+      ]
     }
   ],
-  "record_count": 221
+  "record_count": 222
 }
