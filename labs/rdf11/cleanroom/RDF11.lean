@@ -50,3 +50,4 @@ import RDF11.CollectionEntailment
 import RDF11.CollectionExamples
 import RDF11.SkolemLifting
 import RDF11.Preinterpretations
+import RDF11.FiniteSimpleModels

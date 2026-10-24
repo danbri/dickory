@@ -2,6 +2,8 @@
 
 23 October 2026. Sixteenth working increment. The proofs cover simple-semantic name locality; the finite-resource bound remains open.
 
+Update, 24 October: the [seventeenth increment](20261024-finite-simple-models.md) proves the simple N+B+1 active-domain bound and bounded-pre-interpretation equivalences. The remainder of this note records the earlier increment's scope and validation.
+
 ## Source reading and separation of obligations
 
 [Informative Appendix B](https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#finite_interpretations) explicitly presents a sketch without proof. Its third paragraph combines a restricted name vocabulary, the proposed N+B+1 resource bound, extension to full interpretations, preservation of relevant truth, and equivalent satisfiability and entailment. An AI source-reading pass assessed the whole paragraph and its surrounding qualifications. This is not accepted expert review.

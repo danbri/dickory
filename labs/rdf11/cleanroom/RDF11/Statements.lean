@@ -1,5 +1,6 @@
 import RDF11.FiniteInstances
 import RDF11.SkolemLifting
+import RDF11.FiniteSimpleModels
 
 /-!
 # Headline statements for RDF 1.1 Semantics review
@@ -76,5 +77,12 @@ theorem skolemization_lemma (G H : Graph Iri Literal B) (sk : Skolemization data
 Reapply original names on the left; preserve conclusion blanks on the right.
 No finiteness or fresh-vocabulary condition on H is required. -/
 theorem skolemization_lifting_lemma (G : Graph Iri Literal B₁) (H : Graph Iri Literal B₂) (sk : Skolemization datatype G.generalize) (h : SimplyEntails.{u} sk.graph H.generalize) : ∃ H' : Graph Iri Literal (Sum B₁ B₂), SimplyEntails.{u} G.generalize H'.generalize ∧ (∀ b, H'.generalize.hasBlank (.inl b) → G.generalize.hasBlank b) ∧ Set.image sk.applyLiftedTriple H'.generalize = H.generalize := RDF11.Skolemization.ordinary_exact_lifting G sk H h
+
+/-- Finite simple pre-interpretation bound: a failed entailment has a model
+with at most N+B+1 active objects, including resources and properties.
+Appendix B https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#finite_interpretations
+N counts the union vocabulary; B counts the union of occurring blank identities.
+The completed interpretation maps all names; its active domain is bounded. -/
+theorem finite_simple_countermodel_bound (datatype : Literal → Iri) (G E : GeneralizedGraph Iri Literal B) (hG : FiniteGraph G) (hE : FiniteGraph E) (h : ¬ SimplyEntails.{u} G E) : ∃ (v : Enumeration (Set.union (G.vocabulary datatype) (E.vocabulary datatype))) (b : Enumeration (Set.union G.hasBlank E.hasBlank)) (U : Type u) (I : SimpleInterpretation Iri Literal U), I.BoundedDomain (v.triples.length + b.triples.length + 1) ∧ I.Satisfies G ∧ ¬ I.Satisfies E := RDF11.finite_simple_countermodel datatype G E hG hE h
 
 end RDF11.Statements

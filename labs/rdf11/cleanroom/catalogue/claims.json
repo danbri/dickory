@@ -3,8 +3,8 @@
   "status": "draft_not_complete_coverage",
   "method": "Human-readable AI close reading; selectors locate already selected passages and do not extract assertions.",
   "source_inventory": "../ledger/semantics-inventory.json",
-  "inventory_sha256": "012cfe8518ea375efadadae70d647347e300f75a32a6c3e6fbc7d8fd4de914ab",
-  "mapping_input_sha256": "37c2677247ae2ef1e913b7ee062f9a342bd56db1aa80b73a88ebac620516b9f5",
+  "inventory_sha256": "1314c6fb97cb68fcae2e3d45daafa3b331b267e89e0cc1b163d0fec1d13d05ff",
+  "mapping_input_sha256": "a3b6fc35d21f0ca8ddabcbca43d0db211114064d1ccf4fcfe6b6ce9b517c54a9",
   "documents": [
     {
       "id": "mt",
@@ -13727,12 +13727,68 @@
         "formal_proof": "unassessed",
         "test_mapping": "unassessed"
       },
-      "formalization_note": "Finite graph inputs have an exactly enumerated union vocabulary, and name-domain restriction/completion preserves truth and entailment. The N+B+1 resource bound and restriction to finite-carrier countermodels remain unproved. Name completion is separated into MT11-SIMPLE-PREINTERPRETATION-COMPLETION.",
+      "formalization_note": "Under the explicit section-5-faithful refinement of pre-interpretations, the N+B+1 bound is proved for the entire active domain IR union IP and hence for IR. B counts distinct blank identities in the union, and N counts names including literal datatype IRIs. Bounded-preinterpretation entailment and satisfiability equivalences are proved. Domain compression preserves a chosen premise witness and reflects conclusion truth; subsequent name completion preserves all truth over V. This does not establish D/RDF/RDFS bounds or an executable decision procedure.",
       "cleanroom_mapping": {
         "claim_id": "MT11-FINITE-SIMPLE-PREINTERPRETATION",
-        "relation": "partial_theorem",
-        "symbol_linked_english": "finite_shared_vocabulary enumerates exactly the union of the names in G and E, including datatype IRIs contributed by literals. finite_vocabulary_comparison combines this finite vocabulary with equivalence of simple entailment over its preinterpretations and full interpretations.",
+        "relation": "theorem",
+        "symbol_linked_english": "Let v enumerate exactly the names of G union E, and b enumerate exactly their shared occurring blank identities; N is v.triples.length and B is b.triples.length. finite_simple_countermodel exhibits a full-name interpretation satisfying G and falsifying E with BoundedDomain (N+B+1). BoundedDomain counts IR union IP; its resources theorem bounds IR too. The two simple_*_iff_bounded_preinterpretations theorems prove the corresponding entailment and satisfiability equivalences, using the existing name-completion proof.",
         "bindings": [
+          {
+            "symbol": "Statements.finite_simple_countermodel_bound",
+            "lean": "RDF11.Statements.finite_simple_countermodel_bound"
+          },
+          {
+            "symbol": "finite_simple_countermodel",
+            "lean": "RDF11.finite_simple_countermodel"
+          },
+          {
+            "symbol": "SimpleInterpretation.BoundedDomain",
+            "lean": "RDF11.SimpleInterpretation.BoundedDomain"
+          },
+          {
+            "symbol": "SimpleInterpretation.BoundedDomain.resources",
+            "lean": "RDF11.SimpleInterpretation.BoundedDomain.resources"
+          },
+          {
+            "symbol": "simple_entailment_iff_bounded_preinterpretations",
+            "lean": "RDF11.simple_entailment_iff_bounded_preinterpretations"
+          },
+          {
+            "symbol": "simple_satisfiable_iff_bounded_preinterpretations",
+            "lean": "RDF11.simple_satisfiable_iff_bounded_preinterpretations"
+          },
+          {
+            "symbol": "FiniteSimpleModel.compress",
+            "lean": "RDF11.FiniteSimpleModel.compress"
+          },
+          {
+            "symbol": "SimpleInterpretation.DomainRestriction.interpretation",
+            "lean": "RDF11.SimpleInterpretation.DomainRestriction.interpretation"
+          },
+          {
+            "symbol": "SimpleInterpretation.DomainRestriction.tripleTrue_iff",
+            "lean": "RDF11.SimpleInterpretation.DomainRestriction.tripleTrue_iff"
+          },
+          {
+            "symbol": "SimpleInterpretation.DomainRestriction.satisfies_lift",
+            "lean": "RDF11.SimpleInterpretation.DomainRestriction.satisfies_lift"
+          },
+          {
+            "symbol": "SimpleInterpretation.DomainRestriction.satisfies_lower",
+            "lean": "RDF11.SimpleInterpretation.DomainRestriction.satisfies_lower"
+          },
+          {
+            "symbol": "FiniteSimpleModel.values",
+            "lean": "RDF11.FiniteSimpleModel.values"
+          },
+          {
+            "symbol": "FiniteSimpleModel.restriction_bounded",
+            "lean": "RDF11.FiniteSimpleModel.restriction_bounded"
+          },
+          {
+            "symbol": "finite_shared_blank_support",
+            "lean": "RDF11.finite_shared_blank_support"
+          },
           {
             "symbol": "finite_shared_vocabulary",
             "lean": "RDF11.finite_shared_vocabulary"
@@ -13754,7 +13810,7 @@
             "lean": "RDF11.GeneralizedGraph.include_restrictNames"
           }
         ],
-        "limitations": "The N+B+1 resource bound and finite-carrier countermodel equivalence remain unproved. Finite vocabulary is not a finite resource universe, nor does it alone bound blank support. Both input graph finiteness hypotheses are explicit. The proof does not establish decidability or complexity. N counts names rather than denotations; literal datatype IRIs are included. The graph inputs may use different blank types, without identifying their independent satisfaction witnesses.",
+        "limitations": "The precise pre-interpretation definition remains an explicit refinement of Appendix B using normative section 5: IS may denote a property outside IR and IL remains partial. The finite bound covers active objects IR union IP; the ambient Lean type U may contain unused objects. Full-name completion still has globally defined IRI mappings. Compression retains one premise witness and reflects any conclusion over V; it does not preserve every originally true graph. The shared-blank bound uses one common identity domain, but graph satisfaction witnesses remain independent. These are simple-semantic model-existence and equivalence proofs, not datatype/RDF/RDFS finite-model results or an executable/complexity result. Concrete name syntax, expert review and package refinement remain external.",
         "extraction_review": "pending_expert_review",
         "formalization_review": "pending_expert_review",
         "implementation_refinement": "not_connected_to_published_package"
@@ -13836,7 +13892,7 @@
             "lean": "RDF11.Graph.generalize_mapNames"
           }
         ],
-        "limitations": "This proves name-domain locality for simple semantics over all V-preinterpretations, retaining possibly infinite carriers. The chosen completion sends unused IRIs to an existing resource and leaves unused literals undefined. Other same-carrier completions whose restriction equals the original interpretation also preserve satisfaction. This does not prove the N+B+1 finite-resource bound, a decision procedure, or D/RDF/RDFS completion. Abstract IRI/literal domains retain their existing external correspondence obligation.",
+        "limitations": "This proves name-domain locality for simple semantics over all V-preinterpretations, retaining possibly infinite carriers. The chosen completion sends unused IRIs to an existing resource and leaves unused literals undefined. Other same-carrier completions whose restriction equals the original interpretation also preserve satisfaction. The N+B+1 simple bound is now proved separately by domain compression; this name-completion theorem alone does not supply it. Neither construction proves a decision procedure or D/RDF/RDFS completion. Abstract IRI/literal domains retain their existing external correspondence obligation.",
         "extraction_review": "pending_expert_review",
         "formalization_review": "pending_expert_review",
         "implementation_refinement": "not_connected_to_published_package"
@@ -15853,7 +15909,16 @@
       "source_phrase": "Any such pre-interpretation",
       "antecedent_passage": "preinterpretation-simple",
       "resolved_meaning": "The simple pre-interpretations on the comparison vocabulary just introduced, following the proposed N+B+1 bound.",
-      "inference": "The checked name-completion construction also works without a finite-carrier hypothesis; this does not prove that finite carriers suffice for entailment. Normative section 5 supplies the precise IS codomain and partial IL behavior omitted by the sketch.",
+      "inference": "Name completion works without a finite-domain hypothesis. A separate bounded-countermodel construction now proves that N+B+1 active objects suffice for simple entailment and satisfiability. Normative section 5 supplies the precise IS codomain and partial IL behavior omitted by the sketch; domain compression does not claim preservation of every originally true graph.",
+      "review": "pending"
+    },
+    {
+      "claim_id": "MT11-FINITE-SIMPLE-PREINTERPRETATION",
+      "passage": "preinterpretation-simple",
+      "source_phrase": "all of which which will give the same truth values",
+      "antecedent_passage": "preinterpretation-simple",
+      "resolved_meaning": "Full simple interpretations obtained by completing the specified pre-interpretation on the selected comparison vocabulary.",
+      "inference": "Truth preservation belongs to name-domain completion. The preceding compression to a bounded domain retains the premise witness and conclusion falsity; it need not retain every original positive witness.",
       "review": "pending"
     }
   ],

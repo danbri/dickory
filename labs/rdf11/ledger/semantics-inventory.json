@@ -4639,7 +4639,7 @@
         "formal_proof": "unassessed",
         "test_mapping": "unassessed"
       },
-      "formalization_note": "Finite graph inputs have an exactly enumerated union vocabulary, and name-domain restriction/completion preserves truth and entailment. The N+B+1 resource bound and restriction to finite-carrier countermodels remain unproved. Name completion is separated into MT11-SIMPLE-PREINTERPRETATION-COMPLETION."
+      "formalization_note": "Under the explicit section-5-faithful refinement of pre-interpretations, the N+B+1 bound is proved for the entire active domain IR union IP and hence for IR. B counts distinct blank identities in the union, and N counts names including literal datatype IRIs. Bounded-preinterpretation entailment and satisfiability equivalences are proved. Domain compression preserves a chosen premise witness and reflects conclusion truth; subsequent name completion preserves all truth over V. This does not establish D/RDF/RDFS bounds or an executable decision procedure."
     },
     {
       "id": "MT11-SIMPLE-PREINTERPRETATION-COMPLETION",

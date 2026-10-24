@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "status": "frozen_sixteenth_increment_preinterpretations_not_expert_approved",
+  "status": "frozen_seventeenth_increment_finite_simple_models_not_expert_approved",
   "lean_version": "4.33.1",
   "allowed_axioms": [
     "propext",
@@ -554,6 +554,23 @@
         "MT11-TRIPLE-TRUTH",
         "MT11-GRAPH-TRUTH"
       ]
+    },
+    {
+      "id": "SUPPORT-FINITE-SIMPLE-MODELS",
+      "purpose": "Induced active-domain restriction, exact finite support enumeration, N+B+1 simple countermodels and bounded-preinterpretation entailment/satisfiability equivalences. Supports shared blank identities, partial IL and property referents outside IR; does not certify D/RDF/RDFS compression or executable search.",
+      "requires": [
+        "MT11-FINITE-SIMPLE-PREINTERPRETATION",
+        "MT11-PREINTERPRETATION",
+        "MT11-SIMPLE-PREINTERPRETATION-COMPLETION",
+        "MT11-NAMES-VOCABULARIES",
+        "MT11-SIMPLE-IR",
+        "MT11-SIMPLE-IP",
+        "MT11-SIMPLE-IEXT",
+        "MT11-SIMPLE-IS",
+        "MT11-SIMPLE-IL",
+        "MT11-TRIPLE-TRUTH",
+        "MT11-GRAPH-TRUTH"
+      ]
     }
   ],
   "files": [
@@ -587,7 +604,7 @@
     },
     {
       "path": "RDF11.lean",
-      "sha256": "a23c2cb3a44aea5495c00ff72829a49e9379d84868a9107fe24866516636d32a",
+      "sha256": "608c80920d64bd535487cef7869bd3e977e1c38ed8b8082ae5d5b2092f9e5ec1",
       "role": "formal_source",
       "lifecycle": "active",
       "review": "pending_expert_review"
@@ -751,7 +768,7 @@
       "role": "formal_source",
       "lifecycle": "active",
       "review": "pending_expert_review",
-      "sha256": "6f5bbe61933ef676fac01c4e78b0ef47301039668ee26cb2b66a35f084843df6"
+      "sha256": "209b3e8ee78a11b78fb8655a56c8df92a89a665decfb08d2aea0298b38400446"
     },
     {
       "path": "RDF11/EntailmentClosure.lean",
@@ -966,6 +983,20 @@
     {
       "path": "RDF11/Preinterpretations.lean",
       "sha256": "abc97e6f999b73140c7985faf8199c90c9ada0255c71db614098d96ef49f29bb",
+      "role": "formal_source",
+      "lifecycle": "active",
+      "review": "pending_expert_review"
+    },
+    {
+      "path": "RDF11/DomainRestriction.lean",
+      "sha256": "2c08c23d3264e9056f5aeb9efaafac97db78c88071ede0231b103f507fecb46e",
+      "role": "formal_source",
+      "lifecycle": "active",
+      "review": "pending_expert_review"
+    },
+    {
+      "path": "RDF11/FiniteSimpleModels.lean",
+      "sha256": "204e5dea8046e2245f3779fb826cdee1656f75647d2c7327fe43159137963b18",
       "role": "formal_source",
       "lifecycle": "active",
       "review": "pending_expert_review"
@@ -15551,7 +15582,7 @@
     },
     {
       "name": "RDF11.Set.empty.eq_1",
-      "module": "RDF11.Datasets",
+      "module": "RDF11.Preinterpretations",
       "kind": "theorem",
       "type": "∀ {α : Type u_1} (x : α), RDF11.Set.empty x = False",
       "role": "proof_support",
@@ -19375,7 +19406,7 @@
     },
     {
       "name": "RDF11.SimpleInterpretation.mk.congr_simp",
-      "module": "RDF11.NameInfinitude",
+      "module": "RDF11.Preinterpretations",
       "kind": "theorem",
       "type": "∀ {Iri Literal : Type} {U : Type u} (IR : RDF11.Set U) (IR_nonempty : ∃ x, IR x) (IP : RDF11.Set U)\n  (IEXT IEXT_1 : { p // IP p } → RDF11.Set ({ x // IR x } × { y // IR y })),\n  IEXT = IEXT_1 →\n    ∀ (IS IS_1 : Iri → { x // IR x ∨ IP x }),\n      IS = IS_1 →\n        ∀ (IL IL_1 : Literal → Option { x // IR x }),\n          IL = IL_1 →\n            { IR := IR, IR_nonempty := IR_nonempty, IP := IP, IEXT := IEXT, IS := IS, IL := IL } =\n              { IR := IR, IR_nonempty := IR_nonempty, IP := IP, IEXT := IEXT_1, IS := IS_1, IL := IL_1 }",
       "role": "proof_support",
@@ -22487,6 +22518,1016 @@
         "SUPPORT-PREINTERPRETATIONS"
       ],
       "parent_declaration_if_applicable": "RDF11.Term.names.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Enumeration.fromList_length",
+      "module": "RDF11.FiniteSimpleModels",
+      "kind": "theorem",
+      "type": "∀ {α : Type u} [inst : DecidableEq α] (xs : List α), (RDF11.Enumeration.fromList xs).triples.length ≤ xs.length",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-SIMPLE-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Enumeration",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Enumeration.subset",
+      "module": "RDF11.FiniteSimpleModels",
+      "kind": "definition",
+      "type": "{α : Type u} → {S : RDF11.Set α} → RDF11.Enumeration S → (T : RDF11.Set α) → T.subset S → RDF11.Enumeration T",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-SIMPLE-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Enumeration",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Enumeration.subset._proof_1",
+      "module": "RDF11.FiniteSimpleModels",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_1} {S : RDF11.Set α} (e : RDF11.Enumeration S) (T : RDF11.Set α),\n  List.Pairwise (fun x1 x2 => x1 ≠ x2) (List.filter (fun x => decide (T x)) e.triples)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-SIMPLE-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Enumeration.subset",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Enumeration.subset._proof_2",
+      "module": "RDF11.FiniteSimpleModels",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_1} {S : RDF11.Set α} (e : RDF11.Enumeration S) (T : RDF11.Set α),\n  T.subset S → ∀ (x : α), x ∈ List.filter (fun x => decide (T x)) e.triples ↔ T x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-SIMPLE-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Enumeration.subset",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Enumeration.subset._simp_1",
+      "module": "RDF11.FiniteSimpleModels",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_1} {p : α → Bool} {as : List α} {x : α}, (x ∈ List.filter p as) = (x ∈ as ∧ p x = true)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-SIMPLE-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Enumeration.subset",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Enumeration.subset_length",
+      "module": "RDF11.FiniteSimpleModels",
+      "kind": "theorem",
+      "type": "∀ {α : Type u} {S : RDF11.Set α} (e : RDF11.Enumeration S) (T : RDF11.Set α) (h : T.subset S),\n  (e.subset T h).triples.length ≤ e.triples.length",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-SIMPLE-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Enumeration",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.FiniteSimpleModel.assignment_kept",
+      "module": "RDF11.FiniteSimpleModels",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {U : Type u} {V : RDF11.Set (RDF11.Name Iri Literal)} {S : RDF11.Set B}\n  (I : RDF11.SimpleInterpretation Iri Literal U) (v : RDF11.Enumeration V) (b : RDF11.Enumeration S)\n  (A : I.Assignment B) (c : B), S c → ∀ (r : I.Resource), A c = some r → r.val ∈ RDF11.FiniteSimpleModel.values I v b A",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-SIMPLE-MODELS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.FiniteSimpleModel.assignment_kept._simp_1_2",
+      "module": "RDF11.FiniteSimpleModels",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_1} {a : α} {s t : List α}, (a ∈ s ++ t) = (a ∈ s ∨ a ∈ t)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-SIMPLE-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.FiniteSimpleModel.assignment_kept",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.FiniteSimpleModel.compress",
+      "module": "RDF11.FiniteSimpleModels",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {U : Type u} {V : RDF11.Set (RDF11.Name Iri Literal)} {S : RDF11.Set B}\n  (I : RDF11.SimpleInterpretation Iri Literal U) (datatype : Literal → Iri) (v : RDF11.Enumeration V)\n  (b : RDF11.Enumeration S) (G : RDF11.GeneralizedGraph Iri Literal B),\n  (RDF11.GeneralizedGraph.vocabulary datatype G).subset V →\n    RDF11.Set.subset G.hasBlank S →\n      I.Satisfies G →\n        ∃ J,\n          J.BoundedDomain (v.triples.length + b.triples.length + 1) ∧\n            J.Satisfies G ∧\n              ∀ (C : Type) (E : RDF11.GeneralizedGraph Iri Literal C),\n                (RDF11.GeneralizedGraph.vocabulary datatype E).subset V → J.Satisfies E → I.Satisfies E",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-SIMPLE-MODELS",
+        "MT11-FINITE-SIMPLE-PREINTERPRETATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.FiniteSimpleModel.nameValue",
+      "module": "RDF11.FiniteSimpleModels",
+      "kind": "definition",
+      "type": "{Iri Literal : Type} → {U : Type u} → RDF11.SimpleInterpretation Iri Literal U → RDF11.Name Iri Literal → Option U",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-SIMPLE-MODELS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.FiniteSimpleModel.nameValue.match_1",
+      "module": "RDF11.FiniteSimpleModels",
+      "kind": "definition",
+      "type": "{Iri Literal : Type} →\n  (motive : RDF11.Name Iri Literal → Sort u_1) →\n    (x : RDF11.Name Iri Literal) → ((i : Iri) → motive (Sum.inl i)) → ((l : Literal) → motive (Sum.inr l)) → motive x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-SIMPLE-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.FiniteSimpleModel.nameValue",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.FiniteSimpleModel.nameValue_active",
+      "module": "RDF11.FiniteSimpleModels",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u} (I : RDF11.SimpleInterpretation Iri Literal U) (n : RDF11.Name Iri Literal) {x : U},\n  RDF11.FiniteSimpleModel.nameValue I n = some x → I.IR x ∨ I.IP x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-SIMPLE-MODELS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.FiniteSimpleModel.name_kept",
+      "module": "RDF11.FiniteSimpleModels",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {U : Type u} {V : RDF11.Set (RDF11.Name Iri Literal)} {S : RDF11.Set B}\n  (I : RDF11.SimpleInterpretation Iri Literal U) (v : RDF11.Enumeration V) (b : RDF11.Enumeration S)\n  (A : I.Assignment B) (n : RDF11.Name Iri Literal),\n  V n → ∀ {x : U}, RDF11.FiniteSimpleModel.nameValue I n = some x → x ∈ RDF11.FiniteSimpleModel.values I v b A",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-SIMPLE-MODELS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.FiniteSimpleModel.name_kept._simp_1_2",
+      "module": "RDF11.FiniteSimpleModels",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_1} {a : α} {s t : List α}, (a ∈ s ++ t) = (a ∈ s ∨ a ∈ t)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-SIMPLE-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.FiniteSimpleModel.name_kept",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.FiniteSimpleModel.restriction",
+      "module": "RDF11.FiniteSimpleModels",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  {U : Type u} →\n    {V : RDF11.Set (RDF11.Name Iri Literal)} →\n      {S : RDF11.Set B} →\n        (I : RDF11.SimpleInterpretation Iri Literal U) →\n          RDF11.Enumeration V →\n            RDF11.Enumeration S → I.Assignment B → (I.comapNames (fun i => i.val) fun l => l.val).DomainRestriction",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-SIMPLE-MODELS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.FiniteSimpleModel.restriction._proof_1",
+      "module": "RDF11.FiniteSimpleModels",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u_1} (I : RDF11.SimpleInterpretation Iri Literal U), I.IR (Classical.choose ⋯)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-SIMPLE-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.FiniteSimpleModel.restriction",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.FiniteSimpleModel.restriction._proof_2",
+      "module": "RDF11.FiniteSimpleModels",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {U : Type u_1} {V : RDF11.Set (RDF11.Name Iri Literal)} {S : RDF11.Set B}\n  (I : RDF11.SimpleInterpretation Iri Literal U) (v : RDF11.Enumeration V) (b : RDF11.Enumeration S)\n  (A : I.Assignment B), Classical.choose ⋯ ∈ RDF11.FiniteSimpleModel.values I v b A",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-SIMPLE-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.FiniteSimpleModel.restriction",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.FiniteSimpleModel.restriction._proof_3",
+      "module": "RDF11.FiniteSimpleModels",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {U : Type u_1} {V : RDF11.Set (RDF11.Name Iri Literal)} {S : RDF11.Set B}\n  (I : RDF11.SimpleInterpretation Iri Literal U) (v : RDF11.Enumeration V) (b : RDF11.Enumeration S)\n  (A : I.Assignment B) (i : RDF11.VocabularyIRI V),\n  ((I.comapNames (fun i => i.val) fun l => l.val).IS i).val ∈ RDF11.FiniteSimpleModel.values I v b A",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-SIMPLE-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.FiniteSimpleModel.restriction",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.FiniteSimpleModel.restriction._proof_4",
+      "module": "RDF11.FiniteSimpleModels",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {U : Type u_1} {V : RDF11.Set (RDF11.Name Iri Literal)} {S : RDF11.Set B}\n  (I : RDF11.SimpleInterpretation Iri Literal U) (v : RDF11.Enumeration V) (b : RDF11.Enumeration S)\n  (A : I.Assignment B) (l : RDF11.VocabularyLiteral V)\n  (r : { x // (I.comapNames (fun i => i.val) fun l => l.val).IR x }),\n  (I.comapNames (fun i => i.val) fun l => l.val).IL l = some r → r.val ∈ RDF11.FiniteSimpleModel.values I v b A",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-SIMPLE-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.FiniteSimpleModel.restriction",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.FiniteSimpleModel.restriction_bounded",
+      "module": "RDF11.FiniteSimpleModels",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {U : Type u} {V : RDF11.Set (RDF11.Name Iri Literal)} {S : RDF11.Set B}\n  (I : RDF11.SimpleInterpretation Iri Literal U) (v : RDF11.Enumeration V) (b : RDF11.Enumeration S)\n  (A : I.Assignment B),\n  (RDF11.FiniteSimpleModel.restriction I v b A).interpretation.BoundedDomain (v.triples.length + b.triples.length + 1)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-SIMPLE-MODELS",
+        "MT11-FINITE-SIMPLE-PREINTERPRETATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.FiniteSimpleModel.values",
+      "module": "RDF11.FiniteSimpleModels",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  {U : Type u} →\n    {V : RDF11.Set (RDF11.Name Iri Literal)} →\n      {S : RDF11.Set B} →\n        (I : RDF11.SimpleInterpretation Iri Literal U) →\n          RDF11.Enumeration V → RDF11.Enumeration S → I.Assignment B → List U",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-SIMPLE-MODELS",
+        "MT11-FINITE-SIMPLE-PREINTERPRETATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.FiniteSimpleModel.values.eq_1",
+      "module": "RDF11.FiniteSimpleModels",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {U : Type u} {V : RDF11.Set (RDF11.Name Iri Literal)} {S : RDF11.Set B}\n  (I : RDF11.SimpleInterpretation Iri Literal U) (v : RDF11.Enumeration V) (b : RDF11.Enumeration S)\n  (A : I.Assignment B),\n  RDF11.FiniteSimpleModel.values I v b A =\n    List.filterMap (RDF11.FiniteSimpleModel.nameValue I) v.triples ++\n        List.filterMap (fun c => Option.map Subtype.val (A c)) b.triples ++\n      [Classical.choose ⋯]",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-SIMPLE-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.FiniteSimpleModel.values",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.FiniteSimpleModel.values_active",
+      "module": "RDF11.FiniteSimpleModels",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {U : Type u} {V : RDF11.Set (RDF11.Name Iri Literal)} {S : RDF11.Set B}\n  (I : RDF11.SimpleInterpretation Iri Literal U) (v : RDF11.Enumeration V) (b : RDF11.Enumeration S)\n  (A : I.Assignment B) {x : U}, x ∈ RDF11.FiniteSimpleModel.values I v b A → I.IR x ∨ I.IP x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-SIMPLE-MODELS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.FiniteSimpleModel.values_active._simp_1_2",
+      "module": "RDF11.FiniteSimpleModels",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_1} {a : α} {s t : List α}, (a ∈ s ++ t) = (a ∈ s ∨ a ∈ t)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-SIMPLE-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.FiniteSimpleModel.values_active",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.FiniteSimpleModel.values_active._simp_1_3",
+      "module": "RDF11.FiniteSimpleModels",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_1} {a b : α}, (a ∈ [b]) = (a = b)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-SIMPLE-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.FiniteSimpleModel.values_active",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.FiniteSimpleModel.values_length",
+      "module": "RDF11.FiniteSimpleModels",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {U : Type u} {V : RDF11.Set (RDF11.Name Iri Literal)} {S : RDF11.Set B}\n  (I : RDF11.SimpleInterpretation Iri Literal U) (v : RDF11.Enumeration V) (b : RDF11.Enumeration S)\n  (A : I.Assignment B), (RDF11.FiniteSimpleModel.values I v b A).length ≤ v.triples.length + b.triples.length + 1",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-SIMPLE-MODELS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.BoundedDomain",
+      "module": "RDF11.FiniteSimpleModels",
+      "kind": "definition",
+      "type": "{Iri Literal : Type} → {U : Type u_1} → RDF11.SimpleInterpretation Iri Literal U → Nat → Prop",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-SIMPLE-MODELS",
+        "MT11-FINITE-SIMPLE-PREINTERPRETATION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.BoundedDomain.resources",
+      "module": "RDF11.FiniteSimpleModels",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u_1} {I : RDF11.SimpleInterpretation Iri Literal U} {n : Nat},\n  I.BoundedDomain n → ∃ e, e.triples.length ≤ n",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-SIMPLE-MODELS",
+        "MT11-FINITE-SIMPLE-PREINTERPRETATION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation.BoundedDomain",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.DomainRestriction",
+      "module": "RDF11.DomainRestriction",
+      "kind": "inductive",
+      "type": "{Iri Literal : Type} → {U : Type u_1} → RDF11.SimpleInterpretation Iri Literal U → Type u_1",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-SIMPLE-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.DomainRestriction._sizeOf_1",
+      "module": "RDF11.DomainRestriction",
+      "kind": "definition",
+      "type": "{Iri Literal : Type} →\n  {U : Type u_1} →\n    {I : RDF11.SimpleInterpretation Iri Literal U} →\n      [SizeOf Iri] → [SizeOf Literal] → [SizeOf U] → I.DomainRestriction → Nat",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-SIMPLE-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation.DomainRestriction",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.DomainRestriction._sizeOf_inst",
+      "module": "RDF11.DomainRestriction",
+      "kind": "definition",
+      "type": "{Iri Literal : Type} →\n  {U : Type u_1} →\n    (I : RDF11.SimpleInterpretation Iri Literal U) →\n      [SizeOf Iri] → [SizeOf Literal] → [SizeOf U] → SizeOf I.DomainRestriction",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-SIMPLE-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation.DomainRestriction",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.DomainRestriction.casesOn",
+      "module": "RDF11.DomainRestriction",
+      "kind": "definition",
+      "type": "{Iri Literal : Type} →\n  {U : Type u_1} →\n    {I : RDF11.SimpleInterpretation Iri Literal U} →\n      {motive : I.DomainRestriction → Sort u} →\n        (t : I.DomainRestriction) →\n          ((keep : RDF11.Set U) →\n              (resource : { r // keep r.val }) →\n                (names : ∀ (i : Iri), keep (I.IS i).val) →\n                  (literals : ∀ (l : Literal) (r : { x // I.IR x }), I.IL l = some r → keep r.val) →\n                    motive { keep := keep, resource := resource, names := names, literals := literals }) →\n            motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-SIMPLE-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation.DomainRestriction",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.DomainRestriction.ctorIdx",
+      "module": "RDF11.DomainRestriction",
+      "kind": "definition",
+      "type": "{Iri Literal : Type} → {U : Type u_1} → {I : RDF11.SimpleInterpretation Iri Literal U} → I.DomainRestriction → Nat",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-SIMPLE-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation.DomainRestriction",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.DomainRestriction.denote_kept",
+      "module": "RDF11.DomainRestriction",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u} {I : RDF11.SimpleInterpretation Iri Literal U} {B : Type} (R : I.DomainRestriction)\n  (A : R.interpretation.Assignment B) (t : RDF11.Term Iri Literal B) {x : U},\n  R.interpretation.denote A t = some x → R.keep x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-SIMPLE-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation.DomainRestriction",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.DomainRestriction.denote_lift",
+      "module": "RDF11.DomainRestriction",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u} {I : RDF11.SimpleInterpretation Iri Literal U} {B : Type} (R : I.DomainRestriction)\n  (A : R.interpretation.Assignment B) (t : RDF11.Term Iri Literal B),\n  R.interpretation.denote A t = I.denote (R.liftAssignment A) t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-SIMPLE-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation.DomainRestriction",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.DomainRestriction.graphTrue_iff",
+      "module": "RDF11.DomainRestriction",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u} {I : RDF11.SimpleInterpretation Iri Literal U} {B : Type} (R : I.DomainRestriction)\n  (A : R.interpretation.Assignment B) (G : RDF11.GeneralizedGraph Iri Literal B),\n  R.interpretation.GraphTrue A G ↔ I.GraphTrue (R.liftAssignment A) G",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-SIMPLE-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation.DomainRestriction",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.DomainRestriction.interpretation",
+      "module": "RDF11.DomainRestriction",
+      "kind": "definition",
+      "type": "{Iri Literal : Type} →\n  {U : Type u} →\n    {I : RDF11.SimpleInterpretation Iri Literal U} → I.DomainRestriction → RDF11.SimpleInterpretation Iri Literal U",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-SIMPLE-MODELS",
+        "MT11-FINITE-SIMPLE-PREINTERPRETATION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation.DomainRestriction",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.DomainRestriction.interpretation._proof_1",
+      "module": "RDF11.DomainRestriction",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u_1} {I : RDF11.SimpleInterpretation Iri Literal U} (R : I.DomainRestriction),\n  ∃ x, I.IR x ∧ R.keep x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-SIMPLE-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation.DomainRestriction.interpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.DomainRestriction.interpretation._proof_2",
+      "module": "RDF11.DomainRestriction",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u_1} {I : RDF11.SimpleInterpretation Iri Literal U} (R : I.DomainRestriction)\n  (p : { p // I.IP p ∧ R.keep p }), I.IP p.val",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-SIMPLE-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation.DomainRestriction.interpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.DomainRestriction.interpretation._proof_3",
+      "module": "RDF11.DomainRestriction",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u_1} {I : RDF11.SimpleInterpretation Iri Literal U} (R : I.DomainRestriction)\n  (pair : { x // I.IR x ∧ R.keep x } × { y // I.IR y ∧ R.keep y }), I.IR pair.fst.val",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-SIMPLE-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation.DomainRestriction.interpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.DomainRestriction.interpretation._proof_4",
+      "module": "RDF11.DomainRestriction",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u_1} {I : RDF11.SimpleInterpretation Iri Literal U} (R : I.DomainRestriction)\n  (pair : { x // I.IR x ∧ R.keep x } × { y // I.IR y ∧ R.keep y }), I.IR pair.snd.val",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-SIMPLE-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation.DomainRestriction.interpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.DomainRestriction.interpretation._proof_5",
+      "module": "RDF11.DomainRestriction",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u_1} {I : RDF11.SimpleInterpretation Iri Literal U} (R : I.DomainRestriction)\n  (i : Iri), I.IR (I.IS i).val ∧ R.keep (I.IS i).val ∨ I.IP (I.IS i).val ∧ R.keep (I.IS i).val",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-SIMPLE-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation.DomainRestriction.interpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.DomainRestriction.interpretation._proof_6",
+      "module": "RDF11.DomainRestriction",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u_1} {I : RDF11.SimpleInterpretation Iri Literal U} (R : I.DomainRestriction)\n  (l : Literal) (r : { x // I.IR x }), I.IL l = some r → I.IR r.val ∧ R.keep r.val",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-SIMPLE-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation.DomainRestriction.interpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.DomainRestriction.interpretation.match_1",
+      "module": "RDF11.DomainRestriction",
+      "kind": "definition",
+      "type": "{Iri Literal : Type} →\n  {U : Type u_1} →\n    {I : RDF11.SimpleInterpretation Iri Literal U} →\n      (motive : Option { x // I.IR x } → Sort u_2) →\n        (x : Option { x // I.IR x }) →\n          (x = none → motive none) → ((r : { x // I.IR x }) → x = some r → motive (some r)) → motive x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-SIMPLE-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation.DomainRestriction.interpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.DomainRestriction.keep",
+      "module": "RDF11.DomainRestriction",
+      "kind": "definition",
+      "type": "{Iri Literal : Type} →\n  {U : Type u_1} → {I : RDF11.SimpleInterpretation Iri Literal U} → I.DomainRestriction → RDF11.Set U",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-SIMPLE-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation.DomainRestriction",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.DomainRestriction.liftAssignment",
+      "module": "RDF11.DomainRestriction",
+      "kind": "definition",
+      "type": "{Iri Literal : Type} →\n  {U : Type u} →\n    {I : RDF11.SimpleInterpretation Iri Literal U} →\n      {B : Type} → (R : I.DomainRestriction) → R.interpretation.Assignment B → I.Assignment B",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-SIMPLE-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation.DomainRestriction",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.DomainRestriction.liftAssignment._proof_1",
+      "module": "RDF11.DomainRestriction",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u_1} {I : RDF11.SimpleInterpretation Iri Literal U} (R : I.DomainRestriction)\n  (r : R.interpretation.Resource), I.IR r.val",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-SIMPLE-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation.DomainRestriction.liftAssignment",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.DomainRestriction.liftAssignment.eq_1",
+      "module": "RDF11.DomainRestriction",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u} {I : RDF11.SimpleInterpretation Iri Literal U} {B : Type} (R : I.DomainRestriction)\n  (A : R.interpretation.Assignment B) (b : B), R.liftAssignment A b = Option.map (fun r => ⟨r.val, ⋯⟩) (A b)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-SIMPLE-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation.DomainRestriction.liftAssignment",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.DomainRestriction.lift_lower",
+      "module": "RDF11.DomainRestriction",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u} {I : RDF11.SimpleInterpretation Iri Literal U} {B : Type} (R : I.DomainRestriction)\n  (A : I.Assignment B) (hA : ∀ (b : B) (r : I.Resource), A b = some r → R.keep r.val),\n  R.liftAssignment (R.lowerAssignment A hA) = A",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-SIMPLE-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation.DomainRestriction",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.DomainRestriction.literals",
+      "module": "RDF11.DomainRestriction",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u_1} {I : RDF11.SimpleInterpretation Iri Literal U} (self : I.DomainRestriction)\n  (l : Literal) (r : { x // I.IR x }), I.IL l = some r → self.keep r.val",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-SIMPLE-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation.DomainRestriction",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.DomainRestriction.lowerAssignment",
+      "module": "RDF11.DomainRestriction",
+      "kind": "definition",
+      "type": "{Iri Literal : Type} →\n  {U : Type u} →\n    {I : RDF11.SimpleInterpretation Iri Literal U} →\n      {B : Type} →\n        (R : I.DomainRestriction) →\n          (A : I.Assignment B) →\n            (∀ (b : B) (r : I.Resource), A b = some r → R.keep r.val) → R.interpretation.Assignment B",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-SIMPLE-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation.DomainRestriction",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.DomainRestriction.lowerAssignment._proof_1",
+      "module": "RDF11.DomainRestriction",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u_1} {I : RDF11.SimpleInterpretation Iri Literal U} {B : Type}\n  (R : I.DomainRestriction) (A : I.Assignment B),\n  (∀ (b : B) (r : I.Resource), A b = some r → R.keep r.val) →\n    ∀ (b : B) (r : I.Resource), A b = some r → I.IR r.val ∧ R.keep r.val",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-SIMPLE-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation.DomainRestriction.lowerAssignment",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.DomainRestriction.lowerAssignment.congr_simp",
+      "module": "RDF11.DomainRestriction",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u} {I : RDF11.SimpleInterpretation Iri Literal U} {B : Type} (R : I.DomainRestriction)\n  (A A_1 : I.Assignment B) (e_A : A = A_1) (hA : ∀ (b : B) (r : I.Resource), A b = some r → R.keep r.val) (a a_1 : B),\n  a = a_1 → R.lowerAssignment A hA a = R.lowerAssignment A_1 ⋯ a_1",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-SIMPLE-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation.DomainRestriction.lowerAssignment",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.DomainRestriction.lowerAssignment.match_1",
+      "module": "RDF11.DomainRestriction",
+      "kind": "definition",
+      "type": "{Iri Literal : Type} →\n  {U : Type u_1} →\n    {I : RDF11.SimpleInterpretation Iri Literal U} →\n      (motive : Option I.Resource → Sort u_2) →\n        (x : Option I.Resource) →\n          (x = none → motive none) → ((r : I.Resource) → x = some r → motive (some r)) → motive x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-SIMPLE-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation.DomainRestriction.lowerAssignment",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.DomainRestriction.mk",
+      "module": "RDF11.DomainRestriction",
+      "kind": "constructor",
+      "type": "{Iri Literal : Type} →\n  {U : Type u_1} →\n    {I : RDF11.SimpleInterpretation Iri Literal U} →\n      (keep : RDF11.Set U) →\n        { r // keep r.val } →\n          (∀ (i : Iri), keep (I.IS i).val) →\n            (∀ (l : Literal) (r : { x // I.IR x }), I.IL l = some r → keep r.val) → I.DomainRestriction",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-SIMPLE-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation.DomainRestriction",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.DomainRestriction.mk._flat_ctor",
+      "module": "RDF11.DomainRestriction",
+      "kind": "definition",
+      "type": "{Iri Literal : Type} →\n  {U : Type u_1} →\n    {I : RDF11.SimpleInterpretation Iri Literal U} →\n      (keep : RDF11.Set U) →\n        { r // keep r.val } →\n          (∀ (i : Iri), keep (I.IS i).val) →\n            (∀ (l : Literal) (r : { x // I.IR x }), I.IL l = some r → keep r.val) → I.DomainRestriction",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-SIMPLE-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation.DomainRestriction.mk",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.DomainRestriction.mk.inj",
+      "module": "RDF11.DomainRestriction",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u_1} {I : RDF11.SimpleInterpretation Iri Literal U} {keep : RDF11.Set U}\n  {resource : { r // keep r.val }} {names : ∀ (i : Iri), keep (I.IS i).val}\n  {literals : ∀ (l : Literal) (r : { x // I.IR x }), I.IL l = some r → keep r.val} {keep_1 : RDF11.Set U}\n  {resource_1 : { r // keep_1 r.val }} {names_1 : ∀ (i : Iri), keep_1 (I.IS i).val}\n  {literals_1 : ∀ (l : Literal) (r : { x // I.IR x }), I.IL l = some r → keep_1 r.val},\n  { keep := keep, resource := resource, names := names, literals := literals } =\n      { keep := keep_1, resource := resource_1, names := names_1, literals := literals_1 } →\n    keep = keep_1 ∧ resource ≍ resource_1",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-SIMPLE-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation.DomainRestriction.mk",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.DomainRestriction.mk.injEq",
+      "module": "RDF11.DomainRestriction",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u_1} {I : RDF11.SimpleInterpretation Iri Literal U} (keep : RDF11.Set U)\n  (resource : { r // keep r.val }) (names : ∀ (i : Iri), keep (I.IS i).val)\n  (literals : ∀ (l : Literal) (r : { x // I.IR x }), I.IL l = some r → keep r.val) (keep_1 : RDF11.Set U)\n  (resource_1 : { r // keep_1 r.val }) (names_1 : ∀ (i : Iri), keep_1 (I.IS i).val)\n  (literals_1 : ∀ (l : Literal) (r : { x // I.IR x }), I.IL l = some r → keep_1 r.val),\n  ({ keep := keep, resource := resource, names := names, literals := literals } =\n      { keep := keep_1, resource := resource_1, names := names_1, literals := literals_1 }) =\n    (keep = keep_1 ∧ resource ≍ resource_1)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-SIMPLE-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation.DomainRestriction.mk",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.DomainRestriction.mk.noConfusion",
+      "module": "RDF11.DomainRestriction",
+      "kind": "definition",
+      "type": "{Iri Literal : Type} →\n  {U : Type u_1} →\n    {I : RDF11.SimpleInterpretation Iri Literal U} →\n      {P : Sort u} →\n        {keep : RDF11.Set U} →\n          {resource : { r // keep r.val }} →\n            {names : ∀ (i : Iri), keep (I.IS i).val} →\n              {literals : ∀ (l : Literal) (r : { x // I.IR x }), I.IL l = some r → keep r.val} →\n                {keep' : RDF11.Set U} →\n                  {resource' : { r // keep' r.val }} →\n                    {names' : ∀ (i : Iri), keep' (I.IS i).val} →\n                      {literals' : ∀ (l : Literal) (r : { x // I.IR x }), I.IL l = some r → keep' r.val} →\n                        { keep := keep, resource := resource, names := names, literals := literals } =\n                            { keep := keep', resource := resource', names := names', literals := literals' } →\n                          (keep ≍ keep' → resource ≍ resource' → P) → P",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-SIMPLE-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation.DomainRestriction.mk",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.DomainRestriction.mk.sizeOf_spec",
+      "module": "RDF11.DomainRestriction",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u_1} {I : RDF11.SimpleInterpretation Iri Literal U} [inst : SizeOf Iri]\n  [inst_1 : SizeOf Literal] [inst_2 : SizeOf U] (keep : RDF11.Set U) (resource : { r // keep r.val })\n  (names : ∀ (i : Iri), keep (I.IS i).val)\n  (literals : ∀ (l : Literal) (r : { x // I.IR x }), I.IL l = some r → keep r.val),\n  sizeOf { keep := keep, resource := resource, names := names, literals := literals } = 1 + sizeOf resource",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-SIMPLE-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation.DomainRestriction.mk",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.DomainRestriction.names",
+      "module": "RDF11.DomainRestriction",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u_1} {I : RDF11.SimpleInterpretation Iri Literal U} (self : I.DomainRestriction)\n  (i : Iri), self.keep (I.IS i).val",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-SIMPLE-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation.DomainRestriction",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.DomainRestriction.noConfusion",
+      "module": "RDF11.DomainRestriction",
+      "kind": "definition",
+      "type": "{P : Sort u} →\n  {Iri Literal : Type} →\n    {U : Type u_1} →\n      {I : RDF11.SimpleInterpretation Iri Literal U} →\n        {t : I.DomainRestriction} →\n          {Iri' Literal' : Type} →\n            {U' : Type u_1} →\n              {I' : RDF11.SimpleInterpretation Iri' Literal' U'} →\n                {t' : I'.DomainRestriction} →\n                  Iri = Iri' →\n                    Literal = Literal' →\n                      U = U' → I ≍ I' → t ≍ t' → RDF11.SimpleInterpretation.DomainRestriction.noConfusionType P t t'",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-SIMPLE-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation.DomainRestriction",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.DomainRestriction.noConfusionType",
+      "module": "RDF11.DomainRestriction",
+      "kind": "definition",
+      "type": "Sort u →\n  {Iri Literal : Type} →\n    {U : Type u_1} →\n      {I : RDF11.SimpleInterpretation Iri Literal U} →\n        I.DomainRestriction →\n          {Iri' Literal' : Type} →\n            {U' : Type u_1} → {I' : RDF11.SimpleInterpretation Iri' Literal' U'} → I'.DomainRestriction → Sort u",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-SIMPLE-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation.DomainRestriction",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.DomainRestriction.rec",
+      "module": "RDF11.DomainRestriction",
+      "kind": "recursor",
+      "type": "{Iri Literal : Type} →\n  {U : Type u_1} →\n    {I : RDF11.SimpleInterpretation Iri Literal U} →\n      {motive : I.DomainRestriction → Sort u} →\n        ((keep : RDF11.Set U) →\n            (resource : { r // keep r.val }) →\n              (names : ∀ (i : Iri), keep (I.IS i).val) →\n                (literals : ∀ (l : Literal) (r : { x // I.IR x }), I.IL l = some r → keep r.val) →\n                  motive { keep := keep, resource := resource, names := names, literals := literals }) →\n          (t : I.DomainRestriction) → motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-SIMPLE-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation.DomainRestriction",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.DomainRestriction.recOn",
+      "module": "RDF11.DomainRestriction",
+      "kind": "definition",
+      "type": "{Iri Literal : Type} →\n  {U : Type u_1} →\n    {I : RDF11.SimpleInterpretation Iri Literal U} →\n      {motive : I.DomainRestriction → Sort u} →\n        (t : I.DomainRestriction) →\n          ((keep : RDF11.Set U) →\n              (resource : { r // keep r.val }) →\n                (names : ∀ (i : Iri), keep (I.IS i).val) →\n                  (literals : ∀ (l : Literal) (r : { x // I.IR x }), I.IL l = some r → keep r.val) →\n                    motive { keep := keep, resource := resource, names := names, literals := literals }) →\n            motive t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-SIMPLE-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation.DomainRestriction",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.DomainRestriction.resource",
+      "module": "RDF11.DomainRestriction",
+      "kind": "definition",
+      "type": "{Iri Literal : Type} →\n  {U : Type u_1} →\n    {I : RDF11.SimpleInterpretation Iri Literal U} → (self : I.DomainRestriction) → { r // self.keep r.val }",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-SIMPLE-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation.DomainRestriction",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.DomainRestriction.satisfies_lift",
+      "module": "RDF11.DomainRestriction",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u} {I : RDF11.SimpleInterpretation Iri Literal U} {B : Type} (R : I.DomainRestriction)\n  (G : RDF11.GeneralizedGraph Iri Literal B), R.interpretation.Satisfies G → I.Satisfies G",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-SIMPLE-MODELS",
+        "MT11-FINITE-SIMPLE-PREINTERPRETATION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation.DomainRestriction",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.DomainRestriction.satisfies_lower",
+      "module": "RDF11.DomainRestriction",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u} {I : RDF11.SimpleInterpretation Iri Literal U} {B : Type} (R : I.DomainRestriction)\n  (G : RDF11.GeneralizedGraph Iri Literal B) (A : I.Assignment B),\n  (∀ (b : B) (r : I.Resource), A b = some r → R.keep r.val) → I.GraphTrue A G → R.interpretation.Satisfies G",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-SIMPLE-MODELS",
+        "MT11-FINITE-SIMPLE-PREINTERPRETATION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation.DomainRestriction",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.DomainRestriction.tripleTrue_iff",
+      "module": "RDF11.DomainRestriction",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u} {I : RDF11.SimpleInterpretation Iri Literal U} {B : Type} (R : I.DomainRestriction)\n  (A : R.interpretation.Assignment B) (t : RDF11.GeneralizedTriple Iri Literal B),\n  R.interpretation.TripleTrue A t ↔ I.TripleTrue (R.liftAssignment A) t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-SIMPLE-MODELS",
+        "MT11-FINITE-SIMPLE-PREINTERPRETATION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation.DomainRestriction",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Statements.finite_simple_countermodel_bound",
+      "module": "RDF11.Statements",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (datatype : Literal → Iri) (G E : RDF11.GeneralizedGraph Iri Literal B),\n  RDF11.FiniteGraph G →\n    RDF11.FiniteGraph E →\n      ¬RDF11.SimplyEntails G E →\n        ∃ v b U I, I.BoundedDomain (v.triples.length + b.triples.length + 1) ∧ I.Satisfies G ∧ ¬I.Satisfies E",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-SIMPLE-MODELS",
+        "MT11-FINITE-SIMPLE-PREINTERPRETATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.bounded_simple_countermodel",
+      "module": "RDF11.FiniteSimpleModels",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B₁ B₂ : Type} {V : RDF11.Set (RDF11.Name Iri Literal)} {S : RDF11.Set B₁} (datatype : Literal → Iri)\n  (v : RDF11.Enumeration V) (b : RDF11.Enumeration S) (G : RDF11.GeneralizedGraph Iri Literal B₁)\n  (E : RDF11.GeneralizedGraph Iri Literal B₂),\n  (RDF11.GeneralizedGraph.vocabulary datatype G).subset V →\n    (RDF11.GeneralizedGraph.vocabulary datatype E).subset V →\n      RDF11.Set.subset G.hasBlank S →\n        ¬RDF11.SimplyEntails G E →\n          ∃ U I, I.BoundedDomain (v.triples.length + b.triples.length + 1) ∧ I.Satisfies G ∧ ¬I.Satisfies E",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-SIMPLE-MODELS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.finite_shared_blank_support",
+      "module": "RDF11.FiniteSimpleModels",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (G E : RDF11.GeneralizedGraph Iri Literal B),\n  RDF11.FiniteGraph G → RDF11.FiniteGraph E → Nonempty (RDF11.Enumeration (RDF11.Set.union G.hasBlank E.hasBlank))",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-SIMPLE-MODELS",
+        "MT11-FINITE-SIMPLE-PREINTERPRETATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.finite_simple_countermodel",
+      "module": "RDF11.FiniteSimpleModels",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri B : Type} (datatype : Literal → Iri) (G E : RDF11.GeneralizedGraph Iri Literal B),\n  RDF11.FiniteGraph G →\n    RDF11.FiniteGraph E →\n      ¬RDF11.SimplyEntails G E →\n        ∃ v b U I, I.BoundedDomain (v.triples.length + b.triples.length + 1) ∧ I.Satisfies G ∧ ¬I.Satisfies E",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-SIMPLE-MODELS",
+        "MT11-FINITE-SIMPLE-PREINTERPRETATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.simple_entailment_iff_bounded",
+      "module": "RDF11.FiniteSimpleModels",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B₁ B₂ : Type} {V : RDF11.Set (RDF11.Name Iri Literal)} {S : RDF11.Set B₁} (datatype : Literal → Iri)\n  (v : RDF11.Enumeration V) (b : RDF11.Enumeration S) (G : RDF11.GeneralizedGraph Iri Literal B₁)\n  (E : RDF11.GeneralizedGraph Iri Literal B₂),\n  (RDF11.GeneralizedGraph.vocabulary datatype G).subset V →\n    (RDF11.GeneralizedGraph.vocabulary datatype E).subset V →\n      RDF11.Set.subset G.hasBlank S →\n        (RDF11.SimplyEntails G E ↔\n          ∀ (U : Type u) (I : RDF11.SimpleInterpretation Iri Literal U),\n            I.BoundedDomain (v.triples.length + b.triples.length + 1) → I.Satisfies G → I.Satisfies E)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-SIMPLE-MODELS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.simple_entailment_iff_bounded_preinterpretations",
+      "module": "RDF11.FiniteSimpleModels",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri B : Type} (datatype : Literal → Iri) (G E : RDF11.GeneralizedGraph Iri Literal B)\n  (v :\n    RDF11.Enumeration\n      ((RDF11.GeneralizedGraph.vocabulary datatype G).union (RDF11.GeneralizedGraph.vocabulary datatype E)))\n  (b : RDF11.Enumeration (RDF11.Set.union G.hasBlank E.hasBlank)),\n  let V := (RDF11.GeneralizedGraph.vocabulary datatype G).union (RDF11.GeneralizedGraph.vocabulary datatype E);\n  RDF11.SimplyEntails G E ↔\n    ∀ (U : Type u) (I : RDF11.PreInterpretation V U),\n      RDF11.SimpleInterpretation.BoundedDomain I (v.triples.length + b.triples.length + 1) →\n        RDF11.SimpleInterpretation.Satisfies I (RDF11.GeneralizedGraph.restrictNames datatype V G ⋯) →\n          RDF11.SimpleInterpretation.Satisfies I (RDF11.GeneralizedGraph.restrictNames datatype V E ⋯)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-SIMPLE-MODELS",
+        "MT11-FINITE-SIMPLE-PREINTERPRETATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.simple_satisfiable_iff_bounded",
+      "module": "RDF11.FiniteSimpleModels",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B₁ : Type} {V : RDF11.Set (RDF11.Name Iri Literal)} {S : RDF11.Set B₁} (datatype : Literal → Iri)\n  (v : RDF11.Enumeration V) (b : RDF11.Enumeration S) (G : RDF11.GeneralizedGraph Iri Literal B₁),\n  (RDF11.GeneralizedGraph.vocabulary datatype G).subset V →\n    RDF11.Set.subset G.hasBlank S →\n      (RDF11.SimplySatisfiable G ↔ ∃ U I, I.BoundedDomain (v.triples.length + b.triples.length + 1) ∧ I.Satisfies G)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-SIMPLE-MODELS"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.simple_satisfiable_iff_bounded_preinterpretations",
+      "module": "RDF11.FiniteSimpleModels",
+      "kind": "theorem",
+      "type": "∀ {Literal Iri B : Type} (datatype : Literal → Iri) (G E : RDF11.GeneralizedGraph Iri Literal B)\n  (v :\n    RDF11.Enumeration\n      ((RDF11.GeneralizedGraph.vocabulary datatype G).union (RDF11.GeneralizedGraph.vocabulary datatype E)))\n  (b : RDF11.Enumeration (RDF11.Set.union G.hasBlank E.hasBlank)),\n  let V := (RDF11.GeneralizedGraph.vocabulary datatype G).union (RDF11.GeneralizedGraph.vocabulary datatype E);\n  RDF11.SimplySatisfiable G ↔\n    ∃ U I,\n      RDF11.SimpleInterpretation.BoundedDomain I (v.triples.length + b.triples.length + 1) ∧\n        RDF11.SimpleInterpretation.Satisfies I (RDF11.GeneralizedGraph.restrictNames datatype V G ⋯)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-SIMPLE-MODELS",
+        "MT11-FINITE-SIMPLE-PREINTERPRETATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.DomainRestriction.0.RDF11.SimpleInterpretation.DomainRestriction.interpretation.match_1.eq_1",
+      "module": "RDF11.DomainRestriction",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u_1} {I : RDF11.SimpleInterpretation Iri Literal U}\n  (motive : Option { x // I.IR x } → Sort u_2) (h_1 : none = none → motive none)\n  (h_2 : (r : { x // I.IR x }) → none = some r → motive (some r)),\n  (match h : none with\n    | none => h_1 h\n    | some r => h_2 r h) =\n    h_1 ⋯",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-SIMPLE-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation.DomainRestriction.interpretation.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.DomainRestriction.0.RDF11.SimpleInterpretation.DomainRestriction.interpretation.match_1.eq_2",
+      "module": "RDF11.DomainRestriction",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u_1} {I : RDF11.SimpleInterpretation Iri Literal U}\n  (motive : Option { x // I.IR x } → Sort u_2) (r : { x // I.IR x }) (h_1 : some r = none → motive none)\n  (h_2 : (r_1 : { x // I.IR x }) → some r = some r_1 → motive (some r_1)),\n  (match h : some r with\n    | none => h_1 h\n    | some r_1 => h_2 r_1 h) =\n    h_2 r ⋯",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-SIMPLE-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation.DomainRestriction.interpretation.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.DomainRestriction.0.RDF11.SimpleInterpretation.DomainRestriction.interpretation.match_1.splitter",
+      "module": "RDF11.DomainRestriction",
+      "kind": "definition",
+      "type": "{Iri Literal : Type} →\n  {U : Type u_1} →\n    {I : RDF11.SimpleInterpretation Iri Literal U} →\n      (motive : Option { x // I.IR x } → Sort u_2) →\n        (x : Option { x // I.IR x }) →\n          (x = none → motive none) → ((r : { x // I.IR x }) → x = some r → motive (some r)) → motive x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-SIMPLE-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation.DomainRestriction.interpretation.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.DomainRestriction.0.RDF11.SimpleInterpretation.DomainRestriction.lowerAssignment.match_1.eq_1",
+      "module": "RDF11.DomainRestriction",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u_1} {I : RDF11.SimpleInterpretation Iri Literal U}\n  (motive : Option I.Resource → Sort u_2) (h_1 : none = none → motive none)\n  (h_2 : (r : I.Resource) → none = some r → motive (some r)),\n  (match h : none with\n    | none => h_1 h\n    | some r => h_2 r h) =\n    h_1 ⋯",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-SIMPLE-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation.DomainRestriction.lowerAssignment.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.DomainRestriction.0.RDF11.SimpleInterpretation.DomainRestriction.lowerAssignment.match_1.eq_2",
+      "module": "RDF11.DomainRestriction",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {U : Type u_1} {I : RDF11.SimpleInterpretation Iri Literal U}\n  (motive : Option I.Resource → Sort u_2) (r : I.Resource) (h_1 : some r = none → motive none)\n  (h_2 : (r_1 : I.Resource) → some r = some r_1 → motive (some r_1)),\n  (match h : some r with\n    | none => h_1 h\n    | some r_1 => h_2 r_1 h) =\n    h_2 r ⋯",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-SIMPLE-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation.DomainRestriction.lowerAssignment.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.DomainRestriction.0.RDF11.SimpleInterpretation.DomainRestriction.lowerAssignment.match_1.splitter",
+      "module": "RDF11.DomainRestriction",
+      "kind": "definition",
+      "type": "{Iri Literal : Type} →\n  {U : Type u_1} →\n    {I : RDF11.SimpleInterpretation Iri Literal U} →\n      (motive : Option I.Resource → Sort u_2) →\n        (x : Option I.Resource) →\n          (x = none → motive none) → ((r : I.Resource) → x = some r → motive (some r)) → motive x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FINITE-SIMPLE-MODELS"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation.DomainRestriction.lowerAssignment.match_1",
       "review": "pending_expert_review"
     }
   ],
