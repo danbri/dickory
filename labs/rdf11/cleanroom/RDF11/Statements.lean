@@ -3,6 +3,7 @@ import RDF11.SkolemLifting
 import RDF11.FiniteSimpleModels
 import RDF11.FiniteDatatypeModels
 import RDF11.DatatypeCompletion
+import RDF11.FamilyMerge
 
 /-!
 # Headline statements for RDF 1.1 Semantics review
@@ -47,11 +48,11 @@ The source states this without finiteness; its unrestricted scope remains open.
 This proof permits generalized syntax and does not require finitely many triples. -/
 theorem lean_proper_instance_finite_blank_lemma (G H : GeneralizedGraph Iri Literal B) (hl : LeanGraph G) (hf : FiniteBlankSupport G) (hp : ProperInstance H G) : ¬ SimplyEntails.{u} G H := RDF11.lean_finite_blanks_not_entails_proper_instance G H hl hf hp
 
-/-- Merging lemma, binary model form: an interpretation satisfies the merge
-exactly when it satisfies both inputs separately. Blank domains are disjoint.
+/-- Merging lemma, arbitrary-family model form: one interpretation satisfies
+the merge exactly when it satisfies each input with its own blank assignment.
 §4.1 / §5.1.1 https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#unions_merges
-This alias does not claim the arbitrary-family formulation. -/
-theorem merging_lemma (I : SimpleInterpretation Iri Literal U) (G : GeneralizedGraph Iri Literal B₁) (H : GeneralizedGraph Iri Literal B₂) : I.Satisfies (merge G H) ↔ I.Satisfies G ∧ I.Satisfies H := RDF11.satisfies_merge I G H
+Derived review name; includes empty and infinite set-sized indexed families. -/
+theorem merging_lemma {K : Type} {Bs : K → Type} (I : SimpleInterpretation Iri Literal U) (G : (i : K) → GeneralizedGraph Iri Literal (Bs i)) : I.Satisfies (GraphFamily.merge G) ↔ ∀ i, I.Satisfies (G i) := RDF11.GraphFamily.satisfies_merge I G
 
 /-- Interpolation lemma: G simply entails ordinary E exactly when a subgraph
 of G is an instance of E. G may be generalized; neither graph need be finite.

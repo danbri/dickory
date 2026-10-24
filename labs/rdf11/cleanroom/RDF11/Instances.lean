@@ -120,7 +120,8 @@ theorem ground_is_lean (G : GeneralizedGraph Iri Literal B) (hG : G.ground) : Le
   rintro H ⟨μ, rfl⟩ _
   exact ground_substitute G hG μ
 
-theorem GeneralizedGraph.mapBlank_comp (f g : B → B) (G : GeneralizedGraph Iri Literal B) :
+theorem GeneralizedGraph.mapBlank_comp (f : B₁ → B₂) (g : B₂ → B₃)
+    (G : GeneralizedGraph Iri Literal B₁) :
     (G.mapBlank f).mapBlank g = G.mapBlank (g ∘ f) := by
   apply Set.ext
   intro t

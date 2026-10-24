@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "status": "frozen_twenty_fourth_increment_instance_search_not_expert_approved",
+  "status": "frozen_twenty_fifth_increment_family_merge_not_expert_approved",
   "lean_version": "4.33.1",
   "allowed_axioms": [
     "propext",
@@ -681,6 +681,19 @@
         "MT11-FINITE-INSTANCE-DECISION",
         "MT11-EXECUTABLE-CLOSURE-INSTANCE-CHECK"
       ]
+    },
+    {
+      "id": "SUPPORT-FAMILY-MERGE",
+      "purpose": "Arbitrary set-sized indexed and set-of-graph unions/merges, coherent assignments, exact projection, common-domain instance and disjoint-support isomorphism. Includes empty/infinite families, reindexing and certified size examples. Historical RDF 2004 correspondence and concrete source identity/allocation are not proved.",
+      "requires": [
+        "FOUNDATION-SETS",
+        "SUPPORT-MERGE",
+        "SUPPORT-INSTANCES",
+        "MT11-UNION",
+        "MT11-MERGE",
+        "MT11-UNION-MERGE-RELATION",
+        "MT11-GRAPH-SET-ENTAILMENT"
+      ]
     }
   ],
   "files": [
@@ -707,14 +720,14 @@
     },
     {
       "path": "Audit/Snapshot.lean",
-      "sha256": "4ac0ce56ce91dcd3abb08dd574639db5a8c3d976f6d350623553cd3cb10eb94e",
+      "sha256": "345513a35176a45c7d00dbe93390fa9eeb259c479a1a93cf9ca7f84ccac0ebc6",
       "role": "formal_source",
       "lifecycle": "active",
       "review": "pending_expert_review"
     },
     {
       "path": "RDF11.lean",
-      "sha256": "153d373c04e98c61a947a6adafd4a6f4768ae9b8239bf0fcc9501ba95e7b7350",
+      "sha256": "a5d0622ffa7a1a0a636e3d6c50ed1d722d6f768eb81c25b186fb644a786713da",
       "role": "formal_source",
       "lifecycle": "active",
       "review": "pending_expert_review"
@@ -759,7 +772,7 @@
       "role": "formal_source",
       "lifecycle": "active",
       "review": "pending_expert_review",
-      "sha256": "6ae4b1ea50a5620fe851a57587025d5400dd756fa8c1b842549d999ad6d379ef"
+      "sha256": "773be57690b235f5f0e26e492fdbf306819dcd0f79f6d0d4f09972b61796a963"
     },
     {
       "path": "RDF11/Interpolation.lean",
@@ -878,7 +891,7 @@
       "role": "formal_source",
       "lifecycle": "active",
       "review": "pending_expert_review",
-      "sha256": "ed0ca3e1ca084475e53c5a5fd096525c52b3d4ea28e6b9cc100cecfb972c981e"
+      "sha256": "34ff3e580977aa70bdb5e96fcd194688b77ae0d94bd72a6cdd46f8b5c0de4a89"
     },
     {
       "path": "RDF11/EntailmentClosure.lean",
@@ -913,7 +926,7 @@
       "role": "formal_source",
       "lifecycle": "active",
       "review": "pending_expert_review",
-      "sha256": "50ccf14e2354498ddcec7ce317c3fa4ee155d048654e1c5a63d3e1d3bf5fe2dd"
+      "sha256": "99ecd63d7a4591b6a00c3d3dcff71a384ed2cc552393db6b1e5df2f20d8c3def"
     },
     {
       "path": "RDF11/DatasetExamples.lean",
@@ -1289,6 +1302,27 @@
     {
       "path": "Audit/InstanceExecution.lean",
       "sha256": "dcbee0cefeec9ec89cb1c172919e4960aec0b103e39c95a6b65614a03f9edbf1",
+      "role": "formal_source",
+      "lifecycle": "active",
+      "review": "pending_expert_review"
+    },
+    {
+      "path": "RDF11/FamilyMerge.lean",
+      "sha256": "bfb216fea021e39595eefece69da2e4e48575a4c67ac9f5d6a99885868c04775",
+      "role": "formal_source",
+      "lifecycle": "active",
+      "review": "pending_expert_review"
+    },
+    {
+      "path": "RDF11/MergeInstances.lean",
+      "sha256": "a6ef1c80c183c5f0be3e196e1e9947c810c7194ea3389e1ad99d516629053787",
+      "role": "formal_source",
+      "lifecycle": "active",
+      "review": "pending_expert_review"
+    },
+    {
+      "path": "RDF11/FamilyMergeExamples.lean",
+      "sha256": "7ed43970caa8fa4ede8be8ce9108e6a76099d65d0ab097db25cffc65327f4ad9",
       "role": "formal_source",
       "lifecycle": "active",
       "review": "pending_expert_review"
@@ -1841,7 +1875,7 @@
       "name": "RDF11.GeneralizedGraph.mapBlank_comp",
       "module": "RDF11.Instances",
       "kind": "theorem",
-      "type": "∀ {B Iri Literal : Type} (f g : B → B) (G : RDF11.GeneralizedGraph Iri Literal B),\n  RDF11.GeneralizedGraph.mapBlank g (RDF11.GeneralizedGraph.mapBlank f G) = RDF11.GeneralizedGraph.mapBlank (g ∘ f) G",
+      "type": "∀ {B₁ B₂ B₃ Iri Literal : Type} (f : B₁ → B₂) (g : B₂ → B₃) (G : RDF11.GeneralizedGraph Iri Literal B₁),\n  RDF11.GeneralizedGraph.mapBlank g (RDF11.GeneralizedGraph.mapBlank f G) = RDF11.GeneralizedGraph.mapBlank (g ∘ f) G",
       "role": "proof_support",
       "grounds": [
         "SUPPORT-INSTANCES"
@@ -13202,7 +13236,7 @@
       "name": "RDF11.Statements.merging_lemma",
       "module": "RDF11.Statements",
       "kind": "theorem",
-      "type": "∀ {Iri Literal B₁ B₂ : Type} {U : Type u} (I : RDF11.SimpleInterpretation Iri Literal U)\n  (G : RDF11.GeneralizedGraph Iri Literal B₁) (H : RDF11.GeneralizedGraph Iri Literal B₂),\n  I.Satisfies (RDF11.merge G H) ↔ I.Satisfies G ∧ I.Satisfies H",
+      "type": "∀ {Iri Literal : Type} {U : Type u} {K : Type} {Bs : K → Type} (I : RDF11.SimpleInterpretation Iri Literal U)\n  (G : (i : K) → RDF11.GeneralizedGraph Iri Literal (Bs i)),\n  I.Satisfies (RDF11.GraphFamily.merge G) ↔ ∀ (i : K), I.Satisfies (G i)",
       "role": "source_mapping",
       "grounds": [
         "MT11-MERGE"
@@ -15828,7 +15862,7 @@
       "name": "RDF11.Graph.mapBlank_comp",
       "module": "RDF11.Datasets",
       "kind": "theorem",
-      "type": "∀ {B Iri Literal : Type} (f g : B → B) (G : RDF11.Graph Iri Literal B),\n  RDF11.Graph.mapBlank g (RDF11.Graph.mapBlank f G) = RDF11.Graph.mapBlank (g ∘ f) G",
+      "type": "∀ {B₁ B₂ B₃ Iri Literal : Type} (f : B₁ → B₂) (g : B₂ → B₃) (G : RDF11.Graph Iri Literal B₁),\n  RDF11.Graph.mapBlank g (RDF11.Graph.mapBlank f G) = RDF11.Graph.mapBlank (g ∘ f) G",
       "role": "proof_support",
       "grounds": [
         "SUPPORT-DATASETS"
@@ -36019,6 +36053,1213 @@
         "SUPPORT-FINITE-INSTANCE-SEARCH"
       ],
       "parent_declaration_if_applicable": "RDF11.InstanceSearch.certificate.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.FamilyMergeExamples.graphSet",
+      "module": "RDF11.FamilyMergeExamples",
+      "kind": "definition",
+      "type": "RDF11.Set (RDF11.GeneralizedGraph Bool Empty Unit)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FAMILY-MERGE",
+        "MT11-UNION-MERGE-RELATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.FamilyMergeExamples.independent",
+      "module": "RDF11.FamilyMergeExamples",
+      "kind": "definition",
+      "type": "Nat → RDF11.GeneralizedGraph Bool Empty Nat",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FAMILY-MERGE",
+        "MT11-UNION-MERGE-RELATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.FamilyMergeExamples.independent_apart",
+      "module": "RDF11.FamilyMergeExamples",
+      "kind": "theorem",
+      "type": "RDF11.GraphFamily.Apart RDF11.FamilyMergeExamples.independent",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FAMILY-MERGE",
+        "MT11-UNION-MERGE-RELATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.FamilyMergeExamples.independent_common_witness",
+      "module": "RDF11.FamilyMergeExamples",
+      "kind": "theorem",
+      "type": "RDF11.ScopeExample.I.GraphTrue (fun x => some ⟨true, True.intro⟩)\n  (RDF11.Set.iUnion RDF11.FamilyMergeExamples.independent)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FAMILY-MERGE",
+        "MT11-UNION-MERGE-RELATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.FamilyMergeExamples.infinite_isomorphism",
+      "module": "RDF11.FamilyMergeExamples",
+      "kind": "definition",
+      "type": "RDF11.GraphIsomorphism (RDF11.GraphFamily.scopedMerge RDF11.FamilyMergeExamples.independent)\n  (RDF11.GraphFamily.scopedUnion RDF11.FamilyMergeExamples.independent)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FAMILY-MERGE",
+        "MT11-UNION-MERGE-RELATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.FamilyMergeExamples.infinite_merge_true",
+      "module": "RDF11.FamilyMergeExamples",
+      "kind": "theorem",
+      "type": "RDF11.ScopeExample.I.Satisfies (RDF11.GraphFamily.merge RDF11.FamilyMergeExamples.independent)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FAMILY-MERGE",
+        "MT11-UNION-MERGE-RELATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.FamilyMergeExamples.infinite_union_true",
+      "module": "RDF11.FamilyMergeExamples",
+      "kind": "theorem",
+      "type": "RDF11.ScopeExample.I.Satisfies (RDF11.Set.iUnion RDF11.FamilyMergeExamples.independent)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FAMILY-MERGE",
+        "MT11-UNION-MERGE-RELATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.FamilyMergeExamples.merging_subgraphs_can_increase_size",
+      "module": "RDF11.FamilyMergeExamples",
+      "kind": "theorem",
+      "type": "∀ (u : RDF11.Enumeration (RDF11.Set.iUnion RDF11.FamilyMergeExamples.nested))\n  (m : RDF11.Enumeration (RDF11.GraphFamily.merge RDF11.FamilyMergeExamples.nested)),\n  u.triples.length = 2 ∧ m.triples.length = 3",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FAMILY-MERGE",
+        "MT11-MERGE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.FamilyMergeExamples.nested",
+      "module": "RDF11.FamilyMergeExamples",
+      "kind": "definition",
+      "type": "Bool → RDF11.GeneralizedGraph Bool Empty Unit",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FAMILY-MERGE",
+        "MT11-MERGE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.FamilyMergeExamples.nested.eq_1",
+      "module": "RDF11.FamilyMergeExamples",
+      "kind": "theorem",
+      "type": "RDF11.FamilyMergeExamples.nested false = RDF11.Set.ofList [RDF11.ScopeExample.triple false]",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FAMILY-MERGE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.FamilyMergeExamples.nested",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.FamilyMergeExamples.nested.eq_2",
+      "module": "RDF11.FamilyMergeExamples",
+      "kind": "theorem",
+      "type": "RDF11.FamilyMergeExamples.nested true =\n  RDF11.Set.ofList [RDF11.ScopeExample.triple false, RDF11.ScopeExample.triple true]",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FAMILY-MERGE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.FamilyMergeExamples.nested",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.FamilyMergeExamples.nested.match_1",
+      "module": "RDF11.FamilyMergeExamples",
+      "kind": "definition",
+      "type": "(motive : Bool → Sort u_1) → (x : Bool) → (Unit → motive false) → (Unit → motive true) → motive x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FAMILY-MERGE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.FamilyMergeExamples.nested",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.FamilyMergeExamples.nested_merge_enumeration",
+      "module": "RDF11.FamilyMergeExamples",
+      "kind": "definition",
+      "type": "RDF11.Enumeration (RDF11.GraphFamily.merge RDF11.FamilyMergeExamples.nested)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FAMILY-MERGE",
+        "MT11-MERGE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.FamilyMergeExamples.nested_merge_enumeration._proof_1",
+      "module": "RDF11.FamilyMergeExamples",
+      "kind": "theorem",
+      "type": "[RDF11.GeneralizedTriple.mapBlank (Sigma.mk false) (RDF11.ScopeExample.triple false),\n    RDF11.GeneralizedTriple.mapBlank (Sigma.mk true) (RDF11.ScopeExample.triple false),\n    RDF11.GeneralizedTriple.mapBlank (Sigma.mk true) (RDF11.ScopeExample.triple true)].Nodup",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FAMILY-MERGE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.FamilyMergeExamples.nested_merge_enumeration",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.FamilyMergeExamples.nested_merge_enumeration._proof_2",
+      "module": "RDF11.FamilyMergeExamples",
+      "kind": "theorem",
+      "type": "∀ (t : RDF11.GeneralizedTriple Bool Empty ((_ : Bool) × Unit)),\n  t ∈\n      [RDF11.GeneralizedTriple.mapBlank (Sigma.mk false) (RDF11.ScopeExample.triple false),\n        RDF11.GeneralizedTriple.mapBlank (Sigma.mk true) (RDF11.ScopeExample.triple false),\n        RDF11.GeneralizedTriple.mapBlank (Sigma.mk true) (RDF11.ScopeExample.triple true)] ↔\n    RDF11.GraphFamily.merge RDF11.FamilyMergeExamples.nested t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FAMILY-MERGE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.FamilyMergeExamples.nested_merge_enumeration",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.FamilyMergeExamples.nested_merge_enumeration._simp_1",
+      "module": "RDF11.FamilyMergeExamples",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_1} {b : α} {l : List α} {a : α}, (a ∈ b :: l) = (a = b ∨ a ∈ l)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FAMILY-MERGE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.FamilyMergeExamples.nested_merge_enumeration",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.FamilyMergeExamples.nested_merge_enumeration._simp_2",
+      "module": "RDF11.FamilyMergeExamples",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_1} {a : α}, (a ∈ []) = False",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FAMILY-MERGE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.FamilyMergeExamples.nested_merge_enumeration",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.FamilyMergeExamples.nested_union_enumeration",
+      "module": "RDF11.FamilyMergeExamples",
+      "kind": "definition",
+      "type": "RDF11.Enumeration (RDF11.Set.iUnion RDF11.FamilyMergeExamples.nested)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FAMILY-MERGE",
+        "MT11-MERGE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.FamilyMergeExamples.nested_union_enumeration._proof_1",
+      "module": "RDF11.FamilyMergeExamples",
+      "kind": "theorem",
+      "type": "[RDF11.ScopeExample.triple false, RDF11.ScopeExample.triple true].Nodup",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FAMILY-MERGE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.FamilyMergeExamples.nested_union_enumeration",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.FamilyMergeExamples.nested_union_enumeration._proof_2",
+      "module": "RDF11.FamilyMergeExamples",
+      "kind": "theorem",
+      "type": "∀ (t : RDF11.GeneralizedTriple Bool Empty Unit),\n  t ∈ [RDF11.ScopeExample.triple false, RDF11.ScopeExample.triple true] ↔\n    RDF11.Set.iUnion RDF11.FamilyMergeExamples.nested t",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FAMILY-MERGE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.FamilyMergeExamples.nested_union_enumeration",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.FamilyMergeExamples.set_merge_true",
+      "module": "RDF11.FamilyMergeExamples",
+      "kind": "theorem",
+      "type": "RDF11.ScopeExample.I.Satisfies (RDF11.GraphFamily.mergeSet RDF11.FamilyMergeExamples.graphSet)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FAMILY-MERGE",
+        "MT11-UNION-MERGE-RELATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.FamilyMergeExamples.set_union_eq",
+      "module": "RDF11.FamilyMergeExamples",
+      "kind": "theorem",
+      "type": "RDF11.GraphFamily.unionSet RDF11.FamilyMergeExamples.graphSet = RDF11.Set.iUnion RDF11.ScopeExample.graph",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FAMILY-MERGE",
+        "MT11-UNION-MERGE-RELATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.FamilyMergeExamples.set_union_false",
+      "module": "RDF11.FamilyMergeExamples",
+      "kind": "theorem",
+      "type": "¬RDF11.ScopeExample.I.Satisfies (RDF11.GraphFamily.unionSet RDF11.FamilyMergeExamples.graphSet)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FAMILY-MERGE",
+        "MT11-UNION-MERGE-RELATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.FamilyMergeExamples.shared_merge_not_entails_union",
+      "module": "RDF11.FamilyMergeExamples",
+      "kind": "theorem",
+      "type": "¬RDF11.SimplyEntails (RDF11.GraphFamily.merge RDF11.ScopeExample.graph) (RDF11.Set.iUnion RDF11.ScopeExample.graph)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FAMILY-MERGE",
+        "MT11-UNION-MERGE-RELATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.FamilyMergeExamples.shared_merge_true",
+      "module": "RDF11.FamilyMergeExamples",
+      "kind": "theorem",
+      "type": "RDF11.ScopeExample.I.Satisfies (RDF11.GraphFamily.merge RDF11.ScopeExample.graph)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FAMILY-MERGE",
+        "MT11-UNION-MERGE-RELATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.FamilyMergeExamples.shared_union_eq",
+      "module": "RDF11.FamilyMergeExamples",
+      "kind": "theorem",
+      "type": "RDF11.Set.iUnion RDF11.ScopeExample.graph =\n  RDF11.Set.union (RDF11.ScopeExample.graph false) (RDF11.ScopeExample.graph true)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FAMILY-MERGE",
+        "MT11-UNION-MERGE-RELATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.FamilyMergeExamples.shared_union_false",
+      "module": "RDF11.FamilyMergeExamples",
+      "kind": "theorem",
+      "type": "¬RDF11.ScopeExample.I.Satisfies (RDF11.Set.iUnion RDF11.ScopeExample.graph)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FAMILY-MERGE",
+        "MT11-UNION-MERGE-RELATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GraphFamily.Apart",
+      "module": "RDF11.FamilyMerge",
+      "kind": "definition",
+      "type": "{K Iri Literal B : Type} → (K → RDF11.GeneralizedGraph Iri Literal B) → Prop",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-FAMILY-MERGE",
+        "MT11-UNION-MERGE-RELATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GraphFamily.ScopedBlank",
+      "module": "RDF11.MergeInstances",
+      "kind": "definition",
+      "type": "Type → Type → Type",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-FAMILY-MERGE",
+        "MT11-UNION-MERGE-RELATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GraphFamily.apart_isomorphism",
+      "module": "RDF11.MergeInstances",
+      "kind": "definition",
+      "type": "{K Iri Literal B : Type} →\n  (G : K → RDF11.GeneralizedGraph Iri Literal B) →\n    RDF11.GraphFamily.Apart G →\n      RDF11.GraphIsomorphism (RDF11.GraphFamily.scopedMerge G) (RDF11.GraphFamily.scopedUnion G)",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-FAMILY-MERGE",
+        "MT11-UNION-MERGE-RELATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GraphFamily.apart_mutual_instances",
+      "module": "RDF11.MergeInstances",
+      "kind": "theorem",
+      "type": "∀ {K Iri Literal B : Type} (G : K → RDF11.GeneralizedGraph Iri Literal B),\n  RDF11.GraphFamily.Apart G →\n    RDF11.IsInstance (RDF11.GraphFamily.scopedUnion G) (RDF11.GraphFamily.scopedMerge G) ∧\n      RDF11.IsInstance (RDF11.GraphFamily.scopedMerge G) (RDF11.GraphFamily.scopedUnion G)",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-FAMILY-MERGE",
+        "MT11-UNION-MERGE-RELATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GraphFamily.apart_union_equivalent_merge",
+      "module": "RDF11.FamilyMerge",
+      "kind": "theorem",
+      "type": "∀ {K Iri Literal B : Type} (G : K → RDF11.GeneralizedGraph Iri Literal B),\n  RDF11.GraphFamily.Apart G → RDF11.LogicallyEquivalent (RDF11.Set.iUnion G) (RDF11.GraphFamily.merge G)",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-FAMILY-MERGE",
+        "MT11-UNION-MERGE-RELATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GraphFamily.entails_merge_iff",
+      "module": "RDF11.FamilyMerge",
+      "kind": "theorem",
+      "type": "∀ {K Iri Literal B : Type} {Bs : K → Type} (G : (i : K) → RDF11.GeneralizedGraph Iri Literal (Bs i))\n  (H : RDF11.GeneralizedGraph Iri Literal B),\n  RDF11.SimplyEntails H (RDF11.GraphFamily.merge G) ↔ ∀ (i : K), RDF11.SimplyEntails H (G i)",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-FAMILY-MERGE",
+        "MT11-MERGE",
+        "MT11-GRAPH-SET-ENTAILMENT"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GraphFamily.forget",
+      "module": "RDF11.MergeInstances",
+      "kind": "definition",
+      "type": "{K B : Type} → RDF11.GraphFamily.ScopedBlank K B → RDF11.GraphFamily.ScopedBlank K B",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-FAMILY-MERGE",
+        "MT11-UNION-MERGE-RELATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GraphFamily.forget.eq_1",
+      "module": "RDF11.MergeInstances",
+      "kind": "theorem",
+      "type": "∀ {K B : Type} (b : B), RDF11.GraphFamily.forget (Sum.inl b) = Sum.inl b",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FAMILY-MERGE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.GraphFamily.forget",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GraphFamily.forget.eq_2",
+      "module": "RDF11.MergeInstances",
+      "kind": "theorem",
+      "type": "∀ {K B : Type} (b : (_ : K) × B), RDF11.GraphFamily.forget (Sum.inr b) = Sum.inl b.snd",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FAMILY-MERGE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.GraphFamily.forget",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GraphFamily.forget.match_1",
+      "module": "RDF11.MergeInstances",
+      "kind": "definition",
+      "type": "{K B : Type} →\n  (motive : RDF11.GraphFamily.ScopedBlank K B → Sort u_1) →\n    (x : RDF11.GraphFamily.ScopedBlank K B) →\n      ((b : B) → motive (Sum.inl b)) → ((b : (_ : K) × B) → motive (Sum.inr b)) → motive x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FAMILY-MERGE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.GraphFamily.forget",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GraphFamily.forget_restore",
+      "module": "RDF11.MergeInstances",
+      "kind": "theorem",
+      "type": "∀ {K Iri Literal B : Type} (G : K → RDF11.GeneralizedGraph Iri Literal B) (b : RDF11.GraphFamily.ScopedBlank K B),\n  (RDF11.GraphFamily.scopedUnion G).hasBlank b → RDF11.GraphFamily.forget (RDF11.GraphFamily.restore G b) = b",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-FAMILY-MERGE",
+        "MT11-UNION-MERGE-RELATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GraphFamily.forget_scopedMerge",
+      "module": "RDF11.MergeInstances",
+      "kind": "theorem",
+      "type": "∀ {K Iri Literal B : Type} (G : K → RDF11.GeneralizedGraph Iri Literal B),\n  RDF11.GeneralizedGraph.mapBlank RDF11.GraphFamily.forget (RDF11.GraphFamily.scopedMerge G) =\n    RDF11.GraphFamily.scopedUnion G",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-FAMILY-MERGE",
+        "MT11-UNION-MERGE-RELATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GraphFamily.forget_tags",
+      "module": "RDF11.MergeInstances",
+      "kind": "theorem",
+      "type": "∀ {K Iri Literal B : Type} (G : K → RDF11.GeneralizedGraph Iri Literal B),\n  RDF11.GeneralizedGraph.mapBlank (fun b => b.snd) (RDF11.GraphFamily.merge G) = RDF11.Set.iUnion G",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-FAMILY-MERGE",
+        "MT11-UNION-MERGE-RELATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GraphFamily.generalize_union",
+      "module": "RDF11.FamilyMerge",
+      "kind": "theorem",
+      "type": "∀ {K Iri Literal B : Type} (G : K → RDF11.Graph Iri Literal B),\n  RDF11.Graph.generalize (RDF11.Set.iUnion G) = RDF11.Set.iUnion fun i => (G i).generalize",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-FAMILY-MERGE",
+        "MT11-UNION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GraphFamily.graphTrue_merge",
+      "module": "RDF11.FamilyMerge",
+      "kind": "theorem",
+      "type": "∀ {K Iri Literal : Type} {Bs : K → Type} {U : Type u_1} (I : RDF11.SimpleInterpretation Iri Literal U)\n  (G : (i : K) → RDF11.GeneralizedGraph Iri Literal (Bs i)) (A : (i : K) → I.Assignment (Bs i)),\n  I.GraphTrue (fun b => A b.fst b.snd) (RDF11.GraphFamily.merge G) ↔ ∀ (i : K), I.GraphTrue (A i) (G i)",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-FAMILY-MERGE",
+        "MT11-MERGE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GraphFamily.mapBlank_union",
+      "module": "RDF11.MergeInstances",
+      "kind": "theorem",
+      "type": "∀ {K Iri Literal B C : Type} (f : B → C) (G : K → RDF11.GeneralizedGraph Iri Literal B),\n  RDF11.GeneralizedGraph.mapBlank f (RDF11.Set.iUnion G) =\n    RDF11.Set.iUnion fun i => RDF11.GeneralizedGraph.mapBlank f (G i)",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-FAMILY-MERGE",
+        "MT11-UNION-MERGE-RELATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GraphFamily.merge",
+      "module": "RDF11.FamilyMerge",
+      "kind": "definition",
+      "type": "{K Iri Literal : Type} →\n  {Bs : K → Type} →\n    ((i : K) → RDF11.GeneralizedGraph Iri Literal (Bs i)) → RDF11.GeneralizedGraph Iri Literal (Sigma Bs)",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-FAMILY-MERGE",
+        "MT11-MERGE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GraphFamily.merge.eq_1",
+      "module": "RDF11.FamilyMerge",
+      "kind": "theorem",
+      "type": "∀ {K Iri Literal : Type} {Bs : K → Type} (G : (i : K) → RDF11.GeneralizedGraph Iri Literal (Bs i)),\n  RDF11.GraphFamily.merge G = RDF11.Set.iUnion fun i => RDF11.GeneralizedGraph.mapBlank (Sigma.mk i) (G i)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FAMILY-MERGE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.GraphFamily.merge",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GraphFamily.mergeSet",
+      "module": "RDF11.FamilyMerge",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} →\n  (S : RDF11.Set (RDF11.GeneralizedGraph Iri Literal B)) → RDF11.GeneralizedGraph Iri Literal ((_ : { G // S G }) × B)",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-FAMILY-MERGE",
+        "MT11-MERGE",
+        "MT11-GRAPH-SET-ENTAILMENT"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GraphFamily.mergeSet.eq_1",
+      "module": "RDF11.FamilyMerge",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (S : RDF11.Set (RDF11.GeneralizedGraph Iri Literal B)),\n  RDF11.GraphFamily.mergeSet S = RDF11.GraphFamily.merge fun G => G.val",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FAMILY-MERGE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.GraphFamily.mergeSet",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GraphFamily.merge_constant_satisfaction",
+      "module": "RDF11.FamilyMerge",
+      "kind": "theorem",
+      "type": "∀ {K Iri Literal B : Type} {U : Type u_1} (I : RDF11.SimpleInterpretation Iri Literal U)\n  (G : RDF11.GeneralizedGraph Iri Literal B) (i : K), I.Satisfies (RDF11.GraphFamily.merge fun x => G) ↔ I.Satisfies G",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-FAMILY-MERGE",
+        "MT11-MERGE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GraphFamily.merge_empty",
+      "module": "RDF11.FamilyMerge",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal : Type} {Bs' : Empty → Type} (G : (i : Empty) → RDF11.GeneralizedGraph Iri Literal (Bs' i)),\n  RDF11.GraphFamily.merge G = RDF11.Set.empty",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-FAMILY-MERGE",
+        "MT11-MERGE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GraphFamily.merge_empty.match_1_1",
+      "module": "RDF11.FamilyMerge",
+      "kind": "definition",
+      "type": "∀ {Iri Literal : Type} {Bs' : Empty → Type} (G : (i : Empty) → RDF11.GeneralizedGraph Iri Literal (Bs' i))\n  (t : RDF11.GeneralizedTriple Iri Literal (Sigma Bs'))\n  (motive : (i : Empty) → RDF11.GeneralizedGraph.mapBlank (Sigma.mk i) (G i) t → Prop) (i : Empty)\n  (h : RDF11.GeneralizedGraph.mapBlank (Sigma.mk i) (G i) t), motive i h",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FAMILY-MERGE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.GraphFamily.merge_empty",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GraphFamily.merge_entailsUnder_iff",
+      "module": "RDF11.FamilyMerge",
+      "kind": "theorem",
+      "type": "∀ {K Iri Literal B : Type} {Bs : K → Type} (C : (U : Type u) → RDF11.SimpleInterpretation Iri Literal U → Prop)\n  (G : (i : K) → RDF11.GeneralizedGraph Iri Literal (Bs i)) (E : RDF11.GeneralizedGraph Iri Literal B),\n  RDF11.EntailsUnder C (RDF11.GraphFamily.merge G) E ↔\n    ∀ (U : Type u) (I : RDF11.SimpleInterpretation Iri Literal U),\n      C U I → (∀ (i : K), I.Satisfies (G i)) → I.Satisfies E",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-FAMILY-MERGE",
+        "MT11-GRAPH-SET-ENTAILMENT"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GraphFamily.merge_entails_iff",
+      "module": "RDF11.FamilyMerge",
+      "kind": "theorem",
+      "type": "∀ {K Iri Literal B : Type} {Bs : K → Type} (G : (i : K) → RDF11.GeneralizedGraph Iri Literal (Bs i))\n  (E : RDF11.GeneralizedGraph Iri Literal B),\n  RDF11.SimplyEntails (RDF11.GraphFamily.merge G) E ↔\n    ∀ (U : Type u) (I : RDF11.SimpleInterpretation Iri Literal U), (∀ (i : K), I.Satisfies (G i)) → I.Satisfies E",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-FAMILY-MERGE",
+        "MT11-GRAPH-SET-ENTAILMENT"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GraphFamily.merge_hasBlank",
+      "module": "RDF11.FamilyMerge",
+      "kind": "theorem",
+      "type": "∀ {K Iri Literal : Type} {Bs : K → Type} (G : (i : K) → RDF11.GeneralizedGraph Iri Literal (Bs i)) (b : Sigma Bs),\n  (RDF11.GraphFamily.merge G).hasBlank b ↔ (G b.fst).hasBlank b.snd",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-FAMILY-MERGE",
+        "MT11-MERGE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GraphFamily.ordinaryMerge",
+      "module": "RDF11.FamilyMerge",
+      "kind": "definition",
+      "type": "{K Iri Literal : Type} →\n  {Bs : K → Type} → ((i : K) → RDF11.Graph Iri Literal (Bs i)) → RDF11.Graph Iri Literal (Sigma Bs)",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-FAMILY-MERGE",
+        "MT11-MERGE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GraphFamily.ordinaryMerge.eq_1",
+      "module": "RDF11.FamilyMerge",
+      "kind": "theorem",
+      "type": "∀ {K Iri Literal : Type} {Bs : K → Type} (G : (i : K) → RDF11.Graph Iri Literal (Bs i)),\n  RDF11.GraphFamily.ordinaryMerge G = RDF11.Set.iUnion fun i => RDF11.Graph.mapBlank (Sigma.mk i) (G i)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FAMILY-MERGE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.GraphFamily.ordinaryMerge",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GraphFamily.ordinaryMerge_generalize",
+      "module": "RDF11.FamilyMerge",
+      "kind": "theorem",
+      "type": "∀ {K Iri Literal : Type} {Bs : K → Type} (G : (i : K) → RDF11.Graph Iri Literal (Bs i)),\n  (RDF11.GraphFamily.ordinaryMerge G).generalize = RDF11.GraphFamily.merge fun i => (G i).generalize",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-FAMILY-MERGE",
+        "MT11-MERGE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GraphFamily.reindex_merge_satisfaction",
+      "module": "RDF11.FamilyMerge",
+      "kind": "theorem",
+      "type": "∀ {K Iri Literal : Type} {Bs : K → Type} {U : Type u_1} {J : Type} (I : RDF11.SimpleInterpretation Iri Literal U)\n  (G : (i : K) → RDF11.GeneralizedGraph Iri Literal (Bs i)) (f : J → K),\n  (∀ (i : K), ∃ j, f j = i) →\n    (I.Satisfies (RDF11.GraphFamily.merge fun j => G (f j)) ↔ I.Satisfies (RDF11.GraphFamily.merge G))",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-FAMILY-MERGE",
+        "MT11-MERGE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GraphFamily.restore",
+      "module": "RDF11.MergeInstances",
+      "kind": "definition",
+      "type": "{K Iri Literal B : Type} →\n  (K → RDF11.GeneralizedGraph Iri Literal B) → RDF11.GraphFamily.ScopedBlank K B → RDF11.GraphFamily.ScopedBlank K B",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-FAMILY-MERGE",
+        "MT11-UNION-MERGE-RELATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GraphFamily.restore.eq_1",
+      "module": "RDF11.MergeInstances",
+      "kind": "theorem",
+      "type": "∀ {K Iri Literal B : Type} (G : K → RDF11.GeneralizedGraph Iri Literal B) (b_1 : B),\n  RDF11.GraphFamily.restore G (Sum.inl b_1) =\n    if h : ∃ i, (G i).hasBlank b_1 then Sum.inr ⟨Classical.choose h, b_1⟩ else Sum.inl b_1",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FAMILY-MERGE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.GraphFamily.restore",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GraphFamily.restore.eq_2",
+      "module": "RDF11.MergeInstances",
+      "kind": "theorem",
+      "type": "∀ {K Iri Literal B : Type} (G : K → RDF11.GeneralizedGraph Iri Literal B) (b_1 : (_ : K) × B),\n  RDF11.GraphFamily.restore G (Sum.inr b_1) = Sum.inr b_1",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FAMILY-MERGE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.GraphFamily.restore",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GraphFamily.restore_forget",
+      "module": "RDF11.MergeInstances",
+      "kind": "theorem",
+      "type": "∀ {K Iri Literal B : Type} (G : K → RDF11.GeneralizedGraph Iri Literal B),\n  RDF11.GraphFamily.Apart G →\n    ∀ (b : RDF11.GraphFamily.ScopedBlank K B),\n      (RDF11.GraphFamily.scopedMerge G).hasBlank b → RDF11.GraphFamily.restore G (RDF11.GraphFamily.forget b) = b",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-FAMILY-MERGE",
+        "MT11-UNION-MERGE-RELATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GraphFamily.satisfies_merge",
+      "module": "RDF11.FamilyMerge",
+      "kind": "theorem",
+      "type": "∀ {K Iri Literal : Type} {Bs : K → Type} {U : Type u_1} (I : RDF11.SimpleInterpretation Iri Literal U)\n  (G : (i : K) → RDF11.GeneralizedGraph Iri Literal (Bs i)),\n  I.Satisfies (RDF11.GraphFamily.merge G) ↔ ∀ (i : K), I.Satisfies (G i)",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-FAMILY-MERGE",
+        "MT11-MERGE"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GraphFamily.satisfies_mergeSet",
+      "module": "RDF11.FamilyMerge",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {U : Type u_1} (I : RDF11.SimpleInterpretation Iri Literal U)\n  (S : RDF11.Set (RDF11.GeneralizedGraph Iri Literal B)),\n  I.Satisfies (RDF11.GraphFamily.mergeSet S) ↔ ∀ (G : RDF11.GeneralizedGraph Iri Literal B), S G → I.Satisfies G",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-FAMILY-MERGE",
+        "MT11-MERGE",
+        "MT11-GRAPH-SET-ENTAILMENT"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GraphFamily.satisfies_unionSet",
+      "module": "RDF11.FamilyMerge",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} {U : Type u_1} (I : RDF11.SimpleInterpretation Iri Literal U)\n  (S : RDF11.Set (RDF11.GeneralizedGraph Iri Literal B)),\n  I.Satisfies (RDF11.GraphFamily.unionSet S) ↔ ∃ A, ∀ (G : RDF11.GeneralizedGraph Iri Literal B), S G → I.GraphTrue A G",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-FAMILY-MERGE",
+        "MT11-UNION",
+        "MT11-GRAPH-SET-ENTAILMENT"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GraphFamily.scopedMerge",
+      "module": "RDF11.MergeInstances",
+      "kind": "definition",
+      "type": "{K Iri Literal B : Type} →\n  (K → RDF11.GeneralizedGraph Iri Literal B) → RDF11.GeneralizedGraph Iri Literal (RDF11.GraphFamily.ScopedBlank K B)",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-FAMILY-MERGE",
+        "MT11-UNION-MERGE-RELATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GraphFamily.scopedMerge.eq_1",
+      "module": "RDF11.MergeInstances",
+      "kind": "theorem",
+      "type": "∀ {K Iri Literal B : Type} (G : K → RDF11.GeneralizedGraph Iri Literal B),\n  RDF11.GraphFamily.scopedMerge G = RDF11.GeneralizedGraph.mapBlank Sum.inr (RDF11.GraphFamily.merge G)",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FAMILY-MERGE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.GraphFamily.scopedMerge",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GraphFamily.scopedUnion",
+      "module": "RDF11.MergeInstances",
+      "kind": "definition",
+      "type": "{K Iri Literal B : Type} →\n  (K → RDF11.GeneralizedGraph Iri Literal B) → RDF11.GeneralizedGraph Iri Literal (RDF11.GraphFamily.ScopedBlank K B)",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-FAMILY-MERGE",
+        "MT11-UNION-MERGE-RELATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GraphFamily.unionSet",
+      "module": "RDF11.FamilyMerge",
+      "kind": "definition",
+      "type": "{Iri Literal B : Type} → RDF11.Set (RDF11.GeneralizedGraph Iri Literal B) → RDF11.GeneralizedGraph Iri Literal B",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-FAMILY-MERGE",
+        "MT11-UNION",
+        "MT11-GRAPH-SET-ENTAILMENT"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GraphFamily.unionSet.eq_1",
+      "module": "RDF11.FamilyMerge",
+      "kind": "theorem",
+      "type": "∀ {Iri Literal B : Type} (S : RDF11.Set (RDF11.GeneralizedGraph Iri Literal B)),\n  RDF11.GraphFamily.unionSet S = RDF11.Set.iUnion fun G => G.val",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FAMILY-MERGE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.GraphFamily.unionSet",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GraphFamily.union_entails_iff",
+      "module": "RDF11.FamilyMerge",
+      "kind": "theorem",
+      "type": "∀ {K Iri Literal B B' : Type} (G : K → RDF11.GeneralizedGraph Iri Literal B)\n  (E : RDF11.GeneralizedGraph Iri Literal B'),\n  RDF11.SimplyEntails (RDF11.Set.iUnion G) E ↔\n    ∀ (U : Type u) (I : RDF11.SimpleInterpretation Iri Literal U) (A : I.Assignment B),\n      (∀ (i : K), I.GraphTrue A (G i)) → I.Satisfies E",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-FAMILY-MERGE",
+        "MT11-GRAPH-SET-ENTAILMENT"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GraphFamily.union_entails_merge",
+      "module": "RDF11.FamilyMerge",
+      "kind": "theorem",
+      "type": "∀ {K Iri Literal B : Type} (G : K → RDF11.GeneralizedGraph Iri Literal B),\n  RDF11.SimplyEntails (RDF11.Set.iUnion G) (RDF11.GraphFamily.merge G)",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-FAMILY-MERGE",
+        "MT11-UNION-MERGE-RELATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GraphFamily.union_hasBlank",
+      "module": "RDF11.FamilyMerge",
+      "kind": "theorem",
+      "type": "∀ {K Iri Literal B : Type} (G : K → RDF11.GeneralizedGraph Iri Literal B) (b : B),\n  RDF11.GeneralizedGraph.hasBlank (RDF11.Set.iUnion G) b ↔ ∃ i, (G i).hasBlank b",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-FAMILY-MERGE",
+        "MT11-UNION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GraphFamily.union_hasBlank.match_1_1",
+      "module": "RDF11.FamilyMerge",
+      "kind": "definition",
+      "type": "∀ {K Iri Literal B : Type} (G : K → RDF11.GeneralizedGraph Iri Literal B) (b : B)\n  (motive : RDF11.GeneralizedGraph.hasBlank (RDF11.Set.iUnion G) b → Prop)\n  (x : RDF11.GeneralizedGraph.hasBlank (RDF11.Set.iUnion G) b),\n  (∀ (t : RDF11.GeneralizedTriple Iri Literal B) (i : K) (ht : G i t) (hb : RDF11.GeneralizedTriple.hasBlank b t),\n      motive ⋯) →\n    motive x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FAMILY-MERGE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.GraphFamily.union_hasBlank",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GraphFamily.union_hasBlank.match_1_3",
+      "module": "RDF11.FamilyMerge",
+      "kind": "definition",
+      "type": "∀ {K Iri Literal B : Type} (G : K → RDF11.GeneralizedGraph Iri Literal B) (b : B)\n  (motive : (∃ i, (G i).hasBlank b) → Prop) (x : ∃ i, (G i).hasBlank b),\n  (∀ (i : K) (t : RDF11.GeneralizedTriple Iri Literal B) (ht : G i t) (hb : RDF11.GeneralizedTriple.hasBlank b t),\n      motive ⋯) →\n    motive x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FAMILY-MERGE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.GraphFamily.union_hasBlank",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.GraphFamily.union_is_instance",
+      "module": "RDF11.MergeInstances",
+      "kind": "theorem",
+      "type": "∀ {K Iri Literal B : Type} (G : K → RDF11.GeneralizedGraph Iri Literal B),\n  RDF11.IsInstance (RDF11.GraphFamily.scopedUnion G) (RDF11.GraphFamily.scopedMerge G)",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-FAMILY-MERGE",
+        "MT11-UNION-MERGE-RELATION"
+      ],
+      "parent_declaration_if_applicable": null,
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Set.iUnion",
+      "module": "RDF11.FamilyMerge",
+      "kind": "definition",
+      "type": "{K : Sort u_1} → {α : Type u_2} → (K → RDF11.Set α) → RDF11.Set α",
+      "role": "foundation",
+      "grounds": [
+        "SUPPORT-FAMILY-MERGE",
+        "MT11-UNION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Set",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Set.iUnion.eq_1",
+      "module": "RDF11.FamilyMergeExamples",
+      "kind": "theorem",
+      "type": "∀ {K : Sort u_1} {α : Type u_2} (S : K → RDF11.Set α) (a : α), RDF11.Set.iUnion S a = ∃ i, S i a",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FAMILY-MERGE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Set.iUnion",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Set.image_iUnion",
+      "module": "RDF11.FamilyMerge",
+      "kind": "theorem",
+      "type": "∀ {α : Type u_1} {β : Type u_2} {K : Sort u_3} (f : α → β) (S : K → RDF11.Set α),\n  RDF11.Set.image f (RDF11.Set.iUnion S) = RDF11.Set.iUnion fun i => RDF11.Set.image f (S i)",
+      "role": "foundation",
+      "grounds": [
+        "SUPPORT-FAMILY-MERGE",
+        "MT11-UNION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Set",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Set.image_iUnion.match_1_1",
+      "module": "RDF11.FamilyMerge",
+      "kind": "definition",
+      "type": "∀ {α : Type u_1} {β : Type u_2} {K : Sort u_3} (f : α → β) (S : K → RDF11.Set α) (b : β)\n  (motive : RDF11.Set.image f (RDF11.Set.iUnion S) b → Prop) (x : RDF11.Set.image f (RDF11.Set.iUnion S) b),\n  (∀ (a : α) (i : K) (ha : S i a) (hab : f a = b), motive ⋯) → motive x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FAMILY-MERGE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Set.image_iUnion",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.Set.image_iUnion.match_1_3",
+      "module": "RDF11.FamilyMerge",
+      "kind": "definition",
+      "type": "∀ {α : Type u_3} {β : Type u_2} {K : Sort u_1} (f : α → β) (S : K → RDF11.Set α) (b : β)\n  (motive : RDF11.Set.iUnion (fun i => RDF11.Set.image f (S i)) b → Prop)\n  (x : RDF11.Set.iUnion (fun i => RDF11.Set.image f (S i)) b),\n  (∀ (i : K) (a : α) (ha : S i a) (hab : f a = b), motive ⋯) → motive x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FAMILY-MERGE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.Set.image_iUnion",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.Coherent",
+      "module": "RDF11.FamilyMerge",
+      "kind": "definition",
+      "type": "{K Iri Literal B : Type} →\n  {U : Type u} →\n    (I : RDF11.SimpleInterpretation Iri Literal U) →\n      (K → RDF11.GeneralizedGraph Iri Literal B) → (K → I.Assignment B) → Prop",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-FAMILY-MERGE",
+        "MT11-UNION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.amalgamate",
+      "module": "RDF11.FamilyMerge",
+      "kind": "definition",
+      "type": "{K Iri Literal B : Type} →\n  {U : Type u} →\n    (I : RDF11.SimpleInterpretation Iri Literal U) →\n      (K → RDF11.GeneralizedGraph Iri Literal B) → (K → I.Assignment B) → I.Assignment B",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-FAMILY-MERGE",
+        "MT11-UNION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.amalgamate.eq_1",
+      "module": "RDF11.FamilyMerge",
+      "kind": "theorem",
+      "type": "∀ {K Iri Literal B : Type} {U : Type u} (I : RDF11.SimpleInterpretation Iri Literal U)\n  (G : K → RDF11.GeneralizedGraph Iri Literal B) (A : K → I.Assignment B) (b : B),\n  I.amalgamate G A b = if h : ∃ i, (G i).hasBlank b then A (Classical.choose h) b else none",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FAMILY-MERGE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation.amalgamate",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.amalgamate_agrees",
+      "module": "RDF11.FamilyMerge",
+      "kind": "theorem",
+      "type": "∀ {K Iri Literal B : Type} {U : Type u} (I : RDF11.SimpleInterpretation Iri Literal U)\n  (G : K → RDF11.GeneralizedGraph Iri Literal B) (A : K → I.Assignment B),\n  I.Coherent G A → ∀ (i : K) (b : B), (G i).hasBlank b → I.amalgamate G A b = A i b",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-FAMILY-MERGE",
+        "MT11-UNION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.graphTrue_iUnion",
+      "module": "RDF11.FamilyMerge",
+      "kind": "theorem",
+      "type": "∀ {K Iri Literal B : Type} {U : Type u} (I : RDF11.SimpleInterpretation Iri Literal U) (A : I.Assignment B)\n  (G : K → RDF11.GeneralizedGraph Iri Literal B), I.GraphTrue A (RDF11.Set.iUnion G) ↔ ∀ (i : K), I.GraphTrue A (G i)",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-FAMILY-MERGE",
+        "MT11-UNION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.graphTrue_iUnion.match_1_1",
+      "module": "RDF11.FamilyMerge",
+      "kind": "definition",
+      "type": "∀ {K Iri Literal B : Type} (G : K → RDF11.GeneralizedGraph Iri Literal B) (t : RDF11.GeneralizedTriple Iri Literal B)\n  (motive : RDF11.Set.iUnion G t → Prop) (x : RDF11.Set.iUnion G t), (∀ (i : K) (ht : G i t), motive ⋯) → motive x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FAMILY-MERGE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation.graphTrue_iUnion",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.satisfies_iUnion",
+      "module": "RDF11.FamilyMerge",
+      "kind": "theorem",
+      "type": "∀ {K Iri Literal B : Type} {U : Type u} (I : RDF11.SimpleInterpretation Iri Literal U)\n  (G : K → RDF11.GeneralizedGraph Iri Literal B), I.Satisfies (RDF11.Set.iUnion G) ↔ ∃ A, ∀ (i : K), I.GraphTrue A (G i)",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-FAMILY-MERGE",
+        "MT11-UNION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.satisfies_iUnion_iff_coherent",
+      "module": "RDF11.FamilyMerge",
+      "kind": "theorem",
+      "type": "∀ {K Iri Literal B : Type} {U : Type u} (I : RDF11.SimpleInterpretation Iri Literal U)\n  (G : K → RDF11.GeneralizedGraph Iri Literal B),\n  I.Satisfies (RDF11.Set.iUnion G) ↔ ∃ A, (∀ (i : K), I.GraphTrue (A i) (G i)) ∧ I.Coherent G A",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-FAMILY-MERGE",
+        "MT11-UNION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "RDF11.SimpleInterpretation.satisfies_iUnion_of_apart",
+      "module": "RDF11.FamilyMerge",
+      "kind": "theorem",
+      "type": "∀ {K Iri Literal B : Type} {U : Type u} (I : RDF11.SimpleInterpretation Iri Literal U)\n  (G : K → RDF11.GeneralizedGraph Iri Literal B),\n  RDF11.GraphFamily.Apart G → (I.Satisfies (RDF11.Set.iUnion G) ↔ ∀ (i : K), I.Satisfies (G i))",
+      "role": "source_mapping",
+      "grounds": [
+        "SUPPORT-FAMILY-MERGE",
+        "MT11-UNION"
+      ],
+      "parent_declaration_if_applicable": "RDF11.SimpleInterpretation",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.FamilyMergeExamples.0.RDF11.FamilyMergeExamples.nested.match_1.eq_1",
+      "module": "RDF11.FamilyMergeExamples",
+      "kind": "theorem",
+      "type": "∀ (motive : Bool → Sort u_1) (h_1 : Unit → motive false) (h_2 : Unit → motive true),\n  (match false with\n    | false => h_1 ()\n    | true => h_2 ()) =\n    h_1 ()",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FAMILY-MERGE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.FamilyMergeExamples.nested.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.FamilyMergeExamples.0.RDF11.FamilyMergeExamples.nested.match_1.eq_2",
+      "module": "RDF11.FamilyMergeExamples",
+      "kind": "theorem",
+      "type": "∀ (motive : Bool → Sort u_1) (h_1 : Unit → motive false) (h_2 : Unit → motive true),\n  (match true with\n    | false => h_1 ()\n    | true => h_2 ()) =\n    h_2 ()",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FAMILY-MERGE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.FamilyMergeExamples.nested.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.FamilyMergeExamples.0.RDF11.FamilyMergeExamples.nested.match_1.splitter",
+      "module": "RDF11.FamilyMergeExamples",
+      "kind": "definition",
+      "type": "(motive : Bool → Sort u_1) → (x : Bool) → (Unit → motive false) → (Unit → motive true) → motive x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FAMILY-MERGE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.FamilyMergeExamples.nested.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.MergeInstances.0.RDF11.GraphFamily.forget.match_1.eq_1",
+      "module": "RDF11.MergeInstances",
+      "kind": "theorem",
+      "type": "∀ {K B : Type} (motive : RDF11.GraphFamily.ScopedBlank K B → Sort u_1) (b : B) (h_1 : (b : B) → motive (Sum.inl b))\n  (h_2 : (b : (_ : K) × B) → motive (Sum.inr b)),\n  (match Sum.inl b with\n    | Sum.inl b => h_1 b\n    | Sum.inr b => h_2 b) =\n    h_1 b",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FAMILY-MERGE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.GraphFamily.forget.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.MergeInstances.0.RDF11.GraphFamily.forget.match_1.eq_2",
+      "module": "RDF11.MergeInstances",
+      "kind": "theorem",
+      "type": "∀ {K B : Type} (motive : RDF11.GraphFamily.ScopedBlank K B → Sort u_1) (b : (_ : K) × B)\n  (h_1 : (b : B) → motive (Sum.inl b)) (h_2 : (b : (_ : K) × B) → motive (Sum.inr b)),\n  (match Sum.inr b with\n    | Sum.inl b => h_1 b\n    | Sum.inr b => h_2 b) =\n    h_2 b",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FAMILY-MERGE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.GraphFamily.forget.match_1",
+      "review": "pending_expert_review"
+    },
+    {
+      "name": "_private.RDF11.MergeInstances.0.RDF11.GraphFamily.forget.match_1.splitter",
+      "module": "RDF11.MergeInstances",
+      "kind": "definition",
+      "type": "{K B : Type} →\n  (motive : RDF11.GraphFamily.ScopedBlank K B → Sort u_1) →\n    (x : RDF11.GraphFamily.ScopedBlank K B) →\n      ((b : B) → motive (Sum.inl b)) → ((b : (_ : K) × B) → motive (Sum.inr b)) → motive x",
+      "role": "proof_support",
+      "grounds": [
+        "SUPPORT-FAMILY-MERGE"
+      ],
+      "parent_declaration_if_applicable": "RDF11.GraphFamily.forget.match_1",
       "review": "pending_expert_review"
     }
   ],

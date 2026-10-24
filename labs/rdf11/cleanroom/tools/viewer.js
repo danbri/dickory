@@ -94,7 +94,11 @@ function showClaim(id){
  a.append(element("p","Source status: "+c.source_status+" · "+c.category));
  const link=element("a","Publisher’s section");link.href=c.source_url;link.target="_blank";link.rel="noreferrer";a.append(link);
  const m=c.cleanroom_mapping;
- if(!m){a.append(element("p","Lean mapping not started."));appendQuestions(a,id);detail.append(a);return}
+ if(!m){
+  a.append(element("p","Lean mapping not started."));
+  if(c.formalization_note)a.append(element("p","Scope note: "+c.formalization_note));
+  appendQuestions(a,id);detail.append(a);return;
+ }
  a.append(element("h3","Explicit English / symbol bindings"),element("p",m.symbol_linked_english));
  appendConnections(a,id);
  a.append(element("h3","Actual Lean 4"));

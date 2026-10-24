@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "status": "draft_tenth_formalization_increment",
+  "status": "draft_twenty_fifth_formalization_increment",
   "selection_method": "Human-readable AI close reading; selectors locate already selected passages and do not extract assertions.",
   "mappings": [
     {
@@ -158,53 +158,289 @@
     },
     {
       "claim_id": "MT11-UNION",
-      "relation": "definition",
-      "symbol_linked_english": "The union of G and H contains a triple exactly when G or H contains that triple, preserving blank-node identity.",
+      "relation": "definition_and_theorem",
+      "symbol_linked_english": "Set.iUnion takes membership in any input graph while retaining shared blank identities. unionSet indexes the actual set members. satisfies_iUnion requires one common assignment; satisfies_iUnion_iff_coherent equivalently glues assignments that agree on shared occurring blanks.",
       "bindings": [
         {
           "symbol": "union",
           "lean": "RDF11.Set.union"
+        },
+        {
+          "symbol": "iUnion",
+          "lean": "RDF11.Set.iUnion"
+        },
+        {
+          "symbol": "image_iUnion",
+          "lean": "RDF11.Set.image_iUnion"
+        },
+        {
+          "symbol": "unionSet",
+          "lean": "RDF11.GraphFamily.unionSet"
+        },
+        {
+          "symbol": "generalize_union",
+          "lean": "RDF11.GraphFamily.generalize_union"
+        },
+        {
+          "symbol": "union_hasBlank",
+          "lean": "RDF11.GraphFamily.union_hasBlank"
+        },
+        {
+          "symbol": "graphTrue_iUnion",
+          "lean": "RDF11.SimpleInterpretation.graphTrue_iUnion"
+        },
+        {
+          "symbol": "satisfies_iUnion",
+          "lean": "RDF11.SimpleInterpretation.satisfies_iUnion"
+        },
+        {
+          "symbol": "Coherent",
+          "lean": "RDF11.SimpleInterpretation.Coherent"
+        },
+        {
+          "symbol": "amalgamate",
+          "lean": "RDF11.SimpleInterpretation.amalgamate"
+        },
+        {
+          "symbol": "amalgamate_agrees",
+          "lean": "RDF11.SimpleInterpretation.amalgamate_agrees"
+        },
+        {
+          "symbol": "satisfies_iUnion_iff_coherent",
+          "lean": "RDF11.SimpleInterpretation.satisfies_iUnion_iff_coherent"
+        },
+        {
+          "symbol": "satisfies_iUnion_of_apart",
+          "lean": "RDF11.SimpleInterpretation.satisfies_iUnion_of_apart"
+        },
+        {
+          "symbol": "satisfies_unionSet",
+          "lean": "RDF11.GraphFamily.satisfies_unionSet"
         }
       ],
-      "limitations": "Binary union; arbitrary families are not yet implemented.",
+      "limitations": "Arbitrary set-sized families, including empty and infinite families. The shared identity domain is explicit; source retrieval and concrete blank-label allocation are not implemented. Coherence concerns only occurring blanks. No dataset truth policy or extension syntax-admission preservation is asserted.",
       "extraction_review": "pending_expert_review",
       "formalization_review": "pending_expert_review",
       "implementation_refinement": "not_connected_to_published_package"
     },
     {
       "claim_id": "MT11-MERGE",
-      "relation": "partial_definition_and_theorem",
-      "symbol_linked_english": "The binary merge of G and H takes their union after placing their blank nodes in disjoint copies. I satisfies that merge exactly when I satisfies G and I satisfies H.",
+      "relation": "definition_and_theorem",
+      "symbol_linked_english": "merge places each input blank domain in a disjoint Sigma copy and takes the indexed union; ordinaryMerge preserves ordinary RDF syntax. mergeSet indexes each graph in a set once. graphTrue_merge combines supplied assignments; satisfies_merge permits separate witnesses in one interpretation. Surjective reindexing preserves satisfaction. The nested-subgraph example has exactly two union triples and three merge triples.",
       "bindings": [
         {
           "symbol": "merging_lemma",
           "lean": "RDF11.Statements.merging_lemma"
         },
         {
-          "symbol": "merge",
+          "symbol": "binary_merge",
           "lean": "RDF11.merge"
         },
         {
-          "symbol": "satisfies_merge",
+          "symbol": "binary_satisfies_merge",
           "lean": "RDF11.satisfies_merge"
+        },
+        {
+          "symbol": "merge",
+          "lean": "RDF11.GraphFamily.merge"
+        },
+        {
+          "symbol": "ordinaryMerge",
+          "lean": "RDF11.GraphFamily.ordinaryMerge"
+        },
+        {
+          "symbol": "ordinaryMerge_generalize",
+          "lean": "RDF11.GraphFamily.ordinaryMerge_generalize"
+        },
+        {
+          "symbol": "mergeSet",
+          "lean": "RDF11.GraphFamily.mergeSet"
+        },
+        {
+          "symbol": "merge_hasBlank",
+          "lean": "RDF11.GraphFamily.merge_hasBlank"
+        },
+        {
+          "symbol": "graphTrue_merge",
+          "lean": "RDF11.GraphFamily.graphTrue_merge"
+        },
+        {
+          "symbol": "satisfies_merge",
+          "lean": "RDF11.GraphFamily.satisfies_merge"
+        },
+        {
+          "symbol": "satisfies_mergeSet",
+          "lean": "RDF11.GraphFamily.satisfies_mergeSet"
+        },
+        {
+          "symbol": "reindex_merge_satisfaction",
+          "lean": "RDF11.GraphFamily.reindex_merge_satisfaction"
+        },
+        {
+          "symbol": "merge_empty",
+          "lean": "RDF11.GraphFamily.merge_empty"
+        },
+        {
+          "symbol": "merge_constant_satisfaction",
+          "lean": "RDF11.GraphFamily.merge_constant_satisfaction"
+        },
+        {
+          "symbol": "entails_merge_iff",
+          "lean": "RDF11.GraphFamily.entails_merge_iff"
+        },
+        {
+          "symbol": "nested",
+          "lean": "RDF11.FamilyMergeExamples.nested"
+        },
+        {
+          "symbol": "nested_union_enumeration",
+          "lean": "RDF11.FamilyMergeExamples.nested_union_enumeration"
+        },
+        {
+          "symbol": "nested_merge_enumeration",
+          "lean": "RDF11.FamilyMergeExamples.nested_merge_enumeration"
+        },
+        {
+          "symbol": "merging_subgraphs_can_increase_size",
+          "lean": "RDF11.FamilyMergeExamples.merging_subgraphs_can_increase_size"
         }
       ],
-      "limitations": "Uses Sum B₁ B₂ for fresh identities. This is a representative up to blank-node renaming; literal equality to union for already-disjoint domains is not asserted.",
+      "limitations": "Fresh tags choose a representative under the specification’s graph-isomorphism convention. Separate blank identities may denote the same resource. Indexed repeated inputs create extra syntactic copies; mergeSet represents literal sets and the reindexing theorem establishes truth invariance, not isomorphism of repetitions. Selecting witnesses for arbitrary families uses classical choice. No finite-family or spare-original-blank assumption is imposed.",
       "extraction_review": "pending_expert_review",
       "formalization_review": "pending_expert_review",
       "implementation_refinement": "not_connected_to_published_package"
     },
     {
       "claim_id": "MT11-UNION-MERGE-RELATION",
-      "relation": "partial_theorem",
-      "symbol_linked_english": "For any G and H with a common blank-node domain, their union simply entails their merge.",
+      "relation": "theorem",
+      "symbol_linked_english": "forget_tags maps the tagged merge exactly onto the shared union. In one common ambient sum, union_is_instance proves the source’s instance relation. Apart requires pairwise disjoint occurring blank supports; apart_isomorphism then supplies inverse renamings on those supports, and apart_mutual_instances and apart_union_equivalent_merge follow. Shared-witness countermodels show why the reverse entailment fails without Apart.",
       "bindings": [
         {
-          "symbol": "union_entails_merge",
+          "symbol": "binary_union_entails_merge",
           "lean": "RDF11.union_entails_merge"
+        },
+        {
+          "symbol": "mapBlank_union",
+          "lean": "RDF11.GraphFamily.mapBlank_union"
+        },
+        {
+          "symbol": "forget_tags",
+          "lean": "RDF11.GraphFamily.forget_tags"
+        },
+        {
+          "symbol": "ScopedBlank",
+          "lean": "RDF11.GraphFamily.ScopedBlank"
+        },
+        {
+          "symbol": "scopedUnion",
+          "lean": "RDF11.GraphFamily.scopedUnion"
+        },
+        {
+          "symbol": "scopedMerge",
+          "lean": "RDF11.GraphFamily.scopedMerge"
+        },
+        {
+          "symbol": "forget",
+          "lean": "RDF11.GraphFamily.forget"
+        },
+        {
+          "symbol": "forget_scopedMerge",
+          "lean": "RDF11.GraphFamily.forget_scopedMerge"
+        },
+        {
+          "symbol": "union_is_instance",
+          "lean": "RDF11.GraphFamily.union_is_instance"
+        },
+        {
+          "symbol": "Apart",
+          "lean": "RDF11.GraphFamily.Apart"
+        },
+        {
+          "symbol": "restore",
+          "lean": "RDF11.GraphFamily.restore"
+        },
+        {
+          "symbol": "restore_forget",
+          "lean": "RDF11.GraphFamily.restore_forget"
+        },
+        {
+          "symbol": "forget_restore",
+          "lean": "RDF11.GraphFamily.forget_restore"
+        },
+        {
+          "symbol": "apart_isomorphism",
+          "lean": "RDF11.GraphFamily.apart_isomorphism"
+        },
+        {
+          "symbol": "apart_mutual_instances",
+          "lean": "RDF11.GraphFamily.apart_mutual_instances"
+        },
+        {
+          "symbol": "union_entails_merge",
+          "lean": "RDF11.GraphFamily.union_entails_merge"
+        },
+        {
+          "symbol": "apart_union_equivalent_merge",
+          "lean": "RDF11.GraphFamily.apart_union_equivalent_merge"
+        },
+        {
+          "symbol": "shared_union_eq",
+          "lean": "RDF11.FamilyMergeExamples.shared_union_eq"
+        },
+        {
+          "symbol": "shared_union_false",
+          "lean": "RDF11.FamilyMergeExamples.shared_union_false"
+        },
+        {
+          "symbol": "shared_merge_true",
+          "lean": "RDF11.FamilyMergeExamples.shared_merge_true"
+        },
+        {
+          "symbol": "shared_merge_not_entails_union",
+          "lean": "RDF11.FamilyMergeExamples.shared_merge_not_entails_union"
+        },
+        {
+          "symbol": "graphSet",
+          "lean": "RDF11.FamilyMergeExamples.graphSet"
+        },
+        {
+          "symbol": "set_merge_true",
+          "lean": "RDF11.FamilyMergeExamples.set_merge_true"
+        },
+        {
+          "symbol": "set_union_eq",
+          "lean": "RDF11.FamilyMergeExamples.set_union_eq"
+        },
+        {
+          "symbol": "set_union_false",
+          "lean": "RDF11.FamilyMergeExamples.set_union_false"
+        },
+        {
+          "symbol": "independent",
+          "lean": "RDF11.FamilyMergeExamples.independent"
+        },
+        {
+          "symbol": "independent_apart",
+          "lean": "RDF11.FamilyMergeExamples.independent_apart"
+        },
+        {
+          "symbol": "independent_common_witness",
+          "lean": "RDF11.FamilyMergeExamples.independent_common_witness"
+        },
+        {
+          "symbol": "infinite_union_true",
+          "lean": "RDF11.FamilyMergeExamples.infinite_union_true"
+        },
+        {
+          "symbol": "infinite_merge_true",
+          "lean": "RDF11.FamilyMergeExamples.infinite_merge_true"
+        },
+        {
+          "symbol": "infinite_isomorphism",
+          "lean": "RDF11.FamilyMergeExamples.infinite_isomorphism"
         }
       ],
-      "limitations": "Semantic consequence only. The stated syntactic instance relation and no-shared-nodes equality remain open.",
+      "limitations": "Canonical fresh copies and original blanks have different types, so equality in the unshared case is represented by the specification’s isomorphism convention. The existing IsInstance/GraphIsomorphism relations are used after explicit embeddings into a common sum; no stronger notion of instance is invented. Both generalized and ordinary graphs are supported. Source identity provenance and executable allocation/refinement remain separate.",
       "extraction_review": "pending_expert_review",
       "formalization_review": "pending_expert_review",
       "implementation_refinement": "not_connected_to_published_package"
@@ -5544,6 +5780,49 @@
       "extraction_review": "pending_expert_review",
       "formalization_review": "pending_expert_review",
       "implementation_refinement": "not_connected_to_published_package"
+    },
+    {
+      "claim_id": "MT11-GRAPH-SET-ENTAILMENT",
+      "relation": "definition_and_theorem",
+      "symbol_linked_english": "Entailment remains a relation between two graphs. merge_entails_iff rewrites entailment from a merged family into truth in every interpretation satisfying each input separately; union_entails_iff instead requires a common assignment. merge_entailsUnder_iff retains an explicit fixed model condition, and entails_merge_iff describes a merged conclusion.",
+      "bindings": [
+        {
+          "symbol": "unionSet",
+          "lean": "RDF11.GraphFamily.unionSet"
+        },
+        {
+          "symbol": "mergeSet",
+          "lean": "RDF11.GraphFamily.mergeSet"
+        },
+        {
+          "symbol": "merge_entails_iff",
+          "lean": "RDF11.GraphFamily.merge_entails_iff"
+        },
+        {
+          "symbol": "union_entails_iff",
+          "lean": "RDF11.GraphFamily.union_entails_iff"
+        },
+        {
+          "symbol": "merge_entailsUnder_iff",
+          "lean": "RDF11.GraphFamily.merge_entailsUnder_iff"
+        },
+        {
+          "symbol": "entails_merge_iff",
+          "lean": "RDF11.GraphFamily.entails_merge_iff"
+        },
+        {
+          "symbol": "satisfies_unionSet",
+          "lean": "RDF11.GraphFamily.satisfies_unionSet"
+        },
+        {
+          "symbol": "satisfies_mergeSet",
+          "lean": "RDF11.GraphFamily.satisfies_mergeSet"
+        }
+      ],
+      "limitations": "The source passage is an informative technical note. These correspondences expose the caller’s choice of union or merge; they do not introduce a separately mandated family-entailment regime. Every component is interpreted in the same model. EntailsUnder concerns fixed model conditions and does not establish additional syntax admission, dataset policies or OWL/SPARQL conformance. The final historical RDF 2004 correspondence sentence has its own unmapped claim record; this mapping does not prove that bridge.",
+      "extraction_review": "pending_expert_review",
+      "formalization_review": "pending_expert_review",
+      "implementation_refinement": "not_connected_to_published_package"
     }
   ],
   "passage_selectors": [
@@ -7391,6 +7670,17 @@
         "MT11-ORDINARY-RULE-CHECK-PROCEDURE",
         "MT11-FINITE-INSTANCE-DECISION"
       ]
+    },
+    {
+      "id": "graph-set-combination-note",
+      "source": "mt",
+      "tag": "p",
+      "text": "We do not define a notion of entailment between sets of graphs.",
+      "within_section": "simpleentailment",
+      "claims": [
+        "MT11-GRAPH-SET-ENTAILMENT",
+        "MT11-MERGE-RDF2004-ENTAILMENT-CORRESPONDENCE"
+      ]
     }
   ],
   "context_resolutions": [
@@ -7671,6 +7961,15 @@
       "antecedent_passage": "closure-definition",
       "resolved_meaning": "The premise graph S whose closure towards E is being constructed.",
       "inference": "The added RDF/RDFS vocabularies contain infinitely many indexed properties. Do not silently replace them by the finite vocabulary selected for this run.",
+      "review": "pending"
+    },
+    {
+      "claim_id": "MT11-UNION-MERGE-RELATION",
+      "passage": "union-instance",
+      "source_phrase": "the merge",
+      "antecedent_passage": "merge",
+      "resolved_meaning": "The merge of the same set of input graphs whose union is being compared; separate fresh copies retain the original IRI and literal identities.",
+      "inference": "The projection identifies copies of each original blank. With disjoint occurring supports its inverse exists on exactly the used blanks; canonical representatives agree up to the specification’s isomorphism convention.",
       "review": "pending"
     }
   ]

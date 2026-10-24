@@ -73,3 +73,6 @@ import RDF11.InstanceSearch
 import RDF11.InstanceDecision
 import RDF11.ClosureInstanceCheck
 import RDF11.InstanceCheckScope
+import RDF11.FamilyMerge
+import RDF11.MergeInstances
+import RDF11.FamilyMergeExamples

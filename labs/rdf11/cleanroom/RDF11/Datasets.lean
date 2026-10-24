@@ -75,7 +75,7 @@ theorem Graph.generalize_injective {G H : Graph Iri Literal B}
     exact Triple.generalize_injective hst ▸ hs
   exact Set.ext fun t => ⟨inclusion h t, inclusion h.symm t⟩
 
-theorem Graph.mapBlank_comp (f g : B → B) (G : Graph Iri Literal B) :
+theorem Graph.mapBlank_comp (f : B₁ → B₂) (g : B₂ → B₃) (G : Graph Iri Literal B₁) :
     (G.mapBlank f).mapBlank g = G.mapBlank (g ∘ f) := by
   apply Graph.generalize_injective
   simp only [generalize_mapBlank, GeneralizedGraph.mapBlank_comp]

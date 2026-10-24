@@ -1226,7 +1226,8 @@
         "implementation_mapping": "unassessed",
         "formal_proof": "unassessed",
         "test_mapping": "unassessed"
-      }
+      },
+      "formalization_note": "Arbitrary set-sized families and literal sets of graphs are distinguished. The headline merging lemma is a local derived review name, not a printed Appendix C theorem. Canonical tags separate syntax, not resource denotations."
     },
     {
       "id": "MT11-UNION-MERGE-RELATION",
@@ -1721,7 +1722,7 @@
       "anchor": "simpleentailment",
       "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#simpleentailment",
       "category": "general_requirement",
-      "source_status": "normative",
+      "source_status": "informative",
       "assertion_basis": "explicit",
       "paraphrase": "The document does not independently define entailment from a set of graphs; first form a union or merge, choosing whether shared blank-node identities must be retained.",
       "official_rule_code": null,
@@ -1735,7 +1736,8 @@
         "implementation_mapping": "unassessed",
         "formal_proof": "unassessed",
         "test_mapping": "unassessed"
-      }
+      },
+      "formalization_note": "This paragraph is explicitly a technical note within section 5.2. The twenty-fifth increment formalizes both combination choices and their model-theoretic correspondences; no universal family-entailment policy is imposed."
     },
     {
       "id": "MT11-VALID-TRANSFORMATION",
@@ -5709,7 +5711,32 @@
         "test_mapping": "unassessed"
       },
       "formalization_note": "Derived composition of exact closure generation, exact finite instance search and existing rule/model soundness. The current selection obstruction is linked to an executable false result with full entailment and a consistency witness under explicit model-constructor hypotheses. The printed procedure is not repaired or declared an official erratum."
+    },
+    {
+      "id": "MT11-MERGE-RDF2004-ENTAILMENT-CORRESPONDENCE",
+      "section": "5.2",
+      "anchor": "simpleentailment",
+      "source_url": "https://www.w3.org/TR/2014/REC-rdf11-mt-20140225/#simpleentailment",
+      "category": "mathematical_consequence",
+      "source_status": "informative",
+      "assertion_basis": "explicit",
+      "paraphrase": "RDF 1.1 simple entailment from the merge of a set of graphs reproduces the graph-set entailment definition used in the 2004 RDF 1.0 specification.",
+      "official_rule_code": null,
+      "dependencies": [
+        "MT11-MERGE",
+        "MT11-GRAPH-SET-ENTAILMENT",
+        "MT11-SIMPLE-ENTAILMENT"
+      ],
+      "imports": [
+        "https://www.w3.org/TR/2004/REC-rdf-mt-20040210/"
+      ],
+      "assessment": {
+        "implementation_mapping": "unassessed",
+        "formal_proof": "unassessed",
+        "test_mapping": "unassessed"
+      },
+      "formalization_note": "The final sentence of the section 5.2 technical note makes a distinct historical correspondence assertion. It remains unmapped until the dated 2004 set-satisfaction, entailment, blank-scope, syntax and interpretation definitions are pinned and related explicitly. The proved RDF 1.1 merge correspondence supplies only one side. No full RDF/RDFS/datatype, dataset or shared-blank-joint-meaning equivalence is claimed."
     }
   ],
-  "record_count": 225
+  "record_count": 226
 }
