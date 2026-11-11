@@ -9,7 +9,7 @@ try{
   await page.goto((process.env.LINKED_SITE_URL||'http://127.0.0.1:8081')+'/labs/linked-assurance/#learn');
   if(!await page.evaluate(()=>crossOriginIsolated)){
     await page.fill('#tutorialEditor','-- keep my edit\n#eval 42');
-    await page.click('#setupLean');await page.waitForFunction(()=>crossOriginIsolated);
+    await page.locator('#compilerSetupTools').evaluate(x=>x.open=true);await page.click('#setupLean');await page.waitForFunction(()=>crossOriginIsolated);
     assert.match(await page.locator('#tutorialEditor').inputValue(),/keep my edit/);
     await page.click('#tutorialReset');
   }
@@ -21,13 +21,13 @@ try{
   await page.screenshot({path:'../../labs/linked-assurance/artifacts/tutorial-desktop.png',fullPage:true});
   console.log('Downloading and saving real Lean compiler assets…');
   await page.click('#downloadLean');
-  await page.waitForFunction(()=>document.querySelector('#downloadLean').textContent==='Lean machinery ready');
+  await page.waitForFunction(()=>document.querySelector('#downloadLean').textContent==='Compiler files ready');
   await page.reload();
   await page.waitForFunction(()=>document.querySelector('#downloadLean').textContent==='Load saved Lean 4 machinery');
   let assetRequests=0;
   await page.route('**/artifacts/toolchain-4.33.1/**',route=>{assetRequests++;return route.abort();});
   await page.click('#downloadLean');
-  await page.waitForFunction(()=>document.querySelector('#downloadLean').textContent==='Lean machinery ready');
+  await page.waitForFunction(()=>document.querySelector('#downloadLean').textContent==='Compiler files ready');
   assert.equal(assetRequests,0,'Cached compiler must not request assets again');
   const checks=[];
   for(const lesson of lessons){

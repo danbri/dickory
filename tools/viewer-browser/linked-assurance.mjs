@@ -32,6 +32,7 @@ try{
  const page=await context.newPage(),errors=[];page.on('pageerror',e=>errors.push(e.message));
  await page.goto(base+'/labs/linked-assurance/');
  await page.waitForFunction(()=>document.querySelector('#leanEditor').value.includes('def policy'));
+ await page.locator('.advancedTools,.operations').evaluateAll(xs=>xs.forEach(x=>x.open=true));
  assert.match(await page.locator('#compilerState').textContent(),/First use/);
  await page.click('#compile');await page.waitForFunction(()=>!document.querySelector('#compile').disabled);
  assert.match(await page.locator('#compilerReport').textContent(),/cross-origin isolation/);
@@ -46,10 +47,10 @@ try{
  await page.selectOption('#scope','default');r=await evaluate();assert.equal(r.dataset.selectedQuads,0);
  await page.selectOption('#scope','union');
  for(const id of ['offer','event','artifact','alert']){
-  await page.click(`[data-id="${id}"]`);r=await evaluate();assert.equal(r.execution,'completed');assert.equal(r.claims[0].answer,true);
+  await page.selectOption('#scenarioChoice',id);r=await evaluate();assert.equal(r.execution,'completed');assert.equal(r.claims[0].answer,true);
  }
  await page.selectOption('#variant','invalid');r=await evaluate();assert.equal(r.execution,'parserError');assert.deepEqual(r.claims,[]);
- await page.click('[data-id="vocabulary"]');await page.selectOption('#regime','OWL-DL');r=await evaluate();assert.equal(r.execution,'unsupported');
+ await page.selectOption('#scenarioChoice','vocabulary');await page.selectOption('#regime','OWL-DL');r=await evaluate();assert.equal(r.execution,'unsupported');
  await page.selectOption('#regime','RDFS');await page.fill('#budget','1');r=await evaluate();assert.equal(r.execution,'timeout');assert.deepEqual(r.claims,[]);
  assert.equal(await page.locator('#knowledge').textContent(),'Not established');
  await page.fill('#budget','60000');r=await evaluate();

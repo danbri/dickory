@@ -1,7 +1,7 @@
 import {scenarios,variants} from './scenarios.js';
 import {runtime,sha256,scopeFrom,queriesFrom,startRdf,fixtureSource} from './evidence.js';
 import {verifyCredential} from './credential.js';
-import {compilerEnvironment,compilePolicy,executePolicy} from './lean-host.js';
+import {compilerEnvironment,compilePolicy,executePolicy,proofDiagnostic} from './lean-host.js';
 import {mountTutorial} from './tutorial.js';
 import {mountCompilerBanner,enableIsolation} from './compiler-banner.js';
 import {pipelineRecord} from './pipeline-record.js';
@@ -21,8 +21,13 @@ function pageTab(){
 $('learnTab').onclick=()=>{location.hash=lastLearnHash;};$('workbenchTab').onclick=()=>{location.hash='workbench';};
 for(const id of ['learnTab','workbenchTab'])$(id).onkeydown=e=>{if(['ArrowLeft','ArrowRight','Home','End'].includes(e.key)){e.preventDefault();const other=e.key==='Home'?'workbenchTab':e.key==='End'?'learnTab':id==='learnTab'?'workbenchTab':'learnTab';$(other).click();$(other).focus();}};
 window.addEventListener('hashchange',pageTab);pageTab();
-let defaultPolicy,credential;
+let defaultPolicy,credential,workflowActive=false,compileProblem=null;
+function step(name,failed=false){
+  const names=['setup','proof','evidence','result'],current=names.indexOf(name);
+  document.querySelectorAll('#runSteps li').forEach((li,i)=>{li.dataset.state=i<current?'done':i===current?(failed?'failed':'active'):'pending';li.setAttribute('aria-current',String(i===current));});
+}
 function invalidate(rdf=true) {
+  if(!workflowActive)step(null);
   state.epoch++;state.job?.cancel();state.job=null;state.record=null;
   show('credentialState','Not checked for current inputs.');
   if(rdf){state.evaluation=null;show('knowledge','Not evaluated');show('execution','Not run');show('executionNote','RDF work is terminated at its deadline.');show('rdfReport','');}
@@ -36,9 +41,12 @@ function activate(s) {
   $('variant').replaceChildren(...variants(s).map(v=>new Option(v.name,v.id)));
   $('attacker').value=s.id==='alert'?'interrupt':'none';
   show('scenarioNote',s.note);$('rdfEditor').value=state.inputs[state.editor];
-  document.querySelectorAll('#catalogue button').forEach(b=>b.setAttribute('aria-current',String(b.dataset.id===s.id)));
+  $('scenarioChoice').value=s.id;
 }
-function progress(text){show('compilerState',text);}
+function progress(text){
+  show('compilerState',text);
+  if(workflowActive&&text.startsWith('Compiling Policy'))step('proof');
+}
 function inputSnapshot(){return {...state.inputs,scope:scopeFrom($('scope').value),regime:$('regime').value,queries:queriesFrom(state.inputs.queries)};}
 async function evaluate() {
   invalidate();const epoch=state.epoch,request=inputSnapshot(),started=performance.now();
@@ -57,14 +65,17 @@ async function evaluate() {
 }
 async function compile() {
   const source=$('leanEditor').value;
+  compileProblem=null;
   $('compile').disabled=true;
   try {
     const result=await compilePolicy(source,progress);
     show('compilerReport',json(result));
-    if(source!==$('leanEditor').value){progress('Source changed during compilation; compile the current text.');return;}
+    if(source!==$('leanEditor').value){compileProblem={title:'Source changed during checking.',detail:'Press the main button again to check the current text.'};progress(compileProblem.title);return;}
     state.compiled=result.contractChecked?result:null;
-    progress(result.contractChecked?'Policy contract checked; compiled module ready.':'Contract rejected. Inspect compiler diagnostics.');
-  }catch(e){state.compiled=null;progress(String(e.message||e));show('compilerReport',String(e.stack||e));}
+    if(!result.contractChecked)compileProblem={stage:'proof',title:'Lean did not accept this proof.',detail:proofDiagnostic(result)+' This does not by itself establish that the claim is false.'};
+    progress(result.contractChecked?'Proof checked. Policy ready to run.':compileProblem.title);
+    return result;
+  }catch(e){state.compiled=null;compileProblem={stage:'setup',title:/timeout/i.test(e.message)?'Compiler timed out.':'Compiler could not complete setup or checking.',detail:String(e.message||e).split('\n').slice(0,3).join('\n')};progress(compileProblem.title);show('compilerReport',String(e.stack||e));}
   finally{$('compile').disabled=false;}
 }
 async function prepareFixture() {
@@ -111,6 +122,7 @@ async function runPolicy() {
   const report=text=>{phase=text;if(epoch===state.epoch){progress(text);show('policyRunSummary',text);}};
   const timer=setInterval(()=>{if(epoch===state.epoch)show('policyRunSummary',phase+' · '+Math.round((performance.now()-started)/1000)+' s');},1000);
   try {
+    if(workflowActive)step('result');
     const execution=await executePolicy(source,fixture,report);
     if(epoch!==state.epoch)return;
     show('decision',execution.executed?execution.decision:'compilerFault');
@@ -133,19 +145,51 @@ async function runPolicy() {
     show('manifest',json(state.record));show('status','Evidence record ready.');
   }finally{clearInterval(timer);$('runPolicy').disabled=false;}
 }
+async function checkAndRun(){
+  if(workflowActive)return;
+  workflowActive=true;const button=$('checkPolicy'),started=performance.now();button.disabled=true;
+  state.record=null;show('decision','Not run');show('attackOutcome','Unknown');show('manifest','');
+  $('compile').disabled=true;$('runPolicy').disabled=true;
+  const timer=setInterval(()=>{button.textContent='Working · '+Math.round((performance.now()-started)/1000)+' s';},1000);
+  try{
+    step('setup');show('policyRunSummary','Preparing Lean. The first run can take a few minutes.');
+    if(!compilerEnvironment().isolated){
+      sessionStorage.setItem('linked-assurance-resume-run','1');
+      progress('Enabling the browser runtime. This reloads once, preserves your edits, then continues.');
+      await enableIsolation();return;
+    }
+    if(!state.compiled||state.compiled.sourceSha256!==await sha256($('leanEditor').value)){
+      await compile();
+      if(!state.compiled){
+        const problem=compileProblem||{title:'No checked policy is available.',detail:'Try checking the current source again.'};
+        step(problem.stage||'proof',true);show('policyRunSummary',problem.title);show('compilerState',problem.detail);return;
+      }
+    }
+    step('evidence');show('policyRunSummary','Proof checked. Evaluating the current inputs…');
+    await runPolicy();
+    if(state.record?.policyExecution.executed)document.querySelectorAll('#runSteps li').forEach(li=>li.dataset.state='done');
+  }catch(e){
+    show('policyRunSummary',/timeout/i.test(e.message)?'The run timed out. No new decision is available.':'The check could not finish. No new decision is available.');
+    progress(String(e.message||e).split('\n').slice(0,3).join('\n'));
+  }finally{
+    clearInterval(timer);workflowActive=false;button.disabled=false;button.textContent='Check policy and show result';
+    $('compile').disabled=false;$('runPolicy').disabled=false;
+  }
+}
 function guard(fn){return async()=>{try{await fn();}catch(e){show('status',String(e.message||e));$('cancel').disabled=true;}};}
 async function init() {
   const responses=await Promise.all([fetch('./lean/Policy.lean'),fetch('./demo-credential.json')]);
   if(responses.some(r=>!r.ok))throw Error('Required lab sources could not be loaded.');
   defaultPolicy=await responses[0].text();credential=await responses[1].json();
   $('leanEditor').value=defaultPolicy;$('credentialPayload').value=credential.payload;$('signature').value=credential.signature;
-  $('catalogue').replaceChildren(...scenarios.map(s=>{const b=document.createElement('button');b.textContent=s.title;b.dataset.id=s.id;b.onclick=()=>activate(s);return b;}));
+  $('scenarioChoice').replaceChildren(...scenarios.map(s=>new Option(s.title,s.id)));
+  $('scenarioChoice').onchange=()=>activate(scenarios.find(s=>s.id===$('scenarioChoice').value));
   document.querySelectorAll('[data-editor]').forEach(b=>b.onclick=()=>{
     state.inputs[state.editor]=$('rdfEditor').value;state.editor=b.dataset.editor;$('rdfEditor').value=state.inputs[state.editor];
     document.querySelectorAll('[data-editor]').forEach(t=>t.setAttribute('aria-selected',String(t===b)));
   });
   $('rdfEditor').oninput=()=>{state.inputs[state.editor]=$('rdfEditor').value;invalidate();};
-  $('leanEditor').oninput=()=>{state.compiled=null;invalidate(false);progress('Source changed. Compile the current policy.');};
+  $('leanEditor').oninput=()=>{state.compiled=null;invalidate(false);progress('Source changed. Use the main button to check this version and show its result.');};
   $('variant').onchange=()=>{state.inputs.dataset=variants(state.scenario).find(v=>v.id===$('variant').value).dataset;invalidate();if(state.editor==='dataset')$('rdfEditor').value=state.inputs.dataset;};
   $('restore').onclick=()=>activate(state.scenario);
   $('resetPolicy').onclick=()=>{$('leanEditor').value=defaultPolicy;state.compiled=null;invalidate(false);};
@@ -154,6 +198,7 @@ async function init() {
   $('prepare').onclick=guard(prepareOnly);$('evaluate').onclick=guard(evaluate);$('compile').onclick=guard(compile);$('runPolicy').onclick=guard(async()=>{
     try{await runPolicy();}catch(e){show('policyRunSummary','Policy did not run: '+e.message);progress('Policy run stopped. See the result message above.');throw e;}
   });
+  $('checkPolicy').onclick=checkAndRun;
   $('cancel').onclick=()=>state.job?.cancel();
   $('download').onclick=guard(async()=>{
     if(!state.record)throw Error('Evaluate RDF and prepare a fixture, or run the compiled policy first.');
@@ -161,7 +206,7 @@ async function init() {
     const a=document.createElement('a');a.href=url;a.download='linked-assurance-evidence.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
   });
   $('isolate').onclick=guard(enableIsolation);
-  const env=compilerEnvironment();progress(env.isolated?'Ready for Lean 4.33.1. Load the compiler using the banner above, or compile to load it now.':'First use: enable running Lean in the banner above. This reloads the page once.');
+  const env=compilerEnvironment();progress(env.isolated?'Ready. The main button checks the policy and shows its result.':'First use: the main button sets up Lean automatically, reloads once, and continues.');
   $('isolate').hidden=env.isolated;activate(scenarios[0]);
   // Retain edits across the one-time isolation reload; do not persist credentials
   // beyond this tab's session or silently reuse a previous execution result.
@@ -173,5 +218,9 @@ async function init() {
     try{sessionStorage.setItem('linked-assurance-reload',json({scenario:state.scenario.id,inputs:state.inputs,
       controls:Object.fromEntries(['leanEditor','variant','scope','regime','budget','clock','transport','permission','attacker','credentialPayload','signature'].map(id=>[id,$(id).value]))}));}catch{}
   });
+  if(sessionStorage.getItem('linked-assurance-resume-run')){
+    sessionStorage.removeItem('linked-assurance-resume-run');
+    if(env.isolated)checkAndRun();else show('policyRunSummary','This browser did not enable the runtime. Open Advanced policy tools to retry isolation setup.');
+  }
 }
 init().catch(e=>show('status',String(e.message||e)));

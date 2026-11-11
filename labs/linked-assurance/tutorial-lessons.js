@@ -187,4 +187,57 @@ theorem accept_contract (fresh permitted : Bool)
     tryIt:'Remove checker_sound from the parameters and try to finish the proof. What information is now missing?',
     takeaway:'An XML transform, a signature check, a graph query and a policy can all be stages. Each needs its own precise contract. In the workbench, Factoidal supplies RDF machinery; the remaining question is how its evidence reaches the Lean policy faithfully.',
   },
+  {
+    id:'weaker', title:'An easier promise', topic:'Accepted, but insufficient',
+    lead:'The requirement is: an accepted request must be fresh AND permitted. Someone supplies this implementation and a proof. Lean accepts the file.',
+    question:'Did the proof establish the requirement we actually asked for?',
+    answer:'No. The theorem concludes fresh = true OR permitted = true. That is a weaker claim. It accurately describes this implementation, which uses ||. The printed example accepts a fresh request without permission. Lean checked the submitted statement correctly; the required guarantee was lost before proof checking began.',
+    source:`def accept (fresh permitted : Bool) : Bool := fresh || permitted
+
+theorem weak_contract (fresh permitted : Bool)
+    (h : accept fresh permitted = true) :
+    fresh = true ∨ permitted = true := by
+  simpa [accept] using h
+
+#eval accept true false
+example : accept true false = true := by rfl
+`,
+    tryIt:'Change ∨ in the theorem to ∧, keeping the implementation fixed. The proof fails, and the example explains why. Then change || to &&: the stronger contract can be proved, but the old counterexample theorem must now fail.',
+    takeaway:'Freeze the intended statement while searching for its proof. A green check for an easier statement is not progress on the original requirement. The counterexample here is executable and also proved by reduction.',
+  },
+  {
+    id:'borrowed', title:'Borrow the answer', topic:'Assuming the conclusion',
+    lead:'Let us keep the stronger conclusion. This time the proof author quietly asks for more input.',
+    question:'Which hypothesis does the proof use? What work is left for it to do?',
+    answer:'It uses already_safe, which is exactly the desired conclusion. The theorem is valid, but it assumes the property we wanted to derive from the program’s result. The parameter h_run is not needed. Notice that #print axioms can report no global axiom dependencies while the theorem still requires this decisive local assumption.',
+    source:`def accept (fresh permitted : Bool) : Bool := fresh || permitted
+
+theorem borrowed_contract (fresh permitted : Bool)
+    (h_run : accept fresh permitted = true)
+    (already_safe : fresh = true ∧ permitted = true) :
+    fresh = true ∧ permitted = true := by
+  exact already_safe
+
+#check borrowed_contract
+#print axioms borrowed_contract
+`,
+    tryIt:'Remove already_safe. Can h_run alone establish the same conclusion? Use accept true false from the previous lesson to answer that question.',
+    takeaway:'Review the whole theorem type, including every premise. During a proof-completion task, adding a premise changes the task. Axiom auditing is useful, but does not replace reviewing hypotheses.',
+  },
+  {
+    id:'vacuous', title:'Nobody can enter', topic:'Impossible premises',
+    lead:'This theorem has a startling conclusion. Lean will accept its proof. Read the inputs before deciding what that means.',
+    question:'Can any Boolean satisfy both hypotheses?',
+    answer:'No. The same Boolean cannot be both true and false. cases examines the two possible inputs; contradiction closes each impossible branch. Lean has proved a conditional statement whose premises can never hold. It has not proved 0 = 1 without those premises.',
+    source:`theorem impossible_request (permitted : Bool)
+    (h_yes : permitted = true)
+    (h_no : permitted = false) : (0 : Nat) = 1 := by
+  cases permitted <;> contradiction
+
+#check impossible_request
+#print axioms impossible_request
+`,
+    tryIt:'Remove h_no and run again. Now permitted = true is a possible input, and the false conclusion is no longer protected by an impossible premise.',
+    takeaway:'A guarantee about an empty set of admissible inputs says nothing about real requests. Ask for a concrete input satisfying the preconditions. One example cannot establish that a specification is adequate, but it exposes this particular kind of vacuity.',
+  },
 ];

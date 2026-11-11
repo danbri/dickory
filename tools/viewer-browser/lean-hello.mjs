@@ -8,7 +8,7 @@ try{
   page.on('console',m=>{if(m.type()==='error')console.log('Browser:',m.text().slice(0,300));});
   await page.goto((process.env.LINKED_SITE_URL||'http://127.0.0.1:8081')+'/labs/linked-assurance/');
   if(!await page.evaluate(()=>crossOriginIsolated)){
-    await page.click('#isolate');await page.waitForFunction(()=>crossOriginIsolated);
+    await page.locator('.advancedTools').evaluateAll(xs=>xs.forEach(x=>x.open=true));await page.click('#isolate');await page.waitForFunction(()=>crossOriginIsolated);
   }
   await page.exposeFunction('helloProgress',s=>console.log('Checking '+s));
   const result=await page.evaluate(()=>new Promise((resolve,reject)=>{

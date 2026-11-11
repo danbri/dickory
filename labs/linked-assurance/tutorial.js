@@ -2,7 +2,7 @@ import {lessons} from './tutorial-lessons.js';
 import {checkLean,hasProofPlaceholder} from './lean-host.js';
 
 export function mountTutorial(target){
-  target.innerHTML=`<div class="tutorialIntro"><p class="eyebrow">A LITTLE LEAN</p><h1>One small proof<br>at a time.</h1><p>You know a little functional programming. Start there. Predict an answer, ask Lean, change something. Twelve short conversations lead from values to proofs, and from proofs to promises about programs.</p></div>
+  target.innerHTML=`<div class="tutorialIntro"><p class="eyebrow">A LITTLE LEAN</p><h1>One small proof<br>at a time.</h1><p>You know a little functional programming. Start there. Predict an answer, ask Lean, change something. ${lessons.length} short conversations lead from values to proofs, then to promises about programs and ways those promises can mislead.</p></div>
   <div class="tutorialLayout"><nav id="lessonNav" aria-label="Lean lessons"></nav>
   <article class="lesson"><p id="lessonNumber" class="eyebrow"></p><h2 id="lessonTitle"></h2><p id="lessonLead"></p>
     <div class="lessonQuestion"><b>Pause and predict</b><p id="lessonQuestion"></p>

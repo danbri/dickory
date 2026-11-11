@@ -18,6 +18,12 @@ export function accepted(result) {
 export function hasProofPlaceholder(result){
   return messages(result).some(m=>m.kind==='hasSorry'||/declaration uses [`']sorry[`']/.test(m.data||m.message||''));
 }
+export function proofDiagnostic(result){
+  if(hasProofPlaceholder(result))return 'The proof contains sorry, which is a placeholder. Replace it with a completed proof.';
+  const error=messages(result).find(m=>m.severity==='error');
+  if(error)return (error.pos?'Line '+error.pos.line+': ':'')+(error.data||error.message||'Lean reported an error.').split('\n').slice(0,3).join('\n');
+  return 'The required contract or its axiom check did not pass. Full diagnostics are available in Advanced results.';
+}
 export function auditContract(result,name='LinkedAssurance.policy_contract') {
   if(!accepted(result))return false;
   const text=diagnosticText(result);

@@ -5,13 +5,16 @@ An experimental Factoidal and Lean policy workbench in its own Dickory lab.
 [Contracted stages](PIPELINES.md) describes the implemented pipeline and its boundaries.
 The existing `labs/rdf11/` formalization is independent and unchanged.
 
-The **Learn Lean** tab is a twelve-lesson introduction for readers who know a
+The **Learn Lean** tab is a fifteen-lesson introduction for readers who know a
 little functional programming. Each lesson offers a question, a revealable
 explanation, an editable file and a small change to try. It leads through values,
 propositions, tactics, cases, induction and composable contracts before bringing
 in external evidence. Lessons use only Lean's core library; RDF enters at the end.
 Draft edits are saved locally. This is a compile-and-inspect playground, not a
-live Lean language-server goal editor or an exercise grader.
+live Lean language-server goal editor or an exercise grader. The final three
+lessons contain accepted proofs with weakened conclusions, assumed conclusions,
+and impossible premises: examples of why checking a proof does not judge the
+adequacy of its specification.
 
 The top banner downloads and verifies the compiler once, then stores its three
 assets in the browser Cache API under content hashes. Later tabs reuse those
@@ -35,6 +38,18 @@ against the fixed `Workbench.permitRequirements` definition. Removing a required
 gate breaks the contract. The adapter retains compiled `Policy.olean` artifacts
 for reuse while small runtime fixtures are elaborated separately. RDF vocabulary,
 queries, scopes and operational inputs do not change that compiled module.
+
+The main **Check policy and show result** button performs setup, proof checking,
+input evaluation and execution in order. The separate controls are under
+Advanced tools. A failed proof attempt is distinguished from a setup failure,
+timeout, or returned policy decision; it is not treated as a refutation.
+
+Recompilation delay currently includes worker and import startup. The pinned
+compiler's persistent `lean_wasm_compile` API supports warm source checking but
+does not emit a module artifact. The policy host still uses the CLI path to
+export the matching Policy module, so edits restart that part of the runtime.
+The tutorial's warm checks do not incur this module-export step. These delays
+are not evidence of a difficult search for a new mathematical proof.
 
 Factoidal 0.35.1 parses one TriG document. The user selects its default graph,
 one named graph, or an explicitly constructed union of `urn:lab:data` and
