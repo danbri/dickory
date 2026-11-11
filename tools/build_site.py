@@ -19,6 +19,12 @@ LINKED_ASSURANCE = Path("labs/linked-assurance")
 FILES += [LINKED_ASSURANCE / name for name in (
     "index.html", "style.css", "app.js", "scenarios.js",
     "lean-host.js", "rdf-worker.js", "coi-sw.js",
+    "evidence.js", "credential.js", "demo-credential.json", "compiler-assets.json",
+    "factoidal-build.json",
+    "lean/Workbench.lean", "lean/Policy.lean",
+    "vendor/lean4.js", "vendor/fflate.js", "vendor/fflate-LICENSE.txt", "vendor/lean4-README.md",
+    "README.md", "DESIGN.md", "THIRD_PARTY.md",
+    "artifacts/lean-checks.json", "artifacts/runtime-checks.json",
 )]
 FILES += [ARTIFACTS / name for name in (
     "source-review.html", "verification.json", "negative-checks.json", "declarations.json",
@@ -40,6 +46,13 @@ class Links(HTMLParser):
 
 
 def main():
+    linked_runtime = json.loads((ROOT / LINKED_ASSURANCE / "artifacts/runtime-checks.json").read_text())
+    linked_lean = json.loads((ROOT / LINKED_ASSURANCE / "artifacts/lean-checks.json").read_text())
+    if linked_runtime["status"] != "pass" or linked_lean["status"] != "pass":
+        raise SystemExit("Refusing to publish failing Linked Assurance evidence")
+    for name, expected in {**linked_runtime["sha256"], **linked_lean["sha256"]}.items():
+        if hashlib.sha256((ROOT / LINKED_ASSURANCE / name).read_bytes()).hexdigest() != expected:
+            raise SystemExit(f"Stale Linked Assurance evidence: {name}")
     evidence = json.loads((ROOT / ARTIFACTS / "verification.json").read_text())
     negative = json.loads((ROOT / ARTIFACTS / "negative-checks.json").read_text())
     execution = json.loads((ROOT / ARTIFACTS / "closure-execution.json").read_text())
