@@ -1,4 +1,7 @@
-import Init
+module
+public import Init
+
+@[expose] public section
 
 /-!
 Application evidence boundary, NOT a second RDF semantics.

@@ -2,6 +2,10 @@ import {chromium} from 'playwright';
 import fs from 'node:fs/promises';
 if(process.argv.includes('--hello')) {
  await import('./lean-hello.mjs');
+} else if(process.argv.includes('--modules')) {
+ await import('./lean-modules.mjs');
+} else if(process.argv.includes('--policy')) {
+ await import('./lean-policy.mjs');
 } else {
 const browser=await chromium.launch({headless:true});
 try{

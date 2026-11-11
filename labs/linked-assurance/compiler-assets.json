@@ -1,17 +1,17 @@
 {
   "lean.js": {
-    "url": "https://lean4-wasm.timqian.com/v0.0.0/lean.js",
-    "bytes": 89496071,
-    "sha256": "0baaafd5d088d288ec44ff57d5ced4146e95ff6ba975c19787fcfcd26f89f87d"
+    "url": "./artifacts/toolchain-4.33.1/bin/lean.js",
+    "bytes": 48467342,
+    "sha256": "79f6bb9f2bd66e1e13c2d3ebfbf73d8e755d7af0e318b15367b1e50c0923ef37"
   },
   "lean.wasm": {
-    "url": "https://lean4-wasm.timqian.com/v0.0.0/lean.wasm",
-    "bytes": 137434848,
-    "sha256": "7ba15bd90d4ab6d8344a9662d6fd190f8326c9b6a79bbd935ef26c4063dbba02"
+    "url": "./artifacts/toolchain-4.33.1/bin/lean.wasm",
+    "bytes": 103725428,
+    "sha256": "e24b3c712f59e983d7c805d5cc3faddd615398e820d27950834c9a3aa9e74151"
   },
   "lean-lib.tar.gz": {
-    "url": "https://lean4-wasm.timqian.com/v0.0.0/lean-lib.tar.gz",
-    "bytes": 98274498,
-    "sha256": "b8e0434fe207e25b2c9d3af280bfbaf8a6db0451d381c52196553262ede18453"
+    "url": "./artifacts/toolchain-4.33.1/lean-lib.tar.gz",
+    "bytes": 31635206,
+    "sha256": "e5a711cf243ed5cc6b376c0fcd001fcad61496bc35b5f9b53ddd3ea40d44b300"
   }
 }

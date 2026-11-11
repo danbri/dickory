@@ -7,8 +7,9 @@ from pathlib import Path
 p = argparse.ArgumentParser()
 p.add_argument('--port', type=int, default=8012)
 p.add_argument('--isolate', action='store_true')
+p.add_argument('--root', type=Path, default=Path(__file__).resolve().parents[3])
 a = p.parse_args()
-root = Path(__file__).resolve().parents[3]
+root = a.root.resolve()
 class Handler(SimpleHTTPRequestHandler):
     def end_headers(self):
         if a.isolate:

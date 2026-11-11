@@ -83,7 +83,9 @@ export function fixtureSource(result,s,context) {
   for(const key of ['observedTime','expiresAt'])if(!Number.isSafeInteger(s[key])||s[key]<0)throw Error('Invalid timestamp.');
   const c=result.context||context;
   const claims=(result.claims||[]).map(x=>`⟨${leanString(x.key)}, ${leanString(x.query)}, ${x.answer===true}⟩`).join(',\n');
-  return `import Policy
+  return `module
+public import Policy
+public meta import Policy
 open LinkedAssurance
 def evidence : Evidence := {
   context := ⟨${['datasetBytesSha256','selectedGraphSha256','scope','regime','runtimeVersion'].map(k=>leanString(c[k])).join(', ')}⟩

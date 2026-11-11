@@ -18,6 +18,11 @@ Reports, including source, diagnostics and runtime hashes, are written to
 From the repository root, obtain the exact upstream build and extract only its
 runtime and core library (Python 3.14 or newer):
 
+The smaller prepared mirror used by Pages is available with
+`python3 labs/linked-assurance/tools/hello/fetch.py`. Its archive checksum is in
+[web-bundle.json](web-bundle.json). The original upstream archive can instead be
+prepared as follows (the upstream Actions artifact expires on 2026-12-09):
+
 ```sh
 gh api repos/cauli/lean4/actions/artifacts/10171167184/zip > labs/linked-assurance/artifacts/lean-4.33.1-browser.zip
 python3 labs/linked-assurance/tools/hello/prepare.py

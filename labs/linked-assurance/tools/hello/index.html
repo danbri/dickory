@@ -5,12 +5,21 @@
 <h1>Lean 4.33.1: hello world</h1>
 <p>These checks run the real Lean compiler in a browser worker. They cover evaluation, a proof by <code>rfl</code>, rejection of a false theorem, and recovery after rejection.</p>
 <p>The first import takes about 40 seconds on the tested machine. Later checks reuse the loaded compiler. This local probe uses the matching downloaded runtime and Init library.</p>
-<button id="run">Run checks</button> <a href="../../">Policy lab</a>
+<button id="run">Run checks</button> <button id="isolate">Enable isolation and reload</button> <a href="../../">Policy lab</a>
 <p id="status" role="status">Ready.</p><pre id="result"></pre>
 <script>
+const isolate=document.getElementById('isolate');isolate.hidden=crossOriginIsolated;
+isolate.onclick=async()=>{
+ try{
+  await navigator.serviceWorker.register(new URL('../../coi-sw.js',location.href),{scope:new URL('../../',location.href).href});
+  await navigator.serviceWorker.ready;
+  if(!navigator.serviceWorker.controller)await new Promise(resolve=>navigator.serviceWorker.addEventListener('controllerchange',resolve,{once:true}));
+  location.reload();
+ }catch(e){document.getElementById('status').textContent=String(e);}
+};
 document.getElementById('run').onclick=()=>{
  const button=document.getElementById('run'),status=document.getElementById('status'),result=document.getElementById('result');
- if(!crossOriginIsolated){status.textContent='This page needs the supplied server with --isolate.';return;}
+ if(!crossOriginIsolated){status.textContent='Enable isolation above first, or use the supplied server with --isolate.';return;}
  button.disabled=true;result.textContent='';const start=performance.now();let stage='Loading compiler';
  const worker=new Worker('./browser-worker.js');
  const clock=setInterval(()=>status.textContent=stage+' · '+Math.round((performance.now()-start)/1000)+' seconds',250);

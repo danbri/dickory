@@ -1,4 +1,7 @@
-import Workbench
+module
+public import Workbench
+
+@[expose] public section
 open LinkedAssurance
 
 namespace LinkedAssurance

@@ -18,11 +18,15 @@ FILES = [Path("index.html"), Path("labs/index.html"), LAB / "index.html"]
 LINKED_ASSURANCE = Path("labs/linked-assurance")
 FILES += [LINKED_ASSURANCE / name for name in (
     "index.html", "style.css", "app.js", "scenarios.js",
-    "lean-host.js", "rdf-worker.js", "coi-sw.js",
+    "lean-host.js", "compiler.js", "compiler-worker.js", "rdf-worker.js", "coi-sw.js",
     "evidence.js", "credential.js", "demo-credential.json", "compiler-assets.json",
     "factoidal-build.json",
     "lean/Workbench.lean", "lean/Policy.lean",
-    "vendor/lean4.js", "vendor/fflate.js", "vendor/fflate-LICENSE.txt", "vendor/lean4-README.md",
+    "vendor/fflate.js", "vendor/fflate-LICENSE.txt", "vendor/lean-LICENSE", "vendor/lean-LICENSES",
+    "tools/hello/index.html", "tools/hello/browser-worker.js", "tools/hello/checks.js",
+    "tools/hello/README.md", "tools/hello/toolchain.json", "tools/hello/web-bundle.json",
+    "tools/hello/prepare.py", "tools/hello/fetch.py", "tools/hello/node.cjs",
+    "artifacts/toolchain-4.33.1-files.json", "artifacts/toolchain-4.33.1/lean-lib.tar.gz",
     "README.md", "DESIGN.md", "THIRD_PARTY.md",
     "artifacts/lean-checks.json", "artifacts/runtime-checks.json",
 )]
@@ -46,6 +50,20 @@ class Links(HTMLParser):
 
 
 def main():
+    for name, expected in json.loads((ROOT / LINKED_ASSURANCE / 'compiler-assets.json').read_text()).items():
+        path = ROOT / LINKED_ASSURANCE / expected['url']
+        if path.stat().st_size != expected['bytes'] or hashlib.sha256(path.read_bytes()).hexdigest() != expected['sha256']:
+            raise SystemExit(f'Compiler asset checksum mismatch: {name}')
+    # This listing comes from the hash-verified prepared archive, not the repo tree.
+    listing = json.loads((ROOT / LINKED_ASSURANCE / 'artifacts/toolchain-4.33.1-files.json').read_text())
+    for entry in listing:
+        name = entry['name']
+        if (Path(name).is_absolute() or '..' in Path(name).parts or
+                not (name in ('bin/lean.js', 'bin/lean.wasm') or
+                     name.startswith(('lib/lean/Init/', 'lib/lean/Init.')) and
+                     name.endswith(('.olean', '.ir', '.ir.sig')))):
+            raise SystemExit(f'Unexpected compiler file: {name}')
+        FILES.append(LINKED_ASSURANCE / 'artifacts/toolchain-4.33.1' / name)
     linked_runtime = json.loads((ROOT / LINKED_ASSURANCE / "artifacts/runtime-checks.json").read_text())
     linked_lean = json.loads((ROOT / LINKED_ASSURANCE / "artifacts/lean-checks.json").read_text())
     if linked_runtime["status"] != "pass" or linked_lean["status"] != "pass":

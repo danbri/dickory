@@ -6,7 +6,10 @@ const artifacts=new URL('../../labs/linked-assurance/artifacts/',import.meta.url
 try{
   const page=await browser.newPage();
   page.on('console',m=>{if(m.type()==='error')console.log('Browser:',m.text().slice(0,300));});
-  await page.goto('http://127.0.0.1:8081/labs/linked-assurance/');
+  await page.goto((process.env.LINKED_SITE_URL||'http://127.0.0.1:8081')+'/labs/linked-assurance/');
+  if(!await page.evaluate(()=>crossOriginIsolated)){
+    await page.click('#isolate');await page.waitForFunction(()=>crossOriginIsolated);
+  }
   await page.exposeFunction('helloProgress',s=>console.log('Checking '+s));
   const result=await page.evaluate(()=>new Promise((resolve,reject)=>{
     if(!crossOriginIsolated)return reject(Error('Page is not cross-origin isolated'));

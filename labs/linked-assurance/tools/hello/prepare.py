@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Verify and stream-extract only the pinned runtime and Init closure. Python >=3.14."""
 import hashlib
+import gzip
 import json
 from pathlib import Path, PurePosixPath
 import shutil
@@ -47,4 +48,12 @@ for entry in listing:
 # Node/Deno pthreads must load the Emscripten glue as CommonJS inside this ESM lab.
 (out/'bin/package.json').write_text('{"type":"commonjs"}\n')
 (artifacts/'toolchain-4.33.1-files.json').write_text(json.dumps(listing,indent=2)+'\n')
+# Compact transport for the app; preserve the same authenticated library bytes.
+packed=out/'lean-lib.tar.gz'
+with packed.open('wb') as raw,gzip.GzipFile(fileobj=raw,mode='wb',mtime=0,filename='') as gz,tarfile.open(fileobj=gz,mode='w|',format=tarfile.USTAR_FORMAT) as tar:
+    for p in sorted((out/'lib/lean').rglob('*')):
+        if not p.is_file():continue
+        info=tarfile.TarInfo(p.relative_to(out/'lib/lean').as_posix())
+        info.size=p.stat().st_size;info.mode=0o644
+        with p.open('rb') as f:tar.addfile(info,f)
 print(f'Verified {len(listing)} files ({sum(x["bytes"] for x in listing):,} bytes) at {out}')

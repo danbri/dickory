@@ -2,7 +2,7 @@ import {sha256} from './evidence.js';
 let compiler, loading, compilerVersion=null, versionProbe=null, busy=false, checked=null;
 export function compilerEnvironment() {
   return {isolated:globalThis.crossOriginIsolated===true,sharedMemory:typeof SharedArrayBuffer!=='undefined',
-    sdk:'lean4.js 0.0.2 + local module-artifact patch',compilerVersion,versionProbe};
+    sdk:'Dickory worker host; Lean 4.33.1 wasm32',compilerVersion,versionProbe};
 }
 function messages(result) {
   return [result.stdout,result.stderr].join('\n').split('\n').flatMap(line=>{
@@ -28,7 +28,7 @@ async function getCompiler(progress) {
   if(compiler)return compiler;
   if(loading)return loading;
   loading=(async()=>{
-    const {Lean4}=await import('./vendor/lean4.js');
+    const {Lean4}=await import('./compiler.js');
     const instance=new Lean4({timeout:180000,onProgress:progress});
     try {
       await instance.init();
@@ -40,6 +40,7 @@ async function getCompiler(progress) {
       // the support and policy compilation below must each succeed independently.
       instance.version=compilerVersion;
       const support=await (await fetch('./lean/Workbench.lean')).text();
+      progress('Compiling Workbench.lean; the first library import can take about a minute…');
       const result=await instance.run(support,{moduleName:'Workbench',exportPrefix:'Workbench',flags:['--json','-o','/lib/lean/Workbench.olean']});
       if(!accepted(result)||!result.artifacts.includes('Workbench.olean'))throw Error('compiler_unavailable: the pinned compiler distribution cannot compile the fixed support module. '+instance.version+'\n'+diagnosticText(result));
       instance.supportSha256=await sha256(support);
@@ -56,6 +57,7 @@ export async function compilePolicy(source,progress=()=>{}) {
     if(checked?.sourceSha256===digest)return {...checked,cached:true};
     checked=null;
     const lean=await getCompiler(progress);
+    lean.resetSession();
     for(const key of [...lean.libraryFiles.keys()])if(key.startsWith('Policy.'))lean.libraryFiles.delete(key);
     const audit=`\n#check (LinkedAssurance.policy_contract : ∀ (e : LinkedAssurance.Evidence) (s : LinkedAssurance.OperationalState), LinkedAssurance.policy e s = LinkedAssurance.Decision.permit → LinkedAssurance.permitRequirements e s)\n#print axioms LinkedAssurance.policy_contract\n`;
     progress('Compiling Policy.lean and checking its required contract…');
@@ -74,7 +76,7 @@ export async function executePolicy(source,fixture,progress=()=>{}) {
   try {
     progress('Importing the checked Policy.olean; evaluating the current fixture…');
     // Only the small runtime fixture is elaborated. The policy module is reused.
-    const result=await compiler.run(fixture,{moduleName:'Run',flags:['--json']});
+    const result=await compiler.run(fixture,{moduleName:'Run',flags:['--json'],persistent:true});
     const text=diagnosticText(result);
     const match=text.match(/LinkedAssurance\.Decision\.(permit|deny|defer|escalate|protectiveShutdown)\s*,\s*LinkedAssurance\.AttackOutcome\.(achieved|notAchieved|unknown)/);
     return {...result,executed:accepted(result)&&!!match,decision:match?.[1],attacker:match?.[2],

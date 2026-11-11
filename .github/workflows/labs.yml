@@ -12,7 +12,7 @@ permissions:
 jobs:
   verify:
     runs-on: ubuntu-24.04
-    timeout-minutes: 20
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
       - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
@@ -20,7 +20,7 @@ jobs:
           python-version: '3.14.7'
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
-          node-version: '22'
+          node-version: '26'
       - name: Install pinned Lean release
         shell: bash
         run: |
@@ -50,6 +50,8 @@ jobs:
           npm ci --prefix labs/linked-assurance
           node labs/linked-assurance/tools/check_runtime.mjs
           python3 labs/linked-assurance/tools/check_lean.py
+          python3 labs/linked-assurance/tools/hello/fetch.py
+          node labs/linked-assurance/tools/hello/node.cjs
           python3 tools/build_site.py
       - name: Check viewer interactions in Chromium
         working-directory: tools/viewer-browser
@@ -58,6 +60,15 @@ jobs:
           npx playwright install --with-deps chromium
           npm test
           LINKED_SITE_ROOT="$GITHUB_WORKSPACE/_site" node linked-assurance.mjs
+      - name: Check real browser Lean through Pages isolation shim
+        working-directory: tools/viewer-browser
+        run: |
+          python3 ../../labs/linked-assurance/tools/serve.py --root ../../_site --port 8081 > "$RUNNER_TEMP/linked-server.log" 2>&1 &
+          node linked-probe.mjs --hello
+          node linked-probe.mjs --policy
+          cp ../../labs/linked-assurance/artifacts/hello-node-checks.json ../../_site/labs/linked-assurance/artifacts/
+          cp ../../labs/linked-assurance/artifacts/hello-browser-checks.json ../../_site/labs/linked-assurance/artifacts/
+          cp ../../labs/linked-assurance/artifacts/policy-browser-checks.json ../../_site/labs/linked-assurance/artifacts/
       - name: Upload verified site
         uses: actions/upload-pages-artifact@7b1f4a764d45c48632c6b24a0339c27f5614fb0b # v4
         with:
