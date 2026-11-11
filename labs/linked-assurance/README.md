@@ -2,6 +2,9 @@
 
 Imported standalone lab exploring the crossover between verification **of** software and verification **facilitated by** software. This is NOT an end-to-end verified RDF-to-Lean assurance system.
 
+[Design and proof obligations](DESIGN.md) describes the intended integration,
+including why ontology and query changes are normally runtime inputs.
+
 ## Files
 
 - index.html / style.css / app.js: browser UI and four editable RDF examples.

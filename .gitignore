@@ -4,5 +4,7 @@ __pycache__/
 .lake/
 _site/
 node_modules/
+/chatgpt-log.md
+labs/linked-assurance/artifacts/
 labs/rdf11/cleanroom/artifacts/*
 !labs/rdf11/cleanroom/artifacts/.gitkeep
