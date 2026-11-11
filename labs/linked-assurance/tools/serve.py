@@ -14,7 +14,7 @@ class Handler(SimpleHTTPRequestHandler):
     def end_headers(self):
         if a.isolate:
             self.send_header('Cross-Origin-Opener-Policy', 'same-origin')
-            self.send_header('Cross-Origin-Embedder-Policy', 'credentialless')
+            self.send_header('Cross-Origin-Embedder-Policy', 'require-corp')
         super().end_headers()
 server = ThreadingHTTPServer(('127.0.0.1', a.port), partial(Handler, directory=str(root)))
 print(f'http://127.0.0.1:{a.port}/labs/linked-assurance/', flush=True)

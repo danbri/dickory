@@ -1,7 +1,7 @@
 import {scenarios,variants} from './scenarios.js';
 import {runtime,sha256,scopeFrom,queriesFrom,startRdf,fixtureSource} from './evidence.js';
 import {verifyCredential} from './credential.js';
-import {compilerEnvironment,compilePolicy,executePolicy,proofDiagnostic} from './lean-host.js';
+import {compilerEnvironment,compilePolicy,executePolicy,proofDiagnostic,compilerUnavailableReason} from './lean-host.js';
 import {mountTutorial} from './tutorial.js';
 import {mountCompilerBanner,enableIsolation} from './compiler-banner.js';
 import {pipelineRecord} from './pipeline-record.js';
@@ -220,7 +220,7 @@ async function init() {
   });
   if(sessionStorage.getItem('linked-assurance-resume-run')){
     sessionStorage.removeItem('linked-assurance-resume-run');
-    if(env.isolated)checkAndRun();else show('policyRunSummary','This browser did not enable the runtime. Open Advanced policy tools to retry isolation setup.');
+    if(env.isolated)checkAndRun();else{show('policyRunSummary','This browser could not complete runtime setup.');progress(compilerUnavailableReason());}
   }
 }
 init().catch(e=>show('status',String(e.message||e)));

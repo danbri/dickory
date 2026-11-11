@@ -9,7 +9,9 @@ self.addEventListener('fetch',event=>{
   const response=await fetch(req);
   const headers=new Headers(response.headers);
   headers.set('Cross-Origin-Opener-Policy','same-origin');
-  headers.set('Cross-Origin-Embedder-Policy','credentialless');
+  // Safari does not implement credentialless. Our compiler assets are same-origin;
+  // the Factoidal CDN is fetched with CORS, so require-corp works for both.
+  headers.set('Cross-Origin-Embedder-Policy','require-corp');
   return new Response(response.body,{status:response.status,statusText:response.statusText,headers});
  })());
 });

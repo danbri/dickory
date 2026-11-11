@@ -67,20 +67,24 @@ jobs:
         working-directory: tools/viewer-browser
         run: |
           npm ci
-          npx playwright install --with-deps chromium
+          npx playwright install --with-deps chromium webkit
           npm test
           LINKED_SITE_ROOT="$GITHUB_WORKSPACE/_site" node linked-assurance.mjs
+          LINKED_SITE_ROOT="$GITHUB_WORKSPACE/_site" node linked-isolation.mjs
       - name: Check real browser Lean through Pages isolation shim
         working-directory: tools/viewer-browser
         run: |
           python3 ../../labs/linked-assurance/tools/serve.py --root ../../_site --port 8081 > "$RUNNER_TEMP/linked-server.log" 2>&1 &
           node linked-probe.mjs --hello
+          LEAN_BROWSER=webkit node linked-probe.mjs --hello
           node linked-probe.mjs --policy
           node linked-probe.mjs --tutorial
           cp ../../labs/linked-assurance/artifacts/hello-node-checks.json ../../_site/labs/linked-assurance/artifacts/
           cp ../../labs/linked-assurance/artifacts/hello-browser-checks.json ../../_site/labs/linked-assurance/artifacts/
+          cp ../../labs/linked-assurance/artifacts/hello-webkit-checks.json ../../_site/labs/linked-assurance/artifacts/
           cp ../../labs/linked-assurance/artifacts/policy-browser-checks.json ../../_site/labs/linked-assurance/artifacts/
           cp ../../labs/linked-assurance/artifacts/tutorial-browser-checks.json ../../_site/labs/linked-assurance/artifacts/
+          cp ../../labs/linked-assurance/artifacts/isolation-browser-checks.json ../../_site/labs/linked-assurance/artifacts/
       - name: Upload verified site
         uses: actions/upload-pages-artifact@7b1f4a764d45c48632c6b24a0339c27f5614fb0b # v4
         with:

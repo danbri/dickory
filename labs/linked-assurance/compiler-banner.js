@@ -1,26 +1,43 @@
 import {prepareCompilerFiles,compilerFilesSaved,onCompilerDownload,clearCompilerCache} from './compiler-cache.js';
+import {compilerEnvironment,compilerUnavailableReason} from './lean-host.js';
+
+function waitForChange(target,event,ready,message){
+  return new Promise((resolve,reject)=>{
+    const cleanup=()=>{clearTimeout(timer);target.removeEventListener(event,check);};
+    const check=()=>{if(ready()){cleanup();resolve();}};
+    const timer=setTimeout(()=>{cleanup();reject(Error(message));},15000);
+    target.addEventListener(event,check);check();
+  });
+}
 
 export async function enableIsolation(){
-  if(!navigator.serviceWorker)throw Error('Service workers unavailable. Use the supplied local server with --isolate.');
-  const registration=await navigator.serviceWorker.register(new URL('./coi-sw.js',import.meta.url),{scope:new URL('./',import.meta.url).href});
-  await navigator.serviceWorker.ready;
-  if(!navigator.serviceWorker.controller)await new Promise((resolve,reject)=>{
-    const done=()=>{clearTimeout(timer);resolve();};
-    const timer=setTimeout(()=>{navigator.serviceWorker.removeEventListener('controllerchange',done);reject(Error('Isolation setup is taking longer than expected. Reload this page.'));},10000);
-    navigator.serviceWorker.addEventListener('controllerchange',done,{once:true});
-  });
-  if(registration.active){window.dispatchEvent(new Event('lean-before-reload'));location.reload();}
+  if(window.self!==window.top)throw Error('Open this page directly in Safari or a desktop browser. An embedded page cannot enable isolation for its containing app.');
+  if(!navigator.serviceWorker)throw Error('This browser cannot install the isolation helper. Open this HTTPS URL directly in Safari or a desktop browser.');
+  const registration=await navigator.serviceWorker.register(new URL('./coi-sw.js',import.meta.url),{scope:new URL('./',import.meta.url).href,updateViaCache:'none'});
+  await registration.update();
+  const worker=registration.installing||registration.waiting||registration.active;
+  if(!worker)throw Error('The browser did not install the isolation helper.');
+  await waitForChange(worker,'statechange',()=>worker.state==='activated','The updated isolation helper did not activate. Try opening this page in a new browser tab.');
+  await waitForChange(navigator.serviceWorker,'controllerchange',()=>navigator.serviceWorker.controller===worker,'The isolation helper could not take control of this page. Try opening it in a new browser tab.');
+  try{sessionStorage.setItem('linked-assurance-isolation-attempted','1');}catch{}
+  window.dispatchEvent(new Event('lean-before-reload'));location.reload();
 }
 
 export function mountCompilerBanner(target){
   target.classList.add('compilerBanner');
   target.innerHTML=`<div><strong>Lean 4.33.1 · on this device</strong>
     <p>About 184 MB, saved for future visits. You can prepare it now, or let your first policy check do this. First setup takes a few minutes; later runs reuse the machinery.</p>
-    <p id="compilerDownloadState" role="status">Compiler files have not been loaded in this tab.</p></div>
+    <p id="compilerBrowserState" role="status"></p>
+    <p id="compilerDownloadState" role="status">Compiler files have not been loaded in this tab.</p>
+    <details><summary>Browser details</summary><pre id="compilerBrowserDetails"></pre></details></div>
     <div class="downloadActions"><button id="downloadLean">Download Lean 4 machinery · 184 MB</button>
     <details id="compilerSetupTools"><summary>Advanced setup</summary><button id="setupLean" class="secondary">Enable browser isolation and reload</button>
     <button id="clearLeanCache" class="secondary">Clear saved compiler files</button><p>Browsers may clear saved files when storage is tight.</p></details></div>`;
   const status=target.querySelector('#compilerDownloadState'),download=target.querySelector('#downloadLean'),setup=target.querySelector('#setupLean');
+  const env=compilerEnvironment();
+  target.querySelector('#compilerBrowserDetails').textContent=JSON.stringify({secureContext:env.secureContext,embedded:env.embedded,crossOriginIsolated:env.isolated,SharedArrayBuffer:env.sharedMemory,serviceWorkerAvailable:env.serviceWorkerAvailable,serviceWorkerControlled:env.serviceWorkerControlled},null,2);
+  let attempted=false;try{attempted=sessionStorage.getItem('linked-assurance-isolation-attempted')==='1';}catch{}
+  target.querySelector('#compilerBrowserState').textContent=env.isolated&&env.sharedMemory?'Browser isolation and shared memory are available.':attempted?'Setup ran, but this browser still cannot run Lean. '+compilerUnavailableReason():'Running Lean needs browser isolation and shared memory. Setup checks these before downloading.';
   let active=false;
   const report=text=>{status.textContent=text;};
   onCompilerDownload(text=>{active=true;report(text);if(text.startsWith('Lean 4.33.1 files ready')){download.textContent='Compiler files ready';download.disabled=true;}});
@@ -29,6 +46,7 @@ export function mountCompilerBanner(target){
     active=true;download.disabled=true;
     try{
       if(!globalThis.crossOriginIsolated){sessionStorage.setItem('linked-assurance-resume-download','1');report('Setting up the browser runtime. Reloading once, then downloading…');await enableIsolation();return;}
+      const unavailable=compilerUnavailableReason();if(unavailable)throw Error(unavailable);
       await prepareCompilerFiles(report);
     }catch(e){sessionStorage.removeItem('linked-assurance-resume-download');report('Setup or download failed: '+e.message);download.disabled=false;download.textContent='Retry Lean setup';}
   };
@@ -40,6 +58,6 @@ export function mountCompilerBanner(target){
   };
   if(sessionStorage.getItem('linked-assurance-resume-download')){
     sessionStorage.removeItem('linked-assurance-resume-download');
-    if(globalThis.crossOriginIsolated)download.click();else report('Browser isolation was not enabled. Open Advanced setup to retry.');
+    if(globalThis.crossOriginIsolated)download.click();else report('No compiler download started: '+compilerUnavailableReason());
   }
 }

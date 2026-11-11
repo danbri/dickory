@@ -2,7 +2,17 @@ import {sha256} from './evidence.js';
 let compiler, loading, compilerVersion=null, versionProbe=null, busy=false, checked=null;
 export function compilerEnvironment() {
   return {isolated:globalThis.crossOriginIsolated===true,sharedMemory:typeof SharedArrayBuffer!=='undefined',
+    secureContext:globalThis.isSecureContext===true,embedded:typeof window!=='undefined'&&window.self!==window.top,
+    serviceWorkerAvailable:!!globalThis.navigator?.serviceWorker,serviceWorkerControlled:!!globalThis.navigator?.serviceWorker?.controller,
     sdk:'Dickory worker host; Lean 4.33.1 wasm32',compilerVersion,versionProbe,cache:compiler?.cache||null};
+}
+export function compilerUnavailableReason(){
+  const env=compilerEnvironment();
+  if(!env.secureContext)return 'compiler_unavailable: this page needs HTTPS or a localhost address.';
+  if(env.embedded)return 'compiler_unavailable: open this page directly in Safari or a desktop browser, outside the embedded view.';
+  if(!env.isolated)return 'compiler_unavailable: cross-origin isolation is missing. Use Enable browser isolation once. If it remains unavailable after reload, open this URL directly in Safari or a desktop browser; repeated reloads will not fix an unsupported browser. See Browser details above.';
+  if(!env.sharedMemory)return 'compiler_unavailable: this browser isolates the page but does not expose SharedArrayBuffer. Try a full Safari or desktop browser. See Browser details above.';
+  return null;
 }
 function messages(result) {
   return [result.stdout,result.stderr].join('\n').split('\n').flatMap(line=>{
@@ -33,8 +43,8 @@ export function auditContract(result,name='LinkedAssurance.policy_contract') {
   return new RegExp(escaped+'[^\\n]*does not depend on any axioms').test(text);
 }
 async function getCompiler(progress) {
-  const env=compilerEnvironment();
-  if(!env.isolated||!env.sharedMemory)throw Error('compiler_unavailable: cross-origin isolation or SharedArrayBuffer is missing. Enable isolation and reload, or use tools/serve.py --isolate.');
+  const unavailable=compilerUnavailableReason();
+  if(unavailable)throw Error(unavailable);
   if(compiler)return compiler;
   if(loading)return loading;
   loading=(async()=>{

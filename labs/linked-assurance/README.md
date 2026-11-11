@@ -25,9 +25,19 @@ library again. Within a tab the tutorial and policy share one compiler host.
 An internal tutorial runtime fault triggers one explicit session restart; ordinary
 proof errors do not. Full diagnostics retain the initial fault.
 
+Browser isolation uses `COOP: same-origin` and `COEP: require-corp`. The previous
+`credentialless` policy is not implemented in Safari/WebKit. Setup now waits for
+the replacement service worker to activate and control the page before reloading.
+The banner reports isolation and shared-memory availability separately from the
+compiler download, with copyable browser details. Embedded or restricted browsers
+may still lack the required capabilities: open the URL in a full browser rather
+than repeatedly reloading an unsupported view. The header shim and its upgrade
+path are tested in Chromium and desktop WebKit; this is not a physical iPhone
+test or a guarantee that the large Lean runtime fits every phone's memory budget.
+
 The browser uses a pinned Lean **4.33.1** wasm32 compiler and matching Init
 library, including executable IR. Hello-world evaluation, theorem checking,
-rejection and recovery pass in Node, Deno and Chromium. Chromium also checks
+rejection and recovery pass in Node, Deno, Chromium and desktop WebKit. Chromium also checks
 the actual policy contract, imports the compiled policy, runs five fixtures,
 and rejects a mutation removing the permit gate. The compiler runs in a worker
 and repeated fixtures reuse the imported environment. See

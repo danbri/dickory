@@ -1,7 +1,9 @@
-import {chromium} from 'playwright';
+import {chromium,webkit} from 'playwright';
 import fs from 'node:fs/promises';
 import {createHash} from 'node:crypto';
-const browser=await chromium.launch({headless:true});
+const engine=process.env.LEAN_BROWSER||'chromium';
+if(!['chromium','webkit'].includes(engine))throw Error('Unsupported LEAN_BROWSER: '+engine);
+const browser=await ({chromium,webkit}[engine]).launch({headless:true});
 const artifacts=new URL('../../labs/linked-assurance/artifacts/',import.meta.url);
 try{
   const page=await browser.newPage();
@@ -24,7 +26,7 @@ try{
     };
   }));
   const hashes={};for(const name of ['lean.js','lean.wasm'])hashes[name]=createHash('sha256').update(await fs.readFile(new URL('toolchain-4.33.1/bin/'+name,artifacts))).digest('hex');
-  const report={...result,browser:browser.version(),leanCommit:'4f9018a62ead9be0ffd652021d5afc8501e92253',hashes};
-  await fs.writeFile(new URL('hello-browser-checks.json',artifacts),JSON.stringify(report,null,2)+'\n');
+  const report={...result,browser:browser.version(),engine,leanCommit:'4f9018a62ead9be0ffd652021d5afc8501e92253',hashes};
+  await fs.writeFile(new URL(engine==='chromium'?'hello-browser-checks.json':'hello-webkit-checks.json',artifacts),JSON.stringify(report,null,2)+'\n');
   console.log(JSON.stringify({...report,cases:report.cases.map(({name,milliseconds,exitCode})=>({name,milliseconds,exitCode}))}));
 }finally{await browser.close();}
