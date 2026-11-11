@@ -2,9 +2,25 @@ import {scenarios,variants} from './scenarios.js';
 import {runtime,sha256,scopeFrom,queriesFrom,startRdf,fixtureSource} from './evidence.js';
 import {verifyCredential} from './credential.js';
 import {compilerEnvironment,compilePolicy,executePolicy} from './lean-host.js';
+import {mountTutorial} from './tutorial.js';
+import {mountCompilerBanner,enableIsolation} from './compiler-banner.js';
+import {pipelineRecord} from './pipeline-record.js';
 const $=id=>document.getElementById(id), show=(id,text)=>{$(id).textContent=text;};
 const state={scenario:scenarios[0],editor:'dataset',inputs:{},evaluation:null,job:null,epoch:0,record:null,compiled:null};
 const json=x=>JSON.stringify(x,null,2);
+mountCompilerBanner($('compilerBanner'));
+mountTutorial($('tutorialPanel'));
+let lastLearnHash=location.hash.startsWith('#learn')?location.hash:'#learn';
+function pageTab(){
+  const learn=location.hash.startsWith('#learn');
+  if(learn)lastLearnHash=location.hash;
+  if(location.hash==='#proof-walkthrough')$('proof-walkthrough').open=true;
+  $('tutorialPanel').hidden=!learn;$('workbenchPanel').hidden=learn;
+  for(const [id,selected] of [['learnTab',learn],['workbenchTab',!learn]]){$(id).setAttribute('aria-selected',String(selected));$(id).tabIndex=selected?0:-1;}
+}
+$('learnTab').onclick=()=>{location.hash=lastLearnHash;};$('workbenchTab').onclick=()=>{location.hash='workbench';};
+for(const id of ['learnTab','workbenchTab'])$(id).onkeydown=e=>{if(['ArrowLeft','ArrowRight','Home','End'].includes(e.key)){e.preventDefault();const other=e.key==='Home'?'workbenchTab':e.key==='End'?'learnTab':id==='learnTab'?'workbenchTab':'learnTab';$(other).click();$(other).focus();}};
+window.addEventListener('hashchange',pageTab);pageTab();
 let defaultPolicy,credential;
 function invalidate(rdf=true) {
   state.epoch++;state.job?.cancel();state.job=null;state.record=null;
@@ -12,6 +28,7 @@ function invalidate(rdf=true) {
   if(rdf){state.evaluation=null;show('knowledge','Not evaluated');show('execution','Not run');show('executionNote','RDF work is terminated at its deadline.');show('rdfReport','');}
   $('cancel').disabled=true;show('decisionNote','Only the compiled Lean function produces this result.');
   show('decision','Not run');show('attackOutcome','Unknown');show('fixture','');show('manifest','');
+  show('policyRunSummary','No result for the current inputs.');
 }
 function activate(s) {
   invalidate();state.scenario=s;
@@ -65,7 +82,7 @@ async function prepareFixture() {
     attackerWantsInterruption:$('attacker').value==='interrupt',legitimateSession:state.scenario.id==='alert'};
   const fallback={datasetBytesSha256:await sha256(request.dataset),selectedGraphSha256:'unavailable',scope:json(request.scope),regime:request.regime,runtimeVersion:runtime.version};
   if(epoch!==state.epoch)return null;
-  const fixture=fixtureSource(result,operational,fallback);
+  const fixture=fixtureSource(result,operational,fallback,request.queries);
   const identities={datasetBytesSha256:fallback.datasetBytesSha256,queriesSha256:await sha256(json(request.queries)),
     descriptionSha256:await sha256(request.description),policySourceSha256:await sha256(source),fixtureSha256:await sha256(fixture),
     meaning:'SHA-256 of exact UTF-8 serialization; not RDF canonicalization'};
@@ -76,6 +93,7 @@ async function prepareFixture() {
 async function prepareOnly() {
   const p=await prepareFixture();if(!p||p.epoch!==state.epoch)return;
   state.record={schema:'linked-assurance-experiment-v1',scenario:p.scenario,
+    pipeline:pipelineRecord({rdf:p.result,verification:p.verification,identities:p.identities}),
     input:{...p.request,policy:p.source,credentialPayload:p.payload,credentialSignature:p.signature,operational:p.operational},
     identities:p.identities,credentialVerification:p.verification,
     rdf:p.result,fixture:p.fixture,policyExecution:{executed:false,reason:'Policy not run'},
@@ -84,18 +102,24 @@ async function prepareOnly() {
   show('manifest',json(state.record));show('status','Fixture and evidence ready to export. Policy not run.');
 }
 async function runPolicy() {
+  show('policyRunSummary','Preparing the evidence and operational inputs…');
   if(!state.compiled||state.compiled.sourceSha256!==await sha256($('leanEditor').value))throw Error('Compile the current policy and contract first.');
   const prepared=await prepareFixture();if(!prepared)return;
   const {epoch,scenario,request,result,source,payload,signature,verification,operational,fixture,identities}=prepared;
   $('runPolicy').disabled=true;
+  const started=performance.now();let phase='Starting the compiled policy…';
+  const report=text=>{phase=text;if(epoch===state.epoch){progress(text);show('policyRunSummary',text);}};
+  const timer=setInterval(()=>{if(epoch===state.epoch)show('policyRunSummary',phase+' · '+Math.round((performance.now()-started)/1000)+' s');},1000);
   try {
-    const execution=await executePolicy(source,fixture,progress);
+    const execution=await executePolicy(source,fixture,report);
     if(epoch!==state.epoch)return;
     show('decision',execution.executed?execution.decision:'compilerFault');
     show('attackOutcome',execution.executed?execution.attacker:'unknown');
     show('decisionNote',execution.executed?'Computed by the compiled Policy.olean on the displayed fixture.':'No policy decision available. Inspect diagnostics.');
+    show('policyRunSummary',execution.executed?`Result: ${execution.decision} · attacker outcome: ${execution.attacker} · ${(performance.now()-started)/1000<1?'under 1':Math.round((performance.now()-started)/1000)} s`:'No decision produced. Open compiler diagnostics below.');
     show('compilerReport',json({compile:state.compiled,execution}));
     state.record={schema:'linked-assurance-experiment-v1',scenario,
+      pipeline:pipelineRecord({rdf:result,verification,identities,compile:state.compiled,execution}),
       input:{...request,policy:source,credentialPayload:payload,credentialSignature:signature,operational},
       identities,fixture,rdf:result,credentialVerification:verification,compile:state.compiled,policyExecution:execution,
       environment:compilerEnvironment(),runtime,
@@ -107,7 +131,7 @@ async function runPolicy() {
         'Lean execution uses compiler/runtime machinery; #eval is not a kernel proof of that execution.',
         'An attacker outcome uses the declared synthetic objective and test oracle. Harm prevention is unknown.']};
     show('manifest',json(state.record));show('status','Evidence record ready.');
-  }finally{$('runPolicy').disabled=false;}
+  }finally{clearInterval(timer);$('runPolicy').disabled=false;}
 }
 function guard(fn){return async()=>{try{await fn();}catch(e){show('status',String(e.message||e));$('cancel').disabled=true;}};}
 async function init() {
@@ -127,24 +151,27 @@ async function init() {
   $('resetPolicy').onclick=()=>{$('leanEditor').value=defaultPolicy;state.compiled=null;invalidate(false);};
   for(const id of ['scope','regime','budget'])$(id).onchange=()=>invalidate();
   for(const id of ['clock','transport','permission','attacker','credentialPayload','signature'])$(id).oninput=()=>invalidate(false);
-  $('prepare').onclick=guard(prepareOnly);$('evaluate').onclick=guard(evaluate);$('compile').onclick=guard(compile);$('runPolicy').onclick=guard(runPolicy);
+  $('prepare').onclick=guard(prepareOnly);$('evaluate').onclick=guard(evaluate);$('compile').onclick=guard(compile);$('runPolicy').onclick=guard(async()=>{
+    try{await runPolicy();}catch(e){show('policyRunSummary','Policy did not run: '+e.message);progress('Policy run stopped. See the result message above.');throw e;}
+  });
   $('cancel').onclick=()=>state.job?.cancel();
   $('download').onclick=guard(async()=>{
     if(!state.record)throw Error('Evaluate RDF and prepare a fixture, or run the compiled policy first.');
     const url=URL.createObjectURL(new Blob([json(state.record)],{type:'application/json'}));
     const a=document.createElement('a');a.href=url;a.download='linked-assurance-evidence.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
   });
-  $('isolate').onclick=guard(async()=>{
-    if(!navigator.serviceWorker)throw Error('Service workers unavailable; use the supplied isolated local server.');
-    const registration=await navigator.serviceWorker.register('./coi-sw.js',{scope:'./'});
-    await navigator.serviceWorker.ready;
-    if(!navigator.serviceWorker.controller)await new Promise((resolve,reject)=>{
-      const timer=setTimeout(()=>reject(Error('Service worker did not take control. Reload manually.')),5000);
-      navigator.serviceWorker.addEventListener('controllerchange',()=>{clearTimeout(timer);resolve();},{once:true});
-    });
-    if(registration.active)location.reload();
-  });
-  const env=compilerEnvironment();progress(env.isolated?'Compiler isolation available. Compile loads the WASM compiler (large download).':'compiler_unavailable: page is not cross-origin isolated. Enable isolation or use the local server.');
+  $('isolate').onclick=guard(enableIsolation);
+  const env=compilerEnvironment();progress(env.isolated?'Ready for Lean 4.33.1. Load the compiler using the banner above, or compile to load it now.':'First use: enable running Lean in the banner above. This reloads the page once.');
   $('isolate').hidden=env.isolated;activate(scenarios[0]);
+  // Retain edits across the one-time isolation reload; do not persist credentials
+  // beyond this tab's session or silently reuse a previous execution result.
+  try{
+    const saved=JSON.parse(sessionStorage.getItem('linked-assurance-reload')||'null');sessionStorage.removeItem('linked-assurance-reload');
+    if(saved){activate(scenarios.find(s=>s.id===saved.scenario)||scenarios[0]);state.inputs=saved.inputs;$('rdfEditor').value=state.inputs[state.editor];for(const [id,value] of Object.entries(saved.controls))if($(id))$(id).value=value;}
+  }catch{}
+  window.addEventListener('lean-before-reload',()=>{
+    try{sessionStorage.setItem('linked-assurance-reload',json({scenario:state.scenario.id,inputs:state.inputs,
+      controls:Object.fromEntries(['leanEditor','variant','scope','regime','budget','clock','transport','permission','attacker','credentialPayload','signature'].map(id=>[id,$(id).value]))}));}catch{}
+  });
 }
 init().catch(e=>show('status',String(e.message||e)));

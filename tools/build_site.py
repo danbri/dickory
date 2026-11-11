@@ -17,18 +17,19 @@ FILES = [Path("index.html"), Path("labs/index.html"), LAB / "index.html"]
 # browser source files; never publish raw repo trees or generated secrets.
 LINKED_ASSURANCE = Path("labs/linked-assurance")
 FILES += [LINKED_ASSURANCE / name for name in (
-    "index.html", "style.css", "app.js", "scenarios.js",
+    "index.html", "style.css", "app.js", "scenarios.js", "tutorial.js", "tutorial-lessons.js",
+    "compiler-cache.js", "compiler-banner.js", "pipeline-record.js",
     "lean-host.js", "compiler.js", "compiler-worker.js", "rdf-worker.js", "coi-sw.js",
     "evidence.js", "credential.js", "demo-credential.json", "compiler-assets.json",
     "factoidal-build.json",
-    "lean/Workbench.lean", "lean/Policy.lean",
+    "lean/Workbench.lean", "lean/Policy.lean", "lean/PipelineBridge.lean",
     "vendor/fflate.js", "vendor/fflate-LICENSE.txt", "vendor/lean-LICENSE", "vendor/lean-LICENSES",
-    "tools/hello/index.html", "tools/hello/browser-worker.js", "tools/hello/checks.js",
+    "tools/hello/index.html", "tools/hello/app.js", "tools/hello/browser-worker.js", "tools/hello/checks.js",
     "tools/hello/README.md", "tools/hello/toolchain.json", "tools/hello/web-bundle.json",
     "tools/hello/prepare.py", "tools/hello/fetch.py", "tools/hello/node.cjs",
     "artifacts/toolchain-4.33.1-files.json", "artifacts/toolchain-4.33.1/lean-lib.tar.gz",
-    "README.md", "DESIGN.md", "THIRD_PARTY.md",
-    "artifacts/lean-checks.json", "artifacts/runtime-checks.json",
+    "README.md", "DESIGN.md", "PIPELINES.md", "THIRD_PARTY.md",
+    "artifacts/lean-checks.json", "artifacts/runtime-checks.json", "artifacts/tutorial-checks.json", "artifacts/pipeline-native-checks.json",
 )]
 FILES += [ARTIFACTS / name for name in (
     "source-review.html", "verification.json", "negative-checks.json", "declarations.json",
@@ -66,6 +67,14 @@ def main():
         FILES.append(LINKED_ASSURANCE / 'artifacts/toolchain-4.33.1' / name)
     linked_runtime = json.loads((ROOT / LINKED_ASSURANCE / "artifacts/runtime-checks.json").read_text())
     linked_lean = json.loads((ROOT / LINKED_ASSURANCE / "artifacts/lean-checks.json").read_text())
+    tutorial = json.loads((ROOT / LINKED_ASSURANCE / "artifacts/tutorial-checks.json").read_text())
+    pipeline = json.loads((ROOT / LINKED_ASSURANCE / "artifacts/pipeline-native-checks.json").read_text())
+    if tutorial['status'] != 'pass' or pipeline['status'] != 'pass':
+        raise SystemExit('Refusing to publish failing tutorial or pipeline evidence')
+    for name, expected in {'tutorial-lessons.js': tutorial['sourceSha256'],
+                           'lean/PipelineBridge.lean': pipeline['sourceSha256']['PipelineBridge.lean']}.items():
+        if hashlib.sha256((ROOT / LINKED_ASSURANCE / name).read_bytes()).hexdigest() != expected:
+            raise SystemExit(f'Stale tutorial or pipeline evidence: {name}')
     if linked_runtime["status"] != "pass" or linked_lean["status"] != "pass":
         raise SystemExit("Refusing to publish failing Linked Assurance evidence")
     for name, expected in {**linked_runtime["sha256"], **linked_lean["sha256"]}.items():

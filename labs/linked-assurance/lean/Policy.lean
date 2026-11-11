@@ -40,4 +40,14 @@ theorem permit_requires_unexpired (e : Evidence) (s : OperationalState)
     (h : policy e s = .permit) : s.observedTime < s.expiresAt :=
   (policy_contract e s h).2.2.2.1
 
+/-- Successful adaptation and permission compose their contracts. The inputs
+are still host observations, not a proof of the external query execution. -/
+theorem policy_pipeline_contract (ctx : Context) (execution : Execution)
+    (bindings : List QueryBinding) (observations : List QueryObservation)
+    (e : Evidence) (s : OperationalState)
+    (ha : adaptEvidence ctx execution bindings observations = .ok e)
+    (hp : policy e s = .permit) :
+    adapterRequirements ctx execution bindings observations e ∧ permitRequirements e s :=
+  ⟨adaptEvidence_contract ctx execution bindings observations e ha, policy_contract e s hp⟩
+
 end LinkedAssurance

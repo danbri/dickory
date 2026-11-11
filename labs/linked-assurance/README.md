@@ -2,7 +2,25 @@
 
 An experimental Factoidal and Lean policy workbench in its own Dickory lab.
 [Design and proof obligations](DESIGN.md) explains the intended connections.
+[Contracted stages](PIPELINES.md) describes the implemented pipeline and its boundaries.
 The existing `labs/rdf11/` formalization is independent and unchanged.
+
+The **Learn Lean** tab is a twelve-lesson introduction for readers who know a
+little functional programming. Each lesson offers a question, a revealable
+explanation, an editable file and a small change to try. It leads through values,
+propositions, tactics, cases, induction and composable contracts before bringing
+in external evidence. Lessons use only Lean's core library; RDF enters at the end.
+Draft edits are saved locally. This is a compile-and-inspect playground, not a
+live Lean language-server goal editor or an exercise grader.
+
+The top banner downloads and verifies the compiler once, then stores its three
+assets in the browser Cache API under content hashes. Later tabs reuse those
+files with integrity checks. This is not localStorage: that smaller store holds
+only tutorial drafts. Browser storage may be evicted or unavailable; downloads
+still work without it. A new tab must initialise the runtime and import the
+library again. Within a tab the tutorial and policy share one compiler host.
+An internal tutorial runtime fault triggers one explicit session restart; ordinary
+proof errors do not. Full diagnostics retain the initial fault.
 
 The browser uses a pinned Lean **4.33.1** wasm32 compiler and matching Init
 library, including executable IR. Hello-world evaluation, theorem checking,
@@ -83,7 +101,7 @@ existing viewer checks in `tools/viewer-browser/`.
 ## Assurance boundary
 
 The policy contract is conditional on the injected evidence and operational
-state. The JavaScript serialization bridge, selected-graph construction,
+state. Graph selection now runs as a checked Factoidal CONSTRUCT stage. The JavaScript serialization bridge,
 compiler/host, runtime observations and correspondence between a query and the
 intended application rule are not proved by that contract. `#eval` executes a
 program; it is not a kernel proof of the execution result. The graph certificate

@@ -33,7 +33,19 @@ structure Context where
   scope : String
   regime : String
   runtimeVersion : String
-  deriving Repr
+  deriving Repr, DecidableEq
+
+/-- Application keys bind to exact query text, not to an implicit vocabulary. -/
+structure QueryBinding where
+  key : String
+  query : String
+  deriving Repr, DecidableEq
+
+/-- A host observation. This type does not prove query evaluation correct. -/
+structure QueryObservation where
+  query : String
+  answer : Bool
+  deriving Repr, DecidableEq
 
 structure Claim where
   key : String
@@ -46,6 +58,45 @@ structure Evidence where
   execution : Execution
   claims : List Claim
   deriving Repr
+
+def claimBindings (claims : List Claim) : List QueryBinding :=
+  claims.map (fun c => ⟨c.key, c.query⟩)
+
+def claimObservations (claims : List Claim) : List QueryObservation :=
+  claims.map (fun c => ⟨c.query, c.answer⟩)
+
+/-- The adapter preserves both input lists, their order, and the execution
+context. It rejects repeated keys, mismatched queries and truncated inputs.
+Non-completed runs cannot carry claims. This is an envelope contract, not
+an RDF entailment claim or a proof of the JavaScript transport. -/
+def adapterRequirements (ctx : Context) (execution : Execution)
+    (bindings : List QueryBinding) (observations : List QueryObservation)
+    (e : Evidence) : Prop :=
+  e.context = ctx ∧ e.execution = execution ∧
+  claimBindings e.claims = bindings ∧ claimObservations e.claims = observations ∧
+  (bindings.map QueryBinding.key).Nodup ∧
+  (execution ≠ .completed → e.claims = [])
+
+instance (ctx : Context) (execution : Execution)
+    (bindings : List QueryBinding) (observations : List QueryObservation)
+    (e : Evidence) : Decidable (adapterRequirements ctx execution bindings observations e) :=
+  inferInstanceAs (Decidable (_ ∧ _ ∧ _ ∧ _ ∧ _ ∧ _))
+
+def adaptEvidence (ctx : Context) (execution : Execution)
+    (bindings : List QueryBinding) (observations : List QueryObservation) : Except String Evidence :=
+  let claims := List.zipWith (fun b o => Claim.mk b.key b.query o.answer) bindings observations
+  let e : Evidence := ⟨ctx, execution, claims⟩
+  if adapterRequirements ctx execution bindings observations e then .ok e
+  else .error "Query bindings and observations do not satisfy the policy adapter contract"
+
+theorem adaptEvidence_contract (ctx : Context) (execution : Execution)
+    (bindings : List QueryBinding) (observations : List QueryObservation)
+    (e : Evidence) (h : adaptEvidence ctx execution bindings observations = .ok e) :
+    adapterRequirements ctx execution bindings observations e := by
+  simp only [adaptEvidence] at h
+  split at h
+  next hc => cases h; exact hc
+  next => contradiction
 
 def Evidence.established (e : Evidence) (key : String) : Bool :=
   decide (e.execution = .completed) && e.claims.any (fun c => c.key == key && c.answer)

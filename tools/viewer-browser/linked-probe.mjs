@@ -1,6 +1,8 @@
 import {chromium} from 'playwright';
 import fs from 'node:fs/promises';
-if(process.argv.includes('--hello')) {
+if(process.argv.includes('--tutorial')) {
+ await import('./lean-tutorial.mjs');
+} else if(process.argv.includes('--hello')) {
  await import('./lean-hello.mjs');
 } else if(process.argv.includes('--modules')) {
  await import('./lean-modules.mjs');

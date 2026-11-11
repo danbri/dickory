@@ -1,5 +1,5 @@
 import {gunzipSync} from './vendor/fflate.js';
-import {sha256} from './evidence.js';
+import {prepareCompilerFiles} from './compiler-cache.js';
 
 function untar(data){
   const files=new Map(),decode=new TextDecoder();
@@ -17,17 +17,10 @@ function untar(data){
 export class Lean4 {
   constructor({onProgress=()=>{},timeout=180000}={}){this.onProgress=onProgress;this.timeout=timeout;this.workers=new Set();this.libraryFiles=new Map();}
   async init(){
-    const manifest=await (await fetch(new URL('./compiler-assets.json',import.meta.url))).json();
-    const entries=await Promise.all(Object.entries(manifest).map(async([name,a])=>{
-      this.onProgress('Loading Lean 4.33.1: '+name);
-      const response=await fetch(new URL(a.url,import.meta.url));if(!response.ok)throw Error('Compiler asset unavailable: '+name);
-      const bytes=new Uint8Array(await response.arrayBuffer());
-      if(bytes.length!==a.bytes||await sha256(bytes)!==a.sha256)throw Error('Compiler asset checksum mismatch: '+name);
-      return [name,bytes];
-    }));
-    const data=Object.fromEntries(entries);
+    const {data,cache}=await prepareCompilerFiles(this.onProgress);this.cache=cache;
     this.jsUrl=URL.createObjectURL(new Blob([data['lean.js']],{type:'text/javascript'}));
     this.wasmUrl=URL.createObjectURL(new Blob([data['lean.wasm']],{type:'application/wasm'}));
+    this.onProgress('Unpacking the saved Lean library into memory…');
     this.libraryFiles=untar(gunzipSync(data['lean-lib.tar.gz']));
     const header=new TextDecoder().decode(this.libraryFiles.get('Init.olean')?.subarray(0,88));
     if(!header.includes('4.33.1')||!header.includes('4f9018a62ead9be0ffd652021d5afc8501e92253'))throw Error('Mismatched Init library');

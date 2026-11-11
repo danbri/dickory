@@ -2,6 +2,15 @@
 // Runtime initialization/UInt32 decoding follows cauli/lean4's Apache-2.0
 // tests/wasm/checks.cjs at 4f9018a62ead9be0ffd652021d5afc8501e92253.
 globalThis.leanHello = {
+  cases:[
+    ['version','#eval Lean.versionString',0,/4\.33\.1/],
+    ['hello','#eval "Hello from Lean"',0,/^"Hello from Lean"$/],
+    ['arithmetic','#eval 2 + 2',0,/^4$/],
+    ['proof','theorem hello (n : Nat) : n + 0 = n := by rfl\n#print axioms hello',0,/does not depend on any axioms/],
+    ['false theorem','example : (2 : Nat) + 2 = 5 := by rfl',1,null],
+    ['recovery after rejection','#eval 6 * 7',0,/^42$/],
+    ['library executable code','#eval ([1, 2, 3] : List Nat).reverse',0,/^\[3, 2, 1\]$/],
+  ],
   initialize(M) {
     M._lean_initialize_runtime_module();
     M._lean_initialize();
@@ -14,15 +23,7 @@ globalThis.leanHello = {
   },
   async run(M, takeDiagnostics, progress=()=>{}) {
     const string=s=>{const p=M.stringToNewUTF8(s),o=M._lean_mk_string(p);M._free(p);return o;};
-    const cases=[
-      ['version','#eval Lean.versionString',0,/4\.33\.1/],
-      ['hello','#eval "Hello from Lean"',0,/^"Hello from Lean"$/],
-      ['arithmetic','#eval 2 + 2',0,/^4$/],
-      ['proof','theorem hello (n : Nat) : n + 0 = n := by rfl\n#print axioms hello',0,/does not depend on any axioms/],
-      ['false theorem','example : (2 : Nat) + 2 = 5 := by rfl',1,null],
-      ['recovery after rejection','#eval 6 * 7',0,/^42$/],
-      ['library executable code','#eval ([1, 2, 3] : List Nat).reverse',0,/^\[3, 2, 1\]$/],
-    ];
+    const cases=this.cases;
     const results=[];
     for(const [name,source,wanted,output] of cases){
       // Reuse must survive returning to the host event loop between requests.

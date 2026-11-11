@@ -5,7 +5,7 @@ import {Worker} from 'node:worker_threads';
 import * as api from '@factoidal/core';
 import {evaluateRdf,scopeFrom,startRdf,queriesFrom,fixtureSource,leanString} from '../evidence.js';
 import {verifyCredential} from '../credential.js';
-import {auditContract} from '../lean-host.js';
+import {auditContract,accepted} from '../lean-host.js';
 import {scenarios,variants} from '../scenarios.js';
 const run=(s,scope='union',regime='RDFS')=>evaluateRdf(api,{...s,scope:scopeFrom(scope),regime});
 const answer=(r,key='classification')=>r.claims.find(c=>c.key===key)?.answer;
@@ -23,6 +23,25 @@ test('select before inference; new vocabulary stays runtime data',async()=>{
 test('shared blanks in one TriG document retain identity',async()=>{
  const s={dataset:'<urn:lab:data> { _:x <urn:p> <urn:o> . } <urn:lab:ontology> { _:x <urn:q> <urn:r> . }',description:'',queries:[{key:'shared',query:'ASK { ?x <urn:p> <urn:o> ; <urn:q> <urn:r> }'}]};
  assert.equal(answer(await run(s),'shared'),true);
+});
+test('selection and ASK use checked nodes with exact query bindings and separate explanation branch',async()=>{
+ const r=await run(scenarios[0]),p=r.pipeline;
+ assert.equal(p.registeredStagesProved,true);
+ assert(p.evidence.every(e=>e.checked&&e.settingsDigest));
+ assert.equal(p.graphCheck.nodes[0].wireOut,'Dataset');
+ for(const b of p.bindings){
+   const record=p.evidence.find(e=>e.node===b.node);
+   assert.equal(record.settings.query,b.query);assert.equal(p.graphCheck.nodes[b.node].wireOut,'Answer');
+ }
+ assert.equal(p.evidence.find(e=>e.node===p.explanationNode).stage,'rdfsExplainGraphStage');
+ assert.deepEqual(p.evidence.find(e=>e.node===p.explanationNode).from,[{node:0}]);
+});
+test('XSLT is a typed transformation with tested, not proved, evidence',async()=>{
+ const node=await api.node('xslt4Transform',{stylesheet:'<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"><xsl:template match="/"><answer>42</answer></xsl:template></xsl:stylesheet>'});
+ assert.equal(node.status,'tested');assert.equal(node.wireIn,'String');assert.equal(node.wireOut,'XSLT result');
+ const result=await api.run(api.pipe(node),'<input/>');
+ assert.equal(result.proved,false);assert.equal(result.evidence[0].checked,false);
+ assert.match(JSON.stringify(result.graph),/42/);
 });
 test('unsupported regimes and invalid input never become false observations',async()=>{
  assert.equal((await run(scenarios[0],'union','OWL-DL')).execution,'unsupported');
@@ -61,6 +80,7 @@ test('contract audit rejects additional axioms and compiler errors',()=>{
  assert(!auditContract(r("'LinkedAssurance.policy_contract' depends on axioms: [sorryAx]")));
  assert(!auditContract(r("'LinkedAssurance.policy_contract' depends on axioms: [HiddenAssumption]")));
  assert(!auditContract({exitCode:1,stdout:'',stderr:'failed'}));
+ assert(!accepted({exitCode:0,stderr:'',stdout:JSON.stringify({severity:'warning',kind:'hasSorry',data:'declaration uses `sorry`'})}));
 });
 test('Lean transport escapes text instead of splicing executable source',()=>{
  assert.equal(leanString('"\nend LinkedAssurance'),'"\\"\\nend LinkedAssurance"');

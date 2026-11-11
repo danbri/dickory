@@ -32,7 +32,7 @@ try{
  const page=await context.newPage(),errors=[];page.on('pageerror',e=>errors.push(e.message));
  await page.goto(base+'/labs/linked-assurance/');
  await page.waitForFunction(()=>document.querySelector('#leanEditor').value.includes('def policy'));
- assert.match(await page.locator('#compilerState').textContent(),/compiler_unavailable/);
+ assert.match(await page.locator('#compilerState').textContent(),/First use/);
  await page.click('#compile');await page.waitForFunction(()=>!document.querySelector('#compile').disabled);
  assert.match(await page.locator('#compilerReport').textContent(),/cross-origin isolation/);
  const evaluate=async()=>{
@@ -53,7 +53,7 @@ try{
  await page.selectOption('#regime','RDFS');await page.fill('#budget','1');r=await evaluate();assert.equal(r.execution,'timeout');assert.deepEqual(r.claims,[]);
  assert.equal(await page.locator('#knowledge').textContent(),'Not established');
  await page.fill('#budget','60000');r=await evaluate();
- await page.click('#prepare');await page.waitForFunction(()=>document.querySelector('#fixture').textContent.includes('def evidence'));
+ await page.click('#prepare');await page.waitForFunction(()=>document.querySelector('#fixture').textContent.includes('def adaptedEvidence'));
  assert.match(await page.locator('#credentialState').textContent(),/signature verified/);
  assert.equal(JSON.parse(await page.locator('#manifest').textContent()).policyExecution.executed,false);
  await page.locator('#rdfEditor').fill((await page.locator('#rdfEditor').inputValue())+'\n# edit');

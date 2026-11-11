@@ -13,7 +13,7 @@ env={**os.environ,'LEAN_PATH':str(out)}
 def lean(path,*args,success=True):
     p=subprocess.run(['lean','--json',*args,str(path)],cwd=root/'lean',env=env,capture_output=True,text=True,timeout=90)
     if (p.returncode==0)!=success: raise SystemExit(p.stdout+p.stderr+f'Unexpected exit {p.returncode}')
-    if success and "declaration uses 'sorry'" in p.stdout+p.stderr: raise SystemExit('Proof placeholder rejected')
+    if success and re.search(r"declaration uses [`']sorry[`']",p.stdout+p.stderr): raise SystemExit('Proof placeholder rejected')
     return p.stdout+p.stderr
 lean(root/'lean/Workbench.lean','-o',str(out/'Workbench.olean'))
 lean(root/'lean/Policy.lean','-o',str(out/'Policy.olean'))
@@ -36,11 +36,22 @@ example : attackerOutcome (policy alarm s) {s with attackerWantsInterruption := 
 #print axioms LinkedAssurance.policy_contract
 #print axioms LinkedAssurance.timeout_no_negative
 #print axioms LinkedAssurance.shutdown_can_be_attacker_success
+def bindings : List QueryBinding := [⟨"classification", "ASK { ?s ?p ?o }"⟩]
+def observations : List QueryObservation := [⟨"ASK { ?s ?p ?o }", true⟩]
+example : (adaptEvidence ctx .completed bindings observations).isOk = true := by decide
+example : (adaptEvidence ctx .completed bindings []).isOk = false := by decide
+example : (adaptEvidence ctx .completed [] observations).isOk = false := by decide
+example : (adaptEvidence ctx .completed bindings [⟨"ASK {}", true⟩]).isOk = false := by decide
+example : (adaptEvidence ctx .completed (bindings ++ bindings) (observations ++ observations)).isOk = false := by decide
+example : (adaptEvidence ctx .timeout bindings observations).isOk = false := by decide
+example : (adaptEvidence ctx .timeout [] []).isOk = true := by decide
+#print axioms LinkedAssurance.adaptEvidence_contract
+#print axioms LinkedAssurance.policy_pipeline_contract
 '''
 (out/'Checks.lean').write_text(checks)
 output=lean(out/'Checks.lean')
 messages=[json.loads(line).get('data','') for line in output.splitlines() if line.startswith('{')]
-for name in ['policy_contract','timeout_no_negative','shutdown_can_be_attacker_success']:
+for name in ['policy_contract','timeout_no_negative','shutdown_can_be_attacker_success','adaptEvidence_contract','policy_pipeline_contract']:
     audits=[m for m in messages if f"'LinkedAssurance.{name}'" in m]
     if len(audits)!=1:raise SystemExit(f'Missing or ambiguous axiom audit: {name}')
     if 'does not depend on any axioms' in audits[0]:continue
@@ -52,7 +63,7 @@ broken=(root/'lean/Policy.lean').read_text().replace('else if ready e s then .pe
 negative=lean(out/'Broken.lean',success=False)
 report={'status':'pass','compiler':subprocess.check_output(['lean','--version'],text=True).strip(),
 'sha256':{name:hashlib.sha256((root/name).read_bytes()).hexdigest() for name in ['lean/Workbench.lean','lean/Policy.lean']},
-'checks':['Workbench and Policy compiled','10 concrete outcomes proved by kernel reduction','Axiom dependencies printed','Removing the permission gate breaks the actual contract'],
+'checks':['Workbench and Policy compiled','10 concrete outcomes proved by kernel reduction','7 policy adapter acceptance/rejection checks proved','Axiom dependencies printed','Removing the permission gate breaks the actual contract'],
 'diagnostics':output,'negativeDiagnostics':negative}
 (root/'artifacts/lean-checks.json').write_text(json.dumps(report,indent=2)+'\n')
 print(json.dumps({k:v for k,v in report.items() if k not in ['diagnostics','negativeDiagnostics']},indent=2))

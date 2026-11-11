@@ -4,8 +4,12 @@
 <body>
 <header><a href="../../">DICKORY / LABS</a><span>EXPERIMENT 02 · FACTOIDAL × LEAN 4</span></header>
 <main>
+<section id="compilerBanner" aria-label="Download and prepare Lean"></section>
+<nav class="mainTabs" role="tablist" aria-label="Lab pages"><button id="workbenchTab" role="tab" aria-controls="workbenchPanel" aria-selected="true">Policy workbench</button><button id="learnTab" role="tab" aria-controls="tutorialPanel" aria-selected="false" tabindex="-1">Learn Lean · a small tutorial</button></nav>
+<section id="tutorialPanel" role="tabpanel" aria-labelledby="learnTab" hidden></section>
+<section id="workbenchPanel" role="tabpanel" aria-labelledby="workbenchTab">
 <section class="intro"><div><p class="eyebrow">LINKED ASSURANCE</p><h1>From RDF evidence<br>to a checked policy.</h1><p>Change the vocabulary. Inspect the inference. Edit the Lean policy and check what its contract actually guarantees.</p></div><aside><b>Three separate checks</b><p>Factoidal evaluates RDF.<br>Lean checks the policy contract.<br>The compiled policy runs on an explicit fixture.</p><small>The RDF-to-fixture translation is not proved.</small></aside></section>
-<p class="note"><strong>Working experiment:</strong> Factoidal evaluates RDF; Lean 4.33.1 checks and runs the policy in a browser worker. Enable compiler isolation below on first use. The compiler downloads about 184 MB; the first compilation and import can take a few minutes. Later policy runs reuse the compiled module. <a href="./tools/hello/">Try just Lean hello world</a> · <a href="./README.md">Reproduction and limits</a>.</p>
+<p class="note"><strong>Working experiment:</strong> Factoidal evaluates RDF; Lean 4.33.1 checks and runs the policy in a browser worker. Prepare Lean using the banner above. The first compilation and import can take a few minutes. Later policy runs reuse the compiled module. <a href="./tools/hello/">Try just Lean hello world</a> · <a href="./README.md">Reproduction and limits</a>.</p>
 <nav id="catalogue" aria-label="Policy catalogue"></nav><p id="scenarioNote" class="note"></p>
 <section class="controls">
 <label>Dataset variant<select id="variant"></select></label>
@@ -24,7 +28,14 @@
 <p class="hint">A real Lean module importing <a href="./lean/Workbench.lean">Workbench.lean</a>. Data, queries and vocabulary are runtime inputs. Editing the policy requires recompilation.</p>
 <textarea id="leanEditor" aria-label="Lean policy source" spellcheck="false"></textarea>
 <div class="actions"><button id="compile">Compile policy and contract</button><button id="runPolicy">Run compiled policy</button></div>
+<div class="policyResult"><strong id="policyRunSummary" role="status">No policy result yet.</strong><p>The result is a decision value returned by Lean. This demo records it; it does not grant access or carry out a shutdown.</p></div>
 <p id="compilerState" role="status">Compiler not loaded.</p><button id="isolate" class="secondary">Enable compiler isolation and reload</button>
+<details id="proof-walkthrough" class="proofGuide"><summary>Walk through the sample proof</summary>
+<p>The theorem assumes <code>h : policy e s = .permit</code> and must produce a proof of <code>permitRequirements e s</code>. <code>by</code> starts a tactic script that constructs that proof.</p>
+<ol><li><code>unfold policy at h</code> exposes the function's chain of conditionals inside the hypothesis.</li><li><code>split at h</code> considers both branches of the next conditional.</li><li><code>&lt;;&gt; try contradiction</code> tries to close each resulting goal. A branch returning <code>defer</code>, <code>escalate</code> or <code>protectiveShutdown</code> conflicts with <code>h</code>, which requires <code>permit</code>.</li><li>After six splits, only the final <code>ready</code> test remains. <code>next hr</code> names its successful branch's evidence, <code>ready e s = true</code>.</li><li><code>exact ready_sound e s hr</code> supplies precisely the proof of the requirements that we need. The final <code>contradiction</code> rules out <code>deny = permit</code>.</li></ol>
+<p>A conjunction is a pair of proofs. <code>.1</code> selects its first part; <code>.2</code> selects its second. The requirements are nested as completed ∧ (regime ∧ (credential ∧ (expiry ∧ (transport ∧ permission)))). Thus <code>.2.2.1</code> retrieves the credential proof and <code>.2.2.2.1</code> retrieves the expiry proof.</p>
+<p>The final <code>⟨adapterProof, policyProof⟩</code> constructs another pair: successful adaptation satisfies the adapter contract, and a permitted decision satisfies the policy contract. These are conditional proofs about the supplied observations, not proofs that those observations describe reality.</p>
+<a href="#learn/claims">Start with propositions in the Lean tutorial →</a></details>
 </section></div>
 <details class="operations" open><summary>Operational state and demo credential</summary>
 <p>The ECDSA check authenticates this payload under the bundled demo key. It does not verify an artifact, identity, consent, or transport. Transport and permission below are user-supplied observations.</p>
@@ -37,7 +48,7 @@
 <p id="credentialState">Not checked.</p></details>
 <section class="outcomes" aria-live="polite"><article><h2>Knowledge</h2><strong id="knowledge">Not evaluated</strong><p id="knowledgeNote">No negative conclusion from a failed or interrupted ASK.</p></article><article><h2>Execution</h2><strong id="execution">Not run</strong><p id="executionNote">RDF work is terminated at its deadline.</p></article><article><h2>Policy</h2><strong id="decision">Not run</strong><p id="decisionNote">Only the compiled Lean function produces this result.</p></article><article><h2>Adversarial outcome</h2><strong id="attackOutcome">Unknown</strong><p>Harm prevention: unknown. An interruption can be an attacker success.</p></article></section>
 <p id="status" role="status">Ready.</p>
-<div class="inspectors"><details><summary>RDF results and graph-derivation certificate</summary><pre id="rdfReport"></pre></details><details><summary>Compiler diagnostics and contract axioms</summary><pre id="compilerReport"></pre></details><details><summary>Exact generated Lean fixture</summary><pre id="fixture"></pre></details><details><summary>Input identity and trust assumptions</summary><pre id="manifest"></pre></details></div>
+<div class="inspectors"><details><summary>RDF results, contracted stages and graph-derivation certificate</summary><pre id="rdfReport"></pre></details><details><summary>Compiler diagnostics and contract axioms</summary><pre id="compilerReport"></pre></details><details><summary>Exact generated Lean fixture</summary><pre id="fixture"></pre></details><details><summary>Pipeline connections, input identity and assumptions</summary><pre id="manifest"></pre></details></div>
 <button id="download" class="secondary">Download evidence record</button>
-<footer><a href="./DESIGN.md">Design and proof obligations</a> · <a href="./README.md">Reproduce this lab</a><p>Input hashes identify exact serializations. They do not assert RDF canonicalization or semantic equivalence. Kernel acceptance of the policy contract does not certify the RDF transport, compiler, or host.</p></footer>
-</main><script type="module" src="./app.js"></script></body></html>
+<footer><a href="./DESIGN.md">Design and proof obligations</a> · <a href="./PIPELINES.md">Contracted pipeline stages</a> · <a href="./README.md">Reproduce this lab</a><p>Input hashes identify exact serializations. They do not assert RDF canonicalization or semantic equivalence. Kernel acceptance of the policy contract does not certify the RDF transport, compiler, or host.</p></footer>
+</section></main><script type="module" src="./app.js"></script></body></html>

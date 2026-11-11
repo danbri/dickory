@@ -22,6 +22,8 @@ try {
   console.log('Running '+name);const start=Date.now();
   await page.click('#runPolicy');await page.waitForFunction(()=>document.querySelector('#decision').textContent!=='Not run');
   assert.equal(await page.locator('#decision').textContent(),decision);
+  assert.match(await page.locator('#policyRunSummary').textContent(),new RegExp('Result: '+decision));
+  assert.match(await page.locator('#compilerState').textContent(),/Finished:/);
   if(attacker)assert.equal(await page.locator('#attackOutcome').textContent(),attacker);
   const record=JSON.parse(await page.locator('#manifest').textContent());
   assert.equal(record.policyExecution.sourceSha256,compiled.sourceSha256);

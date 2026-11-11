@@ -12,13 +12,13 @@ function ioValue(r){
   const box=Module.getValue(r+8,'i32')>>>0;
   return Module.getValue(box+8,'i32')>>>0;
 }
-function done(exitCode){
+function done(exitCode,runtimeFault=false){
   const artifacts=[];
   if(exitCode===0&&config.exportPrefix){
     for(const name of Module.FS.readdir('/lib/lean'))
       if(name.startsWith(config.exportPrefix+'.'))artifacts.push({name,data:Module.FS.readFile('/lib/lean/'+name)});
   }
-  send('result',{stdout:stdout.join('\n'),stderr:stderr.join('\n'),exitCode,artifacts});
+  send('result',{stdout:stdout.join('\n'),stderr:stderr.join('\n'),exitCode,artifacts,runtimeFault});
 }
 function invokeMain(args){
   if(typeof Module.callMain==='function')return Module.callMain(args);
@@ -29,7 +29,7 @@ function invokeMain(args){
 function compile(source,path){
   stdout=[];stderr=[];
   try {done(ioValue(Module._lean_wasm_compile(string(source),string(path))));}
-  catch(e){stderr.push(String(e.stack||e));done(1);}
+  catch(e){stderr.push(String(e.stack||e));done(1,true);}
 }
 function boot(){
   self.Module={
