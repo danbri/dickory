@@ -1,0 +1,14 @@
+{
+  "leanVersion": "4.33.1",
+  "leanCommit": "4f9018a62ead9be0ffd652021d5afc8501e92253",
+  "repository": "cauli/lean4",
+  "branch": "wasm-upstream-4.33.1",
+  "workflowRun": 34519035716,
+  "artifact": 10171167184,
+  "archiveBytes": 681781041,
+  "archiveSha256": "cd942e1efcbf0a711f9a58cbbfe819fa312d845fa0d4289b032b33b7c8730d4f",
+  "objects": {
+    "lean.js": {"bytes": 48467342, "sha256": "79f6bb9f2bd66e1e13c2d3ebfbf73d8e755d7af0e318b15367b1e50c0923ef37"},
+    "lean.wasm": {"bytes": 103725428, "sha256": "e24b3c712f59e983d7c805d5cc3faddd615398e820d27950834c9a3aa9e74151"}
+  }
+}

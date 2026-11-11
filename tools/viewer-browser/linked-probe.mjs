@@ -1,5 +1,8 @@
 import {chromium} from 'playwright';
 import fs from 'node:fs/promises';
+if(process.argv.includes('--hello')) {
+ await import('./lean-hello.mjs');
+} else {
 const browser=await chromium.launch({headless:true});
 try{
  const page=await browser.newPage();page.setDefaultTimeout(240000);
@@ -28,3 +31,4 @@ try{
  await fs.writeFile('../../labs/linked-assurance/artifacts/compiler-checks.json',JSON.stringify(report,null,2)+'\n');
  await page.screenshot({path:'../../labs/linked-assurance/artifacts/workbench.png',fullPage:true});
 }finally{await browser.close();}
+}
