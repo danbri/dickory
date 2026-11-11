@@ -1,0 +1,10 @@
+{
+  "name": "dickory-linked-assurance",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test tests/*.test.mjs",
+    "verify:lean": "python3 tools/check_lean.py"
+  },
+  "devDependencies": {"@factoidal/core": "0.35.1"}
+}

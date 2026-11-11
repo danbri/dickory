@@ -1,251 +1,150 @@
-import {scenarios,getScenario} from "./scenarios.js";
-
-const $=id=>document.getElementById(id);
-const state={scenario:getScenario("offer"),variant:null,editing:"data",edits:{data:"",ontology:""},engine:null,runToken:0,lastEvaluation:null};
-function currentScenario(){return state.scenario;}
-function selectedVariant(){return state.variant||state.scenario.variants[0];}
-function setText(id,txt){$(id).textContent=txt;}
-function setStatus(id,value,tone=""){const el=$(id);el.textContent=value;el.classList.remove("good","warn","bad");if(tone)el.classList.add(tone);}
-function getEdition(){return state.edits[state.editing];}
-function activateSample(id){
- state.scenario=getScenario(id);
- const s=state.scenario;
- $("scenario").value=s.id;
- $("variant").replaceChildren(...s.variants.map(v=>new Option(v.name,v.id)));
- const v=s.variants.find(v=>v.id===s.defaultVariant)||s.variants[0];
- $("variant").value=v.id;state.variant=v;
- state.edits={data:v.data,ontology:s.ontology};
- state.editing="data";renderEditorTabs();setText("policyTitle",s.title);
- $("leanEditor").value=s.lean;setText("proofNotes",s.reason);
- $("dataCount").textContent="Editable Turtle";
- drawPolicy();clearEvaluation();
+import {scenarios,variants} from './scenarios.js';
+import {runtime,sha256,scopeFrom,queriesFrom,startRdf,fixtureSource} from './evidence.js';
+import {verifyCredential} from './credential.js';
+import {compilerEnvironment,compilePolicy,executePolicy} from './lean-host.js';
+const $=id=>document.getElementById(id), show=(id,text)=>{$(id).textContent=text;};
+const state={scenario:scenarios[0],editor:'dataset',inputs:{},evaluation:null,job:null,epoch:0,record:null,compiled:null};
+const json=x=>JSON.stringify(x,null,2);
+let defaultPolicy,credential;
+function invalidate(rdf=true) {
+  state.epoch++;state.job?.cancel();state.job=null;state.record=null;
+  show('credentialState','Not checked for current inputs.');
+  if(rdf){state.evaluation=null;show('knowledge','Not evaluated');show('execution','Not run');show('executionNote','RDF work is terminated at its deadline.');show('rdfReport','');}
+  $('cancel').disabled=true;show('decisionNote','Only the compiled Lean function produces this result.');
+  show('decision','Not run');show('attackOutcome','Unknown');show('fixture','');show('manifest','');
 }
-function changeVariant(id){
- state.variant=state.scenario.variants.find(v=>v.id===id)||state.scenario.variants[0];
- state.edits={data:state.variant.data,ontology:state.scenario.ontology};
- renderEditorTabs();clearEvaluation();
+function activate(s) {
+  invalidate();state.scenario=s;
+  state.inputs={dataset:s.dataset,queries:json(s.queries),description:s.description};
+  $('variant').replaceChildren(...variants(s).map(v=>new Option(v.name,v.id)));
+  $('attacker').value=s.id==='alert'?'interrupt':'none';
+  show('scenarioNote',s.note);$('rdfEditor').value=state.inputs[state.editor];
+  document.querySelectorAll('#catalogue button').forEach(b=>b.setAttribute('aria-current',String(b.dataset.id===s.id)));
 }
-function renderEditorTabs(){
- document.querySelectorAll(".tab").forEach(b=>b.classList.toggle("active",b.dataset.editor===state.editing));
- $("rdfEditor").value=getEdition();
+function progress(text){show('compilerState',text);}
+function inputSnapshot(){return {...state.inputs,scope:scopeFrom($('scope').value),regime:$('regime').value,queries:queriesFrom(state.inputs.queries)};}
+async function evaluate() {
+  invalidate();const epoch=state.epoch,request=inputSnapshot(),started=performance.now();
+  state.job=startRdf(request,Number($('budget').value));
+  $('cancel').disabled=false;show('execution','Running');show('status','Evaluating the selected graph with Factoidal…');
+  const result=await state.job.promise;
+  if(epoch!==state.epoch)return null;
+  state.job=null;$('cancel').disabled=true;
+  result.elapsedMs=Math.round(performance.now()-started);
+  state.evaluation={request,result};
+  const classified=result.claims?.find(c=>c.key==='classification')?.answer===true;
+  show('knowledge',result.execution==='unsupported'?'Unsupported':classified?'Entailed (engine result)':'Not established');
+  show('execution',result.execution);show('executionNote',result.error||`${result.elapsedMs} ms; ${result.dataset.selectedQuads} selected triples; ${result.dataset.defaultQuads} default-graph triples.`);
+  show('rdfReport',json(result));show('status','RDF evaluation recorded. Policy has not run.');
+  return state.evaluation;
 }
-function drawPolicy(){
- const value=Number($("orientationSlider").value), s=state.scenario;
- const mode=value<34?"LEAN-FIRST":value>66?"RDF-FIRST":"HYBRID";
- $("orientation").textContent=value+"% RDF · "+mode;
- $("policyMode").textContent=mode;
- $("policyLanguage").textContent=mode==="LEAN-FIRST"?"Lean-oriented semantic specification (sketch)":mode==="HYBRID"?"RDF + fixed-operation policy (sketch)":"SPARQL/RDF policy view (query text)";
- setText("policyText",mode==="LEAN-FIRST"?s.leanFirst:mode==="HYBRID"?s.hybrid:s.rdfFirst);
- $("policyExplanation").textContent=mode==="RDF-FIRST"?"This is a runtime query over arbitrary ontology terms. External checks, if required, are separate fixed operations.":
-  mode==="HYBRID"?"Design notation for composing RDF entailments with registered operational checks. The running engine uses explicit queries and fixed JavaScript gates, not this hypothetical DSL.":
-  "Lean-style specifications refer to ontology identifiers as runtime RDF terms. This is design notation; the standalone kernel-checkable examples are below.";
+async function compile() {
+  const source=$('leanEditor').value;
+  $('compile').disabled=true;
+  try {
+    const result=await compilePolicy(source,progress);
+    show('compilerReport',json(result));
+    if(source!==$('leanEditor').value){progress('Source changed during compilation; compile the current text.');return;}
+    state.compiled=result.contractChecked?result:null;
+    progress(result.contractChecked?'Policy contract checked; compiled module ready.':'Contract rejected. Inspect compiler diagnostics.');
+  }catch(e){state.compiled=null;progress(String(e.message||e));show('compilerReport',String(e.stack||e));}
+  finally{$('compile').disabled=false;}
 }
-function clearEvaluation(){
- state.lastEvaluation=null;
- setStatus("rdfStatus","Not run");setStatus("decisionStatus","Not run");setStatus("proofStatus","Not checked");
- setText("rdfSummary","Query the dataset with Factoidal.");
- setText("decisionSummary","Evaluate the example policy against actual query results.");
- setText("proofSummary","The Lean source must be checked in the browser compiler; no kernel success is inferred.");
- setText("rdfTrace","");setText("decisionTrace","");setText("proofTrace","");
- setText("lastRun","NOT EVALUATED");
+async function prepareFixture() {
+  if(!state.evaluation)await evaluate();
+  if(!state.evaluation)return;
+  const epoch=state.epoch,{request,result}=state.evaluation,source=$('leanEditor').value;
+  const observedTime=Date.parse($('clock').value);
+  if(!/(Z|[+-]\d{2}:\d{2})$/.test($('clock').value)||!Number.isSafeInteger(observedTime)||observedTime<0)throw Error('Enter an ISO timestamp with a time zone.');
+  const payload=$('credentialPayload').value,signature=$('signature').value,scenario=state.scenario.id;
+  const verification=await verifyCredential(credential.publicKey,payload,signature);
+  if(epoch!==state.epoch)return null;
+  show('credentialState',verification.verified?'ECDSA signature verified for the displayed demo payload.':'Credential check failed.');
+  const operational={credentialVerified:verification.verified,observedTime,expiresAt:verification.expiresAt,
+    secureTransportObserved:$('transport').value==='secure',permissionGranted:$('permission').value==='yes',
+    attackerWantsInterruption:$('attacker').value==='interrupt',legitimateSession:state.scenario.id==='alert'};
+  const fallback={datasetBytesSha256:await sha256(request.dataset),selectedGraphSha256:'unavailable',scope:json(request.scope),regime:request.regime,runtimeVersion:runtime.version};
+  if(epoch!==state.epoch)return null;
+  const fixture=fixtureSource(result,operational,fallback);
+  const identities={datasetBytesSha256:fallback.datasetBytesSha256,queriesSha256:await sha256(json(request.queries)),
+    descriptionSha256:await sha256(request.description),policySourceSha256:await sha256(source),fixtureSha256:await sha256(fixture),
+    meaning:'SHA-256 of exact UTF-8 serialization; not RDF canonicalization'};
+  if(epoch!==state.epoch)return null;
+  show('fixture',fixture);
+  return {epoch,scenario,request,result,source,payload,signature,verification,operational,fixture,identities};
 }
-function termValue(binding,v){
- const term=binding?.[v];if(term==null)return null;
- if(typeof term==="string")return term;
- return term.value??term.lexicalForm??null;
+async function prepareOnly() {
+  const p=await prepareFixture();if(!p||p.epoch!==state.epoch)return;
+  state.record={schema:'linked-assurance-experiment-v1',scenario:p.scenario,
+    input:{...p.request,policy:p.source,credentialPayload:p.payload,credentialSignature:p.signature,operational:p.operational},
+    identities:p.identities,credentialVerification:p.verification,
+    rdf:p.result,fixture:p.fixture,policyExecution:{executed:false,reason:'Policy not run'},
+    environment:compilerEnvironment(),runtime,
+    assumptions:['RDF-to-Lean serialization is unproved.','No Lean policy result or RDF refutation is inferred.']};
+  show('manifest',json(state.record));show('status','Fixture and evidence ready to export. Policy not run.');
 }
-function unwrap(r){
- if(r&&typeof r==="object"&&r.result&&r.results===undefined&&r.boolean===undefined) return r.result;
- return r;
+async function runPolicy() {
+  if(!state.compiled||state.compiled.sourceSha256!==await sha256($('leanEditor').value))throw Error('Compile the current policy and contract first.');
+  const prepared=await prepareFixture();if(!prepared)return;
+  const {epoch,scenario,request,result,source,payload,signature,verification,operational,fixture,identities}=prepared;
+  $('runPolicy').disabled=true;
+  try {
+    const execution=await executePolicy(source,fixture,progress);
+    if(epoch!==state.epoch)return;
+    show('decision',execution.executed?execution.decision:'compilerFault');
+    show('attackOutcome',execution.executed?execution.attacker:'unknown');
+    show('decisionNote',execution.executed?'Computed by the compiled Policy.olean on the displayed fixture.':'No policy decision available. Inspect diagnostics.');
+    show('compilerReport',json({compile:state.compiled,execution}));
+    state.record={schema:'linked-assurance-experiment-v1',scenario,
+      input:{...request,policy:source,credentialPayload:payload,credentialSignature:signature,operational},
+      identities,fixture,rdf:result,credentialVerification:verification,compile:state.compiled,policyExecution:execution,
+      environment:compilerEnvironment(),runtime,
+      assumptions:['TriG parsing, graph selection and query execution use Factoidal 0.35.1.',
+        'The JavaScript/RDF-to-Lean fixture translation is not formally proved.',
+        'Graph-description evidence is separate from SPARQL-to-policy correspondence.',
+        'The demo key authenticates only its credential payload.',
+        'Clock, transport and permission are user-selected test observations.',
+        'Lean execution uses compiler/runtime machinery; #eval is not a kernel proof of that execution.',
+        'An attacker outcome uses the declared synthetic objective and test oracle. Harm prevention is unknown.']};
+    show('manifest',json(state.record));show('status','Evidence record ready.');
+  }finally{$('runPolicy').disabled=false;}
 }
-function booleanValue(r){
- r=unwrap(r);
- if(typeof r==="boolean")return r;
- if(typeof r?.boolean==="boolean")return r.boolean;
- if(typeof r?.result?.boolean==="boolean")return r.result.boolean;
- if(typeof r?.results?.boolean==="boolean")return r.results.boolean;
- throw new Error("Factoidal did not return a recognised SPARQL ASK boolean: "+JSON.stringify(r).slice(0,180));
+function guard(fn){return async()=>{try{await fn();}catch(e){show('status',String(e.message||e));$('cancel').disabled=true;}};}
+async function init() {
+  const responses=await Promise.all([fetch('./lean/Policy.lean'),fetch('./demo-credential.json')]);
+  if(responses.some(r=>!r.ok))throw Error('Required lab sources could not be loaded.');
+  defaultPolicy=await responses[0].text();credential=await responses[1].json();
+  $('leanEditor').value=defaultPolicy;$('credentialPayload').value=credential.payload;$('signature').value=credential.signature;
+  $('catalogue').replaceChildren(...scenarios.map(s=>{const b=document.createElement('button');b.textContent=s.title;b.dataset.id=s.id;b.onclick=()=>activate(s);return b;}));
+  document.querySelectorAll('[data-editor]').forEach(b=>b.onclick=()=>{
+    state.inputs[state.editor]=$('rdfEditor').value;state.editor=b.dataset.editor;$('rdfEditor').value=state.inputs[state.editor];
+    document.querySelectorAll('[data-editor]').forEach(t=>t.setAttribute('aria-selected',String(t===b)));
+  });
+  $('rdfEditor').oninput=()=>{state.inputs[state.editor]=$('rdfEditor').value;invalidate();};
+  $('leanEditor').oninput=()=>{state.compiled=null;invalidate(false);progress('Source changed. Compile the current policy.');};
+  $('variant').onchange=()=>{state.inputs.dataset=variants(state.scenario).find(v=>v.id===$('variant').value).dataset;invalidate();if(state.editor==='dataset')$('rdfEditor').value=state.inputs.dataset;};
+  $('restore').onclick=()=>activate(state.scenario);
+  $('resetPolicy').onclick=()=>{$('leanEditor').value=defaultPolicy;state.compiled=null;invalidate(false);};
+  for(const id of ['scope','regime','budget'])$(id).onchange=()=>invalidate();
+  for(const id of ['clock','transport','permission','attacker','credentialPayload','signature'])$(id).oninput=()=>invalidate(false);
+  $('prepare').onclick=guard(prepareOnly);$('evaluate').onclick=guard(evaluate);$('compile').onclick=guard(compile);$('runPolicy').onclick=guard(runPolicy);
+  $('cancel').onclick=()=>state.job?.cancel();
+  $('download').onclick=guard(async()=>{
+    if(!state.record)throw Error('Evaluate RDF and prepare a fixture, or run the compiled policy first.');
+    const url=URL.createObjectURL(new Blob([json(state.record)],{type:'application/json'}));
+    const a=document.createElement('a');a.href=url;a.download='linked-assurance-evidence.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
+  });
+  $('isolate').onclick=guard(async()=>{
+    if(!navigator.serviceWorker)throw Error('Service workers unavailable; use the supplied isolated local server.');
+    const registration=await navigator.serviceWorker.register('./coi-sw.js',{scope:'./'});
+    await navigator.serviceWorker.ready;
+    if(!navigator.serviceWorker.controller)await new Promise((resolve,reject)=>{
+      const timer=setTimeout(()=>reject(Error('Service worker did not take control. Reload manually.')),5000);
+      navigator.serviceWorker.addEventListener('controllerchange',()=>{clearTimeout(timer);resolve();},{once:true});
+    });
+    if(registration.active)location.reload();
+  });
+  const env=compilerEnvironment();progress(env.isolated?'Compiler isolation available. Compile loads the WASM compiler (large download).':'compiler_unavailable: page is not cross-origin isolated. Enable isolation or use the local server.');
+  $('isolate').hidden=env.isolated;activate(scenarios[0]);
 }
-function rowsValue(r){
- r=unwrap(r);
- const rows=r?.results?.bindings??r?.bindings??r?.result?.results?.bindings;
- if(!Array.isArray(rows))throw new Error("Factoidal did not return SPARQL SELECT bindings: "+JSON.stringify(r).slice(0,220));
- return rows;
-}
-function rawOutput(label,obj){return label+" "+JSON.stringify(obj);}
-async function loadEngine(){
- if(state.engine)return state.engine;
- setText("engineState","LOADING FACTOIDAL…");
- try {
-  const mod=await import("https://danbri.github.io/factoidal/npm/factoidal/browser.js");
-  if(typeof mod.query!=="function")throw new Error("Missing query() in Factoidal browser release");
-  state.engine=mod;
-  $("engineDot").classList.add("live");
-  setText("engineState","FACTOIDAL BROWSER");
-  return mod;
- }catch(err){
-  $("engineDot").classList.remove("live");
-  setText("engineState","ENGINE LOAD FAILED");
-  throw new Error("Could not load the published Factoidal browser module: "+(err.message||String(err)));
- }
-}
-async function executeQuery(merged,sparql,regime){
- const mod=await loadEngine();
- const opts=regime==="RDFS"?{entail:"RDFS",output:"json"}:{output:"json"};
- return await mod.query(merged,sparql,opts);
-}
-function auditDate(s){return Number.isFinite(Date.parse(s))?Date.parse(s):NaN;}
-function evaluateDecision(s,matched,rows,more,regime){
- const row=rows[0]||{};
- const audit=s.auditTime||"2026-11-11T12:00:00Z";
- const cutoff=auditDate(audit);
- if(s.id==="offer"){
-  const person=termValue(row,"agent")||"unresolved";
-  const transport=termValue(row,"transport"),crypto=termValue(row,"encryption");
-  const expiry=termValue(row,"expiry");
-  const secure=transport==="xmpp"&&crypto==="omemo";
-  const fresh=Number.isFinite(auditDate(expiry))&&auditDate(expiry)>cutoff;
-  const isOrg=more.org===true,disjointWitness=more.exclude===true;
-  const conflicting=isOrg&&disjointWitness;
-  let label,summary,tone;
-  if(conflicting){label="Conflicting evidence";summary="The queried class exclusion and Organization classification coexist. Escalate: do not use this as a consistent OWL classification.";tone="bad";}
-  else if(!matched){label="Classification unresolved";summary="RDFS query did not establish ArtificialAgent for this offer. No closed-world negative conclusion is drawn.";tone="warn";}
-  else if(isOrg){label="Organisation route";summary="Positive Organization evidence. This sample does not take the non-organisation ethics route.";tone="good";}
-  else if(!disjointWitness){label="Exclusion unproven";summary="ArtificialAgent is established, but no queried class/disjointness witness excludes Organization. Unknown is not false.";tone="warn";}
-  else{label="Ethics review required";summary="ArtificialAgent and an explicit class/disjointness witness were found. This is a review requirement, not approval to execute.";tone="good";}
-  const permitted=matched&&disjointWitness&&!isOrg&&secure&&fresh;
-  return {label,summary,tone,trace:[
-   "responsible="+person,"entailed ArtificialAgent="+matched,"positive Organization="+isOrg,
-   "explicit disjointness witness="+disjointWitness,"transport "+transport+" / "+crypto+" = "+(secure?"pass":"fail"),
-   "credential valid at "+audit+" = "+(fresh?"pass":"fail"),
-   "operational precheck="+(permitted?"PASS (not authorised)":"BLOCKED"),
-   "No OWL negative entailment or cryptographic proof is claimed."
-  ]};
- }
- if(s.id==="event"){
-  const consent=termValue(row,"consent")==="yes";
-  const expires=termValue(row,"expiry"),fresh=Number.isFinite(auditDate(expires))&&auditDate(expires)>cutoff;
-  const pass=matched&&consent&&fresh;
-  return {label:pass?"Admission precheck passes":"Admission blocked",tone:pass?"good":"warn",
-   summary:pass?"RDFS event classification, attendance, declared consent and validity window pass the demonstration gate.":"At least one required condition is unestablished or false.",
-   trace:["RDFS Event and attendee="+matched,"consent declaration="+consent,"inside window="+fresh,"audit clock="+audit,"Consent's real-world validity is not certified."]};
- }
- if(s.id==="artifact"){
-  const signature=termValue(row,"signature")==="verified";
-  const expires=termValue(row,"expiry"),fresh=Number.isFinite(auditDate(expires))&&auditDate(expires)>cutoff;
-  const pass=matched&&!!termValue(row,"reviewer")&&signature&&fresh;
-  return {label:pass?"Release flag passes":"Release blocked",tone:pass?"warn":"bad",
-   summary:pass?"All asserted RDF flags pass, but the signature is only a string, NOT a cryptographic verification.":"A required assertion, classification or expiry window is missing or failing.",
-   trace:["entailed CreativeWork="+matched,"approval field present="+!!termValue(row,"reviewer"),"signature *flag*="+signature,"deadline live="+fresh,"real signature verification=NOT RUN"]};
- }
- const classValues=rows.map(r=>termValue(r,"class")).filter(Boolean);
- return {label:matched?(regime==="RDFS"?"Qualified via RDFS":"Directly qualified"):"Not established",tone:matched?"good":"warn",
-  summary:matched?"The novel class supplied in the ontology contributes to a valid subclass entailment.":"No relevant RDF inheritance was established from the current asserted class.",
-  trace:["qualifies as ApprovedSupplier="+matched,"query class rows="+classValues.length, ...classValues.slice(0,6).map(v=>"  "+v)]};
-}
-async function run(){
- const token=++state.runToken,s=state.scenario;
- state.edits[state.editing]=$("rdfEditor").value;
- const merged=state.edits.ontology+"\n"+state.edits.data;
- const regime=$("regime").value;
- $("run").disabled=true;$("run").textContent="Evaluating…";
- setStatus("rdfStatus","Running…");setStatus("decisionStatus","Awaiting RDF…");
- setText("rdfTrace","");
- try {
-  const started=performance.now();
-  const results=await executeQuery(merged,s.query,regime);
-  const rows=rowsValue(results);
-  const resultAsk=await executeQuery(merged,s.ask,regime);
-  const matched=booleanValue(resultAsk);
-  const more={};
-  for(const q of s.complementary||[]){more[q.key]=booleanValue(await executeQuery(merged,q.query,regime));}
-  if(token!==state.runToken)return;
-  const ms=Math.round(performance.now()-started);
-  setStatus("rdfStatus",matched?"Entailment established":"Not established",matched?"good":"warn");
-  setText("rdfSummary",matched?"Factoidal returned true for the relevant RDF classification query.":"Factoidal did not establish the requested classification; this is not automatically a refutation.");
-  setText("rdfTrace",[
-    "Engine: Factoidal published browser.js",
-    "Regime: "+regime,
-    "ASK result: "+matched,
-    "SELECT rows: "+rows.length,
-    "Elapsed: "+ms+" ms",
-    ...Object.entries(more).map(([k,v])=>k+" ASK: "+v)
-  ].join("\n"));
-  const decision=evaluateDecision(s,matched,rows,more,regime);
-  setStatus("decisionStatus",decision.label,decision.tone);
-  setText("decisionSummary",decision.summary);
-  setText("decisionTrace",decision.trace.join("\n"));
-  setStatus("proofStatus","Not kernel checked","warn");
-  setText("proofSummary","The Lean source states general obligations over semantic evidence and executable gates. Run it in Lean WASM; this app makes no assertion of Lean kernel acceptance.");
-  setText("proofTrace","RDF entailment: executed\nPolicy gate: evaluated\nLean kernel: not run here\nRDF-to-Lean evidence bridge: not proved");
-  state.lastEvaluation={scenario:s.id,matched,rows:rows.length,ms,more,decision};
-  setText("lastRun","EXECUTED · "+ms+" MS");
- }catch(err){
-  if(token!==state.runToken)return;
-  setStatus("rdfStatus","Execution error","bad");setStatus("decisionStatus","Not evaluated","warn");
-  setText("rdfSummary",err.message||String(err));
-  setText("rdfTrace","No fallback engine was used. An RDF result is not fabricated on error.");
-  setText("decisionSummary","Cannot evaluate without an RDF result.");
-  setText("decisionTrace","");
-  setText("lastRun","ERROR");
- }finally{
-  if(token===state.runToken){$("run").disabled=false;$("run").innerHTML="Evaluate policy <span>↗</span>";}
- }
-}
-function copyText(text){
- const fallback=()=>{
-  const el=document.createElement("textarea");el.value=text;document.body.appendChild(el);el.select();document.execCommand("copy");el.remove();
- };
- if(navigator.clipboard?.writeText)navigator.clipboard.writeText(text).catch(fallback);
- else fallback();
-}
-function install(){
- $("scenario").replaceChildren(...scenarios.map(s=>new Option(s.title,s.id)));
- $("scenario").addEventListener("change",ev=>activateSample(ev.target.value));
- $("variant").addEventListener("change",ev=>changeVariant(ev.target.value));
- $("orientationSlider").addEventListener("input",drawPolicy);
- $("run").addEventListener("click",run);
- document.querySelectorAll(".tab").forEach(btn=>btn.addEventListener("click",()=>{
-  state.edits[state.editing]=$("rdfEditor").value;
-  state.editing=btn.dataset.editor;renderEditorTabs();
- }));
- $("rdfEditor").addEventListener("input",()=>{state.edits[state.editing]=$("rdfEditor").value;});
- $("restore").addEventListener("click",()=>{
-  if(state.editing==="data")state.edits.data=selectedVariant().data;
-  else state.edits.ontology=state.scenario.ontology;
-  renderEditorTabs();clearEvaluation();
- });
- $("copyRdf").addEventListener("click",()=>copyText($("rdfEditor").value));
- $("copyPolicy").addEventListener("click",()=>copyText($("policyText").textContent));
- $("copyLean").addEventListener("click",()=>copyText($("leanEditor").value));
- $("openLean").addEventListener("click",async()=>{
-  const source=$("leanEditor").value;
-  copyText(source);
-  // The actual browser Lean playground accepts a gzip-compressed
-  // {files,active} workspace in #s= (client-side only).
-  const tab=window.open("about:blank","_blank");
-  try{
-   if(typeof CompressionStream!=="function")throw new Error("CompressionStream is not supported");
-   const workspace={files:[{name:"Main.lean",content:source}],active:"Main.lean"};
-   const raw=new TextEncoder().encode(JSON.stringify(workspace));
-   const zipped=new Uint8Array(await new Response(new Blob([raw]).stream().pipeThrough(new CompressionStream("gzip"))).arrayBuffer());
-   let bin="";for(const b of zipped)bin+=String.fromCharCode(b);
-   const hash=btoa(bin).replaceAll("+","-").replaceAll("/","_").replace(/=+$/,"");
-   const url="https://lean.cau.li/#s="+hash;
-   if(tab)tab.location.href=url;
-   else window.location.href=url;
-  }catch(err){
-   if(tab)tab.location.href="https://lean.cau.li";
-   setText("proofSummary","Lean source copied. The browser couldn't package a prefilled Lean workspace: "+err.message);
-  }
- });
- $("library").replaceChildren(...scenarios.map((s,i)=>{
-  const b=document.createElement("button");b.className="libraryItem";b.innerHTML='<span class="num">0'+(i+1)+' / EXPERIMENT</span><b></b><p></p>';
-  b.querySelector("b").textContent=s.short;b.querySelector("p").textContent=s.summary;
-  b.addEventListener("click",()=>{activateSample(s.id);document.querySelector(".controls").scrollIntoView({behavior:"smooth",block:"start"});});
-  return b;
- }));
- activateSample("offer");
- // Loading is deferred to the first evaluation, keeping the landing page fast.
-}
-install();
+init().catch(e=>show('status',String(e.message||e)));
