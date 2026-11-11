@@ -13,6 +13,13 @@ OUT = ROOT / "_site"
 LAB = Path("labs/rdf11")
 ARTIFACTS = LAB / "cleanroom/artifacts"
 FILES = [Path("index.html"), Path("labs/index.html"), LAB / "index.html"]
+# Linked Assurance is a separate experimental lab. Stage only its explicit
+# browser source files; never publish raw repo trees or generated secrets.
+LINKED_ASSURANCE = Path("labs/linked-assurance")
+FILES += [LINKED_ASSURANCE / name for name in (
+    "index.html", "style.css", "app.js", "scenarios.js",
+    "lean-host.js", "rdf-worker.js", "coi-sw.js",
+)]
 FILES += [ARTIFACTS / name for name in (
     "source-review.html", "verification.json", "negative-checks.json", "declarations.json",
     "closure-execution.json", "instance-execution.json"
