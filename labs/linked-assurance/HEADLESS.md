@@ -51,7 +51,8 @@ Install the headless package first. Then start:
 
 Configure an MCP client to launch that file with Node through stdio. Its
 two tools are linked_assurance_cases and linked_assurance_evaluate.
-The runner actually uses Node worker_threads and the actual Factoidal WASM.
+The RDF runner actually uses Node worker_threads and the actual Factoidal WASM.
+A third MCP tool, linked_assurance_policy, invokes native Lean 4.33.1 after verifying the demo credential and generating the Lean fixture.
 
 ## Browser WebMCP
 
@@ -106,12 +107,31 @@ harness. Neither Lean nor the test suite proves global Node-vs-Chromium
 WebAssembly semantics, JavaScript marshalling, memory management or
 memory-crash freedom.
 
-**Important scope limitation:** the present CLI parity test covers
-Factoidal RDF/evidence execution, NOT complete independent execution of
-the Lean policy in both environments. The existing browser compiler
-and the separate native Lean policy checks are not yet a two-runner
-end-to-end equivalence test. That extension remains necessary before
-claiming full policy-execution parity.
+The generic node-runner and linked-headless CLIs compare the RDF/evidence
+stage across multiple scenarios. Two additional paths exercise the **actual
+Lean policy** on a matching fixture:
+
+    node labs/linked-assurance/tools/headless/policy-runner.mjs --scenario vocabulary
+    node tools/viewer-browser/lean-policy.mjs
+
+The browser command is an existing headless policy regression runner, now
+extended to independently execute the Node/native-Lean path and compare:
+
+- default vocabulary fixture: decisions, attacker outcomes, fixture hash,
+  and selected graph hash;
+- false-alarm fixture: protective shutdown, attacker success and fixture hash.
+
+Both must use pinned Lean 4.33.1: native Lean in Node and wasm32 Lean inside
+Chromium. The browser needs the pinned verified compiler assets staged by
+Dickory's site build; a bare checkout without those assets cannot run it.
+
+**This is bounded test-case parity, not a universal equivalence proof of
+Node and Chromium.** The Lean theorem states conditional application-policy
+parity assuming identical evidence and operations. Neither the host
+serialization bridge nor either runtime's memory behaviour has been
+formally verified. The generic browser CLI's WebMCP tool does RDF evaluation;
+full Lean execution remains available in the interactive UI and the
+headless policy regression CLI.
 
 ## Checks
 
