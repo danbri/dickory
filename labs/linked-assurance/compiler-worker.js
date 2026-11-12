@@ -22,7 +22,8 @@ function done(exitCode,runtimeFault=false){
       if(name.startsWith(config.exportPrefix+'.'))artifacts.push({name,data:Module.FS.readFile('/lib/lean/'+name)});
   }
   send('result',{stdout:stdout.join('\n'),stderr:stderr.join('\n'),exitCode,artifacts,runtimeFault,
-    memory:{initialBytes:initialMemoryBytes,linearBytes:compilerMemory.buffer.byteLength}});
+    memory:{initialBytes:initialMemoryBytes,linearBytes:compilerMemory.buffer.byteLength,
+      taskWorkers:PThread.runningWorkers.length+PThread.unusedWorkers.length}});
 }
 function invokeMain(args){
   // Call Lean's exported shell entry point inside this existing browser worker.
@@ -83,8 +84,8 @@ function boot(){
   };
   send('progress',{phase:'Loading and compiling the WebAssembly machinery…'});
   importScripts(config.jsUrl);
-  // Keep one task worker; the pinned glue eagerly creates a pool of four.
-  // Shrink it before the async WASM initialization starts the preRun loader.
+  // Retain one preloaded task worker. Starting it only when a synchronous
+  // command first joins a task can deadlock the Emscripten startup handshake.
   for(const worker of PThread.unusedWorkers.splice(1))worker.terminate();
 }
 self.onmessage=({data})=>{

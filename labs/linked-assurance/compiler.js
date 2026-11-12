@@ -17,7 +17,7 @@ function untar(data){
 export class Lean4 {
   constructor({onProgress=()=>{},timeout=180000}={}){this.onProgress=onProgress;this.timeout=timeout;this.workers=new Set();this.libraryFiles=new Map();}
   async init(){
-    const {data,cache,compilerSha256}=await prepareCompilerFiles(this.onProgress);this.cache=cache;this.compilerSha256=compilerSha256;
+    const {data,cache,compilerSha256,runtimeSha256}=await prepareCompilerFiles(this.onProgress);this.cache=cache;this.compilerSha256=compilerSha256;this.runtimeSha256=runtimeSha256;
     this.jsUrl=URL.createObjectURL(new Blob([data['lean.js']],{type:'text/javascript'}));
     // Emscripten eagerly creates its pool. Defer loading the large runtime in
     // each child until a job arrives; the host retains only one task worker.

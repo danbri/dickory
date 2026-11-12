@@ -23,7 +23,7 @@ export async function compilerFilesSaved(){
     const manifest=await response.json(),cache=await globalThis.caches?.open(cacheName);
     if(!cache)return false;
     const keys=new Set((await cache.keys()).map(r=>r.url));
-    return Object.values(manifest).every(a=>keys.has(new URL('./__lean_cache__/'+a.sha256,import.meta.url).href));
+    return Object.values(manifest).every(asset=>keys.has(new URL('./__lean_cache__/'+(asset.browser||asset).sha256,import.meta.url).href));
   }catch{return false;}
 }
 
@@ -36,10 +36,11 @@ export function releasePreparedCompilerFiles(){prepared=null;}
 export async function loadCompilerAssets(manifest,progress=()=>{},storage=globalThis.caches,fetcher=globalThis.fetch) {
   let cache;
   try {cache=await storage?.open(cacheName);}catch{/* Private mode / quota: run without disk caching. */}
-  const total=Object.values(manifest).reduce((n,a)=>n+a.bytes,0),loaded=new Map();
+  const runtime=Object.fromEntries(Object.entries(manifest).map(([name,a])=>[name,a.browser||a]));
+  const total=Object.values(runtime).reduce((n,a)=>n+a.bytes,0),loaded=new Map();
   let downloaded=0,cached=0,cacheWritable=!!cache;
   const entries=[];
-  for(const [name,a] of Object.entries(manifest))entries.push(await(async()=>{
+  for(const [name,a] of Object.entries(runtime))entries.push(await(async()=>{
     const url=new URL(a.url,import.meta.url),key=new URL('./__lean_cache__/'+a.sha256,import.meta.url).href;
     const valid=async bytes=>bytes.length===a.bytes && await sha256(bytes)===a.sha256;
     const hit=await cache?.match(key).catch(()=>null);
@@ -69,7 +70,7 @@ export async function loadCompilerAssets(manifest,progress=()=>{},storage=global
   })());
   progress(cached===total?'Compiler files loaded from this device; integrity checks passed.':
     cacheWritable?'Compiler files verified and saved on this device.':'Compiler files verified; browser storage unavailable. Files may download again next visit.');
-  return {data:Object.fromEntries(entries),compilerSha256:Object.fromEntries(Object.entries(manifest).map(([name,asset])=>[name,asset.sha256])),cache:{downloadedBytes:downloaded,cachedBytes:cached,totalBytes:total,persistentCacheAvailable:cacheWritable}};
+  return {data:Object.fromEntries(entries),compilerSha256:Object.fromEntries(Object.entries(manifest).map(([name,asset])=>[name,asset.sha256])),runtimeSha256:Object.fromEntries(Object.entries(runtime).map(([name,asset])=>[name,asset.sha256])),cache:{downloadedBytes:downloaded,cachedBytes:cached,totalBytes:total,persistentCacheAvailable:cacheWritable}};
 }
 
 export async function clearCompilerCache(){prepared=null;await globalThis.caches?.delete(cacheName);}

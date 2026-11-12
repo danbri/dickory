@@ -29,6 +29,7 @@ FILES += [LINKED_ASSURANCE / name for name in (
     "tools/hello/README.md", "tools/hello/toolchain.json", "tools/hello/web-bundle.json",
     "tools/hello/prepare.py", "tools/hello/fetch.py", "tools/hello/node.cjs",
     "tools/build_modules.cjs", "artifacts/workbench-wasm.json", "artifacts/policy-wasm.json",
+    "tools/build_browser_host.cjs", "artifacts/lean-browser.js", "artifacts/browser-host-checks.json",
     "artifacts/toolchain-4.33.1-files.json", "artifacts/toolchain-4.33.1/lean-lib.tar.gz",
     "README.md", "DESIGN.md", "PIPELINES.md", "THIRD_PARTY.md",
     "artifacts/lean-checks.json", "artifacts/runtime-checks.json", "artifacts/tutorial-checks.json", "artifacts/pipeline-native-checks.json",
@@ -71,6 +72,11 @@ def main():
         path = ROOT / LINKED_ASSURANCE / expected['url']
         if path.stat().st_size != expected['bytes'] or hashlib.sha256(path.read_bytes()).hexdigest() != expected['sha256']:
             raise SystemExit(f'Compiler asset checksum mismatch: {name}')
+        if 'browser' in expected:
+            browser = expected['browser']
+            path = ROOT / LINKED_ASSURANCE / browser['url']
+            if path.stat().st_size != browser['bytes'] or hashlib.sha256(path.read_bytes()).hexdigest() != browser['sha256']:
+                raise SystemExit(f'Browser host checksum mismatch: {name}')
     # This listing comes from the hash-verified prepared archive, not the repo tree.
     listing = json.loads((ROOT / LINKED_ASSURANCE / 'artifacts/toolchain-4.33.1-files.json').read_text())
     for entry in listing:

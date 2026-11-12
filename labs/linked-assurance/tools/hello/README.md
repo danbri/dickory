@@ -1,8 +1,10 @@
 # Lean WASM hello-world checks
 
 These deliberately bypass the RDF/policy bridge. The same small programs run
-under Node, Deno, and Chromium using identical Lean 4.33.1 JS/WASM files and the
+under Node, Deno, and Chromium using identical Lean 4.33.1 WASM files and the
 matching wasm32 Init `.olean`, `.ir`, and `.ir.sig` files.
+The interactive page uses the lab's compact JS export loader; the Node/Deno and
+reference browser harnesses use the original upstream JS.
 
 The checks print a greeting, evaluate `2 + 2`, prove a theorem by `rfl`, reject a
 false theorem with compiler status 1, recover after rejection, and evaluate a
@@ -28,6 +30,7 @@ gh api repos/cauli/lean4/actions/artifacts/10171167184/zip > labs/linked-assuran
 python3 labs/linked-assurance/tools/hello/prepare.py
 node labs/linked-assurance/tools/hello/node.cjs
 deno run -A labs/linked-assurance/tools/hello/node.cjs
+node labs/linked-assurance/tools/build_browser_host.cjs
 python3 labs/linked-assurance/tools/serve.py --isolate --port 8081
 ```
 
@@ -37,7 +40,13 @@ browser page. For the automated Chromium check, from `tools/viewer-browser`:
 
 ```sh
 node linked-probe.mjs --hello
+node linked-probe.mjs --startup --webkit --tasks --site=http://127.0.0.1:8081
 ```
+
+The second command exercises the actual hello page, including a task that needs
+the preloaded worker. On macOS it also samples new WebContent processes every
+500 ms and reports aggregate peak RSS. That includes more than WASM linear
+memory, but is a desktop measurement, not a prediction of an iPhone's limit.
 
 [toolchain.json](toolchain.json) pins the successful upstream
 [build](https://github.com/cauli/lean4/actions/runs/34519035716), archive and binary

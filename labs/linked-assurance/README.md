@@ -44,6 +44,22 @@ rather than 2 GiB, and retains one task worker instead of four. Downloads avoid
 duplicate chunk buffers and release raw asset copies after runtime preparation.
 WASM linear-memory figures exclude the browser's other allocations.
 
+An iPhone Chrome report reached “files ready” and then lost the tab during
+hello-world startup. Isolation was already working. Desktop WebKit measurements
+showed roughly 2.8 GiB peak aggregate WebContent RSS on that path. This suggests
+memory pressure, but is not a device crash log or a measured iOS limit.
+The browser now uses a 146 KB generated loader instead of the upstream 48 MB
+export-assignment script, and no longer starts a disposable runtime for
+`--version`. Desktop runs with these changes peaked around 2.2–2.4 GiB: still too
+large to claim reliable phone support. Download success is not runtime readiness.
+
+`tools/build_browser_host.cjs` accepts only the pinned upstream JS/WASM hashes.
+It replaces repetitive JS export wiring with a loop, retaining all 105,330 public
+bindings and the locals used by the glue. The build exhaustively compares the
+original and compact assignments, including unsigned global conversions. The
+compiler WASM and library remain byte-identical. `compiler-assets.json` records
+the separate browser-loader checksum; runtime diagnostics preserve that identity.
+
 The browser uses a pinned Lean **4.33.1** wasm32 compiler and matching Init
 library, including executable IR. Hello-world evaluation, theorem checking,
 rejection and recovery pass in Node, Deno, Chromium and desktop WebKit. The sample
@@ -59,8 +75,9 @@ permit gate. **WebKit policy editing currently exceeds the compiler's call-stack
 limit**, including through the synchronous API; moving just the support module
 out of the browser did not fix this. The WebKit regression verifies the runtime
 failure is distinguished from a rejected proof, execution is blocked for the
-unchecked edit, and restoring the published policy recovers. This applies to
-iPhone Chrome's WebKit engine too, although a physical iPhone has not been tested.
+unchecked edit, and restoring the published policy recovers.
+iPhone startup is a separate unresolved limitation; successful desktop WebKit
+tests do not establish that the compiler fits on an iPhone.
 The compiler runs in a worker
 and repeated fixtures reuse the imported environment. See
 [the minimal checks](tools/hello/README.md).
@@ -122,7 +139,7 @@ Open <http://127.0.0.1:8081/labs/linked-assurance/>. Without `--isolate`, the ap
 can request a service worker scoped only to the lab and reload. The compiler
 requires a secure context, COOP/COEP and SharedArrayBuffer. If they are absent,
 the UI reports `compiler_unavailable`. It does not redirect to another IDE.
-The compiler downloads approximately 184 MB of pinned assets on first use.
+The compiler downloads approximately 136 MB of pinned assets on first use.
 Its upstream fork commit is `4f9018a62ead9be0ffd652021d5afc8501e92253`.
 This matches Factoidal's Lean release version, but wasm32 and the patched fork
 still require matching compiled modules; native Factoidal oleans are not imported.

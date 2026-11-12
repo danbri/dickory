@@ -1,5 +1,5 @@
 import {sha256} from './evidence.js';
-let compiler, loading, compilerVersion=null, versionProbe=null, busy=false, checked=null;
+let compiler, loading, compilerVersion=null, busy=false, checked=null;
 const runKey='linked-assurance-lean-run-v1';
 let currentRun=null,previousRun=null;
 try{previousRun=JSON.parse(globalThis.sessionStorage?.getItem(runKey)||'null');}catch{}
@@ -18,7 +18,8 @@ export function compilerEnvironment() {
   return {isolated:globalThis.crossOriginIsolated===true,sharedMemory:typeof SharedArrayBuffer!=='undefined',
     secureContext:globalThis.isSecureContext===true,embedded:typeof window!=='undefined'&&window.self!==window.top,
     serviceWorkerAvailable:!!globalThis.navigator?.serviceWorker,serviceWorkerControlled:!!globalThis.navigator?.serviceWorker?.controller,
-    sdk:'Dickory worker host; Lean 4.33.1 wasm32',compilerVersion,versionProbe,cache:compiler?.cache||null};
+    sdk:'Dickory worker host; Lean 4.33.1 wasm32',compilerVersion,versionIdentitySource:compiler?'Verified compiler hashes and Init.olean header':null,
+    runtimeSha256:compiler?.runtimeSha256||null,cache:compiler?.cache||null};
 }
 export function compilerUnavailableReason(){
   const env=compilerEnvironment();
@@ -66,14 +67,11 @@ async function getCompiler(progress) {
     const instance=new Lean4({timeout:180000,onProgress:progress});
     try {
       await instance.init();
-      progress('Initialising Lean 4.33.1 in a worker…');
-      const version=await instance.run('-- Compiler version probe\n',{flags:['--version']});
-      versionProbe=version;
-      compilerVersion=version.stdout.match(/Lean \(version[^\n]+/)?.[0]||null;
-      if(!compilerVersion)throw Error('compiler_unavailable: compiler version probe produced no version.\n'+diagnosticText(version));
-      // This informational probe is not a proof check. Preserve its exit status;
-      // the published-module checks or local policy compilation are separate.
-      instance.version=compilerVersion;
+      // Asset hashes and the Init header identify this distribution. Starting a
+      // whole extra runtime only for --version can overlap with the real worker
+      // before the browser reclaims its memory. The hello checks evaluate the
+      // runtime's Lean.versionString inside the same reusable session.
+      compilerVersion=instance.version='Lean 4.33.1 wasm32; pinned commit 4f9018a62ead9be0ffd652021d5afc8501e92253';
       compiler=instance;return instance;
     }catch(e){instance.dispose();throw e;}
   })();

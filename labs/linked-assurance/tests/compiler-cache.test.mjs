@@ -26,3 +26,11 @@ test('streamed assets reject truncation and oversized bodies before cache admiss
   await assert.rejects(loadCompilerAssets(manifest,()=>{},undefined,async()=>response([[1,2]])),/checksum mismatch/);
   await assert.rejects(loadCompilerAssets(manifest,()=>{},undefined,async()=>response([[1,2,0,0],[3]])),/checksum mismatch/);
 });
+test('browser host bytes are verified separately from the pinned upstream compiler identity',async()=>{
+  const bytes=new TextEncoder().encode('compact host'),digest=await sha256(bytes);
+  const manifest={'lean.js':{url:'./upstream.js',bytes:999,sha256:'upstream-sha',browser:{url:'./compact.js',bytes:bytes.length,sha256:digest}}};
+  const result=await loadCompilerAssets(manifest,()=>{},undefined,async url=>{assert(url.pathname.endsWith('/compact.js'));return new Response(bytes);});
+  assert.equal(result.compilerSha256['lean.js'],'upstream-sha');assert.equal(result.runtimeSha256['lean.js'],digest);
+  assert.equal(result.cache.totalBytes,bytes.length);
+  await assert.rejects(loadCompilerAssets(manifest,()=>{},undefined,async()=>new Response('damaged')),/checksum mismatch/);
+});

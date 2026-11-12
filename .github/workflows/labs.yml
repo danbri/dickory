@@ -62,6 +62,7 @@ jobs:
           node --test labs/linked-assurance/tests/compiler-cache.test.mjs
           node --test labs/linked-assurance/tests/support-bundle.test.mjs
           python3 labs/linked-assurance/tools/hello/fetch.py
+          node labs/linked-assurance/tools/build_browser_host.cjs
           node labs/linked-assurance/tools/hello/node.cjs
           node labs/linked-assurance/tools/build_modules.cjs
           node labs/linked-assurance/tools/build_modules.cjs --policy
@@ -80,12 +81,14 @@ jobs:
           python3 ../../labs/linked-assurance/tools/serve.py --root ../../_site --port 8081 > "$RUNNER_TEMP/linked-server.log" 2>&1 &
           node linked-probe.mjs --hello
           LEAN_BROWSER=webkit node linked-probe.mjs --hello
+          node linked-probe.mjs --startup --webkit --tasks --site=http://127.0.0.1:8081
           node linked-probe.mjs --policy
           node linked-probe.mjs --policy --webkit
           node linked-probe.mjs --tutorial
           cp ../../labs/linked-assurance/artifacts/hello-node-checks.json ../../_site/labs/linked-assurance/artifacts/
           cp ../../labs/linked-assurance/artifacts/hello-browser-checks.json ../../_site/labs/linked-assurance/artifacts/
           cp ../../labs/linked-assurance/artifacts/hello-webkit-checks.json ../../_site/labs/linked-assurance/artifacts/
+          cp ../../labs/linked-assurance/artifacts/startup-webkit.json ../../_site/labs/linked-assurance/artifacts/
           cp ../../labs/linked-assurance/artifacts/policy-browser-checks.json ../../_site/labs/linked-assurance/artifacts/
           cp ../../labs/linked-assurance/artifacts/policy-webkit-checks.json ../../_site/labs/linked-assurance/artifacts/
           cp ../../labs/linked-assurance/artifacts/tutorial-browser-checks.json ../../_site/labs/linked-assurance/artifacts/
