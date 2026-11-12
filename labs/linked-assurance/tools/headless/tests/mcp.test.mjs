@@ -16,6 +16,7 @@ test('MCP v2 stdio lists and executes the actual Node runner',{timeout:120000},a
     const listing=await client.listTools();
     assert(listing.tools.some(t=>t.name==='linked_assurance_cases'));
     assert(listing.tools.some(t=>t.name==='linked_assurance_evaluate'));
+    assert(listing.tools.some(t=>t.name==='linked_assurance_policy'));
     const reply=await client.callTool({
       name:'linked_assurance_evaluate',
       arguments:{scenario:'vocabulary',variant:'base',scope:'union',
