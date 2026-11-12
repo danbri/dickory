@@ -24,6 +24,9 @@ export async function enableIsolation(){
 }
 
 export function mountCompilerBanner(target){
+  // Existing isolated tabs also need fixes to the fetch shim. Update it without
+  // clearing the compiler cache or forcing another page reload.
+  navigator.serviceWorker?.getRegistration(new URL('./',import.meta.url)).then(reg=>reg?.update()).catch(()=>{});
   target.classList.add('compilerBanner');
   target.innerHTML=`<div><strong>Lean 4.33.1 · on this device</strong>
     <p>About 184 MB, saved for future visits. You can prepare it now, or let your first policy check do this. First setup takes a few minutes; later runs reuse the machinery.</p>
