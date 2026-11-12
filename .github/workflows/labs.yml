@@ -55,6 +55,8 @@ jobs:
       - name: Stage site and check links
         run: |
           npm ci --prefix labs/linked-assurance
+          npm install --prefix labs/linked-assurance/tools/headless --no-audit --no-fund
+          node --test labs/linked-assurance/tools/headless/tests/mcp.test.mjs
           node labs/linked-assurance/tools/check_runtime.mjs
           python3 labs/linked-assurance/tools/check_lean.py
           python3 labs/linked-assurance/tools/check_pipeline.py --factoidal labs/linked-assurance/artifacts/factoidal-source
