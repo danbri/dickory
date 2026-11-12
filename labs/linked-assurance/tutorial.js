@@ -48,7 +48,7 @@ export function mountTutorial(target){
     try{
       const result=await checkLean(source,progress);if(ticket!==epoch)return;
       const placeholder=hasProofPlaceholder(result);
-      text('tutorialStatus',placeholder?'Proof placeholder detected. Replace sorry with a proof.':result.accepted?'Lean accepted this file.':l.expected==='reject'&&source===l.source?'Lean rejected this claim, as expected. Try repairing it.':'Lean did not accept this file. Read the remaining goal or error below.');
+      text('tutorialStatus',result.runtimeFault?'Lean hit a browser runtime limit; this is not a proof result. Desktop Chrome can handle the examples that exceed WebKit’s call stack.':placeholder?'Proof placeholder detected. Replace sorry with a proof.':result.accepted?'Lean accepted this file.':l.expected==='reject'&&source===l.source?'Lean rejected this claim, as expected. Try repairing it.':'Lean did not accept this file. Read the remaining goal or error below.');
       const diagnostics=result.stdout.split('\n').flatMap(line=>{try{const m=JSON.parse(line);return m.severity?[`${m.severity}${m.pos?' · line '+m.pos.line:''}\n${m.data||m.message||''}`]:[];}catch{return line?[line]:[];}}).join('\n\n');
       $('tutorialOutput').hidden=false;text('tutorialOutput',diagnostics||result.stderr||'No printed output. All declarations in this file were checked.');text('tutorialRaw',JSON.stringify(result,null,2));
     }catch(e){if(ticket===epoch)text('tutorialStatus',e.message);}

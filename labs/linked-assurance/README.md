@@ -24,6 +24,9 @@ still work without it. A new tab must initialise the runtime and import the
 library again. Within a tab the tutorial and policy share one compiler host.
 An internal tutorial runtime fault triggers one explicit session restart; ordinary
 proof errors do not. Full diagnostics retain the initial fault.
+Known call-stack exhaustion is reported without an automatic retry. The banner's
+Browser details includes the current phase and the last interrupted run; Copy
+diagnostics makes these available when a phone tab stops or reloads.
 
 Browser isolation uses `COOP: same-origin` and `COEP: require-corp`. The previous
 `credentialless` policy is not implemented in Safari/WebKit. Setup now waits for
@@ -34,12 +37,31 @@ may still lack the required capabilities: open the URL in a full browser rather
 than repeatedly reloading an unsupported view. The header shim and its upgrade
 path are tested in Chromium and desktop WebKit; this is not a physical iPhone
 test or a guarantee that the large Lean runtime fits every phone's memory budget.
+The shim also preserves bodyless HTTP responses, including cached `304` worker
+loads. Its regression checks load the same worker twice and cover `204`, `205`
+and `304` responses. The compiler starts with 64 MiB of growing WASM memory,
+rather than 2 GiB, and retains one task worker instead of four. Downloads avoid
+duplicate chunk buffers and release raw asset copies after runtime preparation.
+WASM linear-memory figures exclude the browser's other allocations.
 
 The browser uses a pinned Lean **4.33.1** wasm32 compiler and matching Init
 library, including executable IR. Hello-world evaluation, theorem checking,
-rejection and recovery pass in Node, Deno, Chromium and desktop WebKit. Chromium also checks
-the actual policy contract, imports the compiled policy, runs five fixtures,
-and rejects a mutation removing the permit gate. The compiler runs in a worker
+rejection and recovery pass in Node, Deno, Chromium and desktop WebKit. The sample
+policy and fixed support module are compiled during the site build using this
+same WASM compiler under Node, with the required theorem types and axiom audit.
+Browser loading checks the exact source, support and compiler hashes and each
+module file's checksum. The UI and exported record say **site build** for this
+proof check; importing it is not a new browser proof check.
+
+Chromium and desktop WebKit execute the published policy on five fixtures.
+Chromium also checks a valid edit locally and rejects a mutation removing the
+permit gate. **WebKit policy editing currently exceeds the compiler's call-stack
+limit**, including through the synchronous API; moving just the support module
+out of the browser did not fix this. The WebKit regression verifies the runtime
+failure is distinguished from a rejected proof, execution is blocked for the
+unchecked edit, and restoring the published policy recovers. This applies to
+iPhone Chrome's WebKit engine too, although a physical iPhone has not been tested.
+The compiler runs in a worker
 and repeated fixtures reuse the imported environment. See
 [the minimal checks](tools/hello/README.md).
 
@@ -53,6 +75,8 @@ The main **Check policy and show result** button performs setup, proof checking,
 input evaluation and execution in order. The separate controls are under
 Advanced tools. A failed proof attempt is distinguished from a setup failure,
 timeout, or returned policy decision; it is not treated as a refutation.
+An unchanged sample loads its checked module. Edited source never inherits that
+check: its bytes must be compiled and its contract audited locally before use.
 
 Recompilation delay currently includes worker and import startup. The pinned
 compiler's persistent `lean_wasm_compile` API supports warm source checking but
@@ -89,6 +113,8 @@ From the repository root:
 
 ```sh
 python3 labs/linked-assurance/tools/hello/fetch.py
+node labs/linked-assurance/tools/build_modules.cjs
+node labs/linked-assurance/tools/build_modules.cjs --policy
 python3 labs/linked-assurance/tools/serve.py --isolate --port 8081
 ```
 
@@ -100,7 +126,8 @@ The compiler downloads approximately 184 MB of pinned assets on first use.
 Its upstream fork commit is `4f9018a62ead9be0ffd652021d5afc8501e92253`.
 This matches Factoidal's Lean release version, but wasm32 and the patched fork
 still require matching compiled modules; native Factoidal oleans are not imported.
-The first support/policy compilations and fixture import take a few minutes.
+Building the published modules requires Node 26; native Lean oleans cannot replace
+these wasm32 artifacts. First runtime initialization and fixture import take time.
 Subsequent fixture runs in the tested browser took 62–700 ms including RDF work.
 
 `compiler-assets.json` can point to the same bytes on a configurable host or
@@ -164,7 +191,8 @@ Matching compiler/library bytes fixed that failure. Public module declarations
 and explicit runtime/meta imports make exported definitions available to both
 proof checking and evaluation. `tools/viewer-browser/linked-probe.mjs --policy`
 checks this path using the actual browser compiler; no compiler result is mocked.
-Browser support is currently established for Chromium, not phone browsers.
+Proof editing is established for Chromium. Desktop WebKit supports the published
+policy execution path; phone memory limits remain a separate testing boundary.
 
 The exported `rdf.explanation.bundle` is Factoidal's graph derivation artefact,
 also used by its `rdfsExplainGraphStage`. The lab calls `explain()` directly;

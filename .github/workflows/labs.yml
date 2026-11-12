@@ -60,8 +60,11 @@ jobs:
           python3 labs/linked-assurance/tools/check_pipeline.py --factoidal labs/linked-assurance/artifacts/factoidal-source
           node labs/linked-assurance/tools/check_tutorial.mjs
           node --test labs/linked-assurance/tests/compiler-cache.test.mjs
+          node --test labs/linked-assurance/tests/support-bundle.test.mjs
           python3 labs/linked-assurance/tools/hello/fetch.py
           node labs/linked-assurance/tools/hello/node.cjs
+          node labs/linked-assurance/tools/build_modules.cjs
+          node labs/linked-assurance/tools/build_modules.cjs --policy
           python3 tools/build_site.py
       - name: Check viewer interactions in Chromium
         working-directory: tools/viewer-browser
@@ -78,11 +81,13 @@ jobs:
           node linked-probe.mjs --hello
           LEAN_BROWSER=webkit node linked-probe.mjs --hello
           node linked-probe.mjs --policy
+          node linked-probe.mjs --policy --webkit
           node linked-probe.mjs --tutorial
           cp ../../labs/linked-assurance/artifacts/hello-node-checks.json ../../_site/labs/linked-assurance/artifacts/
           cp ../../labs/linked-assurance/artifacts/hello-browser-checks.json ../../_site/labs/linked-assurance/artifacts/
           cp ../../labs/linked-assurance/artifacts/hello-webkit-checks.json ../../_site/labs/linked-assurance/artifacts/
           cp ../../labs/linked-assurance/artifacts/policy-browser-checks.json ../../_site/labs/linked-assurance/artifacts/
+          cp ../../labs/linked-assurance/artifacts/policy-webkit-checks.json ../../_site/labs/linked-assurance/artifacts/
           cp ../../labs/linked-assurance/artifacts/tutorial-browser-checks.json ../../_site/labs/linked-assurance/artifacts/
           cp ../../labs/linked-assurance/artifacts/isolation-browser-checks.json ../../_site/labs/linked-assurance/artifacts/
       - name: Upload verified site

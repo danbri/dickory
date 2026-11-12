@@ -1,5 +1,8 @@
 import {chromium} from 'playwright';
 import fs from 'node:fs/promises';
+if(process.argv.includes('--webkit'))process.env.LEAN_BROWSER='webkit';
+const site=process.argv.find(arg=>arg.startsWith('--site='));
+if(site)process.env.LINKED_SITE_URL=new URL(site.slice(7)).href.replace(/\/$/,'');
 if(process.argv.includes('--tutorial')) {
  await import('./lean-tutorial.mjs');
 } else if(process.argv.includes('--hello')) {

@@ -27,6 +27,10 @@ export async function compilerFilesSaved(){
   }catch{return false;}
 }
 
+// The Cache API keeps verified assets across visits. Drop this tab's raw copies
+// once the caller has made its runtime blobs/library, or only wanted a download.
+export function releasePreparedCompilerFiles(){prepared=null;}
+
 // Content-addressed keys allow a new manifest to reuse unchanged assets. A
 // cached response is still checked against the current pinned manifest.
 export async function loadCompilerAssets(manifest,progress=()=>{},storage=globalThis.caches,fetcher=globalThis.fetch) {
@@ -34,7 +38,8 @@ export async function loadCompilerAssets(manifest,progress=()=>{},storage=global
   try {cache=await storage?.open(cacheName);}catch{/* Private mode / quota: run without disk caching. */}
   const total=Object.values(manifest).reduce((n,a)=>n+a.bytes,0),loaded=new Map();
   let downloaded=0,cached=0,cacheWritable=!!cache;
-  const entries=await Promise.all(Object.entries(manifest).map(async([name,a])=>{
+  const entries=[];
+  for(const [name,a] of Object.entries(manifest))entries.push(await(async()=>{
     const url=new URL(a.url,import.meta.url),key=new URL('./__lean_cache__/'+a.sha256,import.meta.url).href;
     const valid=async bytes=>bytes.length===a.bytes && await sha256(bytes)===a.sha256;
     const hit=await cache?.match(key).catch(()=>null);
@@ -46,26 +51,25 @@ export async function loadCompilerAssets(manifest,progress=()=>{},storage=global
     }
     const response=await fetcher(url);
     if(!response.ok)throw Error('Compiler asset unavailable: '+name);
-    const chunks=[];let length=0,last=0;
+    const bytes=new Uint8Array(a.bytes);let length=0,last=0;
     if(response.body){
       const reader=response.body.getReader();
       while(true){
         const {done,value}=await reader.read();if(done)break;
-        chunks.push(value);length+=value.length;loaded.set(name,length);
+        if(length+value.length>bytes.length){await reader.cancel();throw Error('Compiler asset checksum mismatch: '+name+' (unexpected size)');}
+        bytes.set(value,length);length+=value.length;loaded.set(name,length);
         if(Date.now()-last>400){last=Date.now();progress('Downloading compiler: '+mb([...loaded.values()].reduce((a,b)=>a+b,0))+' downloaded / '+mb(total)+' total (saved files reused)');}
       }
-    }else{const value=new Uint8Array(await response.arrayBuffer());chunks.push(value);length=value.length;}
-    const bytes=new Uint8Array(length);let offset=0;
-    for(const chunk of chunks){bytes.set(chunk,offset);offset+=chunk.length;}
+    }else{const value=new Uint8Array(await response.arrayBuffer());length=value.length;if(length===bytes.length)bytes.set(value);}
     progress('Checking compiler integrity: '+name);
-    if(!await valid(bytes))throw Error('Compiler asset checksum mismatch: '+name);
+    if(length!==a.bytes||!await valid(bytes))throw Error('Compiler asset checksum mismatch: '+name);
     downloaded+=bytes.length;
     if(cache)try{await cache.put(key,new Response(bytes,{headers:{'Content-Type':'application/octet-stream'}}));}catch{cacheWritable=false;}
     return [name,bytes];
-  }));
+  })());
   progress(cached===total?'Compiler files loaded from this device; integrity checks passed.':
     cacheWritable?'Compiler files verified and saved on this device.':'Compiler files verified; browser storage unavailable. Files may download again next visit.');
-  return {data:Object.fromEntries(entries),cache:{downloadedBytes:downloaded,cachedBytes:cached,totalBytes:total,persistentCacheAvailable:cacheWritable}};
+  return {data:Object.fromEntries(entries),compilerSha256:Object.fromEntries(Object.entries(manifest).map(([name,asset])=>[name,asset.sha256])),cache:{downloadedBytes:downloaded,cachedBytes:cached,totalBytes:total,persistentCacheAvailable:cacheWritable}};
 }
 
 export async function clearCompilerCache(){prepared=null;await globalThis.caches?.delete(cacheName);}

@@ -73,9 +73,9 @@ async function compile() {
     if(source!==$('leanEditor').value){compileProblem={title:'Source changed during checking.',detail:'Press the main button again to check the current text.'};progress(compileProblem.title);return;}
     state.compiled=result.contractChecked?result:null;
     if(!result.contractChecked)compileProblem={stage:'proof',title:'Lean did not accept this proof.',detail:proofDiagnostic(result)+' This does not by itself establish that the claim is false.'};
-    progress(result.contractChecked?'Proof checked. Policy ready to run.':compileProblem.title);
+    progress(result.contractChecked?(result.verificationLocation==='site build'?'Published policy checked during the site build. Ready to run here.':'Proof checked in this browser. Policy ready to run.'):compileProblem.title);
     return result;
-  }catch(e){state.compiled=null;compileProblem={stage:'setup',title:/timeout/i.test(e.message)?'Compiler timed out.':'Compiler could not complete setup or checking.',detail:String(e.message||e).split('\n').slice(0,3).join('\n')};progress(compileProblem.title);show('compilerReport',String(e.stack||e));}
+  }catch(e){state.compiled=null;compileProblem={stage:'setup',title:/timeout/i.test(e.message)?'Compiler timed out.':'Compiler could not complete setup or checking.',detail:/Maximum call stack|stack overflow/i.test(e.message)?'This browser ran out of call stack while checking Lean. No proof result was produced. Restore the sample policy to run its published checked module, or use desktop Chrome to check policy edits.':String(e.message||e).split('\n').slice(0,3).join('\n')};progress(compileProblem.title);show('compilerReport',[String(e.message||e),e.stack].filter(Boolean).join('\n'));}
   finally{$('compile').disabled=false;}
 }
 async function prepareFixture() {
@@ -127,7 +127,7 @@ async function runPolicy() {
     if(epoch!==state.epoch)return;
     show('decision',execution.executed?execution.decision:'compilerFault');
     show('attackOutcome',execution.executed?execution.attacker:'unknown');
-    show('decisionNote',execution.executed?'Computed by the compiled Policy.olean on the displayed fixture.':'No policy decision available. Inspect diagnostics.');
+    show('decisionNote',execution.executed?`Computed here by Policy.olean on the displayed fixture. Proof checked ${state.compiled.verificationLocation==='site build'?'during the site build':'in this browser'}.`:'No policy decision available. Inspect diagnostics.');
     show('policyRunSummary',execution.executed?`Result: ${execution.decision} · attacker outcome: ${execution.attacker} · ${(performance.now()-started)/1000<1?'under 1':Math.round((performance.now()-started)/1000)} s`:'No decision produced. Open compiler diagnostics below.');
     show('compilerReport',json({compile:state.compiled,execution}));
     state.record={schema:'linked-assurance-experiment-v1',scenario,

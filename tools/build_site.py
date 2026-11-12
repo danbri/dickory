@@ -4,6 +4,7 @@ from pathlib import Path
 from html.parser import HTMLParser
 from urllib.parse import urlsplit, unquote
 import hashlib
+import base64
 import json
 import os
 import shutil
@@ -27,6 +28,7 @@ FILES += [LINKED_ASSURANCE / name for name in (
     "tools/hello/index.html", "tools/hello/app.js", "tools/hello/browser-worker.js", "tools/hello/checks.js",
     "tools/hello/README.md", "tools/hello/toolchain.json", "tools/hello/web-bundle.json",
     "tools/hello/prepare.py", "tools/hello/fetch.py", "tools/hello/node.cjs",
+    "tools/build_modules.cjs", "artifacts/workbench-wasm.json", "artifacts/policy-wasm.json",
     "artifacts/toolchain-4.33.1-files.json", "artifacts/toolchain-4.33.1/lean-lib.tar.gz",
     "README.md", "DESIGN.md", "PIPELINES.md", "THIRD_PARTY.md",
     "artifacts/lean-checks.json", "artifacts/runtime-checks.json", "artifacts/tutorial-checks.json", "artifacts/pipeline-native-checks.json",
@@ -51,6 +53,20 @@ class Links(HTMLParser):
 
 
 def main():
+    compiler_assets = json.loads((ROOT / LINKED_ASSURANCE / 'compiler-assets.json').read_text())
+    support_hash = hashlib.sha256((ROOT / LINKED_ASSURANCE / 'lean/Workbench.lean').read_bytes()).hexdigest()
+    for module in ('Workbench', 'Policy'):
+        bundle = json.loads((ROOT / LINKED_ASSURANCE / f'artifacts/{module.lower()}-wasm.json').read_text())
+        if (bundle['status'] != 'pass' or bundle['sourceSha256'] != hashlib.sha256(
+                (ROOT / LINKED_ASSURANCE / f'lean/{module}.lean').read_bytes()).hexdigest() or
+                bundle['compilerSha256'] != {name: asset['sha256'] for name, asset in compiler_assets.items()}):
+            raise SystemExit(f'Published {module} does not match its source and compiler')
+        if module == 'Policy' and (bundle['supportSha256'] != support_hash or bundle['result']['exitCode'] != 0):
+            raise SystemExit('Published policy has stale support or a failed check')
+        for file in bundle['files']:
+            data = base64.b64decode(file['base64'], validate=True)
+            if len(data) != file['bytes'] or hashlib.sha256(data).hexdigest() != file['sha256']:
+                raise SystemExit(f'Published {module} checksum mismatch')
     for name, expected in json.loads((ROOT / LINKED_ASSURANCE / 'compiler-assets.json').read_text()).items():
         path = ROOT / LINKED_ASSURANCE / expected['url']
         if path.stat().st_size != expected['bytes'] or hashlib.sha256(path.read_bytes()).hexdigest() != expected['sha256']:

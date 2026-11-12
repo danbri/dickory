@@ -18,3 +18,11 @@ test('compiler still loads when persistent storage is unavailable',async()=>{
   const result=await loadCompilerAssets(manifest,()=>{},{open:async()=>{throw Error('quota');}},async()=>new Response(bytes));
   assert.equal(result.cache.persistentCacheAvailable,false);assert.deepEqual(result.data.asset,bytes);
 });
+test('streamed assets reject truncation and oversized bodies before cache admission',async()=>{
+  const bytes=new Uint8Array([1,2,0,0]),manifest={asset:{url:'./fixture.bin',bytes:bytes.length,sha256:await sha256(bytes)}};
+  const response=chunks=>new Response(new ReadableStream({start(c){for(const chunk of chunks)c.enqueue(new Uint8Array(chunk));c.close();}}));
+  const good=await loadCompilerAssets(manifest,()=>{},undefined,async()=>response([[1],[2,0],[0]]));
+  assert.deepEqual(good.data.asset,bytes);
+  await assert.rejects(loadCompilerAssets(manifest,()=>{},undefined,async()=>response([[1,2]])),/checksum mismatch/);
+  await assert.rejects(loadCompilerAssets(manifest,()=>{},undefined,async()=>response([[1,2,0,0],[3]])),/checksum mismatch/);
+});

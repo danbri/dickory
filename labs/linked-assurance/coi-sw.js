@@ -7,11 +7,15 @@ self.addEventListener('fetch',event=>{
  if(new URL(req.url).origin!==self.location.origin)return;
  event.respondWith((async()=>{
   const response=await fetch(req);
+  if(response.status===0)return response;
   const headers=new Headers(response.headers);
   headers.set('Cross-Origin-Opener-Policy','same-origin');
   // Safari does not implement credentialless. Our compiler assets are same-origin;
   // the Factoidal CDN is fetched with CORS, so require-corp works for both.
   headers.set('Cross-Origin-Embedder-Policy','require-corp');
-  return new Response(response.body,{status:response.status,statusText:response.statusText,headers});
+  // WebKit can expose a stream even for a cached 304. Response construction
+  // forbids bodies for these statuses (and a HEAD request has none either).
+  const body=req.method==='HEAD'||[204,205,304].includes(response.status)?null:response.body;
+  return new Response(body,{status:response.status,statusText:response.statusText,headers});
  })());
 });
