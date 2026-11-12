@@ -1,5 +1,7 @@
 # Linked Assurance
 
+[Headless Node/Chromium, WebMCP and stdio MCP interface](HEADLESS.md) provides separate executable RDF paths and a conditional Lean equivalence theorem. The current parity suite covers RDF/evidence execution, not full two-runtime Lean policy execution.
+
 An experimental Factoidal and Lean policy workbench in its own Dickory lab.
 [Design and proof obligations](DESIGN.md) explains the intended connections.
 [Contracted stages](PIPELINES.md) describes the implemented pipeline and its boundaries.
