@@ -70,6 +70,7 @@ jobs:
           npx playwright install --with-deps chromium webkit
           npm test
           LINKED_SITE_ROOT="$GITHUB_WORKSPACE/_site" node linked-assurance.mjs
+          LINKED_SITE_ROOT="$GITHUB_WORKSPACE/_site" node --test linked-headless-parity.test.mjs
           LINKED_SITE_ROOT="$GITHUB_WORKSPACE/_site" node linked-isolation.mjs
       - name: Check real browser Lean through Pages isolation shim
         working-directory: tools/viewer-browser
