@@ -5,6 +5,7 @@ import {compilerEnvironment,compilePolicy,executePolicy,proofDiagnostic,compiler
 import {mountTutorial} from './tutorial.js';
 import {mountCompilerBanner,enableIsolation} from './compiler-banner.js';
 import {pipelineRecord} from './pipeline-record.js';
+import {mountWebMCP} from './headless-webmcp.js';
 const $=id=>document.getElementById(id), show=(id,text)=>{$(id).textContent=text;};
 const state={scenario:scenarios[0],editor:'dataset',inputs:{},evaluation:null,job:null,epoch:0,record:null,compiled:null};
 const json=x=>JSON.stringify(x,null,2);
@@ -224,3 +225,5 @@ async function init() {
   }
 }
 init().catch(e=>show('status',String(e.message||e)));
+mountWebMCP().catch(e=>console.warn('WebMCP registration unavailable:',String(e)));
+
