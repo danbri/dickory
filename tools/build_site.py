@@ -20,7 +20,7 @@ FILES += [LINKED_ASSURANCE / name for name in (
     "index.html", "style.css", "app.js", "scenarios.js", "tutorial.js", "tutorial-lessons.js",
     "compiler-cache.js", "compiler-banner.js", "pipeline-record.js",
     "lean-host.js", "compiler.js", "compiler-worker.js", "rdf-worker.js", "coi-sw.js",
-    "evidence.js", "credential.js", "demo-credential.json", "compiler-assets.json",
+    "evidence.js", "headless-contract.js", "headless-webmcp.js", "credential.js", "demo-credential.json", "compiler-assets.json",
     "factoidal-build.json",
     "lean/Workbench.lean", "lean/Policy.lean", "lean/PipelineBridge.lean",
     "vendor/fflate.js", "vendor/fflate-LICENSE.txt", "vendor/lean-LICENSE", "vendor/lean-LICENSES",
@@ -28,7 +28,7 @@ FILES += [LINKED_ASSURANCE / name for name in (
     "tools/hello/README.md", "tools/hello/toolchain.json", "tools/hello/web-bundle.json",
     "tools/hello/prepare.py", "tools/hello/fetch.py", "tools/hello/node.cjs",
     "artifacts/toolchain-4.33.1-files.json", "artifacts/toolchain-4.33.1/lean-lib.tar.gz",
-    "README.md", "DESIGN.md", "PIPELINES.md", "THIRD_PARTY.md",
+    "README.md", "HEADLESS.md", "DESIGN.md", "PIPELINES.md", "THIRD_PARTY.md",
     "artifacts/lean-checks.json", "artifacts/runtime-checks.json", "artifacts/tutorial-checks.json", "artifacts/pipeline-native-checks.json",
 )]
 FILES += [ARTIFACTS / name for name in (
