@@ -16,7 +16,8 @@ try{
  else{
   client=new Client({name:'dickory-profile-cli',version:'0.2.0'},{versionNegotiation:{mode:{pin:PROTOCOLS.mcp}}});
   let transport;
-  if(opts.backend==='mcp-stdio')transport=new StdioClientTransport({command:process.execPath,args:[fileURLToPath(new URL('./mcp-server.mjs',import.meta.url))],stderr:'inherit'});
+  if(opts.backend==='mcp-stdio')transport=new StdioClientTransport({command:process.execPath,args:[fileURLToPath(new URL('./mcp-server.mjs',import.meta.url))],stderr:'inherit',
+    env:Object.fromEntries(['LINKED_PROFILE','LINKED_TRUST_LEAN_SOURCE'].filter(k=>process.env[k]!==undefined).map(k=>[k,process.env[k]]))});
   else if(opts.backend==='mcp-http')transport=new StreamableHTTPClientTransport(new URL(opts.url||'http://127.0.0.1:3000/mcp'));
   else throw Error('Unknown backend. The Chromium CLI is tools/viewer-browser/linked-headless.mjs');
   await client.connect(transport);

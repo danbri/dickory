@@ -1,0 +1,58 @@
+name: Supplied Lean source compilation
+on:
+  pull_request:
+    paths: ['labs/linked-assurance/**', 'tools/viewer-browser/**', '.github/workflows/lean-source.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: lean-source-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+jobs:
+  native:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '26'
+      - name: Install pinned Lean
+        run: |
+          curl --fail --location --retry 3 https://github.com/leanprover/lean4/releases/download/v4.33.1/lean-4.33.1-linux.tar.zst -o "$RUNNER_TEMP/lean.tar.zst"
+          echo "890afd185370f85666025b883914ab4f4b339136f8c96167b69cfb62aecaf235  $RUNNER_TEMP/lean.tar.zst" | sha256sum --check
+          tar --zstd -xf "$RUNNER_TEMP/lean.tar.zst" -C "$RUNNER_TEMP"
+          echo "$RUNNER_TEMP/lean-4.33.1-linux/bin" >> "$GITHUB_PATH"
+      - name: Compile real supplied sources and check failure/exposure boundaries
+        run: node --test labs/linked-assurance/tests/lean-source.test.mjs
+  browser:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '26'
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
+        with:
+          python-version: '3.14.7'
+      - name: Prepare actual pinned browser compiler
+        run: |
+          python3 labs/linked-assurance/tools/hello/fetch.py
+          node labs/linked-assurance/tools/build_browser_host.cjs
+          node labs/linked-assurance/tools/build_modules.cjs
+      - name: Install real Chromium
+        working-directory: tools/viewer-browser
+        run: |
+          npm ci
+          npx playwright install --with-deps chromium
+      - name: Compile supplied source via native WebMCP and export actual modules
+        run: |
+          python3 labs/linked-assurance/tools/serve.py --isolate --port 8081 > "$RUNNER_TEMP/source-server.log" 2>&1 &
+          node tools/viewer-browser/lean-source.mjs
+      - name: Preserve compiler receipts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lean-source-browser-evidence
+          path: labs/linked-assurance/artifacts/source-browser-checks.json
