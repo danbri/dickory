@@ -78,7 +78,7 @@ structure Tool where
 def Allowed (p : Profile) (caps : List String) (t : Transport)
     (tool : Tool) (budget : Nat) : Prop :=
   tool.name ∈ p.enabledTools ∧ t ∈ p.transports ∧
-  (∀ c ∈ tool.requires, c ∈ caps) ∧ budget ≤ p.maxBudget
+  tool.requires.all (fun c => decide (c ∈ caps)) = true ∧ budget ≤ p.maxBudget
 instance (p : Profile) (caps : List String) (t : Transport)
     (tool : Tool) (budget : Nat) : Decidable (Allowed p caps t tool budget) :=
   inferInstanceAs (Decidable (_ ∧ _ ∧ _ ∧ _))
@@ -88,6 +88,13 @@ def admit (p : Profile) (caps : List String) (t : Transport)
 theorem admission_sound (p : Profile) (caps : List String) (t : Transport)
     (tool : Tool) (budget : Nat) (h : admit p caps t tool budget = true) :
     Allowed p caps t tool budget := of_decide_eq_true h
+
+theorem admitted_capabilities (p : Profile) (caps : List String) (t : Transport)
+    (tool : Tool) (budget : Nat) (h : admit p caps t tool budget = true) :
+    ∀ c ∈ tool.requires, c ∈ caps := by
+  intro c hc
+  have ha := admission_sound p caps t tool budget h
+  exact of_decide_eq_true ((List.all_eq_true.mp ha.2.2.1) c hc)
 
 theorem disabled_tool_rejected (p : Profile) (caps : List String) (t : Transport)
     (tool : Tool) (budget : Nat) (h : tool.name ∉ p.enabledTools) :
@@ -103,7 +110,8 @@ theorem missing_capability_rejected (p : Profile) (caps : List String)
     admit p caps t tool budget = false := by
   have h : ¬ Allowed p caps t tool budget := by
     intro ha
-    exact hm (ha.2.2.1 c hr)
+    have hc : decide (c ∈ caps) = true := (List.all_eq_true.mp ha.2.2.1) c hr
+    exact hm (of_decide_eq_true hc)
   simp [admit, h]
 
 /-- A narrower exposure/resource policy cannot create a new admissible call. -/
@@ -141,6 +149,7 @@ theorem cancelled_has_no_answers : answers .cancelled = [] := rfl
 #print axioms resolve_sound
 #print axioms resolved_value_idempotent
 #print axioms admission_sound
+#print axioms admitted_capabilities
 #print axioms restriction_monotone
 #print axioms transport_independent_result
 end LinkedAssurance.DeveloperProfile
