@@ -30,9 +30,10 @@ export async function createBrowserDispatcher(config){
    fixtureSha256:p.fixtureSha256,sourceSha256:p.sourceSha256,operational:p.operational,contractChecked:true,
    attestation:{runtime:'browser-wasm-lean',compilerVersion:result.compilerVersion,rdfWorker:rdf.attestation}};
  };
- return createDispatcher({profile,transport:'webmcp',capabilities:['rdf','lean-policy'],runtime:{host:'browser',userAgent:navigator.userAgent},handlers:{
+ return createDispatcher({profile,transport:'webmcp',capabilities:['rdf','lean-policy','lean-source'],runtime:{host:'browser',userAgent:navigator.userAgent},handlers:{
   linked_assurance_cases:()=>({cases:listCases()}),linked_assurance_evaluate:evaluateCase,
-  linked_assurance_check_policy:check,linked_assurance_policy:policy
+  linked_assurance_check_policy:check,linked_assurance_policy:policy,
+  linked_assurance_compile_lean:async(input,options)=>(await import('./source-compiler.js')).compileBrowserSource(input,options)
  }});
 }
 let ready;
