@@ -1,0 +1,17 @@
+{
+  "name": "linked-assurance-headless-mcp",
+  "private": true,
+  "type": "module",
+  "version": "0.2.0",
+  "scripts": {
+    "mcp": "node mcp-server.mjs",
+    "http": "node http-server.mjs",
+    "cli": "node cli.mjs",
+    "test": "node --test tests/*.test.mjs"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/server": "2.4.0",
+    "@modelcontextprotocol/client": "2.4.0",
+    "@modelcontextprotocol/node": "2.1.2"
+  }
+}

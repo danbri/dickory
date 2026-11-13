@@ -1,0 +1,58 @@
+name: Developer profile contracts and native transports
+on:
+  pull_request:
+    paths: ['labs/linked-assurance/**', 'tools/viewer-browser/**', '.github/workflows/developer-profile.yml']
+  push:
+    branches: [main]
+    paths: ['labs/linked-assurance/**', 'tools/viewer-browser/**', '.github/workflows/developer-profile.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: profile-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+jobs:
+  profile:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '26'
+      - name: Install pinned native Lean
+        run: |
+          curl --fail --location --retry 3 https://github.com/leanprover/lean4/releases/download/v4.33.1/lean-4.33.1-linux.tar.zst -o "$RUNNER_TEMP/lean.tar.zst"
+          echo "890afd185370f85666025b883914ab4f4b339136f8c96167b69cfb62aecaf235  $RUNNER_TEMP/lean.tar.zst" | sha256sum --check
+          tar --zstd -xf "$RUNNER_TEMP/lean.tar.zst" -C "$RUNNER_TEMP"
+          echo "$RUNNER_TEMP/lean-4.33.1-linux/bin" >> "$GITHUB_PATH"
+      - name: Check profile model and real JavaScript semantics
+        run: |
+          node --test labs/linked-assurance/tests/profile.test.mjs
+          python3 labs/linked-assurance/tools/check_profile.py
+      - name: Install pinned protocol SDK and actual RDF engine
+        run: |
+          npm ci --prefix labs/linked-assurance
+          npm install --prefix labs/linked-assurance/tools/headless --ignore-scripts --no-audit --no-fund
+      - name: Require modern MCP over stdio and Streamable HTTP
+        run: node --test labs/linked-assurance/tools/headless/tests/mcp.test.mjs
+      - name: Check actual native Lean policy with explicit state
+        run: node --test labs/linked-assurance/tools/headless/tests/policy.test.mjs
+      - name: Install actual headless Chromium
+        working-directory: tools/viewer-browser
+        run: |
+          npm ci
+          npx playwright install --with-deps chromium
+      - name: Require native WebMCP and real Node/Chromium RDF parity
+        run: |
+          node --test tools/viewer-browser/linked-headless-parity.test.mjs
+          node tools/viewer-browser/linked-headless.mjs --compare --scenario vocabulary --budgetMs 60000 > labs/linked-assurance/artifacts/profile-browser-parity.json
+      - name: Preserve contract diagnostics and exact dependency resolution
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: developer-profile-evidence
+          path: |
+            labs/linked-assurance/artifacts/developer-profile-checks.json
+            labs/linked-assurance/artifacts/profile-browser-parity.json
+            labs/linked-assurance/tools/headless/package-lock.json

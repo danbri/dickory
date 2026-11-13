@@ -12,7 +12,7 @@ permissions:
 jobs:
   verify:
     runs-on: ubuntu-24.04
-    timeout-minutes: 30
+    timeout-minutes: 40
     steps:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
       - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
@@ -55,8 +55,13 @@ jobs:
       - name: Stage site and check links
         run: |
           npm ci --prefix labs/linked-assurance
+          npm install --prefix labs/linked-assurance/tools/headless --ignore-scripts --no-audit --no-fund
+          node --test labs/linked-assurance/tests/profile.test.mjs
+          node --test labs/linked-assurance/tools/headless/tests/mcp.test.mjs
           node labs/linked-assurance/tools/check_runtime.mjs
           python3 labs/linked-assurance/tools/check_lean.py
+          python3 labs/linked-assurance/tools/check_profile.py
+          LEAN_PATH="$PWD/labs/linked-assurance/artifacts/lean" lean --json labs/linked-assurance/lean/RunnerParity.lean
           python3 labs/linked-assurance/tools/check_pipeline.py --factoidal labs/linked-assurance/artifacts/factoidal-source
           node labs/linked-assurance/tools/check_tutorial.mjs
           node --test labs/linked-assurance/tests/compiler-cache.test.mjs
@@ -75,6 +80,7 @@ jobs:
           npm test
           LINKED_SITE_ROOT="$GITHUB_WORKSPACE/_site" node linked-assurance.mjs
           LINKED_SITE_ROOT="$GITHUB_WORKSPACE/_site" node linked-isolation.mjs
+          LINKED_SITE_ROOT="$GITHUB_WORKSPACE/_site" node --test linked-headless-parity.test.mjs
       - name: Check real browser Lean through Pages isolation shim
         working-directory: tools/viewer-browser
         run: |
@@ -85,6 +91,8 @@ jobs:
           node linked-probe.mjs --policy
           node linked-probe.mjs --policy --webkit
           node linked-probe.mjs --tutorial
+          LINKED_SITE_ROOT="$GITHUB_WORKSPACE/_site" node linked-policy-parity.mjs
+          cp ../../labs/linked-assurance/artifacts/profile-policy-parity.json ../../_site/labs/linked-assurance/artifacts/
           cp ../../labs/linked-assurance/artifacts/hello-node-checks.json ../../_site/labs/linked-assurance/artifacts/
           cp ../../labs/linked-assurance/artifacts/hello-browser-checks.json ../../_site/labs/linked-assurance/artifacts/
           cp ../../labs/linked-assurance/artifacts/hello-webkit-checks.json ../../_site/labs/linked-assurance/artifacts/
