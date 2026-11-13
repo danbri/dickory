@@ -1,0 +1,7 @@
+{
+  "id": "linked-assurance",
+  "enabledTools": ["linked_assurance_cases", "linked_assurance_evaluate", "linked_assurance_check_policy", "linked_assurance_policy"],
+  "transports": ["local-cli", "mcp-stdio", "mcp-http", "webmcp"],
+  "maxInputBytes": 1048576,
+  "maxBudgetMs": 120000
+}

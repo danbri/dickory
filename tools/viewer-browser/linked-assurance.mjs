@@ -67,9 +67,16 @@ try{
  // Test the actual navigation-header shim on a host that supplies no COOP/COEP.
  await page.click('#isolate');await page.waitForFunction(()=>crossOriginIsolated,{},{timeout:30000});
  assert(await page.evaluate(()=>typeof SharedArrayBuffer==='function'));
+ // A tab can disappear before its worker reports an error. Preserve a small
+ // stage marker across reload, without automatically restarting the compiler.
+ await page.evaluate(()=>sessionStorage.setItem('linked-assurance-lean-run-v1',JSON.stringify({status:'running',activity:'Policy compilation',phase:'simulated interrupted stage'})));
+ await page.reload();await page.waitForFunction(()=>document.querySelector('#leanEditor').value.includes('def policy'));
+ assert.match(await page.locator('#compilerRunState').textContent(),/previous check did not finish/);
+ assert.match(await page.locator('#compilerBrowserDetails').textContent(),/simulated interrupted stage/);
+ assert.equal(await page.locator('#checkPolicy').isEnabled(),true);
  assert.deepEqual(errors,[]);
  const report={status:'pass',runtime:'@factoidal/core 0.35.1 actual WASM; local npm bytes',
-  checks:['5 examples execute in worker','explicit graph scope','parser rejection','unsupported regime','hard timeout','stale result clearing','no policy result without compile','compiler unavailable on plain origin','service-worker isolation after reload','desktop and mobile layout'],
+  checks:['5 examples execute in worker','explicit graph scope','parser rejection','unsupported regime','hard timeout','stale result clearing','no policy result without compile','compiler unavailable on plain origin','service-worker isolation after reload','interrupted stage survives reload without retry','desktop and mobile layout'],
   wasmCompiler:'Not executed in this fast suite; linked-probe.mjs is the separate compiler integration check.'};
  await fs.writeFile(path.join(out,'browser-checks.json'),JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify(report,null,2));
 }finally{await browser.close();await new Promise(resolve=>server.close(resolve));}

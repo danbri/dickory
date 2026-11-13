@@ -12,7 +12,7 @@ permissions:
 jobs:
   verify:
     runs-on: ubuntu-24.04
-    timeout-minutes: 30
+    timeout-minutes: 40
     steps:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
       - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
@@ -55,15 +55,22 @@ jobs:
       - name: Stage site and check links
         run: |
           npm ci --prefix labs/linked-assurance
-          npm install --prefix labs/linked-assurance/tools/headless --no-audit --no-fund
+          npm install --prefix labs/linked-assurance/tools/headless --ignore-scripts --no-audit --no-fund
+          node --test labs/linked-assurance/tests/profile.test.mjs
           node --test labs/linked-assurance/tools/headless/tests/mcp.test.mjs
           node labs/linked-assurance/tools/check_runtime.mjs
           python3 labs/linked-assurance/tools/check_lean.py
+          python3 labs/linked-assurance/tools/check_profile.py
+          LEAN_PATH="$PWD/labs/linked-assurance/artifacts/lean" lean --json labs/linked-assurance/lean/RunnerParity.lean
           python3 labs/linked-assurance/tools/check_pipeline.py --factoidal labs/linked-assurance/artifacts/factoidal-source
           node labs/linked-assurance/tools/check_tutorial.mjs
           node --test labs/linked-assurance/tests/compiler-cache.test.mjs
+          node --test labs/linked-assurance/tests/support-bundle.test.mjs
           python3 labs/linked-assurance/tools/hello/fetch.py
+          node labs/linked-assurance/tools/build_browser_host.cjs
           node labs/linked-assurance/tools/hello/node.cjs
+          node labs/linked-assurance/tools/build_modules.cjs
+          node labs/linked-assurance/tools/build_modules.cjs --policy
           python3 tools/build_site.py
       - name: Check viewer interactions in Chromium
         working-directory: tools/viewer-browser
@@ -72,20 +79,26 @@ jobs:
           npx playwright install --with-deps chromium webkit
           npm test
           LINKED_SITE_ROOT="$GITHUB_WORKSPACE/_site" node linked-assurance.mjs
-          LINKED_SITE_ROOT="$GITHUB_WORKSPACE/_site" node --test linked-headless-parity.test.mjs
           LINKED_SITE_ROOT="$GITHUB_WORKSPACE/_site" node linked-isolation.mjs
+          LINKED_SITE_ROOT="$GITHUB_WORKSPACE/_site" node --test linked-headless-parity.test.mjs
       - name: Check real browser Lean through Pages isolation shim
         working-directory: tools/viewer-browser
         run: |
           python3 ../../labs/linked-assurance/tools/serve.py --root ../../_site --port 8081 > "$RUNNER_TEMP/linked-server.log" 2>&1 &
           node linked-probe.mjs --hello
           LEAN_BROWSER=webkit node linked-probe.mjs --hello
+          node linked-probe.mjs --startup --webkit --tasks --site=http://127.0.0.1:8081
           node linked-probe.mjs --policy
+          node linked-probe.mjs --policy --webkit
           node linked-probe.mjs --tutorial
+          LINKED_SITE_ROOT="$GITHUB_WORKSPACE/_site" node linked-policy-parity.mjs
+          cp ../../labs/linked-assurance/artifacts/profile-policy-parity.json ../../_site/labs/linked-assurance/artifacts/
           cp ../../labs/linked-assurance/artifacts/hello-node-checks.json ../../_site/labs/linked-assurance/artifacts/
           cp ../../labs/linked-assurance/artifacts/hello-browser-checks.json ../../_site/labs/linked-assurance/artifacts/
           cp ../../labs/linked-assurance/artifacts/hello-webkit-checks.json ../../_site/labs/linked-assurance/artifacts/
+          cp ../../labs/linked-assurance/artifacts/startup-webkit.json ../../_site/labs/linked-assurance/artifacts/
           cp ../../labs/linked-assurance/artifacts/policy-browser-checks.json ../../_site/labs/linked-assurance/artifacts/
+          cp ../../labs/linked-assurance/artifacts/policy-webkit-checks.json ../../_site/labs/linked-assurance/artifacts/
           cp ../../labs/linked-assurance/artifacts/tutorial-browser-checks.json ../../_site/labs/linked-assurance/artifacts/
           cp ../../labs/linked-assurance/artifacts/isolation-browser-checks.json ../../_site/labs/linked-assurance/artifacts/
       - name: Upload verified site

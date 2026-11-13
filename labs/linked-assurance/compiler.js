@@ -1,5 +1,5 @@
 import {gunzipSync} from './vendor/fflate.js';
-import {prepareCompilerFiles} from './compiler-cache.js';
+import {prepareCompilerFiles,releasePreparedCompilerFiles} from './compiler-cache.js';
 
 function untar(data){
   const files=new Map(),decode=new TextDecoder();
@@ -9,7 +9,7 @@ function untar(data){
     let name=text(h.subarray(0,100));const prefix=text(h.subarray(345,500));if(prefix)name=prefix+'/'+name;
     const size=parseInt(text(h.subarray(124,136)).trim(),8)||0;i+=512;
     if(name.startsWith('/')||name.split('/').includes('..')||i+size>data.length)throw Error('Invalid compiler library archive');
-    if(h[156]===48||h[156]===0)files.set(name.replace(/^\.\//,''),data.slice(i,i+size));
+    if(h[156]===48||h[156]===0)files.set(name.replace(/^\.\//,''),data.subarray(i,i+size));
     i+=Math.ceil(size/512)*512;
   }
   return files;
@@ -17,18 +17,22 @@ function untar(data){
 export class Lean4 {
   constructor({onProgress=()=>{},timeout=180000}={}){this.onProgress=onProgress;this.timeout=timeout;this.workers=new Set();this.libraryFiles=new Map();}
   async init(){
-    const {data,cache}=await prepareCompilerFiles(this.onProgress);this.cache=cache;
+    const {data,cache,compilerSha256,runtimeSha256}=await prepareCompilerFiles(this.onProgress);this.cache=cache;this.compilerSha256=compilerSha256;this.runtimeSha256=runtimeSha256;
     this.jsUrl=URL.createObjectURL(new Blob([data['lean.js']],{type:'text/javascript'}));
+    // Emscripten eagerly creates its pool. Defer loading the large runtime in
+    // each child until a job arrives; the host retains only one task worker.
+    this.pthreadUrl=URL.createObjectURL(new Blob([`self.addEventListener('error',event=>postMessage({cmd:'callHandler',handler:'printErr',args:[event.error?.stack||event.message]}));self.onmessage=event=>{importScripts(${JSON.stringify(this.jsUrl)});self.onmessage(event);};`],{type:'text/javascript'}));
     this.wasmUrl=URL.createObjectURL(new Blob([data['lean.wasm']],{type:'application/wasm'}));
     this.onProgress('Unpacking the saved Lean library into memory…');
     this.libraryFiles=untar(gunzipSync(data['lean-lib.tar.gz']));
+    releasePreparedCompilerFiles();
     const header=new TextDecoder().decode(this.libraryFiles.get('Init.olean')?.subarray(0,88));
     if(!header.includes('4.33.1')||!header.includes('4f9018a62ead9be0ffd652021d5afc8501e92253'))throw Error('Mismatched Init library');
   }
   spawn(config){
     const worker=new Worker(new URL('./compiler-worker.js',import.meta.url));this.workers.add(worker);
-    const files=[...this.libraryFiles].map(([name,data])=>({name,data:data.slice()}));
-    worker.postMessage({type:'boot',jsUrl:this.jsUrl,wasmUrl:this.wasmUrl,files,...config},files.map(f=>f.data.buffer));
+    const files=config.flags?.includes('--version')?[]:[...this.libraryFiles].map(([name,data])=>({name,data:data.slice()}));
+    worker.postMessage({type:'boot',jsUrl:this.jsUrl,pthreadUrl:this.pthreadUrl,wasmUrl:this.wasmUrl,files,...config},files.map(f=>f.data.buffer));
     return worker;
   }
   stop(worker){worker.terminate();this.workers.delete(worker);}
@@ -36,8 +40,8 @@ export class Lean4 {
     return new Promise((resolve,reject)=>{
       const timer=setTimeout(()=>{cleanup();this.stop(worker);if(this.session===worker)this.session=null;reject(Error('Lean compiler timeout; worker terminated'));},this.timeout);
       const cleanup=()=>{clearTimeout(timer);worker.removeEventListener('message',message);worker.removeEventListener('error',error);};
-      const error=e=>{cleanup();this.stop(worker);if(this.session===worker)this.session=null;reject(Error(e.message||e.error||'Compiler worker failed'));};
-      const message=({data})=>{if(data.type==='error')error(data);else if(data.type===kind){cleanup();resolve(data);}};
+      const error=e=>{cleanup();this.stop(worker);if(this.session===worker)this.session=null;reject(Error([e.message||e.error||'Compiler worker failed',e.stdout,e.stderr,e.context&&JSON.stringify(e.context)].filter(Boolean).join('\n')));};
+      const message=({data})=>{if(data.type==='error')error(data);else if(data.type==='progress')this.onProgress(data.phase);else if(data.type===kind){cleanup();resolve(data);}};
       worker.addEventListener('message',message);worker.addEventListener('error',error);
     });
   }
@@ -52,10 +56,11 @@ export class Lean4 {
     try{return this.result(await this.wait(worker,'result'));}finally{this.stop(worker);}
   }
   result(r){
+    this.memory=r.memory||null;
     if(r.exitCode===0)for(const f of r.artifacts)this.libraryFiles.set(f.name,new Uint8Array(f.data));
     return {...r,artifacts:r.artifacts.map(f=>f.name)};
   }
   resetSession(){if(this.session){this.stop(this.session);this.session=null;}}
   dispose(){for(const worker of this.workers)worker.terminate();this.workers.clear();this.session=null;
-    if(this.jsUrl)URL.revokeObjectURL(this.jsUrl);if(this.wasmUrl)URL.revokeObjectURL(this.wasmUrl);}
+    if(this.jsUrl)URL.revokeObjectURL(this.jsUrl);if(this.pthreadUrl)URL.revokeObjectURL(this.pthreadUrl);if(this.wasmUrl)URL.revokeObjectURL(this.wasmUrl);}
 }

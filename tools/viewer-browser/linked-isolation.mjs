@@ -11,6 +11,16 @@ const types={'.html':'text/html','.js':'text/javascript','.css':'text/css','.jso
 let legacy=false;
 const server=http.createServer(async(req,res)=>{
   try{
+    if(req.url.startsWith('/labs/linked-assurance/cached-worker.js')){
+      res.setHeader('Content-Type','text/javascript');res.setHeader('Cache-Control','no-cache');
+      res.setHeader('ETag','"worker-v1"');res.setHeader('Last-Modified','Wed, 11 Nov 2026 00:00:00 GMT');
+      if(req.headers['if-none-match']||req.headers['if-modified-since']){res.writeHead(304);res.end();}
+      else res.end('onmessage=()=>postMessage(42);');
+      return;
+    }
+    if(req.url.startsWith('/labs/linked-assurance/empty-response')){
+      res.writeHead(Number(new URL(req.url,'http://local').searchParams.get('status')));res.end();return;
+    }
     let file=path.resolve(root,'.'+decodeURIComponent(new URL(req.url,'http://local').pathname));
     if(!file.startsWith(root+path.sep))throw Error('outside root');
     if((await fs.stat(file)).isDirectory())file=path.join(file,'index.html');
@@ -62,7 +72,23 @@ try{
           return {coep:response.headers.get('Cross-Origin-Embedder-Policy'),worker:result,value:new Int32Array(shared)[0]};
         });
         assert.equal(after.coep,'require-corp');assert.equal(after.worker.isolated,true);assert.equal(after.worker.shared,true);assert.equal(after.value,42);
-        checks.push({browser:name,version:browser.version(),scenario:upgrade?'replace old helper':'first setup',before,after});
+        const cachedWorkers=await page.evaluate(async()=>{
+          const results=[];
+          for(let i=0;i<2;i++){
+            const worker=new Worker('./cached-worker.js');
+            try{results.push(await new Promise((resolve,reject)=>{
+              const timer=setTimeout(()=>reject(Error('Cached worker timed out')),10000);
+              worker.onmessage=e=>{clearTimeout(timer);resolve(e.data);};worker.onerror=e=>{clearTimeout(timer);reject(Error(e.message||'Cached worker failed'));};worker.postMessage(null);
+            }));}finally{worker.terminate();}
+          }
+          for(const status of [204,205,304]){
+            const response=await fetch('./empty-response?status='+status);
+            if(response.status!==status||await response.text()!=='')throw Error('Bodyless response failed: '+status);
+          }
+          return results;
+        });
+        assert.deepEqual(cachedWorkers,[42,42]);
+        checks.push({browser:name,version:browser.version(),scenario:upgrade?'replace old helper':'first setup',before,after,cachedWorkers,bodylessStatuses:[204,205,304]});
         console.log(name+': '+(upgrade?'old helper updated':'first setup')+'; page and worker share memory');
         await context.close();
       }

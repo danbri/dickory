@@ -4,6 +4,7 @@ from pathlib import Path
 from html.parser import HTMLParser
 from urllib.parse import urlsplit, unquote
 import hashlib
+import base64
 import json
 import os
 import shutil
@@ -20,16 +21,23 @@ FILES += [LINKED_ASSURANCE / name for name in (
     "index.html", "style.css", "app.js", "scenarios.js", "tutorial.js", "tutorial-lessons.js",
     "compiler-cache.js", "compiler-banner.js", "pipeline-record.js",
     "lean-host.js", "compiler.js", "compiler-worker.js", "rdf-worker.js", "coi-sw.js",
-    "evidence.js", "headless-contract.js", "headless-webmcp.js", "credential.js", "demo-credential.json", "compiler-assets.json",
+    "evidence.js", "credential.js", "demo-credential.json", "compiler-assets.json",
+    "headless-contract.js", "headless-webmcp.js", "developer-profile.json",
+    "profile/core.js", "profile/catalogue.js", "profile/policy-input.js", "profile/webmcp.js",
+    "profile/bootstrap.js", "profile/demo.html", "profile/demo.js",
     "factoidal-build.json",
     "lean/Workbench.lean", "lean/Policy.lean", "lean/PipelineBridge.lean",
+    "lean/DeveloperProfile.lean", "lean/RunnerParity.lean",
     "vendor/fflate.js", "vendor/fflate-LICENSE.txt", "vendor/lean-LICENSE", "vendor/lean-LICENSES",
     "tools/hello/index.html", "tools/hello/app.js", "tools/hello/browser-worker.js", "tools/hello/checks.js",
     "tools/hello/README.md", "tools/hello/toolchain.json", "tools/hello/web-bundle.json",
     "tools/hello/prepare.py", "tools/hello/fetch.py", "tools/hello/node.cjs",
+    "tools/build_modules.cjs", "artifacts/workbench-wasm.json", "artifacts/policy-wasm.json",
+    "tools/build_browser_host.cjs", "artifacts/lean-browser.js", "artifacts/browser-host-checks.json",
     "artifacts/toolchain-4.33.1-files.json", "artifacts/toolchain-4.33.1/lean-lib.tar.gz",
-    "README.md", "HEADLESS.md", "DESIGN.md", "PIPELINES.md", "THIRD_PARTY.md",
+    "README.md", "HEADLESS.md", "PROFILE.md", "DESIGN.md", "PIPELINES.md", "THIRD_PARTY.md",
     "artifacts/lean-checks.json", "artifacts/runtime-checks.json", "artifacts/tutorial-checks.json", "artifacts/pipeline-native-checks.json",
+    "artifacts/developer-profile-checks.json",
 )]
 FILES += [ARTIFACTS / name for name in (
     "source-review.html", "verification.json", "negative-checks.json", "declarations.json",
@@ -51,10 +59,35 @@ class Links(HTMLParser):
 
 
 def main():
+    profile = json.loads((ROOT / LINKED_ASSURANCE / 'artifacts/developer-profile-checks.json').read_text())
+    if profile['status'] != 'pass':
+        raise SystemExit('Developer profile model did not pass')
+    for name, expected in profile['sha256'].items():
+        if hashlib.sha256((ROOT / LINKED_ASSURANCE / name).read_bytes()).hexdigest() != expected:
+            raise SystemExit(f'Stale developer profile evidence: {name}')
+    compiler_assets = json.loads((ROOT / LINKED_ASSURANCE / 'compiler-assets.json').read_text())
+    support_hash = hashlib.sha256((ROOT / LINKED_ASSURANCE / 'lean/Workbench.lean').read_bytes()).hexdigest()
+    for module in ('Workbench', 'Policy'):
+        bundle = json.loads((ROOT / LINKED_ASSURANCE / f'artifacts/{module.lower()}-wasm.json').read_text())
+        if (bundle['status'] != 'pass' or bundle['sourceSha256'] != hashlib.sha256(
+                (ROOT / LINKED_ASSURANCE / f'lean/{module}.lean').read_bytes()).hexdigest() or
+                bundle['compilerSha256'] != {name: asset['sha256'] for name, asset in compiler_assets.items()}):
+            raise SystemExit(f'Published {module} does not match its source and compiler')
+        if module == 'Policy' and (bundle['supportSha256'] != support_hash or bundle['result']['exitCode'] != 0):
+            raise SystemExit('Published policy has stale support or a failed check')
+        for file in bundle['files']:
+            data = base64.b64decode(file['base64'], validate=True)
+            if len(data) != file['bytes'] or hashlib.sha256(data).hexdigest() != file['sha256']:
+                raise SystemExit(f'Published {module} checksum mismatch')
     for name, expected in json.loads((ROOT / LINKED_ASSURANCE / 'compiler-assets.json').read_text()).items():
         path = ROOT / LINKED_ASSURANCE / expected['url']
         if path.stat().st_size != expected['bytes'] or hashlib.sha256(path.read_bytes()).hexdigest() != expected['sha256']:
             raise SystemExit(f'Compiler asset checksum mismatch: {name}')
+        if 'browser' in expected:
+            browser = expected['browser']
+            path = ROOT / LINKED_ASSURANCE / browser['url']
+            if path.stat().st_size != browser['bytes'] or hashlib.sha256(path.read_bytes()).hexdigest() != browser['sha256']:
+                raise SystemExit(f'Browser host checksum mismatch: {name}')
     # This listing comes from the hash-verified prepared archive, not the repo tree.
     listing = json.loads((ROOT / LINKED_ASSURANCE / 'artifacts/toolchain-4.33.1-files.json').read_text())
     for entry in listing:

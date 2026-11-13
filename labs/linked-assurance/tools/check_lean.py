@@ -17,12 +17,6 @@ def lean(path,*args,success=True):
     return p.stdout+p.stderr
 lean(root/'lean/Workbench.lean','-o',str(out/'Workbench.olean'))
 lean(root/'lean/Policy.lean','-o',str(out/'Policy.olean'))
-# Universal conditional parity of checked policy evaluation, not a claim
-# that Node and Chromium have identical runtime implementations.
-parity_output=lean(root/'lean/RunnerParity.lean','-o',str(out/'RunnerParity.olean'))
-for proof in ('policy_runner_parity','runner_adapter_parity'):
-    if f"'LinkedAssurance.{proof}'" not in parity_output:
-        raise SystemExit(f'Missing parity proof audit: {proof}')
 checks='''import Policy
 open LinkedAssurance
 def ctx : Context := ⟨"input", "selected", "union", "RDFS", "0.35.1"⟩
@@ -68,8 +62,8 @@ broken=(root/'lean/Policy.lean').read_text().replace('else if ready e s then .pe
 (out/'Broken.lean').write_text(broken)
 negative=lean(out/'Broken.lean',success=False)
 report={'status':'pass','compiler':subprocess.check_output(['lean','--version'],text=True).strip(),
-'sha256':{name:hashlib.sha256((root/name).read_bytes()).hexdigest() for name in ['lean/Workbench.lean','lean/Policy.lean','lean/RunnerParity.lean']},
-'checks':['Workbench and Policy compiled','10 concrete outcomes proved by kernel reduction','7 policy adapter acceptance/rejection checks proved','Axiom dependencies printed','Removing the permission gate breaks the actual contract','RunnerParity conditional theorems elaborated and axiom audit emitted'],
+'sha256':{name:hashlib.sha256((root/name).read_bytes()).hexdigest() for name in ['lean/Workbench.lean','lean/Policy.lean']},
+'checks':['Workbench and Policy compiled','10 concrete outcomes proved by kernel reduction','7 policy adapter acceptance/rejection checks proved','Axiom dependencies printed','Removing the permission gate breaks the actual contract'],
 'diagnostics':output,'negativeDiagnostics':negative}
 (root/'artifacts/lean-checks.json').write_text(json.dumps(report,indent=2)+'\n')
 print(json.dumps({k:v for k,v in report.items() if k not in ['diagnostics','negativeDiagnostics']},indent=2))

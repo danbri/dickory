@@ -1,67 +1,47 @@
-// WebMCP tools: document.modelContext is the current Chrome API.
-// Not navigator.modelContext. When the API is unavailable, the same
-// real tool handlers remain callable by a local headless test harness;
-// we do not claim that fallback constitutes native WebMCP registration.
+// SPDX-License-Identifier: Apache-2.0
 import {listCases,makeCase,normalizeRdf} from './headless-contract.js';
 import {startRdf} from './evidence.js';
-
-const emptySchema={type:'object',properties:{},additionalProperties:false};
-const caseSchema={type:'object',properties:{
-  scenario:{type:'string',description:'Sample case identifier'},
-  variant:{type:'string',description:'Case data variant',default:'base'},
-  scope:{type:'string',enum:['default','data','ontology','union'],default:'union'},
-  regime:{type:'string',enum:['simple','RDFS'],default:'RDFS'},
-  budgetMs:{type:'integer',minimum:1,maximum:120000,default:60000}
-},additionalProperties:false};
-
-export async function evaluateCase(input={},options={}) {
-  const {identity,request}=makeCase(input);
-  options.signal?.throwIfAborted?.();
-  const job=startRdf(request,identity.budgetMs);
-  const cancel=()=>job.cancel();
-  options.signal?.addEventListener('abort',cancel,{once:true});
-  try{
-    const result=await job.promise;
-    options.signal?.throwIfAborted?.();
-    return {
-      case:identity,observation:normalizeRdf(result),
-      attestation:{
-        runtime:'chromium-page-worker',
-        userAgent:navigator.userAgent,
-        documentType:typeof document,windowType:typeof window,
-        workerAPI:typeof Worker,webAssembly:typeof WebAssembly,
-        crossOriginIsolated:globalThis.crossOriginIsolated===true
-      }
-    };
-  }finally{options.signal?.removeEventListener('abort',cancel);}
+import {createDispatcher} from './profile/core.js';
+import {workbenchProfile} from './profile/catalogue.js';
+import {preparePolicyInput} from './profile/policy-input.js';
+import {registerWebMCP,invokeNativeWebMCP} from './profile/webmcp.js';
+async function read(path,json=false){const r=await fetch(new URL(path,import.meta.url));if(!r.ok)throw Error('Missing '+path);return json?r.json():r.text();}
+export async function evaluateCase(input={},options={}){
+ const {identity,request}=makeCase(input);
+ options.signal?.throwIfAborted();
+ const job=startRdf(request,identity.budgetMs),cancel=()=>job.cancel();
+ options.signal?.addEventListener('abort',cancel,{once:true});
+ try{return {case:identity,observation:normalizeRdf(await job.promise),attestation:{runtime:'chromium-page-worker',userAgent:navigator.userAgent,documentType:typeof document,windowType:typeof window,workerAPI:typeof Worker,crossOriginIsolated:globalThis.crossOriginIsolated===true}};}
+ finally{options.signal?.removeEventListener('abort',cancel);}
 }
-export function toolDefinitions(){
-  return [
-    {name:'linked_assurance_cases',
-      description:'List the pinned Linked Assurance RDF scenarios and admissible graph scopes.',
-      inputSchema:emptySchema,annotations:{readOnlyHint:true},
-      execute:()=>({cases:listCases()})},
-    {name:'linked_assurance_evaluate',
-      description:'Evaluate a pinned Linked Assurance RDF case using the real Factoidal WASM engine in a killable browser worker. Returns observations, not a proof of policy correctness.',
-      inputSchema:caseSchema,annotations:{readOnlyHint:true},
-      execute:async(input={},options={})=>{
-        try{return await evaluateCase(input,options)}
-        catch(e){if(options.signal?.aborted)throw e;return {error:String(e?.message||e)}}
-      }}
-  ];
+export async function createBrowserDispatcher(config){
+ const profile=workbenchProfile(config??await read('./developer-profile.json',true));
+ const check=async()=>{const host=await import('./lean-host.js'),source=await read('./lean/Policy.lean');const result=await host.compilePolicy(source);return {execution:result.contractChecked?'completed':'proof_rejected',contractChecked:result.contractChecked,sourceSha256:result.sourceSha256,compilerVersion:result.compilerVersion,verificationLocation:result.verificationLocation};};
+ const policy=async(input,options)=>{
+  const rdf=await evaluateCase(input,options),host=await import('./lean-host.js');
+  options.signal?.throwIfAborted();
+  const [source,demo]=await Promise.all([read('./lean/Policy.lean'),read('./demo-credential.json',true)]);
+  const c=await host.compilePolicy(source);options.signal?.throwIfAborted();
+  if(!c.contractChecked)return {execution:'proof_rejected',contractChecked:false,policy:{executed:false}};
+  const p=await preparePolicyInput(input,rdf.observation,demo,source);
+  const result=await host.executePolicy(source,p.fixture);options.signal?.throwIfAborted();
+  return {execution:result.executed?'completed':'compiler_fault',case:p.case,resolved:p.resolved,rdfObservation:rdf.observation,
+   policy:{executed:result.executed,decision:result.decision??null,attacker:result.attacker??null},
+   fixtureSha256:p.fixtureSha256,sourceSha256:p.sourceSha256,operational:p.operational,contractChecked:true,
+   attestation:{runtime:'browser-wasm-lean',compilerVersion:result.compilerVersion,rdfWorker:rdf.attestation}};
+ };
+ return createDispatcher({profile,transport:'webmcp',capabilities:['rdf','lean-policy'],runtime:{host:'browser',userAgent:navigator.userAgent},handlers:{
+  linked_assurance_cases:()=>({cases:listCases()}),linked_assurance_evaluate:evaluateCase,
+  linked_assurance_check_policy:check,linked_assurance_policy:policy
+ }});
 }
-export async function mountWebMCP(){
-  const api=document.modelContext;
-  if(!api||typeof api.registerTool!=='function')
-    return {registered:false,reason:'document.modelContext not enabled in this browser'};
-  for(const tool of toolDefinitions())await api.registerTool(tool);
-  return {registered:true,names:toolDefinitions().map(t=>t.name)};
+let ready;
+export function mountWebMCP(){
+ if(!ready)ready=(async()=>{const dispatcher=await createBrowserDispatcher();const registration=await registerWebMCP(dispatcher);return {dispatcher,registration};})();
+ return ready;
 }
-// Harness access only via explicit ?headless=1; not an MCP substitute.
-// In normal browsing tool dispatch is exclusively browser-managed WebMCP.
 if(new URL(location.href).searchParams.has('headless')){
-  window.__linkedAssuranceHeadless={
-    list:()=>listCases(),run:evaluateCase,
-    names:toolDefinitions().map(t=>t.name)
-  };
+ window.__linkedAssuranceHeadless={ready:mountWebMCP(),
+  invokeNative:async(name,args)=>{await mountWebMCP();return invokeNativeWebMCP(name,args);},
+  invokeDirect:async(name,args)=>{const {dispatcher}=await mountWebMCP();return dispatcher.invoke(name,args);}};
 }

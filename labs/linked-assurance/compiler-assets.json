@@ -2,7 +2,12 @@
   "lean.js": {
     "url": "./artifacts/toolchain-4.33.1/bin/lean.js",
     "bytes": 48467342,
-    "sha256": "79f6bb9f2bd66e1e13c2d3ebfbf73d8e755d7af0e318b15367b1e50c0923ef37"
+    "sha256": "79f6bb9f2bd66e1e13c2d3ebfbf73d8e755d7af0e318b15367b1e50c0923ef37",
+    "browser": {
+      "url": "./artifacts/lean-browser.js",
+      "bytes": 146485,
+      "sha256": "9a07acd606c7fc63c13dc55e009bb8851125a254e1bbcfb203f07fd05d41e393"
+    }
   },
   "lean.wasm": {
     "url": "./artifacts/toolchain-4.33.1/bin/lean.wasm",
