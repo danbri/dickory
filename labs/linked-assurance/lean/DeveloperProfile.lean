@@ -66,7 +66,7 @@ theorem resolved_value_idempotent (f : Field V) (input : Option V) (v : V)
 
 inductive Transport where
   | stdio | streamableHttp | webmcp | localCli
-  deriving Repr, DecidableEq, BEq
+  deriving Repr, DecidableEq
 structure Profile where
   enabledTools : List String
   transports : List Transport
