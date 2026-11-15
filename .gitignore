@@ -8,3 +8,4 @@ node_modules/
 labs/linked-assurance/artifacts/
 labs/rdf11/cleanroom/artifacts/*
 !labs/rdf11/cleanroom/artifacts/.gitkeep
+labs/veil/artifacts/
