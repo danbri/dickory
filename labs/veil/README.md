@@ -13,7 +13,8 @@ supported.
 - [`IstCache/Proof.lean`](IstCache/Proof.lean) states the rule as a first-order invariant over
   any number of graphs and propositions, and Veil's `#check_invariants` proves it inductive.
   Every SMT answer is turned into a kernel-checked proof (`veil.smt.trust false`): nothing rests
-  on the solver.
+  on the solver. One verification condition, for the relational `revoke` step, which the SMT
+  translation does not take, is proved by hand in four lines.
 - [`IstCache/Ikl.lean`](IstCache/Ikl.lean) runs the same system on a finite instance (two
   graphs, two propositions) with its invariants written as IKL sentences in CLIF text, for
   example `(forall (p) (if (Cached p) (exists (g) (and (Trusted g) (ist g p)))))` and one with a
@@ -21,9 +22,9 @@ supported.
   Each is read by factoidal-core's CLIF reader and decided in every reachable state by its
   executable IKL satisfaction checker (`L4Factoidal.CL.FiniteSat`), over an interpretation
   built from the state. `#model_check` visits all reachable states: evidence for this
-  instance, not a proof.
+  instance, not a proof. Locally: 137 states, no violation.
 - [`IstCache/Audit.lean`](IstCache/Audit.lean) lists every theorem of the lab with the axioms
-  its proof uses.
+  its proof uses (302 locally, all within `propext`, `Classical.choice`, `Quot.sound`).
 
 What is proved: the first-order cache rule, for all sizes. What is checked, not proved: that
 the IKL sentences hold in every reachable state of the two-by-two instance, and that they
