@@ -71,6 +71,8 @@ jobs:
           node labs/linked-assurance/tools/hello/node.cjs
           node labs/linked-assurance/tools/build_modules.cjs
           node labs/linked-assurance/tools/build_modules.cjs --policy
+          sh labs/company-accounts/verify.sh
+          python3 labs/company-accounts/fetch_sources.py
           python3 tools/build_site.py
       - name: Check viewer interactions in Chromium
         working-directory: tools/viewer-browser
