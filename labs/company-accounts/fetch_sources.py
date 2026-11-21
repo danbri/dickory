@@ -108,7 +108,7 @@ def main():
     actual = listing.names - {"Parent Directory"}
     # We only consider files with the expected source naming patterns. A newly
     # added file is a review event rather than something silently omitted.
-    relevant = {n for n in actual if n.endswith((".n3", ".txt", ".mml", ".zip"))}
+    relevant = actual  # Exact directory inventory: do not silently ignore new extensions.
     if relevant != expected:
         raise SystemExit(f"Archive inventory drift. Missing: {sorted(expected-relevant)}; "
                          f"unexpected: {sorted(relevant-expected)}")
