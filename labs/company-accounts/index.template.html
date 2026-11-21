@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Company Accounts — SWAD-Europe revisited with Lean 4 · Dickory</title>
+<link rel="stylesheet" href="./style.css">
+</head>
+<body>
+<header><a href="../../">DICKORY / LABS</a><span>EXPERIMENT 03 · SWAD-EUROPE 2004 × LEAN 4 WASM</span></header>
+<main>
+<section class="intro">
+  <p class="eyebrow">COMPANY ACCOUNTS / 2004 → 2026</p>
+  <h1>Eleven financial rules.<br>One explicit Lean reference.</h1>
+  <p>Historical N3 and MathML implementations alongside theorem-checked definitions, exact rational arithmetic, typed money, and mechanically checkable counterexamples.</p>
+  <p><strong>Careful:</strong> This is a proposed, reviewable semantic profile in pence and 365-day annual periods, not a claim that the 2004 source data had those units. The historic inputs and output files are reproduced as archival evidence, not interpreted as ground truth.</p>
+  <p class="links"><a href="https://www.w3.org/2001/sw/Europe/reports/xml_test_cases/">Original SWAD-Europe report</a> · <a href="./README.md">Assurance boundaries</a> · <a href="../linked-assurance/">Dickory compiler workbench</a></p>
+</section>
+<section class="overview">
+  <article><strong>11</strong><span>finance relationships</span></article>
+  <article><strong id="sourceCount">—</strong><span>original files embedded</span></article>
+  <article><strong>4</strong><span>explicit example theorems</span></article>
+  <article><strong>0</strong><span>silent floating-point approximations</span></article>
+</section>
+<section class="panel">
+  <h2>01 / Pick a rule</h2>
+  <label for="rule">2004 report rule</label><select id="rule"></select>
+  <h3 id="ruleTitle"></h3><p id="ruleSummary"></p>
+  <p id="ruleFinding" class="finding"></p>
+  <div class="twocol">
+    <div><h3>Archived N3 / CWM rule</h3><pre id="n3Code" tabindex="0"></pre></div>
+    <div><h3>Archived Content MathML rule</h3><pre id="mathCode" tabindex="0"></pre></div>
+  </div>
+  <details><summary>Archived interpreter outputs for this rule</summary>
+    <div class="twocol"><div><h4>CWM / N3</h4><pre id="n3Output"></pre></div><div><h4>MathML / XSLT</h4><pre id="mathOutput"></pre></div></div>
+  </details>
+</section>
+<section class="panel">
+  <h2>02 / Run Lean 4 in this browser</h2>
+  <p>Actual Lean 4.33.1 (WASM) from Dickory's Linked Assurance toolchain. Compiler artefacts are hash-verified. The first load needs roughly 136 MB of downloads and substantial memory; desktop Chrome is the most reliable target.</p>
+  <p id="isolationStatus" role="status"></p>
+  <button id="enableIsolation" type="button">Enable cross-origin isolation and reload</button>
+  <p>Lean source is editable. The checker appends fixed typed obligations for four named theorems and inspects the reported axiom dependencies. An edited program is not silently treated as equivalent to the published source.</p>
+  <label for="leanCode">Lean 4 source (core library only)</label>
+  <textarea id="leanCode" spellcheck="false" aria-label="Editable Lean 4 source"></textarea>
+  <div class="actions"><button id="runProofs" type="button">Compile and verify Lean theorems</button>
+  <button id="runNegative" class="secondary" type="button">Demonstrate rejection of false theorem</button>
+  <button id="resetCode" class="secondary" type="button">Restore repository source</button></div>
+  <p id="proofStatus" role="status">Not checked in this session.</p>
+  <details><summary>Compiler diagnostics and axiom audit</summary><pre id="diagnostics"></pre></details>
+</section>
+<section class="panel">
+  <h2>03 / Complete inline historical source catalogue</h2>
+  <p>The actual archived file bodies are embedded in this HTML by the verified site build, including the binary ZIP as base64. These are source records, <em>not</em> translated or automatically corrected formulas. No archive fetch occurs in the browser.</p>
+  <p id="archiveStatus"></p>
+  <label for="sourceFile">Inspect any original file</label><select id="sourceFile"></select>
+  <p id="fileMeta"></p>
+  <div class="actions"><button id="downloadSource" type="button">Download selected original bytes</button>
+  <button id="downloadManifest" class="secondary" type="button">Download SHA-256 manifest</button></div>
+  <pre id="sourceText" tabindex="0"></pre>
+  <p>The original publication also references <code>newdata.asc</code>; its historical URL currently returns HTTP 404. It is not represented as acquired data.</p>
+</section>
+<footer><a href="./README.md">Design, reproduction and limitations</a> · <a href="../../">Dickory home</a></footer>
+</main>
+<!-- ARCHIVE_JSON -->
+<script type="module" src="./app.js"></script>
+</body></html>

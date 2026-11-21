@@ -39,6 +39,12 @@ FILES += [LINKED_ASSURANCE / name for name in (
     "artifacts/lean-checks.json", "artifacts/runtime-checks.json", "artifacts/tutorial-checks.json", "artifacts/pipeline-native-checks.json",
     "artifacts/developer-profile-checks.json",
 )]
+# This lab's HTML is generated with ALL historical data inline at site build.
+COMPANY = Path("labs/company-accounts")
+FILES += [COMPANY / name for name in (
+    "app.js", "style.css", "coi-sw.js", "README.md", "THIRD_PARTY.md",
+    "lean/Accounts.lean", "artifacts/source-manifest.json",
+)]
 FILES += [ARTIFACTS / name for name in (
     "source-review.html", "verification.json", "negative-checks.json", "declarations.json",
     "closure-execution.json", "instance-execution.json"
@@ -130,16 +136,25 @@ def main():
         destination = OUT / path
         destination.parent.mkdir(parents=True, exist_ok=True)
         shutil.copyfile(ROOT / path, destination)
+    company_source = ROOT / COMPANY / "artifacts/index.html"
+    if not company_source.is_file():
+        raise SystemExit("Company-accounts inline archive has not been generated")
+    company_destination = OUT / COMPANY / "index.html"
+    company_destination.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copyfile(company_source, company_destination)
     build = {
         "commit": os.environ.get("GITHUB_SHA", "local-uncommitted-preview"),
         "run": os.environ.get("GITHUB_RUN_ID"),
         "coverage": "draft; expert reviews and full coverage remain incomplete",
-        "sha256": {p.as_posix(): hashlib.sha256((OUT / p).read_bytes()).hexdigest()
-                   for p in FILES},
+        "sha256": {
+            **{p.as_posix(): hashlib.sha256((OUT / p).read_bytes()).hexdigest()
+               for p in FILES},
+            (COMPANY / "index.html").as_posix(): hashlib.sha256(company_destination.read_bytes()).hexdigest(),
+        },
     }
     (OUT / LAB / "build.json").write_text(json.dumps(build, indent=2) + "\n")
     (OUT / ".nojekyll").touch()
-    for path in FILES:
+    for path in [*FILES, COMPANY / "index.html"]:
         if path.suffix != ".html":
             continue
         parser = Links()
