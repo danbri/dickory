@@ -8,7 +8,7 @@ An independently reviewable reconstruction of [SWAD-Europe 5.3 (2004)](https://w
 
 - Exactly one currency and a single reporting period per record.
 - Money in **integer pence**; in the demonstration fixture, \`gbp n\` denotes 100n pence.
-- Ratios are represented as unreduced exact \`Option (Int × Int)\` fractions, **not** floating point, and \`none\` explicitly denotes a zero denominator.
+- Ratios are represented as unreduced exact \`Option (Int × Int)\` fractions, **not** floating point, and \`none\` explicitly denotes a zero denominator. \`sameExactValue\` compares fractions by cross multiplication; structural inequality of numerator/denominator pairs is **not** used to establish a numerical counterexample.
 - Percentage expressions include ×100. Asset turnover and liquidity ratios are dimensionless.
 - Rule 4 returns a rational estimate of headcount. It does not claim an integer-valued employee count without a separately checked divisibility condition.
 - Rules 10 and 11 use **explicitly selected modern annual ratios** \`365 × debtors / annual sales\` and \`365 × stock / annual cost of sales\`. The 2004 formulas include very different factors; the lab must not silently imply equivalence.
