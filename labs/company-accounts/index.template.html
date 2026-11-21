@@ -38,6 +38,16 @@
   <h2>02 / Check the Lean 4 proofs</h2>
   <p>The published model is theorem-checked in native Lean 4.33.1 by CI, with an exact SHA-256 match to the source below. On supported desktop browsers, you can additionally compile edits with Dickory's genuine Lean WASM compiler. On iPhone and WebKit, the live compiler is unreliable, so this page displays the authentic build-time evidence instead.</p>
   <p id="proofMode" role="status">Inspecting compiler support…</p>
+  <aside class="mobileLeanLinks" aria-label="Genuine Lean on mobile">
+    <h3>Real Lean proofs on iPhone — experimental slim compiler</h3>
+    <p>A separate, open-source Lean 4 WASM playground has an Init-only iOS build. These links transfer the specified source in a compressed URL fragment to that playground (no source POST), where its actual Lean compiler can run locally on your device. <strong>Press Run there to verify</strong>; opening the link is not a proof check. The runtime is not yet version-pinned to Dickory's CI compiler.</p>
+    <div class="actions">
+      <a id="mobileProbe" class="actionLink" aria-disabled="true">Try small company-accounts proof on this phone</a>
+      <a id="mobileFull" class="actionLink subtle" aria-disabled="true">Open exact editor source in mobile Lean</a>
+    </div>
+    <p id="mobileLeanStatus" role="status">Preparing links…</p>
+    <small>External open-source project: <a href="https://github.com/cauli/lean4-wasm-in-browser" rel="noopener noreferrer" target="_blank">cauli/lean4-wasm-in-browser</a>. The page can read the code you open there. Its slim runtime is separate from Dickory's CI compiler.</small>
+  </aside>
   <p id="isolationStatus" role="status"></p>
   <button id="enableIsolation" type="button">Enable cross-origin isolation and reload</button>
   <p>Lean source is editable. The checker appends fixed typed obligations for four named theorems and inspects the reported axiom dependencies. An edited program is not silently treated as equivalent to the published source.</p>
