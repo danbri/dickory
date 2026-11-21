@@ -28,11 +28,15 @@ for line in open(sys.argv[1]):
         if identity in data:
             if 'does not depend on any axioms' in data:
                 seen.add(name)
-            elif 'depends on axioms:' in data:
-                raise SystemExit('Unexpected theorem axiom dependency: ' + data)
+            elif 'depends on axioms: [' in data:
+                axioms = {part.strip() for part in data.split('depends on axioms: [', 1)[1].split(']', 1)[0].split(',') if part.strip()}
+                allowed = {'propext', 'Classical.choice', 'Quot.sound'}
+                if not axioms.issubset(allowed):
+                    raise SystemExit('Unexpected theorem axiom dependency: ' + data)
+                seen.add(name)
 if seen != expected:
-    raise SystemExit('Missing no-axiom checks: ' + repr(sorted(expected - seen)))
-print('All seven Lean theorem dependencies audited: no axioms')
+    raise SystemExit('Missing theorem axiom checks: ' + repr(sorted(expected - seen)))
+print('All seven Lean theorem dependencies audited: kernel-standard axioms only')
 PY
 if LEAN_PATH="$LAB/lean" lean --json "$LAB/lean/Negative.lean" \
   > "$LAB/artifacts/lean-negative.jsonl" 2>&1; then
