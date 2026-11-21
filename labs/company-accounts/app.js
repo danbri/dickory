@@ -85,8 +85,32 @@ async function isolate() {
     scope: new URL('./', import.meta.url).href, updateViaCache:'none'
   });
   await reg.update();
-  await navigator.serviceWorker.ready;
-  sessionStorage.setItem('swad-reload-for-isolation', '1');
+  const worker = reg.installing || reg.waiting || reg.active;
+  if (!worker) throw Error('No isolation helper was installed.');
+  await new Promise((resolve, reject) => {
+    if (worker.state === 'activated') return resolve();
+    const fail = setTimeout(() => reject(Error('Isolation service worker activation timed out.')), 15000);
+    const check = () => {
+      if (worker.state === 'activated') {
+        clearTimeout(fail); worker.removeEventListener('statechange', check); resolve();
+      }
+    };
+    worker.addEventListener('statechange', check);
+    check();
+  });
+  await new Promise((resolve, reject) => {
+    if (navigator.serviceWorker.controller === worker) return resolve();
+    const fail = setTimeout(() => reject(Error('The isolation helper did not take control.')), 15000);
+    const check = () => {
+      if (navigator.serviceWorker.controller === worker) {
+        clearTimeout(fail);
+        navigator.serviceWorker.removeEventListener('controllerchange', check);
+        resolve();
+      }
+    };
+    navigator.serviceWorker.addEventListener('controllerchange', check);
+    check();
+  });
   location.reload();
 }
 async function runPositive() {
