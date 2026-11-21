@@ -27,9 +27,9 @@ const contract = [
  '  ∀ (a : SWADAccounts.Accounts) (replacement : SWADAccounts.Money),',
  '    SWADAccounts.acidTest { a with stock := replacement } = SWADAccounts.acidTest a)',
  '#check (SWADAccounts.archived_rule8_counterexample :',
- '  ¬ SWADAccounts.sameExactValue (SWADAccounts.acidTest SWADAccounts.fixture) (SWADAccounts.archivedN3AcidTest SWADAccounts.fixture))',
+ '  SWADAccounts.sameExactValue (SWADAccounts.acidTest SWADAccounts.fixture) (SWADAccounts.archivedN3AcidTest SWADAccounts.fixture) = false)',
  '#check (SWADAccounts.archived_rule10_counterexample :',
- '  ¬ SWADAccounts.sameExactValue (SWADAccounts.debtorDays SWADAccounts.fixture) (SWADAccounts.archivedN3DebtorDays SWADAccounts.fixture))',
+ '  SWADAccounts.sameExactValue (SWADAccounts.debtorDays SWADAccounts.fixture) (SWADAccounts.archivedN3DebtorDays SWADAccounts.fixture) = false)',
  '#check (SWADAccounts.archived_rule11_predicate_mismatch :',
  '  SWADAccounts.archivedStockOutputPredicate ≠ SWADAccounts.stockOutputPredicate)',
  ...required.map(name => '#print axioms ' + name)
@@ -107,7 +107,7 @@ async function runNegative() {
   const okay = await runPositive();
   if (!okay) throw Error('Cannot interpret negative test: current source has not passed positive obligations.');
   const falseClaim = '\nexample : SWADAccounts.sameExactValue (SWADAccounts.acidTest SWADAccounts.fixture) ' +
-    '(SWADAccounts.archivedN3AcidTest SWADAccounts.fixture) := by decide\n';
+    '(SWADAccounts.archivedN3AcidTest SWADAccounts.fixture) = true := by decide\n';
   const result = await checkLean($('leanCode').value + '\n' + contract + falseClaim, progress => {
     $('proofStatus').textContent = progress;
   });
