@@ -1,5 +1,6 @@
 import {checkLean, auditContract, compilerEnvironment, compilerUnavailableReason, diagnosticText} from '../linked-assurance/lean-host.js';
 import {webKitCompilerRisk, sha256Source, validatePublishedEvidence, publishedProofSummary} from './proof-evidence.js';
+import {leanMobileWorkspaceLink,smallLeanProbe} from './mobile-lean.js';
 
 const $ = id => document.getElementById(id);
 const archive = JSON.parse($('inlineArchive').textContent);
@@ -38,6 +39,35 @@ const contract = [
 
 let initialLean = '';
 let publishedEvidence = null;
+let mobileLinkGeneration = 0;
+async function updateMobileLeanLink(source) {
+  const generation = ++mobileLinkGeneration;
+  const el = $('mobileFull');
+  el.removeAttribute('href');
+  el.setAttribute('aria-disabled','true');
+  $('mobileLeanStatus').textContent='Encoding current Lean source for the slim mobile compiler…';
+  try {
+    const url=await leanMobileWorkspaceLink(source,'Accounts.lean');
+    if(generation!==mobileLinkGeneration)return;
+    el.href=url;
+    el.setAttribute('aria-disabled','false');
+    $('mobileLeanStatus').textContent='Ready. The link contains your editor source in its fragment; the destination will only compile after you press Run there.';
+  } catch(error) {
+    if(generation!==mobileLinkGeneration)return;
+    $('mobileLeanStatus').textContent='Could not generate mobile Lean link: '+String(error.message||error);
+  }
+}
+async function prepareMobileLeanProbe() {
+  try {
+    const link=$('mobileProbe');
+    link.href=await leanMobileWorkspaceLink(smallLeanProbe,'PhoneProbe.lean');
+    link.target='_blank';
+    link.rel='noopener noreferrer';
+    link.setAttribute('aria-disabled','false');
+  } catch(error) {
+    $('mobileLeanStatus').textContent='Could not prepare mobile Lean probe: '+String(error.message||error);
+  }
+}
 const webKitRisk = webKitCompilerRisk(navigator.userAgent, navigator.platform, navigator.maxTouchPoints);
 
 async function loadPublishedEvidence() {
@@ -264,9 +294,16 @@ async function start() {
   if (!response.ok) throw Error('Repository Lean source missing from site');
   initialLean = await response.text();
   $('leanCode').value = initialLean;
+  $('mobileFull').target='_blank';
+  $('mobileFull').rel='noopener noreferrer';
+  await prepareMobileLeanProbe();
+  await updateMobileLeanLink(initialLean);
+  let mobileDebounce;
   $('leanCode').addEventListener('input', () => {
     $('proofStatus').textContent = 'Source edited — no current proof check for these bytes. The published CI record is for the original source only.';
     $('diagnostics').textContent = '';
+    clearTimeout(mobileDebounce);
+    mobileDebounce=setTimeout(()=>updateMobileLeanLink($('leanCode').value),250);
   });
   try {
     await loadPublishedEvidence();
@@ -278,6 +315,7 @@ async function start() {
   $('runNegative').onclick = () => guard(runNegative);
   $('resetCode').onclick = () => {
     $('leanCode').value = initialLean;
+    updateMobileLeanLink(initialLean);
     if(webKitRisk) guard(() => showPublishedForCurrentSource(false));
     else $('proofStatus').textContent = 'Restored repository source. Run the browser compiler for a new local check, or inspect the native CI report.';
   };
