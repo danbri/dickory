@@ -117,9 +117,11 @@ try{
     },editedLink);
     assert.equal(edited.files[0].content,source+'\n-- unverified mutation');
     await mobilePage.click('#runProofs');
+    await mobilePage.waitForFunction(()=>document.querySelector('#proofStatus').textContent.includes('EDITED SOURCE — NOT VERIFIED'));
     assert.match(await mobilePage.locator('#proofStatus').textContent(),/EDITED SOURCE — NOT VERIFIED/);
     assert.match(await mobilePage.locator('#diagnostics').textContent(),/No Lean compilation or theorem check/);
     await mobilePage.click('#resetCode');
+    await mobilePage.waitForFunction(()=>document.querySelector('#proofStatus').textContent.includes('CI PROOFS: seven'));
     assert.match(await mobilePage.locator('#proofStatus').textContent(),/CI PROOFS: seven/);
     assert.deepEqual(compilerFetches,[],'Mobile path must not download or initialise the failing WASM compiler');
     assert.deepEqual(mobileErrors,[]);
