@@ -56,3 +56,6 @@ grep -q '"severity":"error"' "$LAB/artifacts/lean-negative.jsonl" || {
   exit 1
 }
 echo 'Lean positive theorems accepted; deliberately false equality rejected.'
+
+# A published proof record is generated only after both real compiler gates.
+python3 "$LAB/build_evidence.py"
