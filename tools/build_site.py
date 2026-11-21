@@ -43,7 +43,7 @@ FILES += [LINKED_ASSURANCE / name for name in (
 COMPANY = Path("labs/company-accounts")
 FILES += [COMPANY / name for name in (
     "app.js", "style.css", "coi-sw.js", "README.md", "THIRD_PARTY.md",
-    "lean/Accounts.lean", "artifacts/source-manifest.json",
+    "lean/Accounts.lean", "proof-evidence.js", "artifacts/lean-evidence.json", "artifacts/source-manifest.json",
 )]
 FILES += [ARTIFACTS / name for name in (
     "source-review.html", "verification.json", "negative-checks.json", "declarations.json",
@@ -136,6 +136,14 @@ def main():
         destination = OUT / path
         destination.parent.mkdir(parents=True, exist_ok=True)
         shutil.copyfile(ROOT / path, destination)
+    # The published evidence must refer to the exact verified model and negative case.
+    company_evidence = json.loads((ROOT / COMPANY / "artifacts/lean-evidence.json").read_text())
+    if (company_evidence.get("status") != "pass" or
+        company_evidence.get("sourceSha256") != hashlib.sha256(
+            (ROOT / COMPANY / "lean/Accounts.lean").read_bytes()).hexdigest() or
+        company_evidence.get("negativeSourceSha256") != hashlib.sha256(
+            (ROOT / COMPANY / "lean/Negative.lean").read_bytes()).hexdigest()):
+        raise SystemExit("Company accounts proof evidence does not match current sources")
     company_source = ROOT / COMPANY / "artifacts/index.html"
     if not company_source.is_file():
         raise SystemExit("Company-accounts inline archive has not been generated")
