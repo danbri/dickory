@@ -42,7 +42,7 @@ FILES += [LINKED_ASSURANCE / name for name in (
 # This lab's HTML is generated with ALL historical data inline at site build.
 COMPANY = Path("labs/company-accounts")
 FILES += [COMPANY / name for name in (
-    "app.js", "style.css", "coi-sw.js", "README.md",
+    "app.js", "style.css", "coi-sw.js", "README.md", "THIRD_PARTY.md",
     "lean/Accounts.lean", "artifacts/source-manifest.json",
 )]
 FILES += [ARTIFACTS / name for name in (
