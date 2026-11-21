@@ -88,6 +88,16 @@ try{
     assert.match(await mobilePage.locator('#proofMode').textContent(),/CI-native proof record/);
     assert.equal(await mobilePage.locator('#enableIsolation').isVisible(),false);
     assert.equal(await mobilePage.locator('#runProofs').textContent(),'Inspect published Lean proof record');
+    const probeLink=await mobilePage.locator('#mobileProbe').getAttribute('href');
+    const fullLink=await mobilePage.locator('#mobileFull').getAttribute('href');
+    assert(probeLink?.startsWith('https://lean.cau.li/?variant=slim#s='));
+    assert(fullLink?.startsWith('https://lean.cau.li/?variant=slim#s='));
+    const decoded=await mobilePage.evaluate(async link=>{
+      const {decodeMobileWorkspaceFragment}=await import('./mobile-lean.js');
+      return decodeMobileWorkspaceFragment(new URL(link).hash);
+    },fullLink);
+    assert.equal(decoded.active,'Accounts.lean');
+    assert.equal(decoded.files[0].content,await mobilePage.locator('#leanCode').inputValue());
     await mobilePage.click('#runProofs');
     await mobilePage.waitForFunction(()=>document.querySelector('#proofStatus').textContent.includes('CI PROOFS: seven'));
     assert.match(await mobilePage.locator('#diagnostics').textContent(),/native Lean 4\.33\.1 CI check/);
@@ -96,6 +106,16 @@ try{
     assert.match(await mobilePage.locator('#diagnostics').textContent(),/REJECTED by native Lean CI/);
     const source=await mobilePage.locator('#leanCode').inputValue();
     await mobilePage.locator('#leanCode').fill(source+'\n-- unverified mutation');
+    await mobilePage.waitForFunction(previous=>{
+      const href=document.querySelector('#mobileFull').getAttribute('href');
+      return href && href!==previous;
+    },fullLink);
+    const editedLink=await mobilePage.locator('#mobileFull').getAttribute('href');
+    const edited=await mobilePage.evaluate(async link=>{
+      const {decodeMobileWorkspaceFragment}=await import('./mobile-lean.js');
+      return decodeMobileWorkspaceFragment(new URL(link).hash);
+    },editedLink);
+    assert.equal(edited.files[0].content,source+'\n-- unverified mutation');
     await mobilePage.click('#runProofs');
     assert.match(await mobilePage.locator('#proofStatus').textContent(),/EDITED SOURCE — NOT VERIFIED/);
     assert.match(await mobilePage.locator('#diagnostics').textContent(),/No Lean compilation or theorem check/);
@@ -110,7 +130,8 @@ try{
   console.log(JSON.stringify({status:'pass',checks:['54 embedded historical sources byte-verifiable in Chromium',
     'all 11 archived rule comparisons render', 'original ZIP and reports.xml inspectable',
     'source editor loads actual Lean file', 'scoped isolation enables SharedArrayBuffer',
-    'iPhone WebKit displays SHA-matched native proof evidence, rejects edits, and never loads WASM'],sourceCount:audit.count},null,2));
+    'iPhone WebKit displays SHA-matched native proof evidence and rejects edits',
+    'exact edited Lean source is transferred to a genuine slim mobile WASM compiler in a URL fragment; no WASM is loaded by the Dickory page'],sourceCount:audit.count},null,2));
 }finally{
   await browser.close();
   await new Promise(resolve=>server.close(resolve));
