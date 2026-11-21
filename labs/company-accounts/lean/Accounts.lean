@@ -156,7 +156,7 @@ theorem exact_ratio_nonzero (n d : Int) (h : d ≠ 0) :
     exactRatio n d = some (n, d) := by
   simp [exactRatio, h]
 
-/-- A genuine rejection example is in Negative.lean; it must fail to compile. -/
+/- A genuine rejection example is in Negative.lean; it must fail to compile. -/
 #check acid_ignores_stock
 #check archived_rule8_counterexample
 #print axioms SWADAccounts.acid_ignores_stock
