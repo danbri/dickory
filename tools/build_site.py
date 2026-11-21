@@ -23,6 +23,7 @@ FILES += [LINKED_ASSURANCE / name for name in (
     "lean-host.js", "compiler.js", "compiler-worker.js", "rdf-worker.js", "coi-sw.js",
     "evidence.js", "credential.js", "demo-credential.json", "compiler-assets.json",
     "headless-contract.js", "headless-webmcp.js", "developer-profile.json",
+    "source-compiler.js", "profile/lean-source.js", "developer-profile-scripts.json", "LEAN_SOURCE.md",
     "profile/core.js", "profile/catalogue.js", "profile/policy-input.js", "profile/webmcp.js",
     "profile/bootstrap.js", "profile/demo.html", "profile/demo.js",
     "factoidal-build.json",
