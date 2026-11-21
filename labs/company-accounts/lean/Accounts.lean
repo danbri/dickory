@@ -159,6 +159,9 @@ theorem exact_ratio_nonzero (n d : Int) (h : d ≠ 0) :
 /- A genuine rejection example is in Negative.lean; it must fail to compile. -/
 #check acid_ignores_stock
 #check archived_rule8_counterexample
+#print axioms SWADAccounts.current_assets_components
+#print axioms SWADAccounts.acid_undefined_at_zero_liabilities
+#print axioms SWADAccounts.exact_ratio_nonzero
 #print axioms SWADAccounts.acid_ignores_stock
 #print axioms SWADAccounts.archived_rule8_counterexample
 #print axioms SWADAccounts.archived_rule10_counterexample
