@@ -35,6 +35,14 @@ structure Accounts where
 def exactRatio (numerator denominator : Int) : Option (Int × Int) :=
   if denominator = 0 then none else some (numerator, denominator)
 
+/-- Semantic equality of optional exact ratios. Fractions are compared by
+cross-multiplication, never by structural equality of unreduced pairs. -/
+def sameExactValue (lhs rhs : Option (Int × Int)) : Prop :=
+  match lhs, rhs with
+  | none, none => True
+  | some x, some y => x.1 * y.2 = y.1 * x.2
+  | _, _ => False
+
 /-- Percent: operating profit / net assets × 100. -/
 def returnOnNetAssets (a : Accounts) : Option (Int × Int) :=
   exactRatio (100 * a.operatingProfit.pence) a.netAssets.pence
@@ -130,12 +138,12 @@ theorem acid_undefined_at_zero_liabilities :
 
 /-- Rule 8's 2004 N3 expression violates the adopted acid-test definition. -/
 theorem archived_rule8_counterexample :
-    acidTest fixture ≠ archivedN3AcidTest fixture := by
+    ¬ sameExactValue (acidTest fixture) (archivedN3AcidTest fixture) := by
   decide
 
 /-- Rule 10's archived N3 scaling is not a conventional days-of-sales ratio. -/
 theorem archived_rule10_counterexample :
-    debtorDays fixture ≠ archivedN3DebtorDays fixture := by
+    ¬ sameExactValue (debtorDays fixture) (archivedN3DebtorDays fixture) := by
   decide
 
 /-- Rule 11 emits an incompatible predicate. -/
