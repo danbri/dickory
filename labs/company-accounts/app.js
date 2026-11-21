@@ -1,0 +1,168 @@
+import {checkLean, auditContract, compilerEnvironment, compilerUnavailableReason, diagnosticText} from '../linked-assurance/lean-host.js';
+
+const $ = id => document.getElementById(id);
+const archive = JSON.parse($('inlineArchive').textContent);
+const byName = new Map(archive.files.map(item => [item.name, item]));
+const rules = [
+  ['Return on net assets', '100 × operating profit / net assets', 'The denominator must be nonzero.'],
+  ['Profit margin', '100 × operating profit / sales revenue', 'The 2004 prose omits the percent factor used by implementations.'],
+  ['Asset turnover', 'sales revenue / net assets', 'A dimensionless ratio, not a percentage.'],
+  ['Estimated employees', 'sales revenue / sales per employee', 'The old factor 1,000,000 needs independent unit evidence; headcount integrality is not assumed.'],
+  ['Operating profit per employee', 'operating profit / employee count', 'N3 and MathML solve the inverse equation. That is distinct from calculating profit per head.'],
+  ['Non-UK sales percentage', '100 × non-UK sales / total sales', 'An exactly zero non-UK numerator is legitimate; the old N3 guard excludes it.'],
+  ['Current ratio', '(stock + debtors + cash) / current liabilities', 'N3 solves for current assets instead, given current ratio.'],
+  ['Acid-test ratio', '(debtors + cash) / current liabilities', 'Original N3 adds stock and emits corp:at, colliding with asset turnover.'],
+  ['Current assets', 'stock + debtors + cash', 'The lab deliberately limits assets to these three components.'],
+  ['Debtor days', '365 × debtors / annual sales', 'A declared modern annual-period convention. The archived formula differs by scaling and division direction.'],
+  ['Stock days', '365 × stock / annual cost of sales', 'Modern annual-period convention. Archive has conflicting scalings and emits corp:dd.']
+];
+const required = [
+  'SWADAccounts.acid_ignores_stock',
+  'SWADAccounts.archived_rule8_counterexample',
+  'SWADAccounts.archived_rule10_counterexample',
+  'SWADAccounts.archived_rule11_predicate_mismatch'
+];
+const contract = [
+ '#check (SWADAccounts.acid_ignores_stock :',
+ '  ∀ (a : SWADAccounts.Accounts) (replacement : SWADAccounts.Money),',
+ '    SWADAccounts.acidTest { a with stock := replacement } = SWADAccounts.acidTest a)',
+ '#check (SWADAccounts.archived_rule8_counterexample :',
+ '  SWADAccounts.acidTest SWADAccounts.fixture ≠ SWADAccounts.archivedN3AcidTest SWADAccounts.fixture)',
+ '#check (SWADAccounts.archived_rule10_counterexample :',
+ '  SWADAccounts.debtorDays SWADAccounts.fixture ≠ SWADAccounts.archivedN3DebtorDays SWADAccounts.fixture)',
+ '#check (SWADAccounts.archived_rule11_predicate_mismatch :',
+ '  SWADAccounts.archivedStockOutputPredicate ≠ SWADAccounts.stockOutputPredicate)',
+ ...required.map(name => '#print axioms ' + name)
+].join('\n') + '\n';
+
+let initialLean = '';
+function getSource(short) { return byName.get('tests/' + short)?.text || 'Missing archived source: ' + short; }
+function displayRule() {
+  const n = Number($('rule').value), [title, summary, finding] = rules[n-1];
+  $('ruleTitle').textContent = String(n) + ' / ' + title;
+  $('ruleSummary').textContent = 'Lean reference: ' + summary;
+  $('ruleFinding').textContent = 'Review note: ' + finding;
+  $('n3Code').textContent = getSource('cwm' + n + '.n3');
+  $('mathCode').textContent = getSource('mmlrule' + n + '.mml');
+  $('n3Output').textContent = getSource('_out_cwm' + n + '.n3');
+  $('mathOutput').textContent = getSource('_out_mml' + n + '.txt');
+}
+function selected() { return byName.get($('sourceFile').value); }
+function displaySource() {
+  const file = selected();
+  if (!file) return;
+  $('fileMeta').textContent = file.name + ' · ' + file.bytes + ' bytes · SHA-256 ' + file.sha256 +
+    ' · original: ' + file.url;
+  $('sourceText').textContent = file.encoding === 'base64'
+    ? '(Binary ZIP, ' + file.bytes + ' bytes). Contents:\n' + (file.members || []).join('\n')
+    : file.text;
+}
+function downloadBytes(file) {
+  if (file.encoding === 'base64') {
+    const binary = atob(file.base64);
+    return Uint8Array.from(binary, x => x.charCodeAt(0));
+  }
+  if (file.encoding === 'latin-1') {
+    return Uint8Array.from(file.text, x => x.charCodeAt(0));
+  }
+  return new TextEncoder().encode(file.text);
+}
+function downloadBlob(name, bytes, type='application/octet-stream') {
+  const url = URL.createObjectURL(new Blob([bytes], {type}));
+  const a = document.createElement('a');
+  a.href = url; a.download = name; a.click();
+  setTimeout(() => URL.revokeObjectURL(url), 3000);
+}
+function showIsolation() {
+  const env = compilerEnvironment(), reason = compilerUnavailableReason();
+  $('isolationStatus').textContent = reason || 'Cross-origin isolation and shared memory ready; Lean can start here.';
+  $('enableIsolation').hidden = env.isolated && env.sharedMemory;
+}
+async function isolate() {
+  if (window.self !== window.top) throw Error('Open the lab in a full browser tab, not an embedded iframe.');
+  if (!navigator.serviceWorker) throw Error('Browser service workers are unavailable.');
+  const reg = await navigator.serviceWorker.register(new URL('./coi-sw.js', import.meta.url), {
+    scope: new URL('./', import.meta.url).href, updateViaCache:'none'
+  });
+  await reg.update();
+  await navigator.serviceWorker.ready;
+  sessionStorage.setItem('swad-reload-for-isolation', '1');
+  location.reload();
+}
+async function runPositive() {
+  const source = $('leanCode').value;
+  const result = await checkLean(source + '\n' + contract, progress => {
+    $('proofStatus').textContent = progress;
+  });
+  $('diagnostics').textContent = diagnosticText(result);
+  const contractOkay = result.accepted && required.every(name => auditContract(result, name));
+  const status = result.runtimeFault ? 'COMPILER RUNTIME ERROR' :
+    contractOkay ? 'ACCEPTED: required theorem types and permitted axiom audit' :
+    result.accepted ? 'INCOMPLETE: Lean accepted this file, but the required axiom audit is not established' :
+    'REJECTED: Lean did not accept this file or its required theorems';
+  $('proofStatus').textContent = status + '\nCompiler ' + (result.compilerVersion || '?');
+  return contractOkay;
+}
+async function runNegative() {
+  const okay = await runPositive();
+  if (!okay) throw Error('Cannot interpret negative test: current source has not passed positive obligations.');
+  const falseClaim = '\nexample : SWADAccounts.acidTest SWADAccounts.fixture = ' +
+    'SWADAccounts.archivedN3AcidTest SWADAccounts.fixture := by rfl\n';
+  const result = await checkLean($('leanCode').value + '\n' + contract + falseClaim, progress => {
+    $('proofStatus').textContent = progress;
+  });
+  $('diagnostics').textContent = diagnosticText(result);
+  if (result.runtimeFault) {
+    $('proofStatus').textContent = 'Compiler runtime failure, not a successful rejection.';
+  } else if (result.exitCode === 0 || result.accepted) {
+    $('proofStatus').textContent = 'ALARM: the deliberately false claim was accepted.';
+  } else {
+    $('proofStatus').textContent = 'EXPECTED REJECTION: Lean refused the false rule-8 equality. The positive obligations passed first.';
+  }
+}
+async function guard(fn) {
+  $('runProofs').disabled = $('runNegative').disabled = true;
+  try { await fn(); }
+  catch (error) {
+    $('proofStatus').textContent = 'Check failed: ' + (error?.message || String(error));
+  } finally { $('runProofs').disabled = $('runNegative').disabled = false; }
+}
+async function start() {
+  $('sourceCount').textContent = archive.files.length;
+  $('archiveStatus').textContent = archive.testDirCount + ' test-directory files + ' +
+    archive.relatedCount + ' linked documents; each stored inline with SHA-256 and original URL.';
+  for (let n=1; n<=11; n++) $('rule').add(new Option(String(n) + ' — ' + rules[n-1][0], String(n)));
+  $('rule').addEventListener('change', displayRule);
+  for (const file of archive.files) $('sourceFile').add(new Option(file.name, file.name));
+  $('sourceFile').addEventListener('change', displaySource);
+  displayRule(); displaySource();
+  $('downloadSource').onclick = () => {
+    const f = selected();
+    downloadBlob(f.name.split('/').at(-1), downloadBytes(f));
+  };
+  $('downloadManifest').onclick = () => {
+    const summary = archive.files.map(({name,url,sha256,bytes,encoding}) =>
+      ({name,url,sha256,bytes,encoding}));
+    downloadBlob('swad-archive-manifest.json',
+      new TextEncoder().encode(JSON.stringify({origin:archive.origin,files:summary},null,2)),
+      'application/json');
+  };
+  $('enableIsolation').onclick = async () => {
+    try { await isolate(); }
+    catch (error) { $('isolationStatus').textContent = 'Isolation failed: ' + error.message; }
+  };
+  showIsolation();
+  const response = await fetch('./lean/Accounts.lean');
+  if (!response.ok) throw Error('Repository Lean source missing from site');
+  initialLean = await response.text();
+  $('leanCode').value = initialLean;
+  $('runProofs').onclick = () => guard(runPositive);
+  $('runNegative').onclick = () => guard(runNegative);
+  $('resetCode').onclick = () => {
+    $('leanCode').value = initialLean;
+    $('proofStatus').textContent = 'Restored source. Compile it for a new check.';
+  };
+}
+start().catch(error => {
+  $('archiveStatus').textContent = 'Lab startup error: ' + error.message;
+});
