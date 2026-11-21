@@ -28,6 +28,13 @@ jobs:
           echo "890afd185370f85666025b883914ab4f4b339136f8c96167b69cfb62aecaf235  $RUNNER_TEMP/lean.tar.zst" | sha256sum --check
           tar --zstd -xf "$RUNNER_TEMP/lean.tar.zst" -C "$RUNNER_TEMP"
           echo "$RUNNER_TEMP/lean-4.33.1-linux/bin" >> "$GITHUB_PATH"
+      - name: Verify SWAD-Europe accounts lab and inline historical corpus
+        run: |
+          sh labs/company-accounts/verify.sh
+          python3 labs/company-accounts/fetch_sources.py
+          python3 labs/company-accounts/check_inline.py
+          node --check labs/company-accounts/app.js
+          node --check labs/company-accounts/coi-sw.js
       - name: Verify formal inventory and source mappings
         working-directory: labs/rdf11/cleanroom
         run: python3 tools/verify.py
@@ -71,11 +78,6 @@ jobs:
           node labs/linked-assurance/tools/hello/node.cjs
           node labs/linked-assurance/tools/build_modules.cjs
           node labs/linked-assurance/tools/build_modules.cjs --policy
-          sh labs/company-accounts/verify.sh
-          python3 labs/company-accounts/fetch_sources.py
-          python3 labs/company-accounts/check_inline.py
-          node --check labs/company-accounts/app.js
-          node --check labs/company-accounts/coi-sw.js
           python3 tools/build_site.py
       - name: Check viewer interactions in Chromium
         working-directory: tools/viewer-browser
