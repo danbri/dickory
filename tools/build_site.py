@@ -43,7 +43,7 @@ FILES += [LINKED_ASSURANCE / name for name in (
 COMPANY = Path("labs/company-accounts")
 FILES += [COMPANY / name for name in (
     "app.js", "style.css", "coi-sw.js", "README.md", "THIRD_PARTY.md",
-    "lean/Accounts.lean", "proof-evidence.js", "artifacts/lean-evidence.json", "artifacts/source-manifest.json",
+    "lean/Accounts.lean", "proof-evidence.js", "mobile-lean.js", "artifacts/lean-evidence.json", "artifacts/source-manifest.json",
 )]
 FILES += [ARTIFACTS / name for name in (
     "source-review.html", "verification.json", "negative-checks.json", "declarations.json",
