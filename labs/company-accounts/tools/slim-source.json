@@ -1,0 +1,18 @@
+{
+  "schema": "dickory-pinned-slim-lean-source-v1",
+  "factoidalRepository": "danbri/factoidal-core",
+  "factoidalCommit": "57872a9b315b72cce3aca9942d909ee54d1ead99",
+  "factoidalPin": "leanprover/lean4:v4.33.1",
+  "leanVersion": "4.33.1",
+  "forkRepository": "cauli/lean4",
+  "forkCommit": "4f9018a62ead9be0ffd652021d5afc8501e92253",
+  "archiveRun": 34519035716,
+  "archiveArtifact": 10171167184,
+  "archiveUrl": "https://api.github.com/repos/cauli/lean4/actions/artifacts/10171167184/zip",
+  "archiveBytes": 681781041,
+  "archiveSha256": "cd942e1efcbf0a711f9a58cbbfe819fa312d845fa0d4289b032b33b7c8730d4f",
+  "archiveEntry": "lean-4.33.1-linux_wasm32.tar.zst",
+  "slimObjects": {},
+  "license": "Apache-2.0; bundled dependency notices in upstream LICENSES",
+  "artifactExpires": "2026-12-09T19:12:42Z"
+}
