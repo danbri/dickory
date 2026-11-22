@@ -49,12 +49,20 @@ try{
   const result=await page.evaluate(async()=>{
     const {checkMobileLean}=await import('../inline-lean-host.js');
     const source=await (await fetch('../lean/Accounts.lean')).text();
+    const simple=await checkMobileLean([
+      'import Init',
+      'theorem inline_probe : (2 + 2 : Nat) = 4 := by rfl',
+      '#print axioms inline_probe',
+      '#eval Lean.versionString'
+    ].join('\n'));
     const positive=await checkMobileLean(source+'\n#eval Lean.versionString');
     const negative=await checkMobileLean(source+
       '\nexample : SWADAccounts.sameExactValue (SWADAccounts.acidTest SWADAccounts.fixture) '+
       '(SWADAccounts.archivedN3AcidTest SWADAccounts.fixture) = true := by decide\n');
     return {
       version:positive.compilerVersion,
+      simple:{accepted:simple.accepted,runtimeFault:simple.runtimeFault,
+        diagnostics:simple.diagnostics.slice(0,4000),exitCode:simple.exitCode},
       positive:{accepted:positive.accepted,runtimeFault:positive.runtimeFault,
         diagnostics:positive.diagnostics.slice(0,4000),exitCode:positive.exitCode},
       negative:{accepted:negative.accepted,runtimeFault:negative.runtimeFault,
@@ -62,6 +70,10 @@ try{
     };
   },{timeout:300000});
   console.log(JSON.stringify(result,null,2));
+  assert.equal(result.simple.exitCode,0,
+    'Minimal Lean proof must pass before assessing the full model');
+  assert.equal(result.simple.runtimeFault,false);
+  assert.equal(result.simple.accepted,true);
   assert.equal(result.positive.exitCode,0);
   assert.equal(result.positive.runtimeFault,false);
   assert.equal(result.positive.accepted,true);
