@@ -1,0 +1,54 @@
+name: Check inline Lean 4.33.1 binary derivation
+
+on:
+  pull_request:
+    paths:
+      - 'labs/company-accounts/tools/prune_exports.py'
+      - 'labs/company-accounts/inline-lean-*.js'
+      - 'labs/linked-assurance/compiler.js'
+      - '.github/workflows/check-inline-lean.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: inline-lean-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: '3.14.7'
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '26'
+      - name: Obtain pinned Lean 4.33.1 distribution and compact glue
+        run: |
+          python3 labs/linked-assurance/tools/hello/fetch.py
+          node labs/linked-assurance/tools/build_browser_host.cjs
+      - name: Check byte-preserving export pruning and identities
+        run: |
+          python3 labs/company-accounts/tools/prune_exports.py
+          node --check labs/company-accounts/inline-lean-host.js
+          node --check labs/company-accounts/inline-lean-controller.js
+          node --check labs/company-accounts/inline-lean-worker.js
+          node - <<'JS'
+          const fs=require('node:fs'),assert=require('node:assert/strict');
+          const p='labs/company-accounts/artifacts';
+          const r=JSON.parse(fs.readFileSync(p+'/slim-transform.json'));
+          assert(r.removedCount>1000);
+          assert(r.retainedCount>10);
+          assert(r.outputWasm.bytes < 103725428);
+          const wasm=fs.readFileSync(p+'/lean-slim.wasm');
+          const mod=new WebAssembly.Module(wasm);
+          const exports=new Set(WebAssembly.Module.exports(mod).map(x=>x.name));
+          for(const name of ['lean_wasm_compile','lean_initialize','lean_mk_string','__indirect_function_table'])
+            assert(exports.has(name),'Missing '+name);
+          console.log({exports:exports.size,size:wasm.length,sha256:r.outputWasm.sha256});
+          JS
