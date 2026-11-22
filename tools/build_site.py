@@ -45,7 +45,8 @@ FILES += [COMPANY / name for name in (
     "app.js", "style.css", "coi-sw.js", "README.md", "THIRD_PARTY.md",
     "lean/Accounts.lean", "proof-evidence.js", "mobile-lean.js",
     "inline-lean-host.js", "inline-lean-controller.js", "inline-lean-worker.js",
-    "artifacts/lean-slim.wasm", "artifacts/slim-compiler-assets.json", "artifacts/slim-transform.json", "artifacts/lean-evidence.json", "artifacts/source-manifest.json",
+    "artifacts/lean-slim.js", "artifacts/lean-slim.wasm",
+    "artifacts/slim-compiler-assets.json", "artifacts/slim-source-provenance.json", "artifacts/lean-evidence.json", "artifacts/source-manifest.json",
 )]
 FILES += [ARTIFACTS / name for name in (
     "source-review.html", "verification.json", "negative-checks.json", "declarations.json",
@@ -146,19 +147,32 @@ def main():
         company_evidence.get("negativeSourceSha256") != hashlib.sha256(
             (ROOT / COMPANY / "lean/Negative.lean").read_bytes()).hexdigest()):
         raise SystemExit("Company accounts proof evidence does not match current sources")
-    # The inline mobile compiler is derived only from the fully checked,
-    # pinned 4.33.1 binary (executable sections remain unmodified).
+    # Genuine 4.33.1 slim compiler from the SAME upstream pinned full
+    # archive as Linked Assurance, SHA-256-checked before extraction.
     slim_manifest = json.loads((ROOT / COMPANY / "artifacts/slim-compiler-assets.json").read_text())
-    transform = json.loads((ROOT / COMPANY / "artifacts/slim-transform.json").read_text())
-    slim_file = ROOT / COMPANY / "artifacts/lean-slim.wasm"
-    wasm_asset = slim_manifest["runtime"]["lean.wasm"]
-    if (slim_manifest["sourceCommit"] != "4f9018a62ead9be0ffd652021d5afc8501e92253"
-        or slim_manifest["factoidalPin"] != "leanprover/lean4:v4.33.1"
-        or transform["inputWasmSha256"] != compiler_assets["lean.wasm"]["sha256"]
-        or transform["outputWasm"] != {"bytes": slim_file.stat().st_size, "sha256": hashlib.sha256(slim_file.read_bytes()).hexdigest()}
-        or wasm_asset["bytes"] != slim_file.stat().st_size
-        or wasm_asset["sha256"] != transform["outputWasm"]["sha256"]):
-        raise SystemExit("Inline Lean compiler does not match pinned 4.33.1 artefacts")
+    slim_witness = json.loads((ROOT / COMPANY / "artifacts/slim-source-provenance.json").read_text())
+    if (slim_manifest.get("sourceCommit") != "4f9018a62ead9be0ffd652021d5afc8501e92253"
+        or slim_manifest.get("leanVersion") != "4.33.1"
+        or slim_manifest.get("factoidalPin") != "leanprover/lean4:v4.33.1"
+        or slim_manifest.get("origin", {}).get("archiveSha256") !=
+            "cd942e1efcbf0a711f9a58cbbfe819fa312d845fa0d4289b032b33b7c8730d4f"
+        or slim_witness.get("transformation") !=
+            "None: original genuine separately linked slim Lean compiler bytes"
+        or slim_witness.get("sourceCommit") != slim_manifest.get("sourceCommit")
+        or slim_witness.get("matchingInitSha256") != compiler_assets["lean-lib.tar.gz"]["sha256"]):
+        raise SystemExit("Inline Lean compiler source identity or original archive mismatched")
+    expected = {"lean.js": ("lean-slim.js", "bin-slim/lean.js"),
+                "lean.wasm": ("lean-slim.wasm", "bin-slim/lean.wasm")}
+    for runtime_name, (filename, original_name) in expected.items():
+        source_file = ROOT / COMPANY / "artifacts" / filename
+        declared = slim_manifest["runtime"][runtime_name]
+        reviewed = slim_witness["objects"][original_name]
+        if (declared["bytes"] != source_file.stat().st_size
+            or declared["sha256"] != hashlib.sha256(source_file.read_bytes()).hexdigest()
+            or reviewed != {"bytes": declared["bytes"], "sha256": declared["sha256"]}):
+            raise SystemExit("Inline Lean genuine slim object hash mismatch: " + filename)
+    if slim_manifest["runtime"]["lean-lib.tar.gz"]["sha256"] != compiler_assets["lean-lib.tar.gz"]["sha256"]:
+        raise SystemExit("Inline Lean Init closure differs from verified full 4.33.1 build")
     company_source = ROOT / COMPANY / "artifacts/index.html"
     if not company_source.is_file():
         raise SystemExit("Company-accounts inline archive has not been generated")
