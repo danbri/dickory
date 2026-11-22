@@ -44,7 +44,7 @@ COMPANY = Path("labs/company-accounts")
 FILES += [COMPANY / name for name in (
     "app.js", "style.css", "coi-sw.js", "README.md", "THIRD_PARTY.md",
     "lean/Accounts.lean", "proof-evidence.js", "mobile-lean.js",
-    "inline-lean-host.js", "inline-lean-controller.js",
+    "inline-lean-host.js", "inline-lean-controller.js", "inline-lean-worker.js",
     "artifacts/lean-slim.wasm", "artifacts/slim-compiler-assets.json", "artifacts/slim-transform.json", "artifacts/lean-evidence.json", "artifacts/source-manifest.json",
 )]
 FILES += [ARTIFACTS / name for name in (
