@@ -52,3 +52,8 @@ jobs:
             assert(exports.has(name),'Missing '+name);
           console.log({exports:exports.size,size:wasm.length,sha256:r.outputWasm.sha256});
           JS
+      - name: Run full Company Accounts Lean proofs in a real WebKit WASM worker
+        run: |
+          npm ci --prefix tools/viewer-browser
+          npx --prefix tools/viewer-browser playwright install --with-deps webkit
+          node tools/viewer-browser/company-accounts-slim.mjs
