@@ -86,7 +86,7 @@ try{
     await mobilePage.goto(url);
     await mobilePage.waitForFunction(()=>document.querySelector('#proofStatus')?.textContent.includes('PUBLISHED CI PROOF VERIFIED'));
     assert.match(await mobilePage.locator('#proofMode').textContent(),/CI-native proof record/);
-    assert.equal(await mobilePage.locator('#enableIsolation').isVisible(),false);
+    assert.equal(await mobilePage.locator('#enableIsolation').isVisible(),true);
     assert.equal(await mobilePage.locator('#runProofs').textContent(),'Inspect published Lean proof record');
     const probeLink=await mobilePage.locator('#mobileProbe').getAttribute('href');
     const fullLink=await mobilePage.locator('#mobileFull').getAttribute('href');
@@ -123,9 +123,37 @@ try{
     await mobilePage.click('#resetCode');
     await mobilePage.waitForFunction(()=>document.querySelector('#proofStatus').textContent.includes('CI PROOFS: seven'));
     assert.match(await mobilePage.locator('#proofStatus').textContent(),/CI PROOFS: seven/);
-    assert.deepEqual(compilerFetches,[],'Mobile path must not download or initialise the failing WASM compiler');
+    assert.deepEqual(compilerFetches,[],'CI evidence path must not start the compiler');
     assert.deepEqual(mobileErrors,[]);
     assert(await mobilePage.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth));
+    // This is a REAL Lean 4.33.1 worker invocation, using the local export-
+    // pruned WebAssembly. It must establish all four named contracts before we
+    // can report the inline runner as usable. On failure leave the real
+    // diagnostics visible in CI rather than silently falling back to CI proof.
+    await mobilePage.click('#enableIsolation');
+    await mobilePage.waitForFunction(()=>crossOriginIsolated===true,{},{timeout:45000});
+    const inlineNetwork=[];
+    mobilePage.on('request',req=>{
+      if(/lean-slim\.wasm|slim-compiler-assets\.json/.test(req.url()))inlineNetwork.push(req.url());
+    });
+    await mobilePage.click('#runInline');
+    await mobilePage.waitForFunction(() =>
+      !document.querySelector('#runInline').disabled,
+      {},{timeout:240000});
+    const inlineStatus=await mobilePage.locator('#inlineCompilerStatus').textContent();
+    console.log('Inline WebKit Lean 4.33.1: '+inlineStatus);
+    assert.match(inlineStatus,/LOCAL LEAN 4\.33\.1 PROOF ACCEPTED/,
+      'WebKit inline 4.33.1 proof failed: '+(await mobilePage.locator('#diagnostics').textContent()).slice(0,3000));
+    assert(inlineNetwork.some(u=>u.includes('lean-slim.wasm')),
+      'Inline compiler never downloaded the on-origin slim WASM');
+    assert(inlineNetwork.every(u=>u.startsWith(base)),
+      'Inline compiler tried a cross-origin runtime');
+    await mobilePage.click('#runInlineNegative');
+    await mobilePage.waitForFunction(()=>!document.querySelector('#runInlineNegative').disabled,
+      {},{timeout:240000});
+    const negativeStatus=await mobilePage.locator('#inlineCompilerStatus').textContent();
+    console.log('Inline WebKit Lean negative check: '+negativeStatus);
+    assert.match(negativeStatus,/LOCAL LEAN 4\.33\.1 NEGATIVE CHECK: expected false theorem REJECTED/);
   } finally {
     if(mobileBrowser) await mobileBrowser.close();
   }
@@ -133,7 +161,8 @@ try{
     'all 11 archived rule comparisons render', 'original ZIP and reports.xml inspectable',
     'source editor loads actual Lean file', 'scoped isolation enables SharedArrayBuffer',
     'iPhone WebKit displays SHA-matched native proof evidence and rejects edits',
-    'exact edited Lean source is transferred to a genuine slim mobile WASM compiler in a URL fragment; no WASM is loaded by the Dickory page'],sourceCount:audit.count},null,2));
+    'exact edited Lean source is transferred to a genuine slim mobile WASM compiler in a URL fragment',
+    'inline same-origin Lean 4.33.1 worker accepts the full Company Accounts proof and rejects false theorem in WebKit'],sourceCount:audit.count},null,2));
 }finally{
   await browser.close();
   await new Promise(resolve=>server.close(resolve));
