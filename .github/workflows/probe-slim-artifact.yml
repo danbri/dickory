@@ -2,8 +2,7 @@ name: Probe authentic 4.33.1 slim archive access
 
 on:
   pull_request:
-    paths:
-      - '.github/workflows/probe-slim-artifact.yml'
+    paths: ['.github/workflows/probe-slim-artifact.yml']
   workflow_dispatch:
 
 permissions:
@@ -14,21 +13,30 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 5
     steps:
-      - name: Check anonymous signed GitHub artefact redirect via nightly.link
+      - name: Check public artefact proxy endpoints without downloading 681MB
         run: |
           python3 - <<'PY'
-          import urllib.request
+          import urllib.request,urllib.error
           from urllib.parse import urlparse
-          u='https://nightly.link/cauli/lean4/suites/93513831068/artifacts/10171167184'
-          request=urllib.request.Request(u,method='HEAD',headers={'User-Agent':'DickorySlimArtifactProbe/1.0'})
-          try:
-              with urllib.request.urlopen(request,timeout=30) as r:
-                  print('HTTP status:',r.status)
-                  print('Host:',urlparse(r.url).hostname)
-                  print('Type:',r.headers.get('Content-Type'))
-                  print('Content length:',r.headers.get('Content-Length'))
-                  assert r.status==200 and 'zip' in (r.headers.get('Content-Type') or '').lower()
-          except Exception as e:
-              print('Download probe failed (without exposing signed URL):',type(e).__name__,str(e).split('?')[0][:500])
-              raise
+          urls=[
+            'https://nightly.link/cauli/lean4/actions/runs/34519035716',
+            'https://nightly.link/cauli/lean4/suites/93513831068/artifacts/10171167184',
+            'https://nightly.link/cauli/lean4/actions/runs/34519035716/build-Web%20Assembly.zip',
+            'https://nightly.link/cauli/lean4/actions/runs/34519035716/build-Web%20Assembly'
+          ]
+          for url in urls:
+            print('Testing path:',urlparse(url).path)
+            for method in ('HEAD','GET'):
+              try:
+                req=urllib.request.Request(url,method=method,headers={
+                    'User-Agent':'DickorySlimArtifactProbe/1.0',
+                    'Range':'bytes=0-8'
+                })
+                with urllib.request.urlopen(req,timeout=18) as response:
+                    print(method,'status',response.status,'host',urlparse(response.url).hostname,
+                          'content-type',response.headers.get('Content-Type'),
+                          'length',response.headers.get('Content-Length'),
+                          'start',response.read(8) if method=='GET' else '')
+              except Exception as e:
+                print(method,type(e).__name__,str(e).split('?')[0][:170])
           PY
