@@ -41,7 +41,8 @@ async function getCompiler(progress){
   loading=(async()=>{
     const lean=new Lean4({
       timeout:180000,onProgress:progress,
-      assetLoader:assets,expectedVersion:'4.33.1',expectedCommit:PIN
+      assetLoader:assets,expectedVersion:'4.33.1',expectedCommit:PIN,
+      workerURL:new URL('./inline-lean-worker.js',import.meta.url)
     });
     try{
       await lean.init();
