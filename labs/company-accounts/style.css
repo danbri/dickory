@@ -16,3 +16,7 @@
 .mobileLeanLinks .actions{gap:10px}
 #mobileLeanStatus{overflow-wrap:anywhere;font-size:13px}
 @media(max-width:750px){.mobileLeanLinks .actionLink{width:100%}}
+
+.inlineCompiler{border:1px solid #78a7b4;background:#eef5f7;border-radius:8px;padding:16px;margin:16px 0}
+.inlineCompiler h3{margin:0 0 8px;color:#174e5c}
+#inlineCompilerStatus{white-space:pre-wrap;overflow-wrap:anywhere;font-size:13px}
