@@ -1,6 +1,7 @@
 import {checkLean, auditContract, compilerEnvironment, compilerUnavailableReason, diagnosticText} from '../linked-assurance/lean-host.js';
 import {webKitCompilerRisk, sha256Source, validatePublishedEvidence, publishedProofSummary} from './proof-evidence.js';
 import {leanMobileWorkspaceLink,smallLeanProbe} from './mobile-lean.js';
+import {mountInlineCompiler} from './inline-lean-controller.js';
 
 const $ = id => document.getElementById(id);
 const archive = JSON.parse($('inlineArchive').textContent);
@@ -146,11 +147,13 @@ function downloadBlob(name, bytes, type='application/octet-stream') {
 function showIsolation() {
   const env = compilerEnvironment(), reason = compilerUnavailableReason();
   if(webKitRisk) {
-    $('isolationStatus').textContent = 'WebKit / iPhone: live Lean WASM compilation can exceed the JavaScript call stack. This device uses SHA-256-matched proofs from the native Lean 4.33.1 CI run instead. No 136 MB compiler download is needed.';
-    $('enableIsolation').hidden = true;
+    $('isolationStatus').textContent = env.isolated && env.sharedMemory
+      ? 'Browser isolation is enabled. The experimental inline 4.33.1 compiler can be started using Verify locally. The native CI proofs remain available separately.'
+      : 'Inline Lean needs browser isolation and shared memory. Enable isolation once to try the smaller-export 4.33.1 runtime. This is experimental on iPhone.';
+    $('enableIsolation').hidden = env.isolated && env.sharedMemory;
     $('runProofs').textContent = 'Inspect published Lean proof record';
     $('runNegative').textContent = 'Inspect CI rejection of false theorem';
-    $('proofMode').textContent = 'CI-native proof record (source-hash verified). Edits remain unverified on this device.';
+    $('proofMode').textContent = 'Two independent paths: source-hash verified CI record, or on-demand on-device Lean 4.33.1 compilation via the experimental inline compiler below.';
     return;
   }
   $('isolationStatus').textContent = reason || 'Cross-origin isolation and shared memory ready; Lean can start here.';
@@ -294,6 +297,7 @@ async function start() {
   if (!response.ok) throw Error('Repository Lean source missing from site');
   initialLean = await response.text();
   $('leanCode').value = initialLean;
+  mountInlineCompiler({source:()=> $('leanCode').value,contract});
   $('mobileFull').target='_blank';
   $('mobileFull').rel='noopener noreferrer';
   await prepareMobileLeanProbe();
