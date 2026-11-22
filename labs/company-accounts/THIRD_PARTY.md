@@ -24,32 +24,42 @@ All new Lean model, UI, downloader and proof-audit scripts are additions
 to Dickory; see the root LICENSE. This preservation makes no claim that the
 interpretation in \`lean/Accounts.lean\` is endorsed by the original authors.
 
-## Inline Lean 4.33.1 mobile compiler (modified derived binary)
+## Inline Lean 4.33.1 mobile compiler (original upstream slim distribution)
 
-The on-device compiler in `artifacts/lean-slim.wasm` is **not** the
-`cauli/lean4-wasm-in-browser` 4.33.0-pre binary. It is created locally during
-the Dickory build from the existing, permanently mirrored
-[cauli/lean4](https://github.com/cauli/lean4/tree/4f9018a62ead9be0ffd652021d5afc8501e92253)
-compiler at source commit `4f9018a62ead9be0ffd652021d5afc8501e92253`,
-version 4.33.1. The input WebAssembly SHA-256 is
-`e24b3c712f59e983d7c805d5cc3faddd615398e820d27950834c9a3aa9e74151`.
-The `prune_exports.py` transformation removes selected public function exports
-from the WebAssembly export section. **All other WASM sections, including every
-executable code section, are byte-for-byte unchanged.** The generated build
-witness lists the retained exports, the source hash and each unchanged section
-hash, and is available as `artifacts/slim-transform.json`.
+The same-origin runtime is the **unmodified, separately linked** slim variant
+built by [cauli/lean4](https://github.com/cauli/lean4/tree/4f9018a62ead9be0ffd652021d5afc8501e92253)
+at commit `4f9018a62ead9be0ffd652021d5afc8501e92253`, version **4.33.1**.
+The exact original GitHub Actions build is
+[run 34519035716](https://github.com/cauli/lean4/actions/runs/34519035716),
+artifact `10171167184`, uploaded 10 September 2026.
 
-The accompanying JavaScript loader and Init library come unchanged from the
-already-verified Dickory 4.33.1 distribution. Their checksums are checked
-separately. The on-device compiler uses Dickory's own wrapper and worker; no
-JavaScript source from `cauli/lean4-wasm-in-browser` is copied for this path.
+The entire source artifact is authenticated with SHA-256
+`cd942e1efcbf0a711f9a58cbbfe819fa312d845fa0d4289b032b33b7c8730d4f`
+before we extract `bin-slim/lean.js` or `bin-slim/lean.wasm`.
+The public `nightly.link` redirect is used only to retrieve the public
+GitHub Actions archive; it is **not** a source of trust. Object hashes
+and byte counts are recorded in the generated
+`artifacts/slim-source-provenance.json` and `slim-compiler-assets.json`.
+We do **not** rewrite, relink or prune the upstream binary.
+The accompanying same-commit `Init` library and executable IR come from
+Dickory's already permanent, SHA-256-verified 4.33.1 release.
+The byte-stable full and slim binaries are independent and must not be
+mixed with other `.olean` compiler commits.
+
+The browser host and worker are Dickory's own JavaScript, adapted from
+cauli's 4.33.1 WASM test harness, as explained in
+[Linked Assurance](../linked-assurance/THIRD_PARTY.md). The source code of
+`cauli/lean4-wasm-in-browser` is not copied into Dickory's on-device runner.
 
 **Copyright and licences:** Lean itself is Apache-2.0. Its binary distribution
-contains libraries and dependencies licensed under further terms, including
-LLVM's Apache-2.0-with-LLVM-exceptions terms. Retain these complete notices:
+contains third-party components licensed under further terms, including
+LLVM's Apache-2.0-with-LLVM-exceptions terms. Retain the complete
 [Lean LICENSE](../linked-assurance/vendor/lean-LICENSE) and
-[Lean LICENSES](../linked-assurance/vendor/lean-LICENSES). We explicitly identify
-our modified binary above; we do not overwrite upstream rights, copyright
-statements or trademark provisions. The browser page links the notices.
-The original historical SWAD-Europe files continue to have their own licences
-and are not re-licensed by this implementation.
+[Lean LICENSES](../linked-assurance/vendor/lean-LICENSES) notices.
+Redistribution is permitted under those conditions. The historical 2004
+SWAD-Europe files remain independently licensed and are not relicensed by
+this implementation.
+
+The archived upstream Actions artifact expires on 9 December 2026; a permanent
+Dickory mirror (and independently pinned sha256) is required for future
+reproducible builds. This limitation is explicit until the mirror exists.
