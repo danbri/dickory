@@ -36,6 +36,8 @@ jobs:
           node --test labs/company-accounts/proof-evidence.test.mjs
           node --test labs/company-accounts/mobile-lean.test.mjs
           node --check labs/company-accounts/mobile-lean.js
+          node --check labs/company-accounts/inline-lean-host.js
+          node --check labs/company-accounts/inline-lean-controller.js
           node --check labs/company-accounts/proof-evidence.js
           node --check labs/company-accounts/app.js
           node --check labs/company-accounts/coi-sw.js
@@ -79,6 +81,7 @@ jobs:
           node --test labs/linked-assurance/tests/support-bundle.test.mjs
           python3 labs/linked-assurance/tools/hello/fetch.py
           node labs/linked-assurance/tools/build_browser_host.cjs
+          python3 labs/company-accounts/tools/prune_exports.py
           node labs/linked-assurance/tools/hello/node.cjs
           node labs/linked-assurance/tools/build_modules.cjs
           node labs/linked-assurance/tools/build_modules.cjs --policy
