@@ -33,6 +33,10 @@ jobs:
           sh labs/company-accounts/verify.sh
           python3 labs/company-accounts/fetch_sources.py
           python3 labs/company-accounts/check_inline.py
+          node --test labs/company-accounts/proof-evidence.test.mjs
+          node --test labs/company-accounts/mobile-lean.test.mjs
+          node --check labs/company-accounts/mobile-lean.js
+          node --check labs/company-accounts/proof-evidence.js
           node --check labs/company-accounts/app.js
           node --check labs/company-accounts/coi-sw.js
       - name: Verify formal inventory and source mappings

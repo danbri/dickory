@@ -1,6 +1,6 @@
 // Browser integration for the SWAD-Europe archived source and Lean UI.
 // Uses the *actual* generated 54-source HTML, no mock data, served from _site.
-import {chromium} from 'playwright';
+import {chromium, webkit} from 'playwright';
 import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
 import http from 'node:http';
@@ -69,9 +69,71 @@ try{
   assert(await page.evaluate(()=>typeof SharedArrayBuffer==='function'));
   assert.match(await page.locator('#isolationStatus').textContent(),/shared memory ready/);
   assert.deepEqual(errors,[]);
+  assert.match(await page.locator('#proofStatus').textContent(),/native Lean proofs verified during the site build/);
+  let mobileBrowser;
+  try {
+    mobileBrowser=await webkit.launch({headless:true});
+    const mobileContext=await mobileBrowser.newContext({
+      viewport:{width:390,height:844},
+      isMobile:true,hasTouch:true,
+      userAgent:'Mozilla/5.0 (iPhone; CPU iPhone OS 26_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.0 Mobile/15E148 Safari/604.1'
+    });
+    const mobilePage=await mobileContext.newPage(),mobileErrors=[],compilerFetches=[];
+    mobilePage.on('pageerror',e=>mobileErrors.push(e.message));
+    mobilePage.on('request',request=>{
+      if(/lean\.wasm|toolchain-4\.33\.1|lean-lib\.tar\.gz/.test(request.url())) compilerFetches.push(request.url());
+    });
+    await mobilePage.goto(url);
+    await mobilePage.waitForFunction(()=>document.querySelector('#proofStatus')?.textContent.includes('PUBLISHED CI PROOF VERIFIED'));
+    assert.match(await mobilePage.locator('#proofMode').textContent(),/CI-native proof record/);
+    assert.equal(await mobilePage.locator('#enableIsolation').isVisible(),false);
+    assert.equal(await mobilePage.locator('#runProofs').textContent(),'Inspect published Lean proof record');
+    const probeLink=await mobilePage.locator('#mobileProbe').getAttribute('href');
+    const fullLink=await mobilePage.locator('#mobileFull').getAttribute('href');
+    assert(probeLink?.startsWith('https://lean.cau.li/?variant=slim#s='));
+    assert(fullLink?.startsWith('https://lean.cau.li/?variant=slim#s='));
+    const decoded=await mobilePage.evaluate(async link=>{
+      const {decodeMobileWorkspaceFragment}=await import('./mobile-lean.js');
+      return decodeMobileWorkspaceFragment(new URL(link).hash);
+    },fullLink);
+    assert.equal(decoded.active,'Accounts.lean');
+    assert.equal(decoded.files[0].content,await mobilePage.locator('#leanCode').inputValue());
+    await mobilePage.click('#runProofs');
+    await mobilePage.waitForFunction(()=>document.querySelector('#proofStatus').textContent.includes('CI PROOFS: seven'));
+    assert.match(await mobilePage.locator('#diagnostics').textContent(),/native Lean 4\.33\.1 CI check/);
+    await mobilePage.click('#runNegative');
+    await mobilePage.waitForFunction(()=>document.querySelector('#proofStatus').textContent.includes('CI NEGATIVE TEST'));
+    assert.match(await mobilePage.locator('#diagnostics').textContent(),/REJECTED by native Lean CI/);
+    const source=await mobilePage.locator('#leanCode').inputValue();
+    await mobilePage.locator('#leanCode').fill(source+'\n-- unverified mutation');
+    await mobilePage.waitForFunction(previous=>{
+      const href=document.querySelector('#mobileFull').getAttribute('href');
+      return href && href!==previous;
+    },fullLink);
+    const editedLink=await mobilePage.locator('#mobileFull').getAttribute('href');
+    const edited=await mobilePage.evaluate(async link=>{
+      const {decodeMobileWorkspaceFragment}=await import('./mobile-lean.js');
+      return decodeMobileWorkspaceFragment(new URL(link).hash);
+    },editedLink);
+    assert.equal(edited.files[0].content,source+'\n-- unverified mutation');
+    await mobilePage.click('#runProofs');
+    await mobilePage.waitForFunction(()=>document.querySelector('#proofStatus').textContent.includes('EDITED SOURCE — NOT VERIFIED'));
+    assert.match(await mobilePage.locator('#proofStatus').textContent(),/EDITED SOURCE — NOT VERIFIED/);
+    assert.match(await mobilePage.locator('#diagnostics').textContent(),/No Lean compilation or theorem check/);
+    await mobilePage.click('#resetCode');
+    await mobilePage.waitForFunction(()=>document.querySelector('#proofStatus').textContent.includes('CI PROOFS: seven'));
+    assert.match(await mobilePage.locator('#proofStatus').textContent(),/CI PROOFS: seven/);
+    assert.deepEqual(compilerFetches,[],'Mobile path must not download or initialise the failing WASM compiler');
+    assert.deepEqual(mobileErrors,[]);
+    assert(await mobilePage.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth));
+  } finally {
+    if(mobileBrowser) await mobileBrowser.close();
+  }
   console.log(JSON.stringify({status:'pass',checks:['54 embedded historical sources byte-verifiable in Chromium',
     'all 11 archived rule comparisons render', 'original ZIP and reports.xml inspectable',
-    'source editor loads actual Lean file', 'scoped isolation enables SharedArrayBuffer'],sourceCount:audit.count},null,2));
+    'source editor loads actual Lean file', 'scoped isolation enables SharedArrayBuffer',
+    'iPhone WebKit displays SHA-matched native proof evidence and rejects edits',
+    'exact edited Lean source is transferred to a genuine slim mobile WASM compiler in a URL fragment; no WASM is loaded by the Dickory page'],sourceCount:audit.count},null,2));
 }finally{
   await browser.close();
   await new Promise(resolve=>server.close(resolve));

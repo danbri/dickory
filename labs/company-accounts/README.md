@@ -58,3 +58,43 @@ Original report and directory: <https://www.w3.org/2001/sw/Europe/reports/xml_te
 The 2004 W3C historical files are preserved, credited, and identified by URL and SHA-256. They are **not relicensed** by Dickory's Apache 2.0 licence. \`THIRD_PARTY.md\` records the distinction.
 
 The true remaining hard work is independent unit reconstruction, a typed RDF ingestion adapter, an exact interpreter for the relevant Content MathML and N3 subset, and a proof of a correspondence theorem between those parsed program representations and the Lean semantics. Displaying source beside a theorem is not such a proof.
+
+## iPhone / mobile Lean strategy
+
+The original Dickory browser compiler relies on a large Lean 4.33.1 WASM binary
+and imported environment. Real iPhone WebKit reports show stack exhaustion, and
+previous desktop WebKit investigations showed a multi-gigabyte peak. A JS
+RangeError is a runtime failure, **not** Lean rejection or a refutation.
+
+The lab therefore offers **two explicitly different paths** on mobile:
+
+1. Inspect seven genuinely checked native Lean proofs, including all reported
+   axioms and the negative test. The CI evidence is generated from actual
+   `lean --json` diagnostics and tied to the exact `Accounts.lean` bytes by
+   SHA-256. Modifications invalidate the evidence. It is not presented as a
+   proof checked in the iPhone browser.
+2. Open the current Lean source in the open-source
+   [cauli Lean browser playground](https://lean.cau.li/?variant=slim), using
+   its **slim on-device WASM compiler**. A compressed `#s=` URL fragment
+   contains the complete text, without a server POST. Its first proof is a
+   small Init-only acid-test example. A second link opens the full editable
+   `Accounts.lean`. Click **Run** in that playground; only its diagnostics
+   can establish a new on-device proof result. The slim binary does not
+   currently have an exact-version-parity guarantee with Dickory's native
+   4.33.1 compiler, and the full example has not been tested on a physical
+   iPhone in this repository's CI.
+
+The playground route is a real local prover, but hosted by a separate project.
+The fragment is not sent in the HTTP request; however the destination's
+JavaScript can read its contents. Do not use it for private Lean programs unless
+you have reviewed the destination. Browser history can also retain the link.
+
+A future integrated mobile runner can adapt or independently rebuild the slim
+WASM variant, pin its exact artifact hashes and compiler version, run the actual
+Dickory proof contracts in the phone worker, and retain the native CI record as
+fallback. A remote native Lean backend is an alternative for code that cannot
+be elaborated locally, but is not needed for the Init-only starting point.
+
+The CI tests round-trip exact source through the mobile workspace codec and
+exercise the source-bound proof viewer in desktop WebKit configured to emulate
+an iPhone. They **do not** claim proof compilation on a physical iPhone.
