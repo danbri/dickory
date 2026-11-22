@@ -15,6 +15,7 @@ import pathlib
 import tarfile
 import tempfile
 import urllib.request
+import urllib.error
 import zipfile
 
 HERE=pathlib.Path(__file__).resolve().parent
@@ -28,8 +29,20 @@ ARCHIVE_URL="https://nightly.link/cauli/lean4/suites/93513831068/artifacts/10171
 ARCHIVE_SIZE=681781041
 ARCHIVE_SHA="cd942e1efcbf0a711f9a58cbbfe819fa312d845fa0d4289b032b33b7c8730d4f"
 INNER="lean-4.33.1-linux_wasm32.tar.zst"
-EXPECTED={"bin-slim/lean.js":"lean-slim.js","bin-slim/lean.wasm":"lean-slim.wasm"}
-MAX_SIZES={"bin-slim/lean.js":12_000_000,"bin-slim/lean.wasm":110_000_000}
+# These object digests are independently read from successful CI run
+# https://github.com/danbri/dickory/actions/runs/44996081846
+EXPECTED={
+    "bin-slim/lean.js":{
+        "filename":"lean-slim.js","bytes":3458082,
+        "sha256":"2fd9accb23220f3d2fb569c4085e77cbe4637728d7266ff990f969afa80d3c9f"
+    },
+    "bin-slim/lean.wasm":{
+        "filename":"lean-slim.wasm","bytes":72746800,
+        "sha256":"7a2e180408cf8f2e81eec26bee8f698c738ad2a96e128f8f2aff5084b3b2f3fd"
+    }
+}
+RELEASE_TAG="lean-slim-4.33.1-4f9018a"
+MIRROR="https://github.com/danbri/dickory/releases/download/"+RELEASE_TAG
 
 def sha256_file(path):
     with open(path,"rb") as stream:return hashlib.file_digest(stream,"sha256").hexdigest()
@@ -56,36 +69,74 @@ def download():
         target.unlink(missing_ok=True)
         raise
 
+def mirror_or_none():
+    """Prefer a permanent Dickory-hosted copy, validating BOTH exact original
+    objects. Treat a missing first asset as an uninitialised mirror; never
+    silently substitute one asset from a different compiler revision."""
+    verified={}
+    for rel,expect in EXPECTED.items():
+        dest=OUT/expect["filename"]
+        req=urllib.request.Request(MIRROR+"/"+expect["filename"],
+            headers={"User-Agent":"DickoryPinnedLeanMirror/1.0"})
+        try:
+            with urllib.request.urlopen(req,timeout=90) as source:
+                if source.status!=200:raise SystemExit("Unexpected mirror HTTP status")
+                partial=dest.with_suffix(dest.suffix+".partial")
+                with partial.open("wb") as sink:
+                    while chunk:=source.read(4*1024*1024):
+                        sink.write(chunk)
+                        if sink.tell()>expect["bytes"]:
+                            raise SystemExit("Pinned Lean mirror asset exceeded declared size")
+                if partial.stat().st_size!=expect["bytes"] or sha256_file(partial)!=expect["sha256"]:
+                    partial.unlink(missing_ok=True)
+                    raise SystemExit("Permanent Lean mirror SHA mismatch: "+rel)
+                partial.replace(dest)
+                verified[rel]={"bytes":expect["bytes"],"sha256":expect["sha256"]}
+        except urllib.error.HTTPError as error:
+            if error.code==404 and not verified:
+                print("Permanent Lean mirror not published; use original SHA-pinned Actions archive")
+                return None
+            raise
+    print("Permanent, original-byte Lean 4.33.1 slim mirror authenticated")
+    return verified
+
 def main():
-    archive=download()
-    result={}
+    result=mirror_or_none()
+    archive=None
+    if result is None:
+        archive=download()
+        result={}
     try:
-        with zipfile.ZipFile(archive) as z:
-            if z.namelist()!=[INNER]:
-                raise SystemExit("Unexpected upstream ZIP inventory")
-            with z.open(INNER) as compressed,tarfile.open(fileobj=compressed,mode="r|zst") as entries:
-                for entry in entries:
-                    parts=pathlib.PurePosixPath(entry.name).parts
-                    if not parts or ".." in parts or entry.name.startswith("/"):
-                        raise SystemExit("Unsafe upstream TAR member")
-                    if not entry.isfile():
-                        continue
-                    rel="/".join(parts[1:])
-                    if rel not in EXPECTED:continue
-                    if rel in result:
-                        raise SystemExit("Duplicate upstream slim file: "+rel)
-                    if entry.size<=0 or entry.size>MAX_SIZES[rel]:
-                        raise SystemExit("Invalid upstream slim object size: "+rel)
-                    dest=OUT/EXPECTED[rel]
-                    partial=dest.with_suffix(dest.suffix+".partial")
-                    with entries.extractfile(entry) as src,partial.open("wb") as output:
-                        remaining=entry.size
-                        while remaining:
-                            b=src.read(min(4*1024*1024,remaining))
-                            if not b:raise SystemExit("Truncated original slim object")
-                            output.write(b);remaining-=len(b)
-                    partial.replace(dest)
-                    result[rel]={"bytes":dest.stat().st_size,"sha256":sha256_file(dest)}
+        if archive is not None:
+            with zipfile.ZipFile(archive) as z:
+                if z.namelist()!=[INNER]:
+                    raise SystemExit("Unexpected upstream ZIP inventory")
+                with z.open(INNER) as compressed,tarfile.open(fileobj=compressed,mode="r|zst") as entries:
+                    for entry in entries:
+                        parts=pathlib.PurePosixPath(entry.name).parts
+                        if not parts or ".." in parts or entry.name.startswith("/"):
+                            raise SystemExit("Unsafe upstream TAR member")
+                        if not entry.isfile():continue
+                        rel="/".join(parts[1:])
+                        if rel not in EXPECTED:continue
+                        if rel in result:
+                            raise SystemExit("Duplicate upstream slim file: "+rel)
+                        expect=EXPECTED[rel]
+                        if entry.size!=expect["bytes"]:
+                            raise SystemExit("Original upstream slim file size does not match pin: "+rel)
+                        dest=OUT/expect["filename"]
+                        partial=dest.with_suffix(dest.suffix+".partial")
+                        with entries.extractfile(entry) as src,partial.open("wb") as output:
+                            remaining=entry.size
+                            while remaining:
+                                b=src.read(min(4*1024*1024,remaining))
+                                if not b:raise SystemExit("Truncated original slim object")
+                                output.write(b);remaining-=len(b)
+                        if sha256_file(partial)!=expect["sha256"]:
+                            partial.unlink(missing_ok=True)
+                            raise SystemExit("Original upstream slim object hash mismatch: "+rel)
+                        partial.replace(dest)
+                        result[rel]={"bytes":expect["bytes"],"sha256":expect["sha256"]}
         if set(result)!=set(EXPECTED):
             raise SystemExit("Pinned upstream archive did not contain both slim objects")
         published=json.loads((LINKED/"compiler-assets.json").read_text())
@@ -96,7 +147,10 @@ def main():
             "origin":{
                 "type":"cauli/lean4 GitHub Actions artifact, publicly proxied and SHA-256 checked",
                 "run":34519035716,"artifactId":10171167184,
-                "archiveSha256":ARCHIVE_SHA,"archiveBytes":ARCHIVE_SIZE
+                "archiveSha256":ARCHIVE_SHA,"archiveBytes":ARCHIVE_SIZE,
+                "permanentMirrorTag":RELEASE_TAG,
+                "transport":"permanent-original-byte-Dickory-mirror" if archive is None
+                    else "public-github-actions-archive-with-full-hash-verification"
             },
             "runtime":{
                 "lean.js":{
@@ -123,6 +177,6 @@ def main():
         },indent=2)+"\n")
         print(json.dumps({"status":"pass","sourceCommit":PIN,"originalSlimObjects":result},indent=2))
     finally:
-        archive.unlink(missing_ok=True)
+        if archive is not None:archive.unlink(missing_ok=True)
 
 if __name__=="__main__":main()
