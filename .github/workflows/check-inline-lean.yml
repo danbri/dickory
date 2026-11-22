@@ -1,9 +1,9 @@
-name: Check inline Lean 4.33.1 binary derivation
+name: Verify genuine inline Lean 4.33.1 slim compiler
 
 on:
   pull_request:
     paths:
-      - 'labs/company-accounts/tools/prune_exports.py'
+      - 'labs/company-accounts/tools/fetch_genuine_slim.py'
       - 'labs/company-accounts/inline-lean-*.js'
       - 'labs/linked-assurance/compiler.js'
       - '.github/workflows/check-inline-lean.yml'
@@ -32,25 +32,27 @@ jobs:
         run: |
           python3 labs/linked-assurance/tools/hello/fetch.py
           node labs/linked-assurance/tools/build_browser_host.cjs
-      - name: Check byte-preserving export pruning and identities
+      - name: Verify genuine slim 4.33.1 distribution from pinned upstream SHA-256
         run: |
-          python3 labs/company-accounts/tools/prune_exports.py
+          python3 labs/company-accounts/tools/fetch_genuine_slim.py
           node --check labs/company-accounts/inline-lean-host.js
           node --check labs/company-accounts/inline-lean-controller.js
           node --check labs/company-accounts/inline-lean-worker.js
           node - <<'JS'
           const fs=require('node:fs'),assert=require('node:assert/strict');
           const p='labs/company-accounts/artifacts';
-          const r=JSON.parse(fs.readFileSync(p+'/slim-transform.json'));
-          assert(r.removedCount>1000);
-          assert(r.retainedCount>10);
-          assert(r.outputWasm.bytes < 103725428);
+          const r=JSON.parse(fs.readFileSync(p+'/slim-source-provenance.json'));
+          assert.equal(r.transformation,'None: original genuine separately linked slim Lean compiler bytes');
+          const m=JSON.parse(fs.readFileSync(p+'/slim-compiler-assets.json'));
+          assert.equal(m.sourceCommit,'4f9018a62ead9be0ffd652021d5afc8501e92253');
+          assert.equal(m.leanVersion,'4.33.1');
+          assert.equal(m.factoidalPin,'leanprover/lean4:v4.33.1');
           const wasm=fs.readFileSync(p+'/lean-slim.wasm');
-          const mod=new WebAssembly.Module(wasm);
-          const exports=new Set(WebAssembly.Module.exports(mod).map(x=>x.name));
+          assert(wasm.length<103725428);
+          const exports=new Set(WebAssembly.Module.exports(new WebAssembly.Module(wasm)).map(x=>x.name));
           for(const name of ['lean_wasm_compile','lean_initialize','lean_mk_string','__indirect_function_table'])
             assert(exports.has(name),'Missing '+name);
-          console.log({exports:exports.size,size:wasm.length,sha256:r.outputWasm.sha256});
+          console.log({exports:exports.size,wasmBytes:wasm.length,sha256:m.runtime['lean.wasm'].sha256});
           JS
       - name: Run full Company Accounts Lean proofs in a real WebKit WASM worker
         run: |
