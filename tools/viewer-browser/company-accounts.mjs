@@ -21,6 +21,7 @@ const server=http.createServer(async(req,res)=>{
 });
 await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));
 const url='http://127.0.0.1:'+server.address().port+'/labs/company-accounts/';
+const base=new URL(url).origin;
 const browser=await chromium.launch({headless:true});
 try{
   const page=await browser.newPage({viewport:{width:1300,height:960}});
@@ -85,7 +86,7 @@ try{
     });
     await mobilePage.goto(url);
     await mobilePage.waitForFunction(()=>document.querySelector('#proofStatus')?.textContent.includes('PUBLISHED CI PROOF VERIFIED'));
-    assert.match(await mobilePage.locator('#proofMode').textContent(),/CI-native proof record/);
+    assert.match(await mobilePage.locator('#proofMode').textContent(),/Two independent paths: source-hash verified CI record/);
     assert.equal(await mobilePage.locator('#enableIsolation').isVisible(),true);
     assert.equal(await mobilePage.locator('#runProofs').textContent(),'Inspect published Lean proof record');
     const probeLink=await mobilePage.locator('#mobileProbe').getAttribute('href');
@@ -126,8 +127,8 @@ try{
     assert.deepEqual(compilerFetches,[],'CI evidence path must not start the compiler');
     assert.deepEqual(mobileErrors,[]);
     assert(await mobilePage.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth));
-    // This is a REAL Lean 4.33.1 worker invocation, using the local export-
-    // pruned WebAssembly. It must establish all four named contracts before we
+    // This is a REAL Lean 4.33.1 worker invocation using cauli's ORIGINAL
+    // separately linked slim WebAssembly. It must establish all four named contracts before we
     // can report the inline runner as usable. On failure leave the real
     // diagnostics visible in CI rather than silently falling back to CI proof.
     await mobilePage.click('#enableIsolation');
