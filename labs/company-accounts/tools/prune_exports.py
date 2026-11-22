@@ -82,9 +82,13 @@ def main():
                 ekind=payload[pos];pos+=1
                 _,pos=leb(payload,pos)
                 names.add(name)
-                # Preserve all non-function exports including memory, table,
-                # globals and tags. Functions are retained only if required.
-                if ekind!=0 or name in referenced:
+                # Follow the upstream slim *intent* conservatively: discard
+                # generated boxed wrappers, but retain ordinary public Lean
+                # functions, C ABI routines, all non-function exports, plus
+                # any symbols actually needed by the existing browser host.
+                # Keeping non-boxed functions supports runtime calls by name.
+                boxed=(name.endswith("___boxed") or name.endswith("_boxed"))
+                if ekind!=0 or name in referenced or name.startswith("lean_") or not boxed:
                     entries.append(payload[begin:pos]);kept.add(name)
             if pos!=len(payload):raise SystemExit("Trailing bytes in export section")
             extra=referenced-names
@@ -98,6 +102,7 @@ def main():
             print("Pruned "+str(count)+" exports to "+str(len(entries))+"; JS-only names: "+str(len(extra)))
         ptr=finish
     if not found:raise SystemExit("WASM had no export section")
+    if len(kept)>=len(names):raise SystemExit("No exports were pruned")
     dest=ART/"lean-slim.wasm"
     dest.write_bytes(out)
     actual={"bytes":dest.stat().st_size,"sha256":hash_bytes(out)}
@@ -108,7 +113,7 @@ def main():
         "outputWasm":actual,"retainedExports":sorted(kept),
         "retainedCount":len(kept),"removedCount":len(names-kept),
         "unmodifiedSectionHashes":other_sections,
-        "transformation":"Remove exports only, preserve every other WebAssembly section byte-for-byte",
+        "transformation":"Remove unreferenced generated boxed-function exports only; preserve all other WebAssembly sections byte-for-byte",
     }
     (ART/"slim-transform.json").write_text(json.dumps(report,indent=2)+"\n")
     manifest={
