@@ -1,0 +1,38 @@
+name: Verify pinned Lean 4.33.1 slim compiler acquisition
+
+on:
+  pull_request:
+    paths:
+      - 'labs/company-accounts/tools/fetch_slim.py'
+      - 'labs/company-accounts/tools/slim-source.json'
+      - '.github/workflows/test-slim.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  slim:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: '3.14.7'
+      - name: Retrieve and verify pinned 4.33.1 slim build
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 labs/company-accounts/tools/fetch_slim.py
+      - name: Check compiler object identities
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          r=json.loads(Path('labs/company-accounts/artifacts/slim-compiler-assets.json').read_text())
+          assert r['leanVersion']=='4.33.1'
+          assert r['sourceCommit']=='4f9018a62ead9be0ffd652021d5afc8501e92253'
+          for n in ('lean.js','lean.wasm'):
+              print(n,r['runtime'][n]['bytes'],r['runtime'][n]['sha256'])
+          PY
