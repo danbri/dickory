@@ -98,3 +98,37 @@ be elaborated locally, but is not needed for the Init-only starting point.
 The CI tests round-trip exact source through the mobile workspace codec and
 exercise the source-bound proof viewer in desktop WebKit configured to emulate
 an iPhone. They **do not** claim proof compilation on a physical iPhone.
+
+## Inline, same-origin Lean 4.33.1 experiment
+
+Factoidal Core's `formal/lean4/lean-toolchain` at commit
+`57872a9b315b72cce3aca9942d909ee54d1ead99` selects
+`leanprover/lean4:v4.33.1`. This lab is constrained to the **same release
+version**, but a different compiler source commit:
+the existing Dickory browser fork `cauli/lean4@4f9018a62ead9be0ffd652021d5afc8501e92253`.
+The fork and Factoidal native release are *not* claimed ABI-identical; compiled
+`.olean` files are never mixed.
+
+The older full Dickory browser compiler had `105330` exported functions.
+`tools/prune_exports.py` starts from its checksum-pinned binary and removes
+unneeded public WebAssembly export entries while retaining required browser ABI
+entry points and all non-function exports. It changes **only** the binary's
+export section. All code, data and other sections remain unchanged. Its witness,
+`artifacts/slim-transform.json`, records exact SHA-256 hashes. The existing
+verified same-commit `Init.olean` and IR library are reused. The loader is
+the existing compact Dickory JavaScript glue, not the unrelated 4.33.0-pre
+mobile playground.
+
+The **Verify this Lean source locally · 4.33.1** button downloads the smaller
+same-origin compiler and checks actual editor bytes and four fixed theorem
+types/axiom lists, then reports precise source SHA-256. Negative checking is a
+separate real compiler run; a runtime fault or missing error diagnostic cannot
+be counted as an expected theorem rejection.
+
+This export-pruned runtime is not the same as cauli's own *relinked* 70 MB slim
+compiler. Its memory use and physical-iPhone reliability still require direct
+confirmation; do not describe successful desktop WebKit tests as iPhone proof
+acceptance. The existing source-bound native CI report is preserved as a
+working fallback without pretending it checked edited input.
+
+See [third-party and modification notices](THIRD_PARTY.md) for licensing.
