@@ -15,6 +15,9 @@ ART=LAB/"artifacts"
 ART.mkdir(parents=True,exist_ok=True)
 PIN="4f9018a62ead9be0ffd652021d5afc8501e92253"
 SHA="e24b3c712f59e983d7c805d5cc3faddd615398e820d27950834c9a3aa9e74151"
+EXPECTED_BYTES=92686390
+EXPECTED_SHA="bd41c4ca897a3f78ba41893002d0734051a02036dab65e6d2b7da6c2ca7d8ee7"
+EXPECTED_EXPORTED=15952
 
 def leb(data,pos):
     val=0;shift=0;start=pos
@@ -106,6 +109,9 @@ def main():
     dest=ART/"lean-slim.wasm"
     dest.write_bytes(out)
     actual={"bytes":dest.stat().st_size,"sha256":hash_bytes(out)}
+    if (actual["bytes"] != EXPECTED_BYTES or actual["sha256"] != EXPECTED_SHA or
+        len(kept) != EXPECTED_EXPORTED):
+        raise SystemExit("Reduced-export WASM drifted from reviewed 4.33.1 result")
     # Lean 4 compiler source is unchanged (same WASM sections except exports).
     report={
         "sourceCommit":PIN,"leanVersion":"4.33.1",
