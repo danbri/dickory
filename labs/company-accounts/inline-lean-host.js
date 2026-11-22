@@ -1,8 +1,8 @@
 /**
  * Same-origin, on-device Lean 4.33.1 compiler for the Company Accounts lab.
  * Uses Dickory's existing verified cauli/lean4 Init/IR library, the existing
- * worker API, and an export-pruned variant of that EXACT same WASM executable.
- * The original executable code sections remain byte-for-byte intact.
+ * worker API, and the genuine separately linked slim pair from the EXACT
+ * same upstream compiler source commit as Dickory's full executable.
  *
  * This is distinct from cauli's relinked 4.33.0-pre slim runtime and does not
  * rebrand a native/CI proof as an interactive local proof.
@@ -46,7 +46,7 @@ async function getCompiler(progress){
     });
     try{
       await lean.init();
-      lean.version='Lean 4.33.1 wasm32; cauli fork '+PIN+'; Dickory export-pruned binary';
+      lean.version='Lean 4.33.1 wasm32; cauli fork '+PIN+'; original separately linked slim binary';
       instance=lean;
       return lean;
     }catch(e){lean.dispose();throw e;}
