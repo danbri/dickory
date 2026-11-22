@@ -1,0 +1,68 @@
+name: Preserve genuine Lean 4.33.1 slim compiler in Dickory release
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'labs/company-accounts/tools/fetch_genuine_slim.py'
+      - 'labs/company-accounts/SLIM_RELEASE.md'
+      - '.github/workflows/mirror-slim-lean.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: lean-4.33.1-slim-release
+  cancel-in-progress: false
+
+jobs:
+  mirror:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: '3.14.7'
+      - name: Authenticate original 4.33.1 archive or permanent identical mirror
+        run: python3 labs/company-accounts/tools/fetch_genuine_slim.py
+      - name: Verify release identity, exact object digests and licences
+        run: |
+          python3 - <<'PY'
+          import hashlib,json
+          from pathlib import Path
+          src=Path('labs/company-accounts/artifacts')
+          data=json.loads((src/'slim-compiler-assets.json').read_text())
+          assert data['sourceCommit']=='4f9018a62ead9be0ffd652021d5afc8501e92253'
+          assert data['factoidalPin']=='leanprover/lean4:v4.33.1'
+          expected={'lean-slim.js':'2fd9accb23220f3d2fb569c4085e77cbe4637728d7266ff990f969afa80d3c9f',
+                    'lean-slim.wasm':'7a2e180408cf8f2e81eec26bee8f698c738ad2a96e128f8f2aff5084b3b2f3fd'}
+          for name,digest in expected.items():
+              assert hashlib.sha256((src/name).read_bytes()).hexdigest()==digest
+          for name in ('lean-LICENSE','lean-LICENSES'):
+              assert (Path('labs/linked-assurance/vendor')/name).stat().st_size>100
+          PY
+      - name: Publish immutable mirrored assets with upstream licences
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          TAG=lean-slim-4.33.1-4f9018a
+          ASSETS=(
+            labs/company-accounts/artifacts/lean-slim.js
+            labs/company-accounts/artifacts/lean-slim.wasm
+            labs/linked-assurance/vendor/lean-LICENSE#LICENSE
+            labs/linked-assurance/vendor/lean-LICENSES#LICENSES
+          )
+          if gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            mkdir -p /tmp/dickory-slim-release
+            gh release download "$TAG" --repo "$GITHUB_REPOSITORY" --dir /tmp/dickory-slim-release               --pattern 'lean-slim.*'
+            for n in lean-slim.js lean-slim.wasm; do
+              cmp "/tmp/dickory-slim-release/$n" "labs/company-accounts/artifacts/$n"
+            done
+            echo "Immutable Lean slim release already exists and has identical bits"
+          else
+            gh release create "$TAG" "${ASSETS[@]}" --repo "$GITHUB_REPOSITORY"               --target "$GITHUB_SHA"               --title "Original Lean 4.33.1 slim WASM compiler (cauli 4f9018a)"               --notes-file labs/company-accounts/SLIM_RELEASE.md
+          fi

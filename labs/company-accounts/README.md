@@ -98,3 +98,44 @@ be elaborated locally, but is not needed for the Init-only starting point.
 The CI tests round-trip exact source through the mobile workspace codec and
 exercise the source-bound proof viewer in desktop WebKit configured to emulate
 an iPhone. They **do not** claim proof compilation on a physical iPhone.
+
+## Inline, same-origin Lean 4.33.1 experiment
+
+Factoidal Core's `formal/lean4/lean-toolchain` at commit
+`57872a9b315b72cce3aca9942d909ee54d1ead99` selects
+`leanprover/lean4:v4.33.1`. This lab targets the **same release version**
+using the existing Dickory-compatible patched cauli fork at source commit
+`4f9018a62ead9be0ffd652021d5afc8501e92253`.
+The patched fork and Factoidal's native compiler have distinct commit
+identities and are **not** claimed ABI-identical.
+
+The previous export-pruning experiment compiled as WebAssembly but failed a
+genuine minimal proof under WebKit (worker returned an internal numeric
+exception). Consequently we rejected it. Instead,
+`tools/fetch_genuine_slim.py` retrieves the original, separately *relinked*
+slim compiler's JS/WASM pair from exactly the same successful upstream
+4.33.1 build as Dickory's full compiler. The **entire upstream ZIP** must
+match the reviewed SHA-256
+`cd942e1efcbf0a711f9a58cbbfe819fa312d845fa0d4289b032b33b7c8730d4f`
+before any contained binary is accepted. The matching same-commit `Init.olean`
+and IR archive remains sourced from Dickory's existing permanent, pinned
+mirror. No modified binary is claimed equivalent to the upstream slim build.
+
+The `Verify this Lean source locally · 4.33.1` button runs real source in the
+same-origin worker. A negative check must produce a genuine Lean error. Crashes,
+timeouts and unknown diagnostics cannot be counted as either a proof or
+successful refutation.
+
+The original GitHub Actions artifact expires on 9 December 2026 and is
+accessible through an anonymous nightly.link redirect; that service is
+**transport only**, since every byte is checked against the original SHA-256.
+A permanent independently hash-pinned Dickory GitHub release mirror must be
+created before relying on builds past the expiry date.
+
+The browser integration gate compiles the whole `Accounts.lean` and a
+deliberately false theorem using actual desktop WebKit with iPhone-like settings.
+**Physical-iPhone acceptance** remains a distinct requirement, even after that
+gate succeeds. The existing source-bound native CI proofs are independent
+fallback evidence, not a claim that an edited file has been verified locally.
+
+See [third-party and licence notices](THIRD_PARTY.md).

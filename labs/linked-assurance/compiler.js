@@ -15,9 +15,15 @@ function untar(data){
   return files;
 }
 export class Lean4 {
-  constructor({onProgress=()=>{},timeout=180000}={}){this.onProgress=onProgress;this.timeout=timeout;this.workers=new Set();this.libraryFiles=new Map();}
+  constructor({onProgress=()=>{},timeout=180000,assetLoader=prepareCompilerFiles,
+    expectedVersion='4.33.1',expectedCommit='4f9018a62ead9be0ffd652021d5afc8501e92253',
+    workerURL=new URL('./compiler-worker.js',import.meta.url)}={}){
+    this.onProgress=onProgress;this.timeout=timeout;this.workers=new Set();this.libraryFiles=new Map();
+    this.assetLoader=assetLoader;this.expectedVersion=expectedVersion;this.expectedCommit=expectedCommit;
+    this.workerURL=workerURL;
+  }
   async init(){
-    const {data,cache,compilerSha256,runtimeSha256}=await prepareCompilerFiles(this.onProgress);this.cache=cache;this.compilerSha256=compilerSha256;this.runtimeSha256=runtimeSha256;
+    const {data,cache,compilerSha256,runtimeSha256}=await this.assetLoader(this.onProgress);this.cache=cache;this.compilerSha256=compilerSha256;this.runtimeSha256=runtimeSha256;
     this.jsUrl=URL.createObjectURL(new Blob([data['lean.js']],{type:'text/javascript'}));
     // Emscripten eagerly creates its pool. Defer loading the large runtime in
     // each child until a job arrives; the host retains only one task worker.
@@ -27,10 +33,11 @@ export class Lean4 {
     this.libraryFiles=untar(gunzipSync(data['lean-lib.tar.gz']));
     releasePreparedCompilerFiles();
     const header=new TextDecoder().decode(this.libraryFiles.get('Init.olean')?.subarray(0,88));
-    if(!header.includes('4.33.1')||!header.includes('4f9018a62ead9be0ffd652021d5afc8501e92253'))throw Error('Mismatched Init library');
+    if(!header.includes(this.expectedVersion)||!header.includes(this.expectedCommit))
+      throw Error('Mismatched Init library for Lean '+this.expectedVersion+' at '+this.expectedCommit);
   }
   spawn(config){
-    const worker=new Worker(new URL('./compiler-worker.js',import.meta.url));this.workers.add(worker);
+    const worker=new Worker(this.workerURL);this.workers.add(worker);
     const files=config.flags?.includes('--version')?[]:[...this.libraryFiles].map(([name,data])=>({name,data:data.slice()}));
     worker.postMessage({type:'boot',jsUrl:this.jsUrl,pthreadUrl:this.pthreadUrl,wasmUrl:this.wasmUrl,files,...config},files.map(f=>f.data.buffer));
     return worker;

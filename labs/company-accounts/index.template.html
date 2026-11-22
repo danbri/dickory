@@ -36,11 +36,21 @@
 </section>
 <section class="panel">
   <h2>02 / Check the Lean 4 proofs</h2>
-  <p>The published model is theorem-checked in native Lean 4.33.1 by CI, with an exact SHA-256 match to the source below. On supported desktop browsers, you can additionally compile edits with Dickory's genuine Lean WASM compiler. On iPhone and WebKit, the live compiler is unreliable, so this page displays the authentic build-time evidence instead.</p>
+  <p>The published model is theorem-checked in native Lean 4.33.1 by CI, with an exact SHA-256 match to the source below. This page also offers real browser-side proof compilation, including an experimental same-origin 4.33.1 runtime for iPhone. A runtime crash is never treated as a Lean rejection.</p>
   <p id="proofMode" role="status">Inspecting compiler support…</p>
+
+  <div class="inlineCompiler">
+    <h3>Inline Lean 4.33.1 — local on this device</h3>
+    <p>The genuine, separately linked <strong>Lean 4.33.1 slim WASM compiler</strong> is served from this same Dickory website. Its full archive, compiler bytes and matching Init library are SHA-256 checked against the existing cauli source commit used by Dickory. No binary exports or code sections are modified. This is experimental on iPhone; a runtime crash is not a proof failure.</p>
+    <div class="actions">
+      <button id="runInline" type="button">Verify this Lean source locally · 4.33.1</button>
+      <button id="runInlineNegative" class="secondary" type="button">Reject false claim locally · 4.33.1</button>
+    </div>
+    <p id="inlineCompilerStatus" role="status">No local 4.33.1 compilation in this session.</p>
+  </div>
   <aside class="mobileLeanLinks" aria-label="Genuine Lean on mobile">
-    <h3>Real Lean proofs on iPhone — experimental slim compiler</h3>
-    <p>A separate, open-source Lean 4 WASM playground has an Init-only iOS build. These links transfer the specified source in a compressed URL fragment to that playground (no source POST), where its actual Lean compiler can run locally on your device. <strong>Press Run there to verify</strong>; opening the link is not a proof check. The runtime is not yet version-pinned to Dickory's CI compiler.</p>
+    <h3>Optional external slim playground</h3>
+    <p>A separate, open-source Lean 4 WASM playground has an Init-only iOS build (currently 4.33.0-pre). Use it if the inline 4.33.1 compiler fails. These links transfer the specified source in a compressed URL fragment to that playground (no source POST), where its actual Lean compiler can run locally on your device. <strong>Press Run there to verify</strong>; opening the link is not a proof check. The runtime is not yet version-pinned to Dickory's CI compiler.</p>
     <div class="actions">
       <a id="mobileProbe" class="actionLink" aria-disabled="true">Try small company-accounts proof on this phone</a>
       <a id="mobileFull" class="actionLink subtle" aria-disabled="true">Open exact editor source in mobile Lean</a>

@@ -1,0 +1,61 @@
+name: Verify genuine inline Lean 4.33.1 slim compiler
+
+on:
+  pull_request:
+    paths:
+      - 'labs/company-accounts/tools/fetch_genuine_slim.py'
+      - 'labs/company-accounts/inline-lean-*.js'
+      - 'labs/linked-assurance/compiler.js'
+      - '.github/workflows/check-inline-lean.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: inline-lean-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: '3.14.7'
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '26'
+      - name: Obtain pinned Lean 4.33.1 distribution and compact glue
+        run: |
+          python3 labs/linked-assurance/tools/hello/fetch.py
+          node labs/linked-assurance/tools/build_browser_host.cjs
+      - name: Verify genuine slim 4.33.1 distribution from pinned upstream SHA-256
+        run: |
+          python3 labs/company-accounts/tools/fetch_genuine_slim.py
+          node --check labs/company-accounts/inline-lean-host.js
+          node --check labs/company-accounts/inline-lean-controller.js
+          node --check labs/company-accounts/inline-lean-worker.js
+          node - <<'JS'
+          const fs=require('node:fs'),assert=require('node:assert/strict');
+          const p='labs/company-accounts/artifacts';
+          const r=JSON.parse(fs.readFileSync(p+'/slim-source-provenance.json'));
+          assert.equal(r.transformation,'None: original genuine separately linked slim Lean compiler bytes');
+          const m=JSON.parse(fs.readFileSync(p+'/slim-compiler-assets.json'));
+          assert.equal(m.sourceCommit,'4f9018a62ead9be0ffd652021d5afc8501e92253');
+          assert.equal(m.leanVersion,'4.33.1');
+          assert.equal(m.factoidalPin,'leanprover/lean4:v4.33.1');
+          const wasm=fs.readFileSync(p+'/lean-slim.wasm');
+          assert(wasm.length<103725428);
+          const exports=new Set(WebAssembly.Module.exports(new WebAssembly.Module(wasm)).map(x=>x.name));
+          for(const name of ['lean_wasm_compile','lean_initialize','lean_mk_string','__indirect_function_table'])
+            assert(exports.has(name),'Missing '+name);
+          console.log({exports:exports.size,wasmBytes:wasm.length,sha256:m.runtime['lean.wasm'].sha256});
+          JS
+      - name: Run full Company Accounts Lean proofs in a real WebKit WASM worker
+        run: |
+          npm ci --prefix tools/viewer-browser
+          npx --prefix tools/viewer-browser playwright install --with-deps webkit
+          node tools/viewer-browser/company-accounts-slim.mjs
