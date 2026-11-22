@@ -7,7 +7,7 @@ import http from 'node:http';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 
-const repo=fileURLToPath(new URL('../../',import.meta.url));
+const repo=path.resolve(fileURLToPath(new URL('../../',import.meta.url)));
 const types={'.html':'text/html','.js':'text/javascript','.mjs':'text/javascript',
   '.json':'application/json','.css':'text/css','.wasm':'application/wasm'};
 const server=http.createServer(async(req,res)=>{
