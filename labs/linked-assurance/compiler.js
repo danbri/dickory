@@ -16,9 +16,11 @@ function untar(data){
 }
 export class Lean4 {
   constructor({onProgress=()=>{},timeout=180000,assetLoader=prepareCompilerFiles,
-    expectedVersion='4.33.1',expectedCommit='4f9018a62ead9be0ffd652021d5afc8501e92253'}={}){
+    expectedVersion='4.33.1',expectedCommit='4f9018a62ead9be0ffd652021d5afc8501e92253',
+    workerURL=new URL('./compiler-worker.js',import.meta.url)}={}){
     this.onProgress=onProgress;this.timeout=timeout;this.workers=new Set();this.libraryFiles=new Map();
     this.assetLoader=assetLoader;this.expectedVersion=expectedVersion;this.expectedCommit=expectedCommit;
+    this.workerURL=workerURL;
   }
   async init(){
     const {data,cache,compilerSha256,runtimeSha256}=await this.assetLoader(this.onProgress);this.cache=cache;this.compilerSha256=compilerSha256;this.runtimeSha256=runtimeSha256;
@@ -35,7 +37,7 @@ export class Lean4 {
       throw Error('Mismatched Init library for Lean '+this.expectedVersion+' at '+this.expectedCommit);
   }
   spawn(config){
-    const worker=new Worker(new URL('./compiler-worker.js',import.meta.url));this.workers.add(worker);
+    const worker=new Worker(this.workerURL);this.workers.add(worker);
     const files=config.flags?.includes('--version')?[]:[...this.libraryFiles].map(([name,data])=>({name,data:data.slice()}));
     worker.postMessage({type:'boot',jsUrl:this.jsUrl,pthreadUrl:this.pthreadUrl,wasmUrl:this.wasmUrl,files,...config},files.map(f=>f.data.buffer));
     return worker;
